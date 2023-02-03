@@ -1,0 +1,584 @@
+@media only screen and (max-width:1366px) {
+.profile-right-sec {
+	padding: 30px 50px 30px 50px;
+}	
+.profile-info {
+	padding-left: 28px;
+}
+.profile-info h3 {
+	font-size: 26px;
+	line-height: 35px;
+}	
+.profile-bottom-info-sec ul li {
+	padding: 15px 20px 15px 25px;
+	font-size: 18px;
+	line-height: 21px;
+}
+.profile-info-right-desc {
+	width: 60%;
+}
+.profile-qr-inner {
+	padding: 25px 30px;
+	margin-bottom: 33px;
+}
+.profile-qr p {
+	padding-bottom: 30px;
+}
+.profile-top-sec {
+	margin-bottom: 40px;
+}
+.profile-bottom-info-sec ul li:not(:last-child) {
+	margin-bottom: 25px;
+}
+}
+
+
+@media only screen and (max-width:1199px) {
+.profile-right-sec {
+	padding: 30px 30px 30px 30px;
+}
+.profile-avtar {
+	width: 112px;
+	height: 112px;
+	border-radius: 50px;
+}	
+.profile-avtar > img {
+	max-width: 112px;
+	height: auto;
+}	
+.profile-info {
+	padding-left: 20px;
+}
+.profile-info h3 {
+	font-size: 22px;
+	line-height: 30px;
+}
+.profile-top-sec {
+	margin-bottom: 30px;
+}
+.profile-bottom-info-sec ul li:not(:last-child) {
+	margin-bottom: 20px;
+}
+.profile-info-right-desc {
+	width: 65%;
+}
+.profile-bottom-info-sec ul li {
+	padding: 15px 15px 15px 15px;
+	font-size: 16px;
+	line-height: 17px;
+}
+.profile-qr-inner {
+	padding: 20px 20px;
+	margin-bottom: 30px;
+	border-radius: 25px;
+}
+.profile-qr-inner img {
+	max-width: 185px;
+	height: auto;
+}
+	
+}
+
+
+@media only screen and (max-width:991px) {
+.logo-image img {
+	max-width: 250px;
+}
+.logo-content-wrap h4 {
+	font-size: 26px;
+	line-height: 35x;
+	padding: 38px 0 40px;
+}	
+.login-signup-content-wrap {
+	max-height: 85vh;
+	overflow-y: auto;
+}	
+.login-signup-content-wrap h4.blue-text {
+	margin-bottom: 45px;
+	font-size: 24px;
+}
+.login-signup01-content-wrap .radio-wrap {
+	margin-bottom: 54px;
+}
+.login-signup-02 .login-signup-content-wrap h4.blue-text {
+	margin-bottom: 40px;
+}
+.login-signup-03 .login-signup-content-wrap h5 {
+	padding-top: 10px;
+	margin-bottom: 10px;
+}
+.login-signup-03 .login-signup-content-wrap h4.blue-text {
+	margin-bottom: 35px;
+}
+.profile-qr {
+	max-width: 225px;
+	margin: 40px auto 0 0;
+}
+.profile-info-right-desc .edit-button {
+	width: 28px;
+	height: 28px;
+}
+.profile-info-right-desc .edit-button svg {
+	max-width: 18px;
+}
+.profile-bottom-info-sec ul li {
+	padding: 13px 15px 13px 15px;
+	font-size: 15px;
+	line-height: 20px;
+}
+.profile-bottom-info-sec ul li:not(:last-child) {
+	margin-bottom: 15px;
+}
+.profile-top-sec {
+	margin-bottom: 25px;
+}
+.profile-avtar {
+	width: 100px;
+	height: 100px;
+	border-radius: 40px;
+}
+.profile-avtar > img {
+	max-width: 96px;
+	height: auto;
+}
+.profile-info {
+	padding-left: 15px;
+}
+.profile-info h3 {
+	font-size: 20px;
+	line-height: 28px;
+}
+.profile-qr-inner img {
+	max-width: 155px;
+	height: auto;
+}
+.settings-bottom-info-sec ul li {
+	padding: 13px 15px;
+	border-radius: 15px;
+}
+.icon-wrap {
+	font-size: 15px;
+}
+.icon-settings {
+	margin-right: 13px;
+}
+.settings-notifications-bottom-info-sec ul li {
+	padding: 13px 25px;
+	font-size: 15px;
+}
+.settings-notifications-bottom-info-sec ul {
+	padding-bottom: 40px;
+}
+.settings-edit-profile-top-sec {
+	padding-bottom: 35px;
+}
+.currency-wrap {
+	font-size: 19px;
+	line-height: 24px;
+	padding: 10px 0 25px;
+}
+.settings-edit-profile-top-sec .profile-info {
+	padding-top: 20px;
+}
+.business-info-sec .profile-info {
+	padding: 0 0 15px;
+}
+.business-url-field p, .business-id-field p {
+	font-size: 16px;
+	line-height: 20px;
+	margin-bottom: 11px;
+}
+.business-id-field p {
+	padding-top: 9px;
+}
+.business-info-bottom-sec .login-btn {
+	padding-top: 17px;
+}
+.settings-password-bottom-info-sec .nav-tabs .nav-link {
+	font-size: 17px;
+	line-height: 22px;
+}
+.settings-password-bottom-info-sec .nav-tabs .nav-link:not(:last-child) {
+	margin-right: 38px;
+}
+.settings-password-bottom-info-sec .nav-tabs {
+	padding-bottom: 30px;
+}
+.settings-password-bottom-info-sec .login-btn {
+	padding-top: 19px;
+}
+.settings-password-bottom-info-sec .forgot-pass-btn-wrap input[type="submit"] {
+	font-size: 14px;
+	min-width: auto;
+	padding: 14px 30px;
+}
+.forgot-pass-btn-wrap .setting-btn-link > a, .settings-password-bottom-info-sec .setting-btn-link > a {
+	font-size: 15px;
+	padding: 10px 32px 10px 22px;
+}
+.forgot-pass-btn-wrap .setting-btn-link a svg, .settings-password-bottom-info-sec .setting-btn-link > a svg {
+	margin-right: 9px;
+	width: 8px;
+	height: auto;
+}
+.settings-password-bottom-info-sec .setting-btn-link {
+	padding-right: 15px;
+}
+.settings-password-bottom-info-sec .login-btn input[type="submit"] {
+	min-width: 130px;
+	font-size: 14px;
+	padding: 14px 30px;
+}
+}
+
+@media only screen and (max-width:767px) {
+.logo-content-wrap h4 {
+	font-size: 23px;
+	line-height: 30px;
+	padding: 38px 0 35px;
+}	
+.logo-image img {
+	max-width: 240px;
+}	
+.login-signup-content-wrap {
+	padding: 25px 25px 30px;
+	overflow-y: auto;
+	max-height: 90vh;
+}
+.login-signup-content-wrap h4 {
+	margin-bottom: 15px;
+	font-size: 25px;
+}
+.login-logo-image img {
+	max-width: 175px;
+}
+.login-logo-image {
+	margin-bottom: 26px;
+}
+.login-signup-content-wrap h5 {
+	font-size: 22px;
+	line-height: 24px;
+	margin-bottom: 25px;
+}
+form .form-control {
+	border-radius: 12px;
+	padding: 12px 17px;
+	font-size: 14px;
+}
+form .form-control::placeholder {
+	font-size: 14px;
+	line-height: 26px;
+}
+form .form-control:-webkit-placeholder {
+	font-size: 14px;
+	line-height: 26px;
+}
+form .form-control:-moz-placeholder {
+	font-size: 14px;
+	line-height: 26px;
+}
+a {
+	font-size: 14px;
+	line-height: 20px;
+}
+.login-btn input[type="submit"], .btn-primary, .btn {
+	font-size: 15px;
+	padding: 11px 50px;
+	min-width: auto;
+	border-radius: 15px;
+	line-height: 25px;
+}
+p {
+	font-size: 14px;
+	line-height: 20px;
+}
+.login-signup-content-wrap h4.blue-text {
+	margin-bottom: 33px;
+	font-size: 19px;
+}
+.login-signup01-content-wrap h5 {
+	margin-bottom: 18px;
+}
+.login-signup01-content-wrap .radio-wrap {
+	flex-wrap: nowrap;
+	margin-bottom: 40px;
+}
+.radio-wrap .form-check .form-check-label {
+	font-size: 13px;
+	line-height: 34px;
+	padding: 6px 12px;
+	border-radius: 15px;
+}
+.radio-wrap .form-check:nth-child(2) label {
+	padding: 6px 10px;
+}
+.upload-profile-image a {
+	font-size: 15px;
+	line-height: 20px;
+	margin-bottom: 2px;
+	margin-top: 12px;
+}
+.login-signup-02 .login-signup-content-wrap h5 {
+	font-size: 24px;
+	line-height: 35px;
+	margin-bottom: 9px;
+}
+.login-signup-02 .login-signup-content-wrap h4.blue-text {
+	margin-bottom: 28px;
+}
+form .form-field .eye-icon img {
+	max-width: 17px;
+}
+form .form-field .eye-icon {
+	right: 15px;
+	top: 16px;
+}
+form .form-control[type="password"] {
+	padding-right: 35px;
+}
+.login-signup-02 .login-btn {
+	margin-top: 30px;
+	margin-bottom: 15px;
+}
+.upload-profile-image .profile-wrap {
+	width: 112px;
+	height: 112px;
+	border-radius: 40px;
+}
+.login-signup-03 .login-signup-content-wrap h5 {
+	padding-top: 6px;
+	margin-bottom: 3px;
+}
+.login-signup-03 .login-signup-content-wrap h4.blue-text {
+	margin-bottom: 25px;
+}
+form select.form-control {
+	background-position: right 14px center;
+	background-size: 14px auto;
+	padding-right: 32px;
+}
+.login-signup-03 .login-btn .btn:first-child, .login-signup-03 .login-btn .no-bg {
+	min-width: 120px;
+	padding-left:30px;
+	padding-right: 30px;
+}
+/*sidebar toggle css starts*/
+.dashboard-left-wrap .toggle-admin-btn {
+	right: -40px;
+	top: 10px;
+}
+.dashboard-left-sec {
+	position: fixed;
+	left: 0;
+	right: auto;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	transform: translateX(-100%);
+	transition: all 0.5s ease-in-out;
+	width: 100% !important;
+	max-width: 221px;
+}
+.sidebar-open .dashboard-left-sec {
+	transform: translateX(0);
+}
+.sidebar-open .dashboard-link-wrap ul li a {
+	font-size: 14px;
+	padding: 12.5px 18px 11.5px 20px;
+}
+.sidebar-open .dashboard-link-wrap ul li a span {
+	display: block;
+}
+.sidebar-open .dashboard-logo-wrap a img {
+	max-width: max-content;
+}
+.sidebar-open .dashboard-logo-wrap .dashaboard-btn {
+	padding: 7px 27px 9px;
+}
+.dashboard-bottom-links {
+	margin-top: 20px;
+	margin-bottom: auto;
+}
+.dashboard-link-wrap ul li {
+	margin-bottom: 12px;
+}
+.dashboard-link-wrap ul li a svg {
+	margin-right: 15px;
+}
+.dashboard-link-wrap {
+	max-height: calc(100% - 140px);
+	overflow-y: auto;
+	padding-top: 20px;
+}
+.dashboard-logo-wrap {
+	padding-top: 10px;
+	padding-bottom: 15px;
+}
+/*sidebar toggle css close*/
+.dashboard-right-sec {
+	width: 100%;
+	padding: 50px 15px;
+}
+.profile-bottom-info-sec ul li {
+	font-size: 14px;
+	line-height: 18px;
+}
+.profile-qr {
+	max-width: 225px;
+	margin: 40px auto 0;
+}
+.profile-info-right-desc .edit-button {
+	margin-left: 15px;
+}
+.profile-bottom-info-sec ul li {
+	padding: 8px 13px 8px 13px;
+}
+.profile-info-right-desc {
+	word-break: break-word;
+	justify-content: flex-end;
+	text-align: right;
+	align-items: center;
+}
+.profile-info-right-desc .edit-button {
+	margin: 5px 0 5px 15px;
+	margin-left: auto;
+}
+.profile-bottom-info-sec ul li:not(:last-child) {
+	margin-bottom: 10px;
+}
+.settings-bottom-info-sec ul li {
+	padding: 10px 15px;
+	border-radius: 13px;
+}
+.icon-settings {
+	margin-right: 11px;
+	width: 36px;
+	height: 36px;
+}
+.icon-wrap {
+	font-size: 14px;
+}
+.icon-settings svg {
+	max-height: 20px;
+}
+.settings-inner-sec .profile-info h3 {
+	margin-bottom: 7px;
+}
+.settings-bottom-info-sec ul li:not(:last-child) {
+	margin-bottom: 15px;
+}
+.settings-note-inner-sec .profile-info {
+	padding-bottom: 18px;
+}
+.settings-notifications-bottom-info-sec ul li {
+	padding: 10px 20px;
+	font-size: 14px;
+	border-radius: 13px;
+}
+.setting-btn-link a {
+	border-radius: 12px;
+	padding: 10px 20px 10px 18px;
+	font-size: 15px;
+}
+.setting-btn-link a svg {
+	margin-right: 10px;
+	max-width: 6px;
+}
+.settings-notifications-bottom-info-sec ul {
+	padding-bottom: 33px;
+}
+.settings-notifications-bottom-info-sec ul li:not(:last-child) {
+	margin-bottom: 15px;
+}
+.settings-edit-profile-top-sec .profile-info {
+	padding-top: 32px;
+}
+.settings-edit-profile-top-sec .upload-profile-image a {
+	margin: 5px 0 0;
+	font-size: 13px;
+	line-height: 16px;
+}
+.settings-edit-profile-top-sec {
+	padding-bottom: 25px;
+}
+.currency-wrap {
+	font-size: 18px;
+	line-height: 24px;
+	padding: 0px 0 20px;
+}
+.settings-profile-bottom-info-sec .setting-btn-link {
+	padding-right: 15px;
+}
+.settings-profile-bottom-info-sec .login-btn input[type="submit"] {
+	min-width: auto;
+	font-size: 13px;
+	padding: 14px 20px;
+	line-height: 18px;
+}
+.business-info-sec .profile-info {
+	padding: 0 0 10px;
+}
+.business-url-field p, .business-id-field p {
+	font-size: 14px;
+	line-height: 19px;
+	margin-bottom: 9px;
+}
+.business-id-field p {
+	padding-top: 6px;
+}
+.business-info-bottom-sec .login-btn {
+	padding-top: 13px;
+}
+.settings-password-right-sec .settings-note-inner-sec .profile-info {
+	padding-bottom: 10px;
+}
+.settings-password-bottom-info-sec .login-btn {
+	padding-top: 14px;
+}
+.settings-password-bottom-info-sec .login-btn input[type="submit"] {
+	min-width: auto;
+	font-size: 12px;
+	padding: 13px 13px;
+	line-height: 18px;
+	border-radius: 12px;
+}
+.forgot-pass-btn-wrap .setting-btn-link > a, .settings-password-bottom-info-sec .setting-btn-link > a {
+	font-size: 14px;
+	padding: 9px 16px 9px 16px;
+}
+.settings-profile-bottom-info-sec .setting-btn-link {
+	padding-right: 10px;
+}
+.settings-password-bottom-info-sec .nav-tabs .nav-link {
+	font-size: 15px;
+	line-height: 19px;
+}
+.settings-password-bottom-info-sec .nav-tabs {
+	padding-bottom: 25px;
+}
+.settings-password-bottom-info-sec .nav-tabs .nav-link:not(:last-child) {
+	margin-right: 30px;
+}
+}
+
+@media only screen and (max-width:575px) {
+.logo-content-wrap h4 {
+	font-size: 20px;
+	line-height: 25px;
+	padding: 30px 0 35px;
+}	
+.logo-image img {
+	max-width: 200px;
+}
+.profile-info-right-desc .edit-button {
+	margin: 5px 0 5px 15px;
+	margin-left: auto;
+}
+.profile-info-right-desc {
+	width: calc(100% - 110px);
+	word-break: break-all;
+	text-align: right;
+	align-items: center;
+	justify-content: flex-end;
+}
+}
