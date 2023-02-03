@@ -16,23 +16,6 @@ axiosInstance.interceptors.request.use(
     config.headers.appid =
       process.env.APP_ID || "12e14140-73b5-4e4f-9949-ce5bb1769429";
     return config;
-  },
-  async (err) => {
-    console.log("axios err", err);
-    const originalConfig = err.config;
-    if (originalConfig.url !== loginUrl && err.response) {
-      // Access Token was expired
-      if (err.response.status === 401 && !originalConfig._retry) {
-        originalConfig._retry = true;
-        try {
-          await refreshTokenApi();
-          return axiosInstance(originalConfig);
-        } catch (_error) {
-          return Promise.reject(_error);
-        }
-      }
-    }
-    return Promise.reject(err);
   }
 );
 
@@ -40,7 +23,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (originalRequest.url !== loginUrl && error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const refreshToken = localStorage.getItem('refresh_token');
       if (refreshToken) {
