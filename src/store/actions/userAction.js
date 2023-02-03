@@ -1,9 +1,8 @@
-import { USERPROFILE } from "./actionTypes"
+import { USERPROFILE } from "./actionTypes";
 
-export const userProfileAction = (value) => (dispatch) => {
-    dispatch({
-      type: USERPROFILE,
-      payload: value
-    })
-  }
-  
+export const userProfileAction = (value) => {
+  return {
+    type: USERPROFILE,
+    payload: value,
+  };
+};

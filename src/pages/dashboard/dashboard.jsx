@@ -39,9 +39,8 @@ const Dashboard = () => {
   }, []);
 
   const test = useSelector((state) => state.userProfile);
-  console.log("test dashboard :>> ", test);
-  console.log("userProfile :>> ", userProfile);
-  
+  console.log("store dashboard :>> ", test);
+
 // this function should be in a common folder
   const handleLogout = async (event) => {
     event.preventDefault();
