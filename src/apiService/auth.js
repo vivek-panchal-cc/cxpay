@@ -1,6 +1,6 @@
 import { axiosInstance } from "plugin/axios.js";
 import { loginUrl, refreshTokenUrl } from "constants/urls.js";
-import { getCookie, deleteCookie } from "shared/cookies";
+import { deleteCookie } from "shared/cookies";
 
 var now = new Date();
 var time = now.getTime();
@@ -11,11 +11,18 @@ now.setTime(time);
 export const loginApi = async (payload) => {
   try {
     let response = await axiosInstance.post(loginUrl, payload);
-    if (response.data?.data?.token) {
-      // document.cookie = `auth._token.Bearer=${response.data.data.token}`;
+    // if (response.data?.data?.token) {
+    //   document.cookie =
+    //     "auth._token.Bearer=" +
+    //     response.data?.data?.token +
+    //     "; expires=" +
+    //     now.toGMTString() +
+    //     "; path=/";
+    // }
+    if (response.data?.data?.user_name) {
       document.cookie =
         "auth._token.Bearer=" +
-        response.data?.data?.token +
+        response.data?.data?.user_name +
         "; expires=" +
         now.toGMTString() +
         "; path=/";
@@ -36,7 +43,7 @@ export const refreshTokenApi = async () => {
     // ensure deletion of cookie in case refresh token api failed
     deleteCookie();
     // import your accessToken here
-    let accessToken = '';
+    let accessToken = "";
     let response = await axiosInstance.post(refreshTokenUrl, accessToken);
     if (response.data?.data?.token) {
       document.cookie =

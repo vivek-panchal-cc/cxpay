@@ -1,47 +1,29 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
-import { useEffect, useState } from "react";
-import Login from "./pages/login/login.jsx";
-import Signup from "./pages/signup/singup.jsx";
-import Dashboard from "./pages/dashboard/dashboard.jsx";
-import { Protected } from "components/PrivateRoute";
-import { getCookie } from "shared/cookies";
-const token = getCookie("auth._token.Bearer");
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/login/Login.jsx";
+import Signup from "./pages/signup/Singup.jsx";
+import Dashboard from "./pages/dashboard/Dashboard.jsx";
+import PrivateRoute from "routes/PrivateRoute.jsx";
+import LoginWithOtp from "pages/loginWithOtp/LoginWithOtp.jsx";
+import { ToastContainer } from "react-toastify";
 
 function App() {
-  /* const navigate = useNavigate();
-  const [isLoggedIn, setisLoggedIn] = useState(false);
-
-    useEffect(() => {
-    // Checking if user is not loggedIn
-    if (!isLoggedIn) {
-      isLoggedIn = false;
-    } else {
-       isLoggedIn = true;
-    }
-  }, [navigate, isLoggedIn]); */
-
   return (
     <BrowserRouter>
       <Routes>
         {/* <Route path="/dashboard" element={ <Dashboard />} /> */}
         <Route path="/login" element={<Login />} />
+        <Route path="/login-with-otp" element={<LoginWithOtp />} />
         <Route path="/signup" element={<Signup />} />
-        <Route
-          path="/"
-          element={
-            <Protected>
-              <Dashboard />
-            </Protected>
-          }
-        />
+        {/* List of Private Routes */}
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/private" element={<> Accessible after login! </>} />
+        </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      {/* Toast Container */}
+      <ToastContainer position="bottom-left" autoClose={3000} />
     </BrowserRouter>
   );
 }

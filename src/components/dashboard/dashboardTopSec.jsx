@@ -1,6 +1,6 @@
 import React from "react";
 import userImage from "assets/images/user-image-logged-in.png";
-import { deleteCookie } from "shared/cookies";
+// import { deleteCookie } from "shared/cookies";
 
 const dashboardTopSec = () => {
   return (
@@ -89,12 +89,12 @@ const dashboardTopSec = () => {
           <div className="user-image">
             <div className="user-image-wrap">
               <span className="user-image">
-                <img src={userImage} alt="user image" />
+                <img src={userImage} alt="user img" />
               </span>
             </div>
             <ul>
               <li>
-                <a href="#">
+                <a href="/">
                   <svg
                     width="18"
                     height="19"
@@ -123,7 +123,7 @@ const dashboardTopSec = () => {
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="/">
                   <svg
                     width="18"
                     height="19"
@@ -139,8 +139,8 @@ const dashboardTopSec = () => {
                   Settings
                 </a>
               </li>
-              <li onClick={handleLogout}>
-                <a href="#">
+              <li onClick={()=>{}}>
+                <a href="/">
                   <svg
                     width="20"
                     height="19"

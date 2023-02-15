@@ -1,48 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import "assets/css/bootstrap.min.css";
-// import "assets/css/style.css";
-// import "assets/css/responsive.css";
-// import canvasjs from "assets/js/bootstrap.min.js";
-import { loginUrl } from "constants/urls.js";
-import { axiosInstance } from "plugin/axios.js";
 import Sidebar from "components/dashboard/sidebar.jsx";
 import RecentActivity from "components/dashboard/recentActivity";
 import RecentContactSlider from "components/dashboard/recentContactSlider";
-import recentContactImg01 from "assets/images/recent-contact-img01.png";
-import recentContactImg02 from "assets/images/recent-contact-img02.png";
-import card5 from "assets/images/card-5.png";
-import card6 from "assets/images/card-6.png";
-import userImage from "assets/images/user-image-logged-in.png";
-import buttonToggle from "assets/images/dashaboard-button-toggle.png";
-import dashboardLogo from "assets/images/dashaboard-logo.png";
+// import "/assets/images/card-5.png" from "/assets/images/card-5.png";
+// import "/assets/images/card-6.png" from "/assets/images/card-6.png";
+// import "/assets/images/user-image-logged-in.png" from "/assets/images/user-image-logged-in.png";
+// import "/assets/images/dashaboard-button-toggle.png" from "/assets/images/dashaboard-button-toggle.png";
+// import "/assets/images/dashaboard-logo.png" from "/assets/images/dashaboard-logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCookie } from "shared/cookies";
-import { userProfileApi } from "apiService/dashboard";
-import * as userAction from "store/actions/userAction";
+import { fetchUserProfile } from "features/user/userProfileSlice";
 
 const Dashboard = () => {
-  const [userProfile, setUserProfile] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const getUserProfile = async () => {
-    const response = await userProfileApi();
-    setUserProfile(response.data);
-    // move dispatch function in apiService folder
-    dispatch(userAction.userProfileAction(response.data));
-  };
+  const { profile } = useSelector((state) => state.userProfile);
+  console.log("store dashboard :>> ", profile);
 
   useEffect(() => {
-   console.log('useEffect')
-    getUserProfile();
-  }, []);
+    (async () => {
+      await dispatch(fetchUserProfile());
+    })();
+  }, [dispatch]);
 
-  const test = useSelector((state) => state.userProfile);
-  console.log("store dashboard :>> ", test);
-
-// this function should be in a common folder
-  const handleLogout = async (event) => {
+  // this function should be in a common folder
+  const handleLogout = (event) => {
     event.preventDefault();
     deleteCookie();
     navigate("/login");
@@ -55,13 +38,19 @@ const Dashboard = () => {
           <div className="col-xs-12 col-lg-3 dashboard-left-sec">
             <div className="dashboard-left-wrap">
               <span className="toggle-admin-btn">
-                <img src={buttonToggle} alt="button dashboard icon" />
+                <img
+                  src={"/assets/images/dashaboard-button-toggle.png"}
+                  alt="button dashboard icon"
+                />
               </span>
               <div className="dashboard-logo-wrap">
-                <a href="#">
-                  <img src={dashboardLogo} alt="dashboard logo" />
+                <a href="/">
+                  <img
+                    src={"/assets/images/dashaboard-logo.png"}
+                    alt="dashboard logo"
+                  />
                 </a>
-                <a href="#" className="dashaboard-btn">
+                <a href="/" className="dashaboard-btn">
                   Business
                 </a>
               </div>
@@ -155,12 +144,12 @@ const Dashboard = () => {
                   <div className="user-image">
                     <div className="user-image-wrap">
                       <span className="user-image">
-                        <img src={userImage} alt="user image" />
+                        {/* <img src={"/assets/images/user-image-logged-in.png"} alt="user img" /> */}
                       </span>
                     </div>
                     <ul>
                       <li>
-                        <a href="#">
+                        <a href="/">
                           <svg
                             width="18"
                             height="19"
@@ -189,7 +178,7 @@ const Dashboard = () => {
                         </a>
                       </li>
                       <li>
-                        <a href="#">
+                        <a href="/">
                           <svg
                             width="18"
                             height="19"
@@ -206,7 +195,7 @@ const Dashboard = () => {
                         </a>
                       </li>
                       <li onClick={handleLogout}>
-                        <a href="#">
+                        <a href="/">
                           <svg
                             width="20"
                             height="19"
@@ -251,7 +240,7 @@ const Dashboard = () => {
                   <div className="title-content-wrap">
                     <h2>Hi, Digicel</h2>
                     <p>
-                      Welcome to CXpay Business <a href="#">+ Add Funds</a>
+                      Welcome to CXpay Business <a href="/">+ Add Funds</a>
                     </p>
                   </div>
                   <div className="dashboard-graph-wrap">
@@ -270,7 +259,7 @@ const Dashboard = () => {
                   <div className="title-content-wrap">
                     <h3>Hi, Digicel</h3>
                     <p>
-                      8 Cards <a href="#">+ Add Card</a>
+                      8 Cards <a href="/">+ Add Card</a>
                     </p>
                   </div>
                   <div className="card-slider">
@@ -279,28 +268,52 @@ const Dashboard = () => {
                       <div className="swiper-wrapper">
                         {/* <!-- Slides --> */}
                         <div className="swiper-slide">
-                          <img src={card5} alt="card 5 image" />
+                          <img
+                            src={"/assets/images/card-5.png"}
+                            alt="card 5 img"
+                          />
                         </div>
                         <div className="swiper-slide">
-                          <img src={card6} alt="card 6 image" />
+                          <img
+                            src={"/assets/images/card-6.png"}
+                            alt="card 6 img"
+                          />
                         </div>
                         <div className="swiper-slide">
-                          <img src={card5} alt="card 7 image" />
+                          <img
+                            src={"/assets/images/card-5.png"}
+                            alt="card 7 img"
+                          />
                         </div>
                         <div className="swiper-slide">
-                          <img src={card6} alt="card 8 image" />
+                          <img
+                            src={"/assets/images/card-6.png"}
+                            alt="card 8 img"
+                          />
                         </div>
                         <div className="swiper-slide">
-                          <img src={card5} alt="card 1 image" />
+                          <img
+                            src={"/assets/images/card-5.png"}
+                            alt="card 1 img"
+                          />
                         </div>
                         <div className="swiper-slide">
-                          <img src={card6} alt="card 2 image" />
+                          <img
+                            src={"/assets/images/card-6.png"}
+                            alt="card 2 img"
+                          />
                         </div>
                         <div className="swiper-slide">
-                          <img src={card5} alt="card 3 image" />
+                          <img
+                            src={"/assets/images/card-5.png"}
+                            alt="card 3 img"
+                          />
                         </div>
                         <div className="swiper-slide">
-                          <img src={card6} alt="card 4 image" />
+                          <img
+                            src={"/assets/images/card-6.png"}
+                            alt="card 4 img"
+                          />
                         </div>
                       </div>
                       {/*  <!-- If we need pagination --> */}
@@ -367,7 +380,7 @@ const Dashboard = () => {
                 <div className="extra-links-wrap">
                   <ul>
                     <li>
-                      <a href="#">
+                      <a href="/">
                         <span className="icon-link-text">
                           <svg
                             width="24"
@@ -424,7 +437,7 @@ const Dashboard = () => {
                       </a>
                     </li>
                     <li>
-                      <a href="#">
+                      <a href="/">
                         <span className="icon-link-text">
                           <svg
                             width="20"
@@ -479,7 +492,7 @@ const Dashboard = () => {
                       </a>
                     </li>
                     <li>
-                      <a href="#">
+                      <a href="/">
                         <span className="icon-link-text">
                           <svg
                             width="19"
@@ -528,7 +541,7 @@ const Dashboard = () => {
                       </a>
                     </li>
                     <li>
-                      <a href="#">
+                      <a href="/">
                         <span className="icon-link-text">
                           <svg
                             width="24"
@@ -585,7 +598,7 @@ const Dashboard = () => {
                       </a>
                     </li>
                     <li>
-                      <a href="#">
+                      <a href="/">
                         <span className="icon-link-text">
                           <svg
                             width="20"

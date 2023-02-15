@@ -1,12 +1,4 @@
 import React, { useState } from "react";
-import "../../assets/css/bootstrap.min.css";
-import "../../assets/css/style.css";
-import "../../assets/css/responsive.css";
-import { loginUrl } from "constants/urls.js";
-import { axiosInstance } from "plugin/axios.js";
-import activityUser1 from "assets/images/activity-use-image01.jpg";
-import activityUser2 from "assets/images/activity-use-image02.jpg";
-import activityUser3 from "assets/images/activity-use-image03.jpg";
 
 const RecentActivity = () => {
   const handleChange = async (event) => {
@@ -213,7 +205,10 @@ const RecentActivity = () => {
                         <div className="user-info">
                           <div className="user-img-title-wrap">
                             <div className="activity-use-img">
-                              <img src={activityUser1} alt="user image" />
+                              <img
+                                src={"/assets/images/activity-use-image01.jpg"}
+                                alt="user img"
+                              />
                             </div>
                             <h4>Contact Name</h4>
                           </div>
@@ -222,7 +217,7 @@ const RecentActivity = () => {
                           </div>
                           <div className="price-info">+123.45 Nafl</div>
                           <div className="quick-info-btn">
-                            <a href="#">
+                            <a href="/">
                               <svg
                                 width="18"
                                 height="16"
@@ -250,7 +245,10 @@ const RecentActivity = () => {
                         <div className="user-info">
                           <div className="user-img-title-wrap">
                             <div className="activity-use-img">
-                              <img src={activityUser2} alt="userimage" />
+                              <img
+                                src={"/assets/images/activity-use-image02.jpg"}
+                                alt="userimage"
+                              />
                             </div>
                             <h4>Contact Name</h4>
                           </div>
@@ -261,7 +259,7 @@ const RecentActivity = () => {
                             <span className="negative-price">-12.34 Nafl</span>
                           </div>
                           <div className="quick-info-btn">
-                            <a href="#">
+                            <a href="/">
                               <svg
                                 width="18"
                                 height="16"
@@ -282,7 +280,10 @@ const RecentActivity = () => {
                         <div className="user-info">
                           <div className="user-img-title-wrap">
                             <div className="activity-use-img">
-                              <img src={activityUser3} alt="user image" />
+                              <img
+                                src={"/assets/images/activity-use-image03.jpg"}
+                                alt="user img"
+                              />
                             </div>
                             <h4>Contact Name</h4>
                           </div>
@@ -291,7 +292,7 @@ const RecentActivity = () => {
                           </div>
                           <div className="price-info">+123.45 Nafl</div>
                           <div className="quick-info-btn">
-                            <a href="#">
+                            <a href="/">
                               <svg
                                 width="18"
                                 height="16"
@@ -312,7 +313,10 @@ const RecentActivity = () => {
                         <div className="user-info">
                           <div className="user-img-title-wrap">
                             <div className="activity-use-img">
-                              <img src={activityUser1} alt="user image" />
+                              <img
+                                src={"/assets/images/activity-use-image01.jpg"}
+                                alt="user img"
+                              />
                             </div>
                             <h4>Contact Name</h4>
                           </div>
@@ -323,7 +327,7 @@ const RecentActivity = () => {
                             <span className="negative-price">-12.34 Nafl</span>
                           </div>
                           <div className="quick-info-btn">
-                            <a href="#">
+                            <a href="/">
                               <svg
                                 width="18"
                                 height="16"
@@ -344,7 +348,7 @@ const RecentActivity = () => {
                   </div>
                   {/* <!-- tab-content-block-part close--> */}
                   <div className="view-history-btn">
-                    <a href="#">View all history</a>
+                    <a href="/">View all history</a>
                   </div>
                 </div>
               </div>
@@ -366,7 +370,10 @@ const RecentActivity = () => {
                         <div className="user-info">
                           <div className="user-img-title-wrap">
                             <div className="activity-use-img">
-                              <img src={activityUser2} alt="user image" />
+                              <img
+                                src={"/assets/images/activity-use-image02.jpg"}
+                                alt="user img"
+                              />
                             </div>
                             <h4>Contact Name</h4>
                           </div>
@@ -375,7 +382,7 @@ const RecentActivity = () => {
                           </div>
                           <div className="price-info">+123.45 Nafl</div>
                           <div className="quick-info-btn">
-                            <a href="#">
+                            <a href="/">
                               <svg
                                 width="18"
                                 height="16"
@@ -403,7 +410,10 @@ const RecentActivity = () => {
                         <div className="user-info">
                           <div className="user-img-title-wrap">
                             <div className="activity-use-img">
-                              <img src={activityUser3} alt="user image" />
+                              <img
+                                src={"/assets/images/activity-use-image03.jpg"}
+                                alt="user img"
+                              />
                             </div>
                             <h4>Contact Name</h4>
                           </div>
@@ -414,7 +424,7 @@ const RecentActivity = () => {
                             <span className="negative-price">-12.34 Nafl</span>
                           </div>
                           <div className="quick-info-btn">
-                            <a href="#">
+                            <a href="/">
                               <svg
                                 width="18"
                                 height="16"
@@ -435,7 +445,10 @@ const RecentActivity = () => {
                         <div className="user-info">
                           <div className="user-img-title-wrap">
                             <div className="activity-use-img">
-                              <img src={activityUser1} alt="user image" />
+                              <img
+                                src={"/assets/images/activity-use-image01.jpg"}
+                                alt="user img"
+                              />
                             </div>
                             <h4>Contact Name</h4>
                           </div>
@@ -444,7 +457,7 @@ const RecentActivity = () => {
                           </div>
                           <div className="price-info">+123.45 Nafl</div>
                           <div className="quick-info-btn">
-                            <a href="#">
+                            <a href="/">
                               <svg
                                 width="18"
                                 height="16"
@@ -465,7 +478,10 @@ const RecentActivity = () => {
                         <div className="user-info">
                           <div className="user-img-title-wrap">
                             <div className="activity-use-img">
-                              <img src={activityUser2} alt="user image" />
+                              <img
+                                src={"/assets/images/activity-use-image02.jpg"}
+                                alt="user img"
+                              />
                             </div>
                             <h4>Contact Name</h4>
                           </div>
@@ -476,7 +492,7 @@ const RecentActivity = () => {
                             <span className="negative-price">-12.34 Nafl</span>
                           </div>
                           <div className="quick-info-btn">
-                            <a href="#">
+                            <a href="/">
                               <svg
                                 width="18"
                                 height="16"
@@ -497,7 +513,7 @@ const RecentActivity = () => {
                   </div>
                   {/* <!-- tab-content-block-part close--> */}
                   <div className="view-history-btn">
-                    <a href="#">View all history</a>
+                    <a href="/">View all history</a>
                   </div>
                 </div>
               </div>

@@ -1,53 +1,48 @@
-import React, { useState } from "react";
-import "../../assets/css/bootstrap.min.css";
-import "../../assets/css/style.css";
-import "../../assets/css/responsive.css";
-import logo from "../../assets/images/logo-1.png";
-import { ToastContainer, toast } from "react-toastify";
-import axios from "axios";
-import { loginUrl } from "constants/urls.js";
-import { axiosInstance } from "plugin/axios.js";
+import React from "react";
+// import "../../assets/css/bootstrap.min.css";
+// import "../../assets/css/style.css";
+// import "../../assets/css/responsive.css";
 
 const Sidebar = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [error, setError] = useState("");
+  // const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    console.log("Username:", email);
-    console.log("Password:", password);
-    setError("");
-    setLoading(true);
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   console.log("Username:", email);
+  //   console.log("Password:", password);
+  //   setError("");
+  //   setLoading(true);
 
-    if (!email || !password) {
-      setError("email and password are required");
-      setLoading(false);
-      return;
-    }
-    try {
-      axiosInstance
-        .post(loginUrl, {
-          title: "Hello World!",
-          body: "This is a new post.",
-        })
-        .then((response) => {
-          console.log("response.data :>> ", response.data);
-        });
+  //   if (!email || !password) {
+  //     setError("email and password are required");
+  //     setLoading(false);
+  //     return;
+  //   }
+  //   try {
+  //     axiosInstance
+  //       .post(loginUrl, {
+  //         title: "Hello World!",
+  //         body: "This is a new post.",
+  //       })
+  //       .then((response) => {
+  //         console.log("response.data :>> ", response.data);
+  //       });
 
-      // handle successful login
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
-      setLoading(false);
-    }
-  };
+  //     // handle successful login
+  //   } catch (err) {
+  //     setError("Something went wrong. Please try again.");
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div className="dashboard-link-wrap">
       <ul className="dashboard-main-links">
         <li className="active">
-          <a href="#">
+          <a href="/">
             <svg
               width="19"
               height="20"
@@ -65,7 +60,7 @@ const Sidebar = () => {
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/">
             <svg
               width="19"
               height="19"
@@ -94,7 +89,7 @@ const Sidebar = () => {
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/">
             <svg
               width="22"
               height="23"
@@ -128,7 +123,7 @@ const Sidebar = () => {
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/">
             <svg
               width="21"
               height="21"
@@ -153,7 +148,7 @@ const Sidebar = () => {
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/">
             <svg
               width="21"
               height="20"
@@ -196,7 +191,7 @@ const Sidebar = () => {
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/">
             <svg
               width="18"
               height="19"
@@ -227,7 +222,7 @@ const Sidebar = () => {
       </ul>
       <ul className="dashboard-bottom-links">
         <li>
-          <a href="#">
+          <a href="/">
             <svg
               width="24"
               height="20"
@@ -261,7 +256,7 @@ const Sidebar = () => {
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/">
             <svg
               width="18"
               height="19"
@@ -278,7 +273,7 @@ const Sidebar = () => {
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/">
             <svg
               width="20"
               height="19"

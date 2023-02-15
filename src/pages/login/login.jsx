@@ -1,108 +1,116 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import "../../assets/css/bootstrap.min.css";
-// import "../../assets/css/style.css";
-// import "../../assets/css/responsive.css";
-import logo from "../../assets/images/logo-1.png";
-import { ToastContainer, toast } from "react-toastify";
 import { loginApi } from "apiService/auth.js";
-import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "shared/cookies";
-import * as userAction from "store/actions/userAction";
+import Input from "components/ui/Input";
+import { useFormik } from "formik";
+import { LoginSchema } from "schemas/validationSchema";
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const token = getCookie("auth._token.Bearer");
+
   useEffect(() => {
-    if (token) {
-      navigate("/");
-    }
-  }, [token]);
+    const token = getCookie("auth._token.Bearer");
+    if (token) navigate("/");
+  }, [navigate]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    console.log("Username:", email);
-    console.log("Password:", password);
-    setError("");
-    setLoading(true);
-
-    if (!email || !password) {
-      setError("email and password are required");
-      setLoading(false);
-      return;
-    }
-    let payload = {
-      email,
-      password,
-    };
-    // make api call here
-    let response = await loginApi(payload);
-    console.log("login response :>> ", response.data.success);
-    if (response.data.success) {
-      navigate("/");
-    } else {
-      setError("Given credentials are invalid.");
-    }
-  };
+  const formik = useFormik({
+    initialValues: {
+      user_name: "",
+      password: "",
+    },
+    validationSchema: LoginSchema,
+    onSubmit: async (values, { resetForm, setStatus }) => {
+      try {
+        const { data } = await loginApi(values);
+        if (!data.success || data.data === null) throw data.message;
+        console.log(data);
+        navigate("/");
+      } catch (error) {
+        resetForm();
+        console.log(error);
+      }
+    },
+  });
 
   return (
-    <div className="login-signup common-body-bg">
+    <div className="login-signup login-signup-main common-body-bg">
       <div className="container">
         <div className="row">
           <div className="col-xs-12">
             <div className="login-signup-content-wrap">
-              <h4 className="text-center">Welcome to</h4>
-              <div className="login-logo-image text-center">
-                <a href="#">
-                  <img src={logo} alt="login logo image" />
-                </a>
+              <div className="login-signup-inner">
+                <h4 className="text-center">Welcome to</h4>
+                <div className="login-logo-image text-center">
+                  <a href="/">
+                    <img src="/assets/images/logo-1.png" alt="login logo img" />
+                  </a>
+                </div>
+                <h5 className="text-center">Login</h5>
+                <form onSubmit={formik.handleSubmit}>
+                  <div className="form-field">
+                    <Input
+                      type="text"
+                      className="form-control"
+                      placeholder="Email or Phone"
+                      name="user_name"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.user_name}
+                      error={
+                        formik.touched.user_name && formik.errors.user_name
+                      }
+                    />
+                  </div>
+                  <div className="form-field">
+                    <Input
+                      type="password"
+                      className="form-control w-100"
+                      placeholder="Password"
+                      name="password"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.password}
+                      error={formik.touched.password && formik.errors.password}
+                    />
+                  </div>
+                  <p className="forgot-password-text text-center">
+                    <a href="/">Forgot Password?</a>
+                  </p>
+                  <div className="text-center login-btn">
+                    <input
+                      type="submit"
+                      className={`btn btn-primary ${
+                        formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                      }`}
+                      disabled={formik.isSubmitting}
+                      value="LogIn"
+                    />
+                  </div>
+                  <p className="sign-up-text text-center">
+                    Don't have an account ? <a href="/signup">Signup</a>
+                  </p>
+                </form>
               </div>
-              <h5 className="text-center">Login</h5>
-              <form onSubmit={handleSubmit}>
-                <div className="form-field">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="email"
-                    placeholder="Email or Phone"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+              <div className="login-other-option">
+                <div className="login-other-text">
+                  <span>OR</span>
                 </div>
-                <div className="form-field">
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                <div className="login-signup-inner login-with-opt-wrap">
+                  <a className="btn btn-primary blue-bg" href="/login-with-otp">
+                    Login with OTP
+                  </a>
+                  <p className="sign-up-text text-center">
+                    Don't have an account ? <a href="/signup">Signup</a>
+                  </p>
                 </div>
-                <p className="forgot-password-text text-center">
-                  <a href="#">Forgot Password?</a>
-                </p>
-                <p className="text-danger text-center">{error}</p>
-                <div className="text-center login-btn">
-                  <input
-                    type="submit"
-                    className="btn btn-primary"
-                    value="LogIn"
-                  />
-                </div>
-                <p className="sign-up-text text-center">
-                  Don't have an account ? <a href="#">Signup</a>
-                </p>
-              </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/bootstrap.esm.min.js"></script>
     </div>
   );
 };

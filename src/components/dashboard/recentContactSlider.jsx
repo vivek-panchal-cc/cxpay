@@ -1,14 +1,12 @@
 import React from "react";
-import recentContactImg01 from "assets/images/recent-contact-img01.png";
-import recentContactImg02 from "assets/images/recent-contact-img02.png";
 
 export default function recentContactSlider() {
   const options = [
-    { name: "Contact Name 01", img: recentContactImg01 },
-    { name: "Contact Name 02", img: recentContactImg02 },
-    { name: "Contact Name 03", img: recentContactImg01 },
-    { name: "Contact Name 04", img: recentContactImg02 },
-    { name: "Contact Name 05", img: recentContactImg01 },
+    { name: "Contact Name 01", img: "/assets/images/recent-contact-img01.png" },
+    { name: "Contact Name 02", img: "/assets/images/recent-contact-img02.png" },
+    { name: "Contact Name 03", img: "/assets/images/recent-contact-img01.png" },
+    { name: "Contact Name 04", img: "/assets/images/recent-contact-img02.png" },
+    { name: "Contact Name 05", img: "/assets/images/recent-contact-img01.png" },
   ];
   return (
     <div className="recent-contact-slider">
@@ -18,7 +16,7 @@ export default function recentContactSlider() {
           {/* <!-- Slides --> */}
           {options.map((option) => (
             <div key={option.name} className="swiper-slide">
-              <img src={option.img} alt="contact 2 image" />
+              <img src={option.img} alt="contact 2 img" />
               <div className="contact-name">{option.name}</div>
             </div>
           ))}

@@ -1,16 +1,52 @@
+@import url("./styles/css/style.css");
+@import url("./styles/css/responsive.css");
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 #root {
   height: 100vh;
+}
+
+.cursor-auto {
+  pointer-events: visible !important;
+  cursor: auto !important;
+}
+.cursor-default {
+  pointer-events: visible !important;
+  cursor: default !important;
+}
+.cursor-pointer {
+  pointer-events: visible !important;
+  cursor: pointer !important;
+}
+.cursor-wait {
+  pointer-events: visible !important;
+  cursor: wait !important;
+}
+.cursor-text {
+  pointer-events: visible !important;
+  cursor: text !important;
+}
+.cursor-move {
+  pointer-events: visible !important;
+  cursor: move !important;
+}
+.cursor-help {
+  pointer-events: visible !important;
+  cursor: help !important;
+}
+.cursor-not-allowed {
+  pointer-events: visible !important;
+  cursor: not-allowed !important;
 }

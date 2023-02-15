@@ -1,0 +1,14 @@
+.modal {
+  animation-name: modal_open;
+  animation-duration: 0.15s;
+  animation-timing-function: linear;
+}
+
+@keyframes modal_open {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

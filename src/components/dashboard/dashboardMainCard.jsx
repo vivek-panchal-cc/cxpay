@@ -1,22 +1,15 @@
-import React, { useState } from "react";
-import "../../assets/css/bootstrap.min.css";
-import "../../assets/css/style.css";
-import "../../assets/css/responsive.css";
-import logo from "../../assets/images/logo-1.png";
-import { ToastContainer, toast } from "react-toastify";
-import axios from "axios"
-import { loginUrl } from 'constants/urls.js';
-import { axiosInstance } from 'plugin/axios.js';
+import React from "react";
+// import "../../assets/css/bootstrap.min.css";
+// import "../../assets/css/style.css";
+// import "../../assets/css/responsive.css";
 
 const dashboardMainCard = () => {
-
-
   return (
     <div className="dashboard-card-sec">
       <div className="title-content-wrap">
         <h3>Hi, Digicel</h3>
         <p>
-          8 Cards <a href="#">+ Add Card</a>
+          8 Cards <a href="/">+ Add Card</a>
         </p>
       </div>
       <div className="card-slider">
@@ -25,28 +18,28 @@ const dashboardMainCard = () => {
           <div className="swiper-wrapper">
             {/* <!-- Slides --> */}
             <div className="swiper-slide">
-              <img src="images/card-5.png" alt="card 5 image" />
+              <img src="/assets/images/card-5.png" alt="card 5 img" />
             </div>
             <div className="swiper-slide">
-              <img src="images/card-6.png" alt="card 6 image" />
+              <img src="/assets/images/card-6.png" alt="card 6 img" />
             </div>
             <div className="swiper-slide">
-              <img src="images/card-5.png" alt="card 7 image" />
+              <img src="/assets/images/card-5.png" alt="card 7 img" />
             </div>
             <div className="swiper-slide">
-              <img src="images/card-6.png" alt="card 8 image" />
+              <img src="/assets/images/card-6.png" alt="card 8 img" />
             </div>
             <div className="swiper-slide">
-              <img src="images/card-5.png" alt="card 1 image" />
+              <img src="/assets/images/card-5.png" alt="card 1 img" />
             </div>
             <div className="swiper-slide">
-              <img src="images/card-6.png" alt="card 2 image" />
+              <img src="/assets/images/card-6.png" alt="card 2 img" />
             </div>
             <div className="swiper-slide">
-              <img src="images/card-5.png" alt="card 3 image" />
+              <img src="/assets/images/card-5.png" alt="card 3 img" />
             </div>
             <div className="swiper-slide">
-              <img src="images/card-6.png" alt="card 4 image" />
+              <img src="/assets/images/card-6.png" alt="card 4 img" />
             </div>
           </div>
           {/*  <!-- If we need pagination --> */}
