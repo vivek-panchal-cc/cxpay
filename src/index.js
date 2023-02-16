@@ -3,18 +3,22 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { Provider } from "react-redux";
 import { store } from "app/store";
+// CSS
 import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/js/bootstrap";
 import "react-toastify/dist/ReactToastify.css";
+import "swiper/css";
 import "./index.css";
-// import "./styles/css/style.css";
-// import "./styles/css/responsive.css";
+// JAVASCRIPTS
+import "bootstrap/dist/js/bootstrap";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </React.StrictMode>
   </Provider>
 );
