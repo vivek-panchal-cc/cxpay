@@ -1,15 +1,26 @@
-import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+// Pages
 import Login from "./pages/login/Login.jsx";
 import Signup from "./pages/signup/Singup.jsx";
 import Dashboard from "./pages/dashboard/Dashboard.jsx";
-import PrivateRoute from "routes/PrivateRoute.jsx";
 import LoginWithOtp from "pages/loginWithOtp/LoginWithOtp.jsx";
+// Layouts
+import DashboardLayout from "layouts/dashboard/DashboardLayout";
+import PrivateRoute from "routes/PrivateRoute.jsx";
 import { ToastContainer } from "react-toastify";
 
 function App() {
+  const location = useLocation();
+  useEffect(() => {
+    async function loadData() {
+      await import(`./styles/js/custom`);
+    }
+    loadData();
+  }, [location]);
+
   return (
-    <BrowserRouter>
+    <>
       <Routes>
         {/* <Route path="/dashboard" element={ <Dashboard />} /> */}
         <Route path="/login" element={<Login />} />
@@ -17,14 +28,19 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         {/* List of Private Routes */}
         <Route element={<PrivateRoute />}>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<DashboardLayout />}>
+            <Route
+              path="/dashboard"
+              element={<> Welcome to the Dashboard </>}
+            />
+          </Route>
           <Route path="/private" element={<> Accessible after login! </>} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       {/* Toast Container */}
       <ToastContainer position="bottom-left" autoClose={3000} />
-    </BrowserRouter>
+    </>
   );
 }
 

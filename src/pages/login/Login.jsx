@@ -11,7 +11,6 @@ const Login = () => {
 
   useEffect(() => {
     const token = getCookie("auth._token.Bearer");
-    if (token) navigate("/");
   }, [navigate]);
 
   const formik = useFormik({
@@ -25,7 +24,8 @@ const Login = () => {
         const { data } = await loginApi(values);
         if (!data.success || data.data === null) throw data.message;
         console.log(data);
-        navigate("/");
+        // navigate("/");
+        document.location.href = "/";
       } catch (error) {
         resetForm();
         console.log(error);
