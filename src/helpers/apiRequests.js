@@ -17,6 +17,7 @@ const API_verifyForgotPasswordOtp =
   process.env.REACT_APP_VERIFY_FORGOT_PASSWORD_OTP;
 const API_updateForgotPassword =
   process.env.REACT_APP_UPDATE_FORGOT_PASSWORD_OTP;
+const API_linkBank = process.env.REACT_APP_ADD_BANK;
 
 // POST @login API
 // @params user_name, password
@@ -98,6 +99,11 @@ export const verifyForgotPasswordOtp = (params) => {
 export const updateForgotPassword = (params) => {
   return axiosInstance.post(`${API_URL}${API_updateForgotPassword}`, params);
 };
+// POST @add-bank API
+// @params bank_number,account_number,routing_number,account_type
+export const linkBank = (params) => {
+  return axiosInstance.post(`${API_URL}${API_linkBank}`, params);
+};
 
 export const apiRequest = {
   login,
@@ -113,4 +119,5 @@ export const apiRequest = {
   generateForgotPasswordOtpChange,
   verifyForgotPasswordOtp,
   updateForgotPassword,
+  linkBank,
 };

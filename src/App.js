@@ -13,6 +13,8 @@ import LoginWithOtp from "pages/login-with-otp/LoginWithOtp";
 import ChangePassword from "pages/change-password/ChangePassword";
 import ForgotPassword from "pages/forgot-password/ForgotPassword";
 import ResetPassword from "pages/reset-password/ResetPassword";
+import LinkBank from "pages/linkBank/LinkBank";
+import Contacts from "pages/contacts/Contacts";
 
 function App() {
   const location = useLocation();
@@ -40,6 +42,8 @@ function App() {
           <Route path="/" element={<DashboardLayout />}>
             <Route path="/dashboard" element={<> Welcome, Dashboard </>} />
             <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/link-bank" element={<LinkBank />} />
+            <Route path="/contacts" element={<Contacts />} />
             <Route path="/setting" element={<Setting />} />
             <Route path="/setting/notification" element={<></>} />
             <Route path="/setting/profile" element={<></>} />
