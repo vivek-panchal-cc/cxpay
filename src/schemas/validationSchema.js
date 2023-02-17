@@ -63,6 +63,22 @@ const verifyLoginOtpSchema = yup.object().shape({
     .required("OTP is required"),
 });
 
+const editProfileSchema = yup.object().shape({
+  company_name: yup.string().required("required*"),
+  user_type: yup.string().required(),
+  email: emailSchema,
+  //profile_image: profileImageSchema,
+  // mobile_number: yup.string().required("Mobile number is required"),
+});
+
+const editProfilePersonalUserSchema = yup.object().shape({
+  first_name: yup.string().required("required*"),
+  last_name: yup.string().required("required*"),
+  user_type: yup.string().required(),
+  email: emailSchema,
+  //profile_image: profileImageSchema,
+  // mobile_number: yup.string().required("Mobile number is required"),
+});
 export {
   LoginSchema,
   enterPhoneSchema,
@@ -70,4 +86,6 @@ export {
   signUpPersonalAccountSchema,
   signUpBusinessAccountSchema,
   verifyLoginOtpSchema,
+  editProfileSchema,
+  editProfilePersonalUserSchema,
 };

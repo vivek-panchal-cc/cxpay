@@ -8,6 +8,7 @@ const API_getProfile = process.env.REACT_APP_GET_PROFILE;
 const API_loginOtp = process.env.REACT_APP_LOGIN_OTP;
 const API_verifyLoginOtp = process.env.REACT_APP_LOGIN_OTP_VERIFY;
 const API_registerUser = process.env.REACT_APP_REGISTER_USER;
+const API_updateUser = process.env.REACT_APP_UPDATE_USER;
 
 // POST @login API
 // @params user_name, password
@@ -29,8 +30,8 @@ export const verifyRegisterOtp = (params) => {
 
 // GET @get-profile API
 // @params auth_token
-export const getUserProfile = () => {
-  return axiosInstance.get(`${API_URL}${API_getProfile}`);
+export const getUserProfile = (params) => {
+  return axiosInstance.post(`${API_URL}${API_getProfile}`, params);
 };
 
 // POST @login-otp API
@@ -52,6 +53,12 @@ export const registerUser = (params) => {
   return axiosInstance.post(`${API_URL}${API_registerUser}`, params);
 };
 
+// POST @update-user API
+// @params account_number , user_type , company_name,first_name,last_name,city,country,profile_image
+export const updateUser = (params) => {
+  return axiosInstance.post(`${API_URL}${API_updateUser}`, params);
+};
+
 export const apiRequest = {
   loginUser,
   loginOtp,
@@ -60,4 +67,5 @@ export const apiRequest = {
   verifyRegisterOtp,
   verifyLoginOtp,
   registerUser,
+  updateUser,
 };

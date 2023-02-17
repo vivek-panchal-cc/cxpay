@@ -1,8 +1,18 @@
 import LeftSidebar from "components/sidebar/LeftSidebar";
+import { fetchUserProfile } from "features/user/userProfileSlice";
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 
 function DashboardLayout() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    (async () => {
+      await dispatch(fetchUserProfile());
+    })();
+  }, []);
+
   return (
     <div className="dashboard-page wallet-page">
       <div className="container-fluid">

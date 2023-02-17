@@ -9,6 +9,7 @@ import LoginWithOtp from "pages/loginWithOtp/LoginWithOtp.jsx";
 import DashboardLayout from "layouts/dashboard/DashboardLayout";
 import PrivateRoute from "routes/PrivateRoute.jsx";
 import { ToastContainer } from "react-toastify";
+import EditProfile from "pages/editProfile/EditProfile.jsx";
 
 function App() {
   const location = useLocation();
@@ -26,9 +27,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/login-with-otp" element={<LoginWithOtp />} />
         <Route path="/signup" element={<Signup />} />
+
         {/* List of Private Routes */}
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<DashboardLayout />}>
+            <Route path="/edit-profile" element={<EditProfile />} />
             <Route
               path="/dashboard"
               element={<> Welcome to the Dashboard </>}
