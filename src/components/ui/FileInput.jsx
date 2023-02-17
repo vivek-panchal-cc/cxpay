@@ -7,6 +7,7 @@ function FileInput(props) {
     name,
     onChange,
     error,
+
     showPreview,
     showLabel,
     labelText = "Select file",
