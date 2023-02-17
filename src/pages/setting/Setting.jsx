@@ -31,7 +31,7 @@ const settingsRedirects = [
     icon: <IconProfile />,
     title: "Profile",
     link: (
-      <Link to={"/setting/profile"} className="setting-details-links">
+      <Link to={"/setting/edit-profile"} className="setting-details-links">
         <IconRightArrow />
       </Link>
     ),

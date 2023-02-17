@@ -12,7 +12,6 @@ const Login = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("TIMES");
     const token = storageRequest.getAuth();
     if (token) navigate("/");
   }, []);

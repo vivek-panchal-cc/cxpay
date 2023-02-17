@@ -23,7 +23,6 @@ function VerifyLoginOtp(props) {
     },
     validationSchema: verifyLoginOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
-      console.log(values);
       try {
         const { data } = await apiRequest.verifyLoginOtp(values);
         if (!data.success || data.data === null) throw data.message;
