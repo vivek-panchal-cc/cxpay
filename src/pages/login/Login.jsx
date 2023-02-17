@@ -1,17 +1,21 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginApi } from "apiService/auth.js";
-import { getCookie } from "shared/cookies";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { LoginSchema } from "schemas/validationSchema";
+import { useDispatch } from "react-redux";
+import { fetchLogin } from "features/user/userProfileSlice";
+import { storageRequest } from "helpers/storageRequests";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = getCookie("auth._token.Bearer");
-  }, [navigate]);
+    console.log("TIMES");
+    const token = storageRequest.getAuth();
+    if (token) navigate("/");
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -21,11 +25,7 @@ const Login = () => {
     validationSchema: LoginSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
-        const { data } = await loginApi(values);
-        if (!data.success || data.data === null) throw data.message;
-        console.log(data);
-        // navigate("/");
-        document.location.href = "/";
+        await dispatch(fetchLogin(values));
       } catch (error) {
         resetForm();
         console.log(error);
@@ -75,7 +75,7 @@ const Login = () => {
                     />
                   </div>
                   <p className="forgot-password-text text-center">
-                    <a href="/">Forgot Password?</a>
+                    <a href="/forgot-password">Forgot Password?</a>
                   </p>
                   <div className="text-center login-btn">
                     <input

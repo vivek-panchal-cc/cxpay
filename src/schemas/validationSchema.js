@@ -63,6 +63,16 @@ const verifyLoginOtpSchema = yup.object().shape({
     .required("OTP is required"),
 });
 
+const forgotPasswordSchema = yup.object().shape({
+  email: emailSchema,
+  mobile_number: yup.string().required("required*"),
+});
+
+const resetPasswordSchema = yup.object().shape({
+  password: passwordSchema,
+  confirm_password: confirmPasswordSchema,
+});
+
 export {
   LoginSchema,
   enterPhoneSchema,
@@ -70,4 +80,6 @@ export {
   signUpPersonalAccountSchema,
   signUpBusinessAccountSchema,
   verifyLoginOtpSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
 };

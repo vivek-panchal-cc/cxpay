@@ -1,16 +1,19 @@
 import React from "react";
 
 function Input(props) {
-  const { labelname, error } = props;
+  const { labelname, error, disabled } = props;
 
   return (
-    <div className="d-flex flex-column form-field">
+    <div className={`d-flex flex-column form-field`}>
       {labelname && (
         <label htmlFor="" className="mb-2">
           {labelname}
         </label>
       )}
-      <input {...props} />
+      <input
+        {...props}
+        className={`${props.className} ${disabled ? "cursor-not-allowed" : ""}`}
+      />
       <p className="text-danger ps-2">{error}</p>
     </div>
   );

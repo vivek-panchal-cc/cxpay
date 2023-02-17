@@ -1,23 +1,27 @@
 import React from "react";
 import OtpInput from "components/ui/OtpInput";
 import { useFormik } from "formik";
-import { verifyOtpSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
+import { useNavigate } from "react-router-dom";
+import { verifyOtpSchema } from "schemas/validationSchema";
 
-function VerifyPhone(props) {
-  const { signUpCreds, setSignUpCreds } = props;
+function VerifyOtp(props) {
+  const { mobile_number } = props.values;
+
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      mobile_number: signUpCreds.mobile_number,
+      mobile_number: mobile_number,
       user_otp: "",
     },
     validationSchema: verifyOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
-        const { data } = await apiRequest.verifyRegisterOtp(values);
+        const { data } = await apiRequest.verifyForgotPasswordOtp(values);
         if (!data.success || data.data === null) throw data.message;
-        setSignUpCreds((cs) => ({ ...cs, user_otp: values.user_otp, step: 1 }));
+        if (data.data.mobile_number)
+          navigate(`/reset-password/${data.data.mobile_number}/${"token"}`);
       } catch (error) {
         resetForm();
         setStatus(error);
@@ -63,4 +67,4 @@ function VerifyPhone(props) {
   );
 }
 
-export default VerifyPhone;
+export default VerifyOtp;

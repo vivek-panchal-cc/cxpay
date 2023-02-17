@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-// Pages
-import Login from "./pages/login/Login.jsx";
-import Signup from "./pages/signup/Singup.jsx";
-import Dashboard from "./pages/dashboard/Dashboard.jsx";
-import LoginWithOtp from "pages/loginWithOtp/LoginWithOtp.jsx";
 // Layouts
 import DashboardLayout from "layouts/dashboard/DashboardLayout";
 import PrivateRoute from "routes/PrivateRoute.jsx";
 import { ToastContainer } from "react-toastify";
+// Pages
+import Login from "pages/login/Login.jsx";
+import Signup from "pages/signup/Singup.jsx";
+import Setting from "pages/setting/Setting.jsx";
+import LoginWithOtp from "pages/login-with-otp/LoginWithOtp";
+import ChangePassword from "pages/change-password/ChangePassword";
+import ForgotPassword from "pages/forgot-password/ForgotPassword";
+import ResetPassword from "pages/reset-password/ResetPassword";
 
 function App() {
   const location = useLocation();
@@ -26,13 +29,23 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/login-with-otp" element={<LoginWithOtp />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route
+          path="/reset-password/:mobile/:token"
+          element={<ResetPassword />}
+        />
         {/* List of Private Routes */}
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<DashboardLayout />}>
+            <Route path="/dashboard" element={<> Welcome, Dashboard </>} />
+            <Route path="/setting" element={<Setting />} />
+            <Route path="/setting/notification" element={<></>} />
+            <Route path="/setting/profile" element={<></>} />
             <Route
-              path="/dashboard"
-              element={<> Welcome to the Dashboard </>}
+              path="/setting/change-password"
+              element={<ChangePassword />}
             />
+            <Route path="/setting/business-info" element={<></>} />
           </Route>
           <Route path="/private" element={<> Accessible after login! </>} />
         </Route>

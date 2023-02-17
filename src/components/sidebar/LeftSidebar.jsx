@@ -1,7 +1,18 @@
+import { fetchLogout } from "features/user/userProfileSlice";
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+// import { deleteCookie } from "shared/cookies";
 
 function LeftSidebar() {
+  const dispatch = useDispatch();
+
+  // this function should be in a common folder
+  const handleLogout = async (event) => {
+    event.preventDefault();
+    await dispatch(fetchLogout());
+  };
+
   return (
     <div className="dashboard-left-wrap">
       <span className="toggle-admin-btn">
@@ -235,7 +246,7 @@ function LeftSidebar() {
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/setting">
               <svg
                 width="18"
                 height="19"
@@ -252,7 +263,7 @@ function LeftSidebar() {
             </a>
           </li>
           <li>
-            <a href="#">
+            <a className="" onClick={handleLogout}>
               <svg
                 width="20"
                 height="19"

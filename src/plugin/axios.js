@@ -2,6 +2,7 @@ import axios from "axios";
 import { loginUrl } from "constants/urls.js";
 import { getCookie } from "shared/cookies";
 import { refreshTokenApi } from "apiService/auth";
+import { storageRequest } from "helpers/storageRequests";
 
 // define API_URL and APP ID in env file
 export const axiosInstance = axios.create({
@@ -11,11 +12,12 @@ export const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = getCookie("auth._token.Bearer");
-  const BearerToken = token ? token : null;
-  config.headers.Authorization = `Bearer ${BearerToken}`;
-  config.headers.appid =
-    process.env.APP_ID || "12e14140-73b5-4e4f-9949-ce5bb1769429";
+  const token = storageRequest.getAuth();
+  if (token !== undefined) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  // const accountNumber = getCookie("auth._account_number");
+  // if (accountNumber) config.headers.accountnumber = accountNumber;
   return config;
 });
 
