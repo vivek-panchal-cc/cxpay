@@ -1,8 +1,8 @@
-import LeftSidebar from "components/sidebar/LeftSidebar";
-import { fetchUserProfile } from "features/user/userProfileSlice";
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import LeftSidebar from "components/sidebar/LeftSidebar";
 import { Outlet } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserProfile } from "features/user/userProfileSlice";
 
 function DashboardLayout() {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ function DashboardLayout() {
     (async () => {
       await dispatch(fetchUserProfile());
     })();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="dashboard-page wallet-page">
@@ -20,7 +20,7 @@ function DashboardLayout() {
           <div className="col-xs-12 col-lg-3 dashboard-left-sec">
             <LeftSidebar />
           </div>
-          <div className="col-xs-12 col-lg-9 dashboard-right-sec dashaboard-main-sec">
+          <div className="col-xs-12 col-lg-9 dashboard-right-sec">
             <Outlet />
           </div>
         </div>

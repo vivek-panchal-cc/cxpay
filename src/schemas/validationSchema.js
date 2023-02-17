@@ -79,6 +79,16 @@ const editProfilePersonalUserSchema = yup.object().shape({
   //profile_image: profileImageSchema,
   // mobile_number: yup.string().required("Mobile number is required"),
 });
+const forgotPasswordSchema = yup.object().shape({
+  email: emailSchema,
+  mobile_number: yup.string().required("required*"),
+});
+
+const resetPasswordSchema = yup.object().shape({
+  password: passwordSchema,
+  confirm_password: confirmPasswordSchema,
+});
+
 export {
   LoginSchema,
   enterPhoneSchema,
@@ -88,4 +98,6 @@ export {
   verifyLoginOtpSchema,
   editProfileSchema,
   editProfilePersonalUserSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
 };

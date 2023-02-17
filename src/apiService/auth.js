@@ -12,16 +12,12 @@ export const loginApi = async (payload) => {
   try {
     let response = await axiosInstance.post(loginUrl, payload);
     if (response.data?.data?.token) {
-      document.cookie =
-        "auth._token.Bearer=" +
-        response.data?.data?.token +
-        "; expires=" +
-        now.toGMTString() +
-        "; path=/";
-      localStorage.setItem(
-        "account_number",
+      document.cookie = `auth._token.Bearer=${
+        response.data?.data?.token
+      };expires=${now.toGMTString()};path=/`;
+      document.cookie = `auth._account_number=${
         response.data?.data?.account_number
-      );
+      };expires=${now.toGMTString()};path=/`;
     }
     return response;
   } catch (err) {
