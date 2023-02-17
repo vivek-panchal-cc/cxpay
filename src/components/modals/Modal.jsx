@@ -8,7 +8,6 @@ function Modal(props) {
   useEffect(() => {
     function handleclickOutside(event) {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        console.log("outside");
         setShow(false);
       }
     }

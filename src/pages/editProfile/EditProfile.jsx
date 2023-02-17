@@ -5,7 +5,8 @@ import PersonalForm from "./components/PersonalForm";
 
 const EditProfile = () => {
   const { profile } = useSelector((state) => state.userProfile);
-  const { user_type = "personal" } = profile;
+  const { user_type = "business" } = profile || {};
+
   const getCurrentStepComponent = () => {
     switch (user_type) {
       case "business":

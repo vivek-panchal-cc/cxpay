@@ -39,10 +39,9 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<DashboardLayout />}>
             <Route path="/dashboard" element={<> Welcome, Dashboard </>} />
-            <Route path="/edit-profile" element={<EditProfile />} />
             <Route path="/setting" element={<Setting />} />
+            <Route path="/setting/edit-profile" element={<EditProfile />} />
             <Route path="/setting/notification" element={<></>} />
-            <Route path="/setting/profile" element={<></>} />
             <Route
               path="/setting/change-password"
               element={<ChangePassword />}

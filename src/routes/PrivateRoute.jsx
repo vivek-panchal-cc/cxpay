@@ -5,7 +5,6 @@ import { getCookie } from "shared/cookies";
 
 function PrivateRoute() {
   const token = storageRequest.getAuth();
-  console.log(token === undefined);
   let isLoggedIn = false;
   if (token) isLoggedIn = true;
 

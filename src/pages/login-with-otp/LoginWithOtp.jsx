@@ -27,7 +27,6 @@ const LoginWithOtp = (props) => {
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
         const { data } = await apiRequest.loginOtp(values);
-        console.log(data);
         if (!data.success || data.data === null) throw data.message;
         setMobileNumber(values.mobile_number);
         setShowVerifyPhonePopup(true);
