@@ -183,21 +183,4 @@ $(document).ready(function () {
       minDate: 0,
     });
   });
-  /* Add class Colors of Card */
-  // $(".radio-group-wrap .radio-group-inner").click(function () {
-  //   $(this).parent().find(".radio-group-inner").removeClass("selected");
-  //   $(this).addClass("selected");
-  //   var val = $(this).attr("data-value");
-  //   $(".wallet-ac-inner").attr("bg-color", val);
-  // });
-  $(".image_upload_click").click(function () {
-    $("input[id='customize_card_ip']").click();
-  });
-  /* Saving and Current Account */
-  // $('.wallet-bank_link-form-wrap input[type="radio"]').click(function () {
-  //   var inputValue = $(this).attr("id");
-  //   var targetBox = $("#form_" + inputValue);
-  //   $(".wallet_acc_form").not(targetBox).hide();
-  //   $(targetBox).show();
-  // });
 });
