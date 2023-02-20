@@ -31,7 +31,7 @@
     padding: 20px 50px 20px;
   }
   .login-signup-content-wrap {
-    /* max-height: 95vh; */
+    max-height: 95vh;
   }
   .login-signup-content-wrap h4.blue-text {
     font-size: 21px;
@@ -44,6 +44,73 @@
   }
   .login-signup-02 .login-signup-content-wrap {
     padding: 20px 0px;
+  }
+  .dashboard-link-wrap ul li {
+    margin-bottom: 10px;
+  }
+  .dashboard-link-wrap ul li a {
+    padding: 10px 26px;
+  }
+  .wallet-page-body .settings-inner-sec .profile-info {
+    padding-bottom: 25px;
+  }
+  .contact-right-sec {
+    padding-top: 30px;
+  }
+  .con-listing-container {
+    margin-top: 35px;
+  }
+  .contact-listing-wrap {
+    margin-bottom: 35px;
+  }
+  .contact-listing-wrap li {
+    margin-bottom: 5px;
+  }
+  .wallet-link-bank-bottom {
+    padding-top: 40px;
+  }
+  .dashboard-right-sec {
+    padding-top: 30px;
+  }
+}
+@media only screen and (max-height: 768px) {
+  .add-card-right-sec,
+  .wallet_bank_link_right {
+    padding-top: 20px;
+  }
+  .add-card-right-sec .dashboard-top-sec {
+    padding-bottom: 20px;
+  }
+  .wac-details-wrap {
+    margin-bottom: 30px;
+  }
+  .add-wallet-card-form-wrap .btns-inline {
+    margin-top: 10px;
+  }
+  .wallet-total-am-wrap {
+    margin-top: 15px;
+  }
+  form .form-field .form-control,
+  .select-form-field select {
+    padding: 13px 22px !important;
+  }
+  .wallet-acc-fund-btns {
+    margin-top: 10px;
+  }
+  .wallet-fund-form-wrap .amount-total {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .wallet-page-body .settings-inner-sec .profile-info {
+    padding-bottom: 20px;
+  }
+  .wallet-fund-row-amt table td {
+    padding: 20px 20px 10px;
+  }
+}
+@media only screen and (max-height: 650px) {
+  .wallet_bank_link_right .wallet-link-bank-bottom {
+    padding-top: 80px;
   }
 }
 @media only screen and (max-width: 1366px) {
@@ -236,13 +303,47 @@
   .request-pay-footer-block {
     padding: 0 0 3px 19px !important;
   }
-}
-@media only screen and (min-width: 992px) {
-  .col-left {
-    padding-right: 10px !important;
+  .act-user-content-wrap .left-activity-div {
+    margin-right: 10px;
   }
-  .col-right {
-    padding-left: 10px !important;
+  .wallet-pg-model .modal-header h3 {
+    font-size: 25px;
+    line-height: 30px;
+  }
+  .con-list-uimg {
+    margin-right: 35px;
+  }
+  .wallet-bank_link-form-wrap .radio-wrap {
+    margin-bottom: 35px;
+    margin-top: 25px;
+  }
+  .wallet-bank_link-form-wrap .btns-inline {
+    margin-top: 20px;
+  }
+}
+@media only screen and (max-width: 1299px) {
+  .con-list-uimg {
+    margin-right: 15px;
+  }
+  .con-listing-info .con-list-uname {
+    font-size: 15px;
+  }
+  .conlist-edit-a:first-child {
+    margin-right: 10px;
+  }
+  .con-listing-edit-wrap {
+    margin-right: 25px;
+  }
+  .con-listing-btn-wrap .btn {
+    font-size: 12px;
+    line-height: 12px;
+    padding: 8px 18px;
+  }
+  .con-listing-btn-wrap .btn:first-child {
+    margin-right: 0px;
+  }
+  .contact-top-btn-nav .con-btn-wrap {
+    padding-right: 10px;
   }
 }
 @media only screen and (max-width: 1199px) {
@@ -574,8 +675,65 @@
     font-size: 24px;
     line-height: 20px;
   }
+  .act-user-content-wrap .user-thumb-name img {
+    margin-right: 15px;
+  }
+  .act-user-content-wrap li div,
+  .act-user-content-wrap .seleted-value,
+  .act-user-content-wrap .user-thumb-name span {
+    font-size: 12px;
+    line-height: 20px;
+  }
+  .act-user-content-wrap .left-activity-div {
+    margin-right: 0px;
+  }
+  .act-spec-add {
+    max-width: 215px;
+  }
+  .act-user-content-wrap .left-activity-div {
+    margin-right: 0px;
+  }
+  .con-list-uimg {
+    margin-right: 15px;
+  }
+  .contact-top-btn-nav .con-btn-wrap .btn img {
+    margin-right: 8px;
+    max-width: 20px;
+  }
+  .contact-top-btn-nav {
+    max-width: 530px;
+    padding-left: 20px;
+  }
+  .contact-serch-main {
+    width: calc(100% - 530px);
+  }
+  .contact-listing-wrap > li > div {
+    margin-right: 15px;
+  }
+  .contact-listing-wrap > li > div:last-child {
+    margin-right: 0px;
+  }
 }
-
+@media only screen and (max-width: 1024px) {
+  .contact-top-search-sec {
+    display: block !important;
+  }
+  .contact-serch-main {
+    margin-bottom: 20px;
+    width: 80% !important;
+  }
+  .contact-top-btn-nav {
+    padding-left: 0px;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .col-left {
+    padding-right: 10px !important;
+  }
+  .col-right {
+    padding-left: 10px !important;
+  }
+}
 @media only screen and (max-width: 991px) {
   .logo-image img {
     max-width: 250px;
@@ -586,8 +744,8 @@
     padding: 38px 0 40px;
   }
   .login-signup-content-wrap {
-    /* max-height: 85vh; */
-    /* overflow-y: auto; */
+    max-height: 85vh;
+    overflow-y: auto;
   }
   .login-signup-content-wrap h4.blue-text {
     margin-bottom: 45px;
@@ -762,7 +920,8 @@
   }
   .search-field .search-btn {
     left: 15px;
-    top: 12px;
+    top: 50%;
+    transform: translateY(-50%);
   }
   .graph-title-content-wrap h2 {
     font-size: 20px;
@@ -1015,6 +1174,13 @@
   .send-request-money-modal-content {
     padding: 45px 28px 40px;
   }
+  .contact-top-btn-nav .con-btn-wrap .btn img {
+    margin-right: 5px;
+  }
+  .contact-top-btn-nav .btn {
+    padding: 7px 9px;
+    font-size: 13px;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -1028,8 +1194,8 @@
   }
   .login-signup-content-wrap {
     padding: 25px 20px 30px;
-    /* overflow-y: auto; */
-    /* max-height: 90vh; */
+    overflow-y: auto;
+    max-height: 90vh;
   }
   .login-signup-content-wrap h4 {
     margin-bottom: 15px;
