@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { linkBankSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const LinkBank = (props) => {
   // const [accountType, setAccountType] = useState("current");
@@ -17,7 +17,7 @@ const LinkBank = (props) => {
   const formik = useFormik({
     initialValues: {
       bank_number: "",
-      account_type: "",
+      account_type: "current",
       routing_number: "",
     },
     validationSchema: linkBankSchema,
@@ -200,6 +200,8 @@ const LinkBank = (props) => {
                   name="account_type"
                   value={"savings"}
                   onChange={formik.handleChange}
+                  // checked={formik.values.account_type === "savings"}
+                  // defaultChecked
                 />
                 <label className="form-check-label" htmlFor="saving_acc_op">
                   Savings
@@ -213,6 +215,8 @@ const LinkBank = (props) => {
                   name="account_type"
                   value={"current"}
                   onChange={formik.handleChange}
+                  // checked={formik.values.account_type === "savings"}
+                  defaultChecked
                 />
                 <label className="form-check-label" htmlFor="current_acc_op">
                   Current
