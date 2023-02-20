@@ -13,6 +13,7 @@ import LoginWithOtp from "pages/login-with-otp/LoginWithOtp";
 import ChangePassword from "pages/change-password/ChangePassword";
 import ForgotPassword from "pages/forgot-password/ForgotPassword";
 import ResetPassword from "pages/reset-password/ResetPassword";
+import AddCard from "pages/add-card/AddCard";
 
 function App() {
   const location = useLocation();
@@ -39,6 +40,7 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<DashboardLayout />}>
             <Route path="/dashboard" element={<> Welcome, Dashboard </>} />
+            {/* settings */}
             <Route path="/setting" element={<Setting />} />
             <Route path="/setting/edit-profile" element={<EditProfile />} />
             <Route path="/setting/notification" element={<></>} />
@@ -47,6 +49,9 @@ function App() {
               element={<ChangePassword />}
             />
             <Route path="/setting/business-info" element={<></>} />
+            {/* wallet */}
+            <Route path="/wallet" element={<>This is wallet</>} />
+            <Route path="/wallet/add-card" element={<AddCard />} />
           </Route>
           <Route path="/private" element={<> Accessible after login! </>} />
         </Route>

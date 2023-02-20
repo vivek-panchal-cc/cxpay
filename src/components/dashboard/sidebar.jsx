@@ -148,7 +148,7 @@ const Sidebar = () => {
           </a>
         </li>
         <li>
-          <a href="/">
+          <a href="/wallet">
             <svg
               width="21"
               height="20"

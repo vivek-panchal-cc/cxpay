@@ -138,7 +138,7 @@ function LeftSidebar() {
             </a>
           </li>
           <li>
-            <a href="#">
+            <Link to={"/wallet"}>
               <svg
                 width="21"
                 height="20"
@@ -178,7 +178,7 @@ function LeftSidebar() {
                 />
               </svg>
               Wallet
-            </a>
+            </Link>
           </li>
           <li>
             <a href="#">

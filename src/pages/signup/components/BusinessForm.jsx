@@ -58,7 +58,7 @@ function Businessform(props) {
                 showPreview={true}
                 showLabel={true}
                 labelText="Change Profile Picture"
-                defaultImg="/assets/images/profile-img.png"
+                fallbackSrc="/assets/images/profile-img.png"
                 classNameInput="d-none"
               />
               <h5 className="text-center">Signup</h5>
