@@ -21,11 +21,11 @@ function DashboardLayout() {
             <LeftSidebar />
           </div>
           <div className="col-xs-12 col-lg-9 dashboard-right-sec">
-            <div class="dashboard-top-sec no-search-ontop">
-              <div class="dashboard-notification-sec col-lg-5 col-12 w-100">
-                <div class="notification-user-wrap">
-                  <div class="dashboard-notification-wrap">
-                    <div class="notification-icon">
+            <div className="dashboard-top-sec no-search-ontop">
+              <div className="dashboard-notification-sec col-lg-5 col-12 w-100">
+                <div className="notification-user-wrap">
+                  <div className="dashboard-notification-wrap">
+                    <div className="notification-icon">
                       <svg
                         width="21"
                         height="22"
@@ -36,38 +36,38 @@ function DashboardLayout() {
                         <path
                           d="M17.5303 16.3801H3.80029V8.4701C3.80029 4.6801 6.87029 1.6001 10.6703 1.6001C14.4603 1.6001 17.5403 4.6701 17.5403 8.4701V16.3801H17.5303Z"
                           stroke="#969696"
-                          stroke-width="1.3"
-                          stroke-miterlimit="10"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeWidth="1.3"
+                          strokeMiterlimit="10"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         ></path>
                         <path
                           d="M1.6001 16.3801H19.7301"
                           stroke="#969696"
-                          stroke-width="1.3"
-                          stroke-miterlimit="10"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeWidth="1.3"
+                          strokeMiterlimit="10"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         ></path>
                         <path
                           d="M12.6801 18.3701C12.6801 19.4801 11.7801 20.3901 10.6601 20.3901C9.54014 20.3901 8.64014 19.4901 8.64014 18.3701"
                           stroke="#969696"
-                          stroke-width="1.3"
-                          stroke-miterlimit="10"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeWidth="1.3"
+                          strokeMiterlimit="10"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         ></path>
                       </svg>
-                      <span class="notification-count">
+                      <span className="notification-count">
                         <span></span>
                       </span>
                     </div>
                   </div>
                 </div>
-                <div class="user-profile">
-                  <div class="user-image">
-                    <div class="user-image-wrap">
-                      <span class="user-image">
+                <div className="user-profile">
+                  <div className="user-image">
+                    <div className="user-image-wrap">
+                      <span className="user-image">
                         <img
                           src="images/user-image-logged-in.png"
                           alt="user image"
@@ -87,18 +87,18 @@ function DashboardLayout() {
                             <path
                               d="M9.02072 8.55317C11.1065 8.55317 12.7973 6.86233 12.7973 4.77658C12.7973 2.69083 11.1065 1 9.02072 1C6.93498 1 5.24414 2.69083 5.24414 4.77658C5.24414 6.86233 6.93498 8.55317 9.02072 8.55317Z"
                               stroke="#363853"
-                              stroke-width="1.29114"
-                              stroke-miterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
+                              strokeWidth="1.29114"
+                              strokeMiterlimit="10"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
                             ></path>
                             <path
                               d="M15.9606 18.0001C16.6708 18.0001 17.2195 17.3115 16.9935 16.6229C15.9068 13.2551 12.7543 10.8127 9.02075 10.8127C5.28721 10.8127 2.13467 13.2551 1.04796 16.6229C0.832774 17.3007 1.37075 18.0001 2.08088 18.0001H15.9606Z"
                               stroke="#363853"
-                              stroke-width="1.29114"
-                              stroke-miterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
+                              strokeWidth="1.29114"
+                              strokeMiterlimit="10"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
                             ></path>
                           </svg>
                           Profile
@@ -133,23 +133,23 @@ function DashboardLayout() {
                             <path
                               d="M18.9485 9.61107H7.88379"
                               stroke="#363853"
-                              stroke-width="1.2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
+                              strokeWidth="1.2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
                             ></path>
                             <path
                               d="M16.2593 6.9314L18.9499 9.61096L16.2593 12.2905"
                               stroke="#363853"
-                              stroke-width="1.2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
+                              strokeWidth="1.2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
                             ></path>
                             <path
                               d="M13.9575 5.48432C13.6543 2.19459 12.4229 1 7.52509 1C0.999843 1 0.999843 3.1227 0.999843 9.5C0.999843 15.8773 0.999843 18 7.52509 18C12.4229 18 13.6543 16.8054 13.9575 13.5157"
                               stroke="#363853"
-                              stroke-width="1.2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
+                              strokeWidth="1.2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
                             ></path>
                           </svg>
                           Logout

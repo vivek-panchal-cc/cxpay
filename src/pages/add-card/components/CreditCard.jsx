@@ -1,7 +1,7 @@
 import React from "react";
 
 function CreditCard(props) {
-  const { bgcolor, bgimg } = props;
+  const { bgcolor, bgimg, cardNumber } = props;
 
   return (
     <div
@@ -13,7 +13,7 @@ function CreditCard(props) {
               background: `url(${bgimg})`,
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
-              backgroundSize: "contain",
+              backgroundSize: "cover",
             }
           : {}
       }
@@ -71,8 +71,8 @@ function CreditCard(props) {
             y2="199.38"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0.144388" stop-color="#6730DD" />
-            <stop offset="1" stop-color="#3E188E" stop-opacity="0" />
+            <stop offset="0.144388" stopColor="#6730DD" />
+            <stop offset="1" stopColor="#3E188E" stopOpacity="0" />
           </linearGradient>
           <linearGradient
             id="paint1_linear_1_2975"
@@ -82,8 +82,8 @@ function CreditCard(props) {
             y2="226.392"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0.144388" stop-color="#602AD5" />
-            <stop offset="1" stop-color="#3E188E" stop-opacity="0" />
+            <stop offset="0.144388" stopColor="#602AD5" />
+            <stop offset="1" stopColor="#3E188E" stopOpacity="0" />
           </linearGradient>
           <linearGradient
             id="paint2_linear_1_2975"
@@ -93,8 +93,8 @@ function CreditCard(props) {
             y2="-8.02737"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0.144388" stop-color="#3E188E" />
-            <stop offset="1" stop-color="#3E188E" stop-opacity="0" />
+            <stop offset="0.144388" stopColor="#3E188E" />
+            <stop offset="1" stopColor="#3E188E" stopOpacity="0" />
           </linearGradient>
         </defs>
       </svg>
@@ -172,7 +172,10 @@ function CreditCard(props) {
       </defs>
       <p className="card-holder-nm">XXXXXX</p>
       <div className="card-num-date">
-        <p className="">.... .... .... XXXX</p>
+        <p className="">
+          .... .... ....{" "}
+          {cardNumber ? cardNumber?.substr(cardNumber.length - 4) : "XXXX"}
+        </p>
         <p className="">XX XXX XXXX</p>
       </div>
     </div>

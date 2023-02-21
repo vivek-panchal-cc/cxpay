@@ -6,6 +6,7 @@ import { passwordChangeSchema } from "../../schemas/settingSchema";
 import { apiRequest } from "../../helpers/apiRequests";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { IconLeftArrow } from "styles/svgs";
 
 function ChangePassword() {
   const { profile } = useSelector((state) => state?.userProfile);
@@ -35,21 +36,21 @@ function ChangePassword() {
 
   return (
     <div className="settings-password-right-sec min-vh-100">
-      <div class="settings-note-inner-sec">
-        <div class="profile-info">
+      <div className="settings-note-inner-sec">
+        <div className="profile-info">
           <h3>Change Password</h3>
           <Breadcrumb />
         </div>
-        <div class="settings-profile-bottom-info-sec settings-password-bottom-info-sec">
-          <div class="tab-content" id="nav-tabContent">
+        <div className="settings-profile-bottom-info-sec settings-password-bottom-info-sec">
+          <div className="tab-content" id="nav-tabContent">
             <div
-              class="tab-pane fade show active"
+              className="tab-pane fade show active"
               id="nav-home"
               role="tabpanel"
               aria-labelledby="change-tab"
             >
               <form onSubmit={formik.handleSubmit}>
-                <div class="form-field">
+                <div className="form-field">
                   <Input
                     type="text"
                     className="form-control"
@@ -63,7 +64,7 @@ function ChangePassword() {
                     disabled={true}
                   />
                 </div>
-                <div class="form-field">
+                <div className="form-field">
                   <Input
                     type={"password"}
                     className="form-control"
@@ -79,7 +80,7 @@ function ChangePassword() {
                     autoComplete={"new-password"}
                   />
                 </div>
-                <div class="form-field">
+                <div className="form-field">
                   <Input
                     type={"password"}
                     className="form-control"
@@ -94,7 +95,7 @@ function ChangePassword() {
                     autoComplete={"new-password"}
                   />
                 </div>
-                <div class="form-field">
+                <div className="form-field">
                   <Input
                     type="password"
                     className="form-control"
@@ -109,24 +110,10 @@ function ChangePassword() {
                     }
                   />
                 </div>
-                <div class="login-btn">
-                  <div class="setting-btn-link">
+                <div className="login-btn">
+                  <div className="setting-btn-link">
                     <a href="#">
-                      <svg
-                        width="8"
-                        height="14"
-                        viewBox="0 0 8 14"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M7 13L1 7L7 1"
-                          stroke="#0081C5"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
+                      <IconLeftArrow style={{stroke: '#0081C5'}} />
                       Settings
                     </a>
                   </div>

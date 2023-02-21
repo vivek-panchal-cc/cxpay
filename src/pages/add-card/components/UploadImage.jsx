@@ -16,14 +16,14 @@ function UploadImage(props) {
   });
 
   return (
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style={{ minWidth: "500px" }}>
-        <div class="modal-header">
+    <div className="modal-dialog modal-dialog-centered">
+      <div className="modal-content" style={{ minWidth: "500px" }}>
+        <div className="modal-header">
           <h3>Customize Card</h3>
         </div>
-        <div class="modal-body">
-          <div class="custimize-iu-wrap">
-            <form class="">
+        <div className="modal-body">
+          <div className="custimize-iu-wrap">
+            <form className="">
               <FileInput
                 id="_scci"
                 name="card_image"
@@ -38,7 +38,7 @@ function UploadImage(props) {
                 classNameInput="d-none"
               />
               <label
-                class="cust-image-upload-wrap image_upload_click"
+                className="cust-image-upload-wrap image_upload_click"
                 htmlFor="fileInput_scci"
               >
                 <div>
@@ -47,7 +47,7 @@ function UploadImage(props) {
                 </div>
               </label>
             </form>
-            <a href="" class="cancel-link" data-bs-dismiss="modal">
+            <a href="" className="cancel-link" data-bs-dismiss="modal">
               Cancel
             </a>
           </div>

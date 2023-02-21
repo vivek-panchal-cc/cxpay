@@ -1,12 +1,13 @@
 import Modal from "components/modals/Modal";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { addCardSchema } from "schemas/walletSchema";
 import CreditCard from "./components/CreditCard";
 import CropCard from "./components/CropCard";
 import CustomizePalette from "./components/CustomizePalette";
 import UploadImage from "./components/UploadImage";
+import DatePicker from "react-datepicker";
 
 function AddCard() {
   const [showPopupUpload, setShowPopupUpload] = useState(false);
@@ -14,6 +15,7 @@ function AddCard() {
   const [cardBgColor, setCardBgColor] = useState("blue");
   const [cardBackImg, setCardBackImg] = useState("");
   const [croppedImg, setCroppedImg] = useState("");
+  const [expDate, setExpDate] = useState("");
 
   const handleCustomizePalette = (color) => {
     setCardBgColor(color);
@@ -75,11 +77,21 @@ function AddCard() {
           </div>
           <div className="row wac-details-wrap">
             <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap">
-              <CreditCard bgcolor={cardBgColor} bgimg={croppedImg} />
+              <CreditCard
+                bgcolor={cardBgColor}
+                bgimg={croppedImg}
+                cardNumber={
+                  formik.touched.card_number && !formik.errors.card_number
+                    ? formik.values.card_number
+                    : null
+                }
+              />
             </div>
             <div className="p-0 col-lg-5 col-12">
               <CustomizePalette
                 color={cardBgColor}
+                bgimg={croppedImg}
+                removeBgImg={setCroppedImg}
                 handleChange={handleCustomizePalette}
               />
             </div>
@@ -107,17 +119,22 @@ function AddCard() {
               <div className="row">
                 <div className="col-lg-8 col-12 col-left col p-0">
                   <div className="form-field data-field-wrap is-relative input-with-ic">
-                    <Input
-                      type="text"
-                      className="form-control"
-                      placeholder="Expiration Date"
+                    <DatePicker
+                      selected={expDate}
+                      onChange={(dt) => {
+                        const mmyy = dt?.toLocaleDateString("en", {
+                          month: "2-digit",
+                          year: "numeric",
+                        });
+                        setExpDate(dt);
+                        formik.setFieldValue("expiry_date", mmyy);
+                      }}
                       name="expiry_date"
-                      onChange={formik.handleChange}
+                      dateFormat="MM/yyyy"
+                      className="form-control"
+                      placeholderText="Expiration Date"
                       onBlur={formik.handleBlur}
-                      value={formik.values.expiry_date}
-                      error={
-                        formik.touched.expiry_date && formik.errors.expiry_date
-                      }
+                      showMonthYearPicker
                     />
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -125,37 +142,41 @@ function AddCard() {
                       height="22"
                       viewBox="0 0 20 22"
                       fill="none"
+                      style={{ top: "25px" }}
                       className="z-1"
                     >
                       <path
                         d="M17 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H17C18.1046 21 19 20.1046 19 19V5C19 3.89543 18.1046 3 17 3Z"
                         stroke="#0081C5"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       ></path>
                       <path
                         d="M14 1V5"
                         stroke="#0081C5"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       ></path>
                       <path
                         d="M6 1V5"
                         stroke="#0081C5"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       ></path>
                       <path
                         d="M1 9H19"
                         stroke="#0081C5"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       ></path>
                     </svg>
+                    <p className="text-danger ps-2">
+                      {formik.touched.expiry_date && formik.errors.expiry_date}
+                    </p>
                   </div>
                 </div>
                 <div className="col-lg-4 col-12 col-right col p-0">
@@ -167,7 +188,7 @@ function AddCard() {
                       name="security_code"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      maxlength="3"
+                      maxength="3"
                       value={formik.values.security_code}
                       error={
                         formik.touched.security_code &&
@@ -188,7 +209,6 @@ function AddCard() {
                       name="billing_address"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      maxlength="3"
                       value={formik.values.billing_address}
                       error={
                         formik.touched.billing_address &&
