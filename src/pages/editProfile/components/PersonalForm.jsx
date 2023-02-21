@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import FileInput from "components/ui/FileInput";
+import { IconLeftArrow } from "styles/svgs";
 // import FileInput from "components/ui/FileInput";
 
 function PersonalForm(props) {
@@ -176,21 +177,7 @@ function PersonalForm(props) {
             <div className="login-btn">
               <div className="setting-btn-link">
                 <Link to="/setting">
-                  <svg
-                    width="8"
-                    height="14"
-                    viewBox="0 0 8 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M7 13L1 7L7 1"
-                      stroke="#0081C5"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <IconLeftArrow style={{stroke: '#0081C5'}}/>
                   Settings
                 </Link>
               </div>
