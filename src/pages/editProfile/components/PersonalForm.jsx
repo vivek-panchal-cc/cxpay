@@ -61,7 +61,7 @@ function PersonalForm(props) {
   });
 
   return (
-    <div className="settings-edit-profile-right-sec min-vh-100">
+    <div className="settings-edit-profile-right-sec">
       <div className="settings-edit-profile-inner-sec">
         <div className="settings-profile-bottom-info-sec">
           <form onSubmit={formik.handleSubmit}>

@@ -1,7 +1,6 @@
 import React from "react";
 
 const Request = (props) => {
-  const { className, style } = props;
   return (
     <svg
       width="22"
@@ -9,8 +8,7 @@ const Request = (props) => {
       viewBox="0 0 22 23"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      style={style}
+      {...props}
     >
       <path
         d="M10.9208 1.00144V13.8164"

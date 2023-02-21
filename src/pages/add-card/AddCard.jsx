@@ -8,6 +8,10 @@ import CropCard from "./components/CropCard";
 import CustomizePalette from "./components/CustomizePalette";
 import UploadImage from "./components/UploadImage";
 import DatePicker from "react-datepicker";
+import { Link } from "react-router-dom";
+import { IconCalender, IconLeftArrow } from "styles/svgs";
+import { apiRequest } from "helpers/apiRequests";
+import { toast } from "react-toastify";
 
 function AddCard() {
   const [showPopupUpload, setShowPopupUpload] = useState(false);
@@ -15,7 +19,7 @@ function AddCard() {
   const [cardBgColor, setCardBgColor] = useState("blue");
   const [cardBackImg, setCardBackImg] = useState("");
   const [croppedImg, setCroppedImg] = useState("");
-  const [expDate, setExpDate] = useState("");
+  const [expDate, setExpDate] = useState(new Date());
 
   const handleCustomizePalette = (color) => {
     setCardBgColor(color);
@@ -33,6 +37,10 @@ function AddCard() {
     setShowPopupCrop(false);
   };
 
+  const handleRemoveImage = () => {
+    setCroppedImg("");
+  };
+
   const formik = useFormik({
     initialValues: {
       card_number: "",
@@ -40,10 +48,24 @@ function AddCard() {
       billing_address: "",
       security_code: "",
       color: cardBgColor,
-      image: croppedImg,
     },
     validationSchema: addCardSchema,
-    onSubmit: async (values, { setStatus, resetForm, setErrors }) => {},
+    onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
+      try {
+        const formData = new FormData();
+        for (let key in values) formData.append(key, values[key]);
+        if (croppedImg) formData.append("image", croppedImg);
+        const { data } = await apiRequest.addCard(formData);
+        if (!data.success) throw data.message;
+        toast.success(data.message);
+        resetForm();
+        setExpDate(new Date());
+      } catch (error) {
+        toast.error(error);
+        resetForm();
+        setExpDate(new Date());
+      }
+    },
   });
 
   return (
@@ -91,7 +113,7 @@ function AddCard() {
               <CustomizePalette
                 color={cardBgColor}
                 bgimg={croppedImg}
-                removeBgImg={setCroppedImg}
+                removeBgImg={handleRemoveImage}
                 handleChange={handleCustomizePalette}
               />
             </div>
@@ -118,7 +140,7 @@ function AddCard() {
               </div>
               <div className="row">
                 <div className="col-lg-8 col-12 col-left col p-0">
-                  <div className="form-field data-field-wrap is-relative input-with-ic">
+                  <div className="form-field position-relative z-1">
                     <DatePicker
                       selected={expDate}
                       onChange={(dt) => {
@@ -136,45 +158,12 @@ function AddCard() {
                       onBlur={formik.handleBlur}
                       showMonthYearPicker
                     />
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="22"
-                      viewBox="0 0 20 22"
-                      fill="none"
-                      style={{ top: "25px" }}
-                      className="z-1"
-                    >
-                      <path
-                        d="M17 3H3C1.89543 3 1 3.89543 1 5V19C1 20.1046 1.89543 21 3 21H17C18.1046 21 19 20.1046 19 19V5C19 3.89543 18.1046 3 17 3Z"
-                        stroke="#0081C5"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      ></path>
-                      <path
-                        d="M14 1V5"
-                        stroke="#0081C5"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      ></path>
-                      <path
-                        d="M6 1V5"
-                        stroke="#0081C5"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      ></path>
-                      <path
-                        d="M1 9H19"
-                        stroke="#0081C5"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      ></path>
-                    </svg>
-                    <p className="text-danger ps-2">
+                    <IconCalender
+                      className="position-absolute"
+                      stroke="#0081c5"
+                      style={{ top: "15px", right: "20px" }}
+                    />
+                    <p className="text-danger ps-2 shadow-none">
                       {formik.touched.expiry_date && formik.errors.expiry_date}
                     </p>
                   </div>
@@ -221,29 +210,10 @@ function AddCard() {
               <div className="row">
                 <div className="col-12 p-0 btns-inline">
                   <div className="setting-btn-link btn-wrap">
-                    <a
-                      href="#"
-                      className="outline-btn"
-                      data-bs-toggle="modal"
-                      data-bs-target="#crop_image_model"
-                    >
-                      <svg
-                        width="8"
-                        height="14"
-                        viewBox="0 0 8 14"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M7 13L1 7L7 1"
-                          stroke="#0081C5"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        ></path>
-                      </svg>
+                    <Link to="/wallet" className="outline-btn">
+                      <IconLeftArrow stroke="#0081c5" />
                       Wallet
-                    </a>
+                    </Link>
                   </div>
                   <div className="btn-wrap">
                     <input

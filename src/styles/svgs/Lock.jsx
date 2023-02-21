@@ -1,7 +1,6 @@
 import React from "react";
 
 function Lock(props) {
-  const { className, style } = props;
   return (
     <svg
       width="18"
@@ -9,8 +8,7 @@ function Lock(props) {
       viewBox="0 0 18 21"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      style={style}
+      {...props}
     >
       <path
         d="M13.0266 4.23736C12.4536 2.34236 10.6816 0.974364 8.60361 1.00036C6.13661 1.03036 4.14161 3.01736 4.09961 5.48436V7.65336"

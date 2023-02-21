@@ -28,7 +28,6 @@ const addCardSchema = yup.object().shape({
     ),
   billing_address: yup.string().required("Billing address is required*"),
   color: yup.string().required(""),
-  image: yup.string(),
 });
 
 export { addCardSchema };
