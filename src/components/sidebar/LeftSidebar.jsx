@@ -40,7 +40,7 @@ function LeftSidebar() {
           </li>
           <li>
             <Link to="/">
-              <IconSend />
+              <IconSend style={{stroke: '#F3F3F3'}}/>
               <span>Send</span>
             </Link>
           </li>

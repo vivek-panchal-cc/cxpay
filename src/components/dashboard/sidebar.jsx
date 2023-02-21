@@ -50,7 +50,7 @@ const Sidebar = () => {
         </li>
         <li>
           <a href="/">
-            <IconSend />
+            <IconSend style={{stroke: '#F3F3F3'}}/>
             <span>Send</span>
           </a>
         </li>

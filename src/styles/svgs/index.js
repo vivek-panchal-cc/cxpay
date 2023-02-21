@@ -17,4 +17,10 @@ export { default as IconNotify } from './Notify';
 export { default as IconCalender } from './Calender';
 export { default as IconCaretDown } from './CaretDown';
 export { default as IconQuickInfo } from './QuickInfo';
+export { default as IconLeftArrow } from './LeftArrow';
+export { default as IconAdd } from './Add';
+export { default as IconRightArrowBig }  from './RightArrowBig';
+export { default as IconHexagonProfile } from './HexagonProfile';
+export { default as IconMessage } from "./Message";
+
 

@@ -3,6 +3,7 @@ import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { linkBankSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
+import { IconSearch } from "styles/svgs";
 
 const Contacts = (props) => {
   // const [accountType, setAccountType] = useState("current");
@@ -50,30 +51,7 @@ const Contacts = (props) => {
                     placeholder="Search..."
                   />
                   <div class="search-btn">
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M7.94288 13.4033C10.9586 13.4033 13.4033 10.9586 13.4033 7.94288C13.4033 4.92715 10.9586 2.48242 7.94288 2.48242C4.92715 2.48242 2.48242 4.92715 2.48242 7.94288C2.48242 10.9586 4.92715 13.4033 7.94288 13.4033Z"
-                        stroke="#969696"
-                        stroke-width="0.975"
-                        stroke-miterlimit="10"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>
-                      <path
-                        d="M11.8071 11.8066L15.0005 15"
-                        stroke="#969696"
-                        stroke-width="0.975"
-                        stroke-miterlimit="10"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>
-                    </svg>
+                    <IconSearch />
                   </div>
                 </div>
               </form>
