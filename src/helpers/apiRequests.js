@@ -19,6 +19,9 @@ const API_updateForgotPassword =
   process.env.REACT_APP_UPDATE_FORGOT_PASSWORD_OTP;
 const API_linkBank = process.env.REACT_APP_ADD_BANK;
 const API_addCard = process.env.REACT_APP_ADD_CARD;
+const API_addContact = process.env.REACT_APP_ADD_CONTACT;
+const API_getConatcts = process.env.REACT_APP_GET_CONTACT_LIST;
+const API_deleteContact = process.env.REACT_APP_DELETE_CONTACT;
 
 // POST @login API
 // @params user_name, password
@@ -113,6 +116,24 @@ export const addCard = (params) => {
   return axiosInstance.post(`${API_URL}${API_addCard}`, params);
 };
 
+// POST @add-contact API
+// @params mobile,email
+export const addContact = (params) => {
+  return axiosInstance.post(`${API_URL}${API_addContact}`, params);
+};
+
+// POST @contacts-list API
+// @params auth_token
+export const getConatcts = (params) => {
+  return axiosInstance.post(`${API_URL}${API_getConatcts}`, params);
+};
+
+// POST @delete-contact API
+// @params mobile array
+export const deleteContact = (params) => {
+  return axiosInstance.post(`${API_URL}${API_deleteContact}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -129,4 +150,7 @@ export const apiRequest = {
   updateForgotPassword,
   linkBank,
   addCard,
+  addContact,
+  getConatcts,
+  deleteContact,
 };

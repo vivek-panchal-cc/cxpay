@@ -3,6 +3,7 @@ import styles from "./modal.module.scss";
 
 function Modal(props) {
   const { children, className, id, show, setShow } = props;
+  console.log("show", show);
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -17,10 +18,10 @@ function Modal(props) {
     };
   }, [modalRef, setShow]);
 
-  if (!show) return null;
+  if (!show) return;
   return (
     <div
-      className={`modal fade show ${styles.modal} ${className}`}
+      className={`test modal fade show ${styles.modal} ${className}`}
       id={id}
       role="dialog"
     >

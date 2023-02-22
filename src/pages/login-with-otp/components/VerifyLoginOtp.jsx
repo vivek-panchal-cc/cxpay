@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import { verifyLoginOtpSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { useNavigate } from "react-router-dom";
+import { storageRequest } from "helpers/storageRequests";
 
 function VerifyLoginOtp(props) {
   const { mobileNumber } = props;
@@ -26,14 +27,7 @@ function VerifyLoginOtp(props) {
       try {
         const { data } = await apiRequest.verifyLoginOtp(values);
         if (!data.success || data.data === null) throw data.message;
-        if (data?.data?.user_name) {
-          document.cookie =
-            "auth._token.Bearer=" +
-            data?.data?.user_name +
-            "; expires=" +
-            now.toGMTString() +
-            "; path=/";
-        }
+        storageRequest.setAuth(data.data.token);
         navigate("/");
       } catch (error) {
         resetForm();

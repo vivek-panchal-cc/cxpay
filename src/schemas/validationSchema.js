@@ -93,6 +93,11 @@ const linkBankSchema = yup.object().shape({
   bank_number: yup.string().required("Account number is required."),
 });
 
+const inviteContactSchema = yup.object().shape({
+  email: emailSchema,
+  mobile: yup.string().required("Please enter mobile number."),
+});
+
 export {
   LoginSchema,
   enterPhoneSchema,
@@ -105,4 +110,5 @@ export {
   forgotPasswordSchema,
   resetPasswordSchema,
   linkBankSchema,
+  inviteContactSchema,
 };

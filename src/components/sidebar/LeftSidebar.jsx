@@ -73,7 +73,7 @@ function LeftSidebar() {
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/contacts">
               <IconContact style={{ stroke: "#F3F3F3" }} />
               Contacts
             </Link>

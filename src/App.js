@@ -46,6 +46,8 @@ function App() {
             {/* settings */}
             <Route path="/link-bank" element={<LinkBank />} />
             <Route path="/contacts" element={<Contacts />} />
+            {/* <Route path="/invite-contact" element={<InviteContact />} /> */}
+
             <Route path="/setting" element={<Setting />} />
             <Route path="/setting/edit-profile" element={<EditProfile />} />
             <Route path="/setting/notification" element={<></>} />
