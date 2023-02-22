@@ -181,7 +181,7 @@ function LeftSidebar() {
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/contacts">
               <svg
                 width="18"
                 height="19"

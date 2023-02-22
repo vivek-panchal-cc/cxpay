@@ -15,6 +15,7 @@ import ForgotPassword from "pages/forgot-password/ForgotPassword";
 import ResetPassword from "pages/reset-password/ResetPassword";
 import LinkBank from "pages/linkBank/LinkBank";
 import Contacts from "pages/contacts/Contacts";
+import InviteContact from "pages/contacts/components/InviteContact";
 
 function App() {
   const location = useLocation();
@@ -43,6 +44,8 @@ function App() {
             <Route path="/dashboard" element={<> Welcome, Dashboard </>} />
             <Route path="/link-bank" element={<LinkBank />} />
             <Route path="/contacts" element={<Contacts />} />
+            {/* <Route path="/invite-contact" element={<InviteContact />} /> */}
+
             <Route path="/setting" element={<Setting />} />
             <Route path="/setting/edit-profile" element={<EditProfile />} />
             <Route path="/setting/notification" element={<></>} />

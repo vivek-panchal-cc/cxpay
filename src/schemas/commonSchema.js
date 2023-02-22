@@ -10,8 +10,8 @@ import {
 
 const emailSchema = yup
   .string()
-  .email("Please enter a valid email")
-  .required("Email can't be null");
+  .email("Please enter a valid email.")
+  .required("Please enter a valid email.");
 
 const passwordSchema = yup
   .string()
