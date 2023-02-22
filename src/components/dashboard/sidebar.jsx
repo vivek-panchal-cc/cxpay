@@ -1,5 +1,14 @@
 import React from "react";
-import { IconActivity, IconContact, IconHome, IconProfileVerified, IconRequest, IconSend, IconSetting, IconWallet } from "styles/svgs";
+import {
+  IconActivity,
+  IconContact,
+  IconHome,
+  IconProfileVerified,
+  IconRequest,
+  IconSend,
+  IconSetting,
+  IconWallet,
+} from "styles/svgs";
 // import "../../assets/css/bootstrap.min.css";
 // import "../../assets/css/style.css";
 // import "../../assets/css/responsive.css";
@@ -50,7 +59,7 @@ const Sidebar = () => {
         </li>
         <li>
           <a href="/">
-            <IconSend style={{stroke: '#F3F3F3'}}/>
+            <IconSend style={{ stroke: "#F3F3F3" }} />
             <span>Send</span>
           </a>
         </li>
@@ -74,7 +83,7 @@ const Sidebar = () => {
         </li>
         <li>
           <a href="/">
-            <IconContact style={{stroke: '#F3F3F3'}}/>
+            <IconContact style={{ stroke: "#F3F3F3" }} />
             Contacts
           </a>
         </li>
@@ -88,13 +97,13 @@ const Sidebar = () => {
         </li>
         <li>
           <a href="/">
-            <IconSetting style={{fill: "#fff100"}}/>
+            <IconSetting style={{ fill: "#fff100" }} />
             Setting
           </a>
         </li>
         <li>
           <a href="/">
-            <IconLogout style={{stroke: "#FFF100"}} />
+            <IconLogout style={{ stroke: "#FFF100" }} />
             Log out
           </a>
         </li>

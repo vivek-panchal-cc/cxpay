@@ -11,7 +11,6 @@ function ForgotPassword() {
 
   const formik = useFormik({
     initialValues: {
-      email: "",
       mobile_number: "",
     },
     validationSchema: forgotPasswordSchema,
@@ -51,18 +50,6 @@ function ForgotPassword() {
                   <VerifyOtp values={formik.values} />
                 </Modal>
                 <form onSubmit={formik.handleSubmit}>
-                  <div className="form-field">
-                    <Input
-                      type="text"
-                      className="form-control"
-                      placeholder="Email"
-                      name="email"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.email}
-                      error={formik.touched.email && formik.errors.email}
-                    />
-                  </div>
                   <div className="form-field">
                     <Input
                       type="text"

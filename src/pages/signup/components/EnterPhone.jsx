@@ -11,6 +11,7 @@ function EnterPhone(props) {
   const { signUpCreds, setSignUpCreds } = props;
   const [showRegisteredPopup, setShowregisteredPopup] = useState(false);
   const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
+  const [username, setUsername] = useState("USERNAME");
 
   const formik = useFormik({
     initialValues: {
@@ -21,8 +22,10 @@ function EnterPhone(props) {
       try {
         const { data } = await apiRequest.verifyMobileNumber(values);
         if (!data.success || data.data === null) throw data.message;
-        if (data.data.isAlreadyRegster === "1")
+        if (data.data.isAlreadyRegster === "1") {
+          setUsername(data.data?.user_name);
           return setShowregisteredPopup(true);
+        }
         setSignUpCreds((cs) => ({
           ...cs,
           mobile_number: values.mobile_number,
@@ -51,7 +54,7 @@ function EnterPhone(props) {
                 show={showRegisteredPopup}
                 setShow={setShowregisteredPopup}
               >
-                <AlreadyRegistered />
+                <AlreadyRegistered username={username} />
               </Modal>
               <h4 className="text-center">Welcome to</h4>
               <div className="login-logo-image text-center">

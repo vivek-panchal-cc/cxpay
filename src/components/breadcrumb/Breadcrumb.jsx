@@ -3,7 +3,7 @@ import React from "react";
 function Breadcrumb() {
   return (
     <div>
-      <ul class="breadcrumb">
+      <ul className="breadcrumb">
         <li>
           <a href="#">Settings</a>
         </li>

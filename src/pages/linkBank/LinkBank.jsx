@@ -37,52 +37,6 @@ const LinkBank = (props) => {
   });
   return (
     <div>
-      <div className="dashboard-top-sec no-search-ontop">
-        <div className="dashboard-notification-sec col-lg-5 col-12">
-          <div className="notification-user-wrap">
-            <div className="dashboard-notification-wrap">
-              <div className="notification-icon">
-                <IconNotify />
-                <span className="notification-count">
-                  <span></span>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="user-profile">
-            <div className="user-image">
-              <div className="user-image-wrap">
-                <span className="user-image">
-                  <img
-                    src="assets/images/user-image-logged-in.png"
-                    alt="user img"
-                  />
-                </span>
-              </div>
-              <ul>
-                <li>
-                  <a href="/">
-                    <IconContact style={{stroke: "#363853"}}/>
-                    Profile
-                  </a>
-                </li>
-                <li>
-                  <a href="/">
-                    <IconSetting style={{stroke: "#363853"}}/>
-                    Settings
-                  </a>
-                </li>
-                <li>
-                  <a href="/">
-                    <IconLogout style={{stroke: '#363853'}}/>
-                    Logout
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
       <div className="wallet-link-bank-bottom">
         <div className="profile-info rm-pl-profile-info">
           <h3>Link a Bank</h3>

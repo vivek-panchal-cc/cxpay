@@ -175,7 +175,6 @@ window.onload = function () {
       },
     ],
   };
-  $("#chartContainer").CanvasJSChart(options);
 };
 $(document).ready(function () {
   $(function () {

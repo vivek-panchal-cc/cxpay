@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Input from "components/ui/Input";
+import React from "react";
 import { useFormik } from "formik";
 import { linkBankSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
@@ -31,36 +30,36 @@ const Contacts = (props) => {
     },
   });
   return (
-    <div class="container-fluid">
-      <div class="row">
-        <div class="contact-sec">
-          <div class="contact-top-sec">
-            <div class="title-content-wrap">
+    <div className="container-fluid">
+      <div className="row">
+        <div className="contact-sec">
+          <div className="contact-top-sec">
+            <div className="title-content-wrap">
               <h3>Contacts</h3>
               <p>Lorem Ipsum Dolor Sit Amet</p>
             </div>
           </div>
-          <div class="contact-top-search-sec d-flex align-items-center">
-            <div class="contact-serch-main">
+          <div className="contact-top-search-sec d-flex align-items-center">
+            <div className="contact-serch-main">
               <form>
-                <div class="form-field search-field">
+                <div className="form-field search-field">
                   <input
                     type="search"
-                    class="form-control"
+                    className="form-control"
                     name="search-field"
                     placeholder="Search..."
                   />
-                  <div class="search-btn">
+                  <div className="search-btn">
                     <IconSearch />
                   </div>
                 </div>
               </form>
             </div>
-            <div class="contact-top-btn-nav">
-              <div class="con-btn-wrap con-add-btn-wrap">
+            <div className="contact-top-btn-nav">
+              <div className="con-btn-wrap con-add-btn-wrap">
                 <a
                   href="/"
-                  class="btn"
+                  className="btn"
                   data-bs-toggle="modal"
                   data-bs-target="#add-contact-popup"
                 >
@@ -68,10 +67,10 @@ const Contacts = (props) => {
                   <span>Add Contact</span>
                 </a>
               </div>
-              <div class="con-btn-wrap con-remove-btn-wrap">
+              <div className="con-btn-wrap con-remove-btn-wrap">
                 <a
                   href="/"
-                  class="btn"
+                  className="btn"
                   data-bs-toggle="modal"
                   data-bs-target="#invite-sent-popup"
                 >
@@ -79,10 +78,10 @@ const Contacts = (props) => {
                   <span>Remove Contact</span>
                 </a>
               </div>
-              <div class="con-btn-wrap con-invite-btn-wrap">
+              <div className="con-btn-wrap con-invite-btn-wrap">
                 <a
                   href="/"
-                  class="btn"
+                  className="btn"
                   data-bs-toggle="modal"
                   data-bs-target="#invite-contact-popup"
                 >
@@ -92,114 +91,132 @@ const Contacts = (props) => {
               </div>
             </div>
           </div>
-          <div class="con-listing-container">
-            <ul class="contact-listing-wrap">
+          <div className="con-listing-container">
+            <ul className="contact-listing-wrap">
               <li>
-                <div class="con-listing-info">
-                  <div class="con-list-uimg">
+                <div className="con-listing-info">
+                  <div className="con-list-uimg">
                     <img src="images/activity-use-image02.jpg" alt="" />
                   </div>
-                  <div class="con-list-uname">Contact Name Display Here</div>
+                  <div className="con-list-uname">
+                    Contact Name Display Here
+                  </div>
                 </div>
-                <div class="con-listing-phone">
+                <div className="con-listing-phone">
                   <p>+1 234 567 890</p>
                 </div>
-                <div class="con-listing-mail">
+                <div className="con-listing-mail">
                   <p>abcdef@gmail.com</p>
                 </div>
-                <div class="cont-listing-last-wrap">
-                  <div class="con-listing-edit-wrap">
-                    <a class="conlist-edit-a con-list-edit-star">
-                      <img src="images/Star.svg" class="star_border" alt="" />
+                <div className="cont-listing-last-wrap">
+                  <div className="con-listing-edit-wrap">
+                    <a className="conlist-edit-a con-list-edit-star">
+                      <img
+                        src="images/Star.svg"
+                        className="star_border"
+                        alt=""
+                      />
                       <img
                         src="images/star_fill.svg"
-                        class="star_fill"
+                        className="star_fill"
                         alt=""
                       />
                     </a>
-                    <a href="/" class="conlist-edit-a">
+                    <a href="/" className="conlist-edit-a">
                       <img src="images/Edit.svg" alt="" />
                     </a>
                   </div>
-                  <div class="con-listing-btn-wrap">
-                    <a href="/" class="btn btn-primary con-send-btn">
+                  <div className="con-listing-btn-wrap">
+                    <a href="/" className="btn btn-primary con-send-btn">
                       Send
                     </a>
-                    <a href="/" class="btn btn-primary con-req-btn">
+                    <a href="/" className="btn btn-primary con-req-btn">
                       Request
                     </a>
                   </div>
                 </div>
               </li>
               <li>
-                <div class="con-listing-info">
-                  <div class="con-list-uimg">
+                <div className="con-listing-info">
+                  <div className="con-list-uimg">
                     <img src="images/activity-use-image02.jpg" alt="" />
                   </div>
-                  <div class="con-list-uname">Contact Name Display Here</div>
+                  <div className="con-list-uname">
+                    Contact Name Display Here
+                  </div>
                 </div>
-                <div class="con-listing-phone">
+                <div className="con-listing-phone">
                   <p>+1 234 567 890</p>
                 </div>
-                <div class="con-listing-mail">
+                <div className="con-listing-mail">
                   <p>abcdef@gmail.com</p>
                 </div>
-                <div class="cont-listing-last-wrap">
-                  <div class="con-listing-edit-wrap">
-                    <a class="conlist-edit-a con-list-edit-star">
-                      <img src="images/Star.svg" class="star_border" alt="" />
+                <div className="cont-listing-last-wrap">
+                  <div className="con-listing-edit-wrap">
+                    <a className="conlist-edit-a con-list-edit-star">
+                      <img
+                        src="images/Star.svg"
+                        className="star_border"
+                        alt=""
+                      />
                       <img
                         src="images/star_fill.svg"
-                        class="star_fill"
+                        className="star_fill"
                         alt=""
                       />
                     </a>
-                    <a href="" class="conlist-edit-a">
+                    <a href="" className="conlist-edit-a">
                       <img src="images/Edit.svg" alt="" />
                     </a>
                   </div>
-                  <div class="con-listing-btn-wrap">
-                    <a href="#" class="btn btn-primary con-send-btn">
+                  <div className="con-listing-btn-wrap">
+                    <a href="#" className="btn btn-primary con-send-btn">
                       Send
                     </a>
-                    <a href="#" class="btn btn-primary con-req-btn">
+                    <a href="#" className="btn btn-primary con-req-btn">
                       Request
                     </a>
                   </div>
                 </div>
               </li>
               <li>
-                <div class="con-listing-info">
-                  <div class="con-list-uimg">
+                <div className="con-listing-info">
+                  <div className="con-list-uimg">
                     <img src="images/activity-use-image02.jpg" alt="" />
                   </div>
-                  <div class="con-list-uname">Contact Name Display Here</div>
+                  <div className="con-list-uname">
+                    Contact Name Display Here
+                  </div>
                 </div>
-                <div class="con-listing-phone">
+                <div className="con-listing-phone">
                   <p>+1 234 567 890</p>
                 </div>
-                <div class="con-listing-mail">
+                <div className="con-listing-mail">
                   <p>abcdef@gmail.com</p>
                 </div>
-                <div class="cont-listing-last-wrap">
-                  <div class="con-listing-edit-wrap">
-                    <a class="conlist-edit-a con-list-edit-star">
-                      <img src="images/Star.svg" class="star_border" alt="" />
+                <div className="cont-listing-last-wrap">
+                  <div className="con-listing-edit-wrap">
+                    <a className="conlist-edit-a con-list-edit-star">
+                      <img
+                        src="images/Star.svg"
+                        className="star_border"
+                        alt=""
+                      />
                       <img
                         src="images/star_fill.svg"
-                        class="star_fill"
+                        className="star_fill"
                         alt=""
                       />
                     </a>
-                    <a href="" class="conlist-edit-a">
+                    <a href="" className="conlist-edit-a">
                       <img src="images/Edit.svg" alt="" />
                     </a>
                   </div>
-                  <div class="con-listing-btn-wrap">
-                    <a href="#" class="btn btn-primary con-send-btn">
+                  <div className="con-listing-btn-wrap">
+                    <a href="#" className="btn btn-primary con-send-btn">
                       Send
                     </a>
-                    <a href="#" class="btn btn-primary con-req-btn">
+                    <a href="#" className="btn btn-primary con-req-btn">
                       Request
                     </a>
                   </div>
@@ -207,31 +224,31 @@ const Contacts = (props) => {
               </li>
             </ul>
           </div>
-          <div class="pagination-wrap contact-pagination">
+          <div className="pagination-wrap contact-pagination">
             <ul>
-              <li class="page-item">
-                <span class="page-link prev">PREV >></span>
+              <li className="page-item">
+                <span className="page-link prev">PREV >></span>
               </li>
-              <li class="page-item">
-                <span class="page-link current">1</span>
+              <li className="page-item">
+                <span className="page-link current">1</span>
               </li>
-              <li class="page-item">
-                <span class="page-link">2</span>
+              <li className="page-item">
+                <span className="page-link">2</span>
               </li>
-              <li class="page-item">
-                <span class="page-link">3</span>
+              <li className="page-item">
+                <span className="page-link">3</span>
               </li>
-              <li class="page-item">
-                <span class="page-link">4</span>
+              <li className="page-item">
+                <span className="page-link">4</span>
               </li>
-              <li class="page-item">
-                <span class="page-link skip">.....</span>
+              <li className="page-item">
+                <span className="page-link skip">.....</span>
               </li>
-              <li class="page-item">
-                <span class="page-link last">12</span>
+              <li className="page-item">
+                <span className="page-link last">12</span>
               </li>
-              <li class="page-item">
-                <span class="page-link next">NEXT >></span>
+              <li className="page-item">
+                <span className="page-link next">NEXT >></span>
               </li>
             </ul>
           </div>

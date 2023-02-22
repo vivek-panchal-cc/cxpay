@@ -1,7 +1,6 @@
 import React from "react";
 
 function RightArrow(props) {
-  const { className, style } = props;
   return (
     <svg
       width="5"
@@ -9,15 +8,14 @@ function RightArrow(props) {
       viewBox="0 0 5 8"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      style={style}
+      {...props}
     >
       <path
         d="M1 1.5L3.5 4L1 6.5"
         stroke="#363853"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

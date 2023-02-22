@@ -24,10 +24,11 @@ const Login = () => {
     validationSchema: LoginSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
-        await dispatch(fetchLogin(values));
+        const { error, payload } = await dispatch(fetchLogin(values));
+        if (error) throw payload;
       } catch (error) {
         resetForm();
-        console.log(error);
+        setStatus(error);
       }
     },
   });
@@ -51,7 +52,7 @@ const Login = () => {
                     <Input
                       type="text"
                       className="form-control"
-                      placeholder="Email or Phone"
+                      placeholder="Phone"
                       name="user_name"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -73,6 +74,9 @@ const Login = () => {
                       error={formik.touched.password && formik.errors.password}
                     />
                   </div>
+                  {formik.status && (
+                    <p className="text-danger">{formik.status}</p>
+                  )}
                   <p className="forgot-password-text text-center">
                     <a href="/forgot-password">Forgot Password?</a>
                   </p>
@@ -99,9 +103,9 @@ const Login = () => {
                   <a className="btn btn-primary blue-bg" href="/login-with-otp">
                     Login with OTP
                   </a>
-                  <p className="sign-up-text text-center">
+                  {/* <p className="sign-up-text text-center">
                     Don't have an account ? <a href="/signup">Signup</a>
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>
