@@ -19,6 +19,20 @@ const fetchLogin = createAsyncThunk("user/login", async (creds, thunkAPI) => {
   }
 });
 
+const fetchLoginOtp = createAsyncThunk(
+  "user/loginOtp",
+  async (creds, thunkAPI) => {
+    try {
+      const { data } = await apiRequest.verifyLoginOtp(creds);
+      if (!data.success) throw data.message;
+      storageRequest.setAuth(data.data.token);
+      return data.message;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const fetchLogout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
   try {
     storageRequest.removeAuth();
@@ -66,6 +80,12 @@ const userProfileSlice = createSlice({
       .addCase(fetchLogin.rejected, (state, action) => {
         console.log("Error getting user data", action.payload);
       })
+      .addCase(fetchLoginOtp.fulfilled, (state, action) => {
+        document.location.href = "/";
+      })
+      .addCase(fetchLoginOtp.rejected, (state, action) => {
+        console.log("Error getting user data", action.payload);
+      })
       .addCase(fetchLogout.fulfilled, (state, action) => {
         toast.success(action.payload);
         document.location.href = "/";
@@ -77,6 +97,6 @@ const userProfileSlice = createSlice({
   },
 });
 
-export { fetchLogin, fetchLogout, fetchUserProfile };
+export { fetchLogin, fetchLogout, fetchUserProfile, fetchLoginOtp };
 export const { setUserProfile } = userProfileSlice.actions;
 export default userProfileSlice.reducer;
