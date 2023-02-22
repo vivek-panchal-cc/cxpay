@@ -13,9 +13,9 @@ function RightArrow(props) {
       <path
         d="M1 1.5L3.5 4L1 6.5"
         stroke="#363853"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

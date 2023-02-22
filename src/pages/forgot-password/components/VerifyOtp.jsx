@@ -21,7 +21,9 @@ function VerifyOtp(props) {
         const { data } = await apiRequest.verifyForgotPasswordOtp(values);
         if (!data.success || data.data === null) throw data.message;
         if (data.data.mobile_number)
-          navigate(`/reset-password/${data.data.mobile_number}/${"token"}`);
+          navigate(
+            `/reset-password/${data.data.mobile_number}/${data.data.password_token}`
+          );
       } catch (error) {
         resetForm();
         setStatus(error);
