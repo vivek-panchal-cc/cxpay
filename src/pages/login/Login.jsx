@@ -24,10 +24,11 @@ const Login = () => {
     validationSchema: LoginSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
-        await dispatch(fetchLogin(values));
+        const { error, payload } = await dispatch(fetchLogin(values));
+        if (error) throw payload;
       } catch (error) {
         resetForm();
-        console.log(error);
+        setStatus(error);
       }
     },
   });
@@ -73,6 +74,9 @@ const Login = () => {
                       error={formik.touched.password && formik.errors.password}
                     />
                   </div>
+                  {formik.status && (
+                    <p className="text-danger">{formik.status}</p>
+                  )}
                   <p className="forgot-password-text text-center">
                     <a href="/forgot-password">Forgot Password?</a>
                   </p>
