@@ -14,7 +14,9 @@ import ChangePassword from "pages/change-password/ChangePassword";
 import ForgotPassword from "pages/forgot-password/ForgotPassword";
 import ResetPassword from "pages/reset-password/ResetPassword";
 import LinkBank from "pages/linkBank/LinkBank";
+import AddCard from "pages/add-card/AddCard";
 import Contacts from "pages/contacts/Contacts";
+import Wallet from "pages/wallet/Wallet";
 
 function App() {
   const location = useLocation();
@@ -41,6 +43,7 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<DashboardLayout />}>
             <Route path="/dashboard" element={<> Welcome, Dashboard </>} />
+            {/* settings */}
             <Route path="/link-bank" element={<LinkBank />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/setting" element={<Setting />} />
@@ -51,6 +54,9 @@ function App() {
               element={<ChangePassword />}
             />
             <Route path="/setting/business-info" element={<></>} />
+            {/* wallet */}
+            <Route path="/wallet" element={<Wallet />} />
+            <Route path="/wallet/add-card" element={<AddCard />} />
           </Route>
           <Route path="/private" element={<> Accessible after login! </>} />
         </Route>

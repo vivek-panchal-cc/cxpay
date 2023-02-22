@@ -23,10 +23,18 @@ function Businessform(props) {
       confirm_password: "",
       mobile_number: signUpCreds.mobile_number,
       profile_image: "",
+      country: "ARUBA",
+      country_code: "297",
     },
     validationSchema: signUpBusinessAccountSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
       try {
+        const formData = new FormData();
+        for (let key in values) {
+          if (key === "profile_image") continue;
+          formData.append(key, values[key]);
+        }
+        formData.append("profile_image", values.profile_image);
         const { data } = await apiRequest.registerUser(values);
         if (!data.success || data.data === null) throw data.message;
         setSignUpCreds({ step: 0 });
@@ -58,7 +66,7 @@ function Businessform(props) {
                 showPreview={true}
                 showLabel={true}
                 labelText="Change Profile Picture"
-                defaultImg="/assets/images/profile-img.png"
+                fallbackSrc="/assets/images/profile-img.png"
                 classNameInput="d-none"
               />
               <h5 className="text-center">Signup</h5>
@@ -155,7 +163,10 @@ function Businessform(props) {
               <div className="text-center sign-up-btn">
                 <input
                   type="submit"
-                  className="btn btn-primary"
+                  className={`btn btn-primary ${
+                    formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                  }`}
+                  disabled={formik.isSubmitting}
                   value="Signup"
                 />
               </div>

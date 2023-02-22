@@ -4,7 +4,6 @@ import { IconCalender, IconCaretDown, IconQuickInfo } from "styles/svgs";
 const RecentActivity = () => {
   const handleChange = async (event) => {
     event.preventDefault();
-    console.log("event", event);
     setSelected(event.target.value);
   };
   const options = [

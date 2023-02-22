@@ -80,7 +80,6 @@ const editProfilePersonalUserSchema = yup.object().shape({
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 const forgotPasswordSchema = yup.object().shape({
-  email: emailSchema,
   mobile_number: yup.string().required("required*"),
 });
 

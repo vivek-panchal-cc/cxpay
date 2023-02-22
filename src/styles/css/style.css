@@ -285,7 +285,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 * {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -350,10 +349,10 @@ a {
   text-decoration: none;
   font-family: "Comfortaa";
   /*font-style: normal;
-	font-weight: 500;
-	font-size: 14px;
-	line-height: 34px;
-	text-align: center;*/
+font-weight: 500;
+font-size: 14px;
+line-height: 34px;
+text-align: center;*/
   color: #0081c5;
   transition: all 0.5s ease-in-out;
   -webkit-transition: all 0.5s ease-in-out;
@@ -364,6 +363,17 @@ a {
 a:hover {
   color: #333;
 }
+/* Start Common IN Full site */
+.input-with-ic {
+  filter: drop-shadow(0px 2px 4px rgba(37, 31, 48, 0.2));
+  background-color: #ffffff;
+  border-radius: 18px !important;
+}
+.input-with-ic .form-control {
+  filter: none !important;
+  background-color: transparent !important;
+}
+/* End Common IN Full site */
 .app-bg::before {
   position: absolute;
   content: "";
@@ -408,17 +418,17 @@ ul {
 }
 /* login signup page css starts*/
 /*.common-body-bg::before {
-	position: absolute;
-	content: "";
-	display: block;
-	left: 0;
-	right: 0;
-	z-index: -1;
-	top: 0;
-	bottom: 0;
-	margin: auto;
-	background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.6) 20.31%, rgba(255, 255, 255, 0) 100%);
-	pointer-events: none;
+position: absolute;
+content: "";
+display: block;
+left: 0;
+right: 0;
+z-index: -1;
+top: 0;
+bottom: 0;
+margin: auto;
+background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.6) 20.31%, rgba(255, 255, 255, 0) 100%);
+pointer-events: none;
 }*/
 .common-body-bg::after {
   position: absolute;
@@ -478,7 +488,7 @@ form .form-field .form-control {
   /* filter: drop-shadow(0px 3.76623px 15.6926px rgba(37, 31, 48, 0.2)); */
   filter: drop-shadow(0px 2px 4px rgba(37, 31, 48, 0.2));
   background-color: #ffffff;
-  padding: 13px 22px !important;
+  padding: 17px 22px !important;
   font-family: "Comfortaa";
   font-style: normal;
   font-weight: 500;
@@ -558,8 +568,8 @@ form {
   margin-bottom: 0;
 }
 .login-signup-content-wrap {
-  /* max-height: 90vh; */
-  /* overflow-y: auto; */
+  max-height: 90vh;
+  overflow-y: auto;
 }
 .login-other-text:after {
   content: "";
@@ -713,10 +723,11 @@ form .form-field {
 form .form-field .eye-icon {
   position: absolute;
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle;
   left: auto;
   right: 18px;
-  top: 17px;
+  top: 50%;
+  transform: translateY(-50%);
   bottom: auto;
   margin: auto;
   cursor: pointer;
@@ -857,7 +868,7 @@ form .form-field select.form-control {
 .dashboard-link-wrap {
   display: flex;
   flex-wrap: wrap;
-  /*height: inherit;*/
+  height: calc(100% - 138px);
   padding-top: 43px;
   padding-bottom: 29px;
   background-color: #0081c5;
@@ -899,8 +910,8 @@ form .form-field select.form-control {
   margin-bottom: 17px;
 }
 .dashboard-bottom-links {
-  margin-top: 156px;
-  margin-bottom: auto;
+  margin-top: auto;
+  margin-bottom: 0;
 }
 .sidebar-open .dashboard-link-wrap ul li a {
   font-size: 0;
@@ -1301,12 +1312,12 @@ form .form-field select.form-control {
 }
 /*
 .settings-notifications-bottom-info-sec .form-switch .form-check-input + label {
-	position: absolute;
-	left: 0;
-	right: auto;
-	top: 0;
-	bottom: 0;
-	margin: auto;
+position: absolute;
+left: 0;
+right: auto;
+top: 0;
+bottom: 0;
+margin: auto;
 }*/
 .settings-notifications-bottom-info-sec
   .form-switch
@@ -1342,28 +1353,30 @@ form .form-field select.form-control {
   background-color: #fff;
   border: 1.5px solid #0081c5;
   border-radius: 12px;
-  padding: 12px 32px 12px 22px;
+  padding: 13px 32px 13px 22px;
   font-family: "Visby Round CF";
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 18px;
+  line-height: 22px;
   text-align: center;
   color: #0081c5;
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
 }
-.setting-btn-link a svg {
+.setting-btn-link a svg,
+.outline-btn svg {
   margin-right: 16px;
 }
 .setting-btn-link a:hover,
 .outline-btn:hover {
-  background-color: #333;
-  border-color: #333;
+  background-color: #363853;
+  border-color: #363853;
   color: #fff;
 }
-.setting-btn-link a:hover svg path {
+.setting-btn-link a:hover svg path,
+.outline-btn:hover svg path {
   stroke: #fff;
 }
 .settings-notifications-bottom-info-sec .settings {
@@ -1425,10 +1438,10 @@ form .form-field select.form-control {
   margin: 0;
   padding: 17px 0 30px;
 }
-.settings-profile-bottom-info-sec .login-btn input[type="submit"] {
+.settings-profile-bottom-info-sec .login-btn .btn {
   min-width: 183px;
   font-size: 16px;
-  padding: 16px 10px;
+  padding: 16px 25px;
   font-weight: 500;
   line-height: 18px;
 }
@@ -1556,8 +1569,8 @@ form .form-field select.form-control {
   justify-content: center;
 }
 .modal {
-  background: rgba(0, 0, 0, 0.74);
-  backdrop-filter: blur(0px);
+  background: rgba(54, 56, 83, 0.3);
+  backdrop-filter: blur(2.5px);
 }
 .modal-dialog {
   display: flex;
@@ -1985,7 +1998,7 @@ form .search-field -o::placeholder {
 }
 .extra-links-wrap ul li a {
   /*background-color: #fff;
-	box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
+box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   border-radius: 15px;
   font-family: "Visby Round CF";
   font-style: normal;
@@ -3178,6 +3191,11 @@ span.date-cal {
   background-color: #fff;
   box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
 }
+.user-thumb-name {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
 .act-user-content-wrap .user-thumb-name img {
   width: 48px;
   height: 48px;
@@ -3224,6 +3242,7 @@ img.img-hover {
   font-size: 16px;
   line-height: 19px;
   text-align: right;
+  font-family: "Visby Round CF";
 }
 .activity-month {
   font-family: "Quicksand";
@@ -3365,7 +3384,447 @@ form .row {
   width: 100%;
   margin: auto;
 }
-/* Wallet Fund Bank Account  */
+.page-item:not(:first-child) .page-link {
+  margin-left: 0px !important;
+}
+/* Pagination CSS */
+.pagination-wrap ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+.pagination-wrap ul .page-link.prev,
+.pagination-wrap ul .page-link.next {
+  padding: 0px 12px;
+  width: 100%;
+}
+.pagination-wrap ul span.page-link.skip {
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  color: #363853 !important;
+  pointer-events: none;
+}
+.pagination-wrap ul .page-item {
+  margin: 0px 8px 0px 0px;
+}
+.pagination-wrap ul .page-item:last-child {
+  margin: 0px 0px 0px 0px;
+}
+.pagination-wrap ul .page-link {
+  padding: 0px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #363853;
+  box-shadow: 0px 23px 63px rgba(0, 0, 0, 0.12);
+  border-radius: 12px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  color: #363853;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  cursor: pointer;
+}
+.pagination-wrap ul .page-link:hover,
+.pagination-wrap ul .page-link.current {
+  background-color: #363853;
+  color: #fff;
+}
+.loan-amount {
+  background: rgba(147, 224, 111, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 20px;
+}
+.loan-amount p {
+  padding-bottom: 0px;
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 22px;
+  text-align: center;
+  color: #828282;
+}
+.loan-amount p:first-child {
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 38px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  color: #56be15;
+  text-align: center;
+  text-transform: capitalize;
+  padding-bottom: 10px;
+}
+.user-profile-div {
+  width: 113px;
+  height: 113px;
+  border-radius: 100%;
+}
+.user-profile-div img {
+  border-radius: 50%;
+  width: 100%;
+}
+.user-details-modal table {
+  width: 100%;
+  margin-top: 25px;
+  margin-bottom: 20px;
+}
+.user-details-modal table td {
+  padding: 0px 10px 30px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+  color: #363853;
+}
+.user-details-modal table td.highlight {
+  color: #56be15;
+}
+.user-details-modal table td:first-child {
+  color: #bdbdbd;
+}
+.btn.print-details-btn {
+  min-width: 204px;
+}
+.btn.print-details-btn:hover {
+  color: #fff;
+}
+.user-details-modal .modal-content {
+  background-color: transparent;
+  padding: 0px;
+  border-radius: 0px;
+}
+.user-details-modal .modal-header {
+  padding: 0px 50px 0px;
+  text-align: center;
+  margin-bottom: -45px;
+  z-index: 9;
+}
+.user-details-modal .modal-body {
+  background-color: #fff;
+  border-radius: 30px;
+  padding: 60px 50px 40px;
+}
+.act-user-content-wrap li div {
+  padding-right: 15px;
+  display: flex;
+  align-items: center;
+}
+.act-user-content-wrap li div:last-child {
+  padding-right: 0px;
+}
+.act-user-content-wrap .left-activity-div {
+  width: calc(100% - 32px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 30px;
+}
+.act-spec-add {
+  max-width: 230px;
+}
+/*  16-02-20023*/
+.no-search-ontop {
+  justify-content: end;
+}
+.add-card-right-sec {
+  padding-top: 40px;
+}
+.add-card-right-sec .dashboard-top-sec {
+  padding-bottom: 30px;
+}
+.btns-inline {
+  display: flex;
+  align-items: center;
+}
+.btns-inline > div {
+  margin-right: 20px;
+}
+.btns-inline > div:last-child {
+  margin-right: 0px;
+}
+.btn-wrap .btn {
+  padding: 15px 20px;
+}
+.add-wallet-card-form-wrap .btn-wrap .btn {
+  min-width: 185px;
+}
+.add-wallet-card-form-wrap .btns-inline {
+  margin-top: 25px;
+}
+ul.radio-group-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 0px 7px 10px;
+}
+ul.radio-group-wrap li {
+  width: 33.33%;
+  padding: 13px 10px;
+}
+.radio-group-wrap .radio-round {
+  width: 48px;
+  height: 48px;
+  background-color: #fff;
+  border: 1px solid;
+  border-color: transparent;
+  box-shadow: 0px 7.3125px 14.625px rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+.radio-group-wrap .radio-round.purple {
+  background-color: #936ee3;
+}
+.radio-group-wrap .radio-round.blue {
+  background-color: #0081c5;
+}
+.radio-group-wrap .radio-round.green {
+  background-color: #93e06f;
+}
+.radio-group-wrap .radio-round.light_blue {
+  background-color: #24beef;
+}
+.radio-group-wrap .radio-round.yellow {
+  background-color: #fff100;
+}
+.radio-group-wrap .radio-round:after {
+  content: "";
+  border: 3px solid transparent;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  box-shadow: 0px 0px 0px 1px transparent;
+}
+.radio-group-wrap li.selected .radio-round:after {
+  box-shadow: 0px 0px 0px 1px #363853;
+  border-color: #f2f2f2;
+}
+.radio-round svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+div.row {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.add-card-color-wrap {
+  padding: 0px;
+  background-color: #f2f2f2;
+  border-radius: 30px;
+  max-width: 212px;
+  height: 212px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: 0;
+}
+.add-card-color-wrap p {
+  font-family: "Visby Round CF";
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 34px;
+  color: #323232;
+  margin-bottom: 10px;
+  padding: 20px 20px 0px;
+}
+.wallet-ac-inner p.card-holder-nm {
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 28px;
+  color: #fff;
+  z-index: 9;
+  text-shadow: -1px -1px 3px rgb(255 255 255 / 55%),
+    2px 2px 4px rgb(0 0 0 / 45%);
+}
+.card-num-date p:first-child {
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 22px;
+  color: #fff;
+  margin-bottom: 20px;
+  letter-spacing: 0.25em;
+}
+.card-num-date p:last-child {
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+  color: #fff;
+  margin-bottom: 0px;
+}
+.wallet-ac-info-wrap .wallet-ac-inner {
+  background: #0081c5;
+  /*background-color: rgb(0 0 0 / 35%);
+  background-blend-mode: overlay;*/
+  box-shadow: 0px 7.13683px 14.2737px rgba(146, 123, 193, 0.3);
+  border-radius: 35px;
+  padding: 50px 10px 20px 40px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 212px;
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.wallet-slider {
+  padding-left: 12px;
+}
+.wallet-ac-info-wrap div,
+.wallet-slider .wallet-ac-inner div {
+  z-index: 1;
+}
+.wallet-ac-info-wrapp .card-holder-nm {
+  margin-bottom: auto;
+}
+.wallet-ac-info-wrap .card-num-date {
+  margin-top: auto;
+  z-index: 9;
+}
+.wallet-ac-inner p {
+  width: 100%;
+  z-index: 9;
+  text-shadow: -1px -1px 3px rgba(255, 255, 255, 0.55),
+    2px 2px 4px rgba(0, 0, 0, 0.45);
+}
+.wallet-ac-inner > svg {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  right: 0;
+  left: 0;
+}
+.wac-details-wrap {
+  margin-bottom: 50px;
+}
+.wallet-ac-inner[bg-color="purple"] {
+  background-color: #936ee3;
+}
+.wallet-ac-inner[bg-color="blue"] {
+  background-color: #0081c5;
+}
+.wallet-ac-inner[bg-color="green"] {
+  background-color: #93e06f;
+}
+.wallet-ac-inner[bg-color="light_blue"] {
+  background-color: #24beef;
+}
+.wallet-ac-inner[bg-color="yellow"] {
+  background-color: #fff100;
+}
+.cust-image-upload-wrap {
+  background: rgba(0, 129, 197, 0.1);
+  border: 1px dashed #0081c5;
+  border-radius: 20px;
+  text-align: center;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+.cust-image-upload-wrap p {
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 34px;
+  padding-bottom: 0;
+  width: 100%;
+  margin-bottom: 0px;
+}
+.cust-image-upload-wrap img {
+  margin-bottom: 20px;
+}
+.custimize-iu-wrap {
+  text-align: Center;
+}
+.cancel-link {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+  color: #0081c5;
+}
+.wallet-pg-model .modal-header {
+  padding-bottom: 30px !important;
+}
+.wallet-pg-model .modal-header h3 {
+  font-size: 32px;
+  line-height: 37px;
+  padding-bottom: 0px;
+  margin-bottom: 0px !important;
+}
+.wallet-page-body form input:not([type="submit"]) {
+  color: #363853 !important;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: "Comfortaa";
+}
+/*.wallet-add-card-main .dashboard-main-links{
+margin-bottom:auto;
+margin-top:0px;
+}
+.wallet-add-card-main .dashboard-bottom-links{
+margin-top:auto;
+margin-bottom:0px;
+}*/
+/* Wallet Bank Link */
+.wallet-link-bank-bottom {
+  max-width: 400px;
+  margin: auto;
+}
+.wallet-bank_link-form-wrap .radio-wrap {
+  max-width: 100%;
+  margin-bottom: 70px;
+  margin-top: 40px;
+}
+.wallet-bank_link-form-wrap .form-check {
+  width: 50%;
+}
+.wallet-bank_link-form-wrap .form-check-label {
+  width: 100%;
+  text-align: center;
+}
+.rm-pl-profile-info {
+  padding-left: 0px;
+}
+.wallet-bank_link-form-wrap .btns-inline {
+  margin-top: 25px;
+}
+.wallet-bank_link-form-wrap .btns-inline .btn-wrap {
+  width: 50%;
+}
+.wallet-bank_link-form-wrap .btn-wrap .btn {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  min-width: 1px;
+}
+.wallet_bank_link_right {
+  padding-top: 40px;
+}
+.wallet_bank_link_right .wallet-link-bank-bottom {
+  padding-top: 130px;
+}
+/* Wallet Fund Bank Account */
 .wallet-cb-wrap {
   position: relative;
   display: flex;
@@ -3437,7 +3896,7 @@ form .row {
   font-weight: 500;
   font-size: 16px;
   line-height: 18px;
-  margin-top: 40px;
+  margin-top: 25px;
 }
 .wallet-fund-form-wrap .amount-total {
   margin-left: 20px;
@@ -3524,11 +3983,15 @@ form .row {
 }
 .fund-sucess-modal .modal-body h3 {
   font-weight: 700;
-  font-size: 31px;
-  line-height: 40px;
+  font-size: 28px;
+  line-height: 33px;
   margin-bottom: 20px;
   padding-bottom: 0px;
   font-family: "Visby Round CF";
+}
+.fund-sucess-modal .modal-body h3 span {
+  font-size: 31px;
+  line-height: 36px;
 }
 .fund-sucess-modal .modal-body p {
   font-family: "Visby Round CF";
@@ -3554,39 +4017,6 @@ form .row {
 }
 .amnt-inc-field input + span {
   cursor: pointer;
-}
-.btns-inline {
-  display: flex;
-  align-items: center;
-}
-.wallet-bank_link-form-wrap .btns-inline .btn-wrap {
-  width: 50%;
-}
-.btns-inline > div {
-  margin-right: 20px;
-}
-.wallet-bank_link-form-wrap .btn-wrap .btn {
-  width: 100%;
-  text-align: center;
-  justify-content: center;
-  min-width: 1px;
-}
-.wallet-link-bank-bottom {
-  max-width: 400px;
-  margin: auto;
-  padding-top: 130px;
-}
-.wallet-bank_link-form-wrap .form-check {
-  width: 50%;
-}
-.wallet-bank_link-form-wrap .radio-wrap {
-  max-width: 100%;
-  margin-bottom: 70px;
-  margin-top: 40px;
-}
-.wallet-bank_link-form-wrap .form-check-label {
-  width: 100%;
-  text-align: center;
 }
 /* Contact Page */
 .contact-serch-main {
@@ -3829,291 +4259,348 @@ cursor:pointer;
 .contact-pg-popup .form-field input:not([type="submit"]) {
   color: #363853;
 }
-.page-item:not(:first-child) .page-link {
-  margin-left: 0px !important;
+/* Wallet Page Start */
+.wallet-main-right {
+  margin-bottom: 50px;
 }
-/* Pagination CSS */
-.pagination-wrap ul {
+.wallet-recent-activity-sec ul li .user-info {
   display: flex;
-  flex-wrap: wrap;
-}
-.pagination-wrap ul .page-link.prev,
-.pagination-wrap ul .page-link.next {
-  padding: 0px 12px;
-  width: 100%;
-}
-.pagination-wrap ul span.page-link.skip {
-  border: none;
-  background-color: transparent;
-  font-size: 20px;
-  color: #363853 !important;
-  pointer-events: none;
-}
-.pagination-wrap ul .page-item {
-  margin: 0px 8px 0px 0px;
-}
-.pagination-wrap ul .page-item:last-child {
-  margin: 0px 0px 0px 0px;
-}
-.pagination-wrap ul .page-link {
-  padding: 0px;
-  width: 40px;
-  height: 40px;
-  border: 1px solid #363853;
-  box-shadow: 0px 23px 63px rgba(0, 0, 0, 0.12);
-  border-radius: 12px !important;
-  display: flex;
-  justify-content: center;
+  flex-wrap: no-wrap;
+  white-space: nowrap;
+  justify-content: space-between;
   align-items: center;
-  background-color: transparent;
-  color: #363853;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
+  padding: 10px 12px;
   cursor: pointer;
-}
-.pagination-wrap ul .page-link:hover,
-.pagination-wrap ul .page-link.current {
-  background-color: #363853;
-  color: #fff;
-}
-.loan-amount {
-  background: rgba(147, 224, 111, 0.1);
+  background-color: transparent;
+  transition: all 0.5s ease-in-out;
   border-radius: 15px;
-  padding: 20px;
-  margin-top: 20px;
+  overflow-x: auto;
 }
-.loan-amount p {
-  padding-bottom: 0px;
-  font-family: "Comfortaa";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 22px;
-  text-align: center;
-  color: #828282;
+.wallet-recent-activity-sec .user-img-title-wrap {
+  min-width: 185px;
+  max-width: 185px;
 }
-.loan-amount p:first-child {
-  font-family: "Visby Round CF";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 38px;
-  margin-bottom: 0px;
-  padding-bottom: 0px;
-  color: #56be15;
-  text-align: center;
-  text-transform: capitalize;
-  padding-bottom: 10px;
+.wallet-recent-activity-sec .user-info .date-info {
+  min-width: 170px;
+  max-width: 170px;
 }
-.user-profile-div {
-  width: 113px;
-  height: 113px;
+.wallet-recent-activity-sec .price-info {
+  min-width: 90px;
+  max-width: 90px;
+}
+.wallet-recent-activity-sec .user-info > div {
+  margin-right: 10px;
+  white-space: normal;
+}
+.wallet-recent-activity-sec .user-info > div:last-child {
+  margin-right: 0px;
+}
+.wallet-recent-activity-sec ul li .user-info:hover {
+  background-color: #fff;
+  box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
+}
+.wallet-recent-activity-sec .activity-use-img {
+  max-width: 48px;
   border-radius: 100%;
+  overflow: hidden;
+  width: 48px;
+  height: 48px;
 }
-.user-profile-div img {
-  border-radius: 50%;
-  width: 100%;
+.wallet-recent-activity-sec .user-img-title-wrap h4 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 19px;
+  color: #323232;
+  padding-left: 25px;
 }
-.user-details-modal table {
-  width: 100%;
-  margin-top: 25px;
+.wallet-recent-activity-sec ul li .user-info:hover .img-default {
+  display: none;
+  transition: all 0.5s ease-in-out;
+}
+.wallet-recent-activity-sec ul li .user-info:hover .img-hover {
+  display: block;
+  transition: all 0.5s ease-in-out;
+}
+.wallet-recent-activity-sec {
+  position: relative;
+}
+.recent-activity-title h3 {
   margin-bottom: 20px;
 }
-.user-details-modal table td {
-  padding: 0px 10px 30px;
+.wallet-recent-activity-sec ul {
+  margin-bottom: 20px;
+}
+.is-relative {
+  position: relative;
+}
+.data-field-wrap svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+  left: auto;
+  z-index: -1;
+}
+.wallet-title-wrap {
+  display: flex;
+  align-items: center;
+}
+.wallet-title-btns {
+  max-width: 365px;
+  margin-left: auto;
+  margin-right: 0;
+  width: 100%;
+}
+/*.wallet-title-btns span.wallet-icon-span {
+  background: #0081C5;
+  box-shadow: 0px 7.3125px 14.625px rgba(0, 0, 0, 0.08);
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  margin-right: 15px;
+  display: inline-block;
+  vertical-align: middle;
+}*/
+.wallet-title-btns a img {
+  margin-right: 15px;
+}
+.wallet-title-btns a {
+  padding: 17px 12px;
+  box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  background: #fff;
   font-weight: 500;
   font-size: 16px;
   line-height: 18px;
-  color: #363853;
 }
-.user-details-modal table td.highlight {
-  color: #56be15;
+.wallet-title-btns a span:last-child {
+  max-width: 86px !important;
+  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
 }
-.user-details-modal table td:first-child {
-  color: #bdbdbd;
+.wallet-title-btns a.wallet-top-1-btn {
+  color: #0081c5;
+  margin-right: 20px;
 }
-.btn.print-details-btn {
-  min-width: 204px;
+.wallet-title-btns a.wallet-top-2-btn {
+  color: #936ee3;
 }
-.btn.print-details-btn:hover {
-  color: #fff;
-}
-.user-details-modal .modal-content {
-  background-color: transparent;
-  padding: 0px;
-  border-radius: 0px;
-}
-.user-details-modal .modal-header {
-  padding: 0px 50px 0px;
-  text-align: center;
-  margin-bottom: -45px;
-  z-index: 9;
-}
-.user-details-modal .modal-body {
-  background-color: #fff;
-  border-radius: 30px;
-  padding: 60px 50px 40px;
-}
-.act-user-content-wrap li div {
-  padding-right: 15px;
-  display: flex;
-  align-items: center;
-}
-.act-user-content-wrap li div:last-child {
-  padding-right: 0px;
-}
-.act-user-content-wrap .left-activity-div {
-  width: calc(100% - 32px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-right: 30px;
-}
-.act-spec-add {
-  max-width: 230px;
-}
-/* Pagination CSS */
-.page-item:not(:first-child) .page-link {
-  margin-left: 0px !important;
-}
-.pagination-wrap ul {
+.wallet-slider .wallet-ac-inner {
+  background: #0081c5;
+  box-shadow: 0px 7.13683px 14.2737px rgb(146 123 193 / 30%);
+  border-radius: 35px;
+  padding: 50px 10px 20px 40px;
   display: flex;
   flex-wrap: wrap;
-}
-.pagination-wrap ul .page-link.prev,
-.pagination-wrap ul .page-link.next {
-  padding: 0px 12px;
   width: 100%;
+  height: 212px;
+  position: relative;
 }
-.pagination-wrap ul span.page-link.skip {
-  border: none;
-  background-color: transparent;
-  font-size: 20px;
-  color: #363853 !important;
-  pointer-events: none;
+.wallet-slider .swiper-3d .swiper-slide-shadow {
+  background: transparent;
 }
-.pagination-wrap ul .page-item {
-  margin: 0px 8px 0px 0px;
+.wallet-slider .swiper-wrapper {
+  margin-bottom: 60px;
 }
-.pagination-wrap ul .page-item:last-child {
-  margin: 0px 0px 0px 0px;
+.wallet-slider .swiper-scrollbar.swiper-scrollbar-horizontal,
+.wallet-slider .swiper-button-next,
+.wallet-slider .swiper-button-prev {
+  bottom: -50px;
 }
-.pagination-wrap ul .page-link {
-  padding: 0px;
-  width: 40px;
-  height: 40px;
-  border: 1px solid #363853;
-  box-shadow: 0px 23px 63px rgba(0, 0, 0, 0.12);
-  border-radius: 12px !important;
+.wallet-main-left {
+  width: calc(100% - 420px);
+}
+.wallet-main-right {
+  width: 420px;
+  padding-left: 45px;
+}
+/* Wallet Page End */
+.wallet-card-add-btns {
   display: flex;
-  justify-content: center;
   align-items: center;
-  background-color: transparent;
-  color: #363853;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  cursor: pointer;
 }
-.pagination-wrap ul .page-link:hover,
-.pagination-wrap ul .page-link.current {
-  background-color: #363853;
-  color: #fff;
-}
-.loan-amount {
-  background: rgba(147, 224, 111, 0.1);
-  border-radius: 15px;
-  padding: 20px;
-  margin-top: 20px;
-}
-.loan-amount p {
-  padding-bottom: 0px;
-  font-family: "Comfortaa";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 22px;
-  text-align: center;
-  color: #828282;
-}
-.loan-amount p:first-child {
-  font-family: "Visby Round CF";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 38px;
-  margin-bottom: 0px;
-  padding-bottom: 0px;
-  color: #56be15;
-  text-align: center;
-  text-transform: capitalize;
-  padding-bottom: 10px;
-}
-.user-profile-div {
-  width: 113px;
-  height: 113px;
-  border-radius: 100%;
-}
-.user-profile-div img {
-  border-radius: 50%;
-  width: 100%;
-}
-.user-details-modal table {
-  width: 100%;
-  margin-top: 25px;
-  margin-bottom: 20px;
-}
-.user-details-modal table td {
-  padding: 0px 10px 30px;
+.wallet-card-add-btns a {
+  padding: 17px 12px;
+  box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  background: #fff;
   font-weight: 500;
   font-size: 16px;
   line-height: 18px;
+  color: #0081c5;
+}
+.wallet-card-add-btns a:first-child {
+  margin-right: 18px;
   color: #363853;
 }
-.user-details-modal table td.highlight {
-  color: #56be15;
+.wallet-card-add-btns a img {
+  margin-right: 15px;
 }
-.user-details-modal table td:first-child {
-  color: #bdbdbd;
+.wallet-card-add-btns a span {
+  display: inline-block;
+  max-width: 86px;
+  vertical-align: middle;
 }
-.btn.print-details-btn {
-  min-width: 204px;
+.wc-details-wrap table {
+  width: 100%;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
-.btn.print-details-btn:hover {
-  color: #fff;
+.wc-details-wrap td {
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-size: 16px;
+  line-height: 19px;
+  padding: 20px 0px;
+  width: 50%;
 }
-.user-details-modal .modal-content {
-  background-color: transparent;
-  padding: 0px;
-  border-radius: 0px;
+.wc-details-wrap td:first-child {
+  font-weight: 500;
+  color: #969696;
+  padding-right: 10px;
 }
-.user-details-modal .modal-header {
-  padding: 0px 50px 0px;
-  text-align: center;
-  margin-bottom: -45px;
-  z-index: 9;
+.wc-details-wrap td:last-child {
+  color: #2b2b2b;
+  font-weight: 600;
+  padding-left: 10px;
 }
-.user-details-modal .modal-body {
-  background-color: #fff;
-  border-radius: 30px;
-  padding: 60px 50px 40px;
-}
-.act-user-content-wrap li div {
-  padding-right: 15px;
+.wc-details-wrap {
   display: flex;
-  align-items: center;
 }
-.act-user-content-wrap li div:last-child {
-  padding-right: 0px;
+.wallet-right-title h3 {
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #323232;
+  margin-bottom: 35px;
 }
-.act-user-content-wrap .left-activity-div {
-  width: calc(100% - 32px);
+.wallet-right-sec {
+  padding-top: 40px;
+}
+.wallet-top-wrap {
+  margin-bottom: 50px;
+}
+.wallet-chart-container {
+  margin-bottom: 50px;
+}
+.wallet-slider .swiper-slide {
+  box-shadow: 0px 7.13683px 14.2737px rgb(146 123 193 / 30%);
+  border-radius: 35px;
+}
+.wallet-slider .wallet-ac-inner {
+  box-shadow: none;
+}
+.recent-activity-title h3 {
+  font-size: 20px;
+  line-height: 24px;
+  color: #323232;
+}
+.wallet-main-left {
+  padding-right: 60px;
+}
+.swiper-scrollbar-drag {
+  left: 0;
+}
+img.img-size {
+  width: auto;
+  max-width: 100%;
+}
+.wc-details-wrap .card-detail {
+  display: none;
+  width: 100%;
+}
+.w-card-top-img {
+  position: absolute;
+  top: 0;
+  right: auto;
+  left: 0;
+  max-width: 126px;
+  width: 100% !important;
+}
+.w-card-bottom-img {
+  position: absolute;
+  bottom: 0;
+  right: -5px;
+  left: auto;
+  max-width: 300px;
+  width: 100% !important;
+}
+/*  Add to card Updates Start */
+.img-radio img {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  left: 0;
+}
+.img-radio .card-img-ic {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 100%;
+}
+.img-radio .img-del-ic {
+  width: 11px;
+  height: 11px;
+  margin: auto;
+}
+.wallet-ac-info-wrap .wallet-ac-inner.bg-img-added {
+  background-color: rgb(0 0 0 / 35%);
+  background-blend-mode: overlay;
+}
+/*  Add to card Updates End */
+/* Fund to your Account Modal Start */
+.fund-acc-modal .modal-dialog {
+  max-width: 532px;
+  margin: auto;
+}
+.fund-acc-modal .modal-content {
+  padding: 50px;
+}
+.fund-payment-option-wrap {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-right: 30px;
+  text-align: center;
 }
-.act-spec-add {
-  max-width: 230px;
+.fund-payment-option {
+  box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.05);
+  border-radius: 15px;
+  background-color: #fff;
+  padding: 18px;
+  width: 130px;
+  min-width: 130px;
+  height: 100%;
 }
+.fund-payment-option img {
+  margin-bottom: 15px;
+}
+.fund-payment-option p {
+  padding-bottom: 0px !important;
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px !important;
+  line-height: 16px !important;
+}
+.fund-acc-modal .modal-header {
+  padding-bottom: 40px;
+  display: block;
+  text-align: center;
+}
+.fund-acc-modal .modal-header img {
+  margin-bottom: 25px;
+}
+.fund-acc-modal .modal-header h3 {
+  font-size: 32px;
+  line-height: 37px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+.ic-shadow {
+  box-shadow: 0px 9.05357px 18.1071px rgba(0, 0, 0, 0.08);
+  border-radius: 100%;
+}
+/* Fund to your Account Modal End */

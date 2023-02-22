@@ -1,8 +1,18 @@
 import { fetchLogout } from "features/user/userProfileSlice";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { IconActivity, IconContact, IconHome, IconLogout, IconProfileVerified, IconRequest, IconSend, IconSetting, IconWallet } from "styles/svgs";
+import { Link } from "react-router-dom";
+import {
+  IconActivity,
+  IconContact,
+  IconHome,
+  IconLogout,
+  IconProfileVerified,
+  IconRequest,
+  IconSend,
+  IconSetting,
+  IconWallet,
+} from "styles/svgs";
 // import { deleteCookie } from "shared/cookies";
 
 function LeftSidebar() {
@@ -23,12 +33,12 @@ function LeftSidebar() {
         />
       </span>
       <div className="dashboard-logo-wrap">
-        <a href="#">
+        <Link to="/">
           <img src="/assets/images/dashaboard-logo.png" alt="dashboard logo" />
-        </a>
-        <a href="#" className="dashaboard-btn">
+        </Link>
+        <Link to="/" className="dashaboard-btn">
           Business
-        </a>
+        </Link>
       </div>
       <div className="dashboard-link-wrap">
         <ul className="dashboard-main-links">
@@ -40,58 +50,57 @@ function LeftSidebar() {
           </li>
           <li>
             <Link to="/">
-              <IconSend style={{stroke: '#F3F3F3'}}/>
+              <IconSend style={{ stroke: "#F3F3F3" }} />
               <span>Send</span>
             </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to="/">
               <IconRequest />
               <span>Request</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to="/">
               <IconActivity />
               <span>Activities</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to="/wallet">
               <IconWallet />
               Wallet
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
-              <IconContact style={{stroke: '#F3F3F3'}}/>
+            <Link to="/">
+              <IconContact style={{ stroke: "#F3F3F3" }} />
               Contacts
-            </a>
+            </Link>
           </li>
         </ul>
         <ul className="dashboard-bottom-links">
           <li>
-            <a href="#">
+            <Link to="/">
               <IconProfileVerified />
               Profile
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/setting">
-              <IconSetting style={{fill: "#fff100"}}/>
+            <Link to="/setting">
+              <IconSetting style={{ fill: "#fff100" }} />
               Setting
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/link-bank">
-              {" "}
+            <Link to="/link-bank">
               <IconWallet />
               Link Bank
-            </a>
+            </Link>
           </li>
           <li>
             <a className="" onClick={handleLogout}>
-              <IconLogout style={{stroke: "#FFF100"}} />
+              <IconLogout style={{ stroke: "#FFF100" }} />
               Log out
             </a>
           </li>

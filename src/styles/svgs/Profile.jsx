@@ -1,7 +1,6 @@
 import React from "react";
 
 function Profile(props) {
-  const { className, style } = props;
   return (
     <svg
       width="16"
@@ -9,8 +8,7 @@ function Profile(props) {
       viewBox="0 0 16 22"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      style={style}
+      {...props}
     >
       <path
         fillRule="evenodd"
