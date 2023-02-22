@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Input from "components/ui/Input";
+import React from "react";
 import { useFormik } from "formik";
 import { linkBankSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";

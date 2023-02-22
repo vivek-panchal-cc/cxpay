@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { editProfileSchema } from "schemas/validationSchema";
@@ -62,6 +62,7 @@ function Businessform(props) {
           <form onSubmit={formik.handleSubmit}>
             <div className="settings-edit-profile-top-sec">
               <FileInput
+                id="_upBusiness"
                 name="profile_image"
                 onChange={(e) => {
                   formik.setFieldValue(
@@ -82,8 +83,14 @@ function Businessform(props) {
                 <p>
                   <a href="mailto:abcdef@gmail.com">{email}</a>
                 </p>
-                <p className="upload-profile-image">
-                  <a href="/">Change Profile Picture</a>
+                <p className="">
+                  <label
+                    htmlFor="fileInput_upBusiness"
+                    className="cursor-pointer"
+                    style={{ color: "#0081c5" }}
+                  >
+                    Change Profile Picture
+                  </label>
                 </p>
               </div>
             </div>
@@ -166,7 +173,10 @@ function Businessform(props) {
               </div>
               <input
                 type="submit"
-                className="btn btn-primary"
+                className={`btn btn-primary ${
+                  formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                }`}
+                disabled={formik.isSubmitting}
                 value="Save Changes"
               />
             </div>

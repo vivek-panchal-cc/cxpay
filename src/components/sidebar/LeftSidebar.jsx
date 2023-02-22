@@ -1,7 +1,7 @@
 import { fetchLogout } from "features/user/userProfileSlice";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   IconActivity,
   IconContact,
@@ -33,12 +33,12 @@ function LeftSidebar() {
         />
       </span>
       <div className="dashboard-logo-wrap">
-        <a href="#">
+        <Link to="/">
           <img src="/assets/images/dashaboard-logo.png" alt="dashboard logo" />
-        </a>
-        <a href="#" className="dashaboard-btn">
+        </Link>
+        <Link to="/" className="dashaboard-btn">
           Business
-        </a>
+        </Link>
       </div>
       <div className="dashboard-link-wrap">
         <ul className="dashboard-main-links">
@@ -55,16 +55,16 @@ function LeftSidebar() {
             </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to="/">
               <IconRequest />
               <span>Request</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to="/">
               <IconActivity />
               <span>Activities</span>
-            </a>
+            </Link>
           </li>
           <li>
             <Link to="/wallet">
@@ -73,31 +73,30 @@ function LeftSidebar() {
             </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to="/">
               <IconContact style={{ stroke: "#F3F3F3" }} />
               Contacts
-            </a>
+            </Link>
           </li>
         </ul>
         <ul className="dashboard-bottom-links">
           <li>
-            <a href="#">
+            <Link to="/">
               <IconProfileVerified />
               Profile
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/setting">
+            <Link to="/setting">
               <IconSetting style={{ fill: "#fff100" }} />
               Setting
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/link-bank">
-              {" "}
+            <Link to="/link-bank">
               <IconWallet />
               Link Bank
-            </a>
+            </Link>
           </li>
           <li>
             <a className="" onClick={handleLogout}>

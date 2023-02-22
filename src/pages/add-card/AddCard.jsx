@@ -19,7 +19,7 @@ function AddCard() {
   const [cardBgColor, setCardBgColor] = useState("blue");
   const [cardBackImg, setCardBackImg] = useState("");
   const [croppedImg, setCroppedImg] = useState("");
-  const [expDate, setExpDate] = useState(new Date());
+  const [expDate, setExpDate] = useState();
 
   const handleCustomizePalette = (color) => {
     setCardBgColor(color);

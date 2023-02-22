@@ -23,3 +23,4 @@ export { default as IconRightArrowBig } from "./RightArrowBig";
 export { default as IconHexagonProfile } from "./HexagonProfile";
 export { default as IconMessage } from "./Message";
 export { default as IconImage } from "./Image";
+export { default as IconCardBackground } from "./CardBackground";

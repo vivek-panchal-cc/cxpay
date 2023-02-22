@@ -5,7 +5,6 @@ import { linkBankSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { IconContact, IconLogout, IconNotify, IconSetting } from "styles/svgs";
 
 const LinkBank = (props) => {
   // const [accountType, setAccountType] = useState("current");

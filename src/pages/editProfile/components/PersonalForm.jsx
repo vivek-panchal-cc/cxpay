@@ -67,6 +67,7 @@ function PersonalForm(props) {
           <form onSubmit={formik.handleSubmit}>
             <div className="settings-edit-profile-top-sec">
               <FileInput
+                id="_upPersonal"
                 name="profile_image"
                 onChange={(e) => {
                   formik.setFieldValue(
@@ -89,9 +90,18 @@ function PersonalForm(props) {
                 <p>
                   <a href="mailto:">{email}</a>
                 </p>
+                <p className="">
+                  <label
+                    htmlFor="fileInput_upPersonal"
+                    className="cursor-pointer"
+                    style={{ color: "#0081c5" }}
+                  >
+                    Change Profile Picture
+                  </label>
+                </p>
               </div>
             </div>
-            <div className="form-field two-fields">
+            <div className="form-field two-fields mb-0">
               <div className="field-half">
                 <Input
                   type="text"
@@ -177,13 +187,16 @@ function PersonalForm(props) {
             <div className="login-btn">
               <div className="setting-btn-link">
                 <Link to="/setting">
-                  <IconLeftArrow style={{stroke: '#0081C5'}}/>
+                  <IconLeftArrow style={{ stroke: "#0081C5" }} />
                   Settings
                 </Link>
               </div>
               <input
                 type="submit"
-                className="btn btn-primary"
+                className={`btn btn-primary ${
+                  formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                }`}
+                disabled={formik.isSubmitting}
                 value="Save Changes"
               />
             </div>

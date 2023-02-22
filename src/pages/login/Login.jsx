@@ -51,7 +51,7 @@ const Login = () => {
                     <Input
                       type="text"
                       className="form-control"
-                      placeholder="Email or Phone"
+                      placeholder="Phone"
                       name="user_name"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}

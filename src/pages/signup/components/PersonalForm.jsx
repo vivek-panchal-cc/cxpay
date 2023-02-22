@@ -24,14 +24,21 @@ function PersonalForm(props) {
       email: "",
       password: "",
       confirm_password: "",
-      country: "",
+      country: "ARUBA",
       city: "",
       profile_image: "",
+      country_code: "297",
     },
     validationSchema: signUpPersonalAccountSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
       try {
-        const { data } = await apiRequest.registerUser(values);
+        const formData = new FormData();
+        for (let key in values) {
+          if (key === "profile_image") continue;
+          formData.append(key, values[key]);
+        }
+        formData.append("profile_image", values.profile_image);
+        const { data } = await apiRequest.registerUser(formData);
         if (!data.success || data.data === null) throw data.message;
         setSignUpCreds({ step: 0 });
         toast.success(data.message);
@@ -183,7 +190,7 @@ function PersonalForm(props) {
                       error={formik.touched.password && formik.errors.password}
                       autoComplete={"new-password"}
                     />
-                    <span className="eye-icon" style={{ top: "11px" }}>
+                    <span className="eye-icon" style={{ top: "24px" }}>
                       <img
                         className="eye-close"
                         src="/assets/images/eye-close.png"
@@ -224,7 +231,10 @@ function PersonalForm(props) {
               <div className="text-center login-btn personal-sign-up">
                 <input
                   type="submit"
-                  className="btn btn-primary"
+                  className={`btn btn-primary ${
+                    formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                  }`}
+                  disabled={formik.isSubmitting}
                   value="Signup"
                 />
               </div>

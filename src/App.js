@@ -16,6 +16,7 @@ import ResetPassword from "pages/reset-password/ResetPassword";
 import AddCard from "pages/add-card/AddCard";
 import LinkBank from "pages/linkBank/LinkBank";
 import Contacts from "pages/contacts/Contacts";
+import Wallet from "pages/wallet/Wallet";
 
 function App() {
   const location = useLocation();
@@ -54,7 +55,7 @@ function App() {
             />
             <Route path="/setting/business-info" element={<></>} />
             {/* wallet */}
-            <Route path="/wallet" element={<>This is wallet</>} />
+            <Route path="/wallet" element={<Wallet />} />
             <Route path="/wallet/add-card" element={<AddCard />} />
           </Route>
           <Route path="/private" element={<> Accessible after login! </>} />
