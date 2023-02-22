@@ -1,7 +1,7 @@
 import { fetchLogout } from "features/user/userProfileSlice";
-import React from "react";
+import React, { useMemo } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import {
   IconActivity,
   IconContact,
@@ -17,6 +17,9 @@ import {
 
 function LeftSidebar() {
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const thisRoute = useMemo(() => location.pathname.split("/")[1], [location]);
 
   // this function should be in a common folder
   const handleLogout = async (event) => {
@@ -42,57 +45,57 @@ function LeftSidebar() {
       </div>
       <div className="dashboard-link-wrap">
         <ul className="dashboard-main-links">
-          <li className="active">
+          <li className={`${thisRoute === "dashboard" ? "active" : ""}`}>
             <Link to="/dashboard">
               <IconHome />
               <span>Dashboard</span>
             </Link>
           </li>
-          <li>
+          <li className={`${thisRoute === "send" ? "active" : ""}`}>
             <Link to="/">
               <IconSend style={{ stroke: "#F3F3F3" }} />
               <span>Send</span>
             </Link>
           </li>
-          <li>
+          <li className={`${thisRoute === "request" ? "active" : ""}`}>
             <Link to="/">
               <IconRequest />
               <span>Request</span>
             </Link>
           </li>
-          <li>
+          <li className={`${thisRoute === "activities" ? "active" : ""}`}>
             <Link to="/">
               <IconActivity />
               <span>Activities</span>
             </Link>
           </li>
-          <li>
+          <li className={`${thisRoute === "wallet" ? "active" : ""}`}>
             <Link to="/wallet">
               <IconWallet />
               Wallet
             </Link>
           </li>
-          <li>
-            <Link to="/contacts">
+          <li className={`${thisRoute === "contacts" ? "active" : ""}`}>
+            <Link to="/">
               <IconContact style={{ stroke: "#F3F3F3" }} />
               Contacts
             </Link>
           </li>
         </ul>
         <ul className="dashboard-bottom-links">
-          <li>
+          <li className={`${thisRoute === "profile" ? "active" : ""}`}>
             <Link to="/">
               <IconProfileVerified />
               Profile
             </Link>
           </li>
-          <li>
+          <li className={`${thisRoute === "setting" ? "active" : ""}`}>
             <Link to="/setting">
               <IconSetting style={{ fill: "#fff100" }} />
               Setting
             </Link>
           </li>
-          <li>
+          <li className={`${thisRoute === "link-bank" ? "active" : ""}`}>
             <Link to="/link-bank">
               <IconWallet />
               Link Bank

@@ -2,20 +2,13 @@ import React from "react";
 import OtpInput from "components/ui/OtpInput";
 import { useFormik } from "formik";
 import { verifyLoginOtpSchema } from "schemas/validationSchema";
-import { apiRequest } from "helpers/apiRequests";
-import { useNavigate } from "react-router-dom";
-import { storageRequest } from "helpers/storageRequests";
+import { fetchLoginOtp } from "features/user/userProfileSlice";
+import { useDispatch } from "react-redux";
 
 function VerifyLoginOtp(props) {
   const { mobileNumber } = props;
 
-  const navigate = useNavigate();
-
-  var now = new Date();
-  var time = now.getTime();
-  // token will expire after 1 hrs
-  time += 1 * 60 * 60 * 1000;
-  now.setTime(time);
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -25,10 +18,8 @@ function VerifyLoginOtp(props) {
     validationSchema: verifyLoginOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
-        const { data } = await apiRequest.verifyLoginOtp(values);
-        if (!data.success || data.data === null) throw data.message;
-        storageRequest.setAuth(data.data.token);
-        navigate("/");
+        const { error, payload } = await dispatch(fetchLoginOtp(values));
+        if (error) throw payload;
       } catch (error) {
         resetForm();
         setStatus(error);

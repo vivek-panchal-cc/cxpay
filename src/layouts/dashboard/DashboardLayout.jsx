@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import LeftSidebar from "components/sidebar/LeftSidebar";
 import { Outlet } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { IconNotify, IconContact, IconSetting, IconLogout } from "styles/svgs";
 
 function DashboardLayout() {
   const dispatch = useDispatch();
+  const { profile } = useSelector((state) => state.userProfile);
 
   useEffect(() => {
     (async () => {
@@ -38,10 +39,7 @@ function DashboardLayout() {
                   <div className="user-image">
                     <div className="user-image-wrap">
                       <span className="user-image">
-                        <img
-                          src="assets/images/user-image-logged-in.png"
-                          alt="user img"
-                        />
+                        <img src={profile.profile_image} alt="user img" />
                       </span>
                     </div>
                     <ul>

@@ -99,9 +99,9 @@ const Login = () => {
                   <a className="btn btn-primary blue-bg" href="/login-with-otp">
                     Login with OTP
                   </a>
-                  <p className="sign-up-text text-center">
+                  {/* <p className="sign-up-text text-center">
                     Don't have an account ? <a href="/signup">Signup</a>
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>
