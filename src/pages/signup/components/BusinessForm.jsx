@@ -1,18 +1,19 @@
-import React, { useState } from "react";
-import Input from "components/ui/Input";
-import { useFormik } from "formik";
-import { signUpBusinessAccountSchema } from "schemas/validationSchema";
-import FileInput from "components/ui/FileInput";
-import { apiRequest } from "helpers/apiRequests";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import { signUpBusinessAccountSchema } from "schemas/validationSchema";
+import { apiRequest } from "helpers/apiRequests";
+import { SignupContext } from "context/signupContext";
+import Input from "components/ui/Input";
+import InputFile from "components/ui/InputFile";
+import InputSelect from "components/ui/InputSelect";
 
 function Businessform(props) {
-  const { signUpCreds, setSignUpCreds } = props;
-
+  const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const navigate = useNavigate();
-
   const [showPassword, setShowPassword] = useState(false);
+  const { countryList, cityList } = signUpCreds || {};
 
   const formik = useFormik({
     initialValues: {
@@ -20,11 +21,14 @@ function Businessform(props) {
       user_type: signUpCreds.user_type || "business",
       email: "",
       password: "",
-      confirm_password: "",
+      confirm_password: "", //not required for API
       mobile_number: signUpCreds.mobile_number,
       profile_image: "",
-      country: "ARUBA",
-      country_code: "297",
+      country_index: -1, //not required for API
+      country: "",
+      country_iso: "", //not required for API
+      country_code: "",
+      city: "",
     },
     validationSchema: signUpBusinessAccountSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
@@ -35,7 +39,7 @@ function Businessform(props) {
           formData.append(key, values[key]);
         }
         formData.append("profile_image", values.profile_image);
-        const { data } = await apiRequest.registerUser(values);
+        const { data } = await apiRequest.registerUser(formData);
         if (!data.success || data.data === null) throw data.message;
         setSignUpCreds({ step: 0 });
         toast.success(data.message);
@@ -54,7 +58,7 @@ function Businessform(props) {
         <div className="col-xs-12">
           <div className="login-signup-content-wrap login-signup01-content-wrap">
             <form onSubmit={formik.handleSubmit}>
-              <FileInput
+              <InputFile
                 name="profile_image"
                 onChange={(e) => {
                   formik.setFieldValue(
@@ -73,47 +77,81 @@ function Businessform(props) {
               <h4 className="blue-text text-center">
                 Please Enter Business Details
               </h4>
-              <div className="form-field">
-                <Input
-                  type="text"
-                  className="form-control"
-                  placeholder="Company Name"
-                  name="company_name"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.company_name}
-                  error={
-                    formik.touched.company_name && formik.errors.company_name
-                  }
-                />
-              </div>
-              <div className="form-field">
-                <Input
-                  type="text"
-                  className="form-control"
-                  placeholder="Mobile Number"
-                  name="mobile_number"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.mobile_number}
-                  error={
-                    formik.touched.mobile_number && formik.errors.mobile_number
-                  }
-                />
-              </div>
-              <div className="form-field">
-                <Input
-                  type="text"
-                  className="form-control"
-                  placeholder="Email"
-                  name="email"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.email}
-                  error={formik.touched.email && formik.errors.email}
-                  autoComplete={"new-email"}
-                />
-              </div>
+              <Input
+                type="text"
+                className="form-control"
+                placeholder="Company Name"
+                name="company_name"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.company_name}
+                error={
+                  formik.touched.company_name && formik.errors.company_name
+                }
+              />
+              <Input
+                type="text"
+                className="form-control"
+                placeholder="Mobile Number"
+                name="mobile_number"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.mobile_number}
+                error={
+                  formik.touched.mobile_number && formik.errors.mobile_number
+                }
+              />
+              <InputSelect
+                className="form-select form-control"
+                name="country_index"
+                onChange={({ currentTarget }) => {
+                  const i = parseInt(currentTarget.value);
+                  formik.setFieldValue("country_index", i);
+                  formik.setFieldValue("country_iso", countryList[i].iso);
+                  formik.setFieldValue(
+                    "country_code",
+                    countryList[i].phonecode
+                  );
+                  formik.setFieldValue("country", countryList[i].country_name);
+                  formik.setFieldValue("city", "");
+                }}
+                onBlur={formik.handleBlur}
+                value={formik.values.country_index}
+                error={formik.touched.country && formik.errors.country}
+              >
+                <option value={""}>Select Country</option>
+                {countryList?.map((country, index) => (
+                  <option key={index} value={index}>
+                    {country.country_name}
+                  </option>
+                ))}
+              </InputSelect>
+              <InputSelect
+                className="form-select form-control"
+                name="city"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.city}
+                error={formik.touched.city && formik.errors.city}
+              >
+                <option value={""}>Select City</option>
+                {cityList[formik.values.country_iso]?.map((city, index) => (
+                  <option key={index} value={city.city_name}>
+                    {city.city_name}
+                  </option>
+                ))}
+              </InputSelect>
+              <Input
+                type="text"
+                className="form-control"
+                placeholder="Email"
+                name="email"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+                error={formik.touched.email && formik.errors.email}
+                autoComplete={"new-email"}
+              />
               <div className="form-field">
                 <Input
                   type={showPassword ? "text" : "password"}
@@ -126,7 +164,7 @@ function Businessform(props) {
                   error={formik.touched.password && formik.errors.password}
                   autoComplete={"new-password"}
                 />
-                <span className="eye-icon" style={{ top: "11px" }}>
+                <span className="eye-icon" style={{ top: "24px" }}>
                   <img
                     className="eye-close"
                     src="/assets/images/eye-close.png"
@@ -151,7 +189,7 @@ function Businessform(props) {
                 />
                 {formik.touched.confirm_password &&
                   !formik.errors.confirm_password && (
-                    <span className="eye-icon top-50 translate-middle">
+                    <span className="eye-icon" style={{ top: "24px" }}>
                       <img
                         className="eye-close"
                         src="/assets/images/green-tick.svg"

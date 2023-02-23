@@ -4,7 +4,7 @@ import Cropper from "react-easy-crop";
 import { IconImage } from "styles/svgs";
 
 function CropCard(props) {
-  const { src, onImgCropped } = props;
+  const { src, onImgCropped, closeModal } = props;
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [croppedAreaPixels, setCroppedAreaPixel] = useState();
   const [zoom, setZoom] = useState(1);
@@ -72,7 +72,10 @@ function CropCard(props) {
                 >
                   <span className="text-white">&#10003;</span>
                 </button>
-                <button className="radio-round purple ms-3 rounded-4 text-white">
+                <button
+                  className="radio-round purple ms-3 rounded-4 text-white"
+                  onClick={closeModal}
+                >
                   <span>&#10005;</span>
                 </button>
               </div>

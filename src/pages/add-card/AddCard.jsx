@@ -41,6 +41,10 @@ function AddCard() {
     setCroppedImg("");
   };
 
+  const handleClosePopupUpload = () => setShowPopupUpload(false);
+
+  const handleClosePopupCrop = () => setShowPopupCrop(false);
+
   const formik = useFormik({
     initialValues: {
       card_number: "",
@@ -76,7 +80,10 @@ function AddCard() {
         show={showPopupUpload}
         setShow={setShowPopupUpload}
       >
-        <UploadImage handleUpload={handleUploadImage} />
+        <UploadImage
+          handleUpload={handleUploadImage}
+          closeModal={handleClosePopupUpload}
+        />
       </Modal>
       <Modal
         id="crop_image_model"
@@ -84,7 +91,11 @@ function AddCard() {
         show={showPopupCrop}
         setShow={setShowPopupCrop}
       >
-        <CropCard src={cardBackImg} onImgCropped={handleCropImage} />
+        <CropCard
+          src={cardBackImg}
+          onImgCropped={handleCropImage}
+          closeModal={handleClosePopupCrop}
+        />
       </Modal>
       <div className="add-card-right-sec py-0">
         <div className="settings-inner-sec wallet-ac-is">
@@ -106,6 +117,9 @@ function AddCard() {
                   formik.touched.card_number && !formik.errors.card_number
                     ? formik.values.card_number
                     : null
+                }
+                expDate={
+                  !formik.errors.expiry_date ? formik.values.expiry_date : null
                 }
               />
             </div>

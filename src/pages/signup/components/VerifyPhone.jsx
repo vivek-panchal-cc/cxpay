@@ -1,12 +1,12 @@
-import React from "react";
-import OtpInput from "components/ui/OtpInput";
+import React, { useContext } from "react";
+import InputOtp from "components/ui/InputOtp";
 import { useFormik } from "formik";
 import { verifyOtpSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
+import { SignupContext } from "context/signupContext";
 
 function VerifyPhone(props) {
-  const { signUpCreds, setSignUpCreds } = props;
-
+  const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const formik = useFormik({
     initialValues: {
       mobile_number: signUpCreds.mobile_number,
@@ -38,7 +38,7 @@ function VerifyPhone(props) {
           <p>Pleases enter confirmation code</p>
           <form className="login-otp-numbers" onSubmit={formik.handleSubmit}>
             <div className="form-field">
-              <OtpInput
+              <InputOtp
                 otpSize={4}
                 name="user_otp"
                 className={"form-control"}

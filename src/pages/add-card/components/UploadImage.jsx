@@ -1,9 +1,9 @@
-import FileInput from "components/ui/FileInput";
+import InputFile from "components/ui/InputFile";
 import { useFormik } from "formik";
 import React from "react";
 
 function UploadImage(props) {
-  const { handleUpload } = props;
+  const { handleUpload, closeModal } = props;
 
   const formik = useFormik({
     initialValues: {
@@ -24,7 +24,7 @@ function UploadImage(props) {
         <div className="modal-body">
           <div className="custimize-iu-wrap">
             <form className="">
-              <FileInput
+              <InputFile
                 id="_scci"
                 name="card_image"
                 onChange={(e) => {
@@ -47,7 +47,7 @@ function UploadImage(props) {
                 </div>
               </label>
             </form>
-            <a href="" className="cancel-link" data-bs-dismiss="modal">
+            <a className="cancel-link cursor-pointer" onClick={closeModal}>
               Cancel
             </a>
           </div>

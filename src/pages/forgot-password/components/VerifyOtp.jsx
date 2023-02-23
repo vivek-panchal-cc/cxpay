@@ -1,5 +1,5 @@
 import React from "react";
-import OtpInput from "components/ui/OtpInput";
+import InputOtp from "components/ui/InputOtp";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
 import { useNavigate } from "react-router-dom";
@@ -44,7 +44,7 @@ function VerifyOtp(props) {
           <p>Pleases enter confirmation code</p>
           <form className="login-otp-numbers" onSubmit={formik.handleSubmit}>
             <div className="form-field">
-              <OtpInput
+              <InputOtp
                 otpSize={4}
                 name="user_otp"
                 className={"form-control"}

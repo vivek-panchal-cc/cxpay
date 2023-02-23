@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./input.module.scss";
 
-function OtpInput(props) {
+function InputOtp(props) {
   const { labelname, error, otpSize, onChange, className, name, value } = props;
 
   const [inputArr] = useState(Array.from(Array(otpSize).keys()));
@@ -61,4 +61,4 @@ function OtpInput(props) {
   );
 }
 
-export default OtpInput;
+export default InputOtp;
