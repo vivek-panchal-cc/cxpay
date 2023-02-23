@@ -22,6 +22,7 @@ const API_addCard = process.env.REACT_APP_ADD_CARD;
 const API_addContact = process.env.REACT_APP_ADD_CONTACT;
 const API_getConatcts = process.env.REACT_APP_GET_CONTACT_LIST;
 const API_deleteContact = process.env.REACT_APP_DELETE_CONTACT;
+const API_favContact = process.env.REACT_APP_FAV_CONTACT;
 
 // POST @login API
 // @params user_name, password
@@ -134,6 +135,12 @@ export const deleteContact = (params) => {
   return axiosInstance.post(`${API_URL}${API_deleteContact}`, params);
 };
 
+// POST @mark-as-favourite API
+// @params mobile
+export const favContact = (params) => {
+  return axiosInstance.post(`${API_URL}${API_favContact}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -153,4 +160,5 @@ export const apiRequest = {
   addContact,
   getConatcts,
   deleteContact,
+  favContact,
 };

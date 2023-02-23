@@ -3,12 +3,11 @@ import { useFormik } from "formik";
 import { inviteContactSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import Input from "components/ui/Input";
-import Modal from "components/modals/Modal";
 import InvitationSent from "./InvitationSent";
 
 function InviteContact(props) {
   const { invitetitle } = props;
-  const { setShow } = props;
+  const { setShow, getConatcts, page, search } = props;
   const [showInvitationSentPopup, setInvitationSentPopup] = useState(false);
   const [isShowContactPopup, setIsShowContactPopup] = useState(true);
 
@@ -24,6 +23,7 @@ function InviteContact(props) {
         if (!data.success) throw data.message;
         if (data.data.alreadyInvited === false) {
           setIsShowContactPopup(false);
+          getConatcts(page, search);
           return setInvitationSentPopup(true);
         } else {
           setStatus(data.message);
@@ -35,10 +35,6 @@ function InviteContact(props) {
     },
   });
 
-  const handlePopupClose = () => {
-    setInvitationSentPopup(false);
-    setIsShowContactPopup(false);
-  };
   return (
     <>
       {/* <Modal

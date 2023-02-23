@@ -3,7 +3,6 @@ import styles from "./modal.module.scss";
 
 function Modal(props) {
   const { children, className, id, show, setShow } = props;
-  console.log("show", show);
   const modalRef = useRef(null);
 
   useEffect(() => {
