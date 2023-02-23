@@ -417,6 +417,11 @@
   .dashaboard-main-sec .dashboard-notification-sec {
     width: 30%;
   }
+  .dashboard-home-container .dashboard-graph-sec{padding-right:15px;}
+  .dashboard-home-container .dashboard-card-links-sec,
+  .dashboard-home-container .dashboard-notification-sec {width: 300px;}
+  .dashboard-home-container .dashboard-graph-sec,
+  .dashboard-home-container .dashboard-search-wrap {width: calc(100% - 300px);}
   .user-profile ul li a {
     font-size: 13px;
   }
@@ -955,6 +960,31 @@
   .dashaboard-main-sec {
     padding-right: 25px;
     padding-left: 25px;
+  }
+  .dashboard-top-sec {
+    flex-direction: column-reverse;
+  }
+  .dashboard-home-container .dashboard-bottom-sec {
+    flex-wrap: wrap;
+  }
+  .dashboard-home-container .dashboard-graph-sec {
+    width: 100%;
+    padding-right: 0px;
+  }
+  .dashboard-home-container .dashboard-card-links-sec {
+    width: 100%;
+    padding-left: 0px;
+  }
+  .dashboard-home-container .dashboard-notification-sec{
+    width: 100%;
+  }
+  .dashboard-home-container .dashboard-search-wrap{
+      width: 100%;
+      margin-top: -48px;
+  }
+  .dashboard-home-container .dashboard-search-wrap form .search-field{
+    margin-left: 0;
+    margin-right: auto;
   }
   .tab-inner-wrap ul li .user-info {
     padding: 10px 8px 10px 8px;

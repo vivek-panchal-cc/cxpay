@@ -943,6 +943,26 @@ form .form-field select.form-control {
 .sidebar-open .toggle-admin-btn img {
   transform: rotate(180deg);
 }
+
+.dashboard-home-container .dashboard-bottom-sec{flex-wrap: nowrap;}
+.dashboard-home-container .dashboard-graph-sec {
+    width: calc(100% - 450px);
+    padding-right: 40px;
+}
+.dashboard-home-container .dashboard-card-links-sec{
+	width: 450px;
+    padding-left: 35px;
+}
+.dashboard-home-container .dashboard-search-wrap{
+	 width: calc(100% - 450px);
+    padding-right: 40px;
+}
+.dashboard-home-container .dashboard-notification-sec{
+	width: 450px;
+    padding-left: 35px;
+}
+.dashboard-home-container .dashboard-bottom-sec{padding-top: 20px;}
+
 /*dashboard page css close*/
 
 /* profile page css starts*/
