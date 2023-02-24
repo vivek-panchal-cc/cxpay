@@ -34,7 +34,8 @@ const profileImageSchema = yup
   .required("Profile image is required")
   .test({
     message: "Not a valid image type",
-    test: (file) => isValidFileType(file && file.name.toLowerCase(), "image"),
+    test: (file) =>
+      isValidFileType(file && file.name.toLowerCase(), "image"),
   });
 
 export {

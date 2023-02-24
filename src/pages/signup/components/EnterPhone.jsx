@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
@@ -6,9 +6,10 @@ import { enterPhoneSchema } from "schemas/validationSchema";
 import AlreadyRegistered from "./AlreadyRegistered";
 import VerifyPhone from "./VerifyPhone";
 import Modal from "components/modals/Modal";
+import { SignupContext } from "context/signupContext";
 
 function EnterPhone(props) {
-  const { signUpCreds, setSignUpCreds } = props;
+  const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const [showRegisteredPopup, setShowregisteredPopup] = useState(false);
   const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
   const [username, setUsername] = useState("USERNAME");

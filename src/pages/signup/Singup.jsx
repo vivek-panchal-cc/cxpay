@@ -1,34 +1,30 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import EnterPhone from "./components/EnterPhone";
 import AccountType from "./components/AccountType";
 import Businessform from "./components/BusinessForm";
 import PersonalForm from "./components/PersonalForm";
+import SignupProvider, { SignupContext } from "context/signupContext";
 
 const Signup = () => {
-  const [signUpCreds, setSignUpCreds] = useState({
-    step: 0,
-    mobile_number: "",
-    user_otp: "",
-    user_type: "",
-  });
+  const { signUpCreds } = useContext(SignupContext);
 
   const getCurrentStepComponent = () => {
     switch (signUpCreds.step) {
       case 0:
-        return <EnterPhone {...{ signUpCreds, setSignUpCreds }} />;
+        return <EnterPhone />;
       case 1:
-        return <AccountType {...{ signUpCreds, setSignUpCreds }} />;
+        return <AccountType />;
       case 2:
         switch (signUpCreds.user_type) {
           case "business":
-            return <Businessform {...{ signUpCreds, setSignUpCreds }} />;
+            return <Businessform />;
           case "personal":
-            return <PersonalForm {...{ signUpCreds, setSignUpCreds }} />;
+            return <PersonalForm />;
           default:
-            return <EnterPhone {...{ signUpCreds, setSignUpCreds }} />;
+            return <EnterPhone />;
         }
       default:
-        return <EnterPhone {...{ signUpCreds, setSignUpCreds }} />;
+        return <EnterPhone />;
     }
   };
 

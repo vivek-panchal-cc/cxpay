@@ -1,22 +1,24 @@
 import React, { useEffect } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-// Layouts
-import DashboardLayout from "layouts/dashboard/DashboardLayout";
-import PrivateRoute from "routes/PrivateRoute.jsx";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import PrivateLayout from "layouts/PrivateLayout.jsx";
 import { ToastContainer } from "react-toastify";
-import EditProfile from "pages/editProfile/EditProfile.jsx";
 // Pages
 import Login from "pages/login/Login.jsx";
 import Signup from "pages/signup/Singup.jsx";
-import Setting from "pages/setting/Setting.jsx";
 import LoginWithOtp from "pages/login-with-otp/LoginWithOtp";
-import ChangePassword from "pages/change-password/ChangePassword";
 import ForgotPassword from "pages/forgot-password/ForgotPassword";
 import ResetPassword from "pages/reset-password/ResetPassword";
-import LinkBank from "pages/linkBank/LinkBank";
-import AddCard from "pages/add-card/AddCard";
-import Contacts from "pages/contacts/Contacts";
+import SignupProvider from "context/signupContext";
+import DashboardLayout from "layouts/DashboardLayout";
+import Setting from "pages/setting/Setting";
+import EditProfile from "pages/editProfile/EditProfile";
+import ChangePassword from "pages/change-password/ChangePassword";
 import Wallet from "pages/wallet/Wallet";
+import AddCard from "pages/add-card/AddCard";
+import LinkBank from "pages/linkBank/LinkBank";
+import Contacts from "pages/contacts/Contacts";
+import Logout from "pages/logout/Logout";
+import PublicLayout from "layouts/PublicLayout";
 
 function App() {
   const location = useLocation();
@@ -30,22 +32,28 @@ function App() {
   return (
     <>
       <Routes>
-        {/* <Route path="/dashboard" element={ <Dashboard />} /> */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/login-with-otp" element={<LoginWithOtp />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route
-          path="/reset-password/:mobile/:token"
-          element={<ResetPassword />}
-        />
+        {/* List of Public Routes */}
+        <Route element={<PublicLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/login-with-otp" element={<LoginWithOtp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="/reset-password/:mobile/:token"
+            element={<ResetPassword />}
+          />
+          <Route
+            path="/signup"
+            element={
+              <SignupProvider>
+                <Signup />
+              </SignupProvider>
+            }
+          />
+        </Route>
         {/* List of Private Routes */}
-        <Route element={<PrivateRoute />}>
+        <Route element={<PrivateLayout />}>
           <Route path="/" element={<DashboardLayout />}>
-            <Route path="/dashboard" element={<> Welcome, Dashboard </>} />
             {/* settings */}
-            <Route path="/link-bank" element={<LinkBank />} />
-            <Route path="/contacts" element={<Contacts />} />
             <Route path="/setting" element={<Setting />} />
             <Route path="/setting/edit-profile" element={<EditProfile />} />
             <Route path="/setting/notification" element={<></>} />
@@ -57,8 +65,11 @@ function App() {
             {/* wallet */}
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/wallet/add-card" element={<AddCard />} />
+            <Route path="/wallet/link-bank" element={<LinkBank />} />
+            {/* contacts */}
+            <Route path="/contacts" element={<Contacts />} />
           </Route>
-          <Route path="/private" element={<> Accessible after login! </>} />
+          <Route path="/logout" element={<Logout />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

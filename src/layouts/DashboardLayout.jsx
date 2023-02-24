@@ -38,8 +38,12 @@ function DashboardLayout() {
                 <div className="user-profile">
                   <div className="user-image">
                     <div className="user-image-wrap">
-                      <span className="user-image">
-                        <img src={profile.profile_image} alt="user img" />
+                      <span className="user-image h-100 w-100">
+                        <img
+                          src={profile.profile_image}
+                          className="object-fit-cover h-100 w-100"
+                          alt="user img"
+                        />
                       </span>
                     </div>
                     <ul>
@@ -56,7 +60,7 @@ function DashboardLayout() {
                         </a>
                       </li>
                       <li>
-                        <a href="/">
+                        <a href="/logout">
                           <IconLogout style={{ stroke: "#363853" }} />
                           Logout
                         </a>

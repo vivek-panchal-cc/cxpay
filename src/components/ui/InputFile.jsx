@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-function FileInput(props) {
+function InputFile(props) {
   const {
     id = Math.round(Math.random() * 1000).toString(),
     name,
@@ -64,4 +64,4 @@ function FileInput(props) {
   );
 }
 
-export default FileInput;
+export default InputFile;

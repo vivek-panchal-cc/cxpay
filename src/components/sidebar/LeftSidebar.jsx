@@ -1,7 +1,5 @@
-import { fetchLogout } from "features/user/userProfileSlice";
 import React, { useMemo } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   IconActivity,
   IconContact,
@@ -13,19 +11,10 @@ import {
   IconSetting,
   IconWallet,
 } from "styles/svgs";
-// import { deleteCookie } from "shared/cookies";
 
 function LeftSidebar() {
-  const dispatch = useDispatch();
   const location = useLocation();
-
   const thisRoute = useMemo(() => location.pathname.split("/")[1], [location]);
-
-  // this function should be in a common folder
-  const handleLogout = async (event) => {
-    event.preventDefault();
-    await dispatch(fetchLogout());
-  };
 
   return (
     <div className="dashboard-left-wrap">
@@ -102,10 +91,10 @@ function LeftSidebar() {
             </Link>
           </li>
           <li>
-            <a className="" onClick={handleLogout}>
+            <Link to="/logout">
               <IconLogout style={{ stroke: "#FFF100" }} />
               Log out
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

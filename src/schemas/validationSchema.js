@@ -16,6 +16,7 @@ const signUpPersonalAccountSchema = yup.object().shape({
   confirm_password: confirmPasswordSchema,
   profile_image: profileImageSchema,
   country: yup.string().required("required*"),
+  country_code: yup.string().required("required*"),
   city: yup.string().required("required*"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
@@ -27,6 +28,9 @@ const signUpBusinessAccountSchema = yup.object().shape({
   password: passwordSchema,
   confirm_password: confirmPasswordSchema,
   profile_image: profileImageSchema,
+  country: yup.string().required("required*"),
+  country_code: yup.string().required("required*"),
+  city: yup.string().required("required*"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
@@ -63,10 +67,13 @@ const verifyLoginOtpSchema = yup.object().shape({
     .required("OTP is required"),
 });
 
-const editProfileSchema = yup.object().shape({
+const editProfileBusinessUserSchema = yup.object().shape({
   company_name: yup.string().required("required*"),
   user_type: yup.string().required(),
   email: emailSchema,
+  country: yup.string().required("required*"),
+  country_code: yup.string().required("required*"),
+  city: yup.string().required("required*"),
   //profile_image: profileImageSchema,
   // mobile_number: yup.string().required("Mobile number is required"),
 });
@@ -76,7 +83,10 @@ const editProfilePersonalUserSchema = yup.object().shape({
   last_name: yup.string().required("required*"),
   user_type: yup.string().required(),
   email: emailSchema,
-  //profile_image: profileImageSchema,
+  country: yup.string().required("required*"),
+  country_code: yup.string().required("required*"),
+  city: yup.string().required("required*"),
+  // profile_image: profileImageSchema,
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 const forgotPasswordSchema = yup.object().shape({
@@ -100,7 +110,7 @@ export {
   signUpPersonalAccountSchema,
   signUpBusinessAccountSchema,
   verifyLoginOtpSchema,
-  editProfileSchema,
+  editProfileBusinessUserSchema,
   editProfilePersonalUserSchema,
   forgotPasswordSchema,
   resetPasswordSchema,

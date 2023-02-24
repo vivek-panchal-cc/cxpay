@@ -2,7 +2,7 @@ import React from "react";
 import { IconCardBackground } from "styles/svgs";
 
 function CreditCard(props) {
-  const { bgcolor, bgimg, cardNumber } = props;
+  const { bgcolor, bgimg, cardNumber, expDate } = props;
 
   return (
     <div
@@ -19,14 +19,18 @@ function CreditCard(props) {
           : {}
       }
     >
-      <IconCardBackground />
+      {!bgimg && <IconCardBackground />}
       <p className="card-holder-nm">XXXXXX</p>
       <div className="card-num-date">
         <p className="">
           .... .... ....{" "}
           {cardNumber ? cardNumber?.substr(cardNumber.length - 4) : "XXXX"}
         </p>
-        <p className="">XX XXX XXXX</p>
+        <p className="">
+          {expDate
+            ? `XX ${expDate.split("/")[0]} ${expDate.split("/")[1]}`
+            : `XX XXX XXXX`}
+        </p>
       </div>
     </div>
   );

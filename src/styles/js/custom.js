@@ -176,10 +176,10 @@ window.onload = function () {
     ],
   };
 };
-$(document).ready(function () {
-  $(function () {
-    $(".date_field").datepicker({
-      minDate: 0,
-    });
-  });
-});
+// $(document).ready(function () {
+//   $(function () {
+//     $(".date_field").datepicker({
+//       minDate: 0,
+//     });
+//   });
+// });
