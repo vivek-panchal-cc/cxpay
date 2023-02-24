@@ -90,7 +90,12 @@ const editProfilePersonalUserSchema = yup.object().shape({
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 const forgotPasswordSchema = yup.object().shape({
-  mobile_number: yup.string().required("required*"),
+  mobile_number: yup
+    .string()
+    .min(10, "Mobile number must be at least 10 characters")
+    .max(10, "Mobile number must be at most 10 characters")
+    .matches(/^[0-9]*$/, "Enter a valid mobile number")
+    .required("Mobile number is required"),
 });
 
 const resetPasswordSchema = yup.object().shape({

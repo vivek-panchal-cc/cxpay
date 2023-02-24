@@ -68,12 +68,15 @@ function PersonalForm(props) {
                     e.currentTarget.files[0]
                   );
                 }}
-                error={formik.errors.profile_image}
+                error={
+                  formik.touched.profile_image && formik.errors.profile_image
+                }
                 showPreview={true}
                 showLabel={true}
                 labelText="Change Profile Picture"
                 fallbackSrc="/assets/images/profile-img.png"
                 classNameInput="d-none"
+                accept="image/*"
               />
               <h5 className="text-center">Signup</h5>
               <h4 className="blue-text text-center">

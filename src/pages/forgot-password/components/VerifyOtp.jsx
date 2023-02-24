@@ -40,7 +40,7 @@ function VerifyOtp(props) {
           </div>
         </div>
         <div className="modal-body">
-          <h3>Verify your Phone Number</h3>
+          <h3 className="lh-base">Verify your Phone Number</h3>
           <p>Pleases enter confirmation code</p>
           <form className="login-otp-numbers" onSubmit={formik.handleSubmit}>
             <div className="form-field">

@@ -20,6 +20,7 @@ const API_updateForgotPassword =
 const API_linkBank = process.env.REACT_APP_ADD_BANK;
 const API_addCard = process.env.REACT_APP_ADD_CARD;
 const API_getCountry = process.env.REACT_APP_GET_COUNTRY;
+const API_refreshToken = process.env.REACT_APP_REFRESH_TOKEN;
 
 // POST @login API
 // @params user_name, password
@@ -120,6 +121,12 @@ export const getCountry = () => {
   return axiosInstance.post(`${API_URL}${API_getCountry}`);
 };
 
+// POST @get-country API
+// @params authToken
+export const refreshToken = (token) => {
+  return axiosInstance.post(`${API_URL}${API_refreshToken}`, token);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -137,4 +144,5 @@ export const apiRequest = {
   linkBank,
   addCard,
   getCountry,
+  refreshToken,
 };
