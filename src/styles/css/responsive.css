@@ -1,6 +1,6 @@
 @media only screen and (max-height: 850px) {
   .login-logo-image img {
-    max-width: 120px;
+    max-width: 110px;
   }
   .login-signup form .form-field .form-control {
     padding: 11px 19px !important;
@@ -14,7 +14,8 @@
     font-size: 24px;
     line-height: 28px;
   }
-  .login-signup-content-wrap h5 {
+  .login-signup-content-wrap h5,
+ .login-signup-content-wrap h4.blue-text {
     font-size: 20px;
     line-height: 25px;
     margin-bottom: 15px;
@@ -23,20 +24,20 @@
     padding-bottom: 10px;
   }
   .login-signup input[type="submit"] {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    font-size: 16px;
+    padding-top:12px;
+    padding-bottom:12px;
+    font-size:14px;
+	line-height:18px;
   }
   .login-signup .login-signup-inner {
-    padding: 20px 50px 20px;
+    padding: 30px 50px;
   }
-  .login-signup-content-wrap {
+  .login-signup-01 .login-signup-inner {
+    padding: 30px 50px;
+  }
+  /*.login-signup-content-wrap {
     max-height: 95vh;
-  }
-  .login-signup-content-wrap h4.blue-text {
-    font-size: 21px;
-    line-height: 25px;
-  }
+  }*/
   .send-cd-btn .btn,
   .sign-up-btn .btn {
     margin-top: 10px;
@@ -72,6 +73,35 @@
   .dashboard-right-sec {
     padding-top: 30px;
   }
+  /* Wallet Page Start */
+  .wallet-chart-container,
+  .wallet-top-wrap{margin-bottom:30px;}
+  .wallet-slider .swiper-wrapper{margin-bottom: 40px;}
+  .wallet-slider .swiper-scrollbar.swiper-scrollbar-horizontal,
+  .wallet-slider .swiper-button-next, .wallet-slider .swiper-button-prev {bottom: -35px;}
+  .wallet-title-btns a,
+  .wallet-card-add-btns a{padding:12px 12px;}
+  .wallet-main-right{margin-bottom:30px;}
+  .wc-details-wrap td{padding:13px 0px;}
+  .wc-details-wrap td:first-child{padding-right:5px;}
+  .wc-details-wrap td:last-child{padding-left:5px;}
+  .wc-details-wrap table{
+	  margin-top:15px;
+	  margin-bottom:15px;
+  }
+  .wallet-right-title h3{margin-bottom:35px;}
+  .extra-links-wrap ul li a{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size:15px;
+    line-height:20px;
+  }
+  .extra-links-wrap .icon-link-text svg{width: 20px;}
+  .extra-links-wrap .arrow-wrap svg{width:7px;}
+  /* Wallet Page End */
+  .recent-contact-sec .title-content-wrap{padding-bottom: 20px;}
+  .dashboard-card-sec{margin-bottom:15px;}
+  .dashboard-graph-sec .graph-title-content-wrap {padding-bottom: 25px;}
 }
 @media only screen and (max-height: 768px) {
   .add-card-right-sec,
@@ -88,7 +118,7 @@
     margin-top: 10px;
   }
   .wallet-total-am-wrap {
-    margin-top: 15px;
+    margin-top:10px;
   }
   form .form-field .form-control,
   .select-form-field select {
@@ -107,10 +137,102 @@
   .wallet-fund-row-amt table td {
     padding: 20px 20px 10px;
   }
+  .login-signup-02 .login-signup-content-wrap h4.blue-text{margin-bottom:20px;}
+  .modal-content{
+	  padding-top:30px;
+	  padding-bottom:25px; 
+  }
+  .contact-pg-popup h3{
+	    font-size: 24px;
+		line-height: 30px;
+  }
+  .invite-logo{margin-bottom: 15px;}
+  .contact-pg-popup form{margin-top: 25px;}
+  .user-details-modal .modal-body h3{
+    font-size: 22px;
+    line-height: 22px;
+    padding-bottom: 0px;
+  }
+  .user-details-modal .loan-amount p:first-child{
+      font-size: 22px;
+      line-height: 22px;
+  }
+  .user-details-modal .loan-amount p{
+    font-size: 15px;
+    line-height: 20px;
+  }
+  .user-details-modal .loan-amount{
+    padding: 20px 20px;
+    margin-top: 20px;
+  }
+  .user-details-modal table td{
+    font-size: 15px;
+    line-height: 15px;
+    padding-bottom:30px;
+  }
+  .user-details-modal table{
+    margin-bottom: 15px;
+  }
+ .user-details-modal  .btn.print-details-btn{
+    font-size: 16px;
+    line-height: 16px;
+  }
+  .user-details-modal .modal-body{
+    padding-bottom: 35px;
+  }
+  .modal-content{
+    max-height: 96vh;
+  }
 }
 @media only screen and (max-height: 650px) {
-  .wallet_bank_link_right .wallet-link-bank-bottom {
-    padding-top: 80px;
+	.wallet_bank_link_right .wallet-link-bank-bottom {
+		padding-top:30px;
+	}
+	.account-type-content img {
+		max-width: 50px;
+		margin: auto;
+	}
+	.account-type-content p{
+		font-size: 16px;
+		line-height: 18px;
+	}
+	.account-type-content p{margin-top:10px;}
+	.login-account-type .login-signup-inner{
+		padding-top:30px;
+		padding-bottom:30px;
+	}
+	#already_register_user .modal-body p.user_name{
+		margin:30px 0px;
+		font-size:25px;
+	}
+  .dashboard-link-wrap{
+    padding-top: 25px;
+  }
+  ul.dashboard-bottom-links{padding-bottom: 10px;}
+  .db-view-bank-main ul.db-view-bank-listing {
+    height: 400px;
+  }
+  .view_bank_listing_bottom-wrap {
+    bottom: 30px;
+  }
+   .user-details-modal  .btn.print-details-btn{
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .user-details-modal table td{padding-bottom: 23px;}
+  .user-details-modal .loan-amount{
+    padding: 15px 20px;
+    margin-top: 15px;
+  }
+  .user-details-modal .loan-amount p:first-child {
+    font-size: 20px;
+    line-height: 20px;
+  }
+  .activities-sec {padding-bottom: 20px;}
+}
+@media only screen and (max-height: 600px){
+  .db-view-bank-main ul.db-view-bank-listing {
+    height:340px;
   }
 }
 @media only screen and (max-width: 1366px) {
@@ -127,10 +249,11 @@
   .profile-bottom-info-sec ul li {
     padding: 15px 20px 15px 25px;
     font-size: 18px;
-    line-height: 21px;
+    line-height: 23px;
   }
-  .profile-info-right-desc {
-    width: 60%;
+  .profile-info-right-desc p{
+    font-size: 18px;
+    line-height: 23px;
   }
   .profile-qr-inner {
     padding: 25px 30px;
@@ -164,7 +287,7 @@
     padding: 10px 12px 10px 8px;
   }
   .graph-title-content-wrap h2 {
-    font-size: 25px;
+    font-size: 22px;
   }
   .send-top-sec p,
   .send-pay-title-sec p {
@@ -188,26 +311,17 @@
     margin-right: 20px;
   }
   .send-top-sec {
-    padding-bottom: 50px;
+    padding-bottom:40px;
     padding-right: 30px;
   }
   .send-whom-slider .contact-name {
     font-size: 17px;
   }
-  .send-whom-slider .img-wrap img {
-    border-radius: 47%;
-    max-height: 110px;
-  }
-  .send-whom-slider .img-wrap {
-    max-width: 118px;
-    max-height: 118px;
-    margin: 0 auto 13px;
-  }
   .send-whom-slider .swiper-wrapper {
     padding-bottom: 47px;
   }
   .send-btn-wrap {
-    padding-top: 45px;
+    padding-top:35px;
   }
   .send-btn-wrap .btn-group-payment,
   .pay-btn-wrap .btn-cancel-payment,
@@ -255,7 +369,7 @@
     padding-left: 16px;
   }
   .payment-blocks-listing li > div.specification-input {
-    min-width: 320px;
+    min-width: 300px;
   }
   .payment-footer-block {
     padding: 35px 60px;
@@ -283,19 +397,10 @@
   }
   .payment-blocks-listing .input-select-wrap {
     max-width: 240px;
-  }
-  .send-group-slider .img-wrap img {
-    max-height: 54px;
-    max-width: 75px;
+    min-width: 240px;
   }
   .send-group-slider .contact-name {
     max-width: 121px;
-  }
-  .send-group-slider .img-wrap {
-    height: 118px;
-  }
-  .send-group-slider .img-wrap {
-    height: 116px;
   }
   .request-whom-slider .contact-name {
     max-width: 133px;
@@ -311,7 +416,7 @@
     line-height: 30px;
   }
   .con-list-uimg {
-    margin-right: 35px;
+    margin-right:18px;
   }
   .wallet-bank_link-form-wrap .radio-wrap {
     margin-bottom: 35px;
@@ -320,13 +425,117 @@
   .wallet-bank_link-form-wrap .btns-inline {
     margin-top: 20px;
   }
+  /* Wallet Page Start */
+  .wallet-chart-container{margin-bottom:30px;}
+  .wallet-recent-activity-sec .user-img-title-wrap h4{padding-left:10px;}
+  .wallet-main-left, .wallet-top-wrap .wallet-title-wrap{padding-right:0px;}
+  /* Wallet Page End */
+	.con-listing-info .con-list-uname{    
+		font-size: 15px;
+		line-height: 20px;
+	}
+	.con-listing-btn-wrap .btn{
+		padding: 8px 16px;
+		font-size:13px;
+	}
+	.con-listing-edit-wrap {
+		margin-right: 25px;
+	}
+	.conlist-edit-a {
+		margin-right: 9px;
+	}
+	.con-listing-btn-wrap .btn {
+		padding: 9px 16px;
+	}
+  .profile-qr-inner img{max-width: 150px;}
+  .profile-info-right-desc{padding-left:25px;}
+  .business-id-field p{padding-top: 10px;}
+  .business-url-field p, .business-id-field p{font-size: 18px;}
+  .dashboard-home-container .dashboard-graph-sec,
+  .dashboard-home-container .dashboard-search-wrap{padding-right: 20px;}
+  .tab-inner-wrap .user-img-title-wrap h4{
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .user-img-title-wrap{
+    max-width: 200px;
+    min-width: 200px;
+  }
+  .user-info .date-info{
+      font-size: 13px;
+      max-width: 180px;
+      min-width: 160px;
+  }
+  .user-info .price-info{
+    font-size: 14px;
+    line-height: 14px;
+    max-width: 105px;
+    min-width: 105px;
+  }
+  .tab-inner-wrap ul li .user-info > div{padding:0px 5px;}
+  .recent-contact-sec .title-content-wrap h3,
+   .recent-activity-sec .title-content-wrap h3,
+   .dashboard-card-sec h3 {
+    font-size: 18px;
+  }
+  .dashboard-card-sec .title-content-wrap {
+    padding-top: 10px;
+    padding-bottom: 20px;
+  }
+  p.bank-name-wrap{padding-left:20px;}
+  p.bank-cardname-wrap{
+    font-size:15px;
+  }
+  .bank-bal-wrap{
+    font-size: 18px;
+    line-height:23px;
+  }
+  .db-view-bank-listing li{padding: 17px 15px;}
+  .bank-del-wrap{
+    width:45px;
+    height: 45px;
+  }
+  .db-view-bank-main ul.db-view-bank-listing{padding:13px;}
+  .group-save-modal-content form .form-field {margin-bottom: 25px;}
+  .act-user-content-wrap .user-thumb-name img{margin-right: 20px;}
+  .act-user-content-wrap .user-thumb-name {
+    min-width:210px;
+    max-width:210px;
+  }
+  .act-user-content-wrap{margin-bottom: 15px;}
+  .act-user-content-wrap .activity-month{padding-bottom: 10px;}
+  .date-inner-div input{
+    padding: 12px 40px 12px 15px !important;
+  }
+  form .search-field input[type="search"]{
+    padding-top: 11px !important;
+    padding-bottom: 11px !important;
+  }
+  .activity-date-wrap {
+    padding: 20px 0px 25px;
+  }
+  .act-user-content-wrap{padding-bottom:10px;}
+  .activities-top-sec .title-content-wrap h3,
+  .wallet-title-container h2{
+      font-size: 23px;
+      line-height: 30px;
+  }
+  .wallet-title-btns a img{margin-right: 7px;max-width:35px;}
+  .wallet-title-btns a.wallet-top-1-btn{margin-right: 15px;}
+  .wallet-title-btns a span:last-child{
+    max-width: 75px !important;
+    font-size: 14px;
+  }
+  .wallet-title-btns{
+        max-width: 320px;
+  }
 }
 @media only screen and (max-width: 1299px) {
   .con-list-uimg {
     margin-right: 15px;
   }
   .con-listing-info .con-list-uname {
-    font-size: 15px;
+    font-size:14px;
   }
   .conlist-edit-a:first-child {
     margin-right: 10px;
@@ -345,25 +554,74 @@
   .contact-top-btn-nav .con-btn-wrap {
     padding-right: 10px;
   }
+  .profile-info-right-desc{
+    padding-left:40px;
+  }
+  .profile-qr-inner img{max-width: 125px;}
+  .business-info-right-sec .form-field .form-control{
+    padding-top: 13px !important;
+    padding-bottom: 13px !important;
+  }
+  .dashboard-link-wrap ul li{margin-bottom: 7px;}
+  .dashboard-home-container .dashboard-card-links-sec,
+  .dashboard-home-container .dashboard-notification-sec {
+    width: 380px;
+    padding-left: 20px;
+  }
+  .dashboard-home-container .dashboard-graph-sec,
+  .dashboard-home-container .dashboard-search-wrap{
+    width: calc(100% - 380px);
+  }
+  .slider-card-common .card-holder-nm, .slider-card-common .card-num-date p:first-child{
+    font-size:11px;
+    line-height: 16px;
+  }
+  .slider-card-common{
+      padding: 15px 17px 15px;
+      height: 110px;
+  }
+  .slider-card-common img.w-card-bottom-img {max-width: 125px;}
+  .bank-card-wrap{
+      width: 85px;
+      height: 55px;
+  }
+  p.bank-cardname-wrap{
+    width: calc(100% - 85px);
+  }
+  .bank-card-name-wrap{
+    max-width: 250px;
+    min-width: 250px;
+  }
+  .bank-card-wrap img.w-card-bottom-img {
+    max-width: 73px;
+  }
+  .act-user-content-wrap .act-spec-add{
+    min-width: 230px;
+    max-width: 230px;
+  }
+  .wallet-top-wrap .wallet-title-wrap{
+    width: calc(100% - 200px);
+  }
+  .wallet-top-wrap .dashboard-notification-sec{width: 200px;}
 }
 @media only screen and (max-width: 1199px) {
   .profile-right-sec {
     padding: 30px 30px 30px 30px;
   }
   .profile-avtar {
-    width: 112px;
-    height: 112px;
+    width: 100px;
+    height: 100px;
     border-radius: 50px;
   }
   .profile-avtar > img {
-    max-width: 112px;
+    max-width: 100px;
     height: auto;
   }
   .profile-info {
     padding-left: 20px;
   }
   .profile-info h3 {
-    font-size: 22px;
+    font-size: 24px;
     line-height: 30px;
   }
   .profile-top-sec {
@@ -372,27 +630,28 @@
   .profile-bottom-info-sec ul li:not(:last-child) {
     margin-bottom: 20px;
   }
-  .profile-info-right-desc {
-    width: 65%;
-  }
   .profile-bottom-info-sec ul li {
     padding: 15px 15px 15px 15px;
     font-size: 16px;
     line-height: 17px;
   }
+   .profile-info-right-desc p{
+      font-size: 16px;
+      line-height: 20px;
+    }
   .profile-qr-inner {
     padding: 20px 20px;
     margin-bottom: 30px;
     border-radius: 25px;
   }
   .profile-qr-inner img {
-    max-width: 185px;
+    max-width: 110px;
     height: auto;
   }
   /*20-01-2023*/
   .graph-title-content-wrap h2 {
-    font-size: 23px;
-    line-height: 35px;
+    font-size:22px;
+    line-height:30px;
   }
   .dashaboard-main-sec .col-lg-7 {
     width: 100%;
@@ -457,12 +716,6 @@
   .recent-contact-slider .swiper-wrapper {
     padding-bottom: 40px;
   }
-  .recent-contact-slider .swiper-slide img {
-    border-radius: 50%;
-    max-height: 112px;
-    object-fit: cover;
-    max-width: 112px;
-  }
   .recent-contact-slider .swiper::after {
     right: 0;
     height: 112px;
@@ -501,15 +754,6 @@
   .send-top-right-sec {
     width: 57%;
     padding-left: 12px;
-  }
-  .send-whom-slider .img-wrap {
-    max-width: 116px;
-    max-height: 116px;
-    margin: 0 auto 10px;
-  }
-  .send-whom-slider .img-wrap img {
-    border-radius: 47%;
-    max-height: 108px;
   }
   .send-whom-slider .contact-name {
     font-size: 15px;
@@ -572,6 +816,7 @@
   }
   .payment-blocks-listing .input-select-wrap {
     max-width: 200px;
+    min-width: 200px;
   }
   .payment-blocks-inner form .input-select-wrap select.form-control {
     font-size: 16px;
@@ -645,18 +890,10 @@
     width: 50px;
     height: 50px;
   }
-  .payee-name-img-wrap .payee-img img {
-    max-height: 50px;
-  }
-  .send-group-slider .img-wrap img {
-    max-height: 54px;
-    max-width: 70px;
-  }
   .send-group-slider .contact-name {
     max-width: 95px;
   }
   .group-payment-block .payee-name-img-wrap .payee-img img {
-    max-height: 19px;
     border-radius: 0;
   }
   .send-main-sec .main-search-wrap {
@@ -681,7 +918,7 @@
   .act-user-content-wrap li div,
   .act-user-content-wrap .seleted-value,
   .act-user-content-wrap .user-thumb-name span {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 20px;
   }
   .act-user-content-wrap .left-activity-div {
@@ -710,21 +947,182 @@
   .contact-listing-wrap > li > div {
     margin-right: 15px;
   }
-  .contact-listing-wrap > li > div:last-child {
-    margin-right: 0px;
+  .contact-listing-wrap > li > div:last-child {margin-right: 0px;}
+  .wallet-card-add-btns a img,
+  .wallet-title-btns a img{margin-right:8px;max-width:32px;}
+  .wallet-ac-inner p.card-holder-nm{
+	font-size: 26px;
+    line-height: 26px;
+  }
+  .card-num-date p:first-child{
+	   font-size: 20px;
+		line-height: 20px;
+  }
+  .wallet-slider .wallet-ac-inner{padding-left:25px;}
+  .wallet-main-right,.wallet-top-wrap .dashboard-notification-sec{
+    width:390px;
+  }
+  .wallet-main-left, .wallet-top-wrap .wallet-title-wrap{width:calc(100% - 390px);}
+  .wallet-title-btns a.wallet-top-1-btn{margin-right:10px;}
+  .wallet-title-btns a{font-size:14px;line-height:16px;}
+  .wallet-title-btns a span:last-child{max-width: 84px !important;}
+  .fund-acc-modal .modal-header img{margin-bottom:20px;}
+  .fund-acc-modal .modal-header h3{
+	    font-size: 26px;
+		line-height: 31px;
+  }
+  .fund-acc-modal .modal-header{padding-bottom:30px;}
+  .profile-info-right-desc{padding-left:15px;}
+  .settings-password-bottom-info-sec .nav-tabs{padding-bottom: 25px;}
+  .business-info-bottom-sec .login-btn {padding-top: 15px;}
+  .dashboard-home-container .dashboard-graph-sec{padding-right:15px;}
+  .dashboard-home-container .dashboard-card-links-sec,
+  .dashboard-home-container .dashboard-notification-sec {width: 300px;}
+  .dashboard-home-container .dashboard-graph-sec,
+  .dashboard-home-container .dashboard-search-wrap {width: calc(100% - 300px);}
+  .extra-links-wrap ul li a{padding: 10px 9px;}
+  .bank-account-num-wrap, .bank-account-type-wrap,
+  .bank-account-date-wrap{
+        font-size: 14px;
+  }
+  .bank-bal-wrap {
+    font-size: 15px;
+    line-height: 20px;
+    max-width: 140px;
+    min-width: 140px;
+  }
+  p.bank-name-wrap,
+  p.bank-cardname-wrap {
+    padding-left:15px;
+  }
+  .bank-logo-wrap{
+    width: 55px;
+    height: 55px;
+  }
+   .bank-logo-wrap svg{width:25px;}
+   .bank-card-wrap {
+    width: 75px;
+    height: 49px;
+  }
+  p.bank-cardname-wrap{width: calc(100% - 75px);}
+  .bank-card-name-wrap {
+    max-width: 240px;
+    min-width: 240px;
+  }
+   .view_bank_listing_bottom-wrap a{
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .send-whom-slider .img-wrap{
+      width: 140px;
+      height: 140px;  
+  }
+  .add-contact-btn-wrap .btn{
+      font-size: 13px;
+      line-height: 20px;
+  }
+  form .search-field input[type="search"]{padding-left:35px !important;}
+  .search-field .search-btn svg{width:15px;}
+  .search-field .search-btn{left:13px;}
+  .payment-blocks-listing .payee-name-img-wrap {
+    max-width: 230px;
+    min-width: 230px;
   }
 }
+@media only screen and (max-width:1100px) and (min-width:992px){
+	.dashboard-right-sec{
+		padding-left:40px;
+		padding-right: 25px;
+	}
+	.wallet-main-right,
+  .wallet-top-wrap .dashboard-notification-sec{
+    width: 330px;
+    padding-left:35px;
+  }
+	.wallet-main-left,
+  .wallet-top-wrap .wallet-title-wrap {width: calc(100% - 330px);}
+	.wallet-right-title h3 {margin-bottom:15px;font-size: 18px;line-height: 23px;}
+	.wallet-slider .wallet-ac-inner{height:175px;padding-top:30px;}
+	.wallet-slider .wallet-ac-inner p.card-holder-nm{
+		font-size: 20px;
+		line-height: 20px;
+	}
+	.wallet-slider .card-num-date p:first-child{font-size: 16px;line-height: 16px;}
+	.wallet-slider .card-num-date p:last-child{
+	    font-size: 14px;
+		line-height: 14px;
+	}
+	.wc-details-wrap td{
+		font-size:14px;
+		line-height:20px;
+	}
+	.wallet-title-btns a, .wallet-card-add-btns a{
+		padding:12px 10px;
+	}
+	.wallet-card-add-btns a img, .wallet-title-btns a img{
+		margin-right:8px;
+		max-width: 30px;
+	}
+	.wallet-page .wallet-title-wrap{
+		flex: 0 0 auto;
+		width: 70.33333333%;		
+	}
+	.wallet-page .dashboard-notification-sec{
+		flex: 0 0 auto;
+		width: 29.66666667%;
+	}
+  .pi-title-div{width: 125px;}
+  .profile-info-right-desc {
+    width: calc(100% - 125px);
+  }
+  .wc-details-wrap td{padding: 10px 0px;}
+  .wallet-card-add-btns a span{max-width: 80px;}
+}
+@media only screen and (max-width:991px) and (min-width:768px){
+	.dashboard-right-sec {padding: 50px 35px 50px 50px;}
+	.sidebar-open .dashboard-link-wrap ul li a{
+		font-size: 14px;
+		padding: 12.5px 18px 11.5px 20px;
+	}
+	.sidebar-open .dashboard-link-wrap ul li a span {display: block;}
+	.wallet-title-container{margin-right:20px;}
+  .business-info-right-sec .business-info-left-content{
+      max-width: 559px;
+      margin: auto;
+  }
+  .business-info-right-sec .profile-qr{margin-left: auto;}
+}
 @media only screen and (max-width: 1024px) {
-  .contact-top-search-sec {
-    display: block !important;
+	.contact-top-search-sec {
+		display: block !important;
+	}
+	.contact-serch-main {
+		margin-bottom: 20px;
+		width: 80% !important;
+	}
+	.contact-top-btn-nav {
+		padding-left: 0px;
+	}
+	#already_register_user .modal-body p.user_name{
+		margin:30px 0px;
+		font-size:25px;
+	}
+	#already_register_user .modal-header{padding-bottom:0px;}
+  .modal-body h3{
+      font-size: 26px;
+      line-height: 30px;
   }
-  .contact-serch-main {
-    margin-bottom: 20px;
-    width: 80% !important;
+  .verification-code-form .form-field{margin-bottom: 30px;}
+  .currency-wrap{padding: 8px 0px 20px;}
+  .settings-edit-profile-top-sec{padding-bottom:30px;}
+  .wallet-fund-row-amt .col-12{
+    margin: 20px 0px 20px;
   }
-  .contact-top-btn-nav {
-    padding-left: 0px;
+  .wallet-fund-row-amt table td:last-child{
+    font-size: 20px;
+    line-height: 25px;
   }
+  .wallet-fund-row-amt table td{font-size: 15px;}
 }
 @media only screen and (min-width: 992px) {
   .col-left {
@@ -735,452 +1133,568 @@
   }
 }
 @media only screen and (max-width: 991px) {
-  .logo-image img {
-    max-width: 250px;
+	  .logo-image img {
+		max-width: 250px;
+	  }
+	  .logo-content-wrap h4 {
+		font-size: 26px;
+		line-height: 35x;
+		padding: 38px 0 40px;
+	  }
+	  /*.login-signup-content-wrap {
+		max-height: 85vh;
+		overflow-y: auto;
+	  }*/
+	  .login-signup01-content-wrap .radio-wrap {
+		margin-bottom: 54px;
+	  }
+	  .login-signup-03 .login-signup-content-wrap h5 {
+		padding-top: 10px;
+		margin-bottom: 10px;
+	  }
+	  .profile-qr {
+		max-width: 225px;
+		margin: 40px auto 0 0;
+	  }
+	  .profile-info-right-desc .edit-button {
+		width: 28px;
+		height: 28px;
+	  }
+	  .profile-info-right-desc .edit-button svg {
+		max-width: 18px;
+	  }
+	  .profile-bottom-info-sec ul li {
+		  padding: 13px 15px 13px 15px;
+		  font-size: 15px;
+		  line-height: 20px;
+	  }
+    .profile-info-right-desc p{
+      font-size: 15px;
+      line-height: 20px;
+    }
+	  .profile-bottom-info-sec ul li:not(:last-child) {
+		  margin-bottom: 15px;
+	  }
+	  .profile-top-sec {
+		  margin-bottom: 25px;
+	  }
+	  .profile-avtar {
+  		width: 100px;
+  		height: 100px;
+  		border-radius: 40px;
+	  }
+	  .profile-avtar > img {
+  		max-width: 96px;
+  		height: auto;
+  	}
+	  .profile-info {
+		  padding-left: 15px;
+	  }
+	  .profile-info h3 {
+  		font-size: 20px;
+  		line-height: 28px;
+	  }
+	  .profile-qr-inner img {
+  		max-width: 100px;
+  		height: auto;
+	  }
+	  .settings-bottom-info-sec ul li {
+  		padding: 13px 15px;
+  		border-radius: 15px;
+	  }
+	  .icon-wrap {
+		  font-size: 15px;
+	  }
+	  .icon-settings {
+		  margin-right: 13px;
+	  }
+	  .settings-notifications-bottom-info-sec ul li {
+  		padding: 13px 25px;
+  		font-size: 15px;
+	  }
+	  .settings-notifications-bottom-info-sec ul {
+		  padding-bottom: 40px;
+	  }
+	  .settings-edit-profile-top-sec {
+		  padding-bottom: 35px;
+	  }
+	  .currency-wrap {
+  		font-size: 19px;
+  		line-height: 24px;
+  		padding: 10px 0 25px;
+	  }
+	  .business-info-sec .profile-info {
+		  padding: 0 0 15px;
+	  }
+	  .business-url-field p,
+	  .business-id-field p {
+  		font-size: 16px;
+  		line-height: 20px;
+  		margin-bottom: 11px;
+	  }
+	  .business-id-field p {
+		  padding-top: 9px;
+	  }
+	  .business-info-bottom-sec .login-btn {
+		  padding-top: 17px;
+	  }
+	  .settings-password-bottom-info-sec .nav-tabs .nav-link {
+  		font-size: 17px;
+  		line-height: 22px;
+	  }
+	  .settings-password-bottom-info-sec .nav-tabs .nav-link:not(:last-child) {
+		  margin-right: 38px;
+	  }
+	  .settings-password-bottom-info-sec .nav-tabs {
+		  padding-bottom: 30px;
+	  }
+	  .settings-password-bottom-info-sec .login-btn {
+		  padding-top: 19px;
+	  }
+	  .settings-password-bottom-info-sec
+		.forgot-pass-btn-wrap
+		input[type="submit"] {
+  		font-size: 14px;
+  		min-width: auto;
+  		padding: 14px 30px;
+	  }
+	  .forgot-pass-btn-wrap .setting-btn-link > a,
+	  .settings-password-bottom-info-sec .setting-btn-link > a {
+  		font-size: 15px;
+  		padding: 10px 32px 10px 22px;
+	  }
+	  .forgot-pass-btn-wrap .setting-btn-link a svg,
+	  .settings-password-bottom-info-sec .setting-btn-link > a svg {
+  		margin-right: 9px;
+  		width: 8px;
+  		height: auto;
+	  }
+	  .settings-password-bottom-info-sec .setting-btn-link {
+		  padding-right: 15px;
+	  }
+	  .settings-password-bottom-info-sec .login-btn input[type="submit"] {
+  		min-width: 130px;
+  		font-size: 14px;
+  		padding: 14px 30px;
+	  }
+	  /*20-01-2023*/
+	  .modal-content {
+		  padding: 45px 60px 40px;
+	  }
+	  .modal-header {
+		  padding: 0 0 24px;
+	  }
+	  .modal-body h3 {
+  		font-size: 27px;
+  		line-height: 27px;
+  		padding-bottom: 12px;
+	  }
+	  form.verification-code-form .form-field .form-control {
+		max-width: 57px;
+		font-size: 21px;
+		line-height: 20px;
+		padding: 15.5px 10px !important;
+		margin: 0 9px;
+	  }
+	  .verify-code-btn-wrap .btn {
+		line-height: 20px;
+		min-width: 130px;
+		padding: 14px 15px;
+		font-size: 17px;
+	  }
+	  form .search-field {
+		max-width: 277px;
+	  }
+	  form .search-field input[type="search"] {
+		padding: 12px 15px 12px 40px !important;
+		font-size: 14px;
+		line-height: 16px;
+	  }
+	  .search-field .search-btn {
+		left: 15px;
+		top: 50%;
+		transform: translateY(-50%);
+	  }
+	  .graph-title-content-wrap h2 {
+		font-size: 20px;
+		line-height: 30px;
+		margin: 3px 0 0;
+	  }
+	  .tab-inner-wrap .user-img-title-wrap h4 {
+		padding-left: 13px;
+		font-size: 14px;
+	  }
+	  .user-info .date-info {
+		font-size: 12px;
+	  }
+	  .user-info .price-info {
+		font-size: 14px;
+	  }
+	  .recent-contact-sec .title-content-wrap {
+		padding-bottom: 20px;
+	  }
+	  .extra-links-wrap ul li a {
+		font-size: 15px;
+		padding: 13px 15px 13px 14px;
+	  }
+	  .arrow-wrap svg {
+		width: 7px;
+		height: auto;
+	  }
+	  .dashboard-search-wrap .search-field {
+		margin-top: 3px;
+	  }
+	  .dashaboard-main-sec {
+		padding-right: 25px;
+		padding-left: 25px;
+	  }
+	  .tab-inner-wrap ul li .user-info {
+		padding: 10px 8px 10px 8px;
+	  }
+	  .tab-inner-wrap ul li .user-info > div {
+		  padding: 0 6px;
+	  }
+	  .send-main-sec,
+	  .send-group-main-sec {
+		padding-left: 25px;
+	  }
+	  .send-top-sec h3,
+	  .send-pay-title-sec h3 {
+		font-size: 21px;
+		line-height: 30px;
+		margin-bottom: 9px;
+	  }
+	  .send-top-sec .title-content-wrap {
+		width: 100%;
+		padding-bottom: 20px;
+	  }
+	  .send-top-right-sec {
+		width: auto;
+		padding-left: 0;
+		justify-content: flex-start;
+	  }
+	  .main-search-wrap {
+		width: auto;
+		max-width: 327px;
+		margin-right: 15px;
+		margin-left: auto;
+		display: flex;
+		justify-content: flex-start;
+		flex-wrap: wrap;
+	  }
+	  .add-contact-btn-wrap .btn {
+  		padding: 8px 15px;
+  		font-size: 14px;
+  		line-height: 24px;
+  		border-radius: 12px !important;
+	  }
+	  .send-main-sec .dashboard-top-sec,
+	  .send-group-main-sec .dashboard-top-sec {
+  		padding-bottom: 30px;
+  		padding-right: 20px;
+	  }
+	  .send-whom-slider .img-wrap::after {
+  		width: 27px;
+  		height: 27px;
+  		background-size: 14px auto;
+	  }
+	  .send-whom-slider .contact-name {
+  		font-size: 14px;
+  		padding: 0 4px;
+  		line-height: 20px;
+	  }
+	  .one-time-pay-main-sec .dashboard-search-wrap {
+		  width: 62%;
+	  }
+	  .one-time-pay-main-sec .dashboard-notification-sec {
+  		width: 38%;
+  		padding-left: 15px;
+	  }
+	  .one-time-pay-main-sec {
+		  padding: 40px 25px 40px 20px;
+	  }
+	  .one-time-pay-main-sec .dashboard-top-sec {
+		  padding-left: 30px;
+	  }
+	  .payee-name-img-wrap,
+	  .payment-blocks-listing li {
+		  flex-wrap: wrap;
+	  }
+	  .payment-blocks-listing li > div {
+  		padding: 0 10px !important;
+  		margin: 8px 0;
+	  }
+	  .payment-blocks-listing li {
+		  padding: 10px 5px;
+	  }
+	  .payment-blocks-listing li > div.specification-input {
+		  min-width: 230px;
+	  }
+	  .payment-blocks-inner form .form-field .form-control {
+  		padding: 10px 11px !important;
+  		font-size: 14px;
+  		border-radius: 11px !important;
+	  }
+	  .payment-blocks-inner form .input-select-wrap select.form-control {
+  		font-size: 15px;
+  		line-height: 32px;
+  		padding: 0 20px 0 10px !important;
+  		max-width: 70px;
+	  }
+	  .payment-blocks-listing .input-select-wrap .selec-wrap {
+  		right: 14px;
+  		top: 5px;
+	  }
+	  .payment-blocks-inner form .input-select-wrap .form-control {
+		  padding-right: 78px !important;
+	  }
+	  .payment-blocks-listing .input-select-wrap {
+		  max-width: 185px;
+	  }
+	  .payment-blocks-inner form .form-field .form-control::placeholder {
+		  font-size: 14px;
+	  }
+	  .payment-blocks-inner form .form-field select.form-control::placeholder {
+		  font-size: 15px;
+	  }
+	  .remove-btn .close-icons {
+  		width: 35px;
+  		height: 35px;
+	  }
+	  .remove-btn .close-icons::before,
+	  .remove-btn .close-icons::after {
+  		width: 17px;
+  		height: 2px;
+	  }
+	  .payment-footer-block {
+		  padding: 25px 15px;
+	  }
+	  .payment-footer-block ul .payment-footer-col-label {
+  		font-size: 16px;
+  		line-height: 20px;
+  		padding: 0 0 7px;
+	  }
+	  .payment-footer-block .amount {
+  		font-size: 19px;
+  		line-height: 21px;
+	  }
+	  .amount-currency-wrap .selec-wrap select {
+  		font-size: 17px;
+  		line-height: 24px;
+  		max-width: 59px;
+  		padding-right: 22px;
+	  }
+	  .payment-footer-block ul > li:nth-child(2) {
+		  padding: 0 10px;
+	  }
+	  .pay-btn-wrap {
+		  padding-top: 27px;
+	  }
+	  .pay-btn-wrap .btn-send-payment {
+  		margin: 0 15px 0 10px;
+  		font-size: 14px;
+  		line-height: 23px;
+  		padding: 10px 25px;
+	  }
+	  .pay-btn-wrap .btn-cancel-payment,
+	  .send-btn-wrap .btn-cancel-payment {
+  		padding: 9px 16px 10px;
+  		font-size: 14px;
+  		line-height: 22px;
+  		border-radius: 15px !important;
+	  }
+	  .pay-btn-wrap .schedule-pay-btn {
+		  margin-right: 23px;
+	  }
+	  .pay-btn-wrap .schedule-pay-btn,
+	  .pay-btn-wrap .print-details-btn {
+  		font-size: 14px;
+  		line-height: 22px;
+	  }
+	  .payment-blocks-listing li > div.remove-btn {
+		  padding-right: 10px !important;
+	  }
+	  .group-save-modal-content {
+		  padding: 40px 30px;
+	  }
+	  .group-save-modal-content .modal-body p {
+		  padding-bottom: 25px;
+	  }
+	  .group-save-modal-content .modal-body p a {
+  		font-size: 14px;
+  		line-height: 24px;
+	  }
+	  .otp-verification-modal-content,
+	  .money-sent-modal-content {
+		  padding: 48px 38px 40px;
+	  }
+	  .modal.fade .modal-dialog {
+	   	border-radius: 30px;
+	   }
+	  .send-group-slider .contact-name {
+		  max-width: 90px;
+	  }
+	  .request-pay-footer-block .amount {
+		  font-size: 22px;
+		  line-height: 20px;
+	  }
+	  .request-pay-footer-block {
+		  padding: 0 0 0 9px !important;
+	  }
+	  .send-request-money-modal-content {
+		  padding: 45px 28px 40px;
+	  }
+	  .contact-top-btn-nav .con-btn-wrap .btn img {
+		  margin-right: 5px;
+	  }
+	  .contact-top-btn-nav .btn {
+		  padding:10px;
+		  font-size: 13px;
+	  }
+	  /* Wallet Page Start */
+	  .dashboard-right-sec{width:100% !important;}
+	  .wallet-recent-activity-sec .user-info .date-info {min-width: 145px;}
+	  .wallet-recent-activity-sec .price-info{min-width: 85px;}
+	  .wallet-recent-activity-sec .user-img-title-wrap {min-width: 180px;}
+	  .wallet-title-wrap{flex-wrap:wrap;margin-top: 30px;}
+	  .wallet-title-btns{margin-left:auto;margin-right:0;margin-top:0px;}
+	  .dashboard-bottom-links{
+		  margin-top:0;
+		  margin-bottom:auto;
+	  }
+	  .dashboard-link-wrap{height:auto;}
+	  .dashboard-top-sec{flex-direction:column-reverse;}
+	  .dashboard-left-sec {
+  		position: fixed;
+  		left: 0;
+  		right: auto;
+  		top: 0;
+  		bottom: 0;
+  		margin: auto;
+  		transform: translateX(-100%);
+  		transition: all 0.5s ease-in-out;
+  		width: 100% !important;
+  		max-width: 221px;
+	  }
+	  .sidebar-open .dashboard-left-sec {
+		  transform: translateX(0);
+	  }
+	.wallet-main-right {width: 100%;padding-left: 0px;max-width:420px;}
+	.wallet-main-left{width:100%;margin-bottom:30px;}
+	.fund-acc-modal .modal-content{padding: 40px;}
+  .con-listing-container{margin-top: 30px;}
+  .dashboard-home-container .dashboard-bottom-sec {
+    flex-wrap: wrap;
   }
-  .logo-content-wrap h4 {
-    font-size: 26px;
-    line-height: 35x;
-    padding: 38px 0 40px;
+  .dashboard-home-container .dashboard-graph-sec {
+    width: 100%;
+    padding-right: 0px;
   }
-  .login-signup-content-wrap {
-    max-height: 85vh;
-    overflow-y: auto;
+  .dashboard-home-container .dashboard-card-links-sec {
+    width: 100%;
+    padding-left: 0px;
   }
-  .login-signup-content-wrap h4.blue-text {
-    margin-bottom: 45px;
-    font-size: 24px;
+  .slider-card-common{
+      padding: 15px 20px 15px;
+      height: 130px;
   }
-  .login-signup01-content-wrap .radio-wrap {
-    margin-bottom: 54px;
+  .dashboard-home-container .dashboard-notification-sec{
+    width: 100%;
   }
-  .login-signup-03 .login-signup-content-wrap h5 {
-    padding-top: 10px;
-    margin-bottom: 10px;
+  .dashboard-home-container .dashboard-search-wrap{
+      width: 100%;
+      margin-top: -48px;
   }
-  .login-signup-03 .login-signup-content-wrap h4.blue-text {
-    margin-bottom: 35px;
+  .dashboard-home-container .dashboard-search-wrap form .search-field{
+    margin-left: 0;
+    margin-right: auto;
   }
-  .profile-qr {
-    max-width: 225px;
-    margin: 40px auto 0 0;
+  /* Mobile Navigation Start */
+  /*.mobile-nav-wrap {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    padding: 20px;
+    align-items: center;
   }
-  .profile-info-right-desc .edit-button {
-    width: 28px;
-    height: 28px;
+  .mobile-menu-button {
+    position: relative;
+    width: 40%;
   }
-  .profile-info-right-desc .edit-button svg {
-    max-width: 18px;
-  }
-  .profile-bottom-info-sec ul li {
-    padding: 13px 15px 13px 15px;
-    font-size: 15px;
-    line-height: 20px;
-  }
-  .profile-bottom-info-sec ul li:not(:last-child) {
-    margin-bottom: 15px;
-  }
-  .profile-top-sec {
-    margin-bottom: 25px;
-  }
-  .profile-avtar {
-    width: 100px;
-    height: 100px;
-    border-radius: 40px;
-  }
-  .profile-avtar > img {
-    max-width: 96px;
-    height: auto;
-  }
-  .profile-info {
-    padding-left: 15px;
-  }
-  .profile-info h3 {
-    font-size: 20px;
-    line-height: 28px;
-  }
-  .profile-qr-inner img {
-    max-width: 155px;
-    height: auto;
-  }
-  .settings-bottom-info-sec ul li {
-    padding: 13px 15px;
-    border-radius: 15px;
-  }
-  .icon-wrap {
-    font-size: 15px;
-  }
-  .icon-settings {
-    margin-right: 13px;
-  }
-  .settings-notifications-bottom-info-sec ul li {
-    padding: 13px 25px;
-    font-size: 15px;
-  }
-  .settings-notifications-bottom-info-sec ul {
-    padding-bottom: 40px;
-  }
-  .settings-edit-profile-top-sec {
-    padding-bottom: 35px;
-  }
-  .currency-wrap {
-    font-size: 19px;
-    line-height: 24px;
-    padding: 10px 0 25px;
-  }
-  .settings-edit-profile-top-sec .profile-info {
-    padding-top: 20px;
-  }
-  .business-info-sec .profile-info {
-    padding: 0 0 15px;
-  }
-  .business-url-field p,
-  .business-id-field p {
-    font-size: 16px;
-    line-height: 20px;
-    margin-bottom: 11px;
-  }
-  .business-id-field p {
-    padding-top: 9px;
-  }
-  .business-info-bottom-sec .login-btn {
-    padding-top: 17px;
-  }
-  .settings-password-bottom-info-sec .nav-tabs .nav-link {
-    font-size: 17px;
-    line-height: 22px;
-  }
-  .settings-password-bottom-info-sec .nav-tabs .nav-link:not(:last-child) {
-    margin-right: 38px;
-  }
-  .settings-password-bottom-info-sec .nav-tabs {
-    padding-bottom: 30px;
-  }
-  .settings-password-bottom-info-sec .login-btn {
-    padding-top: 19px;
-  }
-  .settings-password-bottom-info-sec
-    .forgot-pass-btn-wrap
-    input[type="submit"] {
-    font-size: 14px;
-    min-width: auto;
-    padding: 14px 30px;
-  }
-  .forgot-pass-btn-wrap .setting-btn-link > a,
-  .settings-password-bottom-info-sec .setting-btn-link > a {
-    font-size: 15px;
-    padding: 10px 32px 10px 22px;
-  }
-  .forgot-pass-btn-wrap .setting-btn-link a svg,
-  .settings-password-bottom-info-sec .setting-btn-link > a svg {
-    margin-right: 9px;
-    width: 8px;
-    height: auto;
-  }
-  .settings-password-bottom-info-sec .setting-btn-link {
-    padding-right: 15px;
-  }
-  .settings-password-bottom-info-sec .login-btn input[type="submit"] {
-    min-width: 130px;
-    font-size: 14px;
-    padding: 14px 30px;
-  }
-  /*20-01-2023*/
-  .modal-content {
-    padding: 45px 60px 40px;
-  }
-  .modal-header {
-    padding: 0 0 24px;
-  }
-  .modal-body h3 {
-    font-size: 27px;
-    line-height: 27px;
-    padding-bottom: 12px;
-  }
-  form.verification-code-form .form-field .form-control {
-    max-width: 57px;
-    font-size: 21px;
-    line-height: 20px;
-    padding: 15.5px 10px !important;
-    margin: 0 9px;
-  }
-  .verify-code-btn-wrap .btn {
-    line-height: 20px;
-    min-width: 130px;
-    padding: 14px 15px;
-    font-size: 17px;
-  }
-  form .search-field {
-    max-width: 277px;
-  }
-  form .search-field input[type="search"] {
-    padding: 12px 15px 12px 40px !important;
-    font-size: 14px;
-    line-height: 16px;
-  }
-  .search-field .search-btn {
-    left: 15px;
+  .mobile-menu-button .toggle-admin-btn {
+    width: 30px;
+    height: 30px;
+    background-color: #0081C5;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    right: 0;
     top: 50%;
     transform: translateY(-50%);
+    transition: all 0.5s ease-in-out;
   }
-  .graph-title-content-wrap h2 {
-    font-size: 20px;
-    line-height: 30px;
-    margin: 3px 0 0;
+  .mobile-nav-profile-wrap{width: 60%;}
+  .dashboard-left-wrap .toggle-admin-btn{display: none;}
+  .mobile-menu-button.sidebar-open-btn .toggle-admin-btn{
+      left:215px;
+      transition: all 0.5s ease-in-out;
   }
-  .tab-inner-wrap .user-img-title-wrap h4 {
-    padding-left: 13px;
-    font-size: 14px;
+  .sidebar-open-btn .toggle-admin-btn img{transform: rotate(180deg);}*/
+  /* Mobile Navigation Start */
+  .bank-card-wrap {
+    width: 60px;
+    height: 42px;
   }
-  .user-info .date-info {
-    font-size: 12px;
+  p.bank-cardname-wrap {width: calc(100% - 60px);}
+  .bank-card-name-wrap {
+    max-width: 220px;
+    min-width: 220px;
   }
-  .user-info .price-info {
-    font-size: 14px;
+  p.bank-name-wrap, p.bank-cardname-wrap {
+    padding-left: 8px;
   }
-  .recent-contact-sec .title-content-wrap {
-    padding-bottom: 20px;
+  .db-view-bank-listing li,
+  .db-view-card-main .db-view-bank-listing li{
+    padding: 13px 10px;
   }
-  .extra-links-wrap ul li a {
-    font-size: 15px;
-    padding: 13px 15px 13px 14px;
-  }
-  .arrow-wrap svg {
-    width: 7px;
-    height: auto;
-  }
-  .dashboard-search-wrap .search-field {
-    margin-top: 3px;
-  }
-  .dashaboard-main-sec {
-    padding-right: 25px;
-    padding-left: 25px;
-  }
-  .tab-inner-wrap ul li .user-info {
-    padding: 10px 8px 10px 8px;
-  }
-  .tab-inner-wrap ul li .user-info > div {
-    padding: 0 6px;
-  }
-  .recent-contact-slider .swiper-slide img {
-    border-radius: 50%;
-    max-height: 77px;
-    object-fit: cover;
-    max-width: 77px;
-  }
-  .send-main-sec,
-  .send-group-main-sec {
-    padding-left: 25px;
-  }
-  .send-top-sec h3,
-  .send-pay-title-sec h3 {
-    font-size: 21px;
-    line-height: 30px;
-    margin-bottom: 9px;
-  }
-  .send-top-sec .title-content-wrap {
-    width: 100%;
-    padding-bottom: 20px;
-  }
-  .send-top-right-sec {
-    width: auto;
-    padding-left: 0;
-    justify-content: flex-start;
-  }
-  .main-search-wrap {
-    width: auto;
-    max-width: 327px;
-    margin-right: 15px;
-    margin-left: auto;
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-  .add-contact-btn-wrap .btn {
-    padding: 8px 15px;
-    font-size: 14px;
-    line-height: 24px;
-    border-radius: 12px !important;
-  }
-  .send-main-sec .dashboard-top-sec,
-  .send-group-main-sec .dashboard-top-sec {
-    padding-bottom: 30px;
-    padding-right: 20px;
-  }
-  .send-whom-slider .img-wrap img {
-    border-radius: 47%;
-    max-height: 96px;
-  }
-  .send-whom-slider .img-wrap {
-    max-width: 104px;
-    max-height: 104px;
-    margin: 0 auto 10px;
-  }
-  .send-whom-slider .img-wrap::after {
-    width: 27px;
-    height: 27px;
-    background-size: 14px auto;
-  }
-  .send-whom-slider .contact-name {
-    font-size: 14px;
-    padding: 0 4px;
-    line-height: 20px;
-  }
-  .one-time-pay-main-sec .dashboard-search-wrap {
-    width: 62%;
-  }
-  .one-time-pay-main-sec .dashboard-notification-sec {
-    width: 38%;
-    padding-left: 15px;
-  }
-  .one-time-pay-main-sec {
-    padding: 40px 25px 40px 20px;
-  }
-  .one-time-pay-main-sec .dashboard-top-sec {
-    padding-left: 30px;
-  }
-  .payee-name-img-wrap,
-  .payment-blocks-listing li {
-    flex-wrap: wrap;
-  }
-  .payment-blocks-listing li > div {
-    padding: 0 10px !important;
-    margin: 8px 0;
-  }
-  .payment-blocks-listing li {
-    padding: 10px 5px;
-  }
-  .payment-blocks-listing li > div.specification-input {
-    min-width: auto;
-  }
-  .payment-blocks-inner form .form-field .form-control {
-    padding: 10px 11px !important;
-    font-size: 14px;
-    border-radius: 11px !important;
-  }
-  .payment-blocks-inner form .input-select-wrap select.form-control {
-    font-size: 15px;
-    line-height: 32px;
-    padding: 0 20px 0 10px !important;
-    max-width: 70px;
-  }
-  .payment-blocks-listing .input-select-wrap .selec-wrap {
-    right: 14px;
-    top: 5px;
-  }
-  .payment-blocks-inner form .input-select-wrap .form-control {
-    padding-right: 78px !important;
-  }
-  .payment-blocks-listing .input-select-wrap {
-    max-width: 185px;
-  }
-  .payment-blocks-inner form .form-field .form-control::placeholder {
-    font-size: 14px;
-  }
-  .payment-blocks-inner form .form-field select.form-control::placeholder {
-    font-size: 15px;
-  }
-  .remove-btn .close-icons {
-    width: 35px;
-    height: 35px;
-  }
-  .remove-btn .close-icons::before,
-  .remove-btn .close-icons::after {
-    width: 17px;
-    height: 2px;
-  }
-  .payment-footer-block {
-    padding: 25px 15px;
-  }
-  .payment-footer-block ul .payment-footer-col-label {
+  .view_bank_listing_bottom-wrap a{
     font-size: 16px;
     line-height: 20px;
-    padding: 0 0 7px;
   }
-  .payment-footer-block .amount {
-    font-size: 19px;
-    line-height: 21px;
-  }
-  .amount-currency-wrap .selec-wrap select {
-    font-size: 17px;
-    line-height: 24px;
-    max-width: 59px;
-    padding-right: 22px;
-  }
-  .payment-footer-block ul > li:nth-child(2) {
-    padding: 0 10px;
-  }
-  .pay-btn-wrap {
-    padding-top: 27px;
-  }
-  .pay-btn-wrap .btn-send-payment {
-    margin: 0 15px 0 10px;
-    font-size: 14px;
-    line-height: 23px;
-    padding: 10px 25px;
-  }
-  .pay-btn-wrap .btn-cancel-payment,
-  .send-btn-wrap .btn-cancel-payment {
-    padding: 9px 16px 10px;
-    font-size: 14px;
-    line-height: 22px;
-    border-radius: 15px !important;
-  }
-  .pay-btn-wrap .schedule-pay-btn {
-    margin-right: 23px;
-  }
-  .pay-btn-wrap .schedule-pay-btn,
-  .pay-btn-wrap .print-details-btn {
-    font-size: 14px;
-    line-height: 22px;
-  }
-  .payment-blocks-listing li > div.remove-btn {
-    padding-right: 10px !important;
-  }
-  .group-save-modal-content {
-    padding: 40px 30px;
-  }
-  .group-save-modal-content .modal-body p {
-    padding-bottom: 25px;
-  }
-  .group-save-modal-content .modal-body p a {
-    font-size: 14px;
-    line-height: 24px;
-  }
-  .otp-verification-modal-content,
-  .money-sent-modal-content {
-    padding: 48px 38px 40px;
-  }
-  .modal.fade .modal-dialog {
-    border-radius: 30px;
-  }
-  .send-group-slider .img-wrap img {
-    max-height: 54px;
-    max-width: 63px;
-  }
-  .send-group-slider .contact-name {
-    max-width: 90px;
-  }
-  .send-group-slider .img-wrap {
-    height: 104px;
-  }
-  .request-pay-footer-block .amount {
-    font-size: 22px;
-    line-height: 20px;
-  }
-  .request-pay-footer-block {
-    padding: 0 0 0 9px !important;
-  }
-  .send-request-money-modal-content {
-    padding: 45px 28px 40px;
-  }
-  .contact-top-btn-nav .con-btn-wrap .btn img {
-    margin-right: 5px;
-  }
-  .contact-top-btn-nav .btn {
-    padding: 7px 9px;
+  .bank-account-num-wrap, .bank-account-type-wrap, .bank-account-date-wrap {
     font-size: 13px;
   }
+  .wallet-add-card-main .settings-inner-sec{max-width: 100%;}
+  .wac-details-wrap .wallet-ac-info-wrap{
+      width:360px;
+  }
+  .wac-details-wrap>div:last-child{width: 260px;}
+  .wallet-ac-info-wrap .wallet-ac-inner{width: 350px;}
+  .wallet-top-wrap .wallet-title-container{width: 50%;}
+  .wallet-slider .wallet-ac-inner{height: 185px;}
+  .wallet-ac-inner p.card-holder-nm {
+    font-size: 22px;
+    line-height: 22px;
+  }
+  .card-num-date p:first-child {
+    font-size: 16px;
+    line-height: 16px;
+  }
+  .card-num-date p:last-child{
+    font-size: 14px;
+    line-height: 14px;
+  }
+  .wallet-slider .wallet-ac-inner{padding-top: 30px;}
+  .wallet-top-wrap .dashboard-notification-sec{
+    padding-left: 0px;
+    width: 100%;
+  }
+  .wallet-main-left, .wallet-top-wrap .wallet-title-wrap{width: 100%;}
 }
 
 @media only screen and (max-width: 767px) {
@@ -1194,23 +1708,10 @@
   }
   .login-signup-content-wrap {
     padding: 25px 20px 30px;
-    overflow-y: auto;
-    max-height: 90vh;
   }
   .login-signup-content-wrap h4 {
     margin-bottom: 15px;
-    font-size: 25px;
-  }
-  .login-logo-image img {
-    max-width: 175px;
-  }
-  .login-logo-image {
-    margin-bottom: 26px;
-  }
-  .login-signup-content-wrap h5 {
     font-size: 22px;
-    line-height: 24px;
-    margin-bottom: 25px;
   }
   form .form-field .form-control {
     border-radius: 12px !important;
@@ -1245,10 +1746,6 @@
   p {
     font-size: 14px;
     line-height: 20px;
-  }
-  .login-signup-content-wrap h4.blue-text {
-    margin-bottom: 33px;
-    font-size: 19px;
   }
   .login-signup01-content-wrap h5 {
     margin-bottom: 18px;
@@ -1288,7 +1785,7 @@
     padding-right: 35px;
   }
   .login-signup-02 .login-btn {
-    margin-top: 30px;
+    margin-top:0px;
     margin-bottom: 15px;
   }
   .upload-profile-image .profile-wrap {
@@ -1318,21 +1815,6 @@
   .dashboard-left-wrap .toggle-admin-btn {
     right: -40px;
     top: 10px;
-  }
-  .dashboard-left-sec {
-    position: fixed;
-    left: 0;
-    right: auto;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    transform: translateX(-100%);
-    transition: all 0.5s ease-in-out;
-    width: 100% !important;
-    max-width: 221px;
-  }
-  .sidebar-open .dashboard-left-sec {
-    transform: translateX(0);
   }
   .sidebar-open .dashboard-link-wrap ul li a {
     font-size: 14px;
@@ -1366,30 +1848,27 @@
     padding-top: 10px;
     padding-bottom: 15px;
   }
+   .dashboard-right-sec {
+    padding: 50px 20px;
+	}
   /*sidebar toggle css close*/
-  .dashboard-right-sec {
-    width: 100%;
-    padding: 50px 15px;
-  }
   .profile-bottom-info-sec ul li {
     font-size: 14px;
     line-height: 18px;
   }
+   .profile-info-right-desc p{
+      font-size: 14px;
+      line-height: 20px;
+    }
   .profile-qr {
     max-width: 225px;
-    margin: 40px auto 0;
+    margin: 40px auto 0 0;
   }
   .profile-info-right-desc .edit-button {
     margin-left: 15px;
   }
   .profile-bottom-info-sec ul li {
     padding: 8px 13px 8px 13px;
-  }
-  .profile-info-right-desc {
-    word-break: break-word;
-    justify-content: flex-end;
-    text-align: right;
-    align-items: center;
   }
   .profile-info-right-desc .edit-button {
     margin: 5px 0 5px 15px;
@@ -1441,9 +1920,6 @@
   }
   .settings-notifications-bottom-info-sec ul li:not(:last-child) {
     margin-bottom: 15px;
-  }
-  .settings-edit-profile-top-sec .profile-info {
-    padding-top: 32px;
   }
   .settings-edit-profile-top-sec .upload-profile-image a {
     margin: 5px 0 0;
@@ -1527,8 +2003,6 @@
   .modal-content {
     padding: 30px 20px 30px;
     border-radius: 20px;
-    max-height: 85vh;
-    overflow-y: auto;
   }
   form.verification-code-form .form-field .form-control {
     max-width: 45px;
@@ -1571,7 +2045,7 @@
   }
   .graph-title-content-wrap h2 {
     font-size: 18px;
-    line-height: 30px;
+    line-height: 25px;
     margin: 6px 0 4px;
   }
   .graph-title-content-wrap p,
@@ -1601,10 +2075,6 @@
   }
   .user-image-wrap {
     margin-left: 15px;
-  }
-  .recent-contact-slider .swiper-slide img {
-    max-height: 86px;
-    max-width: 86px;
   }
   .recent-contact-slider .swiper::after {
     right: 0;
@@ -1651,6 +2121,7 @@
   }
   .payment-blocks-listing .input-select-wrap {
     max-width: 168px;
+    min-width: 165px;
   }
   .payment-blocks-listing li > div {
     padding: 0 6px !important;
@@ -1665,6 +2136,15 @@
   }
   .payment-blocks-listing li {
     padding: 6px 5px;
+    min-width: fit-content;
+    width: 100%;
+    flex-wrap: nowrap;
+  }
+  .payment-blocks-listing{
+      overflow-x: auto;
+      white-space: nowrap;
+      flex-wrap: nowrap;
+      margin-bottom: 25px;
   }
   .payment-footer-block .amount {
     font-size: 18px;
@@ -1692,7 +2172,7 @@
     padding-bottom: 20px;
   }
   .group-save-modal-content form .form-field {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
   .modal-save-group {
     max-width: 440px;
@@ -1745,6 +2225,84 @@
     max-width: 73px;
     height: auto;
   }
+	#login_otp_modal .modal-body h3{
+		font-size: 22px;
+		line-height: 28px;
+	}
+	#already_register_user .modal-header h3{
+		font-size: 25px;
+		line-height: 30px;
+	}
+  .pi-title-div {width: 110px;}
+  .profile-info-right-desc {width: calc(100% - 110px);}
+  .business-info-right-sec .profile-qr{margin-left: auto;}
+  .send-top-sec h3, .send-pay-title-sec h3{
+      font-size:18px;
+      line-height:23px;
+  }
+  .send-top-sec p, .send-pay-title-sec p{
+    font-size: 13px;
+    line-height: 20px;
+  }
+  .db-view-card-main .db-view-bank-listing li,
+  .db-view-bank-listing li{
+    padding: 10px 8px;
+  }
+  .activity-date-wrap{
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .activities-serch-main{
+    margin-top: 15px;
+  }
+  .activities-serch-main form .search-field{
+    margin-left: 0;
+    margin-right:auto;
+  }
+  .activity-date-wrap  .date-inner-div{
+    max-width: 170px;
+  }
+  .activity-date-wrap  .date-inner-div{margin-right: 20px;}
+  .activity-date-wrap  .date-inner-div:last-child{margin-right:0px;}
+  .pagination-wrap ul .page-item{margin-bottom: 8px;}
+  .wac-details-wrap .wallet-ac-info-wrap{margin: auto;width: 100%;}
+  .wallet-ac-info-wrap .wallet-ac-inner{margin:0;}
+  .wac-details-wrap>div:last-child{width: 100%;}
+  .add-card-color-wrap {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  .add-card-color-wrap>p {
+    text-align: left;
+    padding: 0px;
+    font-size: 18px;
+  }
+  .add-card-color-wrap ul.radio-group-wrap li{
+      width: auto;
+      padding: 0px 2px;
+      margin: auto;
+  }
+  .wallet-ac-info-wrap .wallet-ac-inner{
+    max-width: 350px;
+    width: 100%;
+  }
+  .wallet-ac-info-wrap .wallet-ac-inner{
+    height: 185px;
+    padding: 35px 15px 20px 30px;
+  }
+  ul.radio-group-wrap{padding: 0px;}
+  .add-wallet-card-form-wrap .btn-wrap .btn{min-width: auto;}
+  .btns-inline>div{margin-right: 15px}
+  .outline-btn{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .setting-btn-link a svg, .outline-btn svg {margin-right: 10px;}
+    .wallet-title-container{width:100% !important;}
+    .wallet-title-btns{margin-left: 0 !important;margin-top:20px;}
 }
 @media only screen and (max-width: 575px) {
   .logo-content-wrap h4 {
@@ -1759,18 +2317,7 @@
     margin: 5px 0 5px 15px;
     margin-left: auto;
   }
-  .profile-info-right-desc {
-    width: calc(100% - 110px);
-    word-break: break-all;
-    text-align: right;
-    align-items: center;
-    justify-content: flex-end;
-  }
   /*20-01-2023*/
-  .recent-contact-slider .swiper-slide img {
-    max-height: 49px;
-    max-width: 49px;
-  }
   .recent-contact-slider .swiper::after {
     right: 0;
     height: 82px;
@@ -1876,4 +2423,32 @@
     width: 100%;
     max-width: 327px;
   }
+  .fund-acc-modal .modal-content{padding:30px;}
+  .fund-acc-modal .modal-dialog{max-width: 420px;margin: auto;}
+	.fund-payment-option-wrap {
+		display: block;
+		width: 100%;
+		margin: auto;
+	}
+	.fund-payment-option-wrap .fund-payment-option {
+		width: 100%;
+		margin-bottom: 20px;
+	}
+	.fund-payment-option-wrap a{
+		display:block;
+		max-width:130px;
+		margin:auto;
+	}
+	.fund-payment-option-wrap a:last-child .fund-payment-option{margin-bottom:0px;} 
+	.login-signup .login-signup-inner{padding-left:10px;padding-right:10px;}
+	.login-signup-content-wrap h5, .login-signup-content-wrap h4.blue-text {
+		font-size: 18px;
+		line-height: 22px;
+		margin-bottom: 15px;
+	}
+  .radio-group-wrap .radio-round{
+    width: 42px;
+    height: 42px;
+  }
+  .add-card-color-wrap{padding:20px 15px;}
 }
