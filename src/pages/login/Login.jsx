@@ -27,7 +27,6 @@ const Login = () => {
         const { error, payload } = await dispatch(fetchLogin(values));
         if (error) throw payload;
       } catch (error) {
-        resetForm();
         setStatus(error);
       }
     },

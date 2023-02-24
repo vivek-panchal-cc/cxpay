@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { editProfileBusinessUserSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import InputFile from "components/ui/InputFile";
 import { IconLeftArrow } from "styles/svgs";
 import InputSelect from "components/ui/InputSelect";
+import { fetchUserProfile } from "features/user/userProfileSlice";
 
 function Businessform(props) {
   const { countryList, cityList } = props;
@@ -18,11 +19,23 @@ function Businessform(props) {
     user_type,
     email,
     mobile_number,
-    country,
+    country_code,
     city,
     profile_image,
   } = profile;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { country_index, country_iso, country } = useMemo(() => {
+    if (!country_code) return {};
+    const cphonecode = parseInt(country_code);
+    const country_index = countryList.findIndex(
+      (e) => e.phonecode === cphonecode
+    );
+    const { iso, country_name } =
+      countryList.find((e) => e.phonecode === cphonecode) || {};
+    return { country_index, country_iso: iso, country: country_name };
+  }, [country_code, countryList]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -32,11 +45,11 @@ function Businessform(props) {
       profile_image: profile_image || "",
       user_type: user_type || "",
       company_name: company_name || "",
-      country_index: -1, //not required for API
-      country: "",
-      country_iso: "", //not required for API
-      country_code: "",
-      city: "",
+      country_index: country_index, //not required for API
+      country: country || "",
+      country_iso: country_iso || "", //not required for API
+      country_code: country_code || "",
+      city: city || "",
     },
     validationSchema: editProfileBusinessUserSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
@@ -50,12 +63,15 @@ function Businessform(props) {
         const { data } = await apiRequest.updateUser(formData);
         if (!data.success) throw data.message;
         toast.success(data.message);
+        dispatch(fetchUserProfile());
         navigate("/setting");
       } catch (error) {
         setErrors({
           email: error.first_name?.[0],
           mobile_number: error.mobile_number?.[0],
           company_name: error.company_name?.[0],
+          country: error.country?.[0],
+          city: error.city?.[0],
         });
       }
     },

@@ -66,7 +66,9 @@ function Businessform(props) {
                     e.currentTarget.files[0]
                   );
                 }}
-                error={formik.errors.profile_image}
+                error={
+                  formik.touched.profile_image && formik.errors.profile_image
+                }
                 showPreview={true}
                 showLabel={true}
                 labelText="Change Profile Picture"
