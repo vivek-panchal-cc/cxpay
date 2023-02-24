@@ -17,6 +17,7 @@ function EnterPhone(props) {
   const formik = useFormik({
     initialValues: {
       mobile_number: "",
+      country_code: 297,
     },
     validationSchema: enterPhoneSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
@@ -72,7 +73,7 @@ function EnterPhone(props) {
                   <Input
                     type="text"
                     className="form-control"
-                    placeholder="Mobile Number"
+                    placeholder="Phone"
                     name="mobile_number"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}

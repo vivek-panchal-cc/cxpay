@@ -17,6 +17,7 @@ function InputFile(props) {
     classNameImage,
     classNameBorder,
     className,
+    accept,
   } = props;
   const [preview, setPreview] = useState(previewSrc);
   const [isError, setIsError] = useState(false);
@@ -54,10 +55,15 @@ function InputFile(props) {
         className={`${classNameInput}`}
         onChange={(e) => {
           onChange(e);
-          if (showPreview && e.currentTarget.files.length > 0)
+          if (
+            showPreview &&
+            e.currentTarget.files.length > 0 &&
+            e.currentTarget.files[0].type.includes("image/")
+          )
             return setPreview(URL.createObjectURL(e.currentTarget.files[0]));
-          setPreview("");
+          setPreview(preview);
         }}
+        accept={accept}
       />
       {error && <p className="text-danger ps-2">{error}</p>}
     </div>

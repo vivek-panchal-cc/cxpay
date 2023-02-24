@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { editProfilePersonalUserSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import InputFile from "components/ui/InputFile";
 import { IconLeftArrow } from "styles/svgs";
 import InputSelect from "components/ui/InputSelect";
+import { fetchUserProfile } from "features/user/userProfileSlice";
 // import FileInput from "components/ui/FileInput";
 
 function PersonalForm(props) {
@@ -20,12 +21,23 @@ function PersonalForm(props) {
     user_type,
     email,
     mobile_number,
-    country,
+    country_code,
     city,
     profile_image,
   } = profile || {};
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { country_index, country_iso, country } = useMemo(() => {
+    if (!country_code) return {};
+    const cphonecode = parseInt(country_code);
+    const country_index = countryList.findIndex(
+      (e) => e.phonecode === cphonecode
+    );
+    const { iso, country_name } =
+      countryList.find((e) => e.phonecode === cphonecode) || {};
+    return { country_index, country_iso: iso, country: country_name };
+  }, [country_code, countryList]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -36,15 +48,16 @@ function PersonalForm(props) {
       last_name: last_name || "",
       user_type: user_type || "",
       profile_image: profile_image || "",
-      country_index: -1, //not required for API
-      country: "",
-      country_iso: "", //not required for API
-      country_code: "",
-      city: "",
+      country_index: country_index, //not required for API
+      country_iso: country_iso || "", //not required for API
+      country: country || "",
+      country_code: country_code,
+      city: city || "",
     },
     validationSchema: editProfilePersonalUserSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
       try {
+        console.log(typeof country_code);
         const formData = new FormData();
         for (let key in values) {
           if (key === "profile_image") continue;
@@ -54,11 +67,16 @@ function PersonalForm(props) {
         const { data } = await apiRequest.updateUser(formData);
         if (!data.success) throw data.message;
         toast.success(data.message);
-        navigate("/setting");
+        dispatch(fetchUserProfile());
+        navigate("/setting", { replace: true });
       } catch (error) {
         setErrors({
+          first_name: error.first_name?.[0],
+          last_name: error.last_name?.[0],
           email: error.email?.[0],
           mobile_number: error.mobile_number?.[0],
+          country: error.country?.[0],
+          city: error.city?.[0],
         });
       }
     },

@@ -35,7 +35,6 @@ const fetchLoginOtp = createAsyncThunk(
 
 const fetchLogout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
   try {
-    storageRequest.removeAuth();
     const { data } = await apiRequest.logout();
     if (!data.success) throw data.message;
     return data.message;
@@ -52,7 +51,6 @@ const fetchUserProfile = createAsyncThunk(
       if (!data.success || data.data === null) throw data.message;
       return data.data;
     } catch (error) {
-      await thunkAPI.dispatch(fetchLogout());
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -87,12 +85,14 @@ const userProfileSlice = createSlice({
         console.log("Error getting user data", action.payload);
       })
       .addCase(fetchLogout.fulfilled, (state, action) => {
+        storageRequest.removeAuth();
         toast.success(action.payload);
-        document.location.href = "/";
+        document.location.href = "/login";
       })
       .addCase(fetchLogout.rejected, (state, action) => {
+        storageRequest.removeAuth();
         console.log("Error getting user data", action.payload);
-        document.location.href = "/";
+        document.location.href = "/login";
       });
   },
 });
