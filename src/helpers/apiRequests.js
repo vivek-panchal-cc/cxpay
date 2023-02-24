@@ -20,6 +20,10 @@ const API_updateForgotPassword =
 const API_linkBank = process.env.REACT_APP_ADD_BANK;
 const API_addCard = process.env.REACT_APP_ADD_CARD;
 const API_getCountry = process.env.REACT_APP_GET_COUNTRY;
+const API_resendLoginOtp = process.env.REACT_APP_RESEND_LOGIN_OTP;
+const API_resendForgotPasswordOtp =
+  process.env.REACT_APP_RESEND_FORGOT_PASSWORD_OTP;
+const API_resendRegisterOtp = process.env.REACT_APP_RESEND_REGISTER_OTP;
 
 // POST @login API
 // @params user_name, password
@@ -120,6 +124,24 @@ export const getCountry = () => {
   return axiosInstance.post(`${API_URL}${API_getCountry}`);
 };
 
+// POST @login-otp-resend API
+// @params mobile_number
+export const resendLoginOtp = (params) => {
+  return axiosInstance.post(`${API_URL}${API_resendLoginOtp}`, params);
+};
+
+// POST @resend-forgot-password-otp API
+// @params mobile_number
+export const resendForgotPasswordOtp = (params) => {
+  return axiosInstance.post(`${API_URL}${API_resendForgotPasswordOtp}`, params);
+};
+
+// POST @resend-register-otp API
+// @params mobile_number
+export const resendRegisterOtp = (params) => {
+  return axiosInstance.post(`${API_URL}${API_resendRegisterOtp}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -137,4 +159,7 @@ export const apiRequest = {
   linkBank,
   addCard,
   getCountry,
+  resendLoginOtp,
+  resendForgotPasswordOtp,
+  resendRegisterOtp,
 };

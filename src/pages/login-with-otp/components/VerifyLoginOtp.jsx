@@ -1,13 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import InputOtp from "components/ui/InputOtp";
 import { useFormik } from "formik";
 import { verifyLoginOtpSchema } from "schemas/validationSchema";
 import { fetchLoginOtp } from "features/user/userProfileSlice";
 import { useDispatch } from "react-redux";
+import { apiRequest } from "helpers/apiRequests";
+import { toast } from "react-toastify";
+import { otpCounterTime } from "constants/all";
 
 function VerifyLoginOtp(props) {
   const { mobileNumber } = props;
+  const [counter, setCounter] = useState(otpCounterTime);
+  const [isTimerOver, setIsTimerOver] = useState("disabled");
 
+  React.useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    return () => clearInterval(timer);
+  }, [counter]);
+
+  React.useEffect(() => {
+    handleTimeOut();
+  }, []);
+
+  const handleTimeOut = () => {
+    setTimeout(function () {
+      setIsTimerOver("");
+    }, otpCounterTime * 1000);
+  };
+
+  const handleResendBtn = () => {
+    setIsTimerOver("disabled");
+    setCounter(otpCounterTime);
+    handleTimeOut();
+    try {
+      const { data } = apiRequest.resendLoginOtp({
+        mobile_number: mobileNumber,
+      });
+      if (!data.success || data.data === null) throw data.message;
+      toast.success(data.message);
+    } catch (error) {}
+  };
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -48,6 +81,20 @@ function VerifyLoginOtp(props) {
                 onChange={formik.handleChange}
                 error={formik.touched.login_otp && formik.errors.login_otp}
               />
+            </div>
+
+            <div className="resendOtp">
+              {isTimerOver === "disabled" &&
+                Math.floor(counter / 60) +
+                  ":" +
+                  (counter % 60 ? counter % 60 : "00")}
+              <button
+                className={isTimerOver}
+                disabled={isTimerOver}
+                onClick={handleResendBtn}
+              >
+                Resend OTP
+              </button>
             </div>
             <div className="popup-btn-wrap">
               {formik.status && <p className="text-danger">{formik.status}</p>}
