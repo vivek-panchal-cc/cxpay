@@ -7,6 +7,7 @@ const expContainSpecialChar = /^(?=.*[!@#\$%\^&\*])/;
 const validFileExtensions = {
   image: ["jpg", "gif", "png", "jpeg", "svg", "webp", "img"],
 };
+const otpCounterTime = 180;
 // Test Functions
 const regexNotContainWhitespace = (testStr) =>
   new RegExp(exp0ContainWhitespace).test(testStr);
@@ -38,6 +39,7 @@ export {
   expContainNumber,
   expContainSpecialChar,
   validFileExtensions,
+  otpCounterTime,
 };
 export {
   regexContainCapitalLetter,
