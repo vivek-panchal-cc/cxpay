@@ -85,7 +85,7 @@ const Login = () => {
                       className={`btn btn-primary ${
                         formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
                       }`}
-                      disabled={formik.isSubmitting}
+                      disabled={formik.isSubmitting || !formik.isValid}
                       value="LogIn"
                     />
                   </div>

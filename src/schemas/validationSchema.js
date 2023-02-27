@@ -17,7 +17,7 @@ const signUpPersonalAccountSchema = yup.object().shape({
   confirm_password: confirmPasswordSchema,
   profile_image: profileImageSchema,
   country: yup.string().required("required*"),
-  country_code: yup.string().required("required*"),
+  mobile_code: yup.string().required("required*"),
   city: yup.string().required("required*"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
@@ -30,13 +30,14 @@ const signUpBusinessAccountSchema = yup.object().shape({
   confirm_password: confirmPasswordSchema,
   profile_image: profileImageSchema,
   country: yup.string().required("required*"),
-  country_code: yup.string().required("required*"),
+  mobile_code: yup.string().required("required*"),
   city: yup.string().required("required*"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
 const enterPhoneSchema = yup.object().shape({
   mobile_number: mobileSchema,
+  country_code: yup.string().required("required*"),
 });
 
 const verifyOtpSchema = yup.object().shape({

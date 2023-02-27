@@ -6,7 +6,7 @@ import { apiRequest } from "helpers/apiRequests";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { SignupContext } from "context/signupContext";
-import InputFile from "components/ui/InputFile";
+import InputFile from "components/ui/InputImage";
 import InputSelect from "components/ui/InputSelect";
 
 function PersonalForm(props) {
@@ -29,7 +29,7 @@ function PersonalForm(props) {
       country_index: -1, //not required for API
       country: "",
       country_iso: "", //not required for API
-      country_code: "",
+      mobile_code: signUpCreds.mobile_code,
       city: "",
     },
     validationSchema: signUpPersonalAccountSchema,
@@ -120,14 +120,10 @@ function PersonalForm(props) {
                       formik.setFieldValue("country_index", i);
                       formik.setFieldValue("country_iso", countryList[i].iso);
                       formik.setFieldValue(
-                        "country_code",
-                        countryList[i].phonecode
-                      );
-                      formik.setFieldValue(
                         "country",
                         countryList[i].country_name
                       );
-                      formik.setFieldValue("city", "");
+                      formik.setFieldValue("city", ""); // imp
                     }}
                     onBlur={formik.handleBlur}
                     value={formik.values.country_index}
@@ -249,7 +245,7 @@ function PersonalForm(props) {
                   className={`btn btn-primary ${
                     formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
                   }`}
-                  disabled={formik.isSubmitting}
+                  disabled={formik.isSubmitting || !formik.isValid}
                   value="Signup"
                 />
               </div>

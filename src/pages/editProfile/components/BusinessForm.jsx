@@ -6,7 +6,7 @@ import { apiRequest } from "helpers/apiRequests";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import InputFile from "components/ui/InputFile";
+import InputFile from "components/ui/InputImage";
 import { IconLeftArrow } from "styles/svgs";
 import InputSelect from "components/ui/InputSelect";
 import { fetchUserProfile } from "features/user/userProfileSlice";

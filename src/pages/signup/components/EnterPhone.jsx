@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
@@ -7,17 +7,25 @@ import AlreadyRegistered from "./AlreadyRegistered";
 import VerifyPhone from "./VerifyPhone";
 import Modal from "components/modals/Modal";
 import { SignupContext } from "context/signupContext";
+import InputSelect from "components/ui/InputSelect";
 
 function EnterPhone(props) {
-  const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
+  const { signUpCreds, setSignUpCreds, getCountries } =
+    useContext(SignupContext);
   const [showRegisteredPopup, setShowregisteredPopup] = useState(false);
   const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
   const [username, setUsername] = useState("USERNAME");
+  const { countryList, cityList } = signUpCreds || {};
+  const phoneCodes = countryList.map((item) => item.phonecode);
+
+  useEffect(() => {
+    getCountries();
+  }, []);
 
   const formik = useFormik({
     initialValues: {
       mobile_number: "",
-      country_code: 297,
+      country_code: "",
     },
     validationSchema: enterPhoneSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
@@ -31,6 +39,7 @@ function EnterPhone(props) {
         setSignUpCreds((cs) => ({
           ...cs,
           mobile_number: values.mobile_number,
+          mobile_code: values.country_code,
         }));
         setShowVerifyPhonePopup(true);
       } catch (error) {
@@ -38,6 +47,7 @@ function EnterPhone(props) {
       }
     },
   });
+
   return (
     <div className="container login-signup-01">
       <div className="row">
@@ -69,20 +79,42 @@ function EnterPhone(props) {
                 Please Enter Mobile Number
               </h4>
               <form onSubmit={formik.handleSubmit}>
-                <div className="form-field">
-                  <Input
-                    type="text"
-                    className="form-control"
-                    placeholder="Phone"
-                    name="mobile_number"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.mobile_number}
-                    error={
-                      formik.touched.mobile_number &&
-                      formik.errors.mobile_number
-                    }
-                  />
+                <div className="row form-field">
+                  <div className="col-4">
+                    <InputSelect
+                      className="form-select form-control"
+                      name="country_code"
+                      onBlur={formik.handleBlur}
+                      value={formik.values.country_code}
+                      error={
+                        formik.touched.country_code &&
+                        formik.errors.country_code
+                      }
+                      onChange={formik.handleChange}
+                    >
+                      <option value={""}>Code</option>
+                      {phoneCodes.map((item, index) => (
+                        <option value={item} key={index}>
+                          {item}
+                        </option>
+                      ))}
+                    </InputSelect>
+                  </div>
+                  <div className="col-8 px-0">
+                    <Input
+                      type="text"
+                      className="form-control"
+                      placeholder="Phone"
+                      name="mobile_number"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.mobile_number}
+                      error={
+                        formik.touched.mobile_number &&
+                        formik.errors.mobile_number
+                      }
+                    />
+                  </div>
                 </div>
                 <div className="text-center send-cd-btn">
                   <input

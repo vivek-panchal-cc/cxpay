@@ -1,4 +1,4 @@
-import InputFile from "components/ui/InputFile";
+import InputFile from "components/ui/InputImage";
 import { useFormik } from "formik";
 import React from "react";
 
