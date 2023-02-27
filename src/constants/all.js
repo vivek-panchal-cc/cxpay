@@ -5,8 +5,9 @@ const expContainCapitalLetter = /^(?=.*[A-Z])/;
 const expContainNumber = /^(?=.*[0-9])/;
 const expContainSpecialChar = /^(?=.*[!@#\$%\^&\*])/;
 const validFileExtensions = {
-  image: ["jpg", "gif", "png", "jpeg", "svg", "webp", "img"],
+  image: ["jpg", "png", "jpeg", "svg"],
 };
+// const validFileSize = "5MB";
 const otpCounterTime = 180;
 // Test Functions
 const regexNotContainWhitespace = (testStr) =>
@@ -32,6 +33,12 @@ const isValidFileType = (fileName, fileType) => {
   );
 };
 
+// To check file size
+// const fileUploadLimit = (file, fileSize) => {
+//   console.log(file);
+//   return file && validFileSize[file].indexOf(file.split(".").pop()) > -1;
+// };
+
 export {
   exp0ContainWhitespace,
   exp0ContainWordPassword,
@@ -46,6 +53,7 @@ export {
   regexContainNumber,
   regexContainSpecialCharacter,
   isValidFileType,
+  // fileUploadLimit,
   // ~NOT
   regexNotContainWhitespace,
   regexNotContainWordPassword,
