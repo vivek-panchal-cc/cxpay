@@ -6,6 +6,7 @@ const initialValues = {
   mobile_number: "",
   user_otp: "",
   user_type: "",
+  country_code: "",
   countryList: [],
   cityList: [],
 };
@@ -18,6 +19,7 @@ const SignupProvider = ({ children }) => {
     mobile_number: "",
     user_otp: "",
     user_type: "",
+    mobile_code: null,
     countryList: [],
     cityList: [],
   });
