@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-function InputFile(props) {
+function InputImage(props) {
   const {
     id = Math.round(Math.random() * 1000).toString(),
     name,
@@ -70,4 +70,4 @@ function InputFile(props) {
   );
 }
 
-export default InputFile;
+export default InputImage;

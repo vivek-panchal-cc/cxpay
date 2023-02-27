@@ -2,12 +2,8 @@ import { SignupContext } from "context/signupContext";
 import React, { useContext, useEffect, useState } from "react";
 
 function SelectaccountType(props) {
-  const { setSignUpCreds, getCountries } = useContext(SignupContext);
+  const { setSignUpCreds } = useContext(SignupContext);
   const [userType, setUserType] = useState("personal");
-
-  useEffect(() => {
-    getCountries();
-  }, []);
 
   const handleChangeAccountType = (e) => {
     setUserType(e.target.value);

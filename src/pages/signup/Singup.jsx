@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import EnterPhone from "./components/EnterPhone";
 import AccountType from "./components/AccountType";
 import Businessform from "./components/BusinessForm";
 import PersonalForm from "./components/PersonalForm";
-import SignupProvider, { SignupContext } from "context/signupContext";
+import { SignupContext } from "context/signupContext";
 
 const Signup = () => {
   const { signUpCreds } = useContext(SignupContext);
