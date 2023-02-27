@@ -943,7 +943,41 @@ form .form-field select.form-control {
 .sidebar-open .toggle-admin-btn img {
   transform: rotate(180deg);
 }
-
+.slider-card-common {
+  padding: 20px 20px 20px;
+  height: 120px;
+  box-shadow: 0px 5.08197px 10.1639px rgba(146, 123, 193, 0.3);
+  border-radius: 25px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+}
+.slider-card-common .card-holder-nm{margin-bottom: 18px !important;}
+.slider-card-common .card-num-date p:first-child{margin-bottom:15px !important;}
+.slider-card-common .card-holder-nm,
+.slider-card-common .card-num-date p:first-child{
+  text-shadow: -1px -1px 3px rgba(255, 255, 255, 0.55), 2px 2px 4px rgba(0, 0, 0, 0.45);
+  font-family: 'Visby Round CF';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  color: #fff;
+  line-height: 18px;
+}
+.slider-card-common .card-num-date p:last-child{
+font-size:7px;
+  line-height:10px;
+  color: #fff;
+  text-shadow: -1px -1px 3px rgba(255, 255, 255, 0.55), 2px 2px 4px rgba(0, 0, 0, 0.45);
+}
+.slider-card-common img.w-card-top-img{
+max-width:59px;
+}
+.slider-card-common img.w-card-bottom-img{
+max-width: 140px ;
+}
 .dashboard-home-container .dashboard-bottom-sec{flex-wrap: nowrap;}
 .dashboard-home-container .dashboard-graph-sec {
     width: calc(100% - 450px);
