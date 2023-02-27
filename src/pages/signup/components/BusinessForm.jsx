@@ -96,6 +96,7 @@ function Businessform(props) {
                 className="form-control"
                 placeholder="Mobile Number"
                 name="mobile_number"
+                disabled
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.mobile_number}

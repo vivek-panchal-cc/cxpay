@@ -33,14 +33,25 @@ const profileImageSchema = yup
   .mixed()
   .required("Profile image is required")
   .test({
-    message: "Not a valid image type",
-    test: (file) =>
-      isValidFileType(file && file.name.toLowerCase(), "image"),
+    message: "Image type is not allowed",
+    test: (file) => isValidFileType(file && file.name.toLowerCase(), "image"),
   });
+// .test({
+//   message: "File must not exceed 5 MB",
+//   test: (file) => fileUploadLimit(file && file.size, "image"),
+// });
+
+const mobileSchema = yup
+  .string()
+  .min(10, "Mobile number must be 10 digits")
+  .max(10, "Mobile number must be 10 digits")
+  .matches(/^[0-9]*$/, "Enter a valid mobile number")
+  .required("Mobile number is required");
 
 export {
   emailSchema,
   passwordSchema,
   confirmPasswordSchema,
   profileImageSchema,
+  mobileSchema,
 };

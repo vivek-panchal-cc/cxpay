@@ -98,10 +98,22 @@ function PersonalForm(props) {
                   );
                 }}
                 error={formik.errors.profile_image}
-                showPreview={profile_image}
+                showPreview={
+                  profile_image
+                    ? profile_image
+                    : "/assets/images/user-avatar.png"
+                }
                 showLabel={false}
-                previewSrc={profile_image}
-                fallbackSrc={profile_image}
+                previewSrc={
+                  profile_image
+                    ? profile_image
+                    : "/assets/images/user-avatar.png"
+                }
+                fallbackSrc={
+                  profile_image
+                    ? profile_image
+                    : "/assets/images/user-avatar.png"
+                }
                 classNameInput="d-none"
                 classNameBorder="border-0 overflow-visible"
                 classNameLabel="profile-avtar"

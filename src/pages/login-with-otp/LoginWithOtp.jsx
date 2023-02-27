@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getCookie } from "shared/cookies";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
-import { enterPhoneSchema } from "schemas/validationSchema";
+import { loginWithOtpSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import Modal from "components/modals/Modal";
 import VerifyLoginOtp from "./components/VerifyLoginOtp";
@@ -23,7 +23,7 @@ const LoginWithOtp = (props) => {
     initialValues: {
       mobile_number: "",
     },
-    validationSchema: enterPhoneSchema,
+    validationSchema: loginWithOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
         const { data } = await apiRequest.loginOtp(values);
