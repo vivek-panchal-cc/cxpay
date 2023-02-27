@@ -85,7 +85,7 @@ function LeftSidebar() {
             </Link>
           </li>
           <li className={`${thisRoute === "link-bank" ? "active" : ""}`}>
-            <Link to="/link-bank">
+            <Link to="/wallet/link-bank">
               <IconWallet />
               Link Bank
             </Link>

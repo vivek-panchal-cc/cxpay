@@ -8,6 +8,8 @@ import {
   exp0ContainWordPassword,
 } from "constants/all";
 
+const FILE_SIZE = 5 * 1048576;
+
 const emailSchema = yup
   .string()
   .email("Please enter a valid email")
@@ -35,11 +37,14 @@ const profileImageSchema = yup
   .test({
     message: "Image type is not allowed",
     test: (file) => isValidFileType(file && file.name.toLowerCase(), "image"),
+  })
+  .test({
+    message: "File must not exceed 5 MB",
+    test: (file) => {
+      console.log(file ? file.size <= FILE_SIZE : false);
+      return file ? file.size <= FILE_SIZE : false;
+    },
   });
-// .test({
-//   message: "File must not exceed 5 MB",
-//   test: (file) => fileUploadLimit(file && file.size, "image"),
-// });
 
 const mobileSchema = yup
   .string()

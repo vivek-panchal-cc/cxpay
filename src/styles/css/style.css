@@ -451,9 +451,8 @@ pointer-events: none;
 }
 .login-signup-content-wrap {
   width: 100%;
-  margin: 20px auto;
   max-width: 535px;
-  margin: 0 auto;
+  margin: 20px auto;
   background-color: #fff;
   box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
   border-radius: 15px;
@@ -495,7 +494,7 @@ form .form-field .form-control {
   font-weight: 500;
   font-size: 16px;
   line-height: 140%;
-  /* color: #bdbdbd; */
+  /*color: #BDBDBD;*/
   color: #363853;
 }
 form .form-control::placeholder {
@@ -569,8 +568,8 @@ form {
   margin-bottom: 0;
 }
 /*.login-signup-content-wrap {
-  max-height: 90vh;
-  overflow-y: auto;
+max-height: 90vh;
+overflow-y: auto;
 }*/
 .login-other-text:after {
   content: "";
@@ -678,7 +677,7 @@ form {
   margin-bottom: 12px;
 }
 .login-signup-02 .login-signup-content-wrap h4.blue-text {
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 .personal-sign-up .btn {
   margin-top: 10px;
@@ -757,6 +756,9 @@ form .form-field select.form-control {
   cursor: pointer;
   padding-right: 37px;
 }
+form .form-field select.form-control.form-select {
+  padding-right: 30px !important;
+}
 .login-signup-03 .login-btn {
   display: flex;
   flex-wrap: wrap;
@@ -816,7 +818,6 @@ form .form-field select.form-control {
   width: calc(100% - 221px);
   padding-left: 40px;
   padding-right: 40px;
-  padding-top: 40px;
 }
 .dashboard-left-wrap {
   height: 100%;
@@ -913,6 +914,7 @@ form .form-field select.form-control {
 .dashboard-bottom-links {
   margin-top: auto;
   margin-bottom: 0;
+  background-color: #0081c5;
 }
 .sidebar-open .dashboard-link-wrap ul li a {
   font-size: 0;
@@ -1394,7 +1396,7 @@ margin: auto;
 .settings-edit-profile-top-sec {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
   padding-bottom: 45px;
 }
 .settings-edit-profile-top-sec .upload-profile-image a {
@@ -1406,9 +1408,6 @@ margin: auto;
   line-height: 16px;
   color: #24beef;
   letter-spacing: normal;
-}
-.settings-edit-profile-top-sec .profile-info {
-  padding-top: 27px;
 }
 .settings-edit-profile-inner-sec {
   width: 100%;
@@ -1618,9 +1617,13 @@ form.verification-code-form .form-field .form-control {
   font-size: 24px;
   line-height: 26px;
   padding: 15.5px 10px !important;
-  margin: 0 9px;
+  margin: 0 5px;
   color: #363853;
   text-align: center;
+}
+#forgot-password-popup .modal-dialog {
+  max-width: 440px;
+  margin: auto;
 }
 .verify-code-btn-wrap {
   text-align: center;
@@ -1630,45 +1633,46 @@ form.verification-code-form .form-field .form-control {
   font-family: "Visby Round CF";
   min-width: 160px;
 }
-.btn.close-modal {
-  min-width: 35px !important;
-  position: absolute;
-  left: auto;
-  right: 0;
-  top: 0;
-  bottom: auto;
-  margin: auto;
-  font-size: 0;
-  padding: 7px 14px;
-  border-radius: 10px !important;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  box-shadow: none;
-  visibility: hidden;
+/*.btn.close-modal {
+min-width: 35px !important;
+position: absolute;
+left: auto;
+right: 0;
+top: 0;
+bottom: auto;
+margin: auto;
+font-size: 0;
+padding: 7px 14px;
+border-radius: 10px !important;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+box-shadow: none;
+visibility: hidden;
 }
 .btn.close-modal:focus {
-  background-color: #363853 !important;
+background-color: #363853 !important;
 }
 .btn.close-modal::after {
-  content: "x";
-  display: flex;
-  justify-content: center;
-  color: #fff;
-  font-size: 20px;
-  line-height: normal;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -3px;
-  bottom: 0;
-  margin: auto;
-  flex-wrap: wrap;
-  align-items: center;
-}
+content: "x";
+display: flex;
+justify-content: center;
+color: #fff;
+font-size: 20px;
+line-height: normal;
+position: absolute;
+left: 0;
+right: 0;
+top: -3px;
+bottom: 0;
+margin: auto;
+flex-wrap: wrap;
+align-items: center;
+}*/
 .modal.fade .modal-dialog {
   transform: none;
+  margin: auto;
 }
 /*dashboard-right-section css starts*/
 .dashaboard-main-sec {
@@ -1759,9 +1763,6 @@ form .search-field -o::placeholder {
   box-shadow: 0px 7.3125px 14.625px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   margin-left: 21px;
-}
-.no-search-ontop {
-  justify-content: end;
 }
 .dashboard-notification-sec {
   display: flex;
@@ -1861,15 +1862,6 @@ form .search-field -o::placeholder {
   height: auto;
   padding-bottom: 45px;
 }
-.card-slider .swiper-slide img {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-}
-.card-slider {
-  width: 100%;
-}
 .swiper-button-next,
 .swiper-button-prev {
   left: auto;
@@ -1927,6 +1919,10 @@ form .search-field -o::placeholder {
   background-color: transparent;
   padding: 0;
   position: static;
+  transform: translateY(0px) !important;
+}
+.recent-contact-sec .search-btn svg {
+  width: 15px;
 }
 .recent-contact-sec form {
   margin-left: auto;
@@ -1959,9 +1955,15 @@ form .search-field -o::placeholder {
 }
 .recent-contact-slider .swiper-slide img {
   border-radius: 50%;
-  max-height: 52px;
   object-fit: cover;
-  max-width: 52px;
+  width: 100%;
+  height: 100%;
+}
+.recent-con-img-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  margin: auto;
 }
 .recent-contact-slider {
   margin-right: 0;
@@ -2009,7 +2011,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 17px 22px 17px 14px;
+  padding: 15px 22px 15px 14px;
   transition: all 0.5s ease-in-out;
 }
 .extra-links-wrap ul li a:hover {
@@ -2090,7 +2092,13 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
 .user-img-title-wrap {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: no-wrap;
+  max-width: 235px;
+  min-width: 235px;
+  width: 100%;
+}
+.user-img-title-wrap h4 {
+  width: calc(100% - 48px);
 }
 .tab-inner-wrap .user-img-title-wrap h4 {
   margin: 0;
@@ -2101,7 +2109,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
 }
 .tab-inner-wrap ul li .user-info {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
   padding: 10px 12px;
@@ -2137,6 +2145,9 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   font-size: 14px;
   line-height: 19px;
   color: #969696;
+  max-width: 200px;
+  min-width: 200px;
+  width: 100%;
 }
 .user-info .price-info {
   font-family: "Visby Round CF";
@@ -2146,6 +2157,9 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   line-height: 19px;
   text-align: right;
   color: #56be15;
+  max-width: 110px;
+  min-width: 110px;
+  width: 100%;
 }
 .tab-inner-wrap ul li .user-info:hover .quick-info-btn a path {
   stroke: #0081c5;
@@ -2188,9 +2202,10 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   left: 0;
   right: 0;
   top: auto;
-  bottom: 0;
+  bottom: 0px;
   padding: 15px 0;
   text-align: center;
+  margin-bottom: 10px;
 }
 .activity-tab-wrap {
   position: relative;
@@ -2281,11 +2296,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
 .dashboard-graph-wrap {
   padding-top: 18px;
 }
-.card-slider .swiper-slide {
-  border-radius: 25px;
-  overflow: hidden;
-  box-shadow: 0px 5.08197px 10.1639px rgba(146, 123, 193, 0.3);
-}
+
 .recent-contact-slider .swiper::after,
 .card-slider .swiper::after,
 .send-whom-slider .swiper::after {
@@ -2310,7 +2321,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   right: 0;
   top: 0;
   background-image: url("../../../public/assets/images/card-swiper-shadow.png");
-  width: 64px;
+  width: 44px;
   height: 100%;
   bottom: 0;
   background-size: 100% 100%;
@@ -2392,17 +2403,18 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
 }
 .send-whom-slider .img-wrap img {
   max-width: 100%;
-  height: auto;
-  border-radius: 47%;
-  max-height: 145px;
   width: 100%;
   object-fit: cover;
+  border-radius: 50%;
+  height: 100%;
 }
 .send-whom-slider .img-wrap {
-  max-width: 153px;
-  max-height: 153px;
+  /*max-width: 153px;
+max-height: 153px;*/
+  width: 145px;
+  height: 145px;
+  border-radius: 50%;
   box-shadow: 0px 20.434px 40.868px rgba(0, 0, 0, 0.08);
-  border-radius: 47%;
   border: 4px solid transparent;
   position: relative;
   transition: all 0.5s ease-in-out;
@@ -2611,9 +2623,11 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   transition: all 0.5s ease-in-out;
   background-color: transparent;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  min-width: fit-content;
+  width: 100%;
+  flex-wrap: nowrap;
 }
 .payment-blocks-listing li:hover {
   background-color: #fff;
@@ -2623,13 +2637,12 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   width: 58px;
   height: 58px;
   box-shadow: 0px 20.434px 40.868px rgba(0, 0, 0, 0.08);
-  border-radius: 47%;
+  border-radius: 50%;
   overflow: hidden;
 }
 .payee-name-img-wrap .payee-img img {
-  max-width: 100%;
-  height: auto;
-  max-height: 58px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 50%;
 }
@@ -2644,6 +2657,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   line-height: 19px;
   margin: 0;
   padding-left: 26px;
+  white-space: normal;
 }
 .payment-blocks-listing li > div {
   padding: 0 10px;
@@ -2788,6 +2802,9 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
 .payment-blocks-listing {
   position: relative;
   padding-bottom: 34px;
+  overflow-x: auto;
+  white-space: nowrap;
+  flex-wrap: nowrap;
 }
 .payment-blocks-listing::after {
   position: absolute;
@@ -3006,14 +3023,13 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   margin-right: 0;
 }
 .send-group-slider .img-wrap img {
-  max-height: 54px;
   width: auto;
   margin: 0 auto;
   max-width: 85px;
+  height: auto;
   border-radius: 0 !important;
 }
 .send-group-slider .img-wrap {
-  height: 153px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -3054,7 +3070,9 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   border: 1px solid #bdbdbd;
 }
 .group-payment-block .payee-name-img-wrap .payee-img img {
-  max-height: 23px;
+  max-width: 35px;
+  width: 100%;
+  height: auto;
   border-radius: 0;
 }
 .group-payment-block .payee-name-img-wrap .payee-img {
@@ -3145,6 +3163,9 @@ span.date-cal {
   font-size: 14px;
   line-height: 16px;
 }
+.activities-sec {
+  padding-bottom: 30px;
+}
 .activities-right-sec {
   padding-top: 40px;
   padding-left: 50px;
@@ -3171,10 +3192,18 @@ span.date-cal {
   width: 100%;
 }
 .act-user-content-wrap {
-  padding-bottom: 30px;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  overflow-x: auto;
+  white-space: nowrap;
+  flex-wrap: nowrap;
 }
 .act-user-content-wrap li {
   display: flex;
+  flex-wrap: nowrap;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
   align-items: center;
   justify-content: space-between;
   padding: 12px;
@@ -3190,10 +3219,13 @@ span.date-cal {
   background-color: #fff;
   box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
 }
-.user-thumb-name {
+.act-user-content-wrap .user-thumb-name {
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
+  min-width: 235px;
+  max-width: 235px;
+  width: 100%;
 }
 .act-user-content-wrap .user-thumb-name img {
   width: 48px;
@@ -3208,6 +3240,21 @@ span.date-cal {
   font-size: 16px;
   line-height: 19px;
   color: #323232;
+}
+.act-user-content-wrap .activity-date {
+  min-width: 180px;
+  max-width: 180px;
+  width: 100%;
+}
+.act-user-content-wrap .act-spec-add {
+  min-width: 250px;
+  max-width: 250px;
+  width: 100%;
+}
+.act-user-content-wrap .left-activity-div .seleted-value {
+  min-width: 90px;
+  max-width: 90px;
+  width: 100%;
 }
 .act-edit-btn a {
   background-color: #f7f7f9;
@@ -3345,7 +3392,7 @@ img.img-hover {
   height: 24px;
   border-radius: 50%;
   background-color: #56be15;
-  background-image: url("../../../public/assets/images/tick-12-7.svg");
+  background-image: url(../../../public/assets/images/tick-12-7.svg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 13px;
@@ -3460,12 +3507,13 @@ form .row {
   text-transform: capitalize;
   padding-bottom: 10px;
 }
-.user-profile-div {
+.user-details-modal .user-profile-div {
   width: 113px;
   height: 113px;
   border-radius: 100%;
+  box-shadow: 0px 7.3125px 14.625px rgba(0, 0, 0, 0.08);
 }
-.user-profile-div img {
+.user-details-modal .user-profile-div img {
   border-radius: 50%;
   width: 100%;
 }
@@ -3510,7 +3558,7 @@ form .row {
   padding: 60px 50px 40px;
 }
 .act-user-content-wrap li div {
-  padding-right: 15px;
+  padding-right: 10px;
   display: flex;
   align-items: center;
 }
@@ -3522,7 +3570,8 @@ form .row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-right: 30px;
+  margin-right: 50px;
+  white-space: normal;
 }
 .act-spec-add {
   max-width: 230px;
@@ -3682,13 +3731,14 @@ div.row {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  overflow: hidden;
 }
 .wallet-slider {
   padding-left: 12px;
 }
 .wallet-ac-info-wrap div,
 .wallet-slider .wallet-ac-inner div {
-  z-index: 1;
+  z-index: 9;
 }
 .wallet-ac-info-wrapp .card-holder-nm {
   margin-bottom: auto;
@@ -3713,21 +3763,49 @@ div.row {
 .wac-details-wrap {
   margin-bottom: 50px;
 }
-.wallet-ac-inner[bg-color="purple"] {
+.wallet-ac-inner[bg-color="purple"],
+.card-bg-color[bg-color="purple"],
+.bank-logo-wrap[bg-color="purple"],
+.bank-card-wrap[bg-color="purple"] {
   background-color: #936ee3;
 }
-.wallet-ac-inner[bg-color="blue"] {
+.wallet-ac-inner[bg-color="blue"],
+.card-bg-color[bg-color="blue"],
+.bank-logo-wrap[bg-color="blue"],
+.bank-card-wrap[bg-color="blue"] {
   background-color: #0081c5;
 }
-.wallet-ac-inner[bg-color="green"] {
+.wallet-ac-inner[bg-color="green"],
+.card-bg-color[bg-color="green"],
+.bank-logo-wrap[bg-color="green"],
+.bank-card-wrap[bg-color="green"] {
   background-color: #93e06f;
 }
-.wallet-ac-inner[bg-color="light_blue"] {
+
+.wallet-ac-inner[bg-color="light_blue"],
+.card-bg-color[bg-color="light_blue"],
+.bank-logo-wrap[bg-color="light_blue"],
+.bank-card-wrap[bg-color="light_blue"] {
   background-color: #24beef;
 }
-.wallet-ac-inner[bg-color="yellow"] {
+
+.wallet-ac-inner[bg-color="yellow"],
+.card-bg-color[bg-color="yellow"],
+.bank-logo-wrap[bg-color="yellow"],
+.bank-card-wrap[bg-color="yellow"] {
   background-color: #fff100;
 }
+
+.wallet-ac-inner[bg-color="yellow"] p,
+.card-bg-color[bg-color="yellow"] p {
+  color: #0081c5 !important;
+}
+
+.bank-logo-wrap[bg-color="light_blue"] svg path,
+.bank-logo-wrap[bg-color="yellow"] svg path {
+  stroke: #363853;
+}
+
 .cust-image-upload-wrap {
   background: rgba(0, 129, 197, 0.1);
   border: 1px dashed #0081c5;
@@ -4076,6 +4154,11 @@ margin-bottom:0px;
 }
 .contact-listing-wrap {
   margin-bottom: 50px;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  overflow-x: auto;
+  width: 100%;
 }
 .contact-listing-wrap li {
   display: flex;
@@ -4092,7 +4175,9 @@ margin-bottom:0px;
   margin-bottom: 10px;
   flex-wrap: nowrap;
   white-space: nowrap;
-  overflow-x: auto;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
 }
 .contact-listing-wrap li:hover {
   background-color: #fff;
@@ -4163,8 +4248,11 @@ cursor:pointer;
 .conlist-edit-a {
   cursor: pointer;
 }
-.conlist-edit-a:first-child {
-  margin-right: 20px;
+.conlist-edit-a {
+  margin-right: 15px;
+}
+.conlist-edit-a:last-child {
+  margin-right: 0px;
 }
 .con-list-edit-star .star_fill {
   display: none;
@@ -4198,32 +4286,31 @@ cursor:pointer;
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  margin-right: 55px;
+  margin-right: 30px;
 }
 .con-list-uimg img {
   width: 48px;
   height: 48px;
   border-radius: 50%;
 }
-.contact-listing-wrap li::-webkit-scrollbar {
-  width: 10px;
-  height: 7px;
+ul::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+  background: #f2f2f2;
 }
-.contact-listing-wrap li::-webkit-scrollbar-track {
+ul::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 0px rgba(0, 0, 0, 0);
 }
-.contact-listing-wrap li::-webkit-scrollbar-thumb {
-  background: #d3d3d3;
-  border-radius: 5px;
-  width: 5px;
-  height: 7px;
+ul::-webkit-scrollbar-thumb {
+  background: #0081c5;
+  border-radius: 0px;
+  width: 3px;
+  height: 3px;
 }
-.contact-listing-wrap li::-webkit-scrollbar-thumb:hover {
+ul::-webkit-scrollbar-thumb:hover {
   background: #363853;
 }
-.contact-listing-wrap li::-webkit-scrollbar:vertical {
-  display: none;
-}
+/*ul::-webkit-scrollbar:vertical{display: none;}*/
 .contact-pg-popup form {
   margin-top: 30px;
 }
@@ -4273,7 +4360,10 @@ cursor:pointer;
   background-color: transparent;
   transition: all 0.5s ease-in-out;
   border-radius: 15px;
-  overflow-x: auto;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  width: 100%;
 }
 .wallet-recent-activity-sec .user-img-title-wrap {
   min-width: 185px;
@@ -4328,6 +4418,11 @@ cursor:pointer;
 }
 .wallet-recent-activity-sec ul {
   margin-bottom: 20px;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  overflow-x: auto;
+  width: 100%;
 }
 .is-relative {
   position: relative;
@@ -4407,12 +4502,15 @@ cursor:pointer;
 .wallet-slider .swiper-button-prev {
   bottom: -50px;
 }
-.wallet-main-left {
-  width: calc(100% - 420px);
+.wallet-main-left,
+.wallet-top-wrap .wallet-title-wrap {
+  width: calc(100% - 440px);
+  padding-right: 60px;
 }
-.wallet-main-right {
-  width: 420px;
-  padding-left: 45px;
+.wallet-main-right,
+.wallet-top-wrap .dashboard-notification-sec {
+  width: 440px;
+  padding-left: 40px;
 }
 /* Wallet Page End */
 .wallet-card-add-btns {
@@ -4497,9 +4595,6 @@ cursor:pointer;
   line-height: 24px;
   color: #323232;
 }
-.wallet-main-left {
-  padding-right: 60px;
-}
 .swiper-scrollbar-drag {
   left: 0;
 }
@@ -4549,6 +4644,9 @@ img.img-size {
 .wallet-ac-info-wrap .wallet-ac-inner.bg-img-added {
   background-color: rgb(0 0 0 / 35%);
   background-blend-mode: overlay;
+}
+.slider-card-common p {
+  width: 100%;
 }
 /*  Add to card Updates End */
 /* Fund to your Account Modal Start */
@@ -4603,26 +4701,444 @@ img.img-size {
   border-radius: 100%;
 }
 /* Fund to your Account Modal End */
-/* Resent OPt */
-.resendOtp {
-  text-align: center;
-  font-size: 18px;
-  line-height: 18px;
-  color: #838080;
-  font-weight: bold;
-  margin: 0px 0px 15px;
-}
-.resendOtp button {
-  font-weight: bold;
-  color: #0080c4;
+.con-listing-check label {
+  position: relative;
+  margin: 0px;
   padding: 0px;
-  background-color: transparent !important;
-  border: 0px !important;
-  margin-left: 10px;
+  cursor: pointer;
 }
-.resendOtp button:hover {
+.con-listing-check label:before {
+  width: 15px;
+  height: 15;
+  border: 1px solid #323232;
+  display: block;
+  content: "";
+  background-color: transparent;
+}
+.con-listing-check label:after {
+  content: "";
+  left: 5px;
+  width: 5px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  top: 3px;
+  opacity: 0;
+  visibility: hidden;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.con-listing-check input:checked ~ label:after {
+  opacity: 1;
+  visibility: visible;
+}
+.con-listing-check input:checked ~ label:before {
+  border-color: #0081c5;
+  background-color: #0081c5;
+}
+.con-listing-check input {
+  visibility: hidden;
+  width: 0px;
+  height: 0px;
+}
+.con-list-up svg {
+  max-width: 15px;
+  width: 100%;
+}
+.con-list-up {
+  width: 32px;
+  height: 32px;
+  background: #f3f3f3;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.con-list-up:hover {
+  background: #0081c5;
+}
+.con-list-up:hover svg path {
+  stroke: #fff;
+}
+.con-list-up svg path {
+  stroke: #0081c5;
+}
+.con-listing-check {
+  min-width: 15px;
+  margin-right: 20px;
+}
+.con-listing-info {
+  max-width: 340px;
+  padding-right: 8px;
+}
+.con-listing-phone {
+  max-width: 110px;
+  padding-right: 8px;
+}
+.con-listing-mail {
+  max-width: 200px;
+  padding-right: 8px;
+}
+.con-listing-edit-wrap {
+  margin-right: 35px;
+}
+/* Dashboard Page Start By Varsha Rohit  */
+.slider-card-common {
+  padding: 20px 20px 20px;
+  height: 120px;
+  box-shadow: 0px 5.08197px 10.1639px rgba(146, 123, 193, 0.3);
+  border-radius: 25px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+}
+.slider-card-common .card-holder-nm {
+  margin-bottom: 18px !important;
+}
+.slider-card-common .card-num-date p:first-child {
+  margin-bottom: 15px !important;
+}
+.slider-card-common .card-holder-nm,
+.slider-card-common .card-num-date p:first-child {
+  text-shadow: -1px -1px 3px rgba(255, 255, 255, 0.55),
+    2px 2px 4px rgba(0, 0, 0, 0.45);
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  color: #fff;
+  line-height: 18px;
+}
+.slider-card-common .card-num-date p:last-child {
+  font-size: 7px;
+  line-height: 10px;
+  color: #fff;
+  text-shadow: -1px -1px 3px rgba(255, 255, 255, 0.55),
+    2px 2px 4px rgba(0, 0, 0, 0.45);
+}
+.slider-card-common img.w-card-top-img {
+  max-width: 59px;
+}
+.slider-card-common img.w-card-bottom-img {
+  max-width: 140px;
+}
+.dashboard-home-container .dashboard-bottom-sec {
+  flex-wrap: nowrap;
+}
+.dashboard-home-container .dashboard-graph-sec {
+  width: calc(100% - 450px);
+  padding-right: 40px;
+}
+.dashboard-home-container .dashboard-card-links-sec {
+  width: 450px;
+  padding-left: 35px;
+}
+.dashboard-home-container .dashboard-search-wrap {
+  width: calc(100% - 450px);
+  padding-right: 40px;
+}
+.dashboard-home-container .dashboard-notification-sec {
+  width: 450px;
+  padding-left: 35px;
+}
+.dashboard-home-container .dashboard-bottom-sec {
+  padding-top: 20px;
+}
+.dashboard-graph-wrap img {
+  max-width: 100%;
+  width: auto;
+}
+.dashboard-recent-activity-sec .tab-content-block-part > ul {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  overflow-x: auto;
+  width: 100%;
+}
+.dashboard-recent-activity-sec .tab-inner-wrap ul li .user-info {
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  width: 100%;
+}
+.card-num-date {
+  z-index: 9;
+}
+/* Dashboard Page End By Varsha Rohit  */
+/* Profile Update BY VR  Start */
+.profile-info-right-desc p {
+  margin-bottom: 0px;
+  font-size: 22px;
+  line-height: 25px;
+  font-weight: 500;
+  color: #363853;
+  width: calc(100% - 32px);
+  padding-right: 15px;
+}
+.pi-title-div {
+  width: 180px;
+}
+.profile-info-right-desc {
+  width: calc(100% - 180px);
+  padding-left: 70px;
+}
+/* Profile Update BY VR  End */
+/* Dashboard View Bank Acccounts Start  */
+.db-view-bank-listing li {
+  padding: 19px;
+  box-shadow: none;
+  border-radius: 15px;
+  transition: all 0.5s ease-in-out;
+  background-color: transparent;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  min-width: fit-content;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+.db-view-bank-listing li:hover {
+  background-color: #fff;
+  box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
+}
+p.bank-name-wrap {
+  color: #363853;
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  padding-left: 35px;
+  width: calc(100% - 58px);
+  white-space: normal;
+}
+.bank-account-type-wrap {
+  max-width: 170px;
+  min-width: 170px;
+  width: 100%;
+  padding-right: 10px;
+}
+.bank-account-num-wrap {
+  max-width: 105px;
+  min-width: 105px;
+  width: 100%;
+  padding-right: 10px;
+}
+.bank-bal-wrap {
+  max-width: 185px;
+  min-width: 185px;
+  width: 100%;
+  padding-right: 10px;
+}
+.bank-account-num-wrap,
+.bank-account-type-wrap {
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  color: #bdbdbd;
+}
+.bank-bal-wrap {
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 26px;
+  color: #9b9b9b;
+}
+.bank-del-wrap {
+  display: flex;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  background: #f7f7f9;
+  border-radius: 8px;
+  justify-content: center;
+  cursor: pointer;
+}
+.bank-del-wrap:hover svg path,
+.db-view-bank-listing li:hover .bank-del-wrap svg path {
+  stroke: #ff3333;
+}
+.db-view-bank-listing li:hover .bank-bal-wrap,
+.db-view-bank-listing li:hover .bank-account-num-wrap,
+.db-view-bank-listing li:hover .bank-account-date-wrap,
+.bank-account-type-wrap input:checked ~ label {
   color: #363853;
 }
-.resendOtp button.disabled {
-  color: #838080 !important;
+.bank-account-type-wrap label {
+  position: relative;
+  padding-left: 30px;
+}
+.bank-account-type-wrap input {
+  visibility: hidden;
+  width: 0px;
+  height: 0px;
+}
+.bank-account-type-wrap input:checked ~ label:before {
+  border-color: #363853;
+}
+.bank-account-type-wrap input:checked ~ label:after {
+  visibility: visible;
+  opacity: 1;
+}
+.bank-account-type-wrap label:before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 1.5px solid #bdbdbd;
+  background-color: transparent;
+  left: 0;
+}
+.bank-account-type-wrap label:after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #363853;
+  left: 5px;
+  visibility: hidden;
+  opacity: 0;
+}
+.bank-logo-name-wrap {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  max-width: 200px;
+  min-width: 200px;
+  width: 100%;
+}
+.bank-logo-wrap {
+  border: 1px solid #bdbdbd;
+  box-shadow: 0px 20.434px 40.868px rgba(0, 0, 0, 0.08);
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bank-logo-wrap .bank-logo-name-wrap .bank-name-wrap {
+  padding-left: 25px;
+}
+.view_bank_listing_bottom-wrap a {
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+}
+.view_bank_listing_bottom-wrap {
+  position: absolute;
+  bottom: 50px;
+}
+.db-view-bank-listing-main-wrap {
+  padding-left: 50px;
+  padding-top: 40px;
+}
+.db-view-bank-main {
+  padding-top: 20px;
+}
+.db-view-bank-main ul.db-view-bank-listing {
+  height: 505px;
+  overflow: auto;
+  padding: 15px;
+}
+/* Dashboard View Bank Acccounts End  */
+/* Dashboard View Card Bank Acccounts Star  */
+.bank-card-name-wrap {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  max-width: 290px;
+  min-width: 290px;
+  width: 100%;
+  padding-right: 10px;
+}
+.bank-card-wrap {
+  width: 105px;
+  height: 63px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0px 7.13683px 14.2737px rgba(146, 123, 193, 0.3);
+  border-radius: 12px;
+}
+.bank-card-wrap img.w-card-top-img {
+  max-width: 37px;
+}
+.bank-card-wrap img.w-card-bottom-img {
+  max-width: 80px;
+}
+p.bank-cardname-wrap {
+  color: #363853;
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  padding-left: 20px;
+  width: calc(100% - 105px);
+  white-space: normal;
+}
+.db-view-card-main .db-view-bank-listing li {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.bank-account-date-wrap {
+  max-width: 65px;
+  min-width: 65px;
+  width: 100%;
+  font-size: 16px;
+  padding-right: 10px;
+}
+/* Dashboard View Card Bank Acccounts End  */
+/* Custom Search Clear Button Start */
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+.form-field.search-field > .clearsearchbox {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 12px;
+  left: auto;
+  opacity: 0;
+  cursor: pointer;
+}
+.clearsearchbox > svg {
+  width: 9px;
+}
+.clearsearchbox > svg path {
+  stroke: #0081c5;
+}
+/* Custom Search Clear Button End */
+.payment-blocks-listing .payee-name {
+  width: calc(100% - 58px);
+}
+.payment-blocks-listing .payee-name-img-wrap {
+  max-width: 250px;
+  min-width: 250px;
+  width: 100%;
+}
+.modal .form-control {
+  color: #363853 !important;
 }

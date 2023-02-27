@@ -1,9 +1,5 @@
 import axios from "axios";
-import { loginUrl } from "constants/urls.js";
-import { getCookie } from "shared/cookies";
-import { refreshTokenApi } from "apiService/auth";
 import { storageRequest } from "helpers/storageRequests";
-import { toast } from "react-toastify";
 import { apiRequest } from "helpers/apiRequests";
 
 // define API_URL and APP ID in env file
@@ -47,7 +43,6 @@ axiosInstance.interceptors.response.use(
       try {
         const { data } = await apiRequest.refreshToken({ token });
         if (!data.success) throw data.message;
-        console.log(data);
         if (data.token) storageRequest.setAuth(data.token);
       } catch (error) {
         console.log(error);

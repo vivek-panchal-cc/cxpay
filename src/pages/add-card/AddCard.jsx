@@ -109,7 +109,7 @@ function AddCard() {
             </ul>
           </div>
           <div className="row wac-details-wrap">
-            <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap">
+            <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap z-0">
               <CreditCard
                 bgcolor={cardBgColor}
                 bgimg={croppedImg}

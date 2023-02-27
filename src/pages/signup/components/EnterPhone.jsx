@@ -28,7 +28,7 @@ function EnterPhone(props) {
       country_code: "",
     },
     validationSchema: enterPhoneSchema,
-    onSubmit: async (values, { resetForm, setStatus }) => {
+    onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
       try {
         const { data } = await apiRequest.verifyMobileNumber(values);
         if (!data.success || data.data === null) throw data.message;
@@ -43,7 +43,10 @@ function EnterPhone(props) {
         }));
         setShowVerifyPhonePopup(true);
       } catch (error) {
-        console.log(error);
+        setErrors({
+          country_code: error.country_code?.[0],
+          mobile_number: error.mobile_number?.[0],
+        });
       }
     },
   });

@@ -25,6 +25,7 @@ const API_resendLoginOtp = process.env.REACT_APP_RESEND_LOGIN_OTP;
 const API_resendForgotPasswordOtp =
   process.env.REACT_APP_RESEND_FORGOT_PASSWORD_OTP;
 const API_resendRegisterOtp = process.env.REACT_APP_RESEND_REGISTER_OTP;
+const API_cardsList = process.env.REACT_APP_CARDS_LIST;
 
 // POST @login API
 // @params user_name, password
@@ -50,7 +51,7 @@ export const verifyRegisterOtp = (params) => {
   return axiosInstance.post(`${API_URL}${API_verifyRegisterOtp}`, params);
 };
 
-// GET @get-profile API
+// POST @get-profile API
 // @params auth_token
 export const getUserProfile = () => {
   return axiosInstance.post(`${API_URL}${API_getProfile}`);
@@ -149,6 +150,12 @@ export const resendRegisterOtp = (params) => {
   return axiosInstance.post(`${API_URL}${API_resendRegisterOtp}`, params);
 };
 
+// POST @cards-list API
+// @params
+export const cardsList = () => {
+  return axiosInstance.post(`${API_URL}${API_cardsList}`);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -170,4 +177,5 @@ export const apiRequest = {
   resendLoginOtp,
   resendForgotPasswordOtp,
   resendRegisterOtp,
+  cardsList,
 };

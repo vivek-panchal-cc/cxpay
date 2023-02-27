@@ -1,11 +1,12 @@
 import React from "react";
 
 function CardBackground(props) {
+  const { height = 359, width = 213 } = props;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="359"
-      height="213"
+      width={height}
+      height={width}
       viewBox="0 0 359 213"
       fill="none"
       {...props}
