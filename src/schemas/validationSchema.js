@@ -40,6 +40,10 @@ const enterPhoneSchema = yup.object().shape({
   country_code: yup.string().required("required*"),
 });
 
+const loginWithOtpSchema = yup.object().shape({
+  mobile_number: mobileSchema,
+});
+
 const verifyOtpSchema = yup.object().shape({
   user_otp: yup
     .string()
@@ -112,4 +116,5 @@ export {
   forgotPasswordSchema,
   resetPasswordSchema,
   linkBankSchema,
+  loginWithOtpSchema,
 };
