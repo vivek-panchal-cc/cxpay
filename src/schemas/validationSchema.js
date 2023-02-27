@@ -16,7 +16,7 @@ const signUpPersonalAccountSchema = yup.object().shape({
   confirm_password: confirmPasswordSchema,
   profile_image: profileImageSchema,
   country: yup.string().required("required*"),
-  country_code: yup.string().required("required*"),
+  mobile_code: yup.string().required("required*"),
   city: yup.string().required("required*"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
@@ -29,7 +29,7 @@ const signUpBusinessAccountSchema = yup.object().shape({
   confirm_password: confirmPasswordSchema,
   profile_image: profileImageSchema,
   country: yup.string().required("required*"),
-  country_code: yup.string().required("required*"),
+  mobile_code: yup.string().required("required*"),
   city: yup.string().required("required*"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
@@ -37,10 +37,11 @@ const signUpBusinessAccountSchema = yup.object().shape({
 const enterPhoneSchema = yup.object().shape({
   mobile_number: yup
     .string()
-    .min(10, "Mobile number must be at least 10 characters")
-    .max(10, "Mobile number must be at most 10 characters")
-    .matches(/^[0-9]*$/, "Enter a valid mobile number")
-    .required("Mobile number is required"),
+    .min(10, "Phone number must be at least 10 characters")
+    .max(10, "Phone number must be at most 10 characters")
+    .matches(/^[0-9]*$/, "Enter a valid Phone number")
+    .required("Phone number is required"),
+  country_code: yup.string().required("required*"),
 });
 
 const verifyOtpSchema = yup.object().shape({
@@ -52,7 +53,12 @@ const verifyOtpSchema = yup.object().shape({
 });
 
 const LoginSchema = yup.object().shape({
-  user_name: yup.string().required("Please enter email or phone"),
+  user_name: yup
+    .string()
+    .min(10, "Phone number must be at least 10 characters")
+    .max(10, "Phone number must be at most 10 characters")
+    .matches(/^[0-9]*$/, "Enter a valid Phone number")
+    .required("Phone number is required"),
   password: yup
     .string()
     .required("Password can't be null")
@@ -92,10 +98,10 @@ const editProfilePersonalUserSchema = yup.object().shape({
 const forgotPasswordSchema = yup.object().shape({
   mobile_number: yup
     .string()
-    .min(10, "Mobile number must be at least 10 characters")
-    .max(10, "Mobile number must be at most 10 characters")
-    .matches(/^[0-9]*$/, "Enter a valid mobile number")
-    .required("Mobile number is required"),
+    .min(10, "Phone number must be at least 10 characters")
+    .max(10, "Phone number must be at most 10 characters")
+    .matches(/^[0-9]*$/, "Enter a valid Phone number")
+    .required("Phone number is required"),
 });
 
 const resetPasswordSchema = yup.object().shape({
