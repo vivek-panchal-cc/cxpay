@@ -112,8 +112,8 @@ function ChangePassword() {
                 </div>
                 <div className="login-btn">
                   <div className="setting-btn-link">
-                    <a href="#">
-                      <IconLeftArrow style={{stroke: '#0081C5'}} />
+                    <a href="/setting">
+                      <IconLeftArrow style={{ stroke: "#0081C5" }} />
                       Settings
                     </a>
                   </div>
