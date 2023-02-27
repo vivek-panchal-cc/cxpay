@@ -26,6 +26,7 @@ function ResetPassword() {
         navigate("/login");
       } catch (error) {
         resetForm();
+        setStatus(error);
         console.log(error);
       }
     },
@@ -75,6 +76,9 @@ function ResetPassword() {
                       }
                     />
                   </div>
+                  {formik.status && (
+                    <p className="text-danger">{formik.status}</p>
+                  )}
                   <div className="text-center login-btn">
                     <input
                       type="submit"
