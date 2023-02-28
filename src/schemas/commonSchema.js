@@ -15,25 +15,56 @@ const emailSchema = yup
   .email("Please enter a valid email")
   .required("Email can't be null");
 
+// const passwordSchema = yup
+//   .string()
+//   .required("Please enter new Password")
+//   .min(8, "Must contain 8 characters")
+//   .max(16, "Maximum limit 16 characters")
+//   .matches(exp0ContainWordPassword, "Should not contain word 'password'")
+//   .matches(exp0ContainWhitespace, "Whitespace is not allowed")
+//   .matches(expContainCapitalLetter, "Must contain one uppercase character")
+//   .matches(expContainNumber, "Must contain one number")
+//   .matches(expContainSpecialChar, "Must contain one special character");
+
 const passwordSchema = yup
   .string()
-  .required("Password can't be null")
-  .min(8, "Must contain 8 characters")
-  .max(16, "Maximum limit 16 characters")
-  .matches(exp0ContainWordPassword, "Should not contain word 'password'")
-  .matches(exp0ContainWhitespace, "Whitespace is not allowed")
-  .matches(expContainCapitalLetter, "Must contain one uppercase character")
-  .matches(expContainNumber, "Must contain one number")
-  .matches(expContainSpecialChar, "Must contain one special character");
+  .required("Please enter new Password")
+  .min(
+    8,
+    "Password must contain at least one number, one uppercase & lowercase letter and one special character, and at least 8 or more characters"
+  )
+  .max(
+    16,
+    "Password must contain at least one number, one uppercase & lowercase letter and one special character, and at least 8 or more characters"
+  )
+  .matches(
+    exp0ContainWordPassword,
+    "Password must contain at least one number, one uppercase & lowercase letter and one special character, and at least 8 or more characters"
+  )
+  .matches(
+    exp0ContainWhitespace,
+    "Password must contain at least one number, one uppercase & lowercase letter and one special character, and at least 8 or more characters"
+  )
+  .matches(
+    expContainCapitalLetter,
+    "Password must contain at least one number, one uppercase & lowercase letter and one special character, and at least 8 or more characters"
+  )
+  .matches(
+    expContainNumber,
+    "Password must contain at least one number, one uppercase & lowercase letter and one special character, and at least 8 or more characters"
+  )
+  .matches(
+    expContainSpecialChar,
+    "Password must contain at least one number, one uppercase & lowercase letter and one special character, and at least 8 or more characters"
+  );
 
 const confirmPasswordSchema = yup
   .string()
   .oneOf([yup.ref("password"), null], "Password must Match")
-  .required("confirm password can't be null");
+  .required("Please enter confirm Password");
 
 const profileImageSchema = yup
   .mixed()
-  .required("Profile image is required")
   .test({
     message: "Image type is not allowed",
     test: (file) => isValidFileType(file && file.name.toLowerCase(), "image"),
