@@ -7,6 +7,7 @@ import { loginWithOtpSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import Modal from "components/modals/Modal";
 import VerifyLoginOtp from "./components/VerifyLoginOtp";
+import { toast } from "react-toastify";
 
 const LoginWithOtp = (props) => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const LoginWithOtp = (props) => {
         const { data } = await apiRequest.loginOtp(values);
         if (!data.success || data.data === null) throw data.message;
         setMobileNumber(values.mobile_number);
+        toast.success(data.data.login_otp);
         setShowVerifyPhonePopup(true);
       } catch (error) {
         resetForm();
