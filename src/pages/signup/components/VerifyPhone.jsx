@@ -28,15 +28,17 @@ function VerifyPhone(props) {
     }, otpCounterTime * 1000);
   };
 
-  const handleResendBtn = () => {
+  const handleResendBtn = async () => {
     setIsTimerOver("disabled");
     setCounter(otpCounterTime);
     handleTimeOut();
     try {
-      const { data } = apiRequest.resendRegisterOtp({
+      const { data } = await apiRequest.resendRegisterOtp({
         mobile_number: signUpCreds.mobile_number,
       });
       if (!data.success || data.data === null) throw data.message;
+
+      toast.success(data.data.otp);
       toast.success(data.message);
     } catch (error) {}
   };
