@@ -73,7 +73,7 @@ function LeftSidebar() {
         </ul>
         <ul className="dashboard-bottom-links">
           <li className={`${thisRoute === "profile" ? "active" : ""}`}>
-            <Link to="/">
+            <Link to="/profile">
               <IconProfileVerified />
               Profile
             </Link>

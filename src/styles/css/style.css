@@ -1034,6 +1034,23 @@ form .form-field select.form-control {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  border: none;
+}
+/* Dashboard Page End By Varsha Rohit  */
+/* Profile Update BY VR  Start */
+.profile-info-right-desc p {
+  margin-bottom: 0px;
+  font-size: 22px;
+  line-height: 25px;
+  font-weight: 500;
+  color: #363853;
+  width: calc(100% - 32px);
+  padding-right: 15px;
+}
+.pi-title-div {width: 180px;}
+.profile-info-right-desc{
+  width: calc(100% - 180px);
+  padding-left: 70px;
 }
 .profile-bottom-info-sec ul li:hover {
   background-color: #fff;

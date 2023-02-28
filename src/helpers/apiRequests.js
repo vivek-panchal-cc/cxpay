@@ -19,6 +19,8 @@ import {
   REACT_APP_RESEND_LOGIN_OTP,
   REACT_APP_RESEND_FORGOT_PASSWORD_OTP,
   REACT_APP_RESEND_REGISTER_OTP,
+  REACT_APP_UPDATE_BUSINESS_URL,
+  REACT_APP_GENERATE_QR_CODE,
 } from "constants/urls";
 import { axiosInstance } from "plugin/axios";
 
@@ -43,7 +45,8 @@ const API_refreshToken = REACT_APP_REFRESH_TOKEN;
 const API_resendLoginOtp = REACT_APP_RESEND_LOGIN_OTP;
 const API_resendForgotPasswordOtp = REACT_APP_RESEND_FORGOT_PASSWORD_OTP;
 const API_resendRegisterOtp = REACT_APP_RESEND_REGISTER_OTP;
-
+const API_updateBusinessUrl = REACT_APP_UPDATE_BUSINESS_URL;
+const API_generateNewQrCode = REACT_APP_GENERATE_QR_CODE;
 // POST @login API
 // @params user_name, password
 export const login = (creds) => {
@@ -167,6 +170,18 @@ export const resendRegisterOtp = (params) => {
   return axiosInstance.post(`${API_URL}${API_resendRegisterOtp}`, params);
 };
 
+// POST @update-business-url API
+// @params business_url
+export const updateBusinessUrl = (params) => {
+  return axiosInstance.post(`${API_URL}${API_updateBusinessUrl}`, params)
+}
+
+// POST @generate-new-qrcode API
+// @params  
+export const generateNewQrCode = () => {
+  return axiosInstance.post(`${API_URL}${API_generateNewQrCode}`)
+}
+
 export const apiRequest = {
   login,
   logout,
@@ -188,4 +203,6 @@ export const apiRequest = {
   resendLoginOtp,
   resendForgotPasswordOtp,
   resendRegisterOtp,
+  updateBusinessUrl,
+  generateNewQrCode
 };
