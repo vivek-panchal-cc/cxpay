@@ -13,9 +13,9 @@ function Lock(props) {
       <path
         d="M13.0266 4.23736C12.4536 2.34236 10.6816 0.974364 8.60361 1.00036C6.13661 1.03036 4.14161 3.01736 4.09961 5.48436V7.65336"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8.66016 12.4058V14.6268"

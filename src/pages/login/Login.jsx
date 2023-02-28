@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
@@ -10,6 +10,7 @@ import { storageRequest } from "helpers/storageRequests";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const token = storageRequest.getAuth();
@@ -51,7 +52,7 @@ const Login = () => {
                     <Input
                       type="text"
                       className="form-control"
-                      placeholder="Phone"
+                      placeholder="Mobile Number"
                       name="user_name"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -63,7 +64,7 @@ const Login = () => {
                   </div>
                   <div className="form-field">
                     <Input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       className="form-control w-100"
                       placeholder="Password"
                       name="password"
@@ -72,9 +73,17 @@ const Login = () => {
                       value={formik.values.password}
                       error={formik.touched.password && formik.errors.password}
                     />
+                    <span className="eye-icon" style={{ top: "24px" }}>
+                      <img
+                        className="eye-close"
+                        src="/assets/images/eye-close.png"
+                        alt="eye close icon"
+                        onClick={() => setShowPassword((e) => !e)}
+                      />
+                    </span>
                   </div>
                   {formik.status && (
-                    <p className="text-danger">{formik.status}</p>
+                    <p className="text-danger text-center">{formik.status}</p>
                   )}
                   <p className="forgot-password-text text-center">
                     <a href="/forgot-password">Forgot Password?</a>

@@ -67,14 +67,14 @@ const profileImageSchema = yup
   .mixed()
   .test({
     message: "Image type is not allowed",
-    test: (file) => isValidFileType(file && file.name.toLowerCase(), "image"),
+    test: (file) =>
+      file && file.name
+        ? isValidFileType(file && file.name.toLowerCase(), "image")
+        : true,
   })
   .test({
     message: "File must not exceed 5 MB",
-    test: (file) => {
-      console.log(file ? file.size <= FILE_SIZE : false);
-      return file ? file.size <= FILE_SIZE : false;
-    },
+    test: (file) => (file && file.size ? file.size <= FILE_SIZE : true),
   });
 
 const mobileSchema = yup
