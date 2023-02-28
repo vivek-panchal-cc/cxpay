@@ -1,6 +1,12 @@
 import React from "react";
 import userImage from "assets/images/user-image-logged-in.png";
-import { IconContact, IconLogout, IconNotify, IconSearch, IconSetting } from "styles/svgs";
+import {
+  IconContact,
+  IconLogout,
+  IconNotify,
+  IconSearch,
+  IconSetting,
+} from "styles/svgs";
 // import { deleteCookie } from "shared/cookies";
 
 const dashboardTopSec = () => {
@@ -42,19 +48,19 @@ const dashboardTopSec = () => {
             <ul>
               <li>
                 <a href="/">
-                  <IconContact style={{stroke: '#363853'}}/>
+                  <IconContact style={{ stroke: "#363853" }} />
                   Profile
                 </a>
               </li>
               <li>
                 <a href="/">
-                  <IconSetting style={{fill: "#363853"}} />
+                  <IconSetting style={{ fill: "#363853" }} />
                   Settings
                 </a>
               </li>
-              <li onClick={()=>{}}>
+              <li onClick={() => {}}>
                 <a href="/">
-                  <IconLogout style={{stroke: '#363853'}}/>
+                  <IconLogout style={{ stroke: "#363853" }} />
                 </a>
               </li>
             </ul>

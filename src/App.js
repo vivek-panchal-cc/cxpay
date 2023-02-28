@@ -20,6 +20,7 @@ import Contacts from "pages/contacts/Contacts";
 import Logout from "pages/logout/Logout";
 import PublicLayout from "layouts/PublicLayout";
 import ViewCard from "pages/view-card/ViewCard";
+import Profile from "pages/profile/Profile";
 
 function App() {
   const location = useLocation();
@@ -70,6 +71,7 @@ function App() {
             <Route path="/view-card" element={<ViewCard />} />
             {/* contacts */}
             <Route path="/contacts" element={<Contacts />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Route>

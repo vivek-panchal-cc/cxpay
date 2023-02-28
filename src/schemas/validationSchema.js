@@ -40,6 +40,10 @@ const enterPhoneSchema = yup.object().shape({
   country_code: yup.string().required("required*"),
 });
 
+const loginWithOtpSchema = yup.object().shape({
+  mobile_number: mobileSchema,
+});
+
 const verifyOtpSchema = yup.object().shape({
   user_otp: yup
     .string()
@@ -100,6 +104,13 @@ const linkBankSchema = yup.object().shape({
   bank_number: yup.string().required("Account number is required."),
 });
 
+const addBusinessUrlSchema = yup.object().shape({
+  business_url: 
+  yup.string()
+    .matches(/^((http|https):\/\/)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/, "Business url is not valid")
+    .required("Business url is required")
+})
+
 export {
   LoginSchema,
   enterPhoneSchema,
@@ -112,4 +123,6 @@ export {
   forgotPasswordSchema,
   resetPasswordSchema,
   linkBankSchema,
+  loginWithOtpSchema,
+  addBusinessUrlSchema
 };

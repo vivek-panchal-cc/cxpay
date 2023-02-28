@@ -66,7 +66,11 @@ function DashboardLayout() {
                     <div className="user-image-wrap">
                       <span className="user-image h-100 w-100">
                         <img
-                          src={profile.profile_image}
+                          src={
+                            profile.profile_image
+                              ? profile.profile_image
+                              : "/assets/images/user-avatar.png"
+                          }
                           className="object-fit-cover h-100 w-100"
                           alt="user img"
                         />

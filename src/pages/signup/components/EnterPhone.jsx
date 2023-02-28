@@ -8,13 +8,14 @@ import VerifyPhone from "./VerifyPhone";
 import Modal from "components/modals/Modal";
 import { SignupContext } from "context/signupContext";
 import InputSelect from "components/ui/InputSelect";
+import { toast } from "react-toastify";
 
 function EnterPhone(props) {
   const { signUpCreds, setSignUpCreds, getCountries } =
     useContext(SignupContext);
   const [showRegisteredPopup, setShowregisteredPopup] = useState(false);
   const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
-  const [username, setUsername] = useState("USERNAME");
+  // const [username, setUsername] = useState("USERNAME");
   const { countryList } = signUpCreds || {};
   const phoneCodes = countryList.map((item) => item.phonecode);
 
@@ -33,7 +34,7 @@ function EnterPhone(props) {
         const { data } = await apiRequest.verifyMobileNumber(values);
         if (!data.success || data.data === null) throw data.message;
         if (data.data.isAlreadyRegster === "1") {
-          setUsername(data.data?.user_name);
+          // setUsername(data.data?.user_name);
           return setShowregisteredPopup(true);
         }
         setSignUpCreds((cs) => ({
@@ -41,7 +42,9 @@ function EnterPhone(props) {
           mobile_number: values.mobile_number,
           mobile_code: values.country_code,
         }));
+
         setShowVerifyPhonePopup(true);
+        toast.success(data.data.otp);
       } catch (error) {
         setErrors({
           country_code: error.country_code?.[0],
@@ -69,7 +72,8 @@ function EnterPhone(props) {
                 show={showRegisteredPopup}
                 setShow={setShowregisteredPopup}
               >
-                <AlreadyRegistered username={username} />
+                {/* <AlreadyRegistered username={username} /> */}
+                <AlreadyRegistered />
               </Modal>
               <h4 className="text-center">Welcome to</h4>
               <div className="login-logo-image text-center">

@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { getCookie } from "shared/cookies";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
-import { enterPhoneSchema } from "schemas/validationSchema";
+import { loginWithOtpSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import Modal from "components/modals/Modal";
 import VerifyLoginOtp from "./components/VerifyLoginOtp";
+import { toast } from "react-toastify";
 
 const LoginWithOtp = (props) => {
   const navigate = useNavigate();
@@ -23,12 +24,13 @@ const LoginWithOtp = (props) => {
     initialValues: {
       mobile_number: "",
     },
-    validationSchema: enterPhoneSchema,
+    validationSchema: loginWithOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
         const { data } = await apiRequest.loginOtp(values);
         if (!data.success || data.data === null) throw data.message;
         setMobileNumber(values.mobile_number);
+        toast.success(data.data.login_otp);
         setShowVerifyPhonePopup(true);
       } catch (error) {
         resetForm();
