@@ -21,6 +21,8 @@ import {
   REACT_APP_RESEND_REGISTER_OTP,
   REACT_APP_UPDATE_BUSINESS_URL,
   REACT_APP_GENERATE_QR_CODE,
+  REACT_APP_UPDATE_CUSTOMER_NOTIFICATION,
+  REACT_APP_GET_CUSTOMER_NOTIFICATION,
 } from "constants/urls";
 import { axiosInstance } from "plugin/axios";
 
@@ -47,6 +49,9 @@ const API_resendForgotPasswordOtp = REACT_APP_RESEND_FORGOT_PASSWORD_OTP;
 const API_resendRegisterOtp = REACT_APP_RESEND_REGISTER_OTP;
 const API_updateBusinessUrl = REACT_APP_UPDATE_BUSINESS_URL;
 const API_generateNewQrCode = REACT_APP_GENERATE_QR_CODE;
+const API_getCustomerNotification = REACT_APP_GET_CUSTOMER_NOTIFICATION;
+const API_updateCustomerNotification = REACT_APP_UPDATE_CUSTOMER_NOTIFICATION;
+
 // POST @login API
 // @params user_name, password
 export const login = (creds) => {
@@ -182,6 +187,18 @@ export const generateNewQrCode = () => {
   return axiosInstance.post(`${API_URL}${API_generateNewQrCode}`)
 }
 
+// POST @get-customer-notification API
+// @params 
+export const getCustomerNotification = () => {
+  return axiosInstance.post(`${API_URL}${API_getCustomerNotification}`)
+}
+
+// POST @update-customer-notification
+// @params email_notification, sms_notification, whatsapp_notification, push_notification
+export const updateCustomerNotification = (params) => {
+  return axiosInstance.post(`${API_URL}${API_updateCustomerNotification}`, params)
+}
+
 export const apiRequest = {
   login,
   logout,
@@ -204,5 +221,7 @@ export const apiRequest = {
   resendForgotPasswordOtp,
   resendRegisterOtp,
   updateBusinessUrl,
-  generateNewQrCode
+  generateNewQrCode,
+  getCustomerNotification,
+  updateCustomerNotification
 };

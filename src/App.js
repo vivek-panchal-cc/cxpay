@@ -20,6 +20,7 @@ import Contacts from "pages/contacts/Contacts";
 import Logout from "pages/logout/Logout";
 import PublicLayout from "layouts/PublicLayout";
 import Profile from "pages/profile/Profile";
+import Notification from "pages/notification/Notification";
 
 function App() {
   const location = useLocation();
@@ -57,7 +58,7 @@ function App() {
             {/* settings */}
             <Route path="/setting" element={<Setting />} />
             <Route path="/setting/edit-profile" element={<EditProfile />} />
-            <Route path="/setting/notification" element={<></>} />
+            <Route path="/setting/notification" element={<Notification />} />
             <Route
               path="/setting/change-password"
               element={<ChangePassword />}

@@ -40,3 +40,5 @@ export const REACT_APP_RESEND_REGISTER_OTP =
 export const REACT_APP_REFRESH_TOKEN = "/customer-login/public/refresh-token";
 export const REACT_APP_UPDATE_BUSINESS_URL = "/customer-onboard/public/update-business-url"
 export const REACT_APP_GENERATE_QR_CODE = "/customer-onboard/public/generate-new-qrcode"
+export const REACT_APP_GET_CUSTOMER_NOTIFICATION = "/customer-onboard/public/get-customer-notification";
+export const REACT_APP_UPDATE_CUSTOMER_NOTIFICATION = "/customer-onboard/public/update-customer-notification";
