@@ -19,6 +19,7 @@ import LinkBank from "pages/linkBank/LinkBank";
 import Contacts from "pages/contacts/Contacts";
 import Logout from "pages/logout/Logout";
 import PublicLayout from "layouts/PublicLayout";
+import Profile from "pages/profile/Profile";
 
 function App() {
   const location = useLocation();
@@ -68,6 +69,7 @@ function App() {
             <Route path="/wallet/link-bank" element={<LinkBank />} />
             {/* contacts */}
             <Route path="/contacts" element={<Contacts />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Route>
