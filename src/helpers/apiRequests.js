@@ -23,6 +23,8 @@ import {
   REACT_APP_GET_CONTACT_LIST,
   REACT_APP_DELETE_CONTACT,
   REACT_APP_FAV_CONTACT,
+  REACT_APP_UPDATE_BUSINESS_URL,
+  REACT_APP_GENERATE_QR_CODE,
 } from "constants/urls";
 import { axiosInstance } from "plugin/axios";
 
@@ -52,6 +54,8 @@ const API_getConatcts = REACT_APP_GET_CONTACT_LIST;
 const API_deleteContact = REACT_APP_DELETE_CONTACT;
 const API_favContact = REACT_APP_FAV_CONTACT;
 
+const API_updateBusinessUrl = REACT_APP_UPDATE_BUSINESS_URL;
+const API_generateNewQrCode = REACT_APP_GENERATE_QR_CODE;
 // POST @login API
 // @params user_name, password
 export const login = (creds) => {
@@ -198,6 +202,18 @@ export const favContact = (params) => {
   return axiosInstance.post(`${API_URL}${API_favContact}`, params);
 };
 
+// POST @update-business-url API
+// @params business_url
+export const updateBusinessUrl = (params) => {
+  return axiosInstance.post(`${API_URL}${API_updateBusinessUrl}`, params)
+}
+
+// POST @generate-new-qrcode API
+// @params  
+export const generateNewQrCode = () => {
+  return axiosInstance.post(`${API_URL}${API_generateNewQrCode}`)
+}
+
 export const apiRequest = {
   login,
   logout,
@@ -223,4 +239,6 @@ export const apiRequest = {
   getConatcts,
   deleteContact,
   favContact,
+  updateBusinessUrl,
+  generateNewQrCode
 };

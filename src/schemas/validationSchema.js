@@ -108,6 +108,12 @@ const inviteContactSchema = yup.object().shape({
   email: emailSchema,
   mobile: yup.string().required("Please enter mobile number."),
 });
+const addBusinessUrlSchema = yup.object().shape({
+  business_url: 
+  yup.string()
+    .matches(/^((http|https):\/\/)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/, "Business url is not valid")
+    .required("Business url is required")
+})
 
 export {
   LoginSchema,
@@ -123,4 +129,5 @@ export {
   linkBankSchema,
   loginWithOtpSchema,
   inviteContactSchema,
+  addBusinessUrlSchema
 };
