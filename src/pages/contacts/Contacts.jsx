@@ -110,7 +110,7 @@ const Contacts = (props) => {
                 </div>
                 <div className="cont-listing-last-wrap">
                   <div className="con-listing-edit-wrap">
-                    <a className="conlist-edit-a con-list-edit-star">
+                    <a href="/" className="conlist-edit-a con-list-edit-star">
                       <img
                         src="images/Star.svg"
                         className="star_border"
@@ -153,7 +153,7 @@ const Contacts = (props) => {
                 </div>
                 <div className="cont-listing-last-wrap">
                   <div className="con-listing-edit-wrap">
-                    <a className="conlist-edit-a con-list-edit-star">
+                    <a href="/" className="conlist-edit-a con-list-edit-star">
                       <img
                         src="images/Star.svg"
                         className="star_border"
@@ -165,15 +165,15 @@ const Contacts = (props) => {
                         alt=""
                       />
                     </a>
-                    <a href="" className="conlist-edit-a">
+                    <a href="/" className="conlist-edit-a">
                       <img src="images/Edit.svg" alt="" />
                     </a>
                   </div>
                   <div className="con-listing-btn-wrap">
-                    <a href="#" className="btn btn-primary con-send-btn">
+                    <a href="/" className="btn btn-primary con-send-btn">
                       Send
                     </a>
-                    <a href="#" className="btn btn-primary con-req-btn">
+                    <a href="/" className="btn btn-primary con-req-btn">
                       Request
                     </a>
                   </div>
@@ -196,7 +196,7 @@ const Contacts = (props) => {
                 </div>
                 <div className="cont-listing-last-wrap">
                   <div className="con-listing-edit-wrap">
-                    <a className="conlist-edit-a con-list-edit-star">
+                    <a href="/" className="conlist-edit-a con-list-edit-star">
                       <img
                         src="images/Star.svg"
                         className="star_border"
@@ -208,15 +208,15 @@ const Contacts = (props) => {
                         alt=""
                       />
                     </a>
-                    <a href="" className="conlist-edit-a">
+                    <a href="/" className="conlist-edit-a">
                       <img src="images/Edit.svg" alt="" />
                     </a>
                   </div>
                   <div className="con-listing-btn-wrap">
-                    <a href="#" className="btn btn-primary con-send-btn">
+                    <a href="/" className="btn btn-primary con-send-btn">
                       Send
                     </a>
-                    <a href="#" className="btn btn-primary con-req-btn">
+                    <a href="/" className="btn btn-primary con-req-btn">
                       Request
                     </a>
                   </div>

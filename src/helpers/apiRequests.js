@@ -60,7 +60,7 @@ export const logout = () => {
 };
 
 // POST @register-mobile API
-// @params mobile_number
+// @params mobile_number, country_code
 export const verifyMobileNumber = (params) => {
   return axiosInstance.post(`${API_URL}${API_verifyMobileNumber}`, params);
 };
@@ -71,7 +71,7 @@ export const verifyRegisterOtp = (params) => {
   return axiosInstance.post(`${API_URL}${API_verifyRegisterOtp}`, params);
 };
 
-// GET @get-profile API
+// POST @get-profile API
 // @params auth_token
 export const getUserProfile = () => {
   return axiosInstance.post(`${API_URL}${API_getProfile}`);
@@ -170,17 +170,23 @@ export const resendRegisterOtp = (params) => {
   return axiosInstance.post(`${API_URL}${API_resendRegisterOtp}`, params);
 };
 
+// POST @cards-list API
+// @params
+export const cardsList = () => {
+  return axiosInstance.post(`${API_URL}${API_cardsList}`);
+};
+
 // POST @update-business-url API
 // @params business_url
 export const updateBusinessUrl = (params) => {
-  return axiosInstance.post(`${API_URL}${API_updateBusinessUrl}`, params)
-}
+  return axiosInstance.post(`${API_URL}${API_updateBusinessUrl}`, params);
+};
 
 // POST @generate-new-qrcode API
-// @params  
+// @params
 export const generateNewQrCode = () => {
-  return axiosInstance.post(`${API_URL}${API_generateNewQrCode}`)
-}
+  return axiosInstance.post(`${API_URL}${API_generateNewQrCode}`);
+};
 
 export const apiRequest = {
   login,
@@ -203,6 +209,7 @@ export const apiRequest = {
   resendLoginOtp,
   resendForgotPasswordOtp,
   resendRegisterOtp,
+  cardsList,
   updateBusinessUrl,
-  generateNewQrCode
+  generateNewQrCode,
 };
