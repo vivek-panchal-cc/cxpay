@@ -43,7 +43,7 @@ function CardItem(props) {
         Balance : <span>1234.00</span>
       </div>
       <div className="bank-del-wrap">
-        <IconCancel />
+        <IconCancel style={{ stroke: "#9b9b9b" }} />
       </div>
     </li>
   );
