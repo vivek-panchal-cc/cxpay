@@ -73,7 +73,7 @@ function LeftSidebar() {
         </ul>
         <ul className="dashboard-bottom-links">
           <li className={`${thisRoute === "profile" ? "active" : ""}`}>
-            <Link to="/">
+            <Link to="/profile">
               <IconProfileVerified />
               Profile
             </Link>
@@ -85,7 +85,7 @@ function LeftSidebar() {
             </Link>
           </li>
           <li className={`${thisRoute === "link-bank" ? "active" : ""}`}>
-            <Link to="/link-bank">
+            <Link to="/wallet/link-bank">
               <IconWallet />
               Link Bank
             </Link>

@@ -47,7 +47,11 @@ function UploadImage(props) {
                 </div>
               </label>
             </form>
-            <a className="cancel-link cursor-pointer" onClick={closeModal}>
+            <a
+              href="/"
+              className="cancel-link cursor-pointer"
+              onClick={closeModal}
+            >
               Cancel
             </a>
           </div>

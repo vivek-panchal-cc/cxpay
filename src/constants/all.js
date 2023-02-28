@@ -8,7 +8,7 @@ const validFileExtensions = {
   image: ["jpg", "png", "jpeg", "svg"],
 };
 // const validFileSize = "5MB";
-const otpCounterTime = 180;
+const otpCounterTime = 60;
 // Test Functions
 const regexNotContainWhitespace = (testStr) =>
   new RegExp(exp0ContainWhitespace).test(testStr);

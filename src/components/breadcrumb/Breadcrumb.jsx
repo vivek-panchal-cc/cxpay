@@ -5,7 +5,7 @@ function Breadcrumb() {
     <div>
       <ul className="breadcrumb">
         <li>
-          <a href="#">Settings</a>
+          <a href="/">Settings</a>
         </li>
         <li>Password</li>
       </ul>

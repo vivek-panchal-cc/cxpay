@@ -1,5 +1,5 @@
-import { SignupContext } from "context/signupContext";
 import React, { useContext, useState } from "react";
+import { SignupContext } from "context/signupContext";
 
 function SelectaccountType(props) {
   const { setSignUpCreds } = useContext(SignupContext);

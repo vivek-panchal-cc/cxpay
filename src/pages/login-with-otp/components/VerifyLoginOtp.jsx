@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import InputOtp from "components/ui/InputOtp";
 import { useFormik } from "formik";
 import { verifyLoginOtpSchema } from "schemas/validationSchema";
@@ -29,15 +29,16 @@ function VerifyLoginOtp(props) {
     }, otpCounterTime * 1000);
   };
 
-  const handleResendBtn = () => {
+  const handleResendBtn = async () => {
     setIsTimerOver("disabled");
     setCounter(otpCounterTime);
     handleTimeOut();
     try {
-      const { data } = apiRequest.resendLoginOtp({
+      const { data } = await apiRequest.resendLoginOtp({
         mobile_number: mobileNumber,
       });
       if (!data.success || data.data === null) throw data.message;
+      toast.success(data.data.login_otp);
       toast.success(data.message);
     } catch (error) {}
   };

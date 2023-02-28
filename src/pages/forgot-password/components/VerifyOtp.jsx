@@ -28,15 +28,16 @@ function VerifyOtp(props) {
     }, otpCounterTime * 1000);
   };
 
-  const handleResendBtn = () => {
+  const handleResendBtn = async () => {
     setIsTimerOver("disabled");
     setCounter(otpCounterTime);
     handleTimeOut();
     try {
-      const { data } = apiRequest.resendForgotPasswordOtp({
+      const { data } = await apiRequest.resendForgotPasswordOtp({
         mobile_number: mobile_number,
       });
       if (!data.success || data.data === null) throw data.message;
+      toast.success(data.data.login_otp);
       toast.success(data.message);
     } catch (error) {}
   };

@@ -1,30 +1,31 @@
+import * as apiUrl from "constants/urls";
 import { axiosInstance } from "plugin/axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
-const API_login = process.env.REACT_APP_LOGIN;
-const API_logout = process.env.REACT_APP_LOGOUT;
-const API_verifyMobileNumber = process.env.REACT_APP_VERIFY_MOBILE_NUMBER;
-const API_verifyRegisterOtp = process.env.REACT_APP_VERIFY_REGISTER_OTP;
-const API_getProfile = process.env.REACT_APP_GET_PROFILE;
-const API_loginOtp = process.env.REACT_APP_LOGIN_OTP;
-const API_verifyLoginOtp = process.env.REACT_APP_LOGIN_OTP_VERIFY;
-const API_registerUser = process.env.REACT_APP_REGISTER_USER;
-const API_updateUser = process.env.REACT_APP_UPDATE_USER;
-const API_passwordChange = process.env.REACT_APP_PASSWORD_CHANGE;
+const API_login = apiUrl.REACT_APP_LOGIN;
+const API_logout = apiUrl.REACT_APP_LOGOUT;
+const API_verifyMobileNumber = apiUrl.REACT_APP_VERIFY_MOBILE_NUMBER;
+const API_verifyRegisterOtp = apiUrl.REACT_APP_VERIFY_REGISTER_OTP;
+const API_getProfile = apiUrl.REACT_APP_GET_PROFILE;
+const API_loginOtp = apiUrl.REACT_APP_LOGIN_OTP;
+const API_verifyLoginOtp = apiUrl.REACT_APP_LOGIN_OTP_VERIFY;
+const API_registerUser = apiUrl.REACT_APP_REGISTER_USER;
+const API_updateUser = apiUrl.REACT_APP_UPDATE_USER;
+const API_passwordChange = apiUrl.REACT_APP_PASSWORD_CHANGE;
 const API_generateForgotPasswordOtp =
-  process.env.REACT_APP_GENERATE_FORGOT_PASSWORD_OTP;
-const API_verifyForgotPasswordOtp =
-  process.env.REACT_APP_VERIFY_FORGOT_PASSWORD_OTP;
-const API_updateForgotPassword =
-  process.env.REACT_APP_UPDATE_FORGOT_PASSWORD_OTP;
-const API_linkBank = process.env.REACT_APP_ADD_BANK;
-const API_addCard = process.env.REACT_APP_ADD_CARD;
-const API_getCountry = process.env.REACT_APP_GET_COUNTRY;
-const API_refreshToken = process.env.REACT_APP_REFRESH_TOKEN;
-const API_resendLoginOtp = process.env.REACT_APP_RESEND_LOGIN_OTP;
-const API_resendForgotPasswordOtp =
-  process.env.REACT_APP_RESEND_FORGOT_PASSWORD_OTP;
-const API_resendRegisterOtp = process.env.REACT_APP_RESEND_REGISTER_OTP;
+  apiUrl.REACT_APP_GENERATE_FORGOT_PASSWORD_OTP;
+const API_verifyForgotPasswordOtp = apiUrl.REACT_APP_VERIFY_FORGOT_PASSWORD_OTP;
+const API_updateForgotPassword = apiUrl.REACT_APP_UPDATE_FORGOT_PASSWORD_OTP;
+const API_linkBank = apiUrl.REACT_APP_ADD_BANK;
+const API_addCard = apiUrl.REACT_APP_ADD_CARD;
+const API_getCountry = apiUrl.REACT_APP_GET_COUNTRY;
+const API_refreshToken = apiUrl.REACT_APP_REFRESH_TOKEN;
+const API_resendLoginOtp = apiUrl.REACT_APP_RESEND_LOGIN_OTP;
+const API_resendForgotPasswordOtp = apiUrl.REACT_APP_RESEND_FORGOT_PASSWORD_OTP;
+const API_resendRegisterOtp = apiUrl.REACT_APP_RESEND_REGISTER_OTP;
+const API_updateBusinessUrl = apiUrl.REACT_APP_UPDATE_BUSINESS_URL;
+const API_generateNewQrCode = apiUrl.REACT_APP_GENERATE_QR_CODE;
+const API_cardsList = apiUrl.REACT_APP_CARDS_LIST;
 
 // POST @login API
 // @params user_name, password
@@ -39,7 +40,7 @@ export const logout = () => {
 };
 
 // POST @register-mobile API
-// @params mobile_number
+// @params mobile_number, country_code
 export const verifyMobileNumber = (params) => {
   return axiosInstance.post(`${API_URL}${API_verifyMobileNumber}`, params);
 };
@@ -50,7 +51,7 @@ export const verifyRegisterOtp = (params) => {
   return axiosInstance.post(`${API_URL}${API_verifyRegisterOtp}`, params);
 };
 
-// GET @get-profile API
+// POST @get-profile API
 // @params auth_token
 export const getUserProfile = () => {
   return axiosInstance.post(`${API_URL}${API_getProfile}`);
@@ -149,6 +150,24 @@ export const resendRegisterOtp = (params) => {
   return axiosInstance.post(`${API_URL}${API_resendRegisterOtp}`, params);
 };
 
+// POST @cards-list API
+// @params
+export const cardsList = () => {
+  return axiosInstance.post(`${API_URL}${API_cardsList}`);
+};
+
+// POST @update-business-url API
+// @params business_url
+export const updateBusinessUrl = (params) => {
+  return axiosInstance.post(`${API_URL}${API_updateBusinessUrl}`, params);
+};
+
+// POST @generate-new-qrcode API
+// @params
+export const generateNewQrCode = () => {
+  return axiosInstance.post(`${API_URL}${API_generateNewQrCode}`);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -170,4 +189,7 @@ export const apiRequest = {
   resendLoginOtp,
   resendForgotPasswordOtp,
   resendRegisterOtp,
+  cardsList,
+  updateBusinessUrl,
+  generateNewQrCode,
 };

@@ -1,7 +1,8 @@
 import getCroppedImg from "helpers/croppedImage";
 import React, { useCallback, useState } from "react";
 import Cropper from "react-easy-crop";
-import { IconImage } from "styles/svgs";
+import { IconCancel, IconImage } from "styles/svgs";
+import styles from "../addCard.module.scss";
 
 function CropCard(props) {
   const { src, onImgCropped, closeModal } = props;
@@ -14,10 +15,19 @@ function CropCard(props) {
   }, []);
 
   const handleSelect = useCallback(async () => {
-    // getCroppedImg return As Base64 string
+    // getCroppedImg return As blob
     const img = await getCroppedImg(src, croppedAreaPixels);
     onImgCropped(img);
-  }, [getCroppedImg, onImgCropped, croppedAreaPixels]);
+  }, [onImgCropped, croppedAreaPixels, src]);
+
+  const handleRangeChange = useCallback((e) => {
+    const min = e.currentTarget.min;
+    const max = e.currentTarget.max;
+    const val = e.currentTarget.value;
+    e.currentTarget.style.backgroundSize =
+      ((val - min) * 100) / (max - min) + "% 100%";
+    setZoom(val);
+  }, []);
 
   return (
     <div
@@ -51,16 +61,14 @@ function CropCard(props) {
               <span className="col-1 d-flex">
                 <IconImage stroke="#BDBDBD" />
               </span>
-              <div className="col-8 d-flex">
+              <div className={`col-8 d-flex ${styles.range_container}`}>
                 <input
                   type="range"
                   value={zoom}
                   min={1}
                   max={3}
                   step={0.1}
-                  onChange={(e) => {
-                    setZoom(e.target.value);
-                  }}
+                  onChange={handleRangeChange}
                   className="w-100"
                 />
               </div>
@@ -76,7 +84,9 @@ function CropCard(props) {
                   className="radio-round purple ms-3 rounded-4 text-white"
                   onClick={closeModal}
                 >
-                  <span>&#10005;</span>
+                  <span>
+                    <IconCancel style={{ stroke: "#fff" }} />
+                  </span>
                 </button>
               </div>
             </div>
