@@ -40,7 +40,7 @@ export const logout = () => {
 };
 
 // POST @register-mobile API
-// @params mobile_number
+// @params mobile_number, country_code
 export const verifyMobileNumber = (params) => {
   return axiosInstance.post(`${API_URL}${API_verifyMobileNumber}`, params);
 };

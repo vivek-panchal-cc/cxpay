@@ -10,7 +10,7 @@ function Logout() {
     (async () => {
       await dispatch(fetchLogout());
     })();
-  }, []);
+  }, [dispatch]);
 
   return <></>;
 }

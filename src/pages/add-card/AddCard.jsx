@@ -54,7 +54,7 @@ function AddCard() {
       color: cardBgColor,
     },
     validationSchema: addCardSchema,
-    onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
+    onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
       try {
         const formData = new FormData();
         for (let key in values) formData.append(key, values[key]);
@@ -65,8 +65,8 @@ function AddCard() {
         resetForm();
         setExpDate(new Date());
       } catch (error) {
-        toast.error(error);
         resetForm();
+        toast.error(error);
         setExpDate(new Date());
       }
     },

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { signUpPersonalAccountSchema } from "schemas/validationSchema";

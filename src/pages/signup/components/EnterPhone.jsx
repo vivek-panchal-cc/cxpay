@@ -15,7 +15,7 @@ function EnterPhone(props) {
   const [showRegisteredPopup, setShowregisteredPopup] = useState(false);
   const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
   const [username, setUsername] = useState("USERNAME");
-  const { countryList, cityList } = signUpCreds || {};
+  const { countryList } = signUpCreds || {};
   const phoneCodes = countryList.map((item) => item.phonecode);
 
   useEffect(() => {

@@ -1,8 +1,6 @@
 import React from "react";
 
 const LeftArrow = (props) => {
-  const { className, style } = props;
-
   return (
     <svg
       width="8"

@@ -12,14 +12,14 @@ function Cancel(props) {
     >
       <path
         d="M13 1L0.999999 13"
-        stroke="#9B9B9B"
+        stroke="inherit"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M1 1L13 13"
-        stroke="#9B9B9B"
+        stroke="inherit"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
