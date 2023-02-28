@@ -7,7 +7,7 @@ const AvatarInfo = (props) => {
     return (
         <div className="profile-top-sec">
             <div className="profile-avtar">
-                <Image src={profileImg} alt="profile avtar" />
+                <Image src={profileImg} alt="profile avtar" fallbacksrc={"/assets/images/user-avatar.png"}/>
             </div>
             <div className="profile-info">
                 <h3>{profileName}</h3>
