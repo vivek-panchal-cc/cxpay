@@ -5,6 +5,7 @@ import Modal from "components/modals/Modal";
 import VerifyOtp from "./components/VerifyOtp";
 import { apiRequest } from "helpers/apiRequests";
 import { forgotPasswordSchema } from "schemas/validationSchema";
+import { toast } from "react-toastify";
 
 function ForgotPassword() {
   const [showOtpPopup, setShowOtpPopup] = useState(false);
@@ -20,6 +21,7 @@ function ForgotPassword() {
           values
         );
         if (!data.success || data.data === null) throw data.message;
+        toast.success(data.data.login_otp);
         setShowOtpPopup(true);
       } catch (error) {
         resetForm();
