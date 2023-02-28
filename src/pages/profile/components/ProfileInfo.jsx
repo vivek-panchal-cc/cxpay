@@ -87,9 +87,9 @@ const ProfileInfo = (props) => {
                 </div>
             </li>
             <li>
-                <div className="pi-title-div">Nationality</div>
+                <div className="pi-title-div">Country</div>
                 <div className="profile-info-right-desc">
-                    <p>{profile?.nationality ? profile?.nationality : "-"}</p>
+                    <p>{profile?.country}</p>
                 </div>
             </li>
         </ul>

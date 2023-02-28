@@ -16,7 +16,9 @@ const Profile = () => {
                     <ProfileInfo profile={profile}/>
                 </div>			  
             </div>
-            <QrCode qrCodeImg={profile?.qr_code_image} />
+            <div className="profile-right-content col-lg-5 col-12">
+                <QrCode qrCodeImg={profile?.qr_code_image} />
+            </div>
         </div>
     );
 }

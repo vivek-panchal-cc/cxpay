@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 const QrCode = (props) => {
-    const {qrCodeImg, qrDescription} = props;
+    const {qrCodeImg} = props;
     const dispatch = useDispatch();
 
     const handleGenerateQrCode = async() => {
@@ -24,15 +24,13 @@ const QrCode = (props) => {
         }
     }
     return (
-        <div className="profile-right-content col-lg-5 col-12">
             <div className="profile-qr">
-            <div className="profile-qr-inner">
-                <Image src={qrCodeImg} alt="QR code image" />
+                <div className="profile-qr-inner">
+                    <Image src={qrCodeImg} alt="QR code image" />
+                </div>
+                {/* <p>{qrDescription ?? 'Lorem Ipsum Dolor Stie Amet'}</p> */}
+                <Button onClick={handleGenerateQrCode} className="btn qr-btn">Request new QR</Button>
             </div>
-            <p>{qrDescription ?? 'Lorem Ipsum Dolor Stie Amet'}</p>
-            <Button onClick={handleGenerateQrCode} className="btn qr-btn">Request new QR</Button>
-            </div>
-        </div>
     );
 }
 
