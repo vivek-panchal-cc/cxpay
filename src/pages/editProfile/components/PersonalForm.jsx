@@ -51,13 +51,13 @@ function PersonalForm(props) {
       country_index: country_index, //not required for API
       country_iso: country_iso || "", //not required for API
       country: country || "",
-      country_code: country_code,
+      mobile_code: country_code,
       city: city || "",
     },
     validationSchema: editProfilePersonalUserSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
       try {
-        console.log(typeof country_code);
+        console.log(values);
         const formData = new FormData();
         for (let key in values) {
           if (key === "profile_image") continue;
@@ -167,7 +167,7 @@ function PersonalForm(props) {
                 type="text"
                 disabled
                 className="form-control"
-                placeholder="Phone Number"
+                placeholder="Mobile Number"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.mobile_number}
@@ -200,7 +200,7 @@ function PersonalForm(props) {
                     formik.setFieldValue("country_index", i);
                     formik.setFieldValue("country_iso", countryList[i].iso);
                     formik.setFieldValue(
-                      "country_code",
+                      "mobile_code",
                       countryList[i].phonecode
                     );
                     formik.setFieldValue(

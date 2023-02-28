@@ -48,7 +48,7 @@ function Businessform(props) {
       country_index: country_index, //not required for API
       country: country || "",
       country_iso: country_iso || "", //not required for API
-      country_code: country_code || "",
+      mobile_code: country_code || "",
       city: city || "",
     },
     validationSchema: editProfileBusinessUserSchema,
@@ -142,7 +142,7 @@ function Businessform(props) {
               type="text"
               disabled
               className="form-control"
-              placeholder="Phone Number"
+              placeholder="Mobile Number"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.mobile_number}
@@ -171,7 +171,7 @@ function Businessform(props) {
                     formik.setFieldValue("country_index", i);
                     formik.setFieldValue("country_iso", countryList[i].iso);
                     formik.setFieldValue(
-                      "country_code",
+                      "mobile_code",
                       countryList[i].phonecode
                     );
                     formik.setFieldValue(

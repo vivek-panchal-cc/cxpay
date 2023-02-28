@@ -8,8 +8,14 @@ import {
 } from "./commonSchema";
 
 const signUpPersonalAccountSchema = yup.object().shape({
-  first_name: yup.string().required("required*"),
-  last_name: yup.string().required("required*"),
+  first_name: yup
+    .string()
+    .required("required*")
+    .max(35, "Maximum limit 35 characters"),
+  last_name: yup
+    .string()
+    .required("required*")
+    .max(35, "Maximum limit 35 characters"),
   user_type: yup.string().required(),
   user_app_id: yup.string().required("required*"),
   email: emailSchema,
@@ -73,21 +79,27 @@ const editProfileBusinessUserSchema = yup.object().shape({
   user_type: yup.string().required(),
   email: emailSchema,
   country: yup.string().required("required*"),
-  country_code: yup.string().required("required*"),
+  mobile_code: yup.string().required("required*"),
   city: yup.string().required("required*"),
-  //profile_image: profileImageSchema,
+  profile_image: profileImageSchema,
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
 const editProfilePersonalUserSchema = yup.object().shape({
-  first_name: yup.string().required("required*"),
-  last_name: yup.string().required("required*"),
+  first_name: yup
+    .string()
+    .required("required*")
+    .max(35, "Maximum limit 35 characters"),
+  last_name: yup
+    .string()
+    .required("required*")
+    .max(35, "Maximum limit 35 characters"),
   user_type: yup.string().required(),
   email: emailSchema,
   country: yup.string().required("required*"),
-  country_code: yup.string().required("required*"),
+  mobile_code: yup.string().required("required*"),
   city: yup.string().required("required*"),
-  // profile_image: profileImageSchema,
+  profile_image: profileImageSchema,
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 const forgotPasswordSchema = yup.object().shape({
@@ -105,11 +117,14 @@ const linkBankSchema = yup.object().shape({
 });
 
 const addBusinessUrlSchema = yup.object().shape({
-  business_url: 
-  yup.string()
-    .matches(/^((http|https):\/\/)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/, "Business url is not valid")
-    .required("Business url is required")
-})
+  business_url: yup
+    .string()
+    .matches(
+      /^((http|https):\/\/)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/,
+      "Business url is not valid"
+    )
+    .required("Business url is required"),
+});
 
 export {
   LoginSchema,
@@ -124,5 +139,5 @@ export {
   resetPasswordSchema,
   linkBankSchema,
   loginWithOtpSchema,
-  addBusinessUrlSchema
+  addBusinessUrlSchema,
 };
