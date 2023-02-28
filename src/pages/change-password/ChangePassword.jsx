@@ -78,6 +78,8 @@ function ChangePassword() {
                       formik.errors.current_password
                     }
                     autoComplete={"new-password"}
+                    onCopy={(e) => e.preventDefault()}
+                    onPaste={(e) => e.preventDefault()}
                   />
                 </div>
                 <div className="form-field">
@@ -93,6 +95,8 @@ function ChangePassword() {
                       formik.touched.new_password && formik.errors.new_password
                     }
                     autoComplete={"new-password"}
+                    onCopy={(e) => e.preventDefault()}
+                    onPaste={(e) => e.preventDefault()}
                   />
                 </div>
                 <div className="form-field">
@@ -108,6 +112,8 @@ function ChangePassword() {
                       formik.touched.confirm_password &&
                       formik.errors.confirm_password
                     }
+                    onCopy={(e) => e.preventDefault()}
+                    onPaste={(e) => e.preventDefault()}
                   />
                 </div>
                 <div className="login-btn">

@@ -53,7 +53,6 @@ function Setting() {
       <div className="settings-inner-sec">
         <div className="profile-info">
           <h3>Settings</h3>
-          <p>Lorem Ipsum Dolor Sit Amet</p>
         </div>
         <div className="settings-bottom-info-sec">
           <ul>

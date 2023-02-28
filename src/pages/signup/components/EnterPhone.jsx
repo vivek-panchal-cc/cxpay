@@ -42,7 +42,6 @@ function EnterPhone(props) {
           mobile_number: values.mobile_number,
           mobile_code: values.country_code,
         }));
-
         setShowVerifyPhonePopup(true);
         toast.success(data.data.otp);
       } catch (error) {
@@ -60,18 +59,10 @@ function EnterPhone(props) {
         <div className="col-xs-12">
           <div className="login-signup-content-wrap login-signup01-content-wrap">
             <div className="login-signup-inner">
-              <Modal
-                id="login_otp_modal"
-                show={showVerifyPhonePopup}
-                setShow={setShowVerifyPhonePopup}
-              >
+              <Modal id="login_otp_modal" show={showVerifyPhonePopup}>
                 <VerifyPhone {...{ signUpCreds, setSignUpCreds }} />
               </Modal>
-              <Modal
-                id="already_register_user"
-                show={showRegisteredPopup}
-                setShow={setShowregisteredPopup}
-              >
+              <Modal id="already_register_user" show={showRegisteredPopup}>
                 {/* <AlreadyRegistered username={username} /> */}
                 <AlreadyRegistered />
               </Modal>
@@ -111,7 +102,7 @@ function EnterPhone(props) {
                     <Input
                       type="text"
                       className="form-control"
-                      placeholder="Phone"
+                      placeholder="Mobile Number"
                       name="mobile_number"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
