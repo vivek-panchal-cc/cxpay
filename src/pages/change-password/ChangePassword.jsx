@@ -35,7 +35,7 @@ function ChangePassword() {
   });
 
   return (
-    <div className="settings-password-right-sec">
+    <div className="settings-password-right-sec min-vh-100">
       <div className="settings-note-inner-sec">
         <div className="profile-info">
           <h3>Change Password</h3>

@@ -19,6 +19,10 @@ import {
   REACT_APP_RESEND_LOGIN_OTP,
   REACT_APP_RESEND_FORGOT_PASSWORD_OTP,
   REACT_APP_RESEND_REGISTER_OTP,
+  REACT_APP_ADD_CONTACT,
+  REACT_APP_GET_CONTACT_LIST,
+  REACT_APP_DELETE_CONTACT,
+  REACT_APP_FAV_CONTACT,
 } from "constants/urls";
 import { axiosInstance } from "plugin/axios";
 
@@ -43,6 +47,10 @@ const API_refreshToken = REACT_APP_REFRESH_TOKEN;
 const API_resendLoginOtp = REACT_APP_RESEND_LOGIN_OTP;
 const API_resendForgotPasswordOtp = REACT_APP_RESEND_FORGOT_PASSWORD_OTP;
 const API_resendRegisterOtp = REACT_APP_RESEND_REGISTER_OTP;
+const API_addContact = REACT_APP_ADD_CONTACT;
+const API_getConatcts = REACT_APP_GET_CONTACT_LIST;
+const API_deleteContact = REACT_APP_DELETE_CONTACT;
+const API_favContact = REACT_APP_FAV_CONTACT;
 
 // POST @login API
 // @params user_name, password
@@ -166,6 +174,29 @@ export const resendForgotPasswordOtp = (params) => {
 export const resendRegisterOtp = (params) => {
   return axiosInstance.post(`${API_URL}${API_resendRegisterOtp}`, params);
 };
+// POST @add-contact API
+// @params mobile,email
+export const addContact = (params) => {
+  return axiosInstance.post(`${API_URL}${API_addContact}`, params);
+};
+
+// POST @contacts-list API
+// @params auth_token
+export const getConatcts = (params) => {
+  return axiosInstance.post(`${API_URL}${API_getConatcts}`, params);
+};
+
+// POST @delete-contact API
+// @params mobile array
+export const deleteContact = (params) => {
+  return axiosInstance.post(`${API_URL}${API_deleteContact}`, params);
+};
+
+// POST @mark-as-favourite API
+// @params mobile
+export const favContact = (params) => {
+  return axiosInstance.post(`${API_URL}${API_favContact}`, params);
+};
 
 export const apiRequest = {
   login,
@@ -188,4 +219,8 @@ export const apiRequest = {
   resendLoginOtp,
   resendForgotPasswordOtp,
   resendRegisterOtp,
+  addContact,
+  getConatcts,
+  deleteContact,
+  favContact,
 };

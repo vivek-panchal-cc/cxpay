@@ -34,6 +34,8 @@ export const REACT_APP_GET_CONTACT_LIST =
   "/customer-onboard/public/contacts-list";
 export const REACT_APP_DELETE_CONTACT =
   "/customer-onboard/public/delete-contact";
+export const REACT_APP_FAV_CONTACT =
+  " /customer-onboard/public/mark-as-favourite";
 export const REACT_APP_GET_COUNTRY = "/customer-onboard/public/get-country";
 export const REACT_APP_RESEND_REGISTER_OTP =
   "/customer-onboard/public/resend-register-otp";
