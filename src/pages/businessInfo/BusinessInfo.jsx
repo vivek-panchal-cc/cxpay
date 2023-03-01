@@ -40,7 +40,7 @@ const BusinessInfo = () => {
                         </div>
                     </div>
                     <div className="settings-profile-bottom-info-sec business-info-bottom-sec">
-                        <BusinessForm countryList={countryList}/>
+                        <BusinessForm countryList={countryList} profile={profile} />
                     </div>
                 </div>
                 <div className="profile-right-content col-lg-5 col-12">

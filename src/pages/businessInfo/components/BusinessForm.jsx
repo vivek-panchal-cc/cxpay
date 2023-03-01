@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from 'components/ui/Button';
 import Input from 'components/ui/Input';
 import InputSelect from 'components/ui/InputSelect';
@@ -8,19 +8,27 @@ import { IconLeftArrow } from 'styles/svgs';
 import { businessInfoSchema } from 'schemas/validationSchema';
 import { apiRequest } from 'helpers/apiRequests';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { fetchUserProfile } from 'features/user/userProfileSlice';
 
 const BusinessForm = (props) => {
-    const {countryList} = props;
+    const {countryList, profile} = props;
+    const dispatch = useDispatch();
+
+    console.log('profile: ', profile);
     const formik = useFormik({
         initialValues: {
             business_url: "",
             business_id: "",
+            business_country: "",
         },
         validationSchema: businessInfoSchema,
         onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
+            console.log('values: ', values);
             try{
                 const {data} = await apiRequest.updateBusinessData(values)
                 if(data.success){
+                    dispatch(fetchUserProfile())
                     toast.success("Business data update successfully.")
                 }
                 if (!data.success || data.data === null) throw data.message;
@@ -29,6 +37,13 @@ const BusinessForm = (props) => {
             }            
         }
     })
+    
+    useEffect(() => {
+        formik.setFieldValue("business_url", profile?.business_url ?? "")
+        formik.setFieldValue("business_id", profile?.business_id ?? "")
+        formik.setFieldValue("business_country", profile?.business_country ?? "")
+    }, [])
+
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className="form-field business-url-field">
@@ -62,29 +77,15 @@ const BusinessForm = (props) => {
             <div className="form-field">
                 <InputSelect
                   className="form-select form-control"
-                  name="country_index"
-                  onChange={({ currentTarget }) => {
-                    const i = parseInt(currentTarget.value);
-                    console.log('i: ', i);
-                    // formik.setFieldValue("country_index", i);
-                    // formik.setFieldValue("country_iso", countryList[i].iso);
-                    // formik.setFieldValue(
-                    //   "mobile_code",
-                    //   countryList[i].phonecode
-                    // );
-                    // formik.setFieldValue(
-                    //   "country",
-                    //   countryList[i].country_name
-                    // );
-                    // formik.setFieldValue("city", "");
-                  }}
-                //   onBlur={formik.handleBlur}
-                //   value={formik.values.country_index}
-                //   error={formik.touched.country && formik.errors.country}
+                  name="business_country"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.business_country}
+                  error={formik.touched.business_country && formik.errors.business_country}
                 >
                   <option value={""}>Select Country</option>
                   {countryList?.map((country, index) => (
-                    <option key={index} value={index}>
+                    <option key={index} value={country.country_name}>
                       {country.country_name}
                     </option>
                   ))}
