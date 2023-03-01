@@ -9,7 +9,8 @@ function ModalConfirmation(props) {
     show,
     setShow,
     handleCallback,
-    header = "Confirm",
+    heading = "Confirm",
+    subHeading = "",
   } = props;
   const modalRef = useRef(null);
 
@@ -34,8 +35,9 @@ function ModalConfirmation(props) {
     >
       <div className="modal-dialog modal-dialog-centered" ref={modalRef}>
         <div className="modal-content">
-          <div className="modal-header">
-            <h3>{header}</h3>
+          <div className="modal-header flex-column">
+            <h3>{heading}</h3>
+            <p>{subHeading}</p>
           </div>
           <div className="modal-body">
             <div>{children}</div>

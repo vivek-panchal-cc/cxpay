@@ -8,8 +8,8 @@ import { IconNotify, IconContact, IconSetting, IconLogout } from "styles/svgs";
 const contentTitles = [
   {
     url: "/view-card",
-    heading: "My Bank Accounts",
-    subHeading: "Primary Bank Accounts",
+    heading: "View Cards",
+    subHeading: "My Credit Cards List",
   },
 ];
 

@@ -42,7 +42,10 @@ function CardItem(props) {
       <div className="bank-bal-wrap">
         Balance : <span>1234.00</span>
       </div>
-      <button className="bank-del-wrap border-0" onClick={handleDelete}>
+      <button
+        className="bank-del-wrap border-0"
+        onClick={() => handleDelete(item)}
+      >
         <IconCancel style={{ stroke: "#9b9b9b" }} />
       </button>
     </li>
