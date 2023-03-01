@@ -1,3 +1,5 @@
+import { Modal } from "bootstrap";
+import ModalConfirmation from "components/modals/ModalConfirmation";
 import { apiRequest } from "helpers/apiRequests";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -17,17 +19,34 @@ function ViewCard(props) {
     }
   };
 
+  const handleCardDelete = async () => {
+    console.log("THIs is the end");
+    // try {
+    //   const { data } = await apiRequest.cardsList();
+    //   if (!data.success) throw data.message;
+    //   console.log(data.data.cards);
+    //   setCardsList(data.data.cards);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+
   useEffect(() => {
     getCardsList();
   }, []);
 
   return (
     <div className="">
+      {/* <ModalConfirmation show={true}></ModalConfirmation> */}
       <div className="db-view-bank-main db-view-card-main">
         <div className="db-view-bank-wrapper db-view-card-wrapper">
           <ul className="db-view-bank-listing">
             {cardsList?.map((item, index) => (
-              <CardItem item={item} key={index} />
+              <CardItem
+                item={item}
+                key={index}
+                handleDelete={handleCardDelete}
+              />
             ))}
           </ul>
         </div>

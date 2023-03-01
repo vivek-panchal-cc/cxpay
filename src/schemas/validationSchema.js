@@ -10,34 +10,34 @@ import {
 const signUpPersonalAccountSchema = yup.object().shape({
   first_name: yup
     .string()
-    .required("required*")
+    .required("Please enter First name")
     .max(35, "Maximum limit 35 characters"),
   last_name: yup
     .string()
-    .required("required*")
+    .required("Please enter Last name")
     .max(35, "Maximum limit 35 characters"),
   user_type: yup.string().required(),
-  user_app_id: yup.string().required("required*"),
+  user_app_id: yup.string().required("Please enter ID"),
   email: emailSchema,
   password: passwordSchema,
   confirm_password: confirmPasswordSchema,
   profile_image: profileImageSchema,
-  country: yup.string().required("required*"),
-  mobile_code: yup.string().required("required*"),
-  city: yup.string().required("required*"),
+  country: yup.string().required("Please select Country"),
+  mobile_code: yup.string().required("required"),
+  city: yup.string().required("Please select City"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
 const signUpBusinessAccountSchema = yup.object().shape({
-  company_name: yup.string().required("required*"),
+  company_name: yup.string().required("Please enter Company name"),
   user_type: yup.string().required(),
   email: emailSchema,
   password: passwordSchema,
   confirm_password: confirmPasswordSchema,
   profile_image: profileImageSchema,
-  country: yup.string().required("required*"),
+  country: yup.string().required("Please select Country"),
   mobile_code: yup.string().required("required*"),
-  city: yup.string().required("required*"),
+  city: yup.string().required("Please select City"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
@@ -75,12 +75,12 @@ const verifyLoginOtpSchema = yup.object().shape({
 });
 
 const editProfileBusinessUserSchema = yup.object().shape({
-  company_name: yup.string().required("required*"),
+  company_name: yup.string().required("Please enter Company name"),
   user_type: yup.string().required(),
   email: emailSchema,
-  country: yup.string().required("required*"),
+  country: yup.string().required("Please select Country"),
   mobile_code: yup.string().required("required*"),
-  city: yup.string().required("required*"),
+  city: yup.string().required("Please select City"),
   profile_image: profileImageSchema,
   // mobile_number: yup.string().required("Mobile number is required"),
 });
@@ -88,18 +88,18 @@ const editProfileBusinessUserSchema = yup.object().shape({
 const editProfilePersonalUserSchema = yup.object().shape({
   first_name: yup
     .string()
-    .required("required*")
+    .required("Please enter First name")
     .max(35, "Maximum limit 35 characters"),
   last_name: yup
     .string()
-    .required("required*")
+    .required("Please enter Last name")
     .max(35, "Maximum limit 35 characters"),
   personal_id: yup.string(),
   user_type: yup.string().required(),
   email: emailSchema,
-  country: yup.string().required("required*"),
+  country: yup.string().required("Please select Country"),
   mobile_code: yup.string().required("required*"),
-  city: yup.string().required("required*"),
+  city: yup.string().required("Please select City"),
   profile_image: profileImageSchema,
   // mobile_number: yup.string().required("Mobile number is required"),
 });
@@ -110,11 +110,6 @@ const forgotPasswordSchema = yup.object().shape({
 const resetPasswordSchema = yup.object().shape({
   password: passwordSchema,
   confirm_password: confirmPasswordSchema,
-});
-
-const linkBankSchema = yup.object().shape({
-  routing_number: yup.string().required("Routing number is required."),
-  bank_number: yup.string().required("Account number is required."),
 });
 
 const addBusinessUrlSchema = yup.object().shape({
@@ -138,7 +133,6 @@ export {
   editProfilePersonalUserSchema,
   forgotPasswordSchema,
   resetPasswordSchema,
-  linkBankSchema,
   loginWithOtpSchema,
   addBusinessUrlSchema,
 };

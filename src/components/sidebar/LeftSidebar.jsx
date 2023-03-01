@@ -84,12 +84,6 @@ function LeftSidebar() {
               Setting
             </Link>
           </li>
-          <li className={`${thisRoute === "link-bank" ? "active" : ""}`}>
-            <Link to="/wallet/link-bank">
-              <IconWallet />
-              Link Bank
-            </Link>
-          </li>
           <li>
             <Link to="/logout">
               <IconLogout style={{ stroke: "#FFF100" }} />
