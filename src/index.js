@@ -7,7 +7,13 @@ import { store } from "app/store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
+// Import Swiper styles
 import "swiper/css";
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/effect-cards';
+
 import "./index.css";
 // JAVASCRIPTS
 import "bootstrap/dist/js/bootstrap";
