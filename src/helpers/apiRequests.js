@@ -26,6 +26,8 @@ const API_resendRegisterOtp = apiUrl.REACT_APP_RESEND_REGISTER_OTP;
 const API_updateBusinessUrl = apiUrl.REACT_APP_UPDATE_BUSINESS_URL;
 const API_generateNewQrCode = apiUrl.REACT_APP_GENERATE_QR_CODE;
 const API_cardsList = apiUrl.REACT_APP_CARDS_LIST;
+const API_bankList = apiUrl.REACT_APP_BANK_LIST;
+const API_deleteBank = apiUrl.REACT_APP_DELETE_BANK;
 
 // POST @login API
 // @params user_name, password
@@ -168,6 +170,18 @@ export const generateNewQrCode = () => {
   return axiosInstance.post(`${API_URL}${API_generateNewQrCode}`);
 };
 
+// POST @banks-list API
+// @params 
+export const getBankList = () => {
+  return axiosInstance.post(`${API_URL}${API_bankList}`);
+}
+
+// POST @delete-bank
+// @params id
+export const deleteBank = (params) => {
+  return axiosInstance.post(`${API_URL}${API_deleteBank}`, params)
+}
+
 export const apiRequest = {
   login,
   logout,
@@ -192,4 +206,6 @@ export const apiRequest = {
   cardsList,
   updateBusinessUrl,
   generateNewQrCode,
+  getBankList,
+  deleteBank
 };
