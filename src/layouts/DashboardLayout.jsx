@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { IconNotify, IconContact, IconSetting, IconLogout } from "styles/svgs";
+import NotificationBar from "components/notification-bar/NotificationBar";
 
 function DashboardLayout() {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ function DashboardLayout() {
           <div className="col-xs-12 col-lg-3 dashboard-left-sec">
             <LeftSidebar />
           </div>
-          <div className="col-xs-12 col-lg-9 dashboard-right-sec">
+          <div className="col-xs-12 col-lg-9 dashboard-right-sec dashaboard-main-sec dashboard-home-container">
             <div className="dashboard-top-sec no-search-ontop">
               <div className="dashboard-notification-sec col-lg-5 col-12">
                 <div className="notification-user-wrap">

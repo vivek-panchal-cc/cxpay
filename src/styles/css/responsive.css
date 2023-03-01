@@ -613,15 +613,6 @@
   .wallet-title-btns {
     max-width: 320px;
   }
-  .con-listing-edit-wrap {
-    margin-right: 25px;
-  }
-  .conlist-edit-a {
-    margin-right: 9px;
-  }
-  .con-listing-btn-wrap .btn {
-    padding: 9px 16px;
-  }
 }
 @media only screen and (max-width: 1299px) {
   .con-list-uimg {
