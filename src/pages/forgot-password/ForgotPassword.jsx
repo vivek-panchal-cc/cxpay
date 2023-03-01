@@ -79,7 +79,7 @@ function ForgotPassword() {
                         formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
                       }`}
                       disabled={formik.isSubmitting}
-                      value="Send Confirmation Code"
+                      value="Send Code"
                     />
                   </div>
                   <p className="sign-up-text text-center">

@@ -94,6 +94,7 @@ const editProfilePersonalUserSchema = yup.object().shape({
     .string()
     .required("Please enter Last name")
     .max(35, "Maximum limit 35 characters"),
+  personal_id: yup.string(),
   user_type: yup.string().required(),
   email: emailSchema,
   country: yup.string().required("Please select Country"),

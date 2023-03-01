@@ -24,6 +24,7 @@ function PersonalForm(props) {
     country_code,
     city,
     profile_image,
+    personal_id,
   } = profile || {};
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ function PersonalForm(props) {
       mobile_number: mobile_number || "", //not required for API
       first_name: first_name || "",
       last_name: last_name || "",
+      personal_id: personal_id || "",
       user_type: user_type || "",
       profile_image: profile_image || "",
       country_index: country_index, //not required for API
@@ -161,6 +163,18 @@ function PersonalForm(props) {
                   error={formik.touched.last_name && formik.errors.last_name}
                 />
               </div>
+            </div>
+            <div className="form-field">
+              <Input
+                type="text"
+                className="form-control"
+                placeholder="Username"
+                name="personal_id"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.personal_id}
+                error={formik.touched.personal_id && formik.errors.personal_id}
+              />
             </div>
             <div className="form-field">
               <Input
