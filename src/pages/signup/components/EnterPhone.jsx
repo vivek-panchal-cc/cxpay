@@ -44,6 +44,7 @@ function EnterPhone(props) {
         }));
         setShowVerifyPhonePopup(true);
         toast.success(data.data.otp);
+        toast.success(data.message);
       } catch (error) {
         setErrors({
           country_code: error.country_code?.[0],

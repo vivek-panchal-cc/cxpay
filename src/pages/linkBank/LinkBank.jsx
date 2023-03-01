@@ -1,17 +1,12 @@
 import React from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
-import { linkBankSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { linkBankSchema } from "schemas/walletSchema";
 
 const LinkBank = (props) => {
-  // const [accountType, setAccountType] = useState("current");
-
-  // const handleChangeAccountType = (e) => {
-  //   setAccountType(e.target.value);
-  // };
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -21,19 +16,24 @@ const LinkBank = (props) => {
       routing_number: "",
     },
     validationSchema: linkBankSchema,
-    onSubmit: async (values, { resetForm, setStatus }) => {
+    onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
       try {
         const { data } = await apiRequest.linkBank(values);
-        if (!data.success || data.data === null) throw data.message;
+        if (!data.success) throw data.message;
         toast.success(data.message);
-        navigate("/setting");
+        navigate("/wallet");
       } catch (error) {
         toast.error(error);
+        setErrors({
+          bank_number: error.bank_number?.[0],
+          routing_number: error.routing_number?.[0],
+        });
         resetForm();
         setStatus(error);
       }
     },
   });
+
   return (
     <div>
       <div className="wallet-link-bank-bottom">

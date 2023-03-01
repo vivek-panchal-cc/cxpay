@@ -78,13 +78,13 @@ function DashboardLayout() {
                     </div>
                     <ul>
                       <li>
-                        <a href="/">
+                        <a href="/profile">
                           <IconContact style={{ stroke: "#363853" }} />
                           Profile
                         </a>
                       </li>
                       <li>
-                        <a href="/">
+                        <a href="/setting">
                           <IconSetting style={{ stroke: "#363853" }} />
                           Settings
                         </a>

@@ -17,7 +17,7 @@ const signUpPersonalAccountSchema = yup.object().shape({
     .required("Please enter Last name")
     .max(35, "Maximum limit 35 characters"),
   user_type: yup.string().required(),
-  user_app_id: yup.string().required("Please enter ID"),
+  personal_id: yup.string().required("Please enter ID"),
   email: emailSchema,
   password: passwordSchema,
   confirm_password: confirmPasswordSchema,
@@ -94,6 +94,7 @@ const editProfilePersonalUserSchema = yup.object().shape({
     .string()
     .required("Please enter Last name")
     .max(35, "Maximum limit 35 characters"),
+  personal_id: yup.string(),
   user_type: yup.string().required(),
   email: emailSchema,
   country: yup.string().required("Please select Country"),
@@ -109,11 +110,6 @@ const forgotPasswordSchema = yup.object().shape({
 const resetPasswordSchema = yup.object().shape({
   password: passwordSchema,
   confirm_password: confirmPasswordSchema,
-});
-
-const linkBankSchema = yup.object().shape({
-  routing_number: yup.string().required("Routing number is required."),
-  bank_number: yup.string().required("Account number is required."),
 });
 
 const addBusinessUrlSchema = yup.object().shape({
@@ -137,7 +133,6 @@ export {
   editProfilePersonalUserSchema,
   forgotPasswordSchema,
   resetPasswordSchema,
-  linkBankSchema,
   loginWithOtpSchema,
   addBusinessUrlSchema,
 };
