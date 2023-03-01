@@ -14,7 +14,7 @@ function Input(props) {
         {...props}
         className={`${props.className} ${disabled ? "cursor-not-allowed" : ""}`}
       />
-      <p className="text-danger ps-2">{error}</p>
+      {error && <p className="text-danger ps-2">{error}</p>}
     </div>
   );
 }
