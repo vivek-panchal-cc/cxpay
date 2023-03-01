@@ -1,3 +1,4 @@
+import { url_regex } from "constants/all";
 import * as yup from "yup";
 import {
   confirmPasswordSchema,
@@ -119,12 +120,16 @@ const linkBankSchema = yup.object().shape({
 const addBusinessUrlSchema = yup.object().shape({
   business_url: yup
     .string()
-    .matches(
-      /^((http|https):\/\/)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/,
+    .matches(url_regex ,
       "Business url is not valid"
     )
     .required("Business url is required"),
 });
+
+const businessInfoSchema = yup.object().shape({
+  business_url: yup.string().matches(url_regex, "Business url is not valid"),
+  business_id: yup.string().required("Business id is required")
+})
 
 export {
   LoginSchema,
@@ -140,4 +145,5 @@ export {
   linkBankSchema,
   loginWithOtpSchema,
   addBusinessUrlSchema,
+  businessInfoSchema
 };

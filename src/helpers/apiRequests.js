@@ -26,6 +26,7 @@ const API_resendRegisterOtp = apiUrl.REACT_APP_RESEND_REGISTER_OTP;
 const API_updateBusinessUrl = apiUrl.REACT_APP_UPDATE_BUSINESS_URL;
 const API_generateNewQrCode = apiUrl.REACT_APP_GENERATE_QR_CODE;
 const API_cardsList = apiUrl.REACT_APP_CARDS_LIST;
+const API_updateBusinessData = apiUrl.REACT_APP_UPDATE_BUSINESS_DATA;
 
 // POST @login API
 // @params user_name, password
@@ -168,6 +169,12 @@ export const generateNewQrCode = () => {
   return axiosInstance.post(`${API_URL}${API_generateNewQrCode}`);
 };
 
+// POST @update-customer-business-data API
+// @params business_id,business_url
+export const updateBusinessData = (params) => {
+  return axiosInstance.post(`${API_URL}${API_updateBusinessData}`, params)
+}
+
 export const apiRequest = {
   login,
   logout,
@@ -192,4 +199,5 @@ export const apiRequest = {
   cardsList,
   updateBusinessUrl,
   generateNewQrCode,
+  updateBusinessData
 };

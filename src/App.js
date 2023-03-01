@@ -21,6 +21,7 @@ import Logout from "pages/logout/Logout";
 import PublicLayout from "layouts/PublicLayout";
 import ViewCard from "pages/view-card/ViewCard";
 import Profile from "pages/profile/Profile";
+import BusinessInfo from "pages/businessInfo/BusinessInfo";
 
 function App() {
   const location = useLocation();
@@ -63,7 +64,7 @@ function App() {
               path="/setting/change-password"
               element={<ChangePassword />}
             />
-            <Route path="/setting/business-info" element={<></>} />
+            <Route path="/setting/business-info" element={<BusinessInfo />} />
             {/* wallet */}
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/wallet/add-card" element={<AddCard />} />
