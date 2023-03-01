@@ -16,8 +16,8 @@ function CropCard(props) {
 
   const handleSelect = useCallback(async () => {
     // getCroppedImg return As blob
-    const img = await getCroppedImg(src, croppedAreaPixels);
-    onImgCropped(img);
+    const imgObj = await getCroppedImg(src, croppedAreaPixels);
+    onImgCropped(imgObj);
   }, [onImgCropped, croppedAreaPixels, src]);
 
   const handleRangeChange = useCallback((e) => {

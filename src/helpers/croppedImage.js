@@ -84,7 +84,7 @@ export default async function getCroppedImg(
   // As a blob (To send image as binary in FormData)
   return new Promise((resolve, reject) => {
     canvas.toBlob((file) => {
-      resolve(file);
+      resolve({ file: file, url: canvas.toDataURL("image/jpeg") });
     }, "image/jpeg");
   });
 }

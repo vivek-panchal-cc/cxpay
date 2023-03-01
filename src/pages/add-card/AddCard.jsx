@@ -18,7 +18,10 @@ function AddCard() {
   const [showPopupCrop, setShowPopupCrop] = useState(false);
   const [cardBgColor, setCardBgColor] = useState("blue");
   const [cardBackImg, setCardBackImg] = useState("");
-  const [croppedImg, setCroppedImg] = useState("");
+  const [croppedImg, setCroppedImg] = useState({
+    file: "",
+    url: "",
+  });
   const [expDate, setExpDate] = useState();
 
   const handleCustomizePalette = (color) => {
@@ -31,14 +34,14 @@ function AddCard() {
     setShowPopupCrop(true);
   };
 
-  const handleCropImage = (cimg) => {
-    setCroppedImg(cimg);
+  const handleCropImage = (cropImgObj) => {
+    setCroppedImg(cropImgObj);
     setShowPopupUpload(false);
     setShowPopupCrop(false);
   };
 
   const handleRemoveImage = () => {
-    setCroppedImg("");
+    setCroppedImg({ file: "", url: "" });
   };
 
   const handleClosePopupUpload = () => setShowPopupUpload(false);
@@ -58,16 +61,18 @@ function AddCard() {
       try {
         const formData = new FormData();
         for (let key in values) formData.append(key, values[key]);
-        if (croppedImg) formData.append("image", croppedImg);
+        if (croppedImg.file) formData.append("image", croppedImg.file);
         const { data } = await apiRequest.addCard(formData);
         if (!data.success) throw data.message;
         toast.success(data.message);
         resetForm();
         setExpDate(new Date());
+        setCroppedImg({ file: "", url: "" });
       } catch (error) {
         resetForm();
         toast.error(error);
         setExpDate(new Date());
+        setCroppedImg({ file: "", url: "" });
       }
     },
   });
@@ -112,7 +117,7 @@ function AddCard() {
             <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap z-0">
               <CreditCard
                 bgcolor={cardBgColor}
-                bgimg={croppedImg}
+                bgimg={croppedImg.url}
                 cardNumber={
                   formik.touched.card_number && !formik.errors.card_number
                     ? formik.values.card_number
@@ -126,7 +131,7 @@ function AddCard() {
             <div className="p-0 col-lg-5 col-12">
               <CustomizePalette
                 color={cardBgColor}
-                bgimg={croppedImg}
+                bgimg={croppedImg.url}
                 removeBgImg={handleRemoveImage}
                 handleChange={handleCustomizePalette}
               />
