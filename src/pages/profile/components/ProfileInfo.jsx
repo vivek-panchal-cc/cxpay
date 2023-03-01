@@ -11,7 +11,8 @@ import { toast } from 'react-toastify';
 
 const ProfileInfo = (props) => {
     const {profile} = props;
-     
+    const {user_type = "personal"} = profile || {};
+
     const [isEditable, setIsEditable] = useState(false);
     const dispatch = useDispatch();
 
@@ -44,12 +45,12 @@ const ProfileInfo = (props) => {
 
     return (
         <ul>
-            <li>
+            {user_type !==  "personal" && <li>
                 <div className="pi-title-div">Business URL</div>
                 <div className="profile-info-right-desc">
                     {!isEditable && 
                         <>
-                            <p>{profile?.business_url}</p>
+                            <p>{profile?.business_url ?? '-'}</p>
                             <button onClick={handleEditUlr} className="edit-button">
                                 <IconEdit />
                             </button>
@@ -75,7 +76,7 @@ const ProfileInfo = (props) => {
                         </button>
                     </form>}
                 </div>
-            </li>
+            </li>}
             <li>
                 <div className="pi-title-div">Email</div>
                 <div className="profile-info-right-desc"><p>{profile?.email}</p>
