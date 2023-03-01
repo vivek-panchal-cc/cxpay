@@ -43,3 +43,5 @@ export const REACT_APP_UPDATE_BUSINESS_URL =
 export const REACT_APP_GENERATE_QR_CODE =
   "/customer-onboard/public/generate-new-qrcode";
 export const REACT_APP_CARDS_LIST = "/customer-onboard/public/cards-list";
+export const REACT_APP_BANK_LIST = "/customer-onboard/public/banks-list";
+export const REACT_APP_DELETE_BANK = "/customer-onboard/public/delete-bank";

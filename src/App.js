@@ -21,6 +21,7 @@ import Logout from "pages/logout/Logout";
 import PublicLayout from "layouts/PublicLayout";
 import ViewCard from "pages/view-card/ViewCard";
 import Profile from "pages/profile/Profile";
+import BankList from "pages/bank-list/BankList";
 
 function App() {
   const location = useLocation();
@@ -69,6 +70,7 @@ function App() {
             <Route path="/wallet/add-card" element={<AddCard />} />
             <Route path="/wallet/link-bank" element={<LinkBank />} />
             <Route path="/view-card" element={<ViewCard />} />
+            <Route path="/wallet/bank-list" element={<BankList />} />
             {/* contacts */}
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/profile" element={<Profile />} />
