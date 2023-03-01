@@ -2,7 +2,15 @@ import React, { useEffect, useRef } from "react";
 import styles from "./modal.module.scss";
 
 function ModalConfirmation(props) {
-  const { children, className, id, show, setShow, header = "Confirm" } = props;
+  const {
+    children,
+    className,
+    id,
+    show,
+    setShow,
+    handleCallback,
+    header = "Confirm",
+  } = props;
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -36,12 +44,14 @@ function ModalConfirmation(props) {
                 type="button"
                 className="outline-btn px-4 py-3"
                 style={{ minWidth: "initial" }}
+                onClick={() => setShow(false)}
               >
                 Cancel
               </button>
               <button
                 className="btn btn-primary px-4 py-3"
                 style={{ minWidth: "initial" }}
+                onClick={handleCallback}
               >
                 confirm
               </button>

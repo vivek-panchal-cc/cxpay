@@ -22,9 +22,11 @@ function ForgotPassword() {
         );
         if (!data.success || data.data === null) throw data.message;
         toast.success(data.data.login_otp);
+        toast.success(data.message);
         setShowOtpPopup(true);
       } catch (error) {
         resetForm();
+        setStatus(error);
         console.log(error);
       }
     },
@@ -67,6 +69,9 @@ function ForgotPassword() {
                       }
                     />
                   </div>
+                  {formik.status && (
+                    <p className="text-danger text-center">{formik.status}</p>
+                  )}
                   <div className="text-center login-btn">
                     <input
                       type="submit"

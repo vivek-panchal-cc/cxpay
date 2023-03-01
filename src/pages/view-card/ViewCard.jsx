@@ -7,6 +7,7 @@ import CardItem from "./component/CardItem";
 
 function ViewCard(props) {
   const [cardsList, setCardsList] = useState([]);
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
 
   const getCardsList = async () => {
     try {
@@ -37,7 +38,11 @@ function ViewCard(props) {
 
   return (
     <div className="">
-      {/* <ModalConfirmation show={true}></ModalConfirmation> */}
+      <ModalConfirmation
+        show={showConfirmPopup}
+        setShow={setShowConfirmPopup}
+        handleCallback={handleCardDelete}
+      ></ModalConfirmation>
       <div className="db-view-bank-main db-view-card-main">
         <div className="db-view-bank-wrapper db-view-card-wrapper">
           <ul className="db-view-bank-listing">

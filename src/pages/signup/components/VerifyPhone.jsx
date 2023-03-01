@@ -83,11 +83,20 @@ function VerifyPhone(props) {
                 error={formik.touched.user_otp && formik.errors.user_otp}
               />
             </div>
-            <div className="resendOtp">
-              {isTimerOver === "disabled" &&
-                Math.floor(counter / 60) +
-                  ":" +
-                  (counter % 60 ? counter % 60 : "00")}
+            <div class="resend-otp-wrap">
+              {isTimerOver === "disabled" && (
+                <div>
+                  <span>
+                    {" "}
+                    {isTimerOver === "disabled" &&
+                      Math.floor(counter / 60) +
+                        ":" +
+                        (counter % 60 ? counter % 60 : "00")}
+                  </span>
+                  <br />
+                </div>
+              )}
+              <p>Didn't receive any code?</p>
               <button
                 className={isTimerOver}
                 disabled={isTimerOver}

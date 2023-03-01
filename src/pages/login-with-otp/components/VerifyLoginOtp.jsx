@@ -83,12 +83,20 @@ function VerifyLoginOtp(props) {
                 error={formik.touched.login_otp && formik.errors.login_otp}
               />
             </div>
-
-            <div className="resendOtp">
-              {isTimerOver === "disabled" &&
-                Math.floor(counter / 60) +
-                  ":" +
-                  (counter % 60 ? counter % 60 : "00")}
+            <div class="resend-otp-wrap">
+              {isTimerOver === "disabled" && (
+                <div>
+                  <span>
+                    {" "}
+                    {isTimerOver === "disabled" &&
+                      Math.floor(counter / 60) +
+                        ":" +
+                        (counter % 60 ? counter % 60 : "00")}
+                  </span>
+                  <br />
+                </div>
+              )}
+              <p>Didn't receive any code?</p>
               <button
                 className={isTimerOver}
                 disabled={isTimerOver}
@@ -97,6 +105,7 @@ function VerifyLoginOtp(props) {
                 Resend OTP
               </button>
             </div>
+
             <div className="popup-btn-wrap">
               {formik.status && <p className="text-danger">{formik.status}</p>}
               <input
