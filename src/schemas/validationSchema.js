@@ -17,7 +17,7 @@ const signUpPersonalAccountSchema = yup.object().shape({
     .required("Please enter Last name")
     .max(35, "Maximum limit 35 characters"),
   user_type: yup.string().required(),
-  user_app_id: yup.string().required("Please enter ID"),
+  personal_id: yup.string().required("Please enter ID"),
   email: emailSchema,
   password: passwordSchema,
   confirm_password: confirmPasswordSchema,

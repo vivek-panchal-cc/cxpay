@@ -50,3 +50,42 @@ code {
   pointer-events: visible !important;
   cursor: not-allowed !important;
 }
+/* / Resend OTP CSS /  */
+.resend-otp-wrap {
+  text-align: center;
+  width: 100%;
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #5b5b5b;
+  margin-bottom: 25px;
+}
+.resend-otp-wrap span:first-child {
+  color: #ff3333;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.resend-otp-wrap p {
+  margin-top: 10px;
+  padding: 0px;
+  margin: 15px 0px 10px;
+  font-size: 18px;
+  line-height: 22px;
+}
+.resend-otp-wrap button.disabled {
+  color: #9d9d9d;
+  pointer-events: none;
+}
+.resend-otp-wrap button {
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0px;
+  border: none;
+  background-color: transparent;
+  color: #0081c5;
+}
+.resend-otp-wrap button:hover {
+  color: #363853;
+}

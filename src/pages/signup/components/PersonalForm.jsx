@@ -21,7 +21,7 @@ function PersonalForm(props) {
       last_name: "",
       user_type: signUpCreds.user_type || "personal",
       mobile_number: signUpCreds.mobile_number,
-      user_app_id: "",
+      personal_id: "",
       email: "",
       password: "",
       confirm_password: "", //not required for API
@@ -160,12 +160,12 @@ function PersonalForm(props) {
                     type="text"
                     className="form-control"
                     placeholder="Id"
-                    name="user_app_id"
+                    name="personal_id"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.user_app_id}
+                    value={formik.values.personal_id}
                     error={
-                      formik.touched.user_app_id && formik.errors.user_app_id
+                      formik.touched.personal_id && formik.errors.personal_id
                     }
                     autoComplete={"new-id"}
                   />
