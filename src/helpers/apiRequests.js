@@ -18,6 +18,7 @@ const API_verifyForgotPasswordOtp = apiUrl.REACT_APP_VERIFY_FORGOT_PASSWORD_OTP;
 const API_updateForgotPassword = apiUrl.REACT_APP_UPDATE_FORGOT_PASSWORD_OTP;
 const API_linkBank = apiUrl.REACT_APP_ADD_BANK;
 const API_addCard = apiUrl.REACT_APP_ADD_CARD;
+const API_deleteCard = apiUrl.REACT_APP_DELETE_CARD;
 const API_getCountry = apiUrl.REACT_APP_GET_COUNTRY;
 const API_refreshToken = apiUrl.REACT_APP_REFRESH_TOKEN;
 const API_resendLoginOtp = apiUrl.REACT_APP_RESEND_LOGIN_OTP;
@@ -122,6 +123,12 @@ export const addCard = (params) => {
   return axiosInstance.post(`${API_URL}${API_addCard}`, params);
 };
 
+// POST @add-bank API
+// @params id(card id)
+export const deleteCard = (params) => {
+  return axiosInstance.post(`${API_URL}${API_deleteCard}`, params);
+};
+
 // POST @get-country API
 // @params
 export const getCountry = () => {
@@ -198,6 +205,7 @@ export const apiRequest = {
   updateForgotPassword,
   linkBank,
   addCard,
+  deleteCard,
   getCountry,
   refreshToken,
   resendLoginOtp,

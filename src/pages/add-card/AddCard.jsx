@@ -16,18 +16,12 @@ import { toast } from "react-toastify";
 function AddCard() {
   const [showPopupUpload, setShowPopupUpload] = useState(false);
   const [showPopupCrop, setShowPopupCrop] = useState(false);
-  const [cardBgColor, setCardBgColor] = useState("blue");
   const [cardBackImg, setCardBackImg] = useState("");
   const [croppedImg, setCroppedImg] = useState({
     file: "",
     url: "",
   });
   const [expDate, setExpDate] = useState();
-
-  const handleCustomizePalette = (color) => {
-    setCardBgColor(color);
-    if (color === "white") setShowPopupUpload(true);
-  };
 
   const handleUploadImage = (img) => {
     setCardBackImg(img);
@@ -54,7 +48,7 @@ function AddCard() {
       expiry_date: "", // mm-yyyy
       billing_address: "",
       security_code: "",
-      color: cardBgColor,
+      color: "blue",
     },
     validationSchema: addCardSchema,
     onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
@@ -76,6 +70,11 @@ function AddCard() {
       }
     },
   });
+
+  const handleCustomizePalette = (color) => {
+    formik.setFieldValue("color", color);
+    if (color === "white") setShowPopupUpload(true);
+  };
 
   return (
     <div className="wallet-add-card-main wallet-page-body">
@@ -116,7 +115,7 @@ function AddCard() {
           <div className="row wac-details-wrap">
             <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap z-0">
               <CreditCard
-                bgcolor={cardBgColor}
+                bgcolor={formik.values.color}
                 bgimg={croppedImg.url}
                 cardNumber={
                   formik.touched.card_number && !formik.errors.card_number
@@ -130,7 +129,7 @@ function AddCard() {
             </div>
             <div className="p-0 col-lg-5 col-12">
               <CustomizePalette
-                color={cardBgColor}
+                color={formik.values.color}
                 bgimg={croppedImg.url}
                 removeBgImg={handleRemoveImage}
                 handleChange={handleCustomizePalette}
