@@ -2,7 +2,7 @@ import React from "react";
 import { IconCancel, IconCardBackground } from "styles/svgs";
 
 function CardItem(props) {
-  const { item } = props;
+  const { item, handleDelete } = props;
   const {
     account_number,
     billing_address,
@@ -42,9 +42,9 @@ function CardItem(props) {
       <div className="bank-bal-wrap">
         Balance : <span>1234.00</span>
       </div>
-      <div className="bank-del-wrap">
+      <button className="bank-del-wrap border-0" onClick={handleDelete}>
         <IconCancel style={{ stroke: "#9b9b9b" }} />
-      </div>
+      </button>
     </li>
   );
 }

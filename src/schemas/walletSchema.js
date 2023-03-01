@@ -30,4 +30,15 @@ const addCardSchema = yup.object().shape({
   color: yup.string().required(""),
 });
 
-export { addCardSchema };
+const linkBankSchema = yup.object().shape({
+  routing_number: yup
+    .string()
+    .required("Routing number is required.")
+    .matches(/^[0-9]*$/, "Invalid routing number"),
+  bank_number: yup
+    .string()
+    .required("Account number is required.")
+    .matches(/^[0-9]*$/, "Invalid account number"),
+});
+
+export { addCardSchema, linkBankSchema };

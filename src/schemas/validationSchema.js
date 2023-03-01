@@ -112,11 +112,6 @@ const resetPasswordSchema = yup.object().shape({
   confirm_password: confirmPasswordSchema,
 });
 
-const linkBankSchema = yup.object().shape({
-  routing_number: yup.string().required("Routing number is required."),
-  bank_number: yup.string().required("Account number is required."),
-});
-
 const addBusinessUrlSchema = yup.object().shape({
   business_url: yup
     .string()
@@ -138,7 +133,6 @@ export {
   editProfilePersonalUserSchema,
   forgotPasswordSchema,
   resetPasswordSchema,
-  linkBankSchema,
   loginWithOtpSchema,
   addBusinessUrlSchema,
 };

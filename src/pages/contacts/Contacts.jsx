@@ -1,8 +1,8 @@
 import React from "react";
 import { useFormik } from "formik";
-import { linkBankSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { IconSearch } from "styles/svgs";
+import { linkBankSchema } from "schemas/walletSchema";
 
 const Contacts = (props) => {
   // const [accountType, setAccountType] = useState("current");
