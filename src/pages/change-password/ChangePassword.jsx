@@ -51,7 +51,7 @@ function ChangePassword() {
             >
               <form onSubmit={formik.handleSubmit}>
                 <div className="form-field">
-                  <Input
+                  {/* <Input
                     type="text"
                     className="form-control"
                     placeholder="Email"
@@ -62,7 +62,7 @@ function ChangePassword() {
                     error={formik.touched.email && formik.errors.email}
                     autoComplete={"new-email"}
                     disabled={true}
-                  />
+                  /> */}
                 </div>
                 <div className="form-field">
                   <Input

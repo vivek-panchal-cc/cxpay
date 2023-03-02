@@ -15,6 +15,7 @@ const LinkBank = (props) => {
       bank_number: "",
       account_type: "current",
       routing_number: "",
+      bank_name: "",
     },
     validationSchema: linkBankSchema,
     onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
@@ -22,12 +23,13 @@ const LinkBank = (props) => {
         const { data } = await apiRequest.linkBank(values);
         if (!data.success) throw data.message;
         toast.success(data.message);
-        navigate("/wallet");
+        navigate("/wallet/bank-list");
       } catch (error) {
         toast.error(error);
         setErrors({
           bank_number: error.bank_number?.[0],
           routing_number: error.routing_number?.[0],
+          bank_name: error.bank_name?.[0],
         });
         resetForm();
         setStatus(error);
@@ -78,6 +80,22 @@ const LinkBank = (props) => {
                 <label className="form-check-label" htmlFor="current_acc_op">
                   Current
                 </label>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-12 col p-0">
+                <div className="form-field">
+                  <Input
+                    type="text"
+                    className="form-control"
+                    placeholder="Bank Name"
+                    name="bank_name"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.bank_name}
+                    error={formik.touched.bank_name && formik.errors.bank_name}
+                  />
+                </div>
               </div>
             </div>
             <div className="row">

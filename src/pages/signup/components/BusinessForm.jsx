@@ -40,7 +40,7 @@ function Businessform(props) {
         }
         formData.append("profile_image", values.profile_image);
         const { data } = await apiRequest.registerUser(formData);
-        if (!data.success || data.data === null) throw data.message;
+        if (!data.success) throw data.message;
         setSignUpCreds({ step: 0 });
         toast.success(data.message);
         navigate("/login");

@@ -91,7 +91,7 @@ const LoginWithOtp = (props) => {
                     />
                   </div>
                   <p className="sign-up-text text-center">
-                    Already have an account? <a href="/login">Login</a>
+                    Don't have an account ? <a href="/signup"> Signup</a>
                   </p>
                 </form>
               </div>
