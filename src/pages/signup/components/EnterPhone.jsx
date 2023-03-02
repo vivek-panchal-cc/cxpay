@@ -92,16 +92,16 @@ function EnterPhone(props) {
                       onChange={formik.handleChange}
                     >
                       <option value={""}>Code</option>
-                      {phoneCodes.map((item, index) => (
-                        <option value={item} key={index}>
-                          {item}
+                      {countryList?.map((country, index) => (
+                        <option value={country.phonecode} key={index}>
+                          {country.phonecode} &nbsp; {country.country_name}
                         </option>
                       ))}
                     </InputSelect>
                   </div>
                   <div className="col-8 px-0">
                     <Input
-                      type="text"
+                      type="mobile"
                       className="form-control"
                       placeholder="Mobile Number"
                       name="mobile_number"

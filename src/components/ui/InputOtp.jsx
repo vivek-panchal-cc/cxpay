@@ -34,6 +34,15 @@ function InputOtp(props) {
       : e.target?.previousSibling?.focus();
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && e.target.name === `otp${inputArr.length - 1}`) {
+      e.preventDefault();
+      e.stopPropagation();
+      // e.target.form.onsubmit();
+      // console.log(e);
+    }
+  };
+
   return (
     <div className={`d-flex flex-column ${styles.otp_input}`}>
       {labelname && (
@@ -53,6 +62,7 @@ function InputOtp(props) {
             value={otpInputs?.[`otp${item}`] || ""}
             className={`${className}`}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
           />
         ))}
       </div>

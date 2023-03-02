@@ -8,6 +8,7 @@ import { SignupContext } from "context/signupContext";
 import Input from "components/ui/Input";
 import InputFile from "components/ui/InputImage";
 import InputSelect from "components/ui/InputSelect";
+import { IconEyeClose, IconEyeOpen } from "styles/svgs";
 
 function Businessform(props) {
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
@@ -164,12 +165,11 @@ function Businessform(props) {
                   onPaste={(e) => e.preventDefault()}
                 />
                 <span className="eye-icon" style={{ top: "24px" }}>
-                  <img
-                    className="eye-close"
-                    src="/assets/images/eye-close.png"
-                    alt="eye close icon"
-                    onClick={() => setShowPassword((e) => !e)}
-                  />
+                  {showPassword ? (
+                    <IconEyeOpen onClick={() => setShowPassword((e) => !e)} />
+                  ) : (
+                    <IconEyeClose onClick={() => setShowPassword((e) => !e)} />
+                  )}
                 </span>
               </div>
               <div className="form-field">

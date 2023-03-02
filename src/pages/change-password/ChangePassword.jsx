@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
@@ -6,11 +6,15 @@ import { passwordChangeSchema } from "../../schemas/settingSchema";
 import { apiRequest } from "../../helpers/apiRequests";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { IconLeftArrow } from "styles/svgs";
+import { IconEyeClose, IconEyeOpen, IconLeftArrow } from "styles/svgs";
 
 function ChangePassword() {
   const { profile } = useSelector((state) => state?.userProfile);
   const { email } = profile || {};
+  const [showPassword, setShowPassword] = useState({
+    old: false,
+    new: false,
+  });
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -66,7 +70,7 @@ function ChangePassword() {
                 </div>
                 <div className="form-field">
                   <Input
-                    type={"password"}
+                    type={showPassword.old ? "text" : "password"}
                     className="form-control"
                     placeholder="Old Password"
                     name="current_password"
@@ -81,10 +85,25 @@ function ChangePassword() {
                     onCopy={(e) => e.preventDefault()}
                     onPaste={(e) => e.preventDefault()}
                   />
+                  <span className="eye-icon" style={{ top: "24px" }}>
+                    {showPassword.old ? (
+                      <IconEyeOpen
+                        onClick={() =>
+                          setShowPassword((e) => ({ ...e, old: !e.old }))
+                        }
+                      />
+                    ) : (
+                      <IconEyeClose
+                        onClick={() =>
+                          setShowPassword((e) => ({ ...e, old: !e.old }))
+                        }
+                      />
+                    )}
+                  </span>
                 </div>
                 <div className="form-field">
                   <Input
-                    type={"password"}
+                    type={showPassword.new ? "text" : "password"}
                     className="form-control"
                     placeholder="New Password"
                     name="new_password"
@@ -98,6 +117,21 @@ function ChangePassword() {
                     onCopy={(e) => e.preventDefault()}
                     onPaste={(e) => e.preventDefault()}
                   />
+                  <span className="eye-icon" style={{ top: "24px" }}>
+                    {showPassword.new ? (
+                      <IconEyeOpen
+                        onClick={() =>
+                          setShowPassword((e) => ({ ...e, new: !e.new }))
+                        }
+                      />
+                    ) : (
+                      <IconEyeClose
+                        onClick={() =>
+                          setShowPassword((e) => ({ ...e, new: !e.new }))
+                        }
+                      />
+                    )}
+                  </span>
                 </div>
                 <div className="form-field">
                   <Input
@@ -115,6 +149,16 @@ function ChangePassword() {
                     onCopy={(e) => e.preventDefault()}
                     onPaste={(e) => e.preventDefault()}
                   />
+                  {formik.touched.confirm_password &&
+                    !formik.errors.confirm_password && (
+                      <span className="eye-icon" style={{ top: "24px" }}>
+                        <img
+                          className="eye-close"
+                          src="/assets/images/green-tick.svg"
+                          alt="eye close icon"
+                        />
+                      </span>
+                    )}
                 </div>
                 <div className="login-btn">
                   <div className="setting-btn-link">
