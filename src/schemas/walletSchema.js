@@ -39,6 +39,7 @@ const linkBankSchema = yup.object().shape({
     .string()
     .required("Account number is required.")
     .matches(/^[0-9]*$/, "Invalid account number"),
+  bank_name: yup.string().required("Bank name is required."),
 });
 
 export { addCardSchema, linkBankSchema };

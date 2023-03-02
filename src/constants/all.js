@@ -50,7 +50,7 @@ export {
   expContainSpecialChar,
   validFileExtensions,
   otpCounterTime,
-  THEME_COLORS
+  THEME_COLORS,
 };
 export {
   regexContainCapitalLetter,

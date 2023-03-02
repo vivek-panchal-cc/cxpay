@@ -22,6 +22,13 @@ function VerifyOtp(props) {
     handleTimeOut();
   }, []);
 
+  let formattedNumber = (counter % 60).toLocaleString("en-US", {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
+  });
+  let counterTime =
+    Math.floor(counter / 60) + ":" + (formattedNumber ? formattedNumber : "00");
+
   const handleTimeOut = () => {
     setTimeout(function () {
       setIsTimerOver("");
@@ -90,13 +97,7 @@ function VerifyOtp(props) {
             <div class="resend-otp-wrap">
               {isTimerOver === "disabled" && (
                 <div>
-                  <span>
-                    {" "}
-                    {isTimerOver === "disabled" &&
-                      Math.floor(counter / 60) +
-                        ":" +
-                        (counter % 60 ? counter % 60 : "00")}
-                  </span>
+                  <span>{isTimerOver === "disabled" && counterTime}</span>
                   <br />
                 </div>
               )}

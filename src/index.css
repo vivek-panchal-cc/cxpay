@@ -59,7 +59,7 @@ code {
 }
 .resend-otp-wrap p {
   margin-top: 10px;
-  padding: 0px;
+  padding: 0px !important;
   margin: 15px 0px 10px;
   font-size: 18px;
   line-height: 22px;

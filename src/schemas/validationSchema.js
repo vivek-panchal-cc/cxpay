@@ -29,7 +29,10 @@ const signUpPersonalAccountSchema = yup.object().shape({
 });
 
 const signUpBusinessAccountSchema = yup.object().shape({
-  company_name: yup.string().required("Please enter Company name"),
+  company_name: yup
+    .string()
+    .required("Please enter Company name")
+    .max(64, "Maximum limit 64 characters"),
   user_type: yup.string().required(),
   email: emailSchema,
   password: passwordSchema,
@@ -75,7 +78,10 @@ const verifyLoginOtpSchema = yup.object().shape({
 });
 
 const editProfileBusinessUserSchema = yup.object().shape({
-  company_name: yup.string().required("Please enter Company name"),
+  company_name: yup
+    .string()
+    .required("Please enter Company name")
+    .max(64, "Maximum limit 64 characters"),
   user_type: yup.string().required(),
   email: emailSchema,
   country: yup.string().required("Please select Country"),
