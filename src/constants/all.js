@@ -33,6 +33,9 @@ const isValidFileType = (fileName, fileType) => {
   );
 };
 
+// theme colors
+const THEME_COLORS = ["purple", "yellow", "blue", "light_blue", "green"];
+
 // To check file size
 // const fileUploadLimit = (file, fileSize) => {
 //   console.log(file);
@@ -47,6 +50,7 @@ export {
   expContainSpecialChar,
   validFileExtensions,
   otpCounterTime,
+  THEME_COLORS
 };
 export {
   regexContainCapitalLetter,
