@@ -63,6 +63,14 @@ const confirmPasswordSchema = yup
   .oneOf([yup.ref("password"), null], "Password must Match")
   .required("Please enter confirm Password");
 
+const changeConfirmPasswordSchema = yup
+  .string()
+  .oneOf(
+    [yup.ref("new_password"), null],
+    "New password and confirm password must be same"
+  )
+  .required("Please enter confirm Password");
+
 const profileImageSchema = yup
   .mixed()
   .test({
@@ -88,6 +96,7 @@ export {
   emailSchema,
   passwordSchema,
   confirmPasswordSchema,
+  changeConfirmPasswordSchema,
   profileImageSchema,
   mobileSchema,
 };

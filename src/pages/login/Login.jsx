@@ -6,6 +6,7 @@ import { LoginSchema } from "schemas/validationSchema";
 import { useDispatch } from "react-redux";
 import { fetchLogin } from "features/user/userProfileSlice";
 import { storageRequest } from "helpers/storageRequests";
+import { IconEyeClose, IconEyeOpen } from "styles/svgs";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ const Login = () => {
                 <form onSubmit={formik.handleSubmit}>
                   <div className="form-field">
                     <Input
-                      type="text"
+                      type="mobile"
                       className="form-control"
                       placeholder="Mobile Number"
                       name="user_name"
@@ -74,12 +75,15 @@ const Login = () => {
                       error={formik.touched.password && formik.errors.password}
                     />
                     <span className="eye-icon" style={{ top: "24px" }}>
-                      <img
-                        className="eye-close"
-                        src="/assets/images/eye-close.png"
-                        alt="eye close icon"
-                        onClick={() => setShowPassword((e) => !e)}
-                      />
+                      {showPassword ? (
+                        <IconEyeOpen
+                          onClick={() => setShowPassword((e) => !e)}
+                        />
+                      ) : (
+                        <IconEyeClose
+                          onClick={() => setShowPassword((e) => !e)}
+                        />
+                      )}
                     </span>
                   </div>
                   {formik.status && (

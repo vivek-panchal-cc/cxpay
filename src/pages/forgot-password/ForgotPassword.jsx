@@ -56,7 +56,7 @@ function ForgotPassword() {
                 <form onSubmit={formik.handleSubmit}>
                   <div className="form-field">
                     <Input
-                      type="text"
+                      type="mobile"
                       className="form-control w-100"
                       placeholder="Mobile Number"
                       name="mobile_number"

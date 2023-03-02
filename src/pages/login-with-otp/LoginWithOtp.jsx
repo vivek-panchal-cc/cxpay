@@ -66,7 +66,7 @@ const LoginWithOtp = (props) => {
                 <form onSubmit={formik.handleSubmit}>
                   <div className="form-field">
                     <Input
-                      type="text"
+                      type="mobile"
                       className="form-control"
                       placeholder="Mobile Number"
                       name="mobile_number"

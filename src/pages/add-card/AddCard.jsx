@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { IconCalender, IconLeftArrow } from "styles/svgs";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
+import Breadcrumb from "components/breadcrumb/Breadcrumb";
 
 function AddCard() {
   const [showPopupUpload, setShowPopupUpload] = useState(false);
@@ -105,12 +106,7 @@ function AddCard() {
         <div className="settings-inner-sec wallet-ac-is">
           <div className="profile-info">
             <h3>Add a Card</h3>
-            <ul className="breadcrumb">
-              <li>
-                <a href="/">Wallet</a>
-              </li>
-              <li>Add a Card</li>
-            </ul>
+            <Breadcrumb />
           </div>
           <div className="row wac-details-wrap">
             <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap z-0">

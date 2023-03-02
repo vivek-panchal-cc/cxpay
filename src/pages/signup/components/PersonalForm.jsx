@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { SignupContext } from "context/signupContext";
 import InputFile from "components/ui/InputImage";
 import InputSelect from "components/ui/InputSelect";
+import { IconEyeClose, IconEyeOpen } from "styles/svgs";
 
 function PersonalForm(props) {
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
@@ -73,7 +74,7 @@ function PersonalForm(props) {
                 showPreview={true}
                 showLabel={true}
                 labelText="Change Profile Picture"
-                fallbackSrc="/assets/images/profile-img.png"
+                fallbackSrc="/assets/images/user-avatar.png"
                 classNameInput="d-none"
                 accept="image/*"
               />
@@ -203,12 +204,15 @@ function PersonalForm(props) {
                       onPaste={(e) => e.preventDefault()}
                     />
                     <span className="eye-icon" style={{ top: "24px" }}>
-                      <img
-                        className="eye-close"
-                        src="/assets/images/eye-close.png"
-                        alt="eye close icon"
-                        onClick={() => setShowPassword((e) => !e)}
-                      />
+                      {showPassword ? (
+                        <IconEyeOpen
+                          onClick={() => setShowPassword((e) => !e)}
+                        />
+                      ) : (
+                        <IconEyeClose
+                          onClick={() => setShowPassword((e) => !e)}
+                        />
+                      )}
                     </span>
                   </div>
                 </div>
