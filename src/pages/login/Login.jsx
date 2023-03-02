@@ -73,6 +73,8 @@ const Login = () => {
                       onBlur={formik.handleBlur}
                       value={formik.values.password}
                       error={formik.touched.password && formik.errors.password}
+                      onCopy={(e) => e.preventDefault()}
+                      onPaste={(e) => e.preventDefault()}
                     />
                     <span className="eye-icon" style={{ top: "24px" }}>
                       {showPassword ? (
