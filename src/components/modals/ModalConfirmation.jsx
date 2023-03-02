@@ -41,10 +41,10 @@ function ModalConfirmation(props) {
           </div>
           <div className="modal-body">
             <div>{children}</div>
-            <div className="popup-btn-wrap d-flex align-items-center gap-4">
+            <div className="popup-btn-wrap d-flex align-items-center justify-content-center gap-4">
               <button
                 type="button"
-                className="outline-btn px-4 py-3"
+                className="outline-btn px-4"
                 style={{ minWidth: "initial" }}
                 onClick={() => setShow(false)}
               >

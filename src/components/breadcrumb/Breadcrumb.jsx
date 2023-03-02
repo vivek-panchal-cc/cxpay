@@ -17,13 +17,21 @@ function Breadcrumb(props) {
     }
   }
 
+  const getCapitalized = (text) => {
+    const str = text.split("-");
+    const cpt = str.map(itm => {
+      return itm.charAt(0).toUpperCase() + itm.slice(1) 
+    })
+    return cpt.join(" ")
+  }
+  
   return (
     <div {...props}>
       <ul className="breadcrumb">
         {urls?.map((elm, i) => {
         return (
           elm && <li key={`breadcrumb-${elm}`}>
-            {i !== (urls.length - 1) ? <Link to={`${getUrl(i)}`}>{elm}</Link> : elm}
+            {i !== (urls.length - 1) ? <Link to={`${getUrl(i)}`}>{getCapitalized(elm)}</Link> : getCapitalized(elm)}
         </li>
         )})}
       </ul>
