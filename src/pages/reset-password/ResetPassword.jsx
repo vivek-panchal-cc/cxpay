@@ -5,6 +5,7 @@ import { apiRequest } from "helpers/apiRequests";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { resetPasswordSchema } from "schemas/validationSchema";
+import { IconEyeClose, IconEyeOpen } from "styles/svgs";
 
 function ResetPassword() {
   const params = useParams();
@@ -64,12 +65,15 @@ function ResetPassword() {
                       onPaste={(e) => e.preventDefault()}
                     />
                     <span className="eye-icon" style={{ top: "24px" }}>
-                      <img
-                        className="eye-close"
-                        src="/assets/images/eye-close.png"
-                        alt="eye close icon"
-                        onClick={() => setShowPassword((e) => !e)}
-                      />
+                      {showPassword ? (
+                        <IconEyeOpen
+                          onClick={() => setShowPassword((e) => !e)}
+                        />
+                      ) : (
+                        <IconEyeClose
+                          onClick={() => setShowPassword((e) => !e)}
+                        />
+                      )}
                     </span>
                   </div>
                   <div className="form-field">

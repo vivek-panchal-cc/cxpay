@@ -3,9 +3,10 @@ import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { linkBankSchema } from "schemas/walletSchema";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
+import { IconLeftArrow } from "styles/svgs";
 
 const LinkBank = (props) => {
   const navigate = useNavigate();
@@ -123,10 +124,14 @@ const LinkBank = (props) => {
             </div>
             <div className="row">
               <div className="col-12 p-0 btns-inline">
-                <div className="btn-wrap">
-                  <a href="/" className="btn outline-btn">
-                    Cancel
-                  </a>
+                <div className="setting-btn-link btn-wrap">
+                  <Link
+                    to="/wallet"
+                    className="outline-btn w-100 text-center d-block"
+                  >
+                    <IconLeftArrow stroke="#0081c5" />
+                    Wallet
+                  </Link>
                 </div>
                 <div className="btn-wrap">
                   <input

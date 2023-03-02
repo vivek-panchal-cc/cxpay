@@ -15,7 +15,7 @@ import EditProfile from "pages/editProfile/EditProfile";
 import ChangePassword from "pages/change-password/ChangePassword";
 import Wallet from "pages/wallet/Wallet";
 import AddCard from "pages/add-card/AddCard";
-import LinkBank from "pages/linkBank/LinkBank";
+import LinkBank from "pages/link-bank/LinkBank";
 import Contacts from "pages/contacts/Contacts";
 import Logout from "pages/logout/Logout";
 import PublicLayout from "layouts/PublicLayout";
@@ -69,7 +69,7 @@ function App() {
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/wallet/add-card" element={<AddCard />} />
             <Route path="/wallet/link-bank" element={<LinkBank />} />
-            <Route path="/view-card" element={<ViewCard />} />
+            <Route path="/wallet/view-card" element={<ViewCard />} />
             <Route path="/wallet/bank-list" element={<BankList />} />
             {/* contacts */}
             <Route path="/contacts" element={<Contacts />} />
