@@ -13,7 +13,10 @@ import { IconEyeClose, IconEyeOpen } from "styles/svgs";
 function PersonalForm(props) {
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState({
+    new: false,
+    confirm: false,
+  });
   const { countryList, cityList } = signUpCreds || {};
 
   const formik = useFormik({
@@ -74,7 +77,7 @@ function PersonalForm(props) {
                 showPreview={true}
                 showLabel={true}
                 labelText="Change Profile Picture"
-                fallbackSrc="/assets/images/user-avatar.png"
+                fallbackSrc="/assets/images/Personal.svg"
                 classNameInput="d-none"
                 accept="image/*"
               />
@@ -191,7 +194,7 @@ function PersonalForm(props) {
                 <div className="col-12 col p-0">
                   <div className="form-field">
                     <Input
-                      type={showPassword ? "text" : "password"}
+                      type={showPassword.new ? "text" : "password"}
                       className="form-control w-100"
                       placeholder="Password"
                       name="password"
@@ -204,13 +207,17 @@ function PersonalForm(props) {
                       onPaste={(e) => e.preventDefault()}
                     />
                     <span className="eye-icon" style={{ top: "24px" }}>
-                      {showPassword ? (
+                      {showPassword.new ? (
                         <IconEyeOpen
-                          onClick={() => setShowPassword((e) => !e)}
+                          onClick={() =>
+                            setShowPassword((e) => ({ ...e, new: !e.new }))
+                          }
                         />
                       ) : (
                         <IconEyeClose
-                          onClick={() => setShowPassword((e) => !e)}
+                          onClick={() =>
+                            setShowPassword((e) => ({ ...e, new: !e.new }))
+                          }
                         />
                       )}
                     </span>
@@ -219,7 +226,7 @@ function PersonalForm(props) {
                 <div className="col-12 col p-0">
                   <div className="form-field">
                     <Input
-                      type="password"
+                      type={showPassword.confirm ? "text" : "password"}
                       className="form-control"
                       placeholder="Confirm password"
                       name="confirm_password"
@@ -235,7 +242,10 @@ function PersonalForm(props) {
                     />
                     {formik.touched.confirm_password &&
                       !formik.errors.confirm_password && (
-                        <span className="eye-icon" style={{ top: "24px" }}>
+                        <span
+                          className="eye-icon"
+                          style={{ top: "24px", right: "45px" }}
+                        >
                           <img
                             className="eye-close"
                             src="/assets/images/green-tick.svg"
@@ -243,6 +253,27 @@ function PersonalForm(props) {
                           />
                         </span>
                       )}
+                    <span className="eye-icon" style={{ top: "24px" }}>
+                      {showPassword.confirm ? (
+                        <IconEyeOpen
+                          onClick={() =>
+                            setShowPassword((e) => ({
+                              ...e,
+                              confirm: !e.confirm,
+                            }))
+                          }
+                        />
+                      ) : (
+                        <IconEyeClose
+                          onClick={() =>
+                            setShowPassword((e) => ({
+                              ...e,
+                              confirm: !e.confirm,
+                            }))
+                          }
+                        />
+                      )}
+                    </span>
                   </div>
                 </div>
               </div>

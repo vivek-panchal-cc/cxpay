@@ -39,6 +39,7 @@ function PersonalForm(props) {
       countryList.find((e) => e.phonecode === cphonecode) || {};
     return { country_index, country_iso: iso, country: country_name };
   }, [country_code, countryList]);
+  console.log(profile_image);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -59,7 +60,6 @@ function PersonalForm(props) {
     validationSchema: editProfilePersonalUserSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
       try {
-        console.log(values);
         const formData = new FormData();
         for (let key in values) {
           if (key === "profile_image") continue;
@@ -101,20 +101,14 @@ function PersonalForm(props) {
                 }}
                 error={formik.errors.profile_image}
                 showPreview={
-                  profile_image
-                    ? profile_image
-                    : "/assets/images/user-avatar.png"
+                  profile_image ? profile_image : "/assets/images/Personal.svg"
                 }
                 showLabel={false}
                 previewSrc={
-                  profile_image
-                    ? profile_image
-                    : "/assets/images/user-avatar.png"
+                  profile_image ? profile_image : "/assets/images/Personal.svg"
                 }
                 fallbackSrc={
-                  profile_image
-                    ? profile_image
-                    : "/assets/images/user-avatar.png"
+                  profile_image ? profile_image : "/assets/images/Personal.svg"
                 }
                 classNameInput="d-none"
                 classNameBorder="border-0 overflow-visible"

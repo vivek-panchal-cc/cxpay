@@ -10,7 +10,10 @@ import { IconEyeClose, IconEyeOpen } from "styles/svgs";
 function ResetPassword() {
   const params = useParams();
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState({
+    new: false,
+    confirm: false,
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -52,7 +55,7 @@ function ResetPassword() {
                 <form onSubmit={formik.handleSubmit}>
                   <div className="form-field">
                     <Input
-                      type={showPassword ? "text" : "password"}
+                      type={showPassword.new ? "text" : "password"}
                       className="form-control"
                       placeholder="New Password"
                       name="password"
@@ -65,20 +68,24 @@ function ResetPassword() {
                       onPaste={(e) => e.preventDefault()}
                     />
                     <span className="eye-icon" style={{ top: "24px" }}>
-                      {showPassword ? (
+                      {showPassword.new ? (
                         <IconEyeOpen
-                          onClick={() => setShowPassword((e) => !e)}
+                          onClick={() =>
+                            setShowPassword((e) => ({ ...e, new: !e.new }))
+                          }
                         />
                       ) : (
                         <IconEyeClose
-                          onClick={() => setShowPassword((e) => !e)}
+                          onClick={() =>
+                            setShowPassword((e) => ({ ...e, new: !e.new }))
+                          }
                         />
                       )}
                     </span>
                   </div>
                   <div className="form-field">
                     <Input
-                      type="password"
+                      type={showPassword.confirm ? "text" : "password"}
                       className="form-control"
                       placeholder="Confirm Password"
                       name="confirm_password"
@@ -94,7 +101,10 @@ function ResetPassword() {
                     />
                     {formik.touched.confirm_password &&
                       !formik.errors.confirm_password && (
-                        <span className="eye-icon" style={{ top: "24px" }}>
+                        <span
+                          className="eye-icon"
+                          style={{ top: "24px", right: "45px" }}
+                        >
                           <img
                             className="eye-close"
                             src="/assets/images/green-tick.svg"
@@ -102,6 +112,27 @@ function ResetPassword() {
                           />
                         </span>
                       )}
+                    <span className="eye-icon" style={{ top: "24px" }}>
+                      {showPassword.confirm ? (
+                        <IconEyeOpen
+                          onClick={() =>
+                            setShowPassword((e) => ({
+                              ...e,
+                              confirm: !e.confirm,
+                            }))
+                          }
+                        />
+                      ) : (
+                        <IconEyeClose
+                          onClick={() =>
+                            setShowPassword((e) => ({
+                              ...e,
+                              confirm: !e.confirm,
+                            }))
+                          }
+                        />
+                      )}
+                    </span>
                   </div>
                   {formik.status && (
                     <p className="text-danger">{formik.status}</p>
