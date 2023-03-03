@@ -5,8 +5,8 @@
   .login-signup form .form-field .form-control {
     padding: 11px 19px !important;
   }
-  form .form-field select.form-control {
-    padding: 11px 22px 11px 11px !important;
+  form .form-field select.form-control.form-select {
+    padding: 11px 24px 11px 11px !important;
     background-position: right 10px center !important;
     background-size: 10px auto !important;
   }
@@ -1537,10 +1537,10 @@
     line-height: 35x;
     padding: 38px 0 40px;
   }
-  .login-signup-content-wrap {
+  /*.login-signup-content-wrap {
     max-height: 85vh;
     overflow-y: auto;
-  }
+  }*/
   .login-signup01-content-wrap .radio-wrap {
     margin-bottom: 54px;
   }
@@ -2669,6 +2669,9 @@
     border-radius: 12px !important;
     padding: 12px 15px !important;
     font-size: 14px;
+  }
+  form .form-field select.form-control {
+    font-size: 10px;
   }
   form .form-control::placeholder {
     font-size: 14px;

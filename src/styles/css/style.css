@@ -1,4 +1,5 @@
-Daterange Picker Popup CSS Start / .daterange_popup_wrapper .daterangepicker {
+/* Daterange Picker Popup CSS Start  */
+.daterange_popup_wrapper .daterangepicker {
   width: 100%;
   max-width: 350px;
   top: 50% !important;
@@ -181,7 +182,8 @@ Daterange Picker Popup CSS Start / .daterange_popup_wrapper .daterangepicker {
   width: 100%;
   height: 100%;
 }
-/ Daterange Picker Popup CSS End /@font-face {
+/*  Daterange Picker Popup CSS End  */
+@font-face {
   font-family: "Comfortaa";
   src: url("../fonts/Comfortaa-Bold.eot");
   src: url("../fonts/Comfortaa-Bold.eot?#iefix") format("embedded-opentype"),
@@ -1567,12 +1569,8 @@ right: auto;
 top: 0;
 bottom: 0;
 margin: auto;
-}*/
-.settings-notifications-bottom-info-sec
-  .form-switch
-  .form-check-input
-  + label::after {
-}
+} */
+
 .settings-notifications-bottom-info-sec
   .form-switch
   .form-check-input:checked
