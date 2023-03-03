@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 function VerifyOtp(props) {
   const { mobile_number } = props.values;
   const [counter, setCounter] = useState(otpCounterTime);
-  const [isTimerOver, setIsTimerOver] = useState("disabled");
+  const [isTimerOver, setIsTimerOver] = useState(true);
 
   React.useEffect(() => {
     const timer =
@@ -31,12 +31,12 @@ function VerifyOtp(props) {
 
   const handleTimeOut = () => {
     setTimeout(function () {
-      setIsTimerOver("");
+      setIsTimerOver(false);
     }, otpCounterTime * 1000);
   };
 
   const handleResendBtn = async () => {
-    setIsTimerOver("disabled");
+    setIsTimerOver(true);
     setCounter(otpCounterTime);
     handleTimeOut();
     try {
@@ -91,19 +91,20 @@ function VerifyOtp(props) {
                 className={"form-control"}
                 value={formik.values.user_otp}
                 onChange={formik.handleChange}
+                handleSubmit={formik.handleSubmit}
                 error={formik.touched.user_otp && formik.errors.user_otp}
               />
             </div>
-            <div class="resend-otp-wrap">
-              {isTimerOver === "disabled" && (
+            <div className="resend-otp-wrap">
+              {isTimerOver && (
                 <div>
-                  <span>{isTimerOver === "disabled" && counterTime}</span>
+                  <span>{counterTime}</span>
                   <br />
                 </div>
               )}
               <p>Didn't receive any code?</p>
               <button
-                className={isTimerOver}
+                className={isTimerOver ? "disabled" : ""}
                 disabled={isTimerOver}
                 onClick={handleResendBtn}
               >

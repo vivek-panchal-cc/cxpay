@@ -106,11 +106,7 @@ function PersonalForm(props) {
                     : "/assets/images/user-avatar.png"
                 }
                 showLabel={false}
-                previewSrc={
-                  profile_image
-                    ? profile_image
-                    : "/assets/images/user-avatar.png"
-                }
+                previewSrc={profile_image}
                 fallbackSrc={
                   profile_image
                     ? profile_image

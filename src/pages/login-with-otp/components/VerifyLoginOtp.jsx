@@ -11,7 +11,7 @@ import { otpCounterTime } from "constants/all";
 function VerifyLoginOtp(props) {
   const { mobileNumber } = props;
   const [counter, setCounter] = useState(otpCounterTime);
-  const [isTimerOver, setIsTimerOver] = useState("disabled");
+  const [isTimerOver, setIsTimerOver] = useState(true);
 
   React.useEffect(() => {
     const timer =
@@ -25,7 +25,7 @@ function VerifyLoginOtp(props) {
 
   const handleTimeOut = () => {
     setTimeout(function () {
-      setIsTimerOver("");
+      setIsTimerOver(false);
     }, otpCounterTime * 1000);
   };
 
@@ -37,7 +37,7 @@ function VerifyLoginOtp(props) {
     Math.floor(counter / 60) + ":" + (formattedNumber ? formattedNumber : "00");
 
   const handleResendBtn = async () => {
-    setIsTimerOver("disabled");
+    setIsTimerOver(true);
     setCounter(otpCounterTime);
     handleTimeOut();
     try {
@@ -87,19 +87,20 @@ function VerifyLoginOtp(props) {
                 className={"form-control"}
                 value={formik.values.login_otp}
                 onChange={formik.handleChange}
+                handleSubmit={formik.handleSubmit}
                 error={formik.touched.login_otp && formik.errors.login_otp}
               />
             </div>
-            <div class="resend-otp-wrap">
-              {isTimerOver === "disabled" && (
+            <div className="resend-otp-wrap">
+              {isTimerOver && (
                 <div>
-                  <span>{isTimerOver === "disabled" && counterTime}</span>
+                  <span>{counterTime}</span>
                   <br />
                 </div>
               )}
               <p>Didn't receive any code?</p>
               <button
-                className={isTimerOver}
+                className={isTimerOver ? "disabled" : ""}
                 disabled={isTimerOver}
                 onClick={handleResendBtn}
               >
