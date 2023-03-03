@@ -2,7 +2,16 @@ import React, { useEffect, useState } from "react";
 import styles from "./input.module.scss";
 
 function InputOtp(props) {
-  const { labelname, error, otpSize, onChange, className, name, value } = props;
+  const {
+    labelname,
+    error,
+    otpSize,
+    onChange,
+    className,
+    name,
+    value,
+    handleSubmit,
+  } = props;
 
   const [inputArr] = useState(Array.from(Array(otpSize).keys()));
   const [otpInputs, setOtpInputs] = useState({});
@@ -38,8 +47,7 @@ function InputOtp(props) {
     if (e.key === "Enter" && e.target.name === `otp${inputArr.length - 1}`) {
       e.preventDefault();
       e.stopPropagation();
-      // e.target.form.onsubmit();
-      // console.log(e);
+      handleSubmit && handleSubmit();
     }
   };
 

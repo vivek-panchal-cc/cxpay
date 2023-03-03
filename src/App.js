@@ -22,15 +22,19 @@ import PublicLayout from "layouts/PublicLayout";
 import ViewCard from "pages/view-card/ViewCard";
 import Profile from "pages/profile/Profile";
 import BankList from "pages/bank-list/BankList";
+import { storageRequest } from "helpers/storageRequests";
+
+async function loadData() {
+  await import(`./styles/js/custom`);
+}
 
 function App() {
   const location = useLocation();
+
   useEffect(() => {
-    async function loadData() {
-      await import(`./styles/js/custom`);
-    }
     loadData();
-  }, [location]);
+    if (location.pathname !== "/signup") storageRequest.removeSignupCreds();
+  }, [location.pathname]);
 
   return (
     <>
