@@ -79,3 +79,6 @@ code {
 .resend-otp-wrap button:hover {
   color: #363853;
 }
+.upload-profile-image .profile-wrap {
+  border-radius: 50% !important;
+}

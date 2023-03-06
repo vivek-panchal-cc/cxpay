@@ -95,18 +95,18 @@ function Businessform(props) {
                 showPreview={
                   profile_image
                     ? profile_image
-                    : "/assets/images/user-avatar.png"
+                    : "/assets/images/Business_account.svg"
                 }
                 showLabel={false}
                 previewSrc={
                   profile_image
                     ? profile_image
-                    : "/assets/images/user-avatar.png"
+                    : "/assets/images/Business_account.svg"
                 }
                 fallbackSrc={
                   profile_image
                     ? profile_image
-                    : "/assets/images/user-avatar.png"
+                    : "/assets/images/Business_account.svg"
                 }
                 classNameInput="d-none"
                 classNameBorder="border-0 overflow-visible"

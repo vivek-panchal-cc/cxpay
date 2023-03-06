@@ -14,6 +14,7 @@ function ChangePassword() {
   const [showPassword, setShowPassword] = useState({
     old: false,
     new: false,
+    confirm: false,
   });
 
   const formik = useFormik({
@@ -135,7 +136,7 @@ function ChangePassword() {
                 </div>
                 <div className="form-field">
                   <Input
-                    type="password"
+                    type={showPassword.confirm ? "text" : "password"}
                     className="form-control"
                     placeholder="Confirm password"
                     name="confirm_password"
@@ -151,7 +152,10 @@ function ChangePassword() {
                   />
                   {formik.touched.confirm_password &&
                     !formik.errors.confirm_password && (
-                      <span className="eye-icon" style={{ top: "24px" }}>
+                      <span
+                        className="eye-icon"
+                        style={{ top: "24px", right: "45px" }}
+                      >
                         <img
                           className="eye-close"
                           src="/assets/images/green-tick.svg"
@@ -159,6 +163,27 @@ function ChangePassword() {
                         />
                       </span>
                     )}
+                  <span className="eye-icon" style={{ top: "24px" }}>
+                    {showPassword.confirm ? (
+                      <IconEyeOpen
+                        onClick={() =>
+                          setShowPassword((e) => ({
+                            ...e,
+                            confirm: !e.confirm,
+                          }))
+                        }
+                      />
+                    ) : (
+                      <IconEyeClose
+                        onClick={() =>
+                          setShowPassword((e) => ({
+                            ...e,
+                            confirm: !e.confirm,
+                          }))
+                        }
+                      />
+                    )}
+                  </span>
                 </div>
                 <div className="login-btn">
                   <div className="setting-btn-link">
