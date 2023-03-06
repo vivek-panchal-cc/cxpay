@@ -10,7 +10,7 @@ const AvatarInfo = (props) => {
         <Image
           src={profileImg}
           alt="profile avtar"
-          fallbacksrc={"/assets/images/user-avatar.png"}
+          fallbacksrc={"/assets/images//Personal.svg"}
           className="h-100 w-100 object-fit-cover"
           style={{ objectPosition: "center" }}
         />

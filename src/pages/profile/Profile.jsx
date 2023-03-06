@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import AvatarInfo from "./components/AvatarInfo";
 import ProfileInfo from "./components/ProfileInfo";
 import QrCode from "./components/QrCode";
+import "./profile.css";
 
 const Profile = () => {
   const { profile } = useSelector((state) => state.userProfile);
