@@ -28,7 +28,7 @@ function DashboardLayout() {
     if (titleObj) return setHeading(titleObj);
     setHeading({ heading: "", subHeading: "" });
   }, [location.pathname]);
-
+  console.log(profile.user_type);
   useEffect(() => {
     (async () => {
       await dispatch(fetchUserProfile());

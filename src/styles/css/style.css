@@ -1139,7 +1139,7 @@ form .form-field select.form-control {
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  align-items: end;
+  align-items: flex-end;
 }
 .slider-card-common .card-holder-nm {
   margin-bottom: 18px !important;
@@ -2013,7 +2013,7 @@ form .search-field -o::placeholder {
   margin-left: 21px;
 }
 .no-search-ontop {
-  justify-content: end;
+  justify-content: flex-end;
 }
 .dashboard-notification-sec {
   display: flex;
@@ -3850,7 +3850,7 @@ form .row {
 }
 /*  16-02-20023*/
 .no-search-ontop {
-  justify-content: end;
+  justify-content: flex-end;
 }
 .add-card-right-sec {
   padding-top: 40px;
@@ -5095,7 +5095,7 @@ img.img-size {
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  align-items: end;
+  align-items: flex-end;
 }
 .slider-card-common .card-holder-nm {
   margin-bottom: 18px !important;

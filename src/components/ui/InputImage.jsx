@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 function InputImage(props) {
@@ -21,6 +21,10 @@ function InputImage(props) {
   } = props;
   const [preview, setPreview] = useState(previewSrc);
   const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    if (previewSrc) setPreview(previewSrc);
+  }, [previewSrc]);
 
   return (
     <div className={`upload-profile-image text-center ${className}`}>
@@ -61,7 +65,7 @@ function InputImage(props) {
             e.currentTarget.files[0].type.includes("image/")
           )
             return setPreview(URL.createObjectURL(e.currentTarget.files[0]));
-          setPreview(preview);
+          setPreview(fallbackSrc);
         }}
         accept={accept}
       />
