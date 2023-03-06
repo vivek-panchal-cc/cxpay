@@ -56,20 +56,6 @@ function ChangePassword() {
             >
               <form onSubmit={formik.handleSubmit}>
                 <div className="form-field">
-                  {/* <Input
-                    type="text"
-                    className="form-control"
-                    placeholder="Email"
-                    name="email"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.email}
-                    error={formik.touched.email && formik.errors.email}
-                    autoComplete={"new-email"}
-                    disabled={true}
-                  /> */}
-                </div>
-                <div className="form-field">
                   <Input
                     type={showPassword.old ? "text" : "password"}
                     className="form-control"

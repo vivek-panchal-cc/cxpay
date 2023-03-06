@@ -1,0 +1,47 @@
+.default {
+  z-index: 999999;
+//   background: url("../../public/assets/images/bg-body-transparent.png");
+  background-position: center;
+//   background-color: #5b5b5b90;
+  background-color: #5b5b5bfa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dotcontainer {
+  .dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    background-color: #4b9cdb;
+  }
+}
+
+// .container .dot:nth-last-child(1) {
+//   animation: fallingAnimation 1s 0.3s linear infinite;
+// }
+// .container .dot:nth-last-child(2) {
+//   animation: fallingAnimation 1s 0.2s linear infinite;
+// }
+// .container .dot:nth-last-child(3) {
+//   animation: fallingAnimation 1s 0.1s linear infinite;
+// }
+
+// @keyframes fallingAnimation {
+//   0% {
+//     transform: translate(0, -15px);
+//     opacity: 0;
+//   }
+//   25%,
+//   50%,
+//   75% {
+//     transform: translate(0, 0);
+//     opacity: 1;
+//   }
+//   100% {
+//     transform: translate(0, 15px);
+//     opacity: 0;
+//   }
+// }

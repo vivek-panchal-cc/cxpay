@@ -6,12 +6,12 @@ function CardItem(props) {
   const {
     account_number,
     billing_address,
+    card_holder_name,
     card_number,
     color,
     expiry_date,
     id,
     image,
-    inst_id,
   } = item;
 
   return (
@@ -33,15 +33,15 @@ function CardItem(props) {
         >
           <IconCardBackground height="100%" width="100%" />
         </div>
-        <p className="bank-cardname-wrap">Card Bank Name</p>
+        <p className="bank-cardname-wrap">{card_holder_name}</p>
       </div>
       <div className="bank-account-num-wrap">
         XXXXXX<span>{card_number}</span>
       </div>
       <div className="bank-account-date-wrap">{expiry_date}</div>
-      <div className="bank-bal-wrap">
+      {/* <div className="bank-bal-wrap">
         Balance : <span>1234.00</span>
-      </div>
+      </div> */}
       <button
         className="bank-del-wrap border-0"
         onClick={() => handleDelete(item)}

@@ -15,10 +15,10 @@ function ViewCard(props) {
     try {
       const { data } = await apiRequest.cardsList();
       if (!data.success) throw data.message;
-      console.log(data.data.cards);
       setCardsList(data.data.cards);
     } catch (error) {
       console.log(error);
+      setCardsList([]);
     }
   };
 

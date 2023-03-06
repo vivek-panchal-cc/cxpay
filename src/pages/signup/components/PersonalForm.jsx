@@ -77,7 +77,7 @@ function PersonalForm(props) {
                 showPreview={true}
                 showLabel={true}
                 labelText="Change Profile Picture"
-                fallbackSrc="/assets/images/Personal.svg"
+                fallbackSrc="/assets/images/Personal.png"
                 classNameInput="d-none"
                 accept="image/*"
               />

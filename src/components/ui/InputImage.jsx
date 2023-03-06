@@ -12,11 +12,11 @@ function InputImage(props) {
     labelText = "Select file",
     previewSrc = "",
     fallbackSrc = "",
-    classNameLabel,
-    classNameInput,
-    classNameImage,
-    classNameBorder,
-    className,
+    classNameLabel = "",
+    classNameInput = "",
+    classNameImage = "",
+    classNameBorder = "",
+    className = "",
     accept,
   } = props;
   const [preview, setPreview] = useState(previewSrc);
@@ -33,7 +33,9 @@ function InputImage(props) {
         className={`cursor-pointer ${classNameLabel}`}
       >
         {showPreview && (
-          <span className={`profile-wrap overflow-hidden ${classNameBorder}`}>
+          <span
+            className={`profile-wrap overflow-hidden mx-auto ${classNameBorder}`}
+          >
             <img
               src={preview}
               alt="profile img"
@@ -69,7 +71,11 @@ function InputImage(props) {
         }}
         accept={accept}
       />
-      {error && <p className="text-danger ps-2">{error}</p>}
+      {error && (
+        <p className="text-danger ps-2" style={{ width: "inherit" }}>
+          {error}
+        </p>
+      )}
     </div>
   );
 }

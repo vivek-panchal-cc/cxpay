@@ -29,12 +29,6 @@ function VerifyPhone(props) {
   let counterTime =
     Math.floor(counter / 60) + ":" + (formattedNumber ? formattedNumber : "00");
 
-  const handleTimeOut = () => {
-    setTimeout(function () {
-      setIsTimerOver(false);
-    }, otpCounterTime * 1000);
-  };
-
   const handleResendBtn = async () => {
     setIsTimerOver(true);
     setCounter(otpCounterTime);
@@ -67,6 +61,13 @@ function VerifyPhone(props) {
       }
     },
   });
+
+  const handleTimeOut = () => {
+    setTimeout(function () {
+      setIsTimerOver(false);
+      formik.setStatus("");
+    }, otpCounterTime * 1000);
+  };
 
   return (
     <div className="modal-dialog modal-dialog-centered">

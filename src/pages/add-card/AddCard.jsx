@@ -48,6 +48,7 @@ function AddCard() {
       card_number: "",
       expiry_date: "", // mm-yyyy
       billing_address: "",
+      card_holder_name: "",
       security_code: "",
       color: "blue",
     },
@@ -111,16 +112,7 @@ function AddCard() {
           <div className="row wac-details-wrap">
             <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap z-0">
               <CreditCard
-                bgcolor={formik.values.color}
-                bgimg={croppedImg.url}
-                cardNumber={
-                  formik.touched.card_number && !formik.errors.card_number
-                    ? formik.values.card_number
-                    : null
-                }
-                expDate={
-                  !formik.errors.expiry_date ? formik.values.expiry_date : null
-                }
+                details={{ ...formik.values, bg_img: croppedImg.url }}
               />
             </div>
             <div className="p-0 col-lg-5 col-12">
@@ -206,6 +198,26 @@ function AddCard() {
                   <div className="form-field">
                     <Input
                       type="text"
+                      id="card_holder_name"
+                      className="form-control"
+                      placeholder="Card Holder Name"
+                      name="card_holder_name"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.card_holder_name}
+                      error={
+                        formik.touched.card_holder_name &&
+                        formik.errors.card_holder_name
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 p-0">
+                  <div className="form-field">
+                    <Input
+                      type="text"
                       id="billing_address"
                       className="form-control"
                       placeholder="Billing Address"
@@ -232,7 +244,10 @@ function AddCard() {
                   <div className="btn-wrap">
                     <input
                       type="submit"
-                      className="btn btn-primary"
+                      className={`btn btn-primary ${
+                        formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                      }`}
+                      disabled={formik.isSubmitting || !formik.isValid}
                       value="Add New Card"
                     />
                   </div>

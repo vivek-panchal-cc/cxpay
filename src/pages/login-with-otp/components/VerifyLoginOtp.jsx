@@ -26,6 +26,7 @@ function VerifyLoginOtp(props) {
   const handleTimeOut = () => {
     setTimeout(function () {
       setIsTimerOver(false);
+      formik.setStatus("");
     }, otpCounterTime * 1000);
   };
 

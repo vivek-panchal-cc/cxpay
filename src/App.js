@@ -11,7 +11,7 @@ import ResetPassword from "pages/reset-password/ResetPassword";
 import SignupProvider from "context/signupContext";
 import DashboardLayout from "layouts/DashboardLayout";
 import Setting from "pages/setting/Setting";
-import EditProfile from "pages/editProfile/EditProfile";
+import EditProfile from "pages/edit-profile/EditProfile";
 import ChangePassword from "pages/change-password/ChangePassword";
 import Wallet from "pages/wallet/Wallet";
 import AddCard from "pages/add-card/AddCard";

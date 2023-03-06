@@ -26,6 +26,14 @@ const addCardSchema = yup.object().shape({
       "Security code is invalid",
       (value) => valid.cvv(value).isValid
     ),
+  card_holder_name: yup
+    .string()
+    .required("Card holder name is required*")
+    .test(
+      "test-cardholder-name",
+      "Card holder name in invalid",
+      (value) => valid.cardholderName(value).isValid
+    ),
   billing_address: yup.string().required("Billing address is required*"),
   color: yup.string().required(""),
 });
