@@ -81,7 +81,7 @@ const profileImageSchema = yup
         : true,
   })
   .test({
-    message: "File must not exceed 5 MB",
+    message: "Profile picture must not exceed 5 MB size.",
     test: (file) => (file && file.size ? file.size <= FILE_SIZE : true),
   });
 

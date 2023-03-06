@@ -37,6 +37,7 @@ const linkBankSchema = yup.object().shape({
     .matches(/^[0-9]*$/, "Invalid routing number"),
   bank_number: yup
     .string()
+    .max(18, "Maximum limit 18 digits")
     .required("Account number is required.")
     .matches(/^[0-9]*$/, "Invalid account number"),
   bank_name: yup.string().required("Bank name is required."),

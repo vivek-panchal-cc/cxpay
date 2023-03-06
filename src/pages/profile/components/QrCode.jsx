@@ -26,7 +26,11 @@ const QrCode = (props) => {
   return (
     <div className="profile-qr">
       <div className="profile-qr-inner">
-        <Image src={qrCodeImg} alt="QR code image" />
+        {qrCodeImg ? (
+          <Image src={qrCodeImg} alt="QR code image" />
+        ) : (
+          <Image src="/assets/images/no-qr.png" alt="QR code image" />
+        )}
       </div>
       {/* <p>{qrDescription ?? 'Lorem Ipsum Dolor Stie Amet'}</p> */}
       <Button onClick={handleGenerateQrCode} className="btn qr-btn">
