@@ -10,7 +10,6 @@ import InputFile from "components/ui/InputImage";
 import { IconLeftArrow } from "styles/svgs";
 import InputSelect from "components/ui/InputSelect";
 import { fetchUserProfile } from "features/user/userProfileSlice";
-// import FileInput from "components/ui/FileInput";
 
 function PersonalForm(props) {
   const { countryList, cityList } = props;
@@ -39,7 +38,6 @@ function PersonalForm(props) {
       countryList.find((e) => e.phonecode === cphonecode) || {};
     return { country_index, country_iso: iso, country: country_name };
   }, [country_code, countryList]);
-  console.log(profile_image);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -115,7 +113,7 @@ function PersonalForm(props) {
                   {first_name} {last_name}
                 </h3>
                 <p>
-                  <a href="mailto:">{email}</a>
+                  <a href={`mailto:${email}`}>{email}</a>
                 </p>
                 <p className="">
                   <label
@@ -123,7 +121,9 @@ function PersonalForm(props) {
                     className="cursor-pointer"
                     style={{ color: "#0081c5" }}
                   >
-                    Change Profile Picture
+                    {profile_image || formik.values.profile_image
+                      ? "Change Profile Picture"
+                      : "Select Profile Picture"}
                   </label>
                 </p>
               </div>

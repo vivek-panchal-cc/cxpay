@@ -1,7 +1,7 @@
 import getCroppedImg from "helpers/croppedImage";
 import React, { useCallback, useState } from "react";
 import Cropper from "react-easy-crop";
-import { IconCancel, IconImage } from "styles/svgs";
+import { IconCancel, IconCancleBg, IconCheckBg, IconImage } from "styles/svgs";
 import styles from "../addCard.module.scss";
 
 function CropCard(props) {
@@ -75,17 +75,19 @@ function CropCard(props) {
               <div className="col-3 d-flex justify-content-end radio-group-wrap">
                 <button
                   type="button"
-                  className="radio-round green rounded-4"
+                  className="radio-round rounded-4"
                   onClick={handleSelect}
                 >
-                  <span className="text-white">&#10003;</span>
+                  <span className="text-white">
+                    <IconCheckBg />
+                  </span>
                 </button>
                 <button
-                  className="radio-round purple ms-3 rounded-4 text-white"
+                  className="radio-round ms-3 rounded-4 text-white"
                   onClick={closeModal}
                 >
                   <span>
-                    <IconCancel style={{ stroke: "#fff" }} />
+                    <IconCancleBg />
                   </span>
                 </button>
               </div>

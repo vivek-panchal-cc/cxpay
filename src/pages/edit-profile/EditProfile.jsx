@@ -36,7 +36,7 @@ const EditProfile = () => {
     getCountries();
   }, []);
 
-  return <div className="">{getCurrentStepComponent()}</div>;
+  return <div className="mb-4">{getCurrentStepComponent()}</div>;
 };
 
 export default EditProfile;
