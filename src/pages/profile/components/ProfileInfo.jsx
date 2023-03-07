@@ -1,7 +1,7 @@
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addBusinessUrlSchema } from "schemas/validationSchema";
 import { IconEdit } from "styles/svgs";
@@ -49,6 +49,10 @@ const ProfileInfo = (props) => {
     },
   });
 
+  useEffect(() => {
+    formik.setFieldValue("business_url", business_url);
+  }, [business_url]);
+
   return (
     <ul>
       {user_type !== "personal" && (
@@ -69,7 +73,7 @@ const ProfileInfo = (props) => {
             {isEditable && (
               <form
                 onSubmit={formik.handleSubmit}
-                className="w-100 d-flex align-items-start gap-2 justify-content-between"
+                className="w-100 d-flex align-items-start gap-2 justify-content-between profile-edit-form-wrap"
               >
                 <div className="form-field mb-0">
                   <Input
