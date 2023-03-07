@@ -11,11 +11,11 @@ const signUpPersonalAccountSchema = yup.object().shape({
   first_name: yup
     .string()
     .required("Please enter First name")
-    .max(35, "Maximum limit 35 characters"),
+    .max(35, "Maximum limit is 35 characters"),
   last_name: yup
     .string()
     .required("Please enter Last name")
-    .max(35, "Maximum limit 35 characters"),
+    .max(35, "Maximum limit is 35 characters"),
   user_type: yup.string().required(),
   personal_id: yup.string().required("Please enter ID"),
   email: emailSchema,
@@ -31,8 +31,8 @@ const signUpPersonalAccountSchema = yup.object().shape({
 const signUpBusinessAccountSchema = yup.object().shape({
   company_name: yup
     .string()
-    .required("Please enter Company name")
-    .max(64, "Maximum limit 64 characters"),
+    .required("Please enter business name")
+    .max(64, "Maximum limit is 64 characters"),
   user_type: yup.string().required(),
   email: emailSchema,
   password: passwordSchema,
@@ -66,7 +66,7 @@ const LoginSchema = yup.object().shape({
   password: yup
     .string()
     .required("Password can't be null")
-    .max(16, "Maximum limit 16 characters"),
+    .max(16, "Maximum limit is 16 characters"),
 });
 
 const verifyLoginOtpSchema = yup.object().shape({
@@ -81,7 +81,7 @@ const editProfileBusinessUserSchema = yup.object().shape({
   company_name: yup
     .string()
     .required("Please enter Company name")
-    .max(64, "Maximum limit 64 characters"),
+    .max(64, "Maximum limit is 64 characters"),
   user_type: yup.string().required(),
   email: emailSchema,
   country: yup.string().required("Please select Country"),
@@ -95,11 +95,11 @@ const editProfilePersonalUserSchema = yup.object().shape({
   first_name: yup
     .string()
     .required("Please enter First name")
-    .max(35, "Maximum limit 35 characters"),
+    .max(35, "Maximum limit is 35 characters"),
   last_name: yup
     .string()
     .required("Please enter Last name")
-    .max(35, "Maximum limit 35 characters"),
+    .max(35, "Maximum limit is 35 characters"),
   personal_id: yup.string(),
   user_type: yup.string().required(),
   email: emailSchema,

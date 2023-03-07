@@ -33,6 +33,7 @@ function ViewCard(props) {
       const { data } = await apiRequest.deleteCard({ id: deleteCard.id });
       if (!data.success) throw data.message;
       getCardsList();
+      toast.success(data.message);
     } catch (error) {
       toast.error(error);
       console.log(error);
@@ -53,6 +54,9 @@ function ViewCard(props) {
         handleCallback={handleCardDelete}
       ></ModalConfirmation>
       <div className="db-view-bank-main db-view-card-main">
+        <div className="title-content-wrap send-pay-title-sec title-common-sec">
+          <h3>My Cards</h3>
+        </div>
         <div className="db-view-bank-wrapper db-view-card-wrapper">
           <ul className="db-view-bank-listing">
             {cardsList?.map((item, index) => (

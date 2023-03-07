@@ -8,7 +8,7 @@ import CropCard from "./components/CropCard";
 import CustomizePalette from "./components/CustomizePalette";
 import UploadImage from "./components/UploadImage";
 import DatePicker from "react-datepicker";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IconCalender, IconLeftArrow } from "styles/svgs";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
@@ -23,6 +23,8 @@ function AddCard() {
     url: "",
   });
   const [expDate, setExpDate] = useState();
+
+  const navigate = useNavigate();
 
   const handleUploadImage = (img) => {
     setCardBackImg(img);
@@ -64,6 +66,7 @@ function AddCard() {
         resetForm();
         setExpDate(new Date());
         setCroppedImg({ file: "", url: "" });
+        navigate("/wallet/view-card");
       } catch (error) {
         resetForm();
         toast.error(error);
