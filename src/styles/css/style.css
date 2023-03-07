@@ -5177,8 +5177,10 @@ img.img-size {
   line-height: 25px;
   font-weight: 500;
   color: #363853;
-  width: calc(100% - 32px);
+  width: calc(100% - 36px);
   padding-right: 15px;
+  white-space: normal;
+  word-break: break-all;
 }
 .pi-title-div {
   width: 180px;
@@ -5636,4 +5638,26 @@ input[type="search"]::-webkit-search-cancel-button {
   border: 1px solid #363853 !important;
   background: #363853 !important;
   color: #fff !important;
+}
+/* Update on 07-03 */
+.text-danger {
+  font-size: 14px !important;
+  line-height: 20px !important;
+  font-weight: 700 !important;
+  margin-top: 5px;
+}
+.profile-info-right-desc > .profile-edit-form-wrap .form-field {
+  width: 100%;
+  margin-right: 10px;
+}
+.profile-info-right-desc > .profile-edit-form-wrap input.form-control {
+  width: 100%;
+  height: 50px !important;
+  padding: 0px 12px !important;
+}
+.profile-edit-form-wrap button.edit-button {
+  margin-top: 10px;
+}
+.profile-info-right-desc form.profile-edit-form-wrap .form-field {
+  margin-bottom: 0px !important;
 }

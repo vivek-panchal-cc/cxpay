@@ -257,7 +257,11 @@
     height: 400px;
   }
   .view_bank_listing_bottom-wrap {
-    bottom: 30px;
+    bottom: 20px;
+  }
+  .db-view-card-main .db-view-bank-listing li {
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   .user-details-modal .btn.print-details-btn {
     padding-top: 16px;
