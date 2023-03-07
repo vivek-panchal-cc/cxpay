@@ -61,7 +61,7 @@ function ViewCard(props) {
           <ul className="db-view-bank-listing">
             {cardsList?.map((item, index) => (
               <CardItem
-                key={index}
+                key={`${item.card_number}${index}`}
                 item={item}
                 handleDelete={handleConfirmDelete}
               />
