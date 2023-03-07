@@ -4,7 +4,15 @@ import valid from "card-validator";
 const addCardSchema = yup.object().shape({
   card_number: yup
     .string()
-    .required("Credit card number is required*")
+    .matches(
+      /^[0-9]*$/,
+      "Your card number is invalid. Card number must between 12 to 16 digits"
+    )
+    .max(
+      16,
+      "Your card number is invalid. Card number must between 12 to 16 digits"
+    )
+    .required("Credit card number is required")
     .test(
       "test-number",
       "Credit card number is invalid",
@@ -28,13 +36,13 @@ const addCardSchema = yup.object().shape({
     ),
   card_holder_name: yup
     .string()
-    .required("Card holder name is required*")
+    .required("Card holder name is required")
     .test(
       "test-cardholder-name",
       "Card holder name in invalid",
       (value) => valid.cardholderName(value).isValid
     ),
-  billing_address: yup.string().required("Billing address is required*"),
+  billing_address: yup.string().required("Billing address is required"),
   color: yup.string().required(""),
 });
 
@@ -45,7 +53,7 @@ const linkBankSchema = yup.object().shape({
     .matches(/^[0-9]*$/, "Invalid routing number"),
   bank_number: yup
     .string()
-    .max(18, "Maximum limit 18 digits")
+    .max(18, "Maximum limit is 18 digits")
     .required("Account number is required.")
     .matches(/^[0-9]*$/, "Invalid account number"),
   bank_name: yup.string().required("Bank name is required."),

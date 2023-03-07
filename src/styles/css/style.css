@@ -1221,7 +1221,7 @@ form .form-field select.form-control {
   display: flex;
   justify-content: center;
   overflow: hidden;
-  border-radius: 50%;
+  border-radius: 50px;
 }
 .profile-avtar > img {
   display: block;

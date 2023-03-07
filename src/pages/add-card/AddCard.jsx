@@ -26,6 +26,8 @@ function AddCard() {
   });
   const [expDate, setExpDate] = useState();
 
+  const navigate = useNavigate();
+
   const handleUploadImage = (img) => {
     setCardBackImg(img);
     setShowPopupCrop(true);
