@@ -21,7 +21,6 @@ const Contacts = (props) => {
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
         const { data } = await apiRequest.linkBank(values);
-        console.log(data);
         if (!data.success || data.data === null) throw data.message;
       } catch (error) {
         resetForm();

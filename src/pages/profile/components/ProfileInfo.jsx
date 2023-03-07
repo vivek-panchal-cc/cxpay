@@ -10,7 +10,14 @@ import { toast } from "react-toastify";
 
 const ProfileInfo = (props) => {
   const { profile } = props;
-  const { user_type = "personal" } = profile || {};
+  const {
+    user_type = "personal",
+    email,
+    business_url,
+    country_code,
+    mobile_number,
+    country,
+  } = profile || {};
 
   const [isEditable, setIsEditable] = useState(false);
   const dispatch = useDispatch();
@@ -50,8 +57,11 @@ const ProfileInfo = (props) => {
           <div className="profile-info-right-desc">
             {!isEditable && (
               <>
-                <p>{profile?.business_url ?? "-"}</p>
-                <button onClick={handleEditUlr} className="edit-button">
+                <p>{business_url ?? "-"}</p>
+                <button
+                  onClick={handleEditUlr}
+                  className="edit-button border-0"
+                >
                   <IconEdit />
                 </button>
               </>
@@ -86,19 +96,21 @@ const ProfileInfo = (props) => {
       <li>
         <div className="pi-title-div">Email</div>
         <div className="profile-info-right-desc">
-          <p>{profile?.email}</p>
+          <p>{email}</p>
         </div>
       </li>
       <li>
         <div className="pi-title-div">Phone no.</div>
         <div className="profile-info-right-desc">
-          <p>{"+" + profile.country_code + profile?.mobile_number}</p>
+          <p>
+            + {country_code} {mobile_number}
+          </p>
         </div>
       </li>
       <li>
         <div className="pi-title-div">Country</div>
         <div className="profile-info-right-desc">
-          <p>{profile?.country}</p>
+          <p>{country}</p>
         </div>
       </li>
     </ul>

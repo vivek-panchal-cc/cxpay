@@ -2,16 +2,17 @@ import React from "react";
 import { IconCardBackground } from "styles/svgs";
 
 function CreditCard(props) {
-  const { bgcolor, bgimg, cardNumber, expDate } = props;
+  const { card_number, expiry_date, card_holder_name, color, bg_img } =
+    props.details || {};
 
   return (
     <div
       className="wallet-ac-inner"
-      bg-color={bgcolor}
+      bg-color={color}
       style={
-        bgimg
+        bg_img
           ? {
-              background: `url(${bgimg})`,
+              background: `url(${bg_img})`,
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
@@ -19,17 +20,22 @@ function CreditCard(props) {
           : {}
       }
     >
-      {!bgimg && <IconCardBackground />}
-      <p className="card-holder-nm">XXXXXX</p>
+      {!bg_img && <IconCardBackground />}
+      <p
+        className="card-holder-nm overflow-hidden"
+        style={{ maxHeight: "40%" }}
+      >
+        {card_holder_name ? card_holder_name.toUpperCase() : "XXXXXX"}
+      </p>
       <div className="card-num-date">
         <p className="">
           .... .... ....{" "}
-          {cardNumber ? cardNumber?.substr(cardNumber.length - 4) : "XXXX"}
+          {card_number ? card_number?.substr(card_number.length - 4) : "XXXX"}
         </p>
         <p className="">
-          {expDate
-            ? `XX ${expDate.split("/")[0]} ${expDate.split("/")[1]}`
-            : `XX XXX XXXX`}
+          {expiry_date
+            ? `${expiry_date.split("/")[0]} ${expiry_date.split("/")[1]}`
+            : `XX XXXX`}
         </p>
       </div>
     </div>

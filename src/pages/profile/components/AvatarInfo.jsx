@@ -2,7 +2,7 @@ import Image from "components/ui/Image";
 import React from "react";
 
 const AvatarInfo = (props) => {
-  const { profileImg, profileName, profileEmail } = props;
+  const { profileImg, profileName, profileEmail, profileType } = props;
 
   return (
     <div className="profile-top-sec">
@@ -10,7 +10,11 @@ const AvatarInfo = (props) => {
         <Image
           src={profileImg}
           alt="profile avtar"
-          fallbacksrc={"/assets/images//Personal.svg"}
+          fallbacksrc={
+            profileType === "business"
+              ? "/assets/images/Business-account.png"
+              : "/assets/images/Personal.png"
+          }
           className="h-100 w-100 object-fit-cover"
           style={{ objectPosition: "center" }}
         />

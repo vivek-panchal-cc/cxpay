@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import LeftSidebar from "components/sidebar/LeftSidebar";
-import { Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { IconNotify, IconContact, IconSetting, IconLogout } from "styles/svgs";
+import Image from "components/ui/Image";
+import { LoaderContext } from "context/loaderContext";
 
 const contentTitles = [
   {
@@ -16,6 +18,7 @@ const contentTitles = [
 function DashboardLayout() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const { setIsLoading } = useContext(LoaderContext);
   const [headings, setHeading] = useState({
     heading: "",
     subHeading: "",
@@ -31,7 +34,9 @@ function DashboardLayout() {
   console.log(profile.user_type);
   useEffect(() => {
     (async () => {
+      setIsLoading(true);
       await dispatch(fetchUserProfile());
+      setIsLoading(false);
     })();
   }, [dispatch]);
 
@@ -65,35 +70,37 @@ function DashboardLayout() {
                   <div className="user-image">
                     <div className="user-image-wrap">
                       <span className="user-image h-100 w-100">
-                        <img
-                          src={
-                            profile.profile_image
-                              ? profile.profile_image
-                              : "/assets/images/user-avatar.png"
+                        <Image
+                          src={profile.profile_image}
+                          alt="profile avtar"
+                          fallbacksrc={
+                            profile.user_type === "business"
+                              ? "/assets/images/Business-account.png"
+                              : "/assets/images/Personal.png"
                           }
-                          className="object-fit-cover h-100 w-100"
-                          alt="user img"
+                          className="h-100 w-100 object-fit-cover"
+                          style={{ objectPosition: "center" }}
                         />
                       </span>
                     </div>
                     <ul>
                       <li>
-                        <a href="/profile">
+                        <Link to="/profile">
                           <IconContact style={{ stroke: "#363853" }} />
                           Profile
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href="/setting">
+                        <Link to="/setting">
                           <IconSetting style={{ stroke: "#363853" }} />
                           Settings
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a href="/logout">
+                        <Link to="/logout">
                           <IconLogout style={{ stroke: "#363853" }} />
                           Logout
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>

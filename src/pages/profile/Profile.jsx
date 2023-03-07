@@ -17,6 +17,7 @@ const Profile = () => {
         <AvatarInfo
           profileImg={profile?.profile_image}
           profileName={profileName}
+          profileType={profile?.user_type}
           profileEmail={profile?.email}
         />
         <div className="profile-bottom-info-sec">

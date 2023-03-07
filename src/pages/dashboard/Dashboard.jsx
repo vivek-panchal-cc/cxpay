@@ -11,13 +11,23 @@ import RecentContactSlider from "components/dashboard/recentContactSlider";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCookie } from "shared/cookies";
 import { fetchUserProfile } from "features/user/userProfileSlice";
-import { IconAdd, IconContact, IconHexagonProfile, IconLogout, IconMessage, IconNotify, IconRightArrowBig, IconSearch, IconSend, IconSetting } from "styles/svgs";
+import {
+  IconAdd,
+  IconContact,
+  IconHexagonProfile,
+  IconLogout,
+  IconMessage,
+  IconNotify,
+  IconRightArrowBig,
+  IconSearch,
+  IconSend,
+  IconSetting,
+} from "styles/svgs";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { profile } = useSelector((state) => state.userProfile);
-  console.log("store dashboard :>> ", profile);
 
   useEffect(() => {
     (async () => {
@@ -97,19 +107,19 @@ const Dashboard = () => {
                     <ul>
                       <li>
                         <a href="/">
-                          <IconContact style={{stroke: '#363853'}}/>
+                          <IconContact style={{ stroke: "#363853" }} />
                           Profile
                         </a>
                       </li>
                       <li>
                         <a href="/">
-                          <IconSetting style={{stroke: '#363853'}}/>
+                          <IconSetting style={{ stroke: "#363853" }} />
                           Settings
                         </a>
                       </li>
                       <li onClick={handleLogout}>
                         <a href="/">
-                          <IconLogout style={{stroke: '#363853'}} />
+                          <IconLogout style={{ stroke: "#363853" }} />
                           Logout
                         </a>
                       </li>
@@ -266,7 +276,7 @@ const Dashboard = () => {
                     <li>
                       <a href="/">
                         <span className="icon-link-text">
-                          <IconSend style={{stroke: "#363853"}}/>
+                          <IconSend style={{ stroke: "#363853" }} />
                           Send
                         </span>
                         <span className="arrow-wrap">
@@ -281,7 +291,7 @@ const Dashboard = () => {
                           Add a Contact
                         </span>
                         <span className="arrow-wrap">
-                         <IconRightArrowBig />
+                          <IconRightArrowBig />
                         </span>
                       </a>
                     </li>
@@ -292,7 +302,7 @@ const Dashboard = () => {
                           Group Payment
                         </span>
                         <span className="arrow-wrap">
-                         <IconRightArrowBig />
+                          <IconRightArrowBig />
                         </span>
                       </a>
                     </li>
