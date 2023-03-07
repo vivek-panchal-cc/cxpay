@@ -31,6 +31,7 @@ function DashboardLayout() {
     if (titleObj) return setHeading(titleObj);
     setHeading({ heading: "", subHeading: "" });
   }, [location.pathname]);
+
   useEffect(() => {
     (async () => {
       setIsLoading(true);
@@ -96,7 +97,7 @@ function DashboardLayout() {
                         </Link>
                       </li>
                       <li>
-                        <Link to="/logout">
+                        <Link to="/logout" replace>
                           <IconLogout style={{ stroke: "#363853" }} />
                           Logout
                         </Link>

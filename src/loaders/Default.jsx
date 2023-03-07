@@ -8,8 +8,8 @@ function Default() {
     >
       <div className="d-flex flex-column align-items-center">
         <img src="/assets/images/dashaboard-logo.png" alt="" width={100} />
-        <p className="text-white mt-4">Innovation Through EPayments</p>
-        <p className="text-white">Loading...</p>
+        {/* <p className="text-white mt-4">Innovation Through EPayments</p> */}
+        <p className="text-white mt-3">Loading...</p>
         <div className="dotcontainer">
           <div className="dot"></div>
           <div className="dot"></div>

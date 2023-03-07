@@ -8,13 +8,15 @@ import CropCard from "./components/CropCard";
 import CustomizePalette from "./components/CustomizePalette";
 import UploadImage from "./components/UploadImage";
 import DatePicker from "react-datepicker";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IconCalender, IconLeftArrow } from "styles/svgs";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 
 function AddCard() {
+  const navigate = useNavigate();
+
   const [showPopupUpload, setShowPopupUpload] = useState(false);
   const [showPopupCrop, setShowPopupCrop] = useState(false);
   const [cardBackImg, setCardBackImg] = useState("");
@@ -64,6 +66,7 @@ function AddCard() {
         resetForm();
         setExpDate(new Date());
         setCroppedImg({ file: "", url: "" });
+        navigate("/wallet/view-card");
       } catch (error) {
         resetForm();
         toast.error(error);
@@ -79,7 +82,7 @@ function AddCard() {
   };
 
   return (
-    <div className="wallet-add-card-main wallet-page-body">
+    <div className="wallet-add-card-main wallet-page-body mb-4">
       <Modal
         id="customize_card"
         className="customize-card-model wallet-pg-model"
@@ -148,6 +151,7 @@ function AddCard() {
                 <div className="col-lg-8 col-12 col-left col p-0">
                   <div className="form-field position-relative z-1">
                     <DatePicker
+                      id="datepickeradd-card"
                       selected={expDate}
                       onChange={(dt) => {
                         const mmyy = dt?.toLocaleDateString("en", {
@@ -164,11 +168,13 @@ function AddCard() {
                       onBlur={formik.handleBlur}
                       showMonthYearPicker
                     />
-                    <IconCalender
-                      className="position-absolute"
-                      stroke="#0081c5"
-                      style={{ top: "15px", right: "20px" }}
-                    />
+                    <label htmlFor="datepickeradd-card">
+                      <IconCalender
+                        className="position-absolute"
+                        stroke="#0081c5"
+                        style={{ top: "15px", right: "20px" }}
+                      />
+                    </label>
                     <p className="text-danger ps-2 shadow-none">
                       {formik.touched.expiry_date && formik.errors.expiry_date}
                     </p>
@@ -236,7 +242,7 @@ function AddCard() {
               <div className="row">
                 <div className="col-12 p-0 btns-inline">
                   <div className="setting-btn-link btn-wrap">
-                    <Link to="/wallet" className="outline-btn">
+                    <Link to="/wallet" replace className="outline-btn">
                       <IconLeftArrow stroke="#0081c5" />
                       Wallet
                     </Link>

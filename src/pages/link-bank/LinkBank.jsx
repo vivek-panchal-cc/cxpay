@@ -146,6 +146,7 @@ const LinkBank = (props) => {
                   <Link
                     to="/wallet"
                     className="outline-btn w-100 text-center d-block"
+                    replace
                   >
                     <IconLeftArrow stroke="#0081c5" />
                     Wallet

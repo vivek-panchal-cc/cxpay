@@ -64,7 +64,7 @@ function Businessform(props) {
         if (!data.success) throw data.message;
         toast.success(data.message);
         dispatch(fetchUserProfile());
-        navigate("/setting");
+        navigate("/setting", { replace: true });
       } catch (error) {
         setErrors({
           email: error.first_name?.[0],
@@ -94,15 +94,11 @@ function Businessform(props) {
                 error={formik.errors.profile_image}
                 showPreview={true}
                 showLabel={false}
-                previewSrc={
-                  profile_image
-                    ? profile_image
-                    : "/assets/images/Business_account.png"
-                }
+                previewSrc={profile_image}
                 fallbackSrc={
                   profile_image
                     ? profile_image
-                    : "/assets/images/Business_account.png"
+                    : "/assets/images/Business-account.png"
                 }
                 classNameInput="d-none"
                 classNameBorder="border-0 overflow-visible"
@@ -111,7 +107,7 @@ function Businessform(props) {
               <div className="profile-info">
                 <h3>{company_name}</h3>
                 <p>
-                  <a href="mailto:abcdef@gmail.com">{email}</a>
+                  <a href={`mailto:${email}`}>{email}</a>
                 </p>
                 <p className="">
                   <label
@@ -119,7 +115,9 @@ function Businessform(props) {
                     className="cursor-pointer"
                     style={{ color: "#0081c5" }}
                   >
-                    Change Profile Picture
+                    {profile_image || formik.values.profile_image
+                      ? "Change Profile Picture"
+                      : "Select Profile Picture"}
                   </label>
                 </p>
               </div>

@@ -33,7 +33,9 @@ function Breadcrumb(props) {
             elm && (
               <li key={`breadcrumb-${elm}`}>
                 {i !== urls.length - 1 ? (
-                  <Link to={`${getUrl(i)}`}>{getCapitalized(elm)}</Link>
+                  <Link to={`${getUrl(i)}`} replace>
+                    {getCapitalized(elm)}
+                  </Link>
                 ) : (
                   getCapitalized(elm)
                 )}

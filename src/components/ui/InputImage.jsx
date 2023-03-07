@@ -26,6 +26,16 @@ function InputImage(props) {
     if (previewSrc) setPreview(previewSrc);
   }, [previewSrc]);
 
+  const handleFocusBack = () => {
+    onChange({ currentTarget: { files: [] } });
+    setPreview(previewSrc || fallbackSrc);
+    window.removeEventListener("focus", handleFocusBack);
+  };
+
+  const clickedFileInput = () => {
+    window.addEventListener("focus", handleFocusBack);
+  };
+
   return (
     <div className={`upload-profile-image text-center ${className}`}>
       <label
@@ -69,6 +79,7 @@ function InputImage(props) {
             return setPreview(URL.createObjectURL(e.currentTarget.files[0]));
           setPreview(fallbackSrc);
         }}
+        onClick={clickedFileInput}
         accept={accept}
       />
       {error && (
