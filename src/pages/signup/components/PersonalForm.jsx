@@ -163,7 +163,7 @@ function PersonalForm(props) {
                   <Input
                     type="text"
                     className="form-control"
-                    placeholder="Id"
+                    placeholder="Personal ID"
                     name="personal_id"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}

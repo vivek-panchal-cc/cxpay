@@ -29,7 +29,7 @@ const QrCode = (props) => {
         {qrCodeImg ? (
           <Image src={qrCodeImg} alt="QR code image" />
         ) : (
-          <Image src="/assets/images/no-qr.png" alt="QR code image" />
+          <Image src="/assets/images/QR_not_found.png" alt="QR code image" />
         )}
       </div>
       {/* <p>{qrDescription ?? 'Lorem Ipsum Dolor Stie Amet'}</p> */}

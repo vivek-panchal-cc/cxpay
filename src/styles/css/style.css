@@ -1064,6 +1064,7 @@ form .form-field select.form-control {
 .dashboard-link-wrap ul {
   width: 100%;
   padding-left: 17px;
+  background-color: #0081c5;
 }
 .dashboard-link-wrap ul li a {
   color: #fff;
@@ -5350,7 +5351,7 @@ p.bank-name-wrap {
 }
 .view_bank_listing_bottom-wrap {
   position: absolute;
-  bottom: 50px;
+  bottom: 30px;
 }
 .db-view-bank-listing-main-wrap {
   padding-left: 50px;
@@ -5360,9 +5361,11 @@ p.bank-name-wrap {
   padding-top: 20px;
 }
 .db-view-bank-main ul.db-view-bank-listing {
-  max-height: 505px;
+  /*max-height: 505px;*/
   overflow: auto;
   padding: 15px;
+  max-height: calc(100vh - 200px);
+  height: auto;
 }
 /* Dashboard View Bank Acccounts End  */
 /* Dashboard View Card Bank Acccounts Star  */
@@ -5405,8 +5408,8 @@ p.bank-cardname-wrap {
   padding-bottom: 16px;
 }
 .bank-account-date-wrap {
-  max-width: 65px;
-  min-width: 65px;
+  max-width: 130px;
+  min-width: 100px;
   width: 100%;
   font-size: 16px;
   padding-right: 10px;
@@ -5678,3 +5681,34 @@ p.bank-name-wrap {
 /* .settings-bottom-info-sec > ul > li {
   cursor: pointer;
 } */
+li.db-view-bank-heading {
+  border-bottom: 1px solid #eee;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 0px !important;
+}
+li.db-view-bank-heading > div,
+li.db-view-bank-heading .bank-bal-wrap {
+  font-size: 16px !important;
+  line-height: 20px;
+  font-weight: 600 !important;
+  white-space: normal;
+  word-break: break-all;
+  color: #363853;
+  font-family: "Visby Round CF";
+}
+li.db-view-bank-heading .bank-del-wrap {
+  background-color: transparent;
+}
+li.db-view-bank-heading:hover {
+  box-shadow: none;
+  background-color: transparent;
+  pointer-events: none;
+}
+.bank-account-routing-num {
+  width: 100%;
+  max-width: 180px;
+  min-width: 180px;
+  white-space: normal;
+  word-break: break-all;
+}

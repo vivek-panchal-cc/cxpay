@@ -64,6 +64,13 @@ const BankList = () => {
       <div className="db-view-bank-main db-view-card-main">
         <div className="db-view-bank-wrapper db-view-card-wrapper">
           <ul className="db-view-bank-listing">
+            <li class="db-view-bank-div-main db-view-bank-common-div db-view-bank-heading">
+              <div class="bank-logo-name-wrap">Bank Name</div>
+              <div class="bank-account-routing-num">Account Number</div>
+              <div class="bank-account-num-wrap">Routing Number</div>
+              <div class="bank-account-type-wrap">Account Type</div>
+              <div class="bank-del-wrap"> </div>
+            </li>
             {bankList && bankList.length > 0 ? (
               bankList?.map((elm, i) => (
                 <li
@@ -79,17 +86,16 @@ const BankList = () => {
                     </div>
                     <p className="bank-name-wrap">{elm?.bank_name}</p>
                   </div>
-                  <div className="bank-account-num-wrap">
+                  <div className="bank-account-routing-num">
                     <span>{elm?.bank_number}</span>
                   </div>
 
                   <div className="bank-account-num-wrap">
                     <span>{elm?.routing_number}</span>
                   </div>
-                  <div className="bank-account-date-wrap">
+                  <div className="bank-account-type-wrap">
                     {getCapitalized(elm?.account_type) + " Account"}
                   </div>
-                  <div className="bank-account-date-wrap"></div>
                   {/* <div className="bank-bal-wrap">Balance : <span>0</span></div> */}
                   <div
                     className="bank-del-wrap"

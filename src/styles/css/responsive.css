@@ -136,9 +136,9 @@
   .dashboard-graph-sec .graph-title-content-wrap {
     padding-bottom: 25px;
   }
-  .db-view-bank-main ul.db-view-bank-listing {
+  /*.db-view-bank-main ul.db-view-bank-listing {
     height: 50vh;
-  }
+  }*/
 }
 @media only screen and (max-height: 768px) {
   .add-card-right-sec,
@@ -256,9 +256,9 @@
   ul.dashboard-bottom-links {
     padding-bottom: 10px;
   }
-  .db-view-bank-main ul.db-view-bank-listing {
+  /*.db-view-bank-main ul.db-view-bank-listing {
     max-height: 400px;
-  }
+  }*/
   .view_bank_listing_bottom-wrap {
     bottom: 20px;
   }
@@ -286,14 +286,14 @@
   }
 }
 @media only screen and (max-height: 600px) {
-  .db-view-bank-main ul.db-view-bank-listing {
+  /*.db-view-bank-main ul.db-view-bank-listing {
     height: 45vh;
-  }
+  }*/
 }
 @media only screen and (max-height: 380px) {
-  .db-view-bank-main ul.db-view-bank-listing {
+  /*.db-view-bank-main ul.db-view-bank-listing {
     height: 30vh;
-  }
+  }*/
 }
 @media only screen and (max-width: 1366px) {
   .profile-right-sec {
@@ -1178,6 +1178,11 @@
   }
   .search-field .search-btn {
     left: 13px;
+  }
+  li.db-view-bank-heading > div,
+  li.db-view-bank-heading .bank-bal-wrap {
+    font-size: 15px !important;
+    line-height: 20px;
   }
 }
 @media only screen and (max-width: 1100px) and (min-width: 992px) {
@@ -2659,6 +2664,10 @@
     background-position: right 10px center !important;
     background-size: 10px auto !important;
   }
+  .db-view-bank-main ul.db-view-bank-listing {
+    max-height: calc(100vh - 235px);
+    height: auto;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -3319,6 +3328,11 @@
   .text-danger {
     line-height: 18px !important;
     font-size: 12px !important;
+  }
+  li.db-view-bank-heading > div,
+  li.db-view-bank-heading .bank-bal-wrap {
+    font-size: 15px !important;
+    line-height: 20px;
   }
 }
 @media only screen and (max-width: 575px) {

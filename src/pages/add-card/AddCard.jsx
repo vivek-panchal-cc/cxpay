@@ -230,9 +230,12 @@ function AddCard() {
               <div className="row">
                 <div className="col-12 p-0 btns-inline">
                   <div className="setting-btn-link btn-wrap">
-                    <Link to="/wallet" replace className="outline-btn">
-                      <IconLeftArrow stroke="#0081c5" />
-                      Wallet
+                    <Link
+                      to="/wallet/view-card"
+                      replace
+                      className="outline-btn"
+                    >
+                      Cancel
                     </Link>
                   </div>
                   <div className="btn-wrap">
