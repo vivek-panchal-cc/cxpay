@@ -51,7 +51,6 @@ function AddCard() {
       expiry_date: "", // mm-yyyy
       billing_address: "",
       card_holder_name: "",
-      security_code: "",
       color: "blue",
     },
     validationSchema: addCardSchema,
@@ -64,14 +63,23 @@ function AddCard() {
         if (!data.success) throw data.message;
         toast.success(data.message);
         resetForm();
-        setExpDate(new Date());
+        setExpDate();
         setCroppedImg({ file: "", url: "" });
         navigate("/wallet/view-card");
       } catch (error) {
-        resetForm();
-        toast.error(error);
-        setExpDate(new Date());
-        setCroppedImg({ file: "", url: "" });
+        if (typeof error === "string") {
+          toast.error(error);
+          resetForm();
+          setExpDate();
+          setCroppedImg({ file: "", url: "" });
+          return;
+        }
+        setErrors({
+          billing_address: error?.billing_address?.[0],
+          card_holder_name: error?.card_holder_name?.[0],
+          card_number: error?.card_number?.[0],
+          expiry_date: error?.expiry_date?.[0],
+        });
       }
     },
   });
@@ -148,7 +156,25 @@ function AddCard() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-8 col-12 col-left col p-0">
+                <div className="col-lg-7 col-12 col-left col p-0">
+                  <div className="form-field">
+                    <Input
+                      type="text"
+                      id="card_holder_name"
+                      className="form-control"
+                      placeholder="Card Holder Name"
+                      name="card_holder_name"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.card_holder_name}
+                      error={
+                        formik.touched.card_holder_name &&
+                        formik.errors.card_holder_name
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-5 col-12 col-right col p-0">
                   <div className="form-field position-relative z-1">
                     <DatePicker
                       id="datepickeradd-card"
@@ -168,54 +194,16 @@ function AddCard() {
                       onBlur={formik.handleBlur}
                       showMonthYearPicker
                     />
-                    <label htmlFor="datepickeradd-card">
-                      <IconCalender
-                        className="position-absolute"
-                        stroke="#0081c5"
-                        style={{ top: "15px", right: "20px" }}
-                      />
+                    <label
+                      htmlFor="datepickeradd-card"
+                      className="position-absolute"
+                      style={{ top: "14px", right: "20px" }}
+                    >
+                      <IconCalender stroke="#0081c5" />
                     </label>
                     <p className="text-danger ps-2 shadow-none">
                       {formik.touched.expiry_date && formik.errors.expiry_date}
                     </p>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-12 col-right col p-0">
-                  <div className="form-field">
-                    <Input
-                      type="password"
-                      className="form-control"
-                      placeholder="Security Code"
-                      name="security_code"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      maxength="3"
-                      value={formik.values.security_code}
-                      error={
-                        formik.touched.security_code &&
-                        formik.errors.security_code
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-12 p-0">
-                  <div className="form-field">
-                    <Input
-                      type="text"
-                      id="card_holder_name"
-                      className="form-control"
-                      placeholder="Card Holder Name"
-                      name="card_holder_name"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.card_holder_name}
-                      error={
-                        formik.touched.card_holder_name &&
-                        formik.errors.card_holder_name
-                      }
-                    />
                   </div>
                 </div>
               </div>

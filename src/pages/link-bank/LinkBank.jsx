@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
@@ -37,6 +37,12 @@ const LinkBank = (props) => {
       }
     },
   });
+
+  useEffect(() => {
+    const type = formik.values.account_type;
+    formik.resetForm();
+    formik.setFieldValue("account_type", type);
+  }, [formik.values.account_type]);
 
   return (
     <div>

@@ -32,11 +32,7 @@ function CreditCard(props) {
           .... .... ....{" "}
           {card_number ? card_number?.substr(card_number.length - 4) : "XXXX"}
         </p>
-        <p className="">
-          {expiry_date
-            ? `${expiry_date.split("/")[0]} ${expiry_date.split("/")[1]}`
-            : `XX XXXX`}
-        </p>
+        <p className="">{expiry_date ? `${expiry_date}` : `XX XXXX`}</p>
       </div>
     </div>
   );
