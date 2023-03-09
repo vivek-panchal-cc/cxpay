@@ -100,7 +100,7 @@ const BankList = () => {
                 </li>
               ))
             ) : (
-              <h6>Bank Account Not Found</h6>
+              <p>Bank Account Not Found</p>
             )}
           </ul>
         </div>
@@ -109,8 +109,8 @@ const BankList = () => {
         <Link to="/wallet/link-bank">+ Add Bank Account</Link>
       </div>
       <ModalConfirmation
-        heading={"Confirm!"}
-        subHeading={"Are you sure you want to delete this bank?"}
+        heading={"Delete bank account"}
+        subHeading={"All your data will be permanently deleted."}
         show={show}
         setShow={setShow}
         handleCallback={handleDeleteBank}

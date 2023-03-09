@@ -49,7 +49,7 @@
     margin-bottom: 15px;
   }
   .login-signup-02 .login-signup-content-wrap {
-    padding: 20px 0px;
+    padding: 20px 20px;
   }
   .dashboard-link-wrap ul li {
     margin-bottom: 10px;
@@ -135,6 +135,9 @@
   }
   .dashboard-graph-sec .graph-title-content-wrap {
     padding-bottom: 25px;
+  }
+  .db-view-bank-main ul.db-view-bank-listing {
+    height: 50vh;
   }
 }
 @media only screen and (max-height: 768px) {
@@ -254,7 +257,7 @@
     padding-bottom: 10px;
   }
   .db-view-bank-main ul.db-view-bank-listing {
-    height: 400px;
+    max-height: 400px;
   }
   .view_bank_listing_bottom-wrap {
     bottom: 20px;
@@ -284,7 +287,12 @@
 }
 @media only screen and (max-height: 600px) {
   .db-view-bank-main ul.db-view-bank-listing {
-    height: 340px;
+    height: 45vh;
+  }
+}
+@media only screen and (max-height: 380px) {
+  .db-view-bank-main ul.db-view-bank-listing {
+    height: 30vh;
   }
 }
 @media only screen and (max-width: 1366px) {
@@ -2069,7 +2077,7 @@
     border-radius: 40px;
   }
   .profile-avtar > img {
-    max-width: 96px;
+    max-width: 100%;
     height: auto;
   }
   .profile-info {
@@ -2204,9 +2212,9 @@
   .mobile-nav-profile-wrap {
     width: 60%;
   }
-  .dashboard-left-wrap .toggle-admin-btn {
+  /*.dashboard-left-wrap .toggle-admin-btn {
     display: none;
-  }
+  }*/
   .mobile-menu-button.sidebar-open-btn .toggle-admin-btn {
     left: 215px;
     transition: all 0.5s ease-in-out;
@@ -3296,6 +3304,21 @@
   .wallet-title-btns {
     margin-left: 0 !important;
     margin-top: 20px;
+  }
+  /* 09-03*/
+  .acount-type-wrap label {
+    padding: 22px 10px;
+  }
+  .account-type-content p {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .login-signup-inner form .form-field .col-4 {
+    padding-left: 0px !important;
+  }
+  .text-danger {
+    line-height: 18px !important;
+    font-size: 12px !important;
   }
 }
 @media only screen and (max-width: 575px) {

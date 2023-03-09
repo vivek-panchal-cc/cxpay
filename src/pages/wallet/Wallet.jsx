@@ -7,7 +7,7 @@ function Wallet() {
       <h1>Wallet</h1>
       <Link to="/wallet/add-card">Go to Add-Card</Link>
       <div>
-        <Link to="/wallet/link-bank">Go to Add Bank</Link>
+        <Link to="/wallet/link-bank">Go to Link a Bank</Link>
       </div>
       <div>
         <Link to="/wallet/bank-list">Bank List</Link>

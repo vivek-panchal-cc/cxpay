@@ -68,7 +68,7 @@ const LoginSchema = yup.object().shape({
   user_name: mobileSchema,
   password: yup
     .string()
-    .required("Password can't be null")
+    .required("Please enter password")
     .max(16, "Maximum limit is 16 characters"),
 });
 
