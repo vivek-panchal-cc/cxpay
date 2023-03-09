@@ -81,7 +81,7 @@ function LeftSidebar() {
           <li className={`${thisRoute === "setting" ? "active" : ""}`}>
             <Link to="/setting" replace>
               <IconSetting style={{ fill: "#fff100" }} />
-              Setting
+              Settings
             </Link>
           </li>
           <li>

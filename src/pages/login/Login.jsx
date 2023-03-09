@@ -101,7 +101,7 @@ const Login = () => {
                         formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
                       }`}
                       disabled={formik.isSubmitting || !formik.isValid}
-                      value="LogIn"
+                      value="Login"
                     />
                   </div>
                   <p className="sign-up-text text-center">

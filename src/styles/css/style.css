@@ -997,6 +997,7 @@ form .form-field select.form-control {
   -moz-transition: all 0.5s ease-in-out;
   -ms-transition: all 0.5s ease-in-out;
   -o-transition: all 0.5s ease-in-out;
+  min-height: 100vh;
 }
 .dashboard-right-sec {
   width: calc(100% - 221px);
@@ -1234,7 +1235,7 @@ form .form-field select.form-control {
 .profile-info h3 {
   font-size: 28px;
   line-height: 40px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   color: #323232;
   margin-bottom: 0;
 }
@@ -5223,19 +5224,19 @@ p.bank-name-wrap {
   white-space: normal;
 }
 .bank-account-type-wrap {
-  max-width: 170px;
-  min-width: 170px;
+  max-width: 210px;
+  min-width: 180px;
   width: 100%;
   padding-right: 10px;
 }
 .bank-account-num-wrap {
-  max-width: 105px;
-  min-width: 105px;
+  max-width: 230px;
+  min-width: 180px;
   width: 100%;
   padding-right: 10px;
 }
 .bank-bal-wrap {
-  max-width: 185px;
+  max-width: 210px;
   min-width: 185px;
   width: 100%;
   padding-right: 10px;
@@ -5323,8 +5324,8 @@ p.bank-name-wrap {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  max-width: 200px;
-  min-width: 200px;
+  max-width: 250px;
+  min-width: 250px;
   width: 100%;
 }
 .bank-logo-wrap {
@@ -5359,7 +5360,7 @@ p.bank-name-wrap {
   padding-top: 20px;
 }
 .db-view-bank-main ul.db-view-bank-listing {
-  height: 505px;
+  max-height: 505px;
   overflow: auto;
   padding: 15px;
 }
@@ -5369,8 +5370,8 @@ p.bank-name-wrap {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  max-width: 290px;
-  min-width: 290px;
+  max-width: 320px;
+  min-width: 320px;
   width: 100%;
   padding-right: 10px;
 }
@@ -5661,3 +5662,19 @@ input[type="search"]::-webkit-search-cancel-button {
 .profile-info-right-desc form.profile-edit-form-wrap .form-field {
   margin-bottom: 0px !important;
 }
+/* 09-03 */
+select.form-control option {
+  color: #363853;
+}
+.bank-account-num-wrap,
+p.bank-cardname-wrap,
+p.bank-name-wrap {
+  white-space: normal;
+  word-break: break-all;
+}
+.bank-del-wrap {
+  min-width: 45px;
+}
+/* .settings-bottom-info-sec > ul > li {
+  cursor: pointer;
+} */

@@ -13,7 +13,7 @@ const FILE_SIZE = 5 * 1048576;
 const emailSchema = yup
   .string()
   .email("Please enter a valid email")
-  .required("Email can't be null");
+  .required("Please enter email.");
 
 // const passwordSchema = yup
 //   .string()

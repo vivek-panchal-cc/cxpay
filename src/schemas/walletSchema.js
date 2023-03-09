@@ -49,6 +49,7 @@ const addCardSchema = yup.object().shape({
 const linkBankSchema = yup.object().shape({
   routing_number: yup
     .string()
+    .max(9, "Maximum limit is 9 digits")
     .required("Routing number is required.")
     .matches(/^[0-9]*$/, "Invalid routing number"),
   bank_number: yup
@@ -56,7 +57,10 @@ const linkBankSchema = yup.object().shape({
     .max(18, "Maximum limit is 18 digits")
     .required("Account number is required.")
     .matches(/^[0-9]*$/, "Invalid account number"),
-  bank_name: yup.string().required("Bank name is required."),
+  bank_name: yup
+    .string()
+    .max(150, "Maximum limit is 150 characters.")
+    .required("Bank name is required."),
 });
 
 export { addCardSchema, linkBankSchema };

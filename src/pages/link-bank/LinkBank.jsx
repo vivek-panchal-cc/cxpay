@@ -5,7 +5,7 @@ import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { linkBankSchema } from "schemas/walletSchema";
-import Breadcrumb from "components/breadcrumb/Breadcrumb";
+// import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import { IconLeftArrow } from "styles/svgs";
 
 const LinkBank = (props) => {
@@ -43,7 +43,13 @@ const LinkBank = (props) => {
       <div className="wallet-link-bank-bottom">
         <div className="profile-info rm-pl-profile-info">
           <h3>Link a Bank</h3>
-          <Breadcrumb />
+          {/* <Breadcrumb /> */}
+          <ul class="breadcrumb">
+            <li>
+              <a href="/wallet">Wallet</a>
+            </li>
+            <li>Link a Bank</li>
+          </ul>
         </div>
         <div className="wallet-bank_link-form-wrap">
           <form
@@ -107,7 +113,7 @@ const LinkBank = (props) => {
                     className="form-control"
                     placeholder={
                       formik.values.account_type === "savings"
-                        ? "Saving Routing Number"
+                        ? "Routing Number"
                         : "Routing Number"
                     }
                     name="routing_number"
@@ -144,12 +150,11 @@ const LinkBank = (props) => {
               <div className="col-12 p-0 btns-inline">
                 <div className="setting-btn-link btn-wrap">
                   <Link
-                    to="/wallet"
+                    to="/wallet/bank-list"
                     className="outline-btn w-100 text-center d-block"
                     replace
                   >
-                    <IconLeftArrow stroke="#0081c5" />
-                    Wallet
+                    Cancel
                   </Link>
                 </div>
                 <div className="btn-wrap">
