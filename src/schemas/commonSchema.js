@@ -60,15 +60,12 @@ const passwordSchema = yup
 
 const confirmPasswordSchema = yup
   .string()
-  .oneOf([yup.ref("password"), null], "Password must Match")
+  .oneOf([yup.ref("password"), null], "Password must be matched")
   .required("Please enter confirm Password");
 
 const changeConfirmPasswordSchema = yup
   .string()
-  .oneOf(
-    [yup.ref("new_password"), null],
-    "New password and confirm password must be same"
-  )
+  .oneOf([yup.ref("new_password"), null], "Password must be matched")
   .required("Please enter confirm Password");
 
 const profileImageSchema = yup
