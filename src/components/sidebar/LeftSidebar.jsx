@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import {
   IconActivity,
@@ -14,6 +15,9 @@ import {
 
 function LeftSidebar() {
   const location = useLocation();
+  const { profile } = useSelector((state) => state.userProfile);
+  const { user_type } = profile || "";
+
   const thisRoute = useMemo(() => location.pathname.split("/")[1], [location]);
 
   return (
@@ -28,8 +32,8 @@ function LeftSidebar() {
         <Link to="/" replace>
           <img src="/assets/images/dashaboard-logo.png" alt="dashboard logo" />
         </Link>
-        <Link to="/" className="dashaboard-btn" replace>
-          Business
+        <Link to="/" className="dashaboard-btn text-capitalize" replace>
+          {user_type}
         </Link>
       </div>
       <div className="dashboard-link-wrap">

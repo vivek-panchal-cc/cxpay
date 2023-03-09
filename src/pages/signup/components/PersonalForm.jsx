@@ -88,7 +88,7 @@ function PersonalForm(props) {
               <div className="row">
                 <div className="col-lg-6 col-12 col-left p-0">
                   <Input
-                    type="text"
+                    type="name"
                     className="form-control"
                     placeholder="First Name"
                     name="first_name"
@@ -102,7 +102,7 @@ function PersonalForm(props) {
                 </div>
                 <div className="col-lg-6 col-12 col-right p-0">
                   <Input
-                    type="text"
+                    type="name"
                     className="form-control"
                     placeholder="Last Name"
                     name="last_name"
@@ -121,18 +121,18 @@ function PersonalForm(props) {
                     onChange={({ currentTarget }) => {
                       const i = parseInt(currentTarget.value);
                       formik.setFieldValue("country_index", i);
-                      formik.setFieldValue("country_iso", countryList[i].iso);
+                      formik.setFieldValue("country_iso", countryList[i]?.iso);
                       formik.setFieldValue(
                         "country",
-                        countryList[i].country_name
+                        countryList[i]?.country_name
                       );
                       formik.setFieldValue("city", ""); // imp
                     }}
                     onBlur={formik.handleBlur}
                     value={formik.values.country_index}
-                    error={formik.touched.country && formik.errors.country}
+                    error={formik.touched.country_index && formik.errors.country}
                   >
-                    <option value={""}>Select Country</option>
+                    <option value={"-1"}>Select Country</option>
                     {countryList?.map((country, index) => (
                       <option key={index} value={index}>
                         {country.country_name}

@@ -82,7 +82,7 @@ function Businessform(props) {
                 Please Enter Business Details
               </h4>
               <Input
-                type="text"
+                type="name"
                 className="form-control"
                 placeholder="Company Name"
                 name="company_name"
@@ -112,15 +112,15 @@ function Businessform(props) {
                 onChange={({ currentTarget }) => {
                   const i = parseInt(currentTarget.value);
                   formik.setFieldValue("country_index", i);
-                  formik.setFieldValue("country_iso", countryList[i].iso);
-                  formik.setFieldValue("country", countryList[i].country_name);
+                  formik.setFieldValue("country_iso", countryList[i]?.iso);
+                  formik.setFieldValue("country", countryList[i]?.country_name);
                   formik.setFieldValue("city", ""); // imp
                 }}
                 onBlur={formik.handleBlur}
                 value={formik.values.country_index}
                 error={formik.touched.country && formik.errors.country}
               >
-                <option value={""}>Select Country</option>
+                <option value={"-1"}>Select Country</option>
                 {countryList?.map((country, index) => (
                   <option key={index} value={index}>
                     {country.country_name}

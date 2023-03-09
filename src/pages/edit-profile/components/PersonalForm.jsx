@@ -131,7 +131,7 @@ function PersonalForm(props) {
             <div className="form-field two-fields mb-0">
               <div className="field-half">
                 <Input
-                  type="text"
+                  type="name"
                   className="form-control"
                   placeholder="First Name"
                   name="first_name"
@@ -143,7 +143,7 @@ function PersonalForm(props) {
               </div>
               <div className="field-half">
                 <Input
-                  type="text"
+                  type="name"
                   className="form-control"
                   placeholder="Last Name"
                   name="last_name"
@@ -202,22 +202,22 @@ function PersonalForm(props) {
                   onChange={({ currentTarget }) => {
                     const i = parseInt(currentTarget.value);
                     formik.setFieldValue("country_index", i);
-                    formik.setFieldValue("country_iso", countryList[i].iso);
+                    formik.setFieldValue("country_iso", countryList[i]?.iso);
                     formik.setFieldValue(
                       "mobile_code",
-                      countryList[i].phonecode
+                      countryList[i]?.phonecode
                     );
                     formik.setFieldValue(
                       "country",
-                      countryList[i].country_name
+                      countryList[i]?.country_name
                     );
                     formik.setFieldValue("city", "");
                   }}
                   onBlur={formik.handleBlur}
                   value={formik.values.country_index}
-                  error={formik.touched.country && formik.errors.country}
+                  error={formik.touched.country_index && formik.errors.country}
                 >
-                  <option value={""}>Select Country</option>
+                  <option value={"-1"}>Select Country</option>
                   {countryList?.map((country, index) => (
                     <option key={index} value={index}>
                       {country.country_name}

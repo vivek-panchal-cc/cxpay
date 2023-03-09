@@ -24,12 +24,16 @@ const Login = () => {
       password: "",
     },
     validationSchema: LoginSchema,
-    onSubmit: async (values, { resetForm, setStatus }) => {
+    onSubmit: async (values, { resetForm, setErrors, setStatus }) => {
       try {
         const { error, payload } = await dispatch(fetchLogin(values));
         if (error) throw payload;
       } catch (error) {
-        setStatus(error);
+        if (typeof error === "string") setStatus(error);
+        setErrors({
+          user_name: error?.user_name?.[0],
+          password: error?.password?.[0],
+        });
       }
     },
   });

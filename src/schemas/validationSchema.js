@@ -20,6 +20,7 @@ const signUpPersonalAccountSchema = yup.object().shape({
   personal_id: yup
     .string()
     .required("Please enter personal id")
+    .matches(/^\S*$/, "Space is not allowed")
     .max(100, "Maximum limit exceeded"),
   email: emailSchema,
   password: passwordSchema,
@@ -49,7 +50,7 @@ const signUpBusinessAccountSchema = yup.object().shape({
 
 const enterPhoneSchema = yup.object().shape({
   mobile_number: mobileSchema,
-  country_code: yup.string().required("required*"),
+  country_code: yup.string().required("Code is required*"),
 });
 
 const loginWithOtpSchema = yup.object().shape({
@@ -68,7 +69,7 @@ const LoginSchema = yup.object().shape({
   user_name: mobileSchema,
   password: yup
     .string()
-    .required("Please enter password")
+    .required("Please enter password.")
     .max(16, "Maximum limit is 16 characters"),
 });
 
@@ -106,6 +107,7 @@ const editProfilePersonalUserSchema = yup.object().shape({
   personal_id: yup
     .string()
     .required("Please enter personal id")
+    .matches(/^\S*$/, "Space is not allowed")
     .max(100, "Maximum limit is exceeded"),
   user_type: yup.string().required(),
   email: emailSchema,

@@ -7,6 +7,8 @@ function Input(props) {
     switch (type) {
       case "mobile":
         return "text";
+      case "name":
+        return "text";
       default:
         return type;
     }
@@ -16,6 +18,9 @@ function Input(props) {
     switch (type) {
       case "mobile":
         element.currentTarget.value = element.currentTarget.value.trim();
+        return element;
+      case "name":
+        element.currentTarget.value = element.currentTarget.value.trimStart();
         return element;
       default:
         return element;
