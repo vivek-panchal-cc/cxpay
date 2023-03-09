@@ -1,17 +1,21 @@
 import { Modal } from "bootstrap";
 import ModalConfirmation from "components/modals/ModalConfirmation";
+import { LoaderContext } from "context/loaderContext";
 import { apiRequest } from "helpers/apiRequests";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import CardItem from "./component/CardItem";
 
 function ViewCard(props) {
+  const { setIsLoading } = useContext(LoaderContext);
+
   const [cardsList, setCardsList] = useState([]);
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [deleteCard, setDeleteCard] = useState(null);
 
   const getCardsList = async () => {
+    setIsLoading(true);
     try {
       const { data } = await apiRequest.cardsList();
       if (!data.success) throw data.message;
@@ -19,6 +23,8 @@ function ViewCard(props) {
     } catch (error) {
       console.log(error);
       setCardsList([]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -29,6 +35,7 @@ function ViewCard(props) {
 
   const handleCardDelete = async () => {
     setShowConfirmPopup(false);
+    setIsLoading(true);
     try {
       const { data } = await apiRequest.deleteCard({ id: deleteCard.id });
       if (!data.success) throw data.message;
@@ -37,6 +44,8 @@ function ViewCard(props) {
     } catch (error) {
       toast.error(error);
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -47,8 +56,8 @@ function ViewCard(props) {
   return (
     <div className="">
       <ModalConfirmation
-        heading="Are you sure?"
-        subHeading="you want to delete this card"
+        heading="Are you sure to delete this card?"
+        subHeading="for delete the credit card"
         show={showConfirmPopup}
         setShow={setShowConfirmPopup}
         handleCallback={handleCardDelete}
@@ -59,13 +68,17 @@ function ViewCard(props) {
         </div>
         <div className="db-view-bank-wrapper db-view-card-wrapper">
           <ul className="db-view-bank-listing">
-            {cardsList?.map((item, index) => (
-              <CardItem
-                key={`${item.card_number}${index}`}
-                item={item}
-                handleDelete={handleConfirmDelete}
-              />
-            ))}
+            {cardsList && cardsList.length > 0 ? (
+              cardsList.map((item, index) => (
+                <CardItem
+                  key={`${item.card_number}${index}`}
+                  item={item}
+                  handleDelete={handleConfirmDelete}
+                />
+              ))
+            ) : (
+              <h6>Card Not Found</h6>
+            )}
           </ul>
         </div>
       </div>

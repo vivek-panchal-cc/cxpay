@@ -9,9 +9,14 @@ import { LoaderContext } from "context/loaderContext";
 
 const contentTitles = [
   {
-    url: "/view-card",
+    url: "/wallet/view-card",
     heading: "View Cards",
     subHeading: "My Credit Cards List",
+  },
+  {
+    url: "/wallet/bank-list",
+    heading: "My Bank Accounts",
+    subHeading: "Primary Bank Accounts",
   },
 ];
 
@@ -40,6 +45,7 @@ function DashboardLayout() {
     })();
   }, [dispatch]);
 
+  // if (Object.keys(profile).length === 0) return null;
   return (
     <div className="dashboard-page wallet-page">
       <div className="container-fluid">
@@ -50,7 +56,7 @@ function DashboardLayout() {
           <div className="col-xs-12 col-lg-9 dashboard-right-sec min-vh-100">
             <div className="dashboard-top-sec no-search-ontop">
               <div className="dashboard-search-wrap col-lg-7 col-12">
-                <div className="title-content-wrap send-pay-title-sec title-common-sec">
+                <div className="title-content-wrap send-pay-title-sec title-common-sec ms-4">
                   <h3>{headings.heading}</h3>
                   <p>{headings.subHeading}</p>
                 </div>
@@ -71,10 +77,10 @@ function DashboardLayout() {
                     <div className="user-image-wrap">
                       <span className="user-image h-100 w-100">
                         <Image
-                          src={profile.profile_image}
+                          src={profile?.profile_image}
                           alt="profile avtar"
                           fallbacksrc={
-                            profile.user_type === "business"
+                            profile?.user_type === "business"
                               ? "/assets/images/Business-account.png"
                               : "/assets/images/Personal.png"
                           }

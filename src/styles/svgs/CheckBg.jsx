@@ -17,9 +17,9 @@ function CheckBg(props) {
       <path
         d="M15 25L22.6364 33L36 18"
         stroke="white"
-        stroke-width="2.16959"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2.16959"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

@@ -36,7 +36,7 @@ function ModalConfirmation(props) {
       <div className="modal-dialog modal-dialog-centered" ref={modalRef}>
         <div className="modal-content">
           <div className="modal-header flex-column">
-            <h3>{heading}</h3>
+            <h3 className="text-center">{heading}</h3>
             <p>{subHeading}</p>
           </div>
           <div className="modal-body">

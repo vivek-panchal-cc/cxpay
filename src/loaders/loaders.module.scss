@@ -1,19 +1,43 @@
 .default {
-  z-index: 999999;
-  //   background: url("../../public/assets/images/bg-body-transparent.png");
-  background-position: center;
-  background-color: #3f3f3f90;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  :global {
+    z-index: 999999;
+    // background: url("../../public/assets/images/bg-body-transparent.png");
+    background-position: center;
+    background-color: #3f3f3f90;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-.dotcontainer {
-  .dot {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    border-radius: 15px;
-    background-color: #4b9cdb;
+    .dotcontainer {
+      .dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 10px;
+        background-color: #fff100;
+        margin: 0 4px;
+        box-shadow: 1px 1px 10px #fff100;
+        &:nth-last-child(1) {
+          animation: jumpinganimation 0.6s 0.1s ease-in infinite;
+        }
+        &:nth-last-child(2) {
+          animation: jumpinganimation 0.6s 0.2s ease-in infinite;
+        }
+        &:nth-last-child(3) {
+          animation: jumpinganimation 0.6s 0.3s ease-in infinite;
+        }
+      }
+    }
+  }
+}
+@keyframes :global(jumpinganimation) {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 15px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
   }
 }
