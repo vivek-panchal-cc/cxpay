@@ -63,9 +63,6 @@ function ViewCard(props) {
         handleCallback={handleCardDelete}
       ></ModalConfirmation>
       <div className="db-view-bank-main db-view-card-main">
-        <div className="title-content-wrap send-pay-title-sec title-common-sec">
-          <h3>My Cards</h3>
-        </div>
         <div className="db-view-bank-wrapper db-view-card-wrapper">
           <ul className="db-view-bank-listing">
             {cardsList && cardsList.length > 0 ? (
@@ -77,7 +74,7 @@ function ViewCard(props) {
                 />
               ))
             ) : (
-              <h6>Card Not Found</h6>
+              <p>Card Not Found</p>
             )}
           </ul>
         </div>

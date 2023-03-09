@@ -100,7 +100,7 @@ const BankList = () => {
                 </li>
               ))
             ) : (
-              <h6>Bank Account Not Found</h6>
+              <p>Bank Account Not Found</p>
             )}
           </ul>
         </div>
