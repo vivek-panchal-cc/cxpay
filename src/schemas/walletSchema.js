@@ -1,5 +1,6 @@
 import * as yup from "yup";
 import valid from "card-validator";
+import { isValidFileType } from "constants/all";
 
 const addCardSchema = yup.object().shape({
   card_number: yup
@@ -24,25 +25,15 @@ const addCardSchema = yup.object().shape({
     .test(
       "test-expiry-date",
       "Expiry date is invalid",
-      (value) => valid.expirationDate(value).isValid
-    ),
-  security_code: yup
-    .string()
-    .required("required*")
-    .test(
-      "test-expiry-date",
-      "Security code is invalid",
-      (value) => valid.cvv(value).isValid
+      (value) => valid.expirationDate(value, 10).isValid
     ),
   card_holder_name: yup
     .string()
-    .required("Card holder name is required")
-    .test(
-      "test-cardholder-name",
-      "Card holder name in invalid",
-      (value) => valid.cardholderName(value).isValid
-    ),
-  billing_address: yup.string().required("Billing address is required"),
+    .matches(/^[a-zA-Z ]*$/, "Card holder name in invalid"),
+  billing_address: yup
+    .string()
+    .required("Billing address is required*")
+    .max(55, "The billing address must not be greater than 55 characters."),
   color: yup.string().required(""),
 });
 
@@ -59,4 +50,14 @@ const linkBankSchema = yup.object().shape({
   bank_name: yup.string().required("Bank name is required."),
 });
 
-export { addCardSchema, linkBankSchema };
+const uploadCardImageSchema = yup.object().shape({
+  card_image: yup.mixed().test({
+    message: "File Type is not allowed",
+    test: (file) =>
+      file && file.name
+        ? isValidFileType(file && file.name.toLowerCase(), "image")
+        : false,
+  }),
+});
+
+export { addCardSchema, linkBankSchema, uploadCardImageSchema };

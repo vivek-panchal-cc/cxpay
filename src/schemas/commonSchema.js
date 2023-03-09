@@ -74,7 +74,7 @@ const changeConfirmPasswordSchema = yup
 const profileImageSchema = yup
   .mixed()
   .test({
-    message: "Image type is not allowed",
+    message: "File Type is not allowed",
     test: (file) =>
       file && file.name
         ? isValidFileType(file && file.name.toLowerCase(), "image")

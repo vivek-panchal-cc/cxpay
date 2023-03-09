@@ -1,6 +1,7 @@
-import InputFile from "components/ui/InputImage";
+import InputImage from "components/ui/InputImage";
 import { useFormik } from "formik";
 import React from "react";
+import { uploadCardImageSchema } from "schemas/walletSchema";
 
 function UploadImage(props) {
   const { handleUpload, closeModal } = props;
@@ -9,7 +10,7 @@ function UploadImage(props) {
     initialValues: {
       card_image: "",
     },
-    validationSchema: "",
+    validationSchema: uploadCardImageSchema,
     onSubmit: async (values, { setStatus, setErrors, setValues }) => {
       handleUpload(URL.createObjectURL(values.card_image));
     },
@@ -19,23 +20,27 @@ function UploadImage(props) {
     <div className="modal-dialog modal-dialog-centered">
       <div className="modal-content" style={{ minWidth: "500px" }}>
         <div className="modal-header">
-          <h3>Customize Card</h3>
+          <h3>Crop image</h3>
         </div>
         <div className="modal-body">
           <div className="custimize-iu-wrap">
-            <form className="">
-              <InputFile
+            <form>
+              <InputImage
                 id="_scci"
                 name="card_image"
-                onChange={(e) => {
-                  handleUpload(URL.createObjectURL(e.currentTarget.files[0]));
-                  formik.setFieldValue("card_image", e.currentTarget.files[0]);
+                onChange={async (e) => {
+                  await formik.setFieldValue(
+                    "card_image",
+                    e.currentTarget.files[0]
+                  );
+                  await formik.submitForm();
                 }}
                 error={formik.errors.card_image}
                 showPreview={false}
                 showLabel={false}
-                fallbackImg="/assets/images/profile-img.png"
+                fallbackSrc="/assets/images/profile-img.png"
                 classNameInput="d-none"
+                accept={"image/*"}
               />
               <label
                 className="cust-image-upload-wrap image_upload_click"
@@ -47,13 +52,12 @@ function UploadImage(props) {
                 </div>
               </label>
             </form>
-            <a
-              href="/"
-              className="cancel-link cursor-pointer"
+            <button
+              className="cancel-link cursor-pointer border-0 bg-transparent"
               onClick={closeModal}
             >
               Cancel
-            </a>
+            </button>
           </div>
         </div>
       </div>

@@ -58,7 +58,9 @@ axiosInstance.interceptors.response.use(
     if (errResponse && errResponse.status === 401 && errResponse.data) {
       storageRequest.removeAuth();
       window.location = "/login";
-    } else return Promise.reject(error);
+      return axiosInstance(error.config);
+    }
+    return Promise.reject(error);
   }
 );
 
