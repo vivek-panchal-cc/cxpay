@@ -2700,6 +2700,9 @@
     background-position: right 10px center !important;
     background-size: 10px auto !important;
   }
+  .login-signup-content-wrap select.form-control.form-select {
+    height: 43.58px;
+  }
   .db-view-bank-main ul.db-view-bank-listing {
     max-height: calc(100vh - 235px);
     height: auto;
@@ -2715,7 +2718,7 @@
     padding-top: 0px;
   }
   .dashboard-logo-wrap {
-    padding-top: 30px;
+    padding-top: 60px;
     padding-bottom: 10px !important;
     padding-bottom: 0px;
     height: auto;
@@ -2730,7 +2733,8 @@
   .dashboard-link-wrap {
     overflow-y: auto;
     padding-top: 20px;
-    height: calc(100vh - 115px);
+    height: calc(100vh - 145px);
+    padding-bottom: 10px;
   }
   .dashboard-left-wrap .toggle-admin-btn {
     right: -45px;
@@ -2745,10 +2749,14 @@
   .dashboard-left-wrap .toggle-admin-btn {
     display: none;
   }
+  .dashboard-left-sec {
+    z-index: 99999;
+  }
   .mobile-toggle .toggle-admin-btn {
     position: absolute;
     left: 20px;
     right: auto;
+    z-index: 99999;
     top: 30px;
     bottom: auto;
     margin: auto;
@@ -2768,6 +2776,27 @@
   }
   .dashboard-right-sec {
     position: relative;
+  }
+  .sidebar-open {
+    position: relative;
+  }
+  .sidebar-open .toggle-admin-btn img {
+    transform: rotate(0deg) !important;
+  }
+  .mobile-toggle .toggle-admin-btn img {
+    transform: rotate(180deg);
+  }
+  body.open-menu:before {
+    content: "";
+    background: rgba(54, 56, 83, 0.3);
+    -webkit-backdrop-filter: blur(2.5px);
+    backdrop-filter: blur(2.5px);
+    display: block;
+    transition: auto;
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
   }
 }
 
