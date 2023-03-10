@@ -156,7 +156,7 @@ const LinkBank = (props) => {
               <div className="col-12 p-0 btns-inline">
                 <div className="setting-btn-link btn-wrap">
                   <Link
-                    to="/wallet/bank-list"
+                    to="/wallet"
                     className="outline-btn w-100 text-center d-block"
                     replace
                   >

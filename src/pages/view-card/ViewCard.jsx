@@ -56,8 +56,8 @@ function ViewCard(props) {
   return (
     <div className="">
       <ModalConfirmation
-        heading="Are you sure to delete this card?"
-        subHeading="for delete the credit card"
+        heading="Are you sure?"
+        subHeading="Are you sure to delete this card?"
         show={showConfirmPopup}
         setShow={setShowConfirmPopup}
         handleCallback={handleCardDelete}

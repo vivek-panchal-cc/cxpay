@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
@@ -7,8 +7,10 @@ import { apiRequest } from "../../helpers/apiRequests";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { IconEyeClose, IconEyeOpen, IconLeftArrow } from "styles/svgs";
+import { LoaderContext } from "context/loaderContext";
 
 function ChangePassword() {
+  const { setIsLoading } = useContext(LoaderContext);
   const { profile } = useSelector((state) => state?.userProfile);
   const { email } = profile || {};
   const [showPassword, setShowPassword] = useState({
@@ -27,6 +29,7 @@ function ChangePassword() {
     },
     validationSchema: passwordChangeSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
+      setIsLoading(true);
       try {
         const { data } = await apiRequest.passwordChange(values);
         if (!data.success) throw data.message;
@@ -35,6 +38,8 @@ function ChangePassword() {
       } catch (error) {
         toast.error(error);
         resetForm();
+      } finally {
+        setIsLoading(false);
       }
     },
   });

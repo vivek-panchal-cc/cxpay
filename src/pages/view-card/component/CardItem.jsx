@@ -19,7 +19,6 @@ function CardItem(props) {
       <div className="bank-card-name-wrap">
         <div
           className="bank-card-wrap"
-          bg-color={item?.color}
           style={
             image
               ? {
@@ -28,7 +27,7 @@ function CardItem(props) {
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
                 }
-              : {}
+              : { background: color }
           }
         >
           <IconCardBackground height="100%" width="100%" />

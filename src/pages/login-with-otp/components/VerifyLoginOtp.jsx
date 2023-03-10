@@ -12,6 +12,7 @@ function VerifyLoginOtp(props) {
   const { mobileNumber, setShow } = props;
   const [counter, setCounter] = useState(otpCounterTime);
   const [isTimerOver, setIsTimerOver] = useState(true);
+  const [error, setError] = useState(false);
 
   React.useEffect(() => {
     const timer =
@@ -36,20 +37,6 @@ function VerifyLoginOtp(props) {
   });
   let counterTime =
     Math.floor(counter / 60) + ":" + (formattedNumber ? formattedNumber : "00");
-
-  const handleResendBtn = async () => {
-    setIsTimerOver(true);
-    setCounter(otpCounterTime);
-    handleTimeOut();
-    try {
-      const { data } = await apiRequest.resendLoginOtp({
-        mobile_number: mobileNumber,
-      });
-      if (!data.success || data.data === null) throw data.message;
-      toast.success(data.data.login_otp);
-      toast.success(data.message);
-    } catch (error) {}
-  };
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -68,6 +55,26 @@ function VerifyLoginOtp(props) {
       }
     },
   });
+
+  const handleResendBtn = async () => {
+    setIsTimerOver(true);
+    setCounter(otpCounterTime);
+    handleTimeOut();
+    try {
+      const { data } = await apiRequest.resendLoginOtp({
+        mobile_number: mobileNumber,
+      });
+      if (!data.success) throw data.message;
+      toast.success(data.data.login_otp);
+      toast.success(data.message);
+    } catch (error) {
+      if (typeof error === "string") {
+        setIsTimerOver(true);
+        formik.setStatus(error);
+        setError(true);
+      }
+    }
+  };
 
   return (
     <div className="modal-dialog modal-dialog-centered">
@@ -93,7 +100,7 @@ function VerifyLoginOtp(props) {
               />
             </div>
             <div className="resend-otp-wrap">
-              {isTimerOver && (
+              {isTimerOver && !error && (
                 <div>
                   <span>{counterTime}</span>
                   <br />

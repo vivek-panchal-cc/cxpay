@@ -1,6 +1,7 @@
 import { apiRequest } from "helpers/apiRequests";
 import { storageRequest } from "helpers/storageRequests";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { LoaderContext } from "./loaderContext";
 
 const initialValues = {
   step: 0,
@@ -15,6 +16,7 @@ const initialValues = {
 export const SignupContext = React.createContext(initialValues);
 
 const SignupProvider = ({ children }) => {
+  const { setIsLoading } = useContext(LoaderContext);
   const creds = storageRequest.getCredsFromtStorage();
   const [signUpCreds, setSignUpCreds] = useState(creds || initialValues);
 
@@ -29,6 +31,7 @@ const SignupProvider = ({ children }) => {
   }, [signUpCreds]);
 
   const getCountries = async () => {
+    setIsLoading(true);
     try {
       const { data } = await apiRequest.getCountry();
       if (!data.success || data.data === null) throw data.message;
@@ -39,6 +42,8 @@ const SignupProvider = ({ children }) => {
       }));
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 

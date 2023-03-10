@@ -1,14 +1,17 @@
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addBusinessUrlSchema } from "schemas/validationSchema";
 import { IconEdit } from "styles/svgs";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { toast } from "react-toastify";
+import { LoaderContext } from "context/loaderContext";
 
 const ProfileInfo = (props) => {
+  const { setIsLoading } = useContext(LoaderContext);
+
   const { profile } = props;
   const {
     user_type = "personal",
@@ -32,19 +35,20 @@ const ProfileInfo = (props) => {
     },
     validationSchema: addBusinessUrlSchema,
     onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
+      setIsLoading(true);
       try {
         const { data } = await apiRequest.updateBusinessUrl(values);
-        if (data.success) {
-          await dispatch(fetchUserProfile());
-          setIsEditable(false);
-          resetForm();
-          toast.success("Business url updated successfully.");
-        }
-        if (!data.success || data.data === null) throw data.message;
+        if (!data.success) throw data.message;
+        setIsEditable(false);
+        await dispatch(fetchUserProfile());
+        toast.success("Business url updated successfully.");
       } catch (error) {
+        if (typeof error === "string") return toast.error(error);
         setErrors({
           business_url: error?.business_url?.[0],
         });
+      } finally {
+        setIsLoading(false);
       }
     },
   });

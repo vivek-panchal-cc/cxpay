@@ -9,8 +9,10 @@ import { SignupContext } from "context/signupContext";
 import InputFile from "components/ui/InputImage";
 import InputSelect from "components/ui/InputSelect";
 import { IconEyeClose, IconEyeOpen } from "styles/svgs";
+import { LoaderContext } from "context/loaderContext";
 
 function PersonalForm(props) {
+  const { setIsLoading } = useContext(LoaderContext);
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState({
@@ -38,6 +40,7 @@ function PersonalForm(props) {
     },
     validationSchema: signUpPersonalAccountSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
+      setIsLoading(true);
       try {
         const formData = new FormData();
         for (let key in values) {
@@ -55,6 +58,8 @@ function PersonalForm(props) {
           email: error.email?.[0],
           mobile_number: error.mobile_number?.[0],
         });
+      } finally {
+        setIsLoading(false);
       }
     },
   });
@@ -76,7 +81,11 @@ function PersonalForm(props) {
                 error={formik.errors.profile_image}
                 showPreview={true}
                 showLabel={true}
-                labelText="Change Profile Picture"
+                labelText={
+                  formik.values.profile_image
+                    ? "Change Profile Picture"
+                    : "Select Profile Picture"
+                }
                 fallbackSrc="/assets/images/Personal.png"
                 classNameInput="d-none"
                 accept="image/*"
@@ -130,7 +139,9 @@ function PersonalForm(props) {
                     }}
                     onBlur={formik.handleBlur}
                     value={formik.values.country_index}
-                    error={formik.touched.country_index && formik.errors.country}
+                    error={
+                      formik.touched.country_index && formik.errors.country
+                    }
                   >
                     <option value={"-1"}>Select Country</option>
                     {countryList?.map((country, index) => (
@@ -282,8 +293,8 @@ function PersonalForm(props) {
                   type="submit"
                   className={`btn btn-primary ${
                     formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
-                  }`}
-                  disabled={formik.isSubmitting || !formik.isValid}
+                  } ${formik.isValid ? "" : "opacity-75"}`}
+                  disabled={formik.isSubmitting}
                   value="Signup"
                 />
               </div>
