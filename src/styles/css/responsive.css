@@ -747,7 +747,7 @@
   .profile-avtar {
     width: 100px;
     height: 100px;
-    border-radius: 50px;
+    border-radius: 40px;
   }
   .profile-avtar > img {
     max-width: 100px;
@@ -1576,6 +1576,9 @@
   }
   .col-right {
     padding-left: 10px !important;
+  }
+  .mobile-toggle {
+    display: none;
   }
 }
 @media only screen and (max-width: 991px) {
@@ -2736,6 +2739,36 @@
   .dashboard-right-sec {
     padding: 30px 25px;
   }
+  .mobile-toggle {
+    display: block;
+  }
+  .dashboard-left-wrap .toggle-admin-btn {
+    display: none;
+  }
+  .mobile-toggle .toggle-admin-btn {
+    position: absolute;
+    left: 20px;
+    right: auto;
+    top: 30px;
+    bottom: auto;
+    margin: auto;
+    width: 30px;
+    height: 30px;
+    background-color: #0081c5;
+    box-shadow: 0px 3px 10px rgb(0 0 0 / 25%);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+  }
+  .sidebar-open .toggle-admin-btn {
+    left: 230px;
+  }
+  .dashboard-right-sec {
+    position: relative;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -3552,5 +3585,10 @@
   }
   .add-card-color-wrap {
     padding: 20px 15px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .profile-inner-sec.p-4 {
+    padding: 0px !important;
   }
 }
