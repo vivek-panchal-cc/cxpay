@@ -57,6 +57,7 @@ function VerifyLoginOtp(props) {
   });
 
   const handleResendBtn = async () => {
+    formik.setStatus("");
     setIsTimerOver(true);
     setCounter(otpCounterTime);
     handleTimeOut();
