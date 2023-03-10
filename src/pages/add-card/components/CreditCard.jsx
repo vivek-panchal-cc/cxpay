@@ -24,9 +24,13 @@ function CreditCard(props) {
       {!bg_img && <IconCardBackground />}
       <p
         className="card-holder-nm overflow-hidden"
-        style={{ maxHeight: "40%" }}
+        style={{ maxHeight: "40%", textOverflow: "ellipsis" }}
       >
-        {card_holder_name ? card_holder_name.toUpperCase() : "XXXXXX"}
+        {card_holder_name
+          ? card_holder_name.length > 25
+            ? card_holder_name.slice(0, 25).toUpperCase() + "..."
+            : card_holder_name.toUpperCase()
+          : "XXXXXX"}
       </p>
       <div className="card-num-date">
         <p className="">
