@@ -223,9 +223,6 @@
   .user-details-modal .modal-body {
     padding-bottom: 35px;
   }
-  .modal-content {
-    max-height: 96vh;
-  }
 }
 @media only screen and (max-height: 650px) {
   .wallet_bank_link_right .wallet-link-bank-bottom {
@@ -253,8 +250,12 @@
   .dashboard-link-wrap {
     padding-top: 25px;
   }
-  ul.dashboard-bottom-links {
-    padding-bottom: 10px;
+  .dashboard-logo-wrap {
+    padding-top: 15px;
+    height: 105px;
+  }
+  .dashboard-link-wrap {
+    height: calc(100vh - 105px);
   }
   /*.db-view-bank-main ul.db-view-bank-listing {
     max-height: 400px;
@@ -286,14 +287,35 @@
   }
 }
 @media only screen and (max-height: 600px) {
-  /*.db-view-bank-main ul.db-view-bank-listing {
-    height: 45vh;
-  }*/
-}
-@media only screen and (max-height: 380px) {
-  /*.db-view-bank-main ul.db-view-bank-listing {
-    height: 30vh;
-  }*/
+  .dashboard-link-wrap ul.dashboard-main-links {
+    padding-bottom: 10px;
+  }
+  .dashboard-logo-wrap a:first-child {
+    margin-bottom: 15px;
+  }
+  .dashboard-logo-wrap a img {
+    max-width: 120px;
+  }
+  .dashboard-logo-wrap {
+    padding-top: 20px;
+    height: 95px;
+  }
+  .dashboard-link-wrap {
+    padding-bottom: 20px;
+  }
+  .dashboard-link-wrap ul li {
+    margin-bottom: 5px;
+  }
+  .dashboard-link-wrap ul li a {
+    font-size: 13px;
+  }
+  .dashboard-link-wrap ul li a {
+    padding: 7.5px 26px;
+  }
+  .dashboard-link-wrap {
+    height: calc(100vh - 95px);
+    overflow-y: auto;
+  }
 }
 @media only screen and (max-width: 1366px) {
   .profile-right-sec {
@@ -629,6 +651,10 @@
   }
   .wallet-title-btns {
     max-width: 320px;
+  }
+  .dashboard-link-wrap {
+    padding-top: 22px;
+    padding-bottom: 22px;
   }
 }
 @media only screen and (max-width: 1299px) {
@@ -1184,6 +1210,9 @@
     font-size: 15px !important;
     line-height: 20px;
   }
+  .settings-edit-profile-top-sec {
+    padding-bottom: 38px;
+  }
 }
 @media only screen and (max-width: 1100px) and (min-width: 992px) {
   .dashboard-right-sec {
@@ -1535,6 +1564,10 @@
   }
   .wallet-fund-row-amt table td {
     font-size: 15px;
+  }
+  .dashboard-link-wrap {
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 }
 @media only screen and (min-width: 992px) {
@@ -2668,6 +2701,41 @@
     max-height: calc(100vh - 235px);
     height: auto;
   }
+  .settings-edit-profile-top-sec .upload-profile-image {
+    width: 100px;
+  }
+  .settings-edit-profile-top-sec .profile-info,
+  .profile-top-sec .profile-info {
+    width: calc(100% - 100px);
+  }
+  .settings-edit-profile-top-sec .profile-info {
+    padding-top: 0px;
+  }
+  .dashboard-logo-wrap {
+    padding-top: 30px;
+    padding-bottom: 10px !important;
+    padding-bottom: 0px;
+    height: auto;
+  }
+  .dashboard-logo-wrap a:first-child {
+    margin-bottom: 15px !important;
+  }
+  .sidebar-open .dashboard-logo-wrap a img {
+    max-width: 120px;
+    width: 100%;
+  }
+  .dashboard-link-wrap {
+    overflow-y: auto;
+    padding-top: 20px;
+    height: calc(100vh - 115px);
+  }
+  .dashboard-left-wrap .toggle-admin-btn {
+    right: -45px;
+    top: 30px;
+  }
+  .dashboard-right-sec {
+    padding: 30px 25px;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -2788,10 +2856,6 @@
     padding-right: 30px;
   }
   /*sidebar toggle css starts*/
-  .dashboard-left-wrap .toggle-admin-btn {
-    right: -40px;
-    top: 10px;
-  }
   .sidebar-open .dashboard-link-wrap ul li a {
     font-size: 14px;
     padding: 12.5px 18px 11.5px 20px;
@@ -2800,32 +2864,17 @@
     display: block;
   }
   .sidebar-open .dashboard-logo-wrap a img {
-    max-width: max-content;
+    max-width: 120px;
+    width: 100%;
   }
   .sidebar-open .dashboard-logo-wrap .dashaboard-btn {
     padding: 7px 27px 9px;
-  }
-  .dashboard-bottom-links {
-    margin-top: 20px;
-    margin-bottom: auto;
   }
   .dashboard-link-wrap ul li {
     margin-bottom: 12px;
   }
   .dashboard-link-wrap ul li a svg {
     margin-right: 15px;
-  }
-  .dashboard-link-wrap {
-    max-height: calc(100% - 140px);
-    overflow-y: auto;
-    padding-top: 20px;
-  }
-  .dashboard-logo-wrap {
-    padding-top: 10px;
-    padding-bottom: 15px;
-  }
-  .dashboard-right-sec {
-    padding: 50px 20px;
   }
   /*sidebar toggle css close*/
   .profile-bottom-info-sec ul li {
@@ -3333,6 +3382,15 @@
   li.db-view-bank-heading .bank-bal-wrap {
     font-size: 15px !important;
     line-height: 20px;
+  }
+  .btn,
+  .btn-primary,
+  .login-btn input[type="submit"] {
+    padding: 10px 30px;
+  }
+  .profile-info h3 {
+    font-size: 17px;
+    line-height: 25px;
   }
 }
 @media only screen and (max-width: 575px) {

@@ -58,7 +58,7 @@ const ProfileInfo = (props) => {
       {user_type !== "personal" && (
         <li>
           <div className="pi-title-div">Business URL</div>
-          <div className="profile-info-right-desc">
+          <div className="profile-info-right-desc with-edit-ic">
             {!isEditable && (
               <>
                 <p>{business_url ?? "-"}</p>

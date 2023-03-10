@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Wallet() {
   return (
-    <div className="p-4">
+    <div className="p-4 wallet-pg-inks">
       <h1>Wallet</h1>
       <Link to="/wallet/add-card">Go to Add-Card</Link>
       <div>

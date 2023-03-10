@@ -1013,7 +1013,7 @@ form .form-field select.form-control {
   position: absolute;
   left: auto;
   right: -40px;
-  top: 47px;
+  top: 30px;
   bottom: auto;
   margin: auto;
   width: 30px;
@@ -1047,7 +1047,6 @@ form .form-field select.form-control {
   color: #363853;
   padding: 7px 27px 9px;
   line-height: 15px;
-  margin-top: -7px;
 }
 .dashboard-logo-wrap .dashaboard-btn:hover {
   background-color: #333;
@@ -1079,9 +1078,6 @@ form .form-field select.form-control {
   background-color: transparent;
   border-radius: 15px 0 0 15px;
 }
-.dashboard-link-wrap ul li a svg {
-  margin-right: 20px;
-}
 .dashboard-link-wrap ul li a:hover,
 .dashboard-link-wrap ul li.active > a {
   background-color: #fff;
@@ -1103,10 +1099,10 @@ form .form-field select.form-control {
   margin-bottom: 0;
   background-color: #0081c5;
 }
-.sidebar-open .dashboard-link-wrap ul li a {
+/*.sidebar-open .dashboard-link-wrap ul li a {
   font-size: 0;
   padding: 14.5px 18px 14.5px 25px;
-}
+}*/
 .sidebar-open .dashboard-logo-wrap a img {
   max-width: 80px;
 }
@@ -1121,11 +1117,6 @@ form .form-field select.form-control {
 }
 .sidebar-open .dashboard-link-wrap ul li a span {
   display: none;
-}
-.dashboard-logo-wrap a:first-child {
-  height: 93px;
-  display: flex;
-  align-items: center;
 }
 .dashboard-bottom-links li:last-child {
   margin-bottom: 0;
@@ -1644,7 +1635,7 @@ margin: auto;
 .settings-edit-profile-top-sec {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
   padding-bottom: 45px;
 }
 .settings-edit-profile-top-sec .upload-profile-image a {
@@ -1657,9 +1648,9 @@ margin: auto;
   color: #24beef;
   letter-spacing: normal;
 }
-.settings-edit-profile-top-sec .profile-info {
+/*.settings-edit-profile-top-sec .profile-info {
   padding-top: 27px;
-}
+}*/
 .settings-edit-profile-inner-sec {
   width: 100%;
   max-width: 559px;
@@ -5678,9 +5669,10 @@ p.bank-name-wrap {
 .bank-del-wrap {
   min-width: 45px;
 }
-/* .settings-bottom-info-sec > ul > li {
+.settings-bottom-info-sec > ul > li {
   cursor: pointer;
-} */
+  position: relative;
+}
 li.db-view-bank-heading {
   border-bottom: 1px solid #eee;
   padding-top: 10px;
@@ -5711,4 +5703,84 @@ li.db-view-bank-heading:hover {
   min-width: 180px;
   white-space: normal;
   word-break: break-all;
+}
+.pop-cancel-btn button {
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0px;
+  border: none;
+  background-color: transparent;
+  color: #0081c5;
+  font-size: 16px;
+  line-height: 20px;
+  margin-top: 15px;
+}
+.pop-cancel-btn button:hover {
+  color: #363853 !important;
+}
+ul.dashboard-main-links {
+  padding-bottom: 30px;
+}
+.settings-edit-profile-top-sec .profile-info,
+.profile-top-sec .profile-info {
+  width: calc(100% - 122px);
+  word-break: break-all;
+  white-space: normal;
+}
+.profile-bottom-info-sec .profile-info-right-desc p {
+  width: 100% !important;
+  padding-right: 0px !important;
+}
+/* Menu CSS New */
+.dashboard-left-sec {
+  position: fixed;
+}
+.dashboard-right-sec {
+  margin-left: auto;
+  margin-right: 0;
+}
+.dashboard-link-wrap ul li a svg {
+  margin-right: 0px;
+  width: 19px;
+}
+.dashboard-link-wrap ul li a span {
+  padding-left: 20px;
+}
+.dashboard-logo-wrap {
+  padding: 40px 5px 0px;
+  height: 125px;
+  justify-content: start;
+}
+.dashboard-logo-wrap a:first-child {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+.dashboard-link-wrap {
+  height: calc(100vh - 125px);
+}
+.dashboard-logo-wrap a img {
+  width: 100%;
+  max-width: 130px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0px;
+}
+.sidebar-open .dashboard-logo-wrap .dashaboard-btn {
+  padding: 5px 20px;
+  font-size: 10px;
+}
+.profile-bottom-info-sec .with-edit-ic p {
+  width: calc(100% - 35px) !important;
+}
+/* Wallet Page Links */
+.wallet-pg-inks h1 {
+  margin-bottom: 20px;
+}
+.wallet-pg-inks a {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  font-family: "Visby Round CF Demi";
 }

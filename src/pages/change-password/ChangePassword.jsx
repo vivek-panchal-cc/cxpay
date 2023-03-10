@@ -124,7 +124,7 @@ function ChangePassword() {
                   <Input
                     type={showPassword.confirm ? "text" : "password"}
                     className="form-control"
-                    placeholder="Confirm password"
+                    placeholder="Confirm Password"
                     name="confirm_password"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}

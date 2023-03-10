@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 
 function VerifyOtp(props) {
   const { mobile_number } = props.values;
+  const { setShow } = props;
   const [counter, setCounter] = useState(otpCounterTime);
   const [isTimerOver, setIsTimerOver] = useState(true);
 
@@ -121,6 +122,11 @@ function VerifyOtp(props) {
                 value="Verify"
                 data-bs-dismiss="modal"
               />
+            </div>
+            <div className="pop-cancel-btn text-center">
+              <button data-bs-dismiss="modal" onClick={() => setShow(false)}>
+                Cancel
+              </button>
             </div>
           </form>
         </div>

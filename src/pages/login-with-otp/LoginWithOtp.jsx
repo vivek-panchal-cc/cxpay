@@ -39,7 +39,7 @@ const LoginWithOtp = (props) => {
       }
     },
   });
-  
+
   return (
     <div className="login-signup common-body-bg">
       <div className="container login-signup-01">
@@ -50,9 +50,12 @@ const LoginWithOtp = (props) => {
                 <Modal
                   id="login_otp_modal"
                   show={showVerifyPhonePopup}
-                  setShow={setShowVerifyPhonePopup}
+                  // setShow={setShowVerifyPhonePopup}
                 >
-                  <VerifyLoginOtp mobileNumber={mobileNumber} />
+                  <VerifyLoginOtp
+                    setShow={setShowVerifyPhonePopup}
+                    mobileNumber={mobileNumber}
+                  />
                 </Modal>
                 <h4 className="text-center">Welcome to</h4>
                 <div className="login-logo-image text-center">

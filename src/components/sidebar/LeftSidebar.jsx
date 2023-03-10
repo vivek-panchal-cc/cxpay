@@ -65,13 +65,13 @@ function LeftSidebar() {
           <li className={`${thisRoute === "wallet" ? "active" : ""}`}>
             <Link to="/wallet" replace>
               <IconWallet />
-              Wallet
+              <span>Wallet</span>
             </Link>
           </li>
           <li className={`${thisRoute === "contacts" ? "active" : ""}`}>
             <Link to="/" replace>
               <IconContact style={{ stroke: "#F3F3F3" }} />
-              Contacts
+              <span>Contacts</span>
             </Link>
           </li>
         </ul>
@@ -79,19 +79,19 @@ function LeftSidebar() {
           <li className={`${thisRoute === "profile" ? "active" : ""}`}>
             <Link to="/profile" replace>
               <IconProfileVerified />
-              Profile
+              <span>Profile</span>
             </Link>
           </li>
           <li className={`${thisRoute === "setting" ? "active" : ""}`}>
             <Link to="/setting" replace>
               <IconSetting style={{ fill: "#fff100" }} />
-              Settings
+              <span>Settings</span>
             </Link>
           </li>
           <li>
             <Link to="/logout" replace>
               <IconLogout style={{ stroke: "#FFF100" }} />
-              Log out
+              <span>Log out</span>
             </Link>
           </li>
         </ul>

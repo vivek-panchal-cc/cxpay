@@ -49,9 +49,9 @@ function ForgotPassword() {
                 <Modal
                   id="forgot-password-popup"
                   show={showOtpPopup}
-                  setShow={setShowOtpPopup}
+                  // setShow={setShowOtpPopup}
                 >
-                  <VerifyOtp values={formik.values} />
+                  <VerifyOtp setShow={setShowOtpPopup} values={formik.values} />
                 </Modal>
                 <form onSubmit={formik.handleSubmit}>
                   <div className="form-field">

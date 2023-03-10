@@ -28,7 +28,7 @@ const emailSchema = yup
 
 const passwordSchema = yup
   .string()
-  .required("Please enter new Password")
+  .required("Please enter new password")
   .min(
     8,
     "Password must contain at least one number, one uppercase & lowercase letter and one special character, and at least 8 or more characters"

@@ -13,7 +13,10 @@ const settingsRedirects = [
     icon: <IconNotification />,
     title: "Notification",
     link: (
-      <Link to={"/setting/notification"} className="setting-details-links">
+      <Link
+        to={"/setting/notification"}
+        className="setting-details-links stretched-link"
+      >
         <IconRightArrow />
       </Link>
     ),
@@ -22,7 +25,10 @@ const settingsRedirects = [
     icon: <IconLock />,
     title: "Password",
     link: (
-      <Link to={"/setting/change-password"} className="setting-details-links">
+      <Link
+        to={"/setting/change-password"}
+        className="setting-details-links stretched-link"
+      >
         <IconRightArrow />
       </Link>
     ),
@@ -31,7 +37,10 @@ const settingsRedirects = [
     icon: <IconProfile />,
     title: "Profile",
     link: (
-      <Link to={"/setting/edit-profile"} className="setting-details-links">
+      <Link
+        to={"/setting/edit-profile"}
+        className="setting-details-links stretched-link"
+      >
         <IconRightArrow />
       </Link>
     ),
@@ -40,7 +49,10 @@ const settingsRedirects = [
     icon: <IconInfo />,
     title: "Business info",
     link: (
-      <Link to={"/setting/business-info"} className="setting-details-links">
+      <Link
+        to={"/setting/business-info"}
+        className="setting-details-links stretched-link"
+      >
         <IconRightArrow />
       </Link>
     ),
