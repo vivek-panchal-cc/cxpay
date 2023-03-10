@@ -22,21 +22,20 @@ function PersonalForm(props) {
     mobile_number,
     country_code,
     city,
+    country,
     profile_image,
     personal_id,
   } = profile || {};
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { country_index, country_iso, country } = useMemo(() => {
-    if (!country_code) return {};
-    const cphonecode = parseInt(country_code);
+  const { country_index, country_iso } = useMemo(() => {
+    if (!country) return {};
     const country_index = countryList.findIndex(
-      (e) => e.phonecode === cphonecode
+      (e) => e.country_name === country
     );
-    const { iso, country_name } =
-      countryList.find((e) => e.phonecode === cphonecode) || {};
-    return { country_index, country_iso: iso, country: country_name };
+    const { iso } = countryList.find((e) => e.country_name === country) || {};
+    return { country_index, country_iso: iso };
   }, [country_code, countryList]);
 
   const formik = useFormik({
@@ -203,10 +202,6 @@ function PersonalForm(props) {
                     const i = parseInt(currentTarget.value);
                     formik.setFieldValue("country_index", i);
                     formik.setFieldValue("country_iso", countryList[i]?.iso);
-                    formik.setFieldValue(
-                      "mobile_code",
-                      countryList[i]?.phonecode
-                    );
                     formik.setFieldValue(
                       "country",
                       countryList[i]?.country_name

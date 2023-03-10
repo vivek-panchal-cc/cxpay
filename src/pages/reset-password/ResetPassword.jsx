@@ -1,13 +1,15 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Input from "components/ui/Input";
 import { apiRequest } from "helpers/apiRequests";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { resetPasswordSchema } from "schemas/validationSchema";
 import { IconEyeClose, IconEyeOpen } from "styles/svgs";
+import { LoaderContext } from "context/loaderContext";
 
 function ResetPassword() {
+  const { setIsLoading } = useContext(LoaderContext);
   const params = useParams();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState({
@@ -24,6 +26,7 @@ function ResetPassword() {
     },
     validationSchema: resetPasswordSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
+      setIsLoading(true);
       try {
         const { data } = await apiRequest.updateForgotPassword(values);
         if (!data.success) throw data.message;
@@ -33,6 +36,8 @@ function ResetPassword() {
         resetForm();
         setStatus(error);
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     },
   });

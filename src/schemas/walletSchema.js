@@ -7,18 +7,16 @@ const addCardSchema = yup.object().shape({
     .string()
     .matches(
       /^[0-9]*$/,
-      "Your card number is invalid. Card number must between 12 to 16 digits"
+      "Credit card number is invalid. Card number must between 12 to 16 digits"
     )
-    .max(
-      16,
-      "Your card number is invalid. Card number must between 12 to 16 digits"
-    )
-    .required("Credit card number is required")
+    .min(12, "Credit card number is invalid")
+    .max(16, "Credit card number is invalid")
     .test(
       "test-number",
       "Credit card number is invalid",
-      (value) => valid.number(value).isValid
-    ),
+      (value) => valid.number(value).isPotentiallyValid
+    )
+    .required("Credit card number is required"),
   expiry_date: yup
     .string()
     .required("Expiry date is required*")
@@ -29,7 +27,7 @@ const addCardSchema = yup.object().shape({
     ),
   card_holder_name: yup
     .string()
-    .matches(/^[a-zA-Z ]*$/, "Card holder name in invalid"),
+    .matches(/^[ a-zA-Z!@#\$%\^&\*]*$/, "Card holder name in invalid"),
   billing_address: yup
     .string()
     .required("Billing address is required*")

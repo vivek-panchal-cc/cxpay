@@ -1,7 +1,7 @@
 import Modal from "components/modals/Modal";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { addCardSchema } from "schemas/walletSchema";
 import CreditCard from "./components/CreditCard";
 import CropCard from "./components/CropCard";
@@ -13,9 +13,11 @@ import { IconCalender, IconLeftArrow } from "styles/svgs";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
+import { LoaderContext } from "context/loaderContext";
 
 function AddCard() {
   const navigate = useNavigate();
+  const { setIsLoading } = useContext(LoaderContext);
 
   const [showPopupUpload, setShowPopupUpload] = useState(false);
   const [showPopupCrop, setShowPopupCrop] = useState(false);
@@ -51,10 +53,11 @@ function AddCard() {
       expiry_date: "", // mm-yyyy
       billing_address: "",
       card_holder_name: "",
-      color: "blue",
+      color: "",
     },
     validationSchema: addCardSchema,
     onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
+      setIsLoading(true);
       try {
         const formData = new FormData();
         for (let key in values) formData.append(key, values[key]);
@@ -80,13 +83,15 @@ function AddCard() {
           card_number: error?.card_number?.[0],
           expiry_date: error?.expiry_date?.[0],
         });
+      } finally {
+        setIsLoading(false);
       }
     },
   });
 
   const handleCustomizePalette = (color) => {
+    if (color === "white") return setShowPopupUpload(true);
     formik.setFieldValue("color", color);
-    if (color === "white") setShowPopupUpload(true);
   };
 
   return (
@@ -230,11 +235,7 @@ function AddCard() {
               <div className="row">
                 <div className="col-12 p-0 btns-inline">
                   <div className="setting-btn-link btn-wrap">
-                    <Link
-                      to="/wallet/view-card"
-                      replace
-                      className="outline-btn"
-                    >
+                    <Link to="/wallet" replace className="outline-btn">
                       Cancel
                     </Link>
                   </div>
@@ -243,8 +244,8 @@ function AddCard() {
                       type="submit"
                       className={`btn btn-primary ${
                         formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
-                      }`}
-                      disabled={formik.isSubmitting || !formik.isValid}
+                      } ${formik.isValid ? "" : "opacity-75"}`}
+                      disabled={formik.isSubmitting}
                       value="Add New Card"
                     />
                   </div>

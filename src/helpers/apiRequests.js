@@ -29,6 +29,7 @@ const API_generateNewQrCode = apiUrl.REACT_APP_GENERATE_QR_CODE;
 const API_cardsList = apiUrl.REACT_APP_CARDS_LIST;
 const API_bankList = apiUrl.REACT_APP_BANK_LIST;
 const API_deleteBank = apiUrl.REACT_APP_DELETE_BANK;
+const API_getCardColor = apiUrl.REACT_APP_GET_CARD_COLOR;
 
 // POST @login API
 // @params user_name, password
@@ -178,16 +179,22 @@ export const generateNewQrCode = () => {
 };
 
 // POST @banks-list API
-// @params 
+// @params
 export const getBankList = () => {
   return axiosInstance.post(`${API_URL}${API_bankList}`);
-}
+};
 
 // POST @delete-bank
 // @params id
 export const deleteBank = (params) => {
-  return axiosInstance.post(`${API_URL}${API_deleteBank}`, params)
-}
+  return axiosInstance.post(`${API_URL}${API_deleteBank}`, params);
+};
+
+// GET @get-card-color
+// @params
+export const getCardColor = () => {
+  return axiosInstance.get(`${API_URL}${API_getCardColor}`);
+};
 
 export const apiRequest = {
   login,
@@ -215,5 +222,6 @@ export const apiRequest = {
   updateBusinessUrl,
   generateNewQrCode,
   getBankList,
-  deleteBank
+  deleteBank,
+  getCardColor,
 };

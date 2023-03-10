@@ -1,14 +1,34 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IconImage } from "styles/svgs";
+import { apiRequest } from "helpers/apiRequests";
+import { LoaderContext } from "context/loaderContext";
 
 function CustomizePalette(props) {
+  const { setIsLoading } = useContext(LoaderContext);
+
   const { color, handleChange, bgimg, removeBgImg } = props;
+  const [colorsPallette, setColorPalette] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      setIsLoading(true);
+      try {
+        const { data } = await apiRequest.getCardColor();
+        if (!data.success) throw data.message;
+        setColorPalette(data.data);
+        handleChange(data?.data?.[1]);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
 
   const handleSelect = (e) => {
     const scolor = e.currentTarget.dataset.value;
     if (scolor === "white" && bgimg) {
       removeBgImg();
-      handleChange("blue");
       return;
     }
     handleChange(scolor);
@@ -18,47 +38,18 @@ function CustomizePalette(props) {
     <div className="add-card-color-wrap">
       <p>Customize</p>
       <ul className="radio-group-wrap">
-        <li
-          className={`radio-group-inner ${
-            color === "purple" ? "selected" : ""
-          }`}
-          data-value="purple"
-          onClick={handleSelect}
-        >
-          <div className="radio-round purple"></div>
-        </li>
-        <li
-          className={`radio-group-inner ${color === "blue" ? "selected" : ""}`}
-          data-value="blue"
-          onClick={handleSelect}
-        >
-          <div className="radio-round blue"></div>
-        </li>
-        <li
-          className={`radio-group-inner ${color === "green" ? "selected" : ""}`}
-          data-value="green"
-          onClick={handleSelect}
-        >
-          <div className="radio-round green"></div>
-        </li>
-        <li
-          className={`radio-group-inner ${
-            color === "light_blue" ? "selected" : ""
-          }`}
-          data-value="light_blue"
-          onClick={handleSelect}
-        >
-          <div className="radio-round light_blue"></div>
-        </li>
-        <li
-          className={`radio-group-inner ${
-            color === "yellow" ? "selected" : ""
-          }`}
-          data-value="yellow"
-          onClick={handleSelect}
-        >
-          <div className="radio-round yellow"></div>
-        </li>
+        {colorsPallette?.map((colorPal, index) => (
+          <li
+            key={index}
+            className={`radio-group-inner ${
+              color === colorPal ? "selected" : ""
+            }`}
+            data-value={colorPal}
+            onClick={handleSelect}
+          >
+            <div className="radio-round" style={{ background: colorPal }}></div>
+          </li>
+        ))}
         <li
           className={`radio-group-inner ${color === "white" ? "selected" : ""}`}
           data-value="white"

@@ -21,6 +21,7 @@ function Input(props) {
         return element;
       case "name":
         element.currentTarget.value = element.currentTarget.value.trimStart();
+        element.currentTarget.value = element.currentTarget.value.trimEnd();
         return element;
       default:
         return element;

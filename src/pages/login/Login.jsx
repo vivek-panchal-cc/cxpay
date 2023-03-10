@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
@@ -7,10 +7,12 @@ import { useDispatch } from "react-redux";
 import { fetchLogin } from "features/user/userProfileSlice";
 import { storageRequest } from "helpers/storageRequests";
 import { IconEyeClose, IconEyeOpen } from "styles/svgs";
+import { LoaderContext } from "context/loaderContext";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { setIsLoading } = useContext(LoaderContext);
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
@@ -25,6 +27,7 @@ const Login = () => {
     },
     validationSchema: LoginSchema,
     onSubmit: async (values, { resetForm, setErrors, setStatus }) => {
+      setIsLoading(true);
       try {
         const { error, payload } = await dispatch(fetchLogin(values));
         if (error) throw payload;
@@ -34,6 +37,8 @@ const Login = () => {
           user_name: error?.user_name?.[0],
           password: error?.password?.[0],
         });
+      } finally {
+        setIsLoading(false);
       }
     },
   });
@@ -103,8 +108,8 @@ const Login = () => {
                       type="submit"
                       className={`btn btn-primary ${
                         formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
-                      }`}
-                      disabled={formik.isSubmitting || !formik.isValid}
+                      } ${formik.isValid ? "" : "opacity-75"}`}
+                      disabled={formik.isSubmitting}
                       value="Login"
                     />
                   </div>

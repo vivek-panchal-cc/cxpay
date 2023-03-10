@@ -8,7 +8,6 @@ function CreditCard(props) {
   return (
     <div
       className="wallet-ac-inner"
-      bg-color={color}
       style={
         bg_img
           ? {
@@ -17,7 +16,9 @@ function CreditCard(props) {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
             }
-          : {}
+          : {
+              background: color,
+            }
       }
     >
       {!bg_img && <IconCardBackground />}
