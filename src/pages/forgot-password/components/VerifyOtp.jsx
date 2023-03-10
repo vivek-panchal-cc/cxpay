@@ -9,9 +9,13 @@ import { toast } from "react-toastify";
 
 function VerifyOtp(props) {
   const { mobile_number } = props.values;
+
+  const navigate = useNavigate();
+
   const { setShow } = props;
   const [counter, setCounter] = useState(otpCounterTime);
   const [isTimerOver, setIsTimerOver] = useState(true);
+  const [error, setError] = useState(false);
 
   React.useEffect(() => {
     const timer =
@@ -37,22 +41,6 @@ function VerifyOtp(props) {
     }, otpCounterTime * 1000);
   };
 
-  const handleResendBtn = async () => {
-    setIsTimerOver(true);
-    setCounter(otpCounterTime);
-    handleTimeOut();
-    try {
-      const { data } = await apiRequest.resendForgotPasswordOtp({
-        mobile_number: mobile_number,
-      });
-      if (!data.success || data.data === null) throw data.message;
-      toast.success(data.data.login_otp);
-      toast.success(data.message);
-    } catch (error) {}
-  };
-
-  const navigate = useNavigate();
-
   const formik = useFormik({
     initialValues: {
       mobile_number: mobile_number,
@@ -73,6 +61,27 @@ function VerifyOtp(props) {
       }
     },
   });
+
+  const handleResendBtn = async () => {
+    formik.setStatus("");
+    setIsTimerOver(true);
+    setCounter(otpCounterTime);
+    handleTimeOut();
+    try {
+      const { data } = await apiRequest.resendForgotPasswordOtp({
+        mobile_number: mobile_number,
+      });
+      if (!data.success || data.data === null) throw data.message;
+      toast.success(data.data.login_otp);
+      toast.success(data.message);
+    } catch (error) {
+      if (typeof error === "string") {
+        setIsTimerOver(true);
+        formik.setStatus(error);
+        setError(true);
+      }
+    }
+  };
 
   return (
     <div className="modal-dialog modal-dialog-centered">
@@ -98,7 +107,7 @@ function VerifyOtp(props) {
               />
             </div>
             <div className="resend-otp-wrap">
-              {isTimerOver && (
+              {isTimerOver && !error && (
                 <div>
                   <span>{counterTime}</span>
                   <br />
