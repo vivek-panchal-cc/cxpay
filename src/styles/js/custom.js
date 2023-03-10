@@ -224,3 +224,15 @@ $(document).ready(function () {
     }
   });
 });
+$(window).resize(function () {
+  var $theWindowSize = $(this).width();
+  if ($theWindowSize < 991) {
+    $(
+      ".dashboard-link-wrap > .dashboard-main-links, .dashboard-bottom-links > li > a"
+    ).click(function () {
+      $(".dashboard-page > .container-fluid > .row").toggleClass(
+        "sidebar-open"
+      );
+    });
+  }
+});

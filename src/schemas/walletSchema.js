@@ -27,7 +27,7 @@ const addCardSchema = yup.object().shape({
     ),
   card_holder_name: yup
     .string()
-    .matches(/^[ a-zA-Z!@#\$%\^&\*]*$/, "Card holder name in invalid"),
+    .matches(/^[^-_/.,\\p{L}0-9]*$/, "Card holder name in invalid"),
   billing_address: yup
     .string()
     .required("Billing address is required*")
