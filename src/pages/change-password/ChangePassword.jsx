@@ -8,9 +8,11 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { IconEyeClose, IconEyeOpen, IconLeftArrow } from "styles/svgs";
 import { LoaderContext } from "context/loaderContext";
+import { useNavigate } from "react-router-dom";
 
 function ChangePassword() {
   const { setIsLoading } = useContext(LoaderContext);
+  const navigate = useNavigate();
   const { profile } = useSelector((state) => state?.userProfile);
   const { email } = profile || {};
   const [showPassword, setShowPassword] = useState({
@@ -33,8 +35,9 @@ function ChangePassword() {
       try {
         const { data } = await apiRequest.passwordChange(values);
         if (!data.success) throw data.message;
-        toast.success(data.message);
         resetForm();
+        toast.success(data.message);
+        navigate("/logout", { replace: true });
       } catch (error) {
         toast.error(error);
         resetForm();

@@ -10,6 +10,7 @@ import { otpCounterTime } from "constants/all";
 
 function VerifyLoginOtp(props) {
   const { mobileNumber, setShow } = props;
+  
   const [counter, setCounter] = useState(otpCounterTime);
   const [isTimerOver, setIsTimerOver] = useState(true);
   const [error, setError] = useState(false);

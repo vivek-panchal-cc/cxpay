@@ -11,6 +11,7 @@ function VerifyPhone(props) {
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const [counter, setCounter] = useState(otpCounterTime);
   const [isTimerOver, setIsTimerOver] = useState(true);
+  const [error, setError] = useState(false);
 
   React.useEffect(() => {
     const timer =
@@ -29,21 +30,6 @@ function VerifyPhone(props) {
   let counterTime =
     Math.floor(counter / 60) + ":" + (formattedNumber ? formattedNumber : "00");
 
-  const handleResendBtn = async () => {
-    setIsTimerOver(true);
-    setCounter(otpCounterTime);
-    handleTimeOut();
-    try {
-      const { data } = await apiRequest.resendRegisterOtp({
-        mobile_number: signUpCreds.mobile_number,
-      });
-      if (!data.success || data.data === null) throw data.message;
-
-      toast.success(data.data.otp);
-      toast.success(data.message);
-    } catch (error) {}
-  };
-
   const formik = useFormik({
     initialValues: {
       mobile_number: signUpCreds.mobile_number,
@@ -61,6 +47,28 @@ function VerifyPhone(props) {
       }
     },
   });
+
+  const handleResendBtn = async () => {
+    formik.setStatus("");
+    setIsTimerOver(true);
+    setCounter(otpCounterTime);
+    handleTimeOut();
+    try {
+      const { data } = await apiRequest.resendRegisterOtp({
+        mobile_number: signUpCreds.mobile_number,
+      });
+      if (!data.success || data.data === null) throw data.message;
+
+      toast.success(data.data.otp);
+      toast.success(data.message);
+    } catch (error) {
+      if (typeof error === "string") {
+        setIsTimerOver(true);
+        formik.setStatus(error);
+        setError(true);
+      }
+    }
+  };
 
   const handleTimeOut = () => {
     setTimeout(function () {
@@ -93,7 +101,7 @@ function VerifyPhone(props) {
               />
             </div>
             <div className="resend-otp-wrap">
-              {isTimerOver && (
+              {isTimerOver && !error && (
                 <div>
                   <span>{counterTime}</span>
                   <br />

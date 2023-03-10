@@ -54,7 +54,7 @@ function DashboardLayout() {
             <LeftSidebar />
           </div>
           <div className="col-xs-12 col-lg-9 dashboard-right-sec min-vh-100">
-            <div class="mobile-toggle">
+            <div className="mobile-toggle">
               <span className="toggle-admin-btn">
                 <img
                   src="/assets/images/dashaboard-button-toggle.png"

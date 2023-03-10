@@ -5,9 +5,7 @@ import { REACT_APP_REFRESH_TOKEN } from "constants/urls";
 
 // define API_URL and APP ID in env file
 export const axiosInstance = axios.create({
-  baseURL:
-    process.env.REACT_APP_API_URL ||
-    "http://203.109.113.162:9098/CxPay-micro-services",
+  baseURL: process.env.REACT_APP_API_URL || "http://3.140.192.108",
 });
 
 const API_URL = process.env.REACT_APP_API_URL;

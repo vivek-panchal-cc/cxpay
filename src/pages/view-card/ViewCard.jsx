@@ -65,11 +65,11 @@ function ViewCard(props) {
       <div className="db-view-bank-main db-view-card-main">
         <div className="db-view-bank-wrapper db-view-card-wrapper">
           <ul className="db-view-bank-listing">
-            <li class="db-view-bank-div-main db-view-bank-common-div db-view-bank-heading">
-              <div class="bank-card-name-wrap"> Card Holder Name</div>
-              <div class="bank-account-num-wrap">Credit Card Number</div>
-              <div class="bank-account-date-wrap">Expiration Date</div>
-              <div class="bank-del-wrap"> </div>
+            <li className="db-view-bank-div-main db-view-bank-common-div db-view-bank-heading">
+              <div className="bank-card-name-wrap"> Card Holder Name</div>
+              <div className="bank-account-num-wrap">Credit Card Number</div>
+              <div className="bank-account-date-wrap">Expiration Date</div>
+              <div className="bank-del-wrap"> </div>
             </li>
             {cardsList && cardsList.length > 0 ? (
               cardsList.map((item, index) => (

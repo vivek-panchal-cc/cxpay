@@ -50,7 +50,7 @@ const LinkBank = (props) => {
         <div className="profile-info rm-pl-profile-info">
           <h3>Link a Bank</h3>
           {/* <Breadcrumb /> */}
-          <ul class="breadcrumb">
+          <ul className="breadcrumb">
             <li>
               <a href="/wallet">Wallet</a>
             </li>
