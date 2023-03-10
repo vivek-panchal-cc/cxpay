@@ -224,15 +224,21 @@ $(document).ready(function () {
     }
   });
 });
-$(window).resize(function () {
-  var $theWindowSize = $(this).width();
-  if ($theWindowSize < 991) {
+
+$(document).ready(function () {
+  if ($(window).innerWidth() <= 991) {
     $(
       ".dashboard-link-wrap > .dashboard-main-links, .dashboard-bottom-links > li > a"
     ).click(function () {
       $(".dashboard-page > .container-fluid > .row").toggleClass(
         "sidebar-open"
       );
+      $("body").toggleClass("open-menu");
+    });
+    $(document).ready(function (e) {
+      $(".toggle-admin-btn").click(function () {
+        $("body").toggleClass("open-menu");
+      });
     });
   }
 });
