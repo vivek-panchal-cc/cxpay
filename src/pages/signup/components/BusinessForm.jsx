@@ -78,6 +78,7 @@ function Businessform(props) {
                 error={formik.errors.profile_image}
                 showPreview={true}
                 showLabel={true}
+                showLoader={true}
                 labelText={
                   formik.values.profile_image
                     ? "Change Profile Picture"

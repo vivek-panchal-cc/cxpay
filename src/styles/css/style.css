@@ -5837,3 +5837,11 @@ ul.dashboard-main-links {
 #crop_image_model .modal-dialog {
   max-width: 100% !important;
 }*/
+
+@media only screen and (max-width: 640px) {
+  .crop_container { 
+    width: 100%;
+    margin-top: 20px;
+    justify-content: center !important;
+  }
+}

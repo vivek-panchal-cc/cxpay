@@ -27,6 +27,7 @@ function AddCard() {
     url: "",
   });
   const [expDate, setExpDate] = useState();
+  const [backImg, setBackImg] = useState(false);
 
   const handleUploadImage = (img) => {
     setCardBackImg(img);
@@ -37,6 +38,7 @@ function AddCard() {
     setCroppedImg(cropImgObj);
     setShowPopupUpload(false);
     setShowPopupCrop(false);
+    setBackImg(true);
   };
 
   const handleRemoveImage = () => {
@@ -90,6 +92,7 @@ function AddCard() {
   });
 
   const handleCustomizePalette = (color) => {
+    backImg && setBackImg(false);
     if (color === "white") return setShowPopupUpload(true);
     formik.setFieldValue("color", color);
   };
@@ -128,13 +131,15 @@ function AddCard() {
           <div className="row wac-details-wrap">
             <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap z-0">
               <CreditCard
-                details={{ ...formik.values, bg_img: croppedImg.url }}
+                details={{ ...formik.values, bg_img: croppedImg.url, backImg }}
               />
             </div>
             <div className="p-0 col-lg-5 col-12">
               <CustomizePalette
                 color={formik.values.color}
                 bgimg={croppedImg.url}
+                backImg={backImg}
+                setBackImg={setBackImg}
                 removeBgImg={handleRemoveImage}
                 handleChange={handleCustomizePalette}
               />

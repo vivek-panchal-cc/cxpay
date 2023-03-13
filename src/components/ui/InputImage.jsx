@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { LoaderContext } from "context/loaderContext";
+import React, { useCallback, useContext, useEffect, useMemo } from "react";
 import { useState } from "react";
 
 function InputImage(props) {
@@ -17,8 +18,11 @@ function InputImage(props) {
     classNameImage = "",
     classNameBorder = "",
     className = "",
-    accept,
+    accept = "image/*",
+    showLoader = false,
   } = props;
+
+  const { setIsLoading } = useContext(LoaderContext);
   const [preview, setPreview] = useState(previewSrc);
   const [isError, setIsError] = useState(false);
 
@@ -26,15 +30,27 @@ function InputImage(props) {
     if (previewSrc) setPreview(previewSrc);
   }, [previewSrc]);
 
-  const handleFocusBack = () => {
-    onChange({ currentTarget: { files: [] } });
+  const handleChange = (e) => {
+    onChange(e);
+    if (
+      showPreview &&
+      e.currentTarget.files.length > 0 &&
+      e.currentTarget.files[0].type.includes("image/")
+    ) {
+      if (showPreview && showLoader) setIsLoading(true);
+      return setPreview(URL.createObjectURL(e.currentTarget.files[0]));
+    }
     setPreview(previewSrc || fallbackSrc);
-    window.removeEventListener("focus", handleFocusBack);
   };
 
-  const clickedFileInput = () => {
+  const handleFocusBack = useCallback(() => {
+    handleChange({ currentTarget: { files: [] } });
+    window.removeEventListener("focus", handleFocusBack);
+  }, [onChange]);
+
+  const clickedFileInput = useCallback(() => {
     window.addEventListener("focus", handleFocusBack);
-  };
+  }, [handleFocusBack]);
 
   return (
     <div className={`upload-profile-image text-center ${className}`}>
@@ -59,6 +75,7 @@ function InputImage(props) {
                     }
                   : null
               }
+              onLoad={() => (showLoader ? setIsLoading(false) : null)}
             />
           </span>
         )}
@@ -69,16 +86,7 @@ function InputImage(props) {
         name={name}
         type={"file"}
         className={`${classNameInput}`}
-        onChange={(e) => {
-          onChange(e);
-          if (
-            showPreview &&
-            e.currentTarget.files.length > 0 &&
-            e.currentTarget.files[0].type.includes("image/")
-          )
-            return setPreview(URL.createObjectURL(e.currentTarget.files[0]));
-          setPreview(fallbackSrc);
-        }}
+        onChange={handleChange}
         onClick={clickedFileInput}
         accept={accept}
       />

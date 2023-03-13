@@ -43,3 +43,20 @@
     border: none;
   }
 }
+.cropper_wrap {
+  :global {
+    height: 358px;
+    width: 636px;
+    @media only screen and (max-width: 640px) {
+      height: 40vh;
+      width: 80vw;
+    }
+    .reactEasyCrop_CropArea,
+    .reactEasyCrop_CropAreaGrid {
+      @media only screen and (max-width: 640px) {
+        height: 160px !important;
+        width: 260px !important;
+      }
+    }
+  }
+}

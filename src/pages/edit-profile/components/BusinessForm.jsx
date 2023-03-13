@@ -90,7 +90,6 @@ function Businessform(props) {
                     e.currentTarget.files[0]
                   );
                 }}
-                error={formik.errors.profile_image}
                 showPreview={true}
                 showLabel={false}
                 previewSrc={profile_image}
@@ -99,6 +98,7 @@ function Businessform(props) {
                     ? profile_image
                     : "/assets/images/Business-account.png"
                 }
+                showLoader={true}
                 classNameInput="d-none"
                 classNameBorder="border-0 overflow-visible"
                 classNameLabel="profile-avtar"
@@ -119,6 +119,7 @@ function Businessform(props) {
                       : "Select Profile Picture"}
                   </label>
                 </p>
+                <p className="text-danger">{formik.errors.profile_image}</p>
               </div>
             </div>
             <Input

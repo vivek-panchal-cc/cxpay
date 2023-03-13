@@ -41,11 +41,7 @@ function CropCard(props) {
         <div className="modal-body">
           <div className="custimize-iu-wrap">
             <div
-              className="position-relative rounded-3 overflow-hidden"
-              style={{
-                height: "358px",
-                width: "636px",
-              }}
+              className={`position-relative rounded-3 overflow-hidden ${styles.cropper_wrap}`}
             >
               <Cropper
                 image={src}
@@ -72,7 +68,9 @@ function CropCard(props) {
                   className="w-100"
                 />
               </div>
-              <div className="col-3 d-flex justify-content-end radio-group-wrap">
+              <div
+                className={`col-3 d-flex justify-content-end radio-group-wrap crop_container`}
+              >
                 <button
                   type="button"
                   className="radio-round rounded-4"
