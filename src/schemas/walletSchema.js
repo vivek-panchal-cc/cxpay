@@ -19,7 +19,7 @@ const addCardSchema = yup.object().shape({
     .required("Credit card number is required"),
   expiry_date: yup
     .string()
-    .required("Expiry date is required*")
+    .required("Expiry date is required")
     .test(
       "test-expiry-date",
       "Expiry date is invalid",
@@ -30,7 +30,7 @@ const addCardSchema = yup.object().shape({
     .matches(/^[^-_/.,\\p{L}0-9]*$/, "Card holder name in invalid"),
   billing_address: yup
     .string()
-    .required("Billing address is required*")
+    .required("Billing address is required")
     .max(55, "The billing address must not be greater than 55 characters."),
   color: yup.string().required(""),
 });

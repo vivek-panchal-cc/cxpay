@@ -8,16 +8,16 @@ import Image from "components/ui/Image";
 import { LoaderContext } from "context/loaderContext";
 
 const contentTitles = [
-  {
-    url: "/wallet/view-card",
-    heading: "View Cards",
-    subHeading: "My Credit Cards List",
-  },
-  {
-    url: "/wallet/bank-list",
-    heading: "My Bank Accounts",
-    subHeading: "Primary Bank Accounts",
-  },
+  // {
+  //   url: "/wallet/view-card",
+  //   heading: "View Cards",
+  //   subHeading: "My Credit Cards List",
+  // },
+  // {
+  //   url: "/wallet/bank-list",
+  //   heading: "My Bank Accounts",
+  //   subHeading: "Primary Bank Accounts",
+  // },
 ];
 
 function DashboardLayout() {

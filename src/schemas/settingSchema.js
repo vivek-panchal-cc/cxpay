@@ -7,7 +7,7 @@ import {
 
 const passwordChangeSchema = yup.object().shape({
   email: emailSchema,
-  current_password: passwordSchema.required("Please enter old Password"),
+  current_password: yup.string().required("Please enter old password"),
   new_password: passwordSchema,
   confirm_password: changeConfirmPasswordSchema,
 });

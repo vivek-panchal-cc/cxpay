@@ -55,6 +55,10 @@ function ViewCard(props) {
 
   return (
     <div className="">
+      <div className="title-content-wrap send-pay-title-sec title-common-sec">
+        <h3>View Cards</h3>
+        <p>My Credit Cards</p>
+      </div>
       <ModalConfirmation
         heading="Are you sure?"
         subHeading="Are you sure to delete this card?"
@@ -80,7 +84,7 @@ function ViewCard(props) {
                 />
               ))
             ) : (
-              <p>Card Not Found</p>
+              <p className="text-center">Card Not Found</p>
             )}
           </ul>
         </div>

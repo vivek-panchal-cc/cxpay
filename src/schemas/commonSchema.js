@@ -61,12 +61,12 @@ const passwordSchema = yup
 const confirmPasswordSchema = yup
   .string()
   .oneOf([yup.ref("password"), null], "Password must be matched")
-  .required("Please enter confirm Password");
+  .required("Please enter confirm password");
 
 const changeConfirmPasswordSchema = yup
   .string()
   .oneOf([yup.ref("new_password"), null], "Password must be matched")
-  .required("Please enter confirm Password");
+  .required("Please enter confirm password");
 
 const profileImageSchema = yup
   .mixed()
@@ -87,7 +87,7 @@ const mobileSchema = yup
   .min(10, "Mobile number must be 10 digits")
   .max(10, "Mobile number must be 10 digits")
   .matches(/^[0-9]*$/, "Enter a valid mobile number")
-  .required("Mobile number is required");
+  .required("Please enter mobile number");
 
 export {
   emailSchema,
