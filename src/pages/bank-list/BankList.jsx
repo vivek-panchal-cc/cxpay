@@ -61,6 +61,10 @@ const BankList = () => {
 
   return (
     <div className="">
+      <div className="title-content-wrap send-pay-title-sec title-common-sec">
+        <h3>My Bank Accounts</h3>
+        <p>Primary Bank Accounts</p>
+      </div>
       <div className="db-view-bank-main db-view-card-main">
         <div className="db-view-bank-wrapper db-view-card-wrapper">
           <ul className="db-view-bank-listing">
@@ -106,7 +110,7 @@ const BankList = () => {
                 </li>
               ))
             ) : (
-              <p>Bank Account Not Found</p>
+              <p className="text-center">Bank Account Not Found</p>
             )}
           </ul>
         </div>

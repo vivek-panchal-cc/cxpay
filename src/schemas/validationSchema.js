@@ -10,11 +10,11 @@ import {
 const signUpPersonalAccountSchema = yup.object().shape({
   first_name: yup
     .string()
-    .required("Please enter First name")
+    .required("Please enter first name")
     .max(35, "Maximum limit is 35 characters"),
   last_name: yup
     .string()
-    .required("Please enter Last name")
+    .required("Please enter last name")
     .max(35, "Maximum limit is 35 characters"),
   user_type: yup.string().required(),
   personal_id: yup
@@ -26,9 +26,9 @@ const signUpPersonalAccountSchema = yup.object().shape({
   password: passwordSchema,
   confirm_password: confirmPasswordSchema,
   profile_image: profileImageSchema,
-  country: yup.string().required("Please select Country"),
+  country: yup.string().required("Please select country"),
   mobile_code: yup.string().required("required"),
-  city: yup.string().required("Please select City"),
+  city: yup.string().required("Please select city"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
@@ -42,15 +42,15 @@ const signUpBusinessAccountSchema = yup.object().shape({
   password: passwordSchema,
   confirm_password: confirmPasswordSchema,
   profile_image: profileImageSchema,
-  country: yup.string().required("Please select Country"),
-  mobile_code: yup.string().required("required*"),
-  city: yup.string().required("Please select City"),
+  country: yup.string().required("Please select country"),
+  mobile_code: yup.string().required("required"),
+  city: yup.string().required("Please select city"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
 const enterPhoneSchema = yup.object().shape({
   mobile_number: mobileSchema,
-  country_code: yup.string().required("Code is required*"),
+  country_code: yup.string().required("Code is required"),
 });
 
 const loginWithOtpSchema = yup.object().shape({
@@ -84,13 +84,13 @@ const verifyLoginOtpSchema = yup.object().shape({
 const editProfileBusinessUserSchema = yup.object().shape({
   company_name: yup
     .string()
-    .required("Please enter Company name")
+    .required("Please enter company name")
     .max(64, "Maximum limit is 64 characters"),
   user_type: yup.string().required(),
   email: emailSchema,
-  country: yup.string().required("Please select Country"),
+  country: yup.string().required("Please select country"),
   mobile_code: yup.string().required("required*"),
-  city: yup.string().required("Please select City"),
+  city: yup.string().required("Please select city"),
   profile_image: profileImageSchema,
   // mobile_number: yup.string().required("Mobile number is required"),
 });
@@ -98,11 +98,11 @@ const editProfileBusinessUserSchema = yup.object().shape({
 const editProfilePersonalUserSchema = yup.object().shape({
   first_name: yup
     .string()
-    .required("Please enter First name")
+    .required("Please enter first name")
     .max(35, "Maximum limit is 35 characters"),
   last_name: yup
     .string()
-    .required("Please enter Last name")
+    .required("Please enter last name")
     .max(35, "Maximum limit is 35 characters"),
   personal_id: yup
     .string()
@@ -111,9 +111,9 @@ const editProfilePersonalUserSchema = yup.object().shape({
     .max(100, "Maximum limit is exceeded"),
   user_type: yup.string().required(),
   email: emailSchema,
-  country: yup.string().required("Please select Country"),
-  mobile_code: yup.string().required("required*"),
-  city: yup.string().required("Please select City"),
+  country: yup.string().required("Please select country"),
+  mobile_code: yup.string().required("required"),
+  city: yup.string().required("Please select city"),
   profile_image: profileImageSchema,
   // mobile_number: yup.string().required("Mobile number is required"),
 });
