@@ -2,6 +2,7 @@ import axios from "axios";
 import { storageRequest } from "helpers/storageRequests";
 import { apiRequest } from "helpers/apiRequests";
 import { REACT_APP_REFRESH_TOKEN } from "constants/urls";
+import { toast } from "react-toastify";
 
 // define API_URL and APP ID in env file
 export const axiosInstance = axios.create({
@@ -56,6 +57,9 @@ axiosInstance.interceptors.response.use(
     if (errResponse && errResponse.status === 401 && errResponse.data) {
       storageRequest.removeAuth();
       window.location = "/login";
+      toast.success(
+        "Your session has expired. Please login again to continue working"
+      );
       return axiosInstance(error.config);
     }
     return Promise.reject(error);

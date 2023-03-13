@@ -5,7 +5,7 @@ import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { linkBankSchema } from "schemas/walletSchema";
-// import Breadcrumb from "components/breadcrumb/Breadcrumb";
+import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import { IconLeftArrow } from "styles/svgs";
 
 const LinkBank = (props) => {
@@ -49,13 +49,7 @@ const LinkBank = (props) => {
       <div className="wallet-link-bank-bottom">
         <div className="profile-info rm-pl-profile-info">
           <h3>Link a Bank</h3>
-          {/* <Breadcrumb /> */}
-          <ul className="breadcrumb">
-            <li>
-              <a href="/wallet">Wallet</a>
-            </li>
-            <li>Link a Bank</li>
-          </ul>
+          <Breadcrumb />
         </div>
         <div className="wallet-bank_link-form-wrap">
           <form

@@ -6,7 +6,8 @@ import { LoaderContext } from "context/loaderContext";
 function CustomizePalette(props) {
   const { setIsLoading } = useContext(LoaderContext);
 
-  const { color, handleChange, bgimg, removeBgImg } = props;
+  const { color, handleChange, bgimg, removeBgImg, backImg, setBackImg } =
+    props;
   const [colorsPallette, setColorPalette] = useState([]);
 
   useEffect(() => {
@@ -42,7 +43,7 @@ function CustomizePalette(props) {
           <li
             key={index}
             className={`radio-group-inner ${
-              color === colorPal ? "selected" : ""
+              color === colorPal && !backImg ? "selected" : ""
             }`}
             data-value={colorPal}
             onClick={handleSelect}
@@ -51,7 +52,7 @@ function CustomizePalette(props) {
           </li>
         ))}
         <li
-          className={`radio-group-inner ${color === "white" ? "selected" : ""}`}
+          className={`radio-group-inner ${backImg ? "selected" : ""}`}
           data-value="white"
           onClick={handleSelect}
         >

@@ -96,13 +96,13 @@ function PersonalForm(props) {
                     e.currentTarget.files[0]
                   );
                 }}
-                error={formik.errors.profile_image}
                 showPreview={true}
                 showLabel={false}
                 previewSrc={profile_image}
                 fallbackSrc={
                   profile_image ? profile_image : "/assets/images/Personal.png"
                 }
+                showLoader={true}
                 classNameInput="d-none"
                 classNameBorder="border-0 overflow-visible"
                 classNameLabel="profile-avtar"
@@ -125,6 +125,7 @@ function PersonalForm(props) {
                       : "Select Profile Picture"}
                   </label>
                 </p>
+                <p className="text-danger">{formik.errors.profile_image}</p>
               </div>
             </div>
             <div className="form-field two-fields mb-0">
