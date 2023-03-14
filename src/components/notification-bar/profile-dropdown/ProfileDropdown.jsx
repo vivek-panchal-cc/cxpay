@@ -1,3 +1,4 @@
+import Image from "components/ui/Image";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { IconContact, IconLogout, IconSetting } from "styles/svgs";
@@ -40,25 +41,33 @@ const ProfileDropdown = () => {
   return (
     <div className="user-profile">
       <div className="user-image">
-        <div className="user-image-wrap">
-          <span className="user-image" onMouseEnter={() => setShowDrop(true)}>
-            <img src={profile.profile_image} alt="user img" />
+        <div className="user-image-wrap" onClick={() => setShowDrop(true)}>
+          <span className="h-100 w-100">
+            <Image
+              src={profile?.profile_image}
+              alt="profile avtar"
+              fallbacksrc={
+                profile?.user_type === "business"
+                  ? "/assets/images/Business-account.png"
+                  : "/assets/images/Personal.png"
+              }
+              className="h-100 w-100 object-fit-cover"
+              style={{ objectPosition: "center" }}
+            />
           </span>
         </div>
-        {showDrop && (
-          <ul ref={dropdownref}>
-            {profileDropItems.map((elm, index) => (
-              <ProfileDropItem
-                path={elm.path}
-                key={index}
-                onClick={() => setShowDrop(false)}
-              >
-                {elm.icon}
-                {elm.title}
-              </ProfileDropItem>
-            ))}
-          </ul>
-        )}
+        <ul ref={dropdownref} style={{ display: showDrop ? "block" : "none" }}>
+          {profileDropItems.map((elm, index) => (
+            <ProfileDropItem
+              path={elm.path}
+              key={index}
+              onClick={() => setShowDrop(false)}
+            >
+              {elm.icon}
+              {elm.title}
+            </ProfileDropItem>
+          ))}
+        </ul>
       </div>
     </div>
   );
