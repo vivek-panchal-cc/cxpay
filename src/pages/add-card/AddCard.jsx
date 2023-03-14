@@ -9,7 +9,7 @@ import CustomizePalette from "./components/CustomizePalette";
 import UploadImage from "./components/UploadImage";
 import DatePicker from "react-datepicker";
 import { Link, useNavigate } from "react-router-dom";
-import { IconCalender, IconLeftArrow } from "styles/svgs";
+import { IconCalender } from "styles/svgs";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
@@ -27,7 +27,6 @@ function AddCard() {
     url: "",
   });
   const [expDate, setExpDate] = useState();
-  const [backImg, setBackImg] = useState(false);
 
   const handleUploadImage = (img) => {
     setCardBackImg(img);
@@ -38,7 +37,7 @@ function AddCard() {
     setCroppedImg(cropImgObj);
     setShowPopupUpload(false);
     setShowPopupCrop(false);
-    setBackImg(true);
+    formik.setFieldValue("color", "white");
   };
 
   const handleRemoveImage = () => {
@@ -92,8 +91,8 @@ function AddCard() {
   });
 
   const handleCustomizePalette = (color) => {
-    backImg && setBackImg(false);
     if (color === "white") return setShowPopupUpload(true);
+    if (croppedImg.url) handleRemoveImage();
     formik.setFieldValue("color", color);
   };
 
@@ -131,15 +130,13 @@ function AddCard() {
           <div className="row wac-details-wrap">
             <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap z-0">
               <CreditCard
-                details={{ ...formik.values, bg_img: croppedImg.url, backImg }}
+                details={{ ...formik.values, bg_img: croppedImg.url }}
               />
             </div>
             <div className="p-0 col-lg-5 col-12">
               <CustomizePalette
                 color={formik.values.color}
                 bgimg={croppedImg.url}
-                backImg={backImg}
-                setBackImg={setBackImg}
                 removeBgImg={handleRemoveImage}
                 handleChange={handleCustomizePalette}
               />

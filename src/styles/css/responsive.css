@@ -3169,9 +3169,6 @@
     line-height: 17px;
     border-radius: 8px;
   }
-  .user-image-wrap {
-    margin-left: 15px;
-  }
   .recent-contact-slider .swiper::after {
     right: 0;
     height: 112px;
