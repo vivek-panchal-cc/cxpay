@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   IconInfo,
@@ -48,23 +49,30 @@ const settingsRedirects = [
 ];
 
 function Setting() {
+  const { profile } = useSelector((state) => state.userProfile);
+  const {user_type = "personal"} = profile || {};
+
   return (
     <div className="settings-right-sec">
       <div className="settings-inner-sec">
         <div className="profile-info">
           <h3>Settings</h3>
-          <p>Lorem Ipsum Dolor Sit Amet</p>
         </div>
         <div className="settings-bottom-info-sec">
           <ul>
             {settingsRedirects?.map((item, index) => (
-              <li key={index}>
-                <div className="icon-wrap">
-                  <span className="icon-settings">{item.icon}</span>
-                  {item.title}
-                </div>
-                {item.link}
-              </li>
+              <>
+                {item?.title == "Business info" && user_type == "personal" ?
+                   "" :
+                  <li key={index}>
+                    <div className="icon-wrap">
+                      <span className="icon-settings">{item.icon}</span>
+                      {item.title}
+                    </div>
+                    {item.link}
+                  </li>
+                }
+              </>
             ))}
           </ul>
         </div>

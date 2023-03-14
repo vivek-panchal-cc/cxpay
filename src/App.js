@@ -19,8 +19,10 @@ import LinkBank from "pages/linkBank/LinkBank";
 import Contacts from "pages/contacts/Contacts";
 import Logout from "pages/logout/Logout";
 import PublicLayout from "layouts/PublicLayout";
+import ViewCard from "pages/view-card/ViewCard";
 import Profile from "pages/profile/Profile";
 import Notification from "pages/notification/Notification";
+import BusinessInfo from "pages/businessInfo/BusinessInfo";
 
 function App() {
   const location = useLocation();
@@ -63,11 +65,12 @@ function App() {
               path="/setting/change-password"
               element={<ChangePassword />}
             />
-            <Route path="/setting/business-info" element={<></>} />
+            <Route path="/setting/business-info" element={<BusinessInfo />} />
             {/* wallet */}
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/wallet/add-card" element={<AddCard />} />
             <Route path="/wallet/link-bank" element={<LinkBank />} />
+            <Route path="/view-card" element={<ViewCard />} />
             {/* contacts */}
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/profile" element={<Profile />} />

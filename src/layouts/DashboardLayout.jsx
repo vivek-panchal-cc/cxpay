@@ -1,14 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import LeftSidebar from "components/sidebar/LeftSidebar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { IconNotify, IconContact, IconSetting, IconLogout } from "styles/svgs";
 import NotificationBar from "components/notification-bar/NotificationBar";
 
+const contentTitles = [
+  {
+    url: "/view-card",
+    heading: "My Bank Accounts",
+    subHeading: "Primary Bank Accounts",
+  },
+];
+
 function DashboardLayout() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const [headings, setHeading] = useState({
+    heading: "",
+    subHeading: "",
+  });
   const { profile } = useSelector((state) => state.userProfile);
+
+  useEffect(() => {
+    const url = location.pathname;
+    const titleObj = contentTitles.find((item) => item.url === url);
+    if (titleObj) return setHeading(titleObj);
+    setHeading({ heading: "", subHeading: "" });
+  }, [location.pathname]);
 
   useEffect(() => {
     (async () => {
@@ -25,6 +45,12 @@ function DashboardLayout() {
           </div>
           <div className="col-xs-12 col-lg-9 dashboard-right-sec dashaboard-main-sec dashboard-home-container">
             <div className="dashboard-top-sec no-search-ontop">
+              <div className="dashboard-search-wrap col-lg-7 col-12">
+                <div className="title-content-wrap send-pay-title-sec title-common-sec">
+                  <h3>{headings.heading}</h3>
+                  <p>{headings.subHeading}</p>
+                </div>
+              </div>
               <div className="dashboard-notification-sec col-lg-5 col-12">
                 <div className="notification-user-wrap">
                   <div className="dashboard-notification-wrap">

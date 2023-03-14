@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import Input from "components/ui/Input";
 import { apiRequest } from "helpers/apiRequests";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,6 +9,7 @@ import { resetPasswordSchema } from "schemas/validationSchema";
 function ResetPassword() {
   const params = useParams();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -50,7 +51,7 @@ function ResetPassword() {
                 <form onSubmit={formik.handleSubmit}>
                   <div className="form-field">
                     <Input
-                      type={"password"}
+                      type={showPassword ? "text" : "password"}
                       className="form-control"
                       placeholder="New Password"
                       name="password"
@@ -59,7 +60,17 @@ function ResetPassword() {
                       value={formik.values.password}
                       error={formik.touched.password && formik.errors.password}
                       autoComplete={"new-password"}
+                      onCopy={(e) => e.preventDefault()}
+                      onPaste={(e) => e.preventDefault()}
                     />
+                    <span className="eye-icon" style={{ top: "24px" }}>
+                      <img
+                        className="eye-close"
+                        src="/assets/images/eye-close.png"
+                        alt="eye close icon"
+                        onClick={() => setShowPassword((e) => !e)}
+                      />
+                    </span>
                   </div>
                   <div className="form-field">
                     <Input
@@ -74,7 +85,19 @@ function ResetPassword() {
                         formik.touched.confirm_password &&
                         formik.errors.confirm_password
                       }
+                      onCopy={(e) => e.preventDefault()}
+                      onPaste={(e) => e.preventDefault()}
                     />
+                    {formik.touched.confirm_password &&
+                      !formik.errors.confirm_password && (
+                        <span className="eye-icon" style={{ top: "24px" }}>
+                          <img
+                            className="eye-close"
+                            src="/assets/images/green-tick.svg"
+                            alt="eye close icon"
+                          />
+                        </span>
+                      )}
                   </div>
                   {formik.status && (
                     <p className="text-danger">{formik.status}</p>

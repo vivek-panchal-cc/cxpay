@@ -1,0 +1,18 @@
+.business-info-right-sec{
+    padding-left: 90px !important;
+}
+.profile-right-sec {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 50px 2px 50px 81px !important;
+}
+.text-danger:not(:empty){
+    margin-bottom: 0 !important;
+    padding-top: 10px !important;
+}
+@media only screen and (max-width: 1199px){
+    .profile-right-sec {
+        padding: 30px 30px 30px 30px !important;
+    }
+}

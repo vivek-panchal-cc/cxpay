@@ -1,65 +1,40 @@
-import {
-  REACT_APP_GET_PROFILE,
-  REACT_APP_LOGIN,
-  REACT_APP_LOGIN_OTP,
-  REACT_APP_LOGIN_OTP_VERIFY,
-  REACT_APP_LOGOUT,
-  REACT_APP_REGISTER_USER,
-  REACT_APP_VERIFY_MOBILE_NUMBER,
-  REACT_APP_VERIFY_REGISTER_OTP,
-  REACT_APP_UPDATE_USER,
-  REACT_APP_PASSWORD_CHANGE,
-  REACT_APP_GENERATE_FORGOT_PASSWORD_OTP,
-  REACT_APP_VERIFY_FORGOT_PASSWORD_OTP,
-  REACT_APP_UPDATE_FORGOT_PASSWORD_OTP,
-  REACT_APP_ADD_BANK,
-  REACT_APP_ADD_CARD,
-  REACT_APP_GET_COUNTRY,
-  REACT_APP_REFRESH_TOKEN,
-  REACT_APP_RESEND_LOGIN_OTP,
-  REACT_APP_RESEND_FORGOT_PASSWORD_OTP,
-  REACT_APP_RESEND_REGISTER_OTP,
-  REACT_APP_ADD_CONTACT,
-  REACT_APP_GET_CONTACT_LIST,
-  REACT_APP_DELETE_CONTACT,
-  REACT_APP_FAV_CONTACT,
-  REACT_APP_UPDATE_BUSINESS_URL,
-  REACT_APP_GENERATE_QR_CODE,
-  REACT_APP_UPDATE_CUSTOMER_NOTIFICATION,
-  REACT_APP_GET_CUSTOMER_NOTIFICATION,
-} from "constants/urls";
+import * as apiUrl from "constants/urls";
 import { axiosInstance } from "plugin/axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
-const API_login = REACT_APP_LOGIN;
-const API_logout = REACT_APP_LOGOUT;
-const API_verifyMobileNumber = REACT_APP_VERIFY_MOBILE_NUMBER;
-const API_verifyRegisterOtp = REACT_APP_VERIFY_REGISTER_OTP;
-const API_getProfile = REACT_APP_GET_PROFILE;
-const API_loginOtp = REACT_APP_LOGIN_OTP;
-const API_verifyLoginOtp = REACT_APP_LOGIN_OTP_VERIFY;
-const API_registerUser = REACT_APP_REGISTER_USER;
-const API_updateUser = REACT_APP_UPDATE_USER;
-const API_passwordChange = REACT_APP_PASSWORD_CHANGE;
-const API_generateForgotPasswordOtp = REACT_APP_GENERATE_FORGOT_PASSWORD_OTP;
-const API_verifyForgotPasswordOtp = REACT_APP_VERIFY_FORGOT_PASSWORD_OTP;
-const API_updateForgotPassword = REACT_APP_UPDATE_FORGOT_PASSWORD_OTP;
-const API_linkBank = REACT_APP_ADD_BANK;
-const API_addCard = REACT_APP_ADD_CARD;
-const API_getCountry = REACT_APP_GET_COUNTRY;
-const API_refreshToken = REACT_APP_REFRESH_TOKEN;
-const API_resendLoginOtp = REACT_APP_RESEND_LOGIN_OTP;
-const API_resendForgotPasswordOtp = REACT_APP_RESEND_FORGOT_PASSWORD_OTP;
-const API_resendRegisterOtp = REACT_APP_RESEND_REGISTER_OTP;
-const API_addContact = REACT_APP_ADD_CONTACT;
-const API_getConatcts = REACT_APP_GET_CONTACT_LIST;
-const API_deleteContact = REACT_APP_DELETE_CONTACT;
-const API_favContact = REACT_APP_FAV_CONTACT;
+const API_login = apiUrl.REACT_APP_LOGIN;
+const API_logout = apiUrl.REACT_APP_LOGOUT;
+const API_verifyMobileNumber = apiUrl.REACT_APP_VERIFY_MOBILE_NUMBER;
+const API_verifyRegisterOtp = apiUrl.REACT_APP_VERIFY_REGISTER_OTP;
+const API_getProfile = apiUrl.REACT_APP_GET_PROFILE;
+const API_loginOtp = apiUrl.REACT_APP_LOGIN_OTP;
+const API_verifyLoginOtp = apiUrl.REACT_APP_LOGIN_OTP_VERIFY;
+const API_registerUser = apiUrl.REACT_APP_REGISTER_USER;
+const API_updateUser = apiUrl.REACT_APP_UPDATE_USER;
+const API_passwordChange = apiUrl.REACT_APP_PASSWORD_CHANGE;
+const API_generateForgotPasswordOtp =
+  apiUrl.REACT_APP_GENERATE_FORGOT_PASSWORD_OTP;
+const API_verifyForgotPasswordOtp = apiUrl.REACT_APP_VERIFY_FORGOT_PASSWORD_OTP;
+const API_updateForgotPassword = apiUrl.REACT_APP_UPDATE_FORGOT_PASSWORD_OTP;
+const API_linkBank = apiUrl.REACT_APP_ADD_BANK;
+const API_addCard = apiUrl.REACT_APP_ADD_CARD;
+const API_getCountry = apiUrl.REACT_APP_GET_COUNTRY;
+const API_refreshToken = apiUrl.REACT_APP_REFRESH_TOKEN;
+const API_resendLoginOtp = apiUrl.REACT_APP_RESEND_LOGIN_OTP;
+const API_resendForgotPasswordOtp = apiUrl.REACT_APP_RESEND_FORGOT_PASSWORD_OTP;
+const API_resendRegisterOtp = apiUrl.REACT_APP_RESEND_REGISTER_OTP;
+const API_updateBusinessUrl = apiUrl.REACT_APP_UPDATE_BUSINESS_URL;
+const API_generateNewQrCode = apiUrl.REACT_APP_GENERATE_QR_CODE;
+const API_cardsList = apiUrl.REACT_APP_CARDS_LIST;
+const API_updateBusinessData = apiUrl.REACT_APP_UPDATE_BUSINESS_DATA;
+const API_addContact = apiUrl.REACT_APP_ADD_CONTACT;
+const API_getConatcts = apiUrl.REACT_APP_GET_CONTACT_LIST;
+const API_deleteContact = apiUrl.REACT_APP_DELETE_CONTACT;
+const API_favContact = apiUrl.REACT_APP_FAV_CONTACT;
 
-const API_updateBusinessUrl = REACT_APP_UPDATE_BUSINESS_URL;
-const API_generateNewQrCode = REACT_APP_GENERATE_QR_CODE;
-const API_getCustomerNotification = REACT_APP_GET_CUSTOMER_NOTIFICATION;
-const API_updateCustomerNotification = REACT_APP_UPDATE_CUSTOMER_NOTIFICATION;
+const API_getCustomerNotification = apiUrl.REACT_APP_GET_CUSTOMER_NOTIFICATION;
+const API_updateCustomerNotification =
+  apiUrl.REACT_APP_UPDATE_CUSTOMER_NOTIFICATION;
 
 // POST @login API
 // @params user_name, password
@@ -74,7 +49,7 @@ export const logout = () => {
 };
 
 // POST @register-mobile API
-// @params mobile_number
+// @params mobile_number, country_code
 export const verifyMobileNumber = (params) => {
   return axiosInstance.post(`${API_URL}${API_verifyMobileNumber}`, params);
 };
@@ -85,7 +60,7 @@ export const verifyRegisterOtp = (params) => {
   return axiosInstance.post(`${API_URL}${API_verifyRegisterOtp}`, params);
 };
 
-// GET @get-profile API
+// POST @get-profile API
 // @params auth_token
 export const getUserProfile = () => {
   return axiosInstance.post(`${API_URL}${API_getProfile}`);
@@ -207,29 +182,44 @@ export const favContact = (params) => {
   return axiosInstance.post(`${API_URL}${API_favContact}`, params);
 };
 
+// POST @cards-list API
+// @params
+export const cardsList = () => {
+  return axiosInstance.post(`${API_URL}${API_cardsList}`);
+};
+
 // POST @update-business-url API
 // @params business_url
 export const updateBusinessUrl = (params) => {
-  return axiosInstance.post(`${API_URL}${API_updateBusinessUrl}`, params)
-}
+  return axiosInstance.post(`${API_URL}${API_updateBusinessUrl}`, params);
+};
 
 // POST @generate-new-qrcode API
-// @params  
+// @params
 export const generateNewQrCode = () => {
-  return axiosInstance.post(`${API_URL}${API_generateNewQrCode}`)
-}
+  return axiosInstance.post(`${API_URL}${API_generateNewQrCode}`);
+};
+
+// POST @update-customer-business-data API
+// @params business_id,business_url
+export const updateBusinessData = (params) => {
+  return axiosInstance.post(`${API_URL}${API_updateBusinessData}`, params);
+};
 
 // POST @get-customer-notification API
-// @params 
+// @params
 export const getCustomerNotification = () => {
-  return axiosInstance.post(`${API_URL}${API_getCustomerNotification}`)
-}
+  return axiosInstance.post(`${API_URL}${API_getCustomerNotification}`);
+};
 
 // POST @update-customer-notification
 // @params email_notification, sms_notification, whatsapp_notification, push_notification
 export const updateCustomerNotification = (params) => {
-  return axiosInstance.post(`${API_URL}${API_updateCustomerNotification}`, params)
-}
+  return axiosInstance.post(
+    `${API_URL}${API_updateCustomerNotification}`,
+    params
+  );
+};
 
 export const apiRequest = {
   login,
@@ -259,5 +249,7 @@ export const apiRequest = {
   updateBusinessUrl,
   generateNewQrCode,
   getCustomerNotification,
-  updateCustomerNotification
+  updateCustomerNotification,
+  cardsList,
+  updateBusinessData,
 };

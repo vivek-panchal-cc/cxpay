@@ -56,7 +56,7 @@ function ForgotPassword() {
                     <Input
                       type="text"
                       className="form-control w-100"
-                      placeholder="Phone"
+                      placeholder="Mobile Number"
                       name="mobile_number"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}

@@ -54,7 +54,7 @@ function AddCard() {
       color: cardBgColor,
     },
     validationSchema: addCardSchema,
-    onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
+    onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
       try {
         const formData = new FormData();
         for (let key in values) formData.append(key, values[key]);
@@ -65,8 +65,8 @@ function AddCard() {
         resetForm();
         setExpDate(new Date());
       } catch (error) {
-        toast.error(error);
         resetForm();
+        toast.error(error);
         setExpDate(new Date());
       }
     },
@@ -109,7 +109,7 @@ function AddCard() {
             </ul>
           </div>
           <div className="row wac-details-wrap">
-            <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap">
+            <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap z-0">
               <CreditCard
                 bgcolor={cardBgColor}
                 bgimg={croppedImg}

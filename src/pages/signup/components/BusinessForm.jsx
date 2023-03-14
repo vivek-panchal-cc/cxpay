@@ -66,9 +66,7 @@ function Businessform(props) {
                     e.currentTarget.files[0]
                   );
                 }}
-                error={
-                  formik.touched.profile_image && formik.errors.profile_image
-                }
+                error={formik.errors.profile_image}
                 showPreview={true}
                 showLabel={true}
                 labelText="Change Profile Picture"
@@ -162,6 +160,8 @@ function Businessform(props) {
                   value={formik.values.password}
                   error={formik.touched.password && formik.errors.password}
                   autoComplete={"new-password"}
+                  onCopy={(e) => e.preventDefault()}
+                  onPaste={(e) => e.preventDefault()}
                 />
                 <span className="eye-icon" style={{ top: "24px" }}>
                   <img
@@ -185,6 +185,8 @@ function Businessform(props) {
                     formik.touched.confirm_password &&
                     formik.errors.confirm_password
                   }
+                  onCopy={(e) => e.preventDefault()}
+                  onPaste={(e) => e.preventDefault()}
                 />
                 {formik.touched.confirm_password &&
                   !formik.errors.confirm_password && (

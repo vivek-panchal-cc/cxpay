@@ -25,6 +25,9 @@ const regexContainNumber = (testStr) =>
 const regexContainSpecialCharacter = (testStr) =>
   new RegExp(expContainSpecialChar).test(testStr);
 
+// regex 
+const url_regex = /^((http|https):\/\/)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/;
+
 // To check file type
 const isValidFileType = (fileName, fileType) => {
   return (
@@ -35,7 +38,7 @@ const isValidFileType = (fileName, fileType) => {
 
 // To check file size
 // const fileUploadLimit = (file, fileSize) => {
-//   console.log(file);
+//   
 //   return file && validFileSize[file].indexOf(file.split(".").pop()) > -1;
 // };
 
@@ -47,6 +50,7 @@ export {
   expContainSpecialChar,
   validFileExtensions,
   otpCounterTime,
+  url_regex
 };
 export {
   regexContainCapitalLetter,

@@ -10,7 +10,7 @@ function AlreadyRegistered(props) {
         </div>
         <div className="modal-body">
           <p style={{ "margin-bottom": "25px" }}>
-            Your account is already registered with us as
+            Mobile number is already registered
           </p>
           {/* <p className="user_name">{username}</p> */}
           <div className="popup-btn-wrap">
