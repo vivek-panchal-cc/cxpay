@@ -10,6 +10,7 @@ import InputFile from "components/ui/InputImage";
 import InputSelect from "components/ui/InputSelect";
 import { IconEyeClose, IconEyeOpen } from "styles/svgs";
 import { LoaderContext } from "context/loaderContext";
+import { storageRequest } from "helpers/storageRequests";
 
 function PersonalForm(props) {
   const { setIsLoading } = useContext(LoaderContext);
@@ -52,7 +53,8 @@ function PersonalForm(props) {
         if (!data.success) throw data.message;
         setSignUpCreds({ step: 0 });
         toast.success(data.message);
-        navigate("/login");
+        storageRequest.setAuth(data.data.token);
+        navigate("/");
       } catch (error) {
         setErrors({
           email: error.email?.[0],
