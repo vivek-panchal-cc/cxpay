@@ -1,10 +1,13 @@
+import { LoaderContext } from "context/loaderContext";
 import getCroppedImg from "helpers/croppedImage";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import Cropper from "react-easy-crop";
 import { IconCancel, IconCancleBg, IconCheckBg, IconImage } from "styles/svgs";
 import styles from "../addCard.module.scss";
 
 function CropCard(props) {
+  const { setIsLoading } = useContext(LoaderContext);
+
   const { src, onImgCropped, closeModal } = props;
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [croppedAreaPixels, setCroppedAreaPixel] = useState();
@@ -15,9 +18,16 @@ function CropCard(props) {
   }, []);
 
   const handleSelect = useCallback(async () => {
-    // getCroppedImg return As blob
-    const imgObj = await getCroppedImg(src, croppedAreaPixels);
-    onImgCropped(imgObj);
+    setIsLoading(true);
+    try {
+      // getCroppedImg return As blob
+      const imgObj = await getCroppedImg(src, croppedAreaPixels);
+      onImgCropped(imgObj);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   }, [onImgCropped, croppedAreaPixels, src]);
 
   const handleRangeChange = useCallback((e) => {

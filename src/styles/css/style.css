@@ -2007,7 +2007,6 @@ form .search-field -o::placeholder {
   align-items: center;
   box-shadow: 0px 7.3125px 14.625px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  margin-left: 21px;
 }
 .no-search-ontop {
   justify-content: flex-end;
