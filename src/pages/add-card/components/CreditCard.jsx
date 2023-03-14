@@ -2,14 +2,14 @@ import React from "react";
 import { IconCardBackground } from "styles/svgs";
 
 function CreditCard(props) {
-  const { card_number, expiry_date, card_holder_name, color, bg_img, backImg } =
+  const { card_number, expiry_date, card_holder_name, color, bg_img } =
     props.details || {};
 
   return (
     <div
       className="wallet-ac-inner"
       style={
-        backImg
+        bg_img
           ? {
               background: `url(${bg_img})`,
               backgroundPosition: "center",
@@ -21,7 +21,7 @@ function CreditCard(props) {
             }
       }
     >
-      {!backImg && <IconCardBackground />}
+      {<IconCardBackground />}
       <p
         className="card-holder-nm overflow-hidden"
         style={{ maxHeight: "40%", textOverflow: "ellipsis" }}

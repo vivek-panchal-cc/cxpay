@@ -1,13 +1,12 @@
-import React from 'react';
-import NotificationDropdown from './notification-dropdown/NotificationDropdown';
-import ProfileDropdown from './profile-dropdown/ProfileDropdown';
+import React from "react";
+import NotificationDropdown from "./notification-dropdown/NotificationDropdown";
+import ProfileDropdown from "./profile-dropdown/ProfileDropdown";
 
 const NotificationBar = (props) => {
-    const {issearchbarvisible = false} = props;
-    return (
-
-        <div className={`dashboard-top-sec ${!issearchbarvisible && "no-search-ontop"}`}>
-           {issearchbarvisible && <div className="dashboard-search-wrap">
+  const { issearchbarvisible = false } = props;
+  return (
+    <div className={`dashboard-top-sec no-search-ontop`}>
+      {/* {issearchbarvisible && <div className="dashboard-search-wrap">
                     <form>  
                     <div className="form-field search-field">
                         <input type="search" className="form-control" name="search-field" placeholder="Search..." />
@@ -19,13 +18,13 @@ const NotificationBar = (props) => {
                         </div>
                     </div>						
                 </form>
-            </div>}
-            <div className="dashboard-notification-sec">
-                <NotificationDropdown />
-                <ProfileDropdown />
-            </div>
+            </div>} */}
+      <div className="dashboard-notification-sec gap-4">
+        <NotificationDropdown />
+        <ProfileDropdown />
       </div>
-    );
-}
+    </div>
+  );
+};
 
 export default NotificationBar;

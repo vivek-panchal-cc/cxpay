@@ -6,6 +6,7 @@ import { fetchUserProfile } from "features/user/userProfileSlice";
 import { IconNotify, IconContact, IconSetting, IconLogout } from "styles/svgs";
 import Image from "components/ui/Image";
 import { LoaderContext } from "context/loaderContext";
+import NotificationBar from "components/notification-bar/NotificationBar";
 
 const contentTitles = [
   // {
@@ -62,7 +63,8 @@ function DashboardLayout() {
                 />
               </span>
             </div>
-            <div className="dashboard-top-sec no-search-ontop">
+            <NotificationBar />
+            {/* <div className="dashboard-top-sec no-search-ontop">
               <div className="dashboard-search-wrap col-lg-7 col-12">
                 <div className="title-content-wrap send-pay-title-sec title-common-sec ms-4">
                   <h3>{headings.heading}</h3>
@@ -120,7 +122,7 @@ function DashboardLayout() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <Outlet />
           </div>
         </div>
