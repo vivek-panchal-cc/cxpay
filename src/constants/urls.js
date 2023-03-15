@@ -34,3 +34,4 @@ export const API_ONBOARD_BANK_LIST = "/banks-list";
 export const API_ONBOARD_DELETE_BANK = "/delete-bank";
 export const API_ONBOARD_DELETE_CARD = "/delete-card";
 export const API_ONBOARD_GET_CARD_COLOR = "/get-card-color";
+export const API_ONBOARD_UPDATE_CARD = "/update-card";

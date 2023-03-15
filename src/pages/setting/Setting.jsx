@@ -11,7 +11,7 @@ import {
 const settingsRedirects = [
   {
     icon: <IconNotification />,
-    title: "Notification",
+    title: "Notifications",
     link: (
       <Link
         to={"/setting/notification"}

@@ -73,9 +73,9 @@ function App() {
             {/* wallet */}
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/wallet/add-card" element={<AddCard />} />
-            <Route path="/wallet/edit-card" element={<EditCard />} />
             <Route path="/wallet/link-bank" element={<LinkBank />} />
             <Route path="/wallet/view-card" element={<ViewCard />} />
+            <Route path="/wallet/view-card/edit-card" element={<EditCard />} />
             <Route path="/wallet/bank-list" element={<BankList />} />
             {/* contacts */}
             <Route path="/contacts" element={<Contacts />} />

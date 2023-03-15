@@ -37,7 +37,7 @@ function AddCard() {
     setCroppedImg(cropImgObj);
     setShowPopupUpload(false);
     setShowPopupCrop(false);
-    formik.setFieldValue("color", "white");
+    formik.setFieldValue("color", "");
   };
 
   const handleRemoveImage = () => {
@@ -45,7 +45,6 @@ function AddCard() {
   };
 
   const handleClosePopupUpload = () => setShowPopupUpload(false);
-
   const handleClosePopupCrop = () => setShowPopupCrop(false);
 
   const formik = useFormik({
@@ -91,7 +90,7 @@ function AddCard() {
   });
 
   const handleCustomizePalette = (color) => {
-    if (color === "white") return setShowPopupUpload(true);
+    if (color === "") return setShowPopupUpload(true);
     if (croppedImg.url) handleRemoveImage();
     formik.setFieldValue("color", color);
   };

@@ -2,14 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import Modal from "components/modals/Modal";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
-import { addCardSchema } from "schemas/walletSchema";
-// import CreditCard from "./components/CreditCard";
-// import CropCard from "./components/CropCard";
-// import CustomizePalette from "./components/CustomizePalette";
-// import UploadImage from "./components/UploadImage";
-// import DatePicker from "react-datepicker";
+import { EditCardSchema } from "schemas/walletSchema";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-// import { IconCalender } from "styles/svgs";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
@@ -30,7 +24,7 @@ function EditCard() {
   const [cardBackImg, setCardBackImg] = useState("");
   const [croppedImg, setCroppedImg] = useState({
     file: "",
-    url: "",
+    url: card?.image,
   });
 
   const handleUploadImage = (img) => {
@@ -42,7 +36,7 @@ function EditCard() {
     setCroppedImg(cropImgObj);
     setShowPopupUpload(false);
     setShowPopupCrop(false);
-    formik.setFieldValue("color", "white");
+    formik.setFieldValue("color", "");
   };
 
   const handleRemoveImage = () => {
@@ -50,43 +44,28 @@ function EditCard() {
   };
 
   const handleClosePopupUpload = () => setShowPopupUpload(false);
-
   const handleClosePopupCrop = () => setShowPopupCrop(false);
 
   const formik = useFormik({
     initialValues: {
-      card_number: card.card_number || "",
-      expiry_date: card.expiry_date || "", // mm-yyyy
-      billing_address: card.billing_address || "",
-      card_holder_name: card.card_holder_name || "",
+      id: card.id || "",
       color: card.color || "",
     },
-    validationSchema: addCardSchema,
-    onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
+    validationSchema: EditCardSchema,
+    onSubmit: async (values, { setStatus, resetForm }) => {
       setIsLoading(true);
       try {
         const formData = new FormData();
-        for (let key in values) formData.append(key, values[key]);
+        formData.append("id", values.id);
+        if (card.color !== values.color) formData.append("color", values.color);
         if (croppedImg.file) formData.append("image", croppedImg.file);
-        const { data } = await apiRequest.addCard(formData);
+        const { data } = await apiRequest.updateCard(formData);
         if (!data.success) throw data.message;
         toast.success(data.message);
         resetForm();
-        setCroppedImg({ file: "", url: "" });
         navigate("/wallet/view-card");
       } catch (error) {
-        if (typeof error === "string") {
-          toast.error(error);
-          resetForm();
-          setCroppedImg({ file: "", url: "" });
-          return;
-        }
-        setErrors({
-          billing_address: error?.billing_address?.[0],
-          card_holder_name: error?.card_holder_name?.[0],
-          card_number: error?.card_number?.[0],
-          expiry_date: error?.expiry_date?.[0],
-        });
+        if (typeof error === "string") return toast.error(error);
       } finally {
         setIsLoading(false);
       }
@@ -94,14 +73,10 @@ function EditCard() {
   });
 
   const handleCustomizePalette = (color) => {
-    if (color === "white") return setShowPopupUpload(true);
+    if (color === "") return setShowPopupUpload(true);
     if (croppedImg.url) handleRemoveImage();
     formik.setFieldValue("color", color);
   };
-
-  useEffect(() => {
-    if (card && card.color) handleCustomizePalette(card.color);
-  }, [card]);
 
   if (!card || Object.keys(card).length <= 0)
     return <Navigate to={"/wallet/view-card"} replace />;
@@ -137,23 +112,25 @@ function EditCard() {
             <h3>Edit a Card</h3>
             <Breadcrumb />
           </div>
-          {formik.values.color && (
-            <div className="row wac-details-wrap">
-              <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap z-0">
-                <CreditCard
-                  details={{ ...formik.values, bg_img: croppedImg.url }}
-                />
-              </div>
-              <div className="p-0 col-lg-5 col-12">
-                <CustomizePalette
-                  color={formik.values.color}
-                  bgimg={croppedImg.url}
-                  removeBgImg={handleRemoveImage}
-                  handleChange={handleCustomizePalette}
-                />
-              </div>
+          <div className="row wac-details-wrap">
+            <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap z-0">
+              <CreditCard
+                details={{
+                  ...card,
+                  color: formik.values.color,
+                  bg_img: croppedImg.url,
+                }}
+              />
             </div>
-          )}
+            <div className="p-0 col-lg-5 col-12">
+              <CustomizePalette
+                color={formik.values.color}
+                bgimg={croppedImg.url}
+                removeBgImg={handleRemoveImage}
+                handleChange={handleCustomizePalette}
+              />
+            </div>
+          </div>
           <div className="add-wallet-card-form-wrap">
             <form onSubmit={formik.handleSubmit}>
               <div className="row">
@@ -164,7 +141,7 @@ function EditCard() {
                       className="form-control opacity-75"
                       placeholder="Credit Card Number"
                       name="card_number"
-                      value={formik.values.card_number}
+                      value={"XXXX XXXX XXXX " + card?.card_number}
                       disabled
                     />
                   </div>
@@ -179,7 +156,7 @@ function EditCard() {
                       className="form-control opacity-75"
                       placeholder="Card Holder Name"
                       name="card_holder_name"
-                      value={formik.values.card_holder_name}
+                      value={card?.card_holder_name}
                       disabled
                     />
                   </div>
@@ -190,9 +167,9 @@ function EditCard() {
                       type="text"
                       id="expiry_date"
                       className="form-control opacity-75"
-                      placeholderText="Expiration Date"
+                      placeholder="Expiration Date"
                       name="expiry_date"
-                      value={formik.values.expiry_date}
+                      value={card?.expiry_date}
                       disabled
                     />
                   </div>
@@ -207,7 +184,7 @@ function EditCard() {
                       className="form-control opacity-75"
                       placeholder="Billing Address"
                       name="billing_address"
-                      value={formik.values.billing_address}
+                      value={card?.billing_address}
                       disabled
                     />
                   </div>

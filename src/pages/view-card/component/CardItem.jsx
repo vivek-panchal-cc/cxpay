@@ -29,7 +29,7 @@ function CardItem(props) {
               : { background: color }
           }
         >
-          <IconCardBackground height="100%" width="100%" />
+          {!image && <IconCardBackground height="100%" width="100%" />}
         </div>
         <p className="bank-cardname-wrap">{card_holder_name}</p>
       </div>
@@ -40,12 +40,12 @@ function CardItem(props) {
       {/* <div className="bank-bal-wrap">
         Balance : <span>1234.00</span>
       </div> */}
-      {/* <button
+      <button
         className="bank-del-wrap border-0"
         onClick={() => handleEdit(item)}
       >
         <IconEdit style={{ stroke: "#9b9b9b" }} />
-      </button> */}
+      </button>
       <button
         className="bank-del-wrap border-0"
         onClick={() => handleDelete(item)}

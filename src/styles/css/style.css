@@ -5363,7 +5363,7 @@ p.bank-name-wrap {
   /*max-height: 505px;*/
   overflow: auto;
   padding: 15px;
-  max-height: calc(100vh - 200px);
+  max-height: calc(100vh - 260px);
   height: auto;
 }
 /* Dashboard View Bank Acccounts End  */
@@ -5838,7 +5838,7 @@ ul.dashboard-main-links {
 }*/
 
 @media only screen and (max-width: 640px) {
-  .crop_container { 
+  .crop_container {
     width: 100%;
     margin-top: 20px;
     justify-content: center !important;

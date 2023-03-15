@@ -35,7 +35,7 @@ const addCardSchema = yup.object().shape({
     .string()
     .required("Billing address is required")
     .max(55, "The billing address must not be greater than 55 characters."),
-  color: yup.string().required(""),
+  color: yup.string(),
 });
 
 const linkBankSchema = yup.object().shape({
@@ -65,4 +65,9 @@ const uploadCardImageSchema = yup.object().shape({
   }),
 });
 
-export { addCardSchema, linkBankSchema, uploadCardImageSchema };
+const EditCardSchema = yup.object().shape({
+  id: yup.string().required("Credit card-id is required"),
+  color: yup.string(),
+});
+
+export { addCardSchema, linkBankSchema, uploadCardImageSchema, EditCardSchema };
