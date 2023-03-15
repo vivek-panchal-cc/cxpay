@@ -25,6 +25,7 @@ import Notification from "pages/notification/Notification";
 import BusinessInfo from "pages/businessInfo/BusinessInfo";
 import BankList from "pages/bank-list/BankList";
 import { storageRequest } from "helpers/storageRequests";
+import EditCard from "pages/edit-card/EditCard";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -74,6 +75,7 @@ function App() {
             {/* wallet */}
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/wallet/add-card" element={<AddCard />} />
+            <Route path="/wallet/edit-card" element={<EditCard />} />
             <Route path="/wallet/link-bank" element={<LinkBank />} />
             <Route path="/wallet/view-card" element={<ViewCard />} />
             <Route path="/wallet/bank-list" element={<BankList />} />
