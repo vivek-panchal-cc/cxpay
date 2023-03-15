@@ -1,4 +1,5 @@
-import React from "react";
+import { LoaderContext } from "context/loaderContext";
+import React, { useCallback, useContext, useEffect, useMemo } from "react";
 import { useState } from "react";
 
 function InputImage(props) {
@@ -12,15 +13,44 @@ function InputImage(props) {
     labelText = "Select file",
     previewSrc = "",
     fallbackSrc = "",
-    classNameLabel,
-    classNameInput,
-    classNameImage,
-    classNameBorder,
-    className,
-    accept,
+    classNameLabel = "",
+    classNameInput = "",
+    classNameImage = "",
+    classNameBorder = "",
+    className = "",
+    accept = "image/*",
+    showLoader = false,
   } = props;
+
+  const { setIsLoading } = useContext(LoaderContext);
   const [preview, setPreview] = useState(previewSrc);
   const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    if (previewSrc) setPreview(previewSrc);
+  }, [previewSrc]);
+
+  const handleChange = (e) => {
+    onChange(e);
+    if (
+      showPreview &&
+      e.currentTarget.files.length > 0 &&
+      e.currentTarget.files[0].type.includes("image/")
+    ) {
+      if (showPreview && showLoader) setIsLoading(true);
+      return setPreview(URL.createObjectURL(e.currentTarget.files[0]));
+    }
+    setPreview(previewSrc || fallbackSrc);
+  };
+
+  const handleFocusBack = useCallback(() => {
+    handleChange({ currentTarget: { files: [] } });
+    window.removeEventListener("focus", handleFocusBack);
+  }, [onChange]);
+
+  const clickedFileInput = useCallback(() => {
+    window.addEventListener("focus", handleFocusBack);
+  }, [handleFocusBack]);
 
   return (
     <div className={`upload-profile-image text-center ${className}`}>
@@ -29,7 +59,9 @@ function InputImage(props) {
         className={`cursor-pointer ${classNameLabel}`}
       >
         {showPreview && (
-          <span className={`profile-wrap overflow-hidden ${classNameBorder}`}>
+          <span
+            className={`profile-wrap overflow-hidden mx-auto ${classNameBorder}`}
+          >
             <img
               src={preview}
               alt="profile img"
@@ -43,6 +75,7 @@ function InputImage(props) {
                     }
                   : null
               }
+              onLoad={() => (showLoader ? setIsLoading(false) : null)}
             />
           </span>
         )}
@@ -53,19 +86,15 @@ function InputImage(props) {
         name={name}
         type={"file"}
         className={`${classNameInput}`}
-        onChange={(e) => {
-          onChange(e);
-          if (
-            showPreview &&
-            e.currentTarget.files.length > 0 &&
-            e.currentTarget.files[0].type.includes("image/")
-          )
-            return setPreview(URL.createObjectURL(e.currentTarget.files[0]));
-          setPreview(preview);
-        }}
+        onChange={handleChange}
+        onClick={clickedFileInput}
         accept={accept}
       />
-      {error && <p className="text-danger ps-2">{error}</p>}
+      {error && (
+        <p className="text-danger ps-2" style={{ width: "inherit" }}>
+          {error}
+        </p>
+      )}
     </div>
   );
 }

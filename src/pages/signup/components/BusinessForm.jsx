@@ -8,11 +8,18 @@ import { SignupContext } from "context/signupContext";
 import Input from "components/ui/Input";
 import InputFile from "components/ui/InputImage";
 import InputSelect from "components/ui/InputSelect";
+import { IconEyeClose, IconEyeOpen } from "styles/svgs";
+import { LoaderContext } from "context/loaderContext";
+import { storageRequest } from "helpers/storageRequests";
 
 function Businessform(props) {
+  const { setIsLoading } = useContext(LoaderContext);
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState({
+    new: false,
+    confirm: false,
+  });
   const { countryList, cityList } = signUpCreds || {};
 
   const formik = useFormik({
@@ -32,6 +39,7 @@ function Businessform(props) {
     },
     validationSchema: signUpBusinessAccountSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
+      setIsLoading(true);
       try {
         const formData = new FormData();
         for (let key in values) {
@@ -40,15 +48,18 @@ function Businessform(props) {
         }
         formData.append("profile_image", values.profile_image);
         const { data } = await apiRequest.registerUser(formData);
-        if (!data.success || data.data === null) throw data.message;
+        if (!data.success) throw data.message;
         setSignUpCreds({ step: 0 });
         toast.success(data.message);
-        navigate("/login");
+        storageRequest.setAuth(data.data.token);
+        navigate("/");
       } catch (error) {
         setErrors({
           email: error.email?.[0],
           mobile_number: error.mobile_number?.[0],
         });
+      } finally {
+        setIsLoading(false);
       }
     },
   });
@@ -69,8 +80,13 @@ function Businessform(props) {
                 error={formik.errors.profile_image}
                 showPreview={true}
                 showLabel={true}
-                labelText="Change Profile Picture"
-                fallbackSrc="/assets/images/profile-img.png"
+                showLoader={true}
+                labelText={
+                  formik.values.profile_image
+                    ? "Change Profile Picture"
+                    : "Select Profile Picture"
+                }
+                fallbackSrc="/assets/images/Business-account.png"
                 classNameInput="d-none"
               />
               <h5 className="text-center">Signup</h5>
@@ -78,7 +94,7 @@ function Businessform(props) {
                 Please Enter Business Details
               </h4>
               <Input
-                type="text"
+                type="name"
                 className="form-control"
                 placeholder="Company Name"
                 name="company_name"
@@ -108,15 +124,15 @@ function Businessform(props) {
                 onChange={({ currentTarget }) => {
                   const i = parseInt(currentTarget.value);
                   formik.setFieldValue("country_index", i);
-                  formik.setFieldValue("country_iso", countryList[i].iso);
-                  formik.setFieldValue("country", countryList[i].country_name);
+                  formik.setFieldValue("country_iso", countryList[i]?.iso);
+                  formik.setFieldValue("country", countryList[i]?.country_name);
                   formik.setFieldValue("city", ""); // imp
                 }}
                 onBlur={formik.handleBlur}
                 value={formik.values.country_index}
                 error={formik.touched.country && formik.errors.country}
               >
-                <option value={""}>Select Country</option>
+                <option value={"-1"}>Select Country</option>
                 {countryList?.map((country, index) => (
                   <option key={index} value={index}>
                     {country.country_name}
@@ -151,7 +167,7 @@ function Businessform(props) {
               />
               <div className="form-field">
                 <Input
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword.new ? "text" : "password"}
                   className="form-control w-100 position-relative"
                   placeholder="Password"
                   name="password"
@@ -164,17 +180,24 @@ function Businessform(props) {
                   onPaste={(e) => e.preventDefault()}
                 />
                 <span className="eye-icon" style={{ top: "24px" }}>
-                  <img
-                    className="eye-close"
-                    src="/assets/images/eye-close.png"
-                    alt="eye close icon"
-                    onClick={() => setShowPassword((e) => !e)}
-                  />
+                  {showPassword.new ? (
+                    <IconEyeOpen
+                      onClick={() =>
+                        setShowPassword((e) => ({ ...e, new: !e.new }))
+                      }
+                    />
+                  ) : (
+                    <IconEyeClose
+                      onClick={() =>
+                        setShowPassword((e) => ({ ...e, new: !e.new }))
+                      }
+                    />
+                  )}
                 </span>
               </div>
               <div className="form-field">
                 <Input
-                  type="password"
+                  type={showPassword.confirm ? "text" : "password"}
                   className="form-control"
                   placeholder="Confirm password"
                   name="confirm_password"
@@ -190,7 +213,10 @@ function Businessform(props) {
                 />
                 {formik.touched.confirm_password &&
                   !formik.errors.confirm_password && (
-                    <span className="eye-icon" style={{ top: "24px" }}>
+                    <span
+                      className="eye-icon"
+                      style={{ top: "24px", right: "45px" }}
+                    >
                       <img
                         className="eye-close"
                         src="/assets/images/green-tick.svg"
@@ -198,14 +224,35 @@ function Businessform(props) {
                       />
                     </span>
                   )}
+                <span className="eye-icon" style={{ top: "24px" }}>
+                  {showPassword.confirm ? (
+                    <IconEyeOpen
+                      onClick={() =>
+                        setShowPassword((e) => ({
+                          ...e,
+                          confirm: !e.confirm,
+                        }))
+                      }
+                    />
+                  ) : (
+                    <IconEyeClose
+                      onClick={() =>
+                        setShowPassword((e) => ({
+                          ...e,
+                          confirm: !e.confirm,
+                        }))
+                      }
+                    />
+                  )}
+                </span>
               </div>
               <div className="text-center sign-up-btn">
                 <input
                   type="submit"
                   className={`btn btn-primary ${
                     formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
-                  }`}
-                  disabled={formik.isSubmitting || !formik.isValid}
+                  } ${formik.isValid ? "" : "opacity-75"}`}
+                  disabled={formik.isSubmitting}
                   value="Signup"
                 />
               </div>

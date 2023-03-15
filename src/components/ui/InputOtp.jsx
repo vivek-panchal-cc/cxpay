@@ -2,7 +2,16 @@ import React, { useEffect, useState } from "react";
 import styles from "./input.module.scss";
 
 function InputOtp(props) {
-  const { labelname, error, otpSize, onChange, className, name, value } = props;
+  const {
+    labelname,
+    error,
+    otpSize,
+    onChange,
+    className,
+    name,
+    value,
+    handleSubmit,
+  } = props;
 
   const [inputArr] = useState(Array.from(Array(otpSize).keys()));
   const [otpInputs, setOtpInputs] = useState({});
@@ -34,6 +43,14 @@ function InputOtp(props) {
       : e.target?.previousSibling?.focus();
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && e.target.name === `otp${inputArr.length - 1}`) {
+      e.preventDefault();
+      e.stopPropagation();
+      handleSubmit && handleSubmit();
+    }
+  };
+
   return (
     <div className={`d-flex flex-column ${styles.otp_input}`}>
       {labelname && (
@@ -53,6 +70,7 @@ function InputOtp(props) {
             value={otpInputs?.[`otp${item}`] || ""}
             className={`${className}`}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
           />
         ))}
       </div>

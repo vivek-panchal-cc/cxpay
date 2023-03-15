@@ -1,17 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
-import { linkBankSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { linkBankSchema } from "schemas/walletSchema";
+import Breadcrumb from "components/breadcrumb/Breadcrumb";
+import { IconLeftArrow } from "styles/svgs";
 
 const LinkBank = (props) => {
-  // const [accountType, setAccountType] = useState("current");
-
-  // const handleChangeAccountType = (e) => {
-  //   setAccountType(e.target.value);
-  // };
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -19,32 +16,40 @@ const LinkBank = (props) => {
       bank_number: "",
       account_type: "current",
       routing_number: "",
+      bank_name: "",
     },
     validationSchema: linkBankSchema,
-    onSubmit: async (values, { resetForm, setStatus }) => {
+    onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
       try {
         const { data } = await apiRequest.linkBank(values);
-        if (!data.success || data.data === null) throw data.message;
+        if (!data.success) throw data.message;
         toast.success(data.message);
-        navigate("/setting");
+        navigate("/wallet/bank-list");
       } catch (error) {
         toast.error(error);
+        setErrors({
+          bank_number: error.bank_number?.[0],
+          routing_number: error.routing_number?.[0],
+          bank_name: error.bank_name?.[0],
+        });
         resetForm();
         setStatus(error);
       }
     },
   });
+
+  useEffect(() => {
+    const type = formik.values.account_type;
+    formik.resetForm();
+    formik.setFieldValue("account_type", type);
+  }, [formik.values.account_type]);
+
   return (
     <div>
       <div className="wallet-link-bank-bottom">
         <div className="profile-info rm-pl-profile-info">
           <h3>Link a Bank</h3>
-          <ul className="breadcrumb">
-            <li>
-              <a href="/">Wallet</a>
-            </li>
-            <li>Link a Bank</li>
-          </ul>
+          <Breadcrumb />
         </div>
         <div className="wallet-bank_link-form-wrap">
           <form
@@ -90,9 +95,25 @@ const LinkBank = (props) => {
                   <Input
                     type="text"
                     className="form-control"
+                    placeholder="Bank Name"
+                    name="bank_name"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.bank_name}
+                    error={formik.touched.bank_name && formik.errors.bank_name}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-12 col p-0">
+                <div className="form-field">
+                  <Input
+                    type="text"
+                    className="form-control"
                     placeholder={
                       formik.values.account_type === "savings"
-                        ? "Saving Routing Number"
+                        ? "Routing Number"
                         : "Routing Number"
                     }
                     name="routing_number"
@@ -127,10 +148,14 @@ const LinkBank = (props) => {
             </div>
             <div className="row">
               <div className="col-12 p-0 btns-inline">
-                <div className="btn-wrap">
-                  <a href="/" className="btn outline-btn">
+                <div className="setting-btn-link btn-wrap">
+                  <Link
+                    to="/wallet"
+                    className="outline-btn w-100 text-center d-block"
+                    replace
+                  >
                     Cancel
-                  </a>
+                  </Link>
                 </div>
                 <div className="btn-wrap">
                   <input

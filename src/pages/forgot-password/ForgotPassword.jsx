@@ -22,9 +22,11 @@ function ForgotPassword() {
         );
         if (!data.success || data.data === null) throw data.message;
         toast.success(data.data.login_otp);
+        toast.success(data.message);
         setShowOtpPopup(true);
       } catch (error) {
         resetForm();
+        setStatus(error);
         console.log(error);
       }
     },
@@ -47,14 +49,14 @@ function ForgotPassword() {
                 <Modal
                   id="forgot-password-popup"
                   show={showOtpPopup}
-                  setShow={setShowOtpPopup}
+                  // setShow={setShowOtpPopup}
                 >
-                  <VerifyOtp values={formik.values} />
+                  <VerifyOtp setShow={setShowOtpPopup} values={formik.values} />
                 </Modal>
                 <form onSubmit={formik.handleSubmit}>
                   <div className="form-field">
                     <Input
-                      type="text"
+                      type="mobile"
                       className="form-control w-100"
                       placeholder="Mobile Number"
                       name="mobile_number"
@@ -67,6 +69,9 @@ function ForgotPassword() {
                       }
                     />
                   </div>
+                  {formik.status && (
+                    <p className="text-danger text-center">{formik.status}</p>
+                  )}
                   <div className="text-center login-btn">
                     <input
                       type="submit"
@@ -74,7 +79,7 @@ function ForgotPassword() {
                         formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
                       }`}
                       disabled={formik.isSubmitting}
-                      value="Send Confirmation Code"
+                      value="Send Code"
                     />
                   </div>
                   <p className="sign-up-text text-center">

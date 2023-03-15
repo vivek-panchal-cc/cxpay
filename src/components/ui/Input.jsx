@@ -1,7 +1,31 @@
 import React from "react";
 
 function Input(props) {
-  const { labelname, error, disabled } = props;
+  const { labelname, error, disabled, type } = props;
+
+  const getType = () => {
+    switch (type) {
+      case "mobile":
+        return "text";
+      case "name":
+        return "text";
+      default:
+        return type;
+    }
+  };
+
+  const changeElement = (element) => {
+    switch (type) {
+      case "mobile":
+        element.currentTarget.value = element.currentTarget.value.trim();
+        return element;
+      case "name":
+        element.currentTarget.value = element.currentTarget.value.trimStart();
+        return element;
+      default:
+        return element;
+    }
+  };
 
   return (
     <div className={`d-flex flex-column form-field`}>
@@ -12,6 +36,8 @@ function Input(props) {
       )}
       <input
         {...props}
+        type={getType()}
+        onChange={(e) => props?.onChange(changeElement(e))}
         className={`${props.className} ${disabled ? "cursor-not-allowed" : ""}`}
       />
       {error && <p className="text-danger ps-2">{error}</p>}

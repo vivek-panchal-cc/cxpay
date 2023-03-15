@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
@@ -6,10 +6,13 @@ import { LoginSchema } from "schemas/validationSchema";
 import { useDispatch } from "react-redux";
 import { fetchLogin } from "features/user/userProfileSlice";
 import { storageRequest } from "helpers/storageRequests";
+import { IconEyeClose, IconEyeOpen } from "styles/svgs";
+import { LoaderContext } from "context/loaderContext";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { setIsLoading } = useContext(LoaderContext);
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
@@ -23,12 +26,19 @@ const Login = () => {
       password: "",
     },
     validationSchema: LoginSchema,
-    onSubmit: async (values, { resetForm, setStatus }) => {
+    onSubmit: async (values, { resetForm, setErrors, setStatus }) => {
+      setIsLoading(true);
       try {
         const { error, payload } = await dispatch(fetchLogin(values));
         if (error) throw payload;
       } catch (error) {
-        setStatus(error);
+        if (typeof error === "string") setStatus(error);
+        setErrors({
+          user_name: error?.user_name?.[0],
+          password: error?.password?.[0],
+        });
+      } finally {
+        setIsLoading(false);
       }
     },
   });
@@ -50,7 +60,7 @@ const Login = () => {
                 <form onSubmit={formik.handleSubmit}>
                   <div className="form-field">
                     <Input
-                      type="text"
+                      type="mobile"
                       className="form-control"
                       placeholder="Mobile Number"
                       name="user_name"
@@ -72,14 +82,19 @@ const Login = () => {
                       onBlur={formik.handleBlur}
                       value={formik.values.password}
                       error={formik.touched.password && formik.errors.password}
+                      onCopy={(e) => e.preventDefault()}
+                      onPaste={(e) => e.preventDefault()}
                     />
                     <span className="eye-icon" style={{ top: "24px" }}>
-                      <img
-                        className="eye-close"
-                        src="/assets/images/eye-close.png"
-                        alt="eye close icon"
-                        onClick={() => setShowPassword((e) => !e)}
-                      />
+                      {showPassword ? (
+                        <IconEyeOpen
+                          onClick={() => setShowPassword((e) => !e)}
+                        />
+                      ) : (
+                        <IconEyeClose
+                          onClick={() => setShowPassword((e) => !e)}
+                        />
+                      )}
                     </span>
                   </div>
                   {formik.status && (
@@ -93,9 +108,9 @@ const Login = () => {
                       type="submit"
                       className={`btn btn-primary ${
                         formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
-                      }`}
-                      disabled={formik.isSubmitting || !formik.isValid}
-                      value="LogIn"
+                      } ${formik.isValid ? "" : "opacity-75"}`}
+                      disabled={formik.isSubmitting}
+                      value="Login"
                     />
                   </div>
                   <p className="sign-up-text text-center">

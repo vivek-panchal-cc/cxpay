@@ -11,40 +11,47 @@ import {
 const signUpPersonalAccountSchema = yup.object().shape({
   first_name: yup
     .string()
-    .required("Please enter First name")
-    .max(35, "Maximum limit 35 characters"),
+    .required("Please enter first name")
+    .max(35, "Maximum limit is 35 characters"),
   last_name: yup
     .string()
-    .required("Please enter Last name")
-    .max(35, "Maximum limit 35 characters"),
+    .required("Please enter last name")
+    .max(35, "Maximum limit is 35 characters"),
   user_type: yup.string().required(),
-  user_app_id: yup.string().required("Please enter ID"),
+  personal_id: yup
+    .string()
+    // .required("Please enter personal id")
+    .matches(/^\S*$/, "Space is not allowed")
+    .max(100, "Maximum limit exceeded"),
   email: emailSchema,
   password: passwordSchema,
   confirm_password: confirmPasswordSchema,
   profile_image: profileImageSchema,
-  country: yup.string().required("Please select Country"),
+  country: yup.string().required("Please select country"),
   mobile_code: yup.string().required("required"),
-  city: yup.string().required("Please select City"),
+  city: yup.string().required("Please select city"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
 const signUpBusinessAccountSchema = yup.object().shape({
-  company_name: yup.string().required("Please enter Company name"),
+  company_name: yup
+    .string()
+    .required("Please enter business name")
+    .max(64, "Maximum limit is 64 characters"),
   user_type: yup.string().required(),
   email: emailSchema,
   password: passwordSchema,
   confirm_password: confirmPasswordSchema,
   profile_image: profileImageSchema,
-  country: yup.string().required("Please select Country"),
-  mobile_code: yup.string().required("required*"),
-  city: yup.string().required("Please select City"),
+  country: yup.string().required("Please select country"),
+  mobile_code: yup.string().required("required"),
+  city: yup.string().required("Please select city"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
 const enterPhoneSchema = yup.object().shape({
   mobile_number: mobileSchema,
-  country_code: yup.string().required("required*"),
+  country_code: yup.string().required("Code is required"),
 });
 
 const loginWithOtpSchema = yup.object().shape({
@@ -63,8 +70,8 @@ const LoginSchema = yup.object().shape({
   user_name: mobileSchema,
   password: yup
     .string()
-    .required("Password can't be null")
-    .max(16, "Maximum limit 16 characters"),
+    .required("Please enter password.")
+    .max(16, "Maximum limit is 16 characters"),
 });
 
 const verifyLoginOtpSchema = yup.object().shape({
@@ -76,12 +83,15 @@ const verifyLoginOtpSchema = yup.object().shape({
 });
 
 const editProfileBusinessUserSchema = yup.object().shape({
-  company_name: yup.string().required("Please enter Company name"),
+  company_name: yup
+    .string()
+    .required("Please enter company name")
+    .max(64, "Maximum limit is 64 characters"),
   user_type: yup.string().required(),
   email: emailSchema,
-  country: yup.string().required("Please select Country"),
+  country: yup.string().required("Please select country"),
   mobile_code: yup.string().required("required*"),
-  city: yup.string().required("Please select City"),
+  city: yup.string().required("Please select city"),
   profile_image: profileImageSchema,
   // mobile_number: yup.string().required("Mobile number is required"),
 });
@@ -89,17 +99,22 @@ const editProfileBusinessUserSchema = yup.object().shape({
 const editProfilePersonalUserSchema = yup.object().shape({
   first_name: yup
     .string()
-    .required("Please enter First name")
-    .max(35, "Maximum limit 35 characters"),
+    .required("Please enter first name")
+    .max(35, "Maximum limit is 35 characters"),
   last_name: yup
     .string()
-    .required("Please enter Last name")
-    .max(35, "Maximum limit 35 characters"),
+    .required("Please enter last name")
+    .max(35, "Maximum limit is 35 characters"),
+  personal_id: yup
+    .string()
+    // .required("Please enter personal id")
+    .matches(/^\S*$/, "Space is not allowed")
+    .max(100, "Maximum limit is exceeded"),
   user_type: yup.string().required(),
   email: emailSchema,
-  country: yup.string().required("Please select Country"),
-  mobile_code: yup.string().required("required*"),
-  city: yup.string().required("Please select City"),
+  country: yup.string().required("Please select country"),
+  mobile_code: yup.string().required("required"),
+  city: yup.string().required("Please select city"),
   profile_image: profileImageSchema,
   // mobile_number: yup.string().required("Mobile number is required"),
 });
@@ -112,24 +127,26 @@ const resetPasswordSchema = yup.object().shape({
   confirm_password: confirmPasswordSchema,
 });
 
-const linkBankSchema = yup.object().shape({
-  routing_number: yup.string().required("Routing number is required."),
-  bank_number: yup.string().required("Account number is required."),
-});
-
 const addBusinessUrlSchema = yup.object().shape({
   business_url: yup
     .string()
-    .matches(url_regex ,
+    .required("Business url is required")
+    .matches(
+      /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm,
       "Business url is not valid"
     )
-    .required("Business url is required"),
+    .nullable(),
+});
+
+const inviteContactSchema = yup.object().shape({
+  email: emailSchema,
+  mobile: yup.string().required("Please enter mobile number."),
 });
 
 const businessInfoSchema = yup.object().shape({
   business_url: yup.string().matches(url_regex, "Business url is not valid"),
-  business_id: yup.string().required("Business id is required")
-})
+  business_id: yup.string().required("Business id is required"),
+});
 
 export {
   LoginSchema,
@@ -142,8 +159,8 @@ export {
   editProfilePersonalUserSchema,
   forgotPasswordSchema,
   resetPasswordSchema,
-  linkBankSchema,
   loginWithOtpSchema,
+  inviteContactSchema,
   addBusinessUrlSchema,
-  businessInfoSchema
+  businessInfoSchema,
 };

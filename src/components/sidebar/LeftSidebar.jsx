@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import {
   IconActivity,
@@ -14,6 +15,9 @@ import {
 
 function LeftSidebar() {
   const location = useLocation();
+  const { profile } = useSelector((state) => state.userProfile);
+  const { user_type } = profile || "";
+
   const thisRoute = useMemo(() => location.pathname.split("/")[1], [location]);
 
   return (
@@ -25,75 +29,69 @@ function LeftSidebar() {
         />
       </span>
       <div className="dashboard-logo-wrap">
-        <Link to="/">
+        <Link to="/" replace>
           <img src="/assets/images/dashaboard-logo.png" alt="dashboard logo" />
         </Link>
-        <Link to="/" className="dashaboard-btn">
-          Business
+        <Link to="/" className="dashaboard-btn text-capitalize" replace>
+          {user_type}
         </Link>
       </div>
       <div className="dashboard-link-wrap">
         <ul className="dashboard-main-links">
           <li className={`${thisRoute === "dashboard" ? "active" : ""}`}>
-            <Link to="/dashboard">
+            <Link to="/" replace>
               <IconHome />
               <span>Dashboard</span>
             </Link>
           </li>
           <li className={`${thisRoute === "send" ? "active" : ""}`}>
-            <Link to="/">
+            <Link to="/" replace>
               <IconSend style={{ stroke: "#F3F3F3" }} />
               <span>Send</span>
             </Link>
           </li>
           <li className={`${thisRoute === "request" ? "active" : ""}`}>
-            <Link to="/">
+            <Link to="/" replace>
               <IconRequest />
               <span>Request</span>
             </Link>
           </li>
           <li className={`${thisRoute === "activities" ? "active" : ""}`}>
-            <Link to="/">
+            <Link to="/" replace>
               <IconActivity />
               <span>Activities</span>
             </Link>
           </li>
           <li className={`${thisRoute === "wallet" ? "active" : ""}`}>
-            <Link to="/wallet">
+            <Link to="/wallet" replace>
               <IconWallet />
-              Wallet
+              <span>Wallet</span>
             </Link>
           </li>
           <li className={`${thisRoute === "contacts" ? "active" : ""}`}>
-            <Link to="/">
+            <Link to="/contacts">
               <IconContact style={{ stroke: "#F3F3F3" }} />
-              Contacts
+              <span>Contacts</span>
             </Link>
           </li>
         </ul>
         <ul className="dashboard-bottom-links">
           <li className={`${thisRoute === "profile" ? "active" : ""}`}>
-            <Link to="/profile">
+            <Link to="/profile" replace>
               <IconProfileVerified />
-              Profile
+              <span>Profile</span>
             </Link>
           </li>
           <li className={`${thisRoute === "setting" ? "active" : ""}`}>
-            <Link to="/setting">
+            <Link to="/setting" replace>
               <IconSetting style={{ fill: "#fff100" }} />
-              Setting
-            </Link>
-          </li>
-          <li className={`${thisRoute === "link-bank" ? "active" : ""}`}>
-            <Link to="/wallet/link-bank">
-              <IconWallet />
-              Link Bank
+              <span>Settings</span>
             </Link>
           </li>
           <li>
-            <Link to="/logout">
+            <Link to="/logout" replace>
               <IconLogout style={{ stroke: "#FFF100" }} />
-              Log out
+              <span>Log out</span>
             </Link>
           </li>
         </ul>

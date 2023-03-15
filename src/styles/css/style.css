@@ -1,3 +1,188 @@
+/* Daterange Picker Popup CSS Start  */
+.daterange_popup_wrapper .daterangepicker {
+  width: 100%;
+  max-width: 350px;
+  top: 50% !important;
+  transform: translateY(-50%);
+  left: 0 !important;
+  right: 0 !important;
+  margin: auto;
+  background: #ffffff;
+  box-shadow: 0px 12px 50px rgb(37 31 48 / 20%);
+  border-radius: 40px;
+  border: 0px;
+  padding: 24px;
+  z-index: 999999;
+}
+.daterange_popup_wrapper .drp-buttons .btn {
+  padding: 15px 12px !important;
+  margin: 0px auto !important;
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  min-width: 160px;
+}
+.daterange_popup_wrapper .daterangepicker:before,
+.daterange_popup_wrapper .daterangepicker:after {
+  display: none;
+}
+.data_range_custom_title + .data_range_custom_title {
+  display: none;
+}
+.data_range_custom_title {
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 40px;
+  color: #363853;
+  text-align: center;
+  padding-bottom: 20px;
+}
+.daterange_popup_wrapper .drp-calendar.right {
+  display: none !important;
+}
+.daterange_popup_wrapper
+  .daterangepicker
+  .calendar-table
+  thead
+  tr:last-child
+  th {
+  padding-top: 15px;
+  padding-bottom: 10px;
+}
+.daterange_popup_wrapper .daterangepicker .calendar-table thead tr {
+  color: rgba(0, 0, 0, 0.6);
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 500;
+}
+.daterange_popup_wrapper .daterangepicker th.month {
+  font-size: 18px !important;
+  line-height: 20px;
+}
+.daterange_popup_wrapper
+  .daterangepicker
+  .calendar-table
+  thead
+  tr:last-child
+  th {
+  font-size: 12px;
+  line-height: 15px;
+}
+.daterange_popup_wrapper .daterangepicker .calendar-table tbody td {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 14px;
+  line-height: 18px;
+  border-radius: 5px;
+}
+.daterange_popup_wrapper .daterangepicker .calendar-table th,
+.daterange_popup_wrapper .daterangepicker .calendar-table td {
+  min-width: 36px;
+  height: 36px;
+}
+.daterange_popup_wrapper .daterangepicker {
+  width: 100%;
+  max-width: 350px;
+}
+.daterange_popup_wrapper .daterangepicker .drp-calendar.left {
+  padding: 0px;
+  max-width: 100%;
+  width: 100%;
+}
+.daterange_popup_wrapper .daterangepicker .calendar-table table {
+  border-collapse: collapse;
+}
+.daterange_popup_wrapper .calendar-table {
+  padding-right: 0px !important;
+}
+.daterange_popup_wrapper .daterangepicker td.today.active,
+.daterange_popup_wrapper .daterangepicker td.today {
+  background-color: #fff !important;
+  position: relative;
+  color: #363853 !important;
+}
+.daterange_popup_wrapper .daterangepicker td.today:before {
+  content: "";
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #363853;
+  position: absolute;
+  border-radius: 5px;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.daterange_popup_wrapper .daterangepicker td.start-date,
+.daterange_popup_wrapper .daterangepicker td.end-date {
+  background-color: #0081c5 !important;
+  color: #fff !important;
+}
+.daterange_popup_wrapper .drp-buttons .cancelBtn {
+  display: none;
+}
+.daterange_popup_wrapper .daterangepicker .drp-buttons {
+  padding: 25px 0px 0px;
+  border-top: none;
+}
+.daterange_popup_wrapper .daterangepicker td.in-range {
+  background-color: #ebf4f8;
+}
+.daterange_popup_wrapper span.drp-selected {
+  font-size: 14px !important;
+  color: #363853;
+  font-weight: 700;
+  font-family: "Comfortaa";
+  margin-bottom: 10px;
+  display: none;
+}
+.daterange_popup_wrapper form .form-control[readonly] {
+  background-color: #fff;
+}
+.daterange_popup_wrapper .drp-buttons .btn-primary:disabled {
+  background-color: #808080;
+  border-color: #808080;
+}
+.daterangepicker td.disabled {
+  color: #c5c5c5 !important;
+  text-decoration: none;
+}
+.js-data-picker-open {
+  overflow: hidden;
+}
+/*.overlay-body {
+    background: rgba(54, 56, 83, 0.3);
+    -webkit-backdrop-filter: blur(2.5px);
+    backdrop-filter: blur(2.5px);
+    display: block;
+    transition: auto;
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    opacity: 0;
+}
+.js-data-picker-open .overlay-body {
+	visibility: visible;
+	opacity: 1;
+}*/
+.js-data-picker-open:before {
+  content: "";
+  background: rgba(54, 56, 83, 0.3);
+  -webkit-backdrop-filter: blur(2.5px);
+  backdrop-filter: blur(2.5px);
+  display: block;
+  transition: auto;
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+}
+/*  Daterange Picker Popup CSS End  */
 @font-face {
   font-family: "Comfortaa";
   src: url("../fonts/Comfortaa-Bold.eot");
@@ -701,6 +886,7 @@ form {
   border: 2px solid #363853;
   max-width: 100%;
   max-height: 100%;
+  margin: auto;
 }
 .upload-profile-image {
   display: flex;
@@ -811,12 +997,15 @@ form .form-field select.form-control {
   -moz-transition: all 0.5s ease-in-out;
   -ms-transition: all 0.5s ease-in-out;
   -o-transition: all 0.5s ease-in-out;
+  min-height: 100vh;
 }
 .dashboard-right-sec {
   width: calc(100% - 221px);
   padding-left: 40px;
   padding-right: 40px;
   padding-top: 40px;
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
 }
 .dashboard-left-wrap {
   height: 100%;
@@ -826,7 +1015,7 @@ form .form-field select.form-control {
   position: absolute;
   left: auto;
   right: -40px;
-  top: 47px;
+  top: 30px;
   bottom: auto;
   margin: auto;
   width: 30px;
@@ -860,7 +1049,6 @@ form .form-field select.form-control {
   color: #363853;
   padding: 7px 27px 9px;
   line-height: 15px;
-  margin-top: -7px;
 }
 .dashboard-logo-wrap .dashaboard-btn:hover {
   background-color: #333;
@@ -877,6 +1065,7 @@ form .form-field select.form-control {
 .dashboard-link-wrap ul {
   width: 100%;
   padding-left: 17px;
+  background-color: #0081c5;
 }
 .dashboard-link-wrap ul li a {
   color: #fff;
@@ -890,9 +1079,6 @@ form .form-field select.form-control {
   padding: 14px 26px;
   background-color: transparent;
   border-radius: 15px 0 0 15px;
-}
-.dashboard-link-wrap ul li a svg {
-  margin-right: 20px;
 }
 .dashboard-link-wrap ul li a:hover,
 .dashboard-link-wrap ul li.active > a {
@@ -915,10 +1101,10 @@ form .form-field select.form-control {
   margin-bottom: 0;
   background-color: #0081c5;
 }
-.sidebar-open .dashboard-link-wrap ul li a {
+/*.sidebar-open .dashboard-link-wrap ul li a {
   font-size: 0;
   padding: 14.5px 18px 14.5px 25px;
-}
+}*/
 .sidebar-open .dashboard-logo-wrap a img {
   max-width: 80px;
 }
@@ -934,17 +1120,76 @@ form .form-field select.form-control {
 .sidebar-open .dashboard-link-wrap ul li a span {
   display: none;
 }
-.dashboard-logo-wrap a:first-child {
-  height: 93px;
-  display: flex;
-  align-items: center;
-}
 .dashboard-bottom-links li:last-child {
   margin-bottom: 0;
 }
 .sidebar-open .toggle-admin-btn img {
   transform: rotate(180deg);
 }
+.slider-card-common {
+  padding: 20px 20px 20px;
+  height: 120px;
+  box-shadow: 0px 5.08197px 10.1639px rgba(146, 123, 193, 0.3);
+  border-radius: 25px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.slider-card-common .card-holder-nm {
+  margin-bottom: 18px !important;
+}
+.slider-card-common .card-num-date p:first-child {
+  margin-bottom: 15px !important;
+}
+.slider-card-common .card-holder-nm,
+.slider-card-common .card-num-date p:first-child {
+  text-shadow: -1px -1px 3px rgba(255, 255, 255, 0.55),
+    2px 2px 4px rgba(0, 0, 0, 0.45);
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  color: #fff;
+  line-height: 18px;
+}
+.slider-card-common .card-num-date p:last-child {
+  font-size: 7px;
+  line-height: 10px;
+  color: #fff;
+  text-shadow: -1px -1px 3px rgba(255, 255, 255, 0.55),
+    2px 2px 4px rgba(0, 0, 0, 0.45);
+}
+.slider-card-common img.w-card-top-img {
+  max-width: 59px;
+}
+.slider-card-common img.w-card-bottom-img {
+  max-width: 140px;
+}
+.dashboard-home-container .dashboard-bottom-sec {
+  flex-wrap: nowrap;
+}
+.dashboard-home-container .dashboard-graph-sec {
+  width: calc(100% - 450px);
+  padding-right: 40px;
+}
+.dashboard-home-container .dashboard-card-links-sec {
+  width: 450px;
+  padding-left: 35px;
+}
+.dashboard-home-container .dashboard-search-wrap {
+  width: calc(100% - 450px);
+  padding-right: 40px;
+}
+.dashboard-home-container .dashboard-notification-sec {
+  width: 450px;
+  padding-left: 35px;
+}
+.dashboard-home-container .dashboard-bottom-sec {
+  padding-top: 20px;
+}
+
 /*dashboard page css close*/
 
 /* profile page css starts*/
@@ -971,6 +1216,7 @@ form .form-field select.form-control {
   display: flex;
   justify-content: center;
   overflow: hidden;
+  border-radius: 50px;
 }
 .profile-avtar > img {
   display: block;
@@ -983,7 +1229,7 @@ form .form-field select.form-control {
 .profile-info h3 {
   font-size: 28px;
   line-height: 40px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   color: #323232;
   margin-bottom: 0;
 }
@@ -1103,6 +1349,7 @@ form .form-field select.form-control {
 }
 .sidebar-open .dashboard-right-sec {
   width: calc(100% - 99px);
+  transition: width 1s;
 }
 /* profile page css close*/
 
@@ -1320,12 +1567,8 @@ right: auto;
 top: 0;
 bottom: 0;
 margin: auto;
-}*/
-.settings-notifications-bottom-info-sec
-  .form-switch
-  .form-check-input
-  + label::after {
-}
+} */
+
 .settings-notifications-bottom-info-sec
   .form-switch
   .form-check-input:checked
@@ -1395,7 +1638,7 @@ margin: auto;
 .settings-edit-profile-top-sec {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
   padding-bottom: 45px;
 }
 .settings-edit-profile-top-sec .upload-profile-image a {
@@ -1408,9 +1651,9 @@ margin: auto;
   color: #24beef;
   letter-spacing: normal;
 }
-.settings-edit-profile-top-sec .profile-info {
+/*.settings-edit-profile-top-sec .profile-info {
   padding-top: 27px;
-}
+}*/
 .settings-edit-profile-inner-sec {
   width: 100%;
   max-width: 559px;
@@ -1756,7 +1999,7 @@ form .search-field -o::placeholder {
 .user-image-wrap {
   width: 48px;
   height: 48px;
-  border: 1.5px solid #0081c5;
+  border: 2px solid #363853;
   border-radius: 20px;
   display: flex;
   flex-wrap: wrap;
@@ -1764,10 +2007,9 @@ form .search-field -o::placeholder {
   align-items: center;
   box-shadow: 0px 7.3125px 14.625px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  margin-left: 21px;
 }
 .no-search-ontop {
-  justify-content: end;
+  justify-content: flex-end;
 }
 .dashboard-notification-sec {
   display: flex;
@@ -3604,7 +3846,7 @@ form .row {
 }
 /*  16-02-20023*/
 .no-search-ontop {
-  justify-content: end;
+  justify-content: flex-end;
 }
 .add-card-right-sec {
   padding-top: 40px;
@@ -4849,7 +5091,7 @@ img.img-size {
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  align-items: end;
+  align-items: flex-end;
 }
 .slider-card-common .card-holder-nm {
   margin-bottom: 18px !important;
@@ -4930,8 +5172,10 @@ img.img-size {
   line-height: 25px;
   font-weight: 500;
   color: #363853;
-  width: calc(100% - 32px);
+  width: calc(100% - 36px);
   padding-right: 15px;
+  white-space: normal;
+  word-break: break-all;
 }
 .pi-title-div {
   width: 180px;
@@ -4974,19 +5218,19 @@ p.bank-name-wrap {
   white-space: normal;
 }
 .bank-account-type-wrap {
-  max-width: 170px;
-  min-width: 170px;
+  max-width: 210px;
+  min-width: 180px;
   width: 100%;
   padding-right: 10px;
 }
 .bank-account-num-wrap {
-  max-width: 105px;
-  min-width: 105px;
+  max-width: 230px;
+  min-width: 180px;
   width: 100%;
   padding-right: 10px;
 }
 .bank-bal-wrap {
-  max-width: 185px;
+  max-width: 210px;
   min-width: 185px;
   width: 100%;
   padding-right: 10px;
@@ -5021,10 +5265,16 @@ p.bank-name-wrap {
 .db-view-bank-listing li:hover .bank-del-wrap svg path {
   stroke: #ff3333;
 }
-.db-view-bank-listing li:hover .bank-bal-wrap,
+/*.db-view-bank-listing li:hover .bank-bal-wrap,
 .db-view-bank-listing li:hover .bank-account-num-wrap,
 .db-view-bank-listing li:hover .bank-account-date-wrap,
 .bank-account-type-wrap input:checked ~ label {
+  color: #363853;
+}*/
+.bank-account-type-wrap input:checked ~ label,
+.db-view-bank-listing li:hover .bank-account-routing-num,
+.db-view-bank-listing li:hover .bank-account-num-wrap,
+.db-view-bank-listing li:hover .bank-account-type-wrap {
   color: #363853;
 }
 .bank-account-type-wrap label {
@@ -5074,8 +5324,8 @@ p.bank-name-wrap {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  max-width: 200px;
-  min-width: 200px;
+  max-width: 250px;
+  min-width: 250px;
   width: 100%;
 }
 .bank-logo-wrap {
@@ -5100,7 +5350,7 @@ p.bank-name-wrap {
 }
 .view_bank_listing_bottom-wrap {
   position: absolute;
-  bottom: 50px;
+  bottom: 30px;
 }
 .db-view-bank-listing-main-wrap {
   padding-left: 50px;
@@ -5110,9 +5360,11 @@ p.bank-name-wrap {
   padding-top: 20px;
 }
 .db-view-bank-main ul.db-view-bank-listing {
-  height: 505px;
+  /*max-height: 505px;*/
   overflow: auto;
   padding: 15px;
+  max-height: calc(100vh - 260px);
+  height: auto;
 }
 /* Dashboard View Bank Acccounts End  */
 /* Dashboard View Card Bank Acccounts Star  */
@@ -5120,8 +5372,8 @@ p.bank-name-wrap {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  max-width: 290px;
-  min-width: 290px;
+  max-width: 320px;
+  min-width: 320px;
   width: 100%;
   padding-right: 10px;
 }
@@ -5155,8 +5407,8 @@ p.bank-cardname-wrap {
   padding-bottom: 16px;
 }
 .bank-account-date-wrap {
-  max-width: 65px;
-  min-width: 65px;
+  max-width: 130px;
+  min-width: 100px;
   width: 100%;
   font-size: 16px;
   padding-right: 10px;
@@ -5192,4 +5444,403 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 .modal .form-control {
   color: #363853 !important;
+}
+/* Daterange Picker Popup CSS Start */
+.daterange_popup_wrapper .daterangepicker {
+  width: 100%;
+  max-width: 350px;
+  top: 50% !important;
+  transform: translateY(-50%);
+  left: 0 !important;
+  right: 0 !important;
+  margin: auto;
+  background: #ffffff;
+  box-shadow: 0px 12px 50px rgb(37 31 48 / 20%);
+  border-radius: 40px;
+  border: 0px;
+  padding: 24px;
+  z-index: 999999;
+}
+.daterange_popup_wrapper .drp-buttons .btn {
+  padding: 15px 12px !important;
+  margin: 0px auto !important;
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  min-width: 160px;
+}
+.daterange_popup_wrapper .daterangepicker:before,
+.daterange_popup_wrapper .daterangepicker:after {
+  display: none;
+}
+.data_range_custom_title + .data_range_custom_title {
+  display: none;
+}
+.data_range_custom_title {
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 40px;
+  color: #363853;
+  text-align: center;
+  padding-bottom: 20px;
+}
+.daterange_popup_wrapper .drp-calendar.right {
+  display: none !important;
+}
+.daterange_popup_wrapper
+  .daterangepicker
+  .calendar-table
+  thead
+  tr:last-child
+  th {
+  padding-top: 15px;
+  padding-bottom: 10px;
+}
+.daterange_popup_wrapper .daterangepicker .calendar-table thead tr {
+  color: rgba(0, 0, 0, 0.6);
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 500;
+}
+.daterange_popup_wrapper .daterangepicker th.month {
+  font-size: 18px !important;
+  line-height: 20px;
+}
+.daterange_popup_wrapper
+  .daterangepicker
+  .calendar-table
+  thead
+  tr:last-child
+  th {
+  font-size: 12px;
+  line-height: 15px;
+}
+.daterange_popup_wrapper .daterangepicker .calendar-table tbody td {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 14px;
+  line-height: 18px;
+  border-radius: 5px;
+}
+.daterange_popup_wrapper .daterangepicker .calendar-table th,
+.daterange_popup_wrapper .daterangepicker .calendar-table td {
+  min-width: 36px;
+  height: 36px;
+}
+.daterange_popup_wrapper .daterangepicker {
+  width: 100%;
+  max-width: 350px;
+}
+.daterange_popup_wrapper .daterangepicker .drp-calendar.left {
+  padding: 0px;
+  max-width: 100%;
+  width: 100%;
+}
+.daterange_popup_wrapper .daterangepicker .calendar-table table {
+  border-collapse: collapse;
+}
+.daterange_popup_wrapper .calendar-table {
+  padding-right: 0px !important;
+}
+.daterange_popup_wrapper .daterangepicker td.today.active,
+.daterange_popup_wrapper .daterangepicker td.today {
+  background-color: #fff !important;
+  position: relative;
+  color: #363853 !important;
+}
+.daterange_popup_wrapper .daterangepicker td.today:before {
+  content: "";
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #363853;
+  position: absolute;
+  border-radius: 5px;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.daterange_popup_wrapper .daterangepicker td.start-date,
+.daterange_popup_wrapper .daterangepicker td.end-date {
+  background-color: #0081c5 !important;
+  color: #fff !important;
+}
+.daterange_popup_wrapper .drp-buttons .cancelBtn {
+  display: none;
+}
+.daterange_popup_wrapper .daterangepicker .drp-buttons {
+  padding: 25px 0px 0px;
+  border-top: none;
+}
+.daterange_popup_wrapper .daterangepicker td.in-range {
+  background-color: #ebf4f8;
+}
+.daterange_popup_wrapper span.drp-selected {
+  font-size: 14px !important;
+  color: #363853;
+  font-weight: 700;
+  font-family: "Comfortaa";
+  margin-bottom: 10px;
+  display: none;
+}
+.daterange_popup_wrapper form .form-control[readonly] {
+  background-color: #fff;
+}
+.daterange_popup_wrapper .drp-buttons .btn-primary:disabled {
+  background-color: #808080;
+  border-color: #808080;
+}
+.daterangepicker td.disabled {
+  color: #c5c5c5 !important;
+  text-decoration: none;
+}
+.js-data-picker-open {
+  overflow: hidden;
+}
+/*.overlay-body {
+    background: rgba(54, 56, 83, 0.3);
+    -webkit-backdrop-filter: blur(2.5px);
+    backdrop-filter: blur(2.5px);
+    display: block;
+    transition: auto;
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    opacity: 0;
+}
+.js-data-picker-open .overlay-body {
+	visibility: visible;
+	opacity: 1;
+}*/
+.js-data-picker-open:before {
+  content: "";
+  background: rgba(54, 56, 83, 0.3);
+  -webkit-backdrop-filter: blur(2.5px);
+  backdrop-filter: blur(2.5px);
+  display: block;
+  transition: auto;
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+}
+/* Daterange Picker Popup CSS End */
+/* CSS For UI Datapicker Styling */
+.ui-datepicker-calendar .ui-state-active,
+.ui-datepicker-calendar .ui-widget-content .ui-state-active {
+  border: 1px solid #0081c5 !important;
+  background: #0081c5 !important;
+}
+.ui-datepicker-calendar .ui-state-highlight,
+.ui-widget-content .ui-state-highlight {
+  border: 1px solid #363853 !important;
+  background: #363853 !important;
+  color: #fff !important;
+}
+/* Update on 07-03 */
+.text-danger {
+  font-size: 14px !important;
+  line-height: 20px !important;
+  font-weight: 700 !important;
+  margin-top: 5px;
+  word-break: break-word;
+}
+.profile-info-right-desc > .profile-edit-form-wrap .form-field {
+  width: 100%;
+  margin-right: 10px;
+}
+.profile-info-right-desc > .profile-edit-form-wrap input.form-control {
+  width: 100%;
+  height: 50px !important;
+  padding: 0px 12px !important;
+}
+.profile-edit-form-wrap button.edit-button {
+  margin-top: 10px;
+}
+.profile-info-right-desc form.profile-edit-form-wrap .form-field {
+  margin-bottom: 0px !important;
+}
+/* 09-03 */
+select.form-control option {
+  color: #363853;
+}
+.bank-account-num-wrap,
+p.bank-cardname-wrap,
+p.bank-name-wrap {
+  white-space: normal;
+  word-break: break-all;
+}
+.bank-del-wrap {
+  min-width: 45px;
+}
+.settings-bottom-info-sec > ul > li {
+  cursor: pointer;
+  position: relative;
+}
+li.db-view-bank-heading {
+  border-bottom: 1px solid #eee;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 0px !important;
+}
+li.db-view-bank-heading > div,
+li.db-view-bank-heading .bank-bal-wrap {
+  font-size: 16px !important;
+  line-height: 20px;
+  font-weight: 600 !important;
+  white-space: normal;
+  word-break: break-word;
+  color: #363853;
+  font-family: "Visby Round CF";
+}
+li.db-view-bank-heading .bank-del-wrap {
+  background-color: transparent;
+}
+li.db-view-bank-heading:hover {
+  box-shadow: none;
+  background-color: transparent;
+  pointer-events: none;
+}
+.bank-account-routing-num {
+  width: 100%;
+  max-width: 180px;
+  min-width: 180px;
+  white-space: normal;
+  word-break: break-all;
+}
+.pop-cancel-btn button {
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0px;
+  border: none;
+  background-color: transparent;
+  color: #0081c5;
+  font-size: 16px;
+  line-height: 20px;
+  margin-top: 15px;
+}
+.pop-cancel-btn button:hover {
+  color: #363853 !important;
+}
+ul.dashboard-main-links {
+  padding-bottom: 30px;
+}
+.settings-edit-profile-top-sec .profile-info,
+.profile-top-sec .profile-info {
+  width: calc(100% - 122px);
+  word-break: break-all;
+  white-space: normal;
+}
+.profile-bottom-info-sec .profile-info-right-desc p {
+  width: 100% !important;
+  padding-right: 0px !important;
+}
+/* Menu CSS New */
+.dashboard-left-sec {
+  position: fixed;
+}
+.dashboard-right-sec {
+  margin-left: auto;
+  margin-right: 0;
+  transition: width 1s;
+}
+.dashboard-link-wrap ul li a svg {
+  margin-right: 0px;
+  width: 19px;
+  min-width: 19px;
+}
+.dashboard-link-wrap ul li a span {
+  padding-left: 20px;
+}
+.dashboard-logo-wrap {
+  padding: 40px 5px 0px;
+  height: 125px;
+  justify-content: start;
+}
+.dashboard-logo-wrap a:first-child {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+.dashboard-link-wrap {
+  height: calc(100vh - 125px);
+}
+.dashboard-logo-wrap a img {
+  width: 100%;
+  max-width: 130px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0px;
+}
+.sidebar-open .dashboard-logo-wrap .dashaboard-btn {
+  padding: 5px 20px;
+  font-size: 10px;
+}
+.profile-bottom-info-sec .with-edit-ic p {
+  width: calc(100% - 35px) !important;
+}
+/* Wallet Page Links */
+.wallet-pg-inks h1 {
+  margin-bottom: 20px;
+}
+.wallet-pg-inks a {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  font-family: "Visby Round CF Demi";
+}
+/*  13- 03 */
+.dashboard-left-sec ::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+  background: #ddd;
+}
+.dashboard-left-sec ::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 0px rgba(0, 0, 0, 0);
+}
+.dashboard-left-sec ::-webkit-scrollbar-thumb {
+  background: #24beef;
+  border-radius: 0px;
+  width: 4px;
+  height: 3px;
+}
+.dashboard-left-sec ::-webkit-scrollbar-thumb:hover {
+  background: #24beef;
+}
+.wallet-ac-info-wrap .wallet-ac-inner {
+  overflow: hidden;
+}
+.no-bank-data ul {
+  display: none;
+}
+/* Modal Fixed */
+.wallet-pg-model > div {
+  width: 100%;
+}
+.wallet-pg-model .modal-content {
+  margin: 15px;
+  min-width: auto !important;
+}
+/*#crop_image_model > div {
+  width: 100%;
+}
+#crop_image_model .modal-content {
+  margin: 15px;
+}
+#crop_image_model .modal-dialog {
+  max-width: 100% !important;
+}*/
+
+@media only screen and (max-width: 640px) {
+  .crop_container {
+    width: 100%;
+    margin-top: 20px;
+    justify-content: center !important;
+  }
 }

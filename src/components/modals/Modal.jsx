@@ -8,7 +8,7 @@ function Modal(props) {
   useEffect(() => {
     function handleclickOutside(event) {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setShow(false);
+        setShow && setShow(false);
       }
     }
     document.addEventListener("mousedown", handleclickOutside);
@@ -17,10 +17,10 @@ function Modal(props) {
     };
   }, [modalRef, setShow]);
 
-  if (!show) return null;
+  if (!show) return;
   return (
     <div
-      className={`modal fade show ${styles.modal} ${className}`}
+      className={`test modal fade show ${styles.modal} ${className}`}
       id={id}
       role="dialog"
     >

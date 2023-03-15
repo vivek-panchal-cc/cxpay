@@ -13,7 +13,7 @@ const FILE_SIZE = 5 * 1048576;
 const emailSchema = yup
   .string()
   .email("Please enter a valid email")
-  .required("Email can't be null");
+  .required("Please enter email.");
 
 // const passwordSchema = yup
 //   .string()
@@ -28,7 +28,7 @@ const emailSchema = yup
 
 const passwordSchema = yup
   .string()
-  .required("Please enter new Password")
+  .required("Please enter new password")
   .min(
     8,
     "Password must contain at least one number, one uppercase & lowercase letter and one special character, and at least 8 or more characters"
@@ -60,20 +60,25 @@ const passwordSchema = yup
 
 const confirmPasswordSchema = yup
   .string()
-  .oneOf([yup.ref("password"), null], "Password must Match")
-  .required("Please enter confirm Password");
+  .oneOf([yup.ref("password"), null], "Password must be matched")
+  .required("Please enter confirm password");
+
+const changeConfirmPasswordSchema = yup
+  .string()
+  .oneOf([yup.ref("new_password"), null], "Password must be matched")
+  .required("Please enter confirm password");
 
 const profileImageSchema = yup
   .mixed()
   .test({
-    message: "Image type is not allowed",
+    message: "File Type is not allowed",
     test: (file) =>
       file && file.name
         ? isValidFileType(file && file.name.toLowerCase(), "image")
         : true,
   })
   .test({
-    message: "File must not exceed 5 MB",
+    message: "Profile picture must not exceed 5 MB size.",
     test: (file) => (file && file.size ? file.size <= FILE_SIZE : true),
   });
 
@@ -82,12 +87,13 @@ const mobileSchema = yup
   .min(10, "Mobile number must be 10 digits")
   .max(10, "Mobile number must be 10 digits")
   .matches(/^[0-9]*$/, "Enter a valid mobile number")
-  .required("Mobile number is required");
+  .required("Please enter mobile number");
 
 export {
   emailSchema,
   passwordSchema,
   confirmPasswordSchema,
+  changeConfirmPasswordSchema,
   profileImageSchema,
   mobileSchema,
 };

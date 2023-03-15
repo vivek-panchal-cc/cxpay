@@ -1,15 +1,6 @@
 @import url("./styles/css/style.css");
 @import url("./styles/css/responsive.css");
 
-/* body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-} */
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -49,4 +40,45 @@ code {
 .cursor-not-allowed {
   pointer-events: visible !important;
   cursor: not-allowed !important;
+}
+.resend-otp-wrap {
+  text-align: center;
+  width: 100%;
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #5b5b5b;
+  margin-bottom: 25px;
+}
+.resend-otp-wrap span:first-child {
+  color: #ff3333;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.resend-otp-wrap p {
+  margin-top: 10px;
+  padding: 0px !important;
+  margin: 15px 0px 10px;
+  font-size: 18px;
+  line-height: 22px;
+}
+.resend-otp-wrap button.disabled {
+  color: #9d9d9d;
+  pointer-events: none;
+}
+.resend-otp-wrap button {
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0px;
+  border: none;
+  background-color: transparent;
+  color: #0081c5;
+}
+.resend-otp-wrap button:hover {
+  color: #363853;
+}
+.upload-profile-image .profile-wrap {
+  border-radius: 50% !important;
 }

@@ -1,14 +1,15 @@
 import * as yup from "yup";
-import { emailSchema, passwordSchema } from "./commonSchema";
+import {
+  changeConfirmPasswordSchema,
+  emailSchema,
+  passwordSchema,
+} from "./commonSchema";
 
 const passwordChangeSchema = yup.object().shape({
   email: emailSchema,
-  current_password: yup.string().required("Please enter old Password").max(30),
+  current_password: yup.string().required("Please enter old password"),
   new_password: passwordSchema,
-  confirm_password: yup
-    .string()
-    .oneOf([yup.ref("new_password"), null], "Password must Match")
-    .required("Please enter confirm Password"),
+  confirm_password: changeConfirmPasswordSchema,
 });
 
 export { passwordChangeSchema };

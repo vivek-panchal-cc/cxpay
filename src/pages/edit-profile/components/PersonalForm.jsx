@@ -10,7 +10,6 @@ import InputFile from "components/ui/InputImage";
 import { IconLeftArrow } from "styles/svgs";
 import InputSelect from "components/ui/InputSelect";
 import { fetchUserProfile } from "features/user/userProfileSlice";
-// import FileInput from "components/ui/FileInput";
 
 function PersonalForm(props) {
   const { countryList, cityList } = props;
@@ -23,20 +22,20 @@ function PersonalForm(props) {
     mobile_number,
     country_code,
     city,
+    country,
     profile_image,
+    personal_id,
   } = profile || {};
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { country_index, country_iso, country } = useMemo(() => {
-    if (!country_code) return {};
-    const cphonecode = parseInt(country_code);
+  const { country_index, country_iso } = useMemo(() => {
+    if (!country) return {};
     const country_index = countryList.findIndex(
-      (e) => e.phonecode === cphonecode
+      (e) => e.country_name === country
     );
-    const { iso, country_name } =
-      countryList.find((e) => e.phonecode === cphonecode) || {};
-    return { country_index, country_iso: iso, country: country_name };
+    const { iso } = countryList.find((e) => e.country_name === country) || {};
+    return { country_index, country_iso: iso };
   }, [country_code, countryList]);
 
   const formik = useFormik({
@@ -46,6 +45,7 @@ function PersonalForm(props) {
       mobile_number: mobile_number || "", //not required for API
       first_name: first_name || "",
       last_name: last_name || "",
+      personal_id: personal_id || "",
       user_type: user_type || "",
       profile_image: profile_image || "",
       country_index: country_index, //not required for API
@@ -57,7 +57,6 @@ function PersonalForm(props) {
     validationSchema: editProfilePersonalUserSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
       try {
-        console.log(values);
         const formData = new FormData();
         for (let key in values) {
           if (key === "profile_image") continue;
@@ -97,23 +96,13 @@ function PersonalForm(props) {
                     e.currentTarget.files[0]
                   );
                 }}
-                error={formik.errors.profile_image}
-                showPreview={
-                  profile_image
-                    ? profile_image
-                    : "/assets/images/user-avatar.png"
-                }
+                showPreview={true}
                 showLabel={false}
-                previewSrc={
-                  profile_image
-                    ? profile_image
-                    : "/assets/images/user-avatar.png"
-                }
+                previewSrc={profile_image}
                 fallbackSrc={
-                  profile_image
-                    ? profile_image
-                    : "/assets/images/user-avatar.png"
+                  profile_image ? profile_image : "/assets/images/Personal.png"
                 }
+                showLoader={true}
                 classNameInput="d-none"
                 classNameBorder="border-0 overflow-visible"
                 classNameLabel="profile-avtar"
@@ -123,7 +112,7 @@ function PersonalForm(props) {
                   {first_name} {last_name}
                 </h3>
                 <p>
-                  <a href="mailto:">{email}</a>
+                  <a href={`mailto:${email}`}>{email}</a>
                 </p>
                 <p className="">
                   <label
@@ -131,15 +120,18 @@ function PersonalForm(props) {
                     className="cursor-pointer"
                     style={{ color: "#0081c5" }}
                   >
-                    Change Profile Picture
+                    {profile_image || formik.values.profile_image
+                      ? "Change Profile Picture"
+                      : "Select Profile Picture"}
                   </label>
                 </p>
+                <p className="text-danger">{formik.errors.profile_image}</p>
               </div>
             </div>
             <div className="form-field two-fields mb-0">
               <div className="field-half">
                 <Input
-                  type="text"
+                  type="name"
                   className="form-control"
                   placeholder="First Name"
                   name="first_name"
@@ -151,7 +143,7 @@ function PersonalForm(props) {
               </div>
               <div className="field-half">
                 <Input
-                  type="text"
+                  type="name"
                   className="form-control"
                   placeholder="Last Name"
                   name="last_name"
@@ -161,6 +153,18 @@ function PersonalForm(props) {
                   error={formik.touched.last_name && formik.errors.last_name}
                 />
               </div>
+            </div>
+            <div className="form-field">
+              <Input
+                type="text"
+                className="form-control"
+                placeholder="Personal ID"
+                name="personal_id"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.personal_id}
+                error={formik.touched.personal_id && formik.errors.personal_id}
+              />
             </div>
             <div className="form-field">
               <Input
@@ -198,22 +202,18 @@ function PersonalForm(props) {
                   onChange={({ currentTarget }) => {
                     const i = parseInt(currentTarget.value);
                     formik.setFieldValue("country_index", i);
-                    formik.setFieldValue("country_iso", countryList[i].iso);
-                    formik.setFieldValue(
-                      "mobile_code",
-                      countryList[i].phonecode
-                    );
+                    formik.setFieldValue("country_iso", countryList[i]?.iso);
                     formik.setFieldValue(
                       "country",
-                      countryList[i].country_name
+                      countryList[i]?.country_name
                     );
                     formik.setFieldValue("city", "");
                   }}
                   onBlur={formik.handleBlur}
                   value={formik.values.country_index}
-                  error={formik.touched.country && formik.errors.country}
+                  error={formik.touched.country_index && formik.errors.country}
                 >
-                  <option value={""}>Select Country</option>
+                  <option value={"-1"}>Select Country</option>
                   {countryList?.map((country, index) => (
                     <option key={index} value={index}>
                       {country.country_name}

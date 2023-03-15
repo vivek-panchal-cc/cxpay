@@ -31,6 +31,7 @@ const LoginWithOtp = (props) => {
         if (!data.success || data.data === null) throw data.message;
         setMobileNumber(values.mobile_number);
         toast.success(data.data.login_otp);
+        toast.success(data.message);
         setShowVerifyPhonePopup(true);
       } catch (error) {
         resetForm();
@@ -38,6 +39,7 @@ const LoginWithOtp = (props) => {
       }
     },
   });
+
   return (
     <div className="login-signup common-body-bg">
       <div className="container login-signup-01">
@@ -48,9 +50,12 @@ const LoginWithOtp = (props) => {
                 <Modal
                   id="login_otp_modal"
                   show={showVerifyPhonePopup}
-                  setShow={setShowVerifyPhonePopup}
+                  // setShow={setShowVerifyPhonePopup}
                 >
-                  <VerifyLoginOtp mobileNumber={mobileNumber} />
+                  <VerifyLoginOtp
+                    setShow={setShowVerifyPhonePopup}
+                    mobileNumber={mobileNumber}
+                  />
                 </Modal>
                 <h4 className="text-center">Welcome to</h4>
                 <div className="login-logo-image text-center">
@@ -65,7 +70,7 @@ const LoginWithOtp = (props) => {
                 <form onSubmit={formik.handleSubmit}>
                   <div className="form-field">
                     <Input
-                      type="text"
+                      type="mobile"
                       className="form-control"
                       placeholder="Mobile Number"
                       name="mobile_number"
@@ -90,7 +95,7 @@ const LoginWithOtp = (props) => {
                     />
                   </div>
                   <p className="sign-up-text text-center">
-                    Already have an account? <a href="/login">Login</a>
+                    Don't have an account ? <a href="/signup"> Signup</a>
                   </p>
                 </form>
               </div>

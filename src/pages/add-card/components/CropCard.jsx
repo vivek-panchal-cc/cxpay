@@ -1,10 +1,13 @@
+import { LoaderContext } from "context/loaderContext";
 import getCroppedImg from "helpers/croppedImage";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import Cropper from "react-easy-crop";
-import { IconCancel, IconImage } from "styles/svgs";
+import { IconCancel, IconCancleBg, IconCheckBg, IconImage } from "styles/svgs";
 import styles from "../addCard.module.scss";
 
 function CropCard(props) {
+  const { setIsLoading } = useContext(LoaderContext);
+
   const { src, onImgCropped, closeModal } = props;
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [croppedAreaPixels, setCroppedAreaPixel] = useState();
@@ -15,9 +18,16 @@ function CropCard(props) {
   }, []);
 
   const handleSelect = useCallback(async () => {
-    // getCroppedImg return As blob
-    const img = await getCroppedImg(src, croppedAreaPixels);
-    onImgCropped(img);
+    setIsLoading(true);
+    try {
+      // getCroppedImg return As blob
+      const imgObj = await getCroppedImg(src, croppedAreaPixels);
+      onImgCropped(imgObj);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   }, [onImgCropped, croppedAreaPixels, src]);
 
   const handleRangeChange = useCallback((e) => {
@@ -41,11 +51,7 @@ function CropCard(props) {
         <div className="modal-body">
           <div className="custimize-iu-wrap">
             <div
-              className="position-relative rounded-3 overflow-hidden"
-              style={{
-                height: "358px",
-                width: "636px",
-              }}
+              className={`position-relative rounded-3 overflow-hidden ${styles.cropper_wrap}`}
             >
               <Cropper
                 image={src}
@@ -72,20 +78,24 @@ function CropCard(props) {
                   className="w-100"
                 />
               </div>
-              <div className="col-3 d-flex justify-content-end radio-group-wrap">
+              <div
+                className={`col-3 d-flex justify-content-end radio-group-wrap crop_container`}
+              >
                 <button
                   type="button"
-                  className="radio-round green rounded-4"
+                  className="radio-round rounded-4"
                   onClick={handleSelect}
                 >
-                  <span className="text-white">&#10003;</span>
+                  <span className="text-white">
+                    <IconCheckBg />
+                  </span>
                 </button>
                 <button
-                  className="radio-round purple ms-3 rounded-4 text-white"
+                  className="radio-round ms-3 rounded-4 text-white"
                   onClick={closeModal}
                 >
                   <span>
-                    <IconCancel style={{ stroke: "#fff" }} />
+                    <IconCancleBg />
                   </span>
                 </button>
               </div>
