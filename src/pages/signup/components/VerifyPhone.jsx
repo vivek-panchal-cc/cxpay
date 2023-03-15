@@ -10,7 +10,8 @@ import { toast } from "react-toastify";
 function VerifyPhone(props) {
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const [counter, setCounter] = useState(otpCounterTime);
-  const [isTimerOver, setIsTimerOver] = useState("disabled");
+  const [isTimerOver, setIsTimerOver] = useState(true);
+  const [error, setError] = useState(false);
 
   React.useEffect(() => {
     const timer =
@@ -22,26 +23,12 @@ function VerifyPhone(props) {
     handleTimeOut();
   }, []);
 
-  const handleTimeOut = () => {
-    setTimeout(function () {
-      setIsTimerOver("");
-    }, otpCounterTime * 1000);
-  };
-
-  const handleResendBtn = async () => {
-    setIsTimerOver("disabled");
-    setCounter(otpCounterTime);
-    handleTimeOut();
-    try {
-      const { data } = await apiRequest.resendRegisterOtp({
-        mobile_number: signUpCreds.mobile_number,
-      });
-      if (!data.success || data.data === null) throw data.message;
-
-      toast.success(data.data.otp);
-      toast.success(data.message);
-    } catch (error) {}
-  };
+  let formattedNumber = (counter % 60).toLocaleString("en-US", {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
+  });
+  let counterTime =
+    Math.floor(counter / 60) + ":" + (formattedNumber ? formattedNumber : "00");
 
   const formik = useFormik({
     initialValues: {
@@ -61,6 +48,35 @@ function VerifyPhone(props) {
     },
   });
 
+  const handleResendBtn = async () => {
+    formik.setStatus("");
+    setIsTimerOver(true);
+    setCounter(otpCounterTime);
+    handleTimeOut();
+    try {
+      const { data } = await apiRequest.resendRegisterOtp({
+        mobile_number: signUpCreds.mobile_number,
+      });
+      if (!data.success || data.data === null) throw data.message;
+
+      toast.success(data.data.otp);
+      toast.success(data.message);
+    } catch (error) {
+      if (typeof error === "string") {
+        setIsTimerOver(true);
+        formik.setStatus(error);
+        setError(true);
+      }
+    }
+  };
+
+  const handleTimeOut = () => {
+    setTimeout(function () {
+      setIsTimerOver(false);
+      formik.setStatus("");
+    }, otpCounterTime * 1000);
+  };
+
   return (
     <div className="modal-dialog modal-dialog-centered">
       <div className="modal-content">
@@ -71,7 +87,7 @@ function VerifyPhone(props) {
         </div>
         <div className="modal-body">
           <h3>Verify your Phone Number</h3>
-          <p>Pleases enter confirmation code</p>
+          <p>Please enter confirmation code</p>
           <form className="login-otp-numbers" onSubmit={formik.handleSubmit}>
             <div className="form-field">
               <InputOtp
@@ -80,18 +96,25 @@ function VerifyPhone(props) {
                 className={"form-control"}
                 value={formik.values.user_otp}
                 onChange={formik.handleChange}
+                handleSubmit={formik.handleSubmit}
                 error={formik.touched.user_otp && formik.errors.user_otp}
               />
             </div>
-            <div className="resendOtp">
-              {isTimerOver === "disabled" &&
-                Math.floor(counter / 60) +
-                  ":" +
-                  (counter % 60 ? counter % 60 : "00")}
+            <div className="resend-otp-wrap">
+              {isTimerOver && !error && (
+                <div>
+                  <span>{counterTime}</span>
+                  <br />
+                </div>
+              )}
+              <p>Didn't receive any code?</p>
               <button
-                className={isTimerOver}
+                className={isTimerOver ? "disabled" : ""}
                 disabled={isTimerOver}
                 onClick={handleResendBtn}
+                tabIndex="0"
+                data-toggle="tooltip"
+                title="Tooltip on top"
               >
                 Resend OTP
               </button>

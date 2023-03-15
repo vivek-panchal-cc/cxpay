@@ -8,7 +8,7 @@ const validFileExtensions = {
   image: ["jpg", "png", "jpeg", "svg"],
 };
 // const validFileSize = "5MB";
-const otpCounterTime = 60;
+const otpCounterTime = 180;
 // Test Functions
 const regexNotContainWhitespace = (testStr) =>
   new RegExp(exp0ContainWhitespace).test(testStr);
@@ -25,8 +25,9 @@ const regexContainNumber = (testStr) =>
 const regexContainSpecialCharacter = (testStr) =>
   new RegExp(expContainSpecialChar).test(testStr);
 
-// regex 
-const url_regex = /^((http|https):\/\/)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/;
+// regex
+const url_regex =
+  /^((http|https):\/\/)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/;
 
 // To check file type
 const isValidFileType = (fileName, fileType) => {
@@ -36,9 +37,12 @@ const isValidFileType = (fileName, fileType) => {
   );
 };
 
+// theme colors
+const THEME_COLORS = ["purple", "yellow", "blue", "light_blue", "green"];
+
 // To check file size
 // const fileUploadLimit = (file, fileSize) => {
-//   
+//
 //   return file && validFileSize[file].indexOf(file.split(".").pop()) > -1;
 // };
 
@@ -50,7 +54,8 @@ export {
   expContainSpecialChar,
   validFileExtensions,
   otpCounterTime,
-  url_regex
+  url_regex,
+  THEME_COLORS,
 };
 export {
   regexContainCapitalLetter,

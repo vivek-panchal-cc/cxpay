@@ -20,21 +20,20 @@ function Businessform(props) {
     email,
     mobile_number,
     country_code,
+    country,
     city,
     profile_image,
   } = profile;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { country_index, country_iso, country } = useMemo(() => {
-    if (!country_code) return {};
-    const cphonecode = parseInt(country_code);
+  const { country_index, country_iso } = useMemo(() => {
+    if (!country) return {};
     const country_index = countryList.findIndex(
-      (e) => e.phonecode === cphonecode
+      (e) => e.country_name === country
     );
-    const { iso, country_name } =
-      countryList.find((e) => e.phonecode === cphonecode) || {};
-    return { country_index, country_iso: iso, country: country_name };
+    const { iso } = countryList.find((e) => e.country_name === country) || {};
+    return { country_index, country_iso: iso };
   }, [country_code, countryList]);
 
   const formik = useFormik({
@@ -48,7 +47,7 @@ function Businessform(props) {
       country_index: country_index, //not required for API
       country: country || "",
       country_iso: country_iso || "", //not required for API
-      mobile_code: country_code || "",
+      mobile_code: country_code,
       city: city || "",
     },
     validationSchema: editProfileBusinessUserSchema,
@@ -64,7 +63,7 @@ function Businessform(props) {
         if (!data.success) throw data.message;
         toast.success(data.message);
         dispatch(fetchUserProfile());
-        navigate("/setting");
+        navigate("/setting", { replace: true });
       } catch (error) {
         setErrors({
           email: error.first_name?.[0],
@@ -91,23 +90,15 @@ function Businessform(props) {
                     e.currentTarget.files[0]
                   );
                 }}
-                error={formik.errors.profile_image}
-                showPreview={
-                  profile_image
-                    ? profile_image
-                    : "/assets/images/user-avatar.png"
-                }
+                showPreview={true}
                 showLabel={false}
-                previewSrc={
-                  profile_image
-                    ? profile_image
-                    : "/assets/images/user-avatar.png"
-                }
+                previewSrc={profile_image}
                 fallbackSrc={
                   profile_image
                     ? profile_image
-                    : "/assets/images/user-avatar.png"
+                    : "/assets/images/Business-account.png"
                 }
+                showLoader={true}
                 classNameInput="d-none"
                 classNameBorder="border-0 overflow-visible"
                 classNameLabel="profile-avtar"
@@ -115,7 +106,7 @@ function Businessform(props) {
               <div className="profile-info">
                 <h3>{company_name}</h3>
                 <p>
-                  <a href="mailto:abcdef@gmail.com">{email}</a>
+                  <a href={`mailto:${email}`}>{email}</a>
                 </p>
                 <p className="">
                   <label
@@ -123,13 +114,16 @@ function Businessform(props) {
                     className="cursor-pointer"
                     style={{ color: "#0081c5" }}
                   >
-                    Change Profile Picture
+                    {profile_image || formik.values.profile_image
+                      ? "Change Profile Picture"
+                      : "Select Profile Picture"}
                   </label>
                 </p>
+                <p className="text-danger">{formik.errors.profile_image}</p>
               </div>
             </div>
             <Input
-              type="text"
+              type="name"
               className="form-control"
               placeholder="Business Name"
               name="company_name"
@@ -169,22 +163,18 @@ function Businessform(props) {
                   onChange={({ currentTarget }) => {
                     const i = parseInt(currentTarget.value);
                     formik.setFieldValue("country_index", i);
-                    formik.setFieldValue("country_iso", countryList[i].iso);
-                    formik.setFieldValue(
-                      "mobile_code",
-                      countryList[i].phonecode
-                    );
+                    formik.setFieldValue("country_iso", countryList[i]?.iso);
                     formik.setFieldValue(
                       "country",
-                      countryList[i].country_name
+                      countryList[i]?.country_name
                     );
                     formik.setFieldValue("city", "");
                   }}
                   onBlur={formik.handleBlur}
                   value={formik.values.country_index}
-                  error={formik.touched.country && formik.errors.country}
+                  error={formik.touched.country_index && formik.errors.country}
                 >
-                  <option value={""}>Select Country</option>
+                  <option value={"-1"}>Select Country</option>
                   {countryList?.map((country, index) => (
                     <option key={index} value={index}>
                       {country.country_name}

@@ -8,11 +8,18 @@ import { toast } from "react-toastify";
 import { SignupContext } from "context/signupContext";
 import InputFile from "components/ui/InputImage";
 import InputSelect from "components/ui/InputSelect";
+import { IconEyeClose, IconEyeOpen } from "styles/svgs";
+import { LoaderContext } from "context/loaderContext";
+import { storageRequest } from "helpers/storageRequests";
 
 function PersonalForm(props) {
+  const { setIsLoading } = useContext(LoaderContext);
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState({
+    new: false,
+    confirm: false,
+  });
   const { countryList, cityList } = signUpCreds || {};
 
   const formik = useFormik({
@@ -21,7 +28,7 @@ function PersonalForm(props) {
       last_name: "",
       user_type: signUpCreds.user_type || "personal",
       mobile_number: signUpCreds.mobile_number,
-      user_app_id: "",
+      personal_id: "",
       email: "",
       password: "",
       confirm_password: "", //not required for API
@@ -34,6 +41,7 @@ function PersonalForm(props) {
     },
     validationSchema: signUpPersonalAccountSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
+      setIsLoading(true);
       try {
         const formData = new FormData();
         for (let key in values) {
@@ -42,15 +50,18 @@ function PersonalForm(props) {
         }
         formData.append("profile_image", values.profile_image);
         const { data } = await apiRequest.registerUser(formData);
-        if (!data.success || data.data === null) throw data.message;
+        if (!data.success) throw data.message;
         setSignUpCreds({ step: 0 });
         toast.success(data.message);
-        navigate("/login");
+        storageRequest.setAuth(data.data.token);
+        navigate("/");
       } catch (error) {
         setErrors({
           email: error.email?.[0],
           mobile_number: error.mobile_number?.[0],
         });
+      } finally {
+        setIsLoading(false);
       }
     },
   });
@@ -72,10 +83,14 @@ function PersonalForm(props) {
                 error={formik.errors.profile_image}
                 showPreview={true}
                 showLabel={true}
-                labelText="Change Profile Picture"
-                fallbackSrc="/assets/images/profile-img.png"
+                showLoader={true}
+                labelText={
+                  formik.values.profile_image
+                    ? "Change Profile Picture"
+                    : "Select Profile Picture"
+                }
+                fallbackSrc="/assets/images/Personal.png"
                 classNameInput="d-none"
-                accept="image/*"
               />
               <h5 className="text-center">Signup</h5>
               <h4 className="blue-text text-center">
@@ -84,7 +99,7 @@ function PersonalForm(props) {
               <div className="row">
                 <div className="col-lg-6 col-12 col-left p-0">
                   <Input
-                    type="text"
+                    type="name"
                     className="form-control"
                     placeholder="First Name"
                     name="first_name"
@@ -98,7 +113,7 @@ function PersonalForm(props) {
                 </div>
                 <div className="col-lg-6 col-12 col-right p-0">
                   <Input
-                    type="text"
+                    type="name"
                     className="form-control"
                     placeholder="Last Name"
                     name="last_name"
@@ -117,18 +132,20 @@ function PersonalForm(props) {
                     onChange={({ currentTarget }) => {
                       const i = parseInt(currentTarget.value);
                       formik.setFieldValue("country_index", i);
-                      formik.setFieldValue("country_iso", countryList[i].iso);
+                      formik.setFieldValue("country_iso", countryList[i]?.iso);
                       formik.setFieldValue(
                         "country",
-                        countryList[i].country_name
+                        countryList[i]?.country_name
                       );
                       formik.setFieldValue("city", ""); // imp
                     }}
                     onBlur={formik.handleBlur}
                     value={formik.values.country_index}
-                    error={formik.touched.country && formik.errors.country}
+                    error={
+                      formik.touched.country_index && formik.errors.country
+                    }
                   >
-                    <option value={""}>Select Country</option>
+                    <option value={"-1"}>Select Country</option>
                     {countryList?.map((country, index) => (
                       <option key={index} value={index}>
                         {country.country_name}
@@ -159,13 +176,13 @@ function PersonalForm(props) {
                   <Input
                     type="text"
                     className="form-control"
-                    placeholder="Id"
-                    name="user_app_id"
+                    placeholder="Personal ID"
+                    name="personal_id"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.user_app_id}
+                    value={formik.values.personal_id}
                     error={
-                      formik.touched.user_app_id && formik.errors.user_app_id
+                      formik.touched.personal_id && formik.errors.personal_id
                     }
                     autoComplete={"new-id"}
                   />
@@ -190,7 +207,7 @@ function PersonalForm(props) {
                 <div className="col-12 col p-0">
                   <div className="form-field">
                     <Input
-                      type={showPassword ? "text" : "password"}
+                      type={showPassword.new ? "text" : "password"}
                       className="form-control w-100"
                       placeholder="Password"
                       name="password"
@@ -203,19 +220,26 @@ function PersonalForm(props) {
                       onPaste={(e) => e.preventDefault()}
                     />
                     <span className="eye-icon" style={{ top: "24px" }}>
-                      <img
-                        className="eye-close"
-                        src="/assets/images/eye-close.png"
-                        alt="eye close icon"
-                        onClick={() => setShowPassword((e) => !e)}
-                      />
+                      {showPassword.new ? (
+                        <IconEyeOpen
+                          onClick={() =>
+                            setShowPassword((e) => ({ ...e, new: !e.new }))
+                          }
+                        />
+                      ) : (
+                        <IconEyeClose
+                          onClick={() =>
+                            setShowPassword((e) => ({ ...e, new: !e.new }))
+                          }
+                        />
+                      )}
                     </span>
                   </div>
                 </div>
                 <div className="col-12 col p-0">
                   <div className="form-field">
                     <Input
-                      type="password"
+                      type={showPassword.confirm ? "text" : "password"}
                       className="form-control"
                       placeholder="Confirm password"
                       name="confirm_password"
@@ -231,7 +255,10 @@ function PersonalForm(props) {
                     />
                     {formik.touched.confirm_password &&
                       !formik.errors.confirm_password && (
-                        <span className="eye-icon" style={{ top: "24px" }}>
+                        <span
+                          className="eye-icon"
+                          style={{ top: "24px", right: "45px" }}
+                        >
                           <img
                             className="eye-close"
                             src="/assets/images/green-tick.svg"
@@ -239,6 +266,27 @@ function PersonalForm(props) {
                           />
                         </span>
                       )}
+                    <span className="eye-icon" style={{ top: "24px" }}>
+                      {showPassword.confirm ? (
+                        <IconEyeOpen
+                          onClick={() =>
+                            setShowPassword((e) => ({
+                              ...e,
+                              confirm: !e.confirm,
+                            }))
+                          }
+                        />
+                      ) : (
+                        <IconEyeClose
+                          onClick={() =>
+                            setShowPassword((e) => ({
+                              ...e,
+                              confirm: !e.confirm,
+                            }))
+                          }
+                        />
+                      )}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -247,8 +295,8 @@ function PersonalForm(props) {
                   type="submit"
                   className={`btn btn-primary ${
                     formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
-                  }`}
-                  disabled={formik.isSubmitting || !formik.isValid}
+                  } ${formik.isValid ? "" : "opacity-75"}`}
+                  disabled={formik.isSubmitting}
                   value="Signup"
                 />
               </div>

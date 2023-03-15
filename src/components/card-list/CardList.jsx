@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { A11y, EffectCards, Navigation, Scrollbar } from 'swiper';
 import { SwiperSlide, Swiper } from 'swiper/react';
-import $ from "jquery";
 import Card from './Card';
 
 
 const CardList = (props) => {
     const { getCurrentSlide, walletSlider=true } = props;
+    // walletSlider ? 'wallet-slider' (for wallet dashboard page) : 'card-slider'
 
     const [activeSlide, setActiveSlide] = useState(1)
     
@@ -58,7 +58,7 @@ const CardList = (props) => {
         },
     ]
     return (
-        <div class={`${walletSlider ? 'wallet-slider' : 'card-slider'}`}>
+        <div className={`${walletSlider ? 'wallet-slider' : 'card-slider'}`}>
             <Swiper
               modules={[Navigation, Scrollbar, EffectCards]}
               effect={walletSlider ? "cards" : ""}
@@ -76,9 +76,9 @@ const CardList = (props) => {
             }}
               onSwiper={(swiper) => console.log(swiper)}
               >
-                <div class="swiper-wrapper">
-                    {cardLists?.map(elm => (
-                        <SwiperSlide >
+                <div className="swiper-wrapper">
+                    {cardLists?.map((elm, i) => (
+                        <SwiperSlide key={"swiper" + i}>
                             <Card customClass={customClass} cardBg={elm.cardBg} cardHolderName={elm.cardHolderName} cardDate={elm.cardDate} cardNumber={elm.cardNumber} />
                         </SwiperSlide>
                     ))}

@@ -1,15 +1,21 @@
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Input from "components/ui/Input";
 import { apiRequest } from "helpers/apiRequests";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { resetPasswordSchema } from "schemas/validationSchema";
+import { IconEyeClose, IconEyeOpen } from "styles/svgs";
+import { LoaderContext } from "context/loaderContext";
 
 function ResetPassword() {
+  const { setIsLoading } = useContext(LoaderContext);
   const params = useParams();
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState({
+    new: false,
+    confirm: false,
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -20,6 +26,7 @@ function ResetPassword() {
     },
     validationSchema: resetPasswordSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
+      setIsLoading(true);
       try {
         const { data } = await apiRequest.updateForgotPassword(values);
         if (!data.success) throw data.message;
@@ -29,6 +36,8 @@ function ResetPassword() {
         resetForm();
         setStatus(error);
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     },
   });
@@ -51,7 +60,7 @@ function ResetPassword() {
                 <form onSubmit={formik.handleSubmit}>
                   <div className="form-field">
                     <Input
-                      type={showPassword ? "text" : "password"}
+                      type={showPassword.new ? "text" : "password"}
                       className="form-control"
                       placeholder="New Password"
                       name="password"
@@ -64,17 +73,24 @@ function ResetPassword() {
                       onPaste={(e) => e.preventDefault()}
                     />
                     <span className="eye-icon" style={{ top: "24px" }}>
-                      <img
-                        className="eye-close"
-                        src="/assets/images/eye-close.png"
-                        alt="eye close icon"
-                        onClick={() => setShowPassword((e) => !e)}
-                      />
+                      {showPassword.new ? (
+                        <IconEyeOpen
+                          onClick={() =>
+                            setShowPassword((e) => ({ ...e, new: !e.new }))
+                          }
+                        />
+                      ) : (
+                        <IconEyeClose
+                          onClick={() =>
+                            setShowPassword((e) => ({ ...e, new: !e.new }))
+                          }
+                        />
+                      )}
                     </span>
                   </div>
                   <div className="form-field">
                     <Input
-                      type="password"
+                      type={showPassword.confirm ? "text" : "password"}
                       className="form-control"
                       placeholder="Confirm Password"
                       name="confirm_password"
@@ -90,7 +106,10 @@ function ResetPassword() {
                     />
                     {formik.touched.confirm_password &&
                       !formik.errors.confirm_password && (
-                        <span className="eye-icon" style={{ top: "24px" }}>
+                        <span
+                          className="eye-icon"
+                          style={{ top: "24px", right: "45px" }}
+                        >
                           <img
                             className="eye-close"
                             src="/assets/images/green-tick.svg"
@@ -98,6 +117,27 @@ function ResetPassword() {
                           />
                         </span>
                       )}
+                    <span className="eye-icon" style={{ top: "24px" }}>
+                      {showPassword.confirm ? (
+                        <IconEyeOpen
+                          onClick={() =>
+                            setShowPassword((e) => ({
+                              ...e,
+                              confirm: !e.confirm,
+                            }))
+                          }
+                        />
+                      ) : (
+                        <IconEyeClose
+                          onClick={() =>
+                            setShowPassword((e) => ({
+                              ...e,
+                              confirm: !e.confirm,
+                            }))
+                          }
+                        />
+                      )}
+                    </span>
                   </div>
                   {formik.status && (
                     <p className="text-danger">{formik.status}</p>

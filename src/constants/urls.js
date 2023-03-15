@@ -1,53 +1,43 @@
-export const loginUrl = "/customer-login/public/login";
-export const userProfileUrl = "/cxpay-api-production/public/api/get-profile";
-export const refreshTokenUrl = "/cxpay-api-production/public/api/refresh-token";
+// customer login urls
+export const API_LOGIN_LOGIN = "/login";
+export const API_LOGIN_LOGOUT = "/logout";
+export const API_LOGIN_LOGIN_OTP = "/login-otp";
+export const API_LOGIN_LOGIN_OTP_VERIFY = "/login-otp-verify";
+export const API_LOGIN_PASSWORD_CHANGE = "/password-change";
+export const API_LOGIN_GENERATE_FORGOT_PASSWORD_OTP =
+  "/generate-forgot-password-otp";
+export const API_LOGIN_VERIFY_FORGOT_PASSWORD_OTP =
+  "/verify-forgot-password-otp";
+export const API_LOGIN_UPDATE_FORGOT_PASSWORD_OTP = "/update-forgot-password";
+export const API_LOGIN_RESEND_LOGIN_OTP = "/login-otp-resend";
+export const API_LOGIN_RESEND_FORGOT_PASSWORD_OTP =
+  "/resend-forgot-password-otp";
+export const API_LOGIN_REFRESH_TOKEN = "/refresh-token";
 
-export const REACT_APP_LOGIN = "/customer-login/public/login";
-export const REACT_APP_LOGOUT = "/customer-login/public/logout";
-export const REACT_APP_LOGIN_OTP = "/customer-login/public/login-otp";
-export const REACT_APP_LOGIN_OTP_VERIFY =
-  "/customer-login/public/login-otp-verify";
-export const REACT_APP_PASSWORD_CHANGE =
-  "/customer-login/public/password-change";
-export const REACT_APP_GENERATE_FORGOT_PASSWORD_OTP =
-  "/customer-login/public/generate-forgot-password-otp";
-export const REACT_APP_VERIFY_FORGOT_PASSWORD_OTP =
-  "/customer-login/public/verify-forgot-password-otp";
-export const REACT_APP_UPDATE_FORGOT_PASSWORD_OTP =
-  "/customer-login/public/update-forgot-password";
-export const REACT_APP_RESEND_LOGIN_OTP =
-  "/customer-login/public/login-otp-resend";
-export const REACT_APP_RESEND_FORGOT_PASSWORD_OTP =
-  "/customer-login/public/resend-forgot-password-otp";
-
-export const REACT_APP_VERIFY_MOBILE_NUMBER =
-  "/customer-onboard/public/register-mobile";
-export const REACT_APP_VERIFY_REGISTER_OTP =
-  "/customer-onboard/public/verify-register-otp";
-export const REACT_APP_REGISTER_USER = "/customer-onboard/public/register-user";
-export const REACT_APP_GET_PROFILE = "/customer-onboard/public/get-profile";
-export const REACT_APP_UPDATE_USER = "/customer-onboard/public/update-user";
-export const REACT_APP_ADD_CARD = "/customer-onboard/public/add-card";
-export const REACT_APP_ADD_BANK = "/customer-onboard/public/add-bank";
-export const REACT_APP_ADD_CONTACT = "/customer-onboard/public/add-contact";
-export const REACT_APP_GET_CONTACT_LIST =
-  "/customer-onboard/public/contacts-list";
-export const REACT_APP_DELETE_CONTACT =
-  "/customer-onboard/public/delete-contact";
-export const REACT_APP_FAV_CONTACT =
-  " /customer-onboard/public/mark-as-favourite";
-export const REACT_APP_GET_COUNTRY = "/customer-onboard/public/get-country";
-export const REACT_APP_RESEND_REGISTER_OTP =
-  "/customer-onboard/public/resend-register-otp";
-export const REACT_APP_REFRESH_TOKEN = "/customer-login/public/refresh-token";
-export const REACT_APP_UPDATE_BUSINESS_URL =
-  "/customer-onboard/public/update-business-url";
-export const REACT_APP_GENERATE_QR_CODE =
-  "/customer-onboard/public/generate-new-qrcode";
-export const REACT_APP_CARDS_LIST = "/customer-onboard/public/cards-list";
-export const REACT_APP_UPDATE_BUSINESS_DATA =
-  "/customer-onboard/public/update-customer-business-data";
-export const REACT_APP_GET_CUSTOMER_NOTIFICATION =
-  "/customer-onboard/public/get-customer-notification";
-export const REACT_APP_UPDATE_CUSTOMER_NOTIFICATION =
-  "/customer-onboard/public/update-customer-notification";
+// customer-onboard urls
+export const API_ONBOARD_VERIFY_MOBILE_NUMBER = "/register-mobile";
+export const API_ONBOARD_VERIFY_REGISTER_OTP = "/verify-register-otp";
+export const API_ONBOARD_REGISTER_USER = "/register-user";
+export const API_ONBOARD_GET_PROFILE = "/get-profile";
+export const API_ONBOARD_UPDATE_USER = "/update-user";
+export const API_ONBOARD_ADD_CARD = "/add-card";
+export const API_ONBOARD_ADD_BANK = "/add-bank";
+export const API_ONBOARD_ADD_CONTACT = "/add-contact";
+export const API_ONBOARD_GET_CONTACT_LIST = "/contacts-list";
+export const API_ONBOARD_DELETE_CONTACT = "/delete-contact";
+export const API_ONBOARD_FAV_CONTACT = "/mark-as-favourite";
+export const API_ONBOARD_GET_COUNTRY = "/get-country";
+export const API_ONBOARD_RESEND_REGISTER_OTP = "/resend-register-otp";
+export const API_ONBOARD_UPDATE_BUSINESS_URL = "/update-business-url";
+export const API_ONBOARD_GENERATE_QR_CODE = "/generate-new-qrcode";
+export const API_ONBOARD_CARDS_LIST = "/cards-list";
+export const API_ONBOARD_BANK_LIST = "/banks-list";
+export const API_ONBOARD_DELETE_BANK = "/delete-bank";
+export const API_ONBOARD_DELETE_CARD = "/delete-card";
+export const API_ONBOARD_GET_CARD_COLOR = "/get-card-color";
+export const API_ONBOARD_UPDATE_BUSINESS_DATA =
+  "/update-customer-business-data";
+export const API_ONBOARD_GET_CUSTOMER_NOTIFICATION =
+  "/get-customer-notification";
+export const API_ONBOARD_UPDATE_CUSTOMER_NOTIFICATION =
+  "/update-customer-notification";

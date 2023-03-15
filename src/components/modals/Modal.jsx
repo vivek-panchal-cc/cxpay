@@ -8,7 +8,7 @@ function Modal(props) {
   useEffect(() => {
     function handleclickOutside(event) {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setShow(false);
+        setShow && setShow(false);
       }
     }
     document.addEventListener("mousedown", handleclickOutside);

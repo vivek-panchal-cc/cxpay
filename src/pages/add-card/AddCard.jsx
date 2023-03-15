@@ -1,44 +1,47 @@
 import Modal from "components/modals/Modal";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { addCardSchema } from "schemas/walletSchema";
 import CreditCard from "./components/CreditCard";
 import CropCard from "./components/CropCard";
 import CustomizePalette from "./components/CustomizePalette";
 import UploadImage from "./components/UploadImage";
 import DatePicker from "react-datepicker";
-import { Link } from "react-router-dom";
-import { IconCalender, IconLeftArrow } from "styles/svgs";
+import { Link, useNavigate } from "react-router-dom";
+import { IconCalender } from "styles/svgs";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
+import Breadcrumb from "components/breadcrumb/Breadcrumb";
+import { LoaderContext } from "context/loaderContext";
 
 function AddCard() {
+  const navigate = useNavigate();
+  const { setIsLoading } = useContext(LoaderContext);
+
   const [showPopupUpload, setShowPopupUpload] = useState(false);
   const [showPopupCrop, setShowPopupCrop] = useState(false);
-  const [cardBgColor, setCardBgColor] = useState("blue");
   const [cardBackImg, setCardBackImg] = useState("");
-  const [croppedImg, setCroppedImg] = useState("");
+  const [croppedImg, setCroppedImg] = useState({
+    file: "",
+    url: "",
+  });
   const [expDate, setExpDate] = useState();
-
-  const handleCustomizePalette = (color) => {
-    setCardBgColor(color);
-    if (color === "white") setShowPopupUpload(true);
-  };
 
   const handleUploadImage = (img) => {
     setCardBackImg(img);
     setShowPopupCrop(true);
   };
 
-  const handleCropImage = (cimg) => {
-    setCroppedImg(cimg);
+  const handleCropImage = (cropImgObj) => {
+    setCroppedImg(cropImgObj);
     setShowPopupUpload(false);
     setShowPopupCrop(false);
+    formik.setFieldValue("color", "white");
   };
 
   const handleRemoveImage = () => {
-    setCroppedImg("");
+    setCroppedImg({ file: "", url: "" });
   };
 
   const handleClosePopupUpload = () => setShowPopupUpload(false);
@@ -50,30 +53,51 @@ function AddCard() {
       card_number: "",
       expiry_date: "", // mm-yyyy
       billing_address: "",
-      security_code: "",
-      color: cardBgColor,
+      card_holder_name: "",
+      color: "",
     },
     validationSchema: addCardSchema,
     onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
+      setIsLoading(true);
       try {
         const formData = new FormData();
         for (let key in values) formData.append(key, values[key]);
-        if (croppedImg) formData.append("image", croppedImg);
+        if (croppedImg.file) formData.append("image", croppedImg.file);
         const { data } = await apiRequest.addCard(formData);
         if (!data.success) throw data.message;
         toast.success(data.message);
         resetForm();
-        setExpDate(new Date());
+        setExpDate();
+        setCroppedImg({ file: "", url: "" });
+        navigate("/wallet/view-card");
       } catch (error) {
-        resetForm();
-        toast.error(error);
-        setExpDate(new Date());
+        if (typeof error === "string") {
+          toast.error(error);
+          resetForm();
+          setExpDate();
+          setCroppedImg({ file: "", url: "" });
+          return;
+        }
+        setErrors({
+          billing_address: error?.billing_address?.[0],
+          card_holder_name: error?.card_holder_name?.[0],
+          card_number: error?.card_number?.[0],
+          expiry_date: error?.expiry_date?.[0],
+        });
+      } finally {
+        setIsLoading(false);
       }
     },
   });
 
+  const handleCustomizePalette = (color) => {
+    if (color === "white") return setShowPopupUpload(true);
+    if (croppedImg.url) handleRemoveImage();
+    formik.setFieldValue("color", color);
+  };
+
   return (
-    <div className="wallet-add-card-main wallet-page-body">
+    <div className="wallet-add-card-main wallet-page-body mb-4">
       <Modal
         id="customize_card"
         className="customize-card-model wallet-pg-model"
@@ -101,32 +125,18 @@ function AddCard() {
         <div className="settings-inner-sec wallet-ac-is">
           <div className="profile-info">
             <h3>Add a Card</h3>
-            <ul className="breadcrumb">
-              <li>
-                <a href="/">Wallet</a>
-              </li>
-              <li>Add a Card</li>
-            </ul>
+            <Breadcrumb />
           </div>
           <div className="row wac-details-wrap">
             <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap z-0">
               <CreditCard
-                bgcolor={cardBgColor}
-                bgimg={croppedImg}
-                cardNumber={
-                  formik.touched.card_number && !formik.errors.card_number
-                    ? formik.values.card_number
-                    : null
-                }
-                expDate={
-                  !formik.errors.expiry_date ? formik.values.expiry_date : null
-                }
+                details={{ ...formik.values, bg_img: croppedImg.url }}
               />
             </div>
             <div className="p-0 col-lg-5 col-12">
               <CustomizePalette
-                color={cardBgColor}
-                bgimg={croppedImg}
+                color={formik.values.color}
+                bgimg={croppedImg.url}
                 removeBgImg={handleRemoveImage}
                 handleChange={handleCustomizePalette}
               />
@@ -153,9 +163,28 @@ function AddCard() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-8 col-12 col-left col p-0">
+                <div className="col-lg-7 col-12 col-left col p-0">
+                  <div className="form-field">
+                    <Input
+                      type="text"
+                      id="card_holder_name"
+                      className="form-control"
+                      placeholder="Card Holder Name"
+                      name="card_holder_name"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.card_holder_name}
+                      error={
+                        formik.touched.card_holder_name &&
+                        formik.errors.card_holder_name
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-5 col-12 col-right col p-0">
                   <div className="form-field position-relative z-1">
                     <DatePicker
+                      id="datepickeradd-card"
                       selected={expDate}
                       onChange={(dt) => {
                         const mmyy = dt?.toLocaleDateString("en", {
@@ -172,32 +201,16 @@ function AddCard() {
                       onBlur={formik.handleBlur}
                       showMonthYearPicker
                     />
-                    <IconCalender
+                    <label
+                      htmlFor="datepickeradd-card"
                       className="position-absolute"
-                      stroke="#0081c5"
-                      style={{ top: "15px", right: "20px" }}
-                    />
+                      style={{ top: "14px", right: "20px" }}
+                    >
+                      <IconCalender stroke="#0081c5" />
+                    </label>
                     <p className="text-danger ps-2 shadow-none">
                       {formik.touched.expiry_date && formik.errors.expiry_date}
                     </p>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-12 col-right col p-0">
-                  <div className="form-field">
-                    <Input
-                      type="password"
-                      className="form-control"
-                      placeholder="Security Code"
-                      name="security_code"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      maxength="3"
-                      value={formik.values.security_code}
-                      error={
-                        formik.touched.security_code &&
-                        formik.errors.security_code
-                      }
-                    />
                   </div>
                 </div>
               </div>
@@ -224,15 +237,17 @@ function AddCard() {
               <div className="row">
                 <div className="col-12 p-0 btns-inline">
                   <div className="setting-btn-link btn-wrap">
-                    <Link to="/wallet" className="outline-btn">
-                      <IconLeftArrow stroke="#0081c5" />
-                      Wallet
+                    <Link to="/wallet" replace className="outline-btn">
+                      Cancel
                     </Link>
                   </div>
                   <div className="btn-wrap">
                     <input
                       type="submit"
-                      className="btn btn-primary"
+                      className={`btn btn-primary ${
+                        formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                      } ${formik.isValid ? "" : "opacity-75"}`}
+                      disabled={formik.isSubmitting}
                       value="Add New Card"
                     />
                   </div>

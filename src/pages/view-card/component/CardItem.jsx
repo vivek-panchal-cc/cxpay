@@ -2,16 +2,16 @@ import React from "react";
 import { IconCancel, IconCardBackground } from "styles/svgs";
 
 function CardItem(props) {
-  const { item } = props;
+  const { item, handleDelete } = props;
   const {
     account_number,
     billing_address,
+    card_holder_name,
     card_number,
     color,
     expiry_date,
     id,
     image,
-    inst_id,
   } = item;
 
   return (
@@ -19,7 +19,6 @@ function CardItem(props) {
       <div className="bank-card-name-wrap">
         <div
           className="bank-card-wrap"
-          bg-color={item?.color}
           style={
             image
               ? {
@@ -28,23 +27,26 @@ function CardItem(props) {
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
                 }
-              : {}
+              : { background: color }
           }
         >
           <IconCardBackground height="100%" width="100%" />
         </div>
-        <p className="bank-cardname-wrap">Card Bank Name</p>
+        <p className="bank-cardname-wrap">{card_holder_name}</p>
       </div>
       <div className="bank-account-num-wrap">
         XXXXXX<span>{card_number}</span>
       </div>
       <div className="bank-account-date-wrap">{expiry_date}</div>
-      <div className="bank-bal-wrap">
+      {/* <div className="bank-bal-wrap">
         Balance : <span>1234.00</span>
-      </div>
-      <div className="bank-del-wrap">
+      </div> */}
+      <button
+        className="bank-del-wrap border-0"
+        onClick={() => handleDelete(item)}
+      >
         <IconCancel style={{ stroke: "#9b9b9b" }} />
-      </div>
+      </button>
     </li>
   );
 }
