@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 const initialState = {
   profile: {},
+  card: {},
 };
 
 // Async thunks for asynchronous logic
@@ -63,6 +64,9 @@ const userProfileSlice = createSlice({
     setUserProfile(state, action) {
       state.profile = action.payload;
     },
+    setEditCard(state, action) {
+      state.card = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -98,5 +102,5 @@ const userProfileSlice = createSlice({
 });
 
 export { fetchLogin, fetchLogout, fetchUserProfile, fetchLoginOtp };
-export const { setUserProfile } = userProfileSlice.actions;
+export const { setUserProfile, setEditCard } = userProfileSlice.actions;
 export default userProfileSlice.reducer;
