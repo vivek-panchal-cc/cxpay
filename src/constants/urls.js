@@ -22,6 +22,7 @@ export const API_ONBOARD_GET_PROFILE = "/get-profile";
 export const API_ONBOARD_UPDATE_USER = "/update-user";
 export const API_ONBOARD_ADD_CARD = "/add-card";
 export const API_ONBOARD_ADD_BANK = "/add-bank";
+export const API_ONBOARD_UPDATE_BANK = "/update-bank";
 export const API_ONBOARD_ADD_CONTACT = "/add-contact";
 export const API_ONBOARD_GET_CONTACT_LIST = "/contacts-list";
 export const API_ONBOARD_DELETE_CONTACT = "/delete-contact";

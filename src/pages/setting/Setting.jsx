@@ -61,7 +61,7 @@ const settingsRedirects = [
 
 function Setting() {
   return (
-    <div className="settings-right-sec">
+    <div className="settings-right-sec settings-vc-sec">
       <div className="settings-inner-sec">
         <div className="profile-info">
           <h3>Settings</h3>

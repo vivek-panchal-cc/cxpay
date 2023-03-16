@@ -1,16 +1,20 @@
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { THEME_COLORS } from "constants/all";
 import { LoaderContext } from "context/loaderContext";
+import { setEditBank } from "features/user/userProfileSlice";
 import { apiRequest } from "helpers/apiRequests";
 import React, { useContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { IconBank, IconCross } from "styles/svgs";
+import { IconBank, IconCross, IconEdit } from "styles/svgs";
 
 const BankList = () => {
   const { setIsLoading } = useContext(LoaderContext);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [bankList, setBankList] = useState([]);
   const [show, setShow] = useState(false);
@@ -59,6 +63,11 @@ const BankList = () => {
     return text.charAt(0).toUpperCase() + text.slice(1);
   };
 
+  const handleEditBank = async (bank) => {
+    await dispatch(setEditBank(bank));
+    navigate("/wallet/bank-list/edit-bank");
+  };
+
   return (
     <div className="">
       <div className="title-content-wrap send-pay-title-sec title-common-sec">
@@ -101,6 +110,12 @@ const BankList = () => {
                     {getCapitalized(elm?.account_type) + " Account"}
                   </div>
                   {/* <div className="bank-bal-wrap">Balance : <span>0</span></div> */}
+                  <button
+                    className="bank-del-wrap border-0"
+                    onClick={() => handleEditBank(elm)}
+                  >
+                    <IconEdit style={{ stroke: "#9b9b9b" }} />
+                  </button>
                   <div
                     className="bank-del-wrap"
                     onClick={() => handleOpenConfirmModal(elm.id)}

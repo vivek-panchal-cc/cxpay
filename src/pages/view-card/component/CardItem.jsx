@@ -4,12 +4,11 @@ import { IconCancel, IconCardBackground, IconEdit } from "styles/svgs";
 function CardItem(props) {
   const { item, handleDelete, handleEdit } = props;
   const {
-    billing_address,
-    card_holder_name,
+    card_holder_first_name,
+    card_holder_last_name,
     card_number,
     color,
     expiry_date,
-    id,
     image,
   } = item;
 
@@ -31,15 +30,12 @@ function CardItem(props) {
         >
           {!image && <IconCardBackground height="100%" width="100%" />}
         </div>
-        <p className="bank-cardname-wrap">{card_holder_name}</p>
+        <p className="bank-cardname-wrap">{`${card_holder_first_name} ${card_holder_last_name}`}</p>
       </div>
       <div className="bank-account-num-wrap">
         XXXXXX<span>{card_number}</span>
       </div>
       <div className="bank-account-date-wrap">{expiry_date}</div>
-      {/* <div className="bank-bal-wrap">
-        Balance : <span>1234.00</span>
-      </div> */}
       <button
         className="bank-del-wrap border-0"
         onClick={() => handleEdit(item)}

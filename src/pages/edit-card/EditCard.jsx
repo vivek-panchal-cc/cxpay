@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import Modal from "components/modals/Modal";
 import Input from "components/ui/Input";
-import { useFormik } from "formik";
+import { replace, useFormik } from "formik";
 import { EditCardSchema } from "schemas/walletSchema";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { apiRequest } from "helpers/apiRequests";
@@ -12,12 +12,26 @@ import UploadImage from "pages/add-card/components/UploadImage";
 import CropCard from "pages/add-card/components/CropCard";
 import CreditCard from "pages/add-card/components/CreditCard";
 import CustomizePalette from "pages/add-card/components/CustomizePalette";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import useCountriesCities from "hooks/useCountriesCities";
+import InputSelect from "components/ui/InputSelect";
+import { setEditCard } from "features/user/userProfileSlice";
 
 function EditCard() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { setIsLoading } = useContext(LoaderContext);
   const { card } = useSelector((state) => state.userProfile);
+  const {
+    card_holder_first_name,
+    card_holder_last_name,
+    country,
+    city,
+    id,
+    color,
+    email,
+    billing_address,
+  } = card || {};
 
   const [showPopupUpload, setShowPopupUpload] = useState(false);
   const [showPopupCrop, setShowPopupCrop] = useState(false);
@@ -26,6 +40,16 @@ function EditCard() {
     file: "",
     url: card?.image,
   });
+  const [countryList, cityList] = useCountriesCities();
+
+  const { country_index, country_iso } = useMemo(() => {
+    if (!country) return {};
+    const country_index = countryList.findIndex(
+      (e) => e.country_name === country
+    );
+    const { iso } = countryList.find((e) => e.country_name === country) || {};
+    return { country_index, country_iso: iso };
+  }, [country, countryList]);
 
   const handleUploadImage = (img) => {
     setCardBackImg(img);
@@ -46,26 +70,43 @@ function EditCard() {
   const handleClosePopupUpload = () => setShowPopupUpload(false);
   const handleClosePopupCrop = () => setShowPopupCrop(false);
 
+  console.log("LOG", card);
+
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      id: card.id || "",
-      color: card.color || "",
+      id: id || "",
+      color: color || "",
+      email: email || "",
+      country: country || "",
+      country_index: country_index,
+      country_iso: country_iso,
+      city: city || "",
     },
     validationSchema: EditCardSchema,
-    onSubmit: async (values, { setStatus, resetForm }) => {
+    onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
       setIsLoading(true);
       try {
         const formData = new FormData();
         formData.append("id", values.id);
+        formData.append("email", values.email);
+        formData.append("country", values.country);
+        formData.append("city", values.city);
         if (card.color !== values.color) formData.append("color", values.color);
         if (croppedImg.file) formData.append("image", croppedImg.file);
         const { data } = await apiRequest.updateCard(formData);
         if (!data.success) throw data.message;
         toast.success(data.message);
-        resetForm();
-        navigate("/wallet/view-card");
+        await dispatch(setEditCard({}));
+        navigate("/wallet/view-card", { replace: true });
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
+        setErrors({
+          id: error?.id?.[0],
+          email: error?.email?.[0],
+          country: error?.country?.[0],
+          city: error?.city?.[0],
+        });
       } finally {
         setIsLoading(false);
       }
@@ -148,21 +189,8 @@ function EditCard() {
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-7 col-12 col-left col p-0">
+                <div className="col-lg-6 col-12 col-left col p-0">
                   <div className="form-field">
-                    <Input
-                      type="text"
-                      id="card_holder_name"
-                      className="form-control opacity-75"
-                      placeholder="Card Holder Name"
-                      name="card_holder_name"
-                      value={card?.card_holder_name}
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="col-lg-5 col-12 col-right col p-0">
-                  <div className="form-field position-relative z-1">
                     <Input
                       type="text"
                       id="expiry_date"
@@ -171,6 +199,61 @@ function EditCard() {
                       name="expiry_date"
                       value={card?.expiry_date}
                       disabled
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-6 col-12 col-right col p-0">
+                  <div className="form-field position-relative z-1">
+                    <Input
+                      type="password"
+                      id="security_code"
+                      className="form-control opacity-75"
+                      placeholder="Security Code"
+                      name="security_code"
+                      value="***"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-6 col-12 col-left p-0">
+                  <div className="form-field">
+                    <Input
+                      type="name"
+                      className="form-control opacity-75"
+                      placeholder="First Name"
+                      name="card_holder_first_name"
+                      value={card_holder_first_name}
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-6 col-12 col-right p-0">
+                  <div className="form-field">
+                    <Input
+                      type="name"
+                      className="form-control opacity-75"
+                      placeholder="First Name"
+                      name="card_holder_last_name"
+                      value={card_holder_last_name}
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 p-0">
+                  <div className="form-field">
+                    <Input
+                      type="text"
+                      className="form-control"
+                      placeholder="Email"
+                      name="email"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.email}
+                      error={formik.touched.email && formik.errors.email}
                     />
                   </div>
                 </div>
@@ -184,16 +267,68 @@ function EditCard() {
                       className="form-control opacity-75"
                       placeholder="Billing Address"
                       name="billing_address"
-                      value={card?.billing_address}
+                      value={billing_address}
                       disabled
                     />
                   </div>
                 </div>
               </div>
+              <div className="form-field two-fields">
+                <div className="field-half">
+                  <InputSelect
+                    className="form-select form-control"
+                    name="country_index"
+                    onChange={({ currentTarget }) => {
+                      const i = parseInt(currentTarget.value);
+                      formik.setFieldValue("country_index", i);
+                      formik.setFieldValue("country_iso", countryList[i]?.iso);
+                      formik.setFieldValue(
+                        "country",
+                        countryList[i]?.country_name
+                      );
+                      formik.setFieldValue("city", "");
+                    }}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.country_index}
+                    error={
+                      formik.touched.country_index && formik.errors.country
+                    }
+                  >
+                    <option value={"-1"}>Select Country</option>
+                    {countryList?.map((country, index) => (
+                      <option key={index} value={index}>
+                        {country.country_name}
+                      </option>
+                    ))}
+                  </InputSelect>
+                </div>
+                <div className="field-half">
+                  <InputSelect
+                    className="form-select form-control"
+                    name="city"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.city}
+                    error={formik.touched.city && formik.errors.city}
+                  >
+                    <option value={""}>Select City</option>
+                    {cityList[formik.values.country_iso]?.map((city, index) => (
+                      <option key={index} value={city.city_name}>
+                        {city.city_name}
+                      </option>
+                    ))}
+                  </InputSelect>
+                </div>
+              </div>
+
               <div className="row">
                 <div className="col-12 p-0 btns-inline">
                   <div className="setting-btn-link btn-wrap">
-                    <Link to="/wallet" replace className="outline-btn">
+                    <Link
+                      to="/wallet/view-card"
+                      replace
+                      className="outline-btn"
+                    >
                       Cancel
                     </Link>
                   </div>
