@@ -36,6 +36,7 @@ const LinkBank = (props) => {
       bank_holder_first_name: first_name || "",
       bank_holder_last_name: last_name || "",
       email: email || "",
+      address: "",
       country: country || "",
       country_index: country_index,
       country_iso: country_iso,
@@ -57,10 +58,10 @@ const LinkBank = (props) => {
           bank_holder_first_name: error.bank_holder_first_name?.[0],
           bank_holder_last_name: error.bank_holder_last_name?.[0],
           email: error?.email?.[0],
+          address: error?.address?.[0],
           country: error?.country?.[0],
           city: error?.city?.[0],
         });
-        resetForm();
         setStatus(error);
       }
     },
@@ -94,8 +95,6 @@ const LinkBank = (props) => {
                   name="account_type"
                   value={"savings"}
                   onChange={formik.handleChange}
-                  // checked={formik.values.account_type === "savings"}
-                  // defaultChecked
                 />
                 <label className="form-check-label" htmlFor="saving_acc_op">
                   Savings
@@ -109,7 +108,6 @@ const LinkBank = (props) => {
                   name="account_type"
                   value={"current"}
                   onChange={formik.handleChange}
-                  // checked={formik.values.account_type === "savings"}
                   defaultChecked
                 />
                 <label className="form-check-label" htmlFor="current_acc_op">
@@ -119,111 +117,114 @@ const LinkBank = (props) => {
             </div>
             <div className="row">
               <div className="col-12 col p-0">
-                <div className="form-field">
-                  <Input
-                    type="text"
-                    className="form-control"
-                    placeholder="Bank Name"
-                    name="bank_name"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.bank_name}
-                    error={formik.touched.bank_name && formik.errors.bank_name}
-                  />
-                </div>
+                <Input
+                  type="text"
+                  className="form-control"
+                  placeholder="Bank Name"
+                  name="bank_name"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.bank_name}
+                  error={formik.touched.bank_name && formik.errors.bank_name}
+                />
               </div>
             </div>
             <div className="row">
               <div className="col-12 col p-0">
-                <div className="form-field">
-                  <Input
-                    type="text"
-                    className="form-control"
-                    placeholder={
-                      formik.values.account_type === "savings"
-                        ? "Routing Number"
-                        : "Routing Number"
-                    }
-                    name="routing_number"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.routing_number}
-                    error={
-                      formik.touched.routing_number &&
-                      formik.errors.routing_number
-                    }
-                  />
-                </div>
+                <Input
+                  type="text"
+                  className="form-control"
+                  placeholder={
+                    formik.values.account_type === "savings"
+                      ? "Routing Number"
+                      : "Routing Number"
+                  }
+                  name="routing_number"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.routing_number}
+                  error={
+                    formik.touched.routing_number &&
+                    formik.errors.routing_number
+                  }
+                />
               </div>
             </div>
             <div className="row">
               <div className="col-12 col p-0">
-                <div className="form-field">
-                  <Input
-                    type="text"
-                    className="form-control"
-                    placeholder="Account Number"
-                    name="bank_number"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.bank_number}
-                    error={
-                      formik.touched.bank_number && formik.errors.bank_number
-                    }
-                  />
-                </div>
+                <Input
+                  type="text"
+                  className="form-control"
+                  placeholder="Account Number"
+                  name="bank_number"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.bank_number}
+                  error={
+                    formik.touched.bank_number && formik.errors.bank_number
+                  }
+                />
               </div>
             </div>
             <div className="row">
               <div className="col-lg-6 col-12 col-left p-0">
-                <div className="form-field">
-                  <Input
-                    type="name"
-                    className="form-control"
-                    placeholder="First Name"
-                    name="bank_holder_first_name"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.bank_holder_first_name}
-                    error={
-                      formik.touched.bank_holder_first_name &&
-                      formik.errors.bank_holder_first_name
-                    }
-                  />
-                </div>
+                <Input
+                  type="name"
+                  className="form-control"
+                  placeholder="First Name"
+                  name="bank_holder_first_name"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.bank_holder_first_name}
+                  error={
+                    formik.touched.bank_holder_first_name &&
+                    formik.errors.bank_holder_first_name
+                  }
+                />
               </div>
               <div className="col-lg-6 col-12 col-right p-0">
-                <div className="form-field">
-                  <Input
-                    type="name"
-                    className="form-control"
-                    placeholder="Last Name"
-                    name="bank_holder_last_name"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.bank_holder_last_name}
-                    error={
-                      formik.touched.bank_holder_last_name &&
-                      formik.errors.bank_holder_last_name
-                    }
-                  />
-                </div>
+                <Input
+                  type="name"
+                  className="form-control"
+                  placeholder="Last Name"
+                  name="bank_holder_last_name"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.bank_holder_last_name}
+                  error={
+                    formik.touched.bank_holder_last_name &&
+                    formik.errors.bank_holder_last_name
+                  }
+                />
               </div>
             </div>
             <div className="row">
               <div className="col-12 p-0">
-                <div className="form-field">
-                  <Input
-                    type="text"
-                    className="form-control"
-                    placeholder="Email"
-                    name="email"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.email}
-                    error={formik.touched.email && formik.errors.email}
-                  />
-                </div>
+                <Input
+                  type="text"
+                  className="form-control"
+                  placeholder="Email"
+                  name="email"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
+                  error={formik.touched.email && formik.errors.email}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-12 p-0">
+                <Input
+                  type="text"
+                  id="address"
+                  className="form-control"
+                  placeholder="Address"
+                  name="address"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.address}
+                  error={formik.touched.address && formik.errors.address}
+                />
               </div>
             </div>
             <div className="form-field two-fields">

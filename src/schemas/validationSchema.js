@@ -10,10 +10,12 @@ import {
 const signUpPersonalAccountSchema = yup.object().shape({
   first_name: yup
     .string()
+    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "First name is invalid")
     .required("Please enter first name")
     .max(35, "Maximum limit is 35 characters"),
   last_name: yup
     .string()
+    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "Last name is invalid")
     .required("Please enter last name")
     .max(35, "Maximum limit is 35 characters"),
   user_type: yup.string().required(),
@@ -98,10 +100,12 @@ const editProfileBusinessUserSchema = yup.object().shape({
 const editProfilePersonalUserSchema = yup.object().shape({
   first_name: yup
     .string()
+    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "First name is invalid")
     .required("Please enter first name")
     .max(35, "Maximum limit is 35 characters"),
   last_name: yup
     .string()
+    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "Last name is invalid")
     .required("Please enter last name")
     .max(35, "Maximum limit is 35 characters"),
   personal_id: yup

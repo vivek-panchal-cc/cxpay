@@ -28,6 +28,7 @@ const EditBank = (props) => {
     bank_number,
     id,
     routing_number,
+    address,
   } = bank || {};
 
   console.log(bank);
@@ -102,7 +103,7 @@ const EditBank = (props) => {
                   type="radio"
                   id="saving_acc_op"
                   name="account_type"
-                  defaultChecked={account_type === "saving"}
+                  defaultChecked={account_type === "savings"}
                   disabled
                 />
                 <label className="form-check-label" htmlFor="saving_acc_op">
@@ -125,86 +126,87 @@ const EditBank = (props) => {
             </div>
             <div className="row">
               <div className="col-12 col p-0">
-                <div className="form-field">
-                  <Input
-                    type="text"
-                    className="form-control opacity-75"
-                    placeholder="Bank Name"
-                    name="bank_name"
-                    value={bank_name}
-                    disabled
-                  />
-                </div>
+                <Input
+                  type="text"
+                  className="form-control opacity-75"
+                  placeholder="Bank Name"
+                  name="bank_name"
+                  value={bank_name}
+                  disabled
+                />
               </div>
             </div>
             <div className="row">
               <div className="col-12 col p-0">
-                <div className="form-field">
-                  <Input
-                    type="text"
-                    className="form-control opacity-75"
-                    placeholder="Routing Number"
-                    name="routing_number"
-                    value={routing_number}
-                    disabled
-                  />
-                </div>
+                <Input
+                  type="text"
+                  className="form-control opacity-75"
+                  placeholder="Routing Number"
+                  name="routing_number"
+                  value={routing_number}
+                  disabled
+                />
               </div>
             </div>
             <div className="row">
               <div className="col-12 col p-0">
-                <div className="form-field">
-                  <Input
-                    type="text"
-                    className="form-control opacity-75"
-                    placeholder="Account Number"
-                    name="bank_number"
-                    value={bank_number}
-                    disabled
-                  />
-                </div>
+                <Input
+                  type="text"
+                  className="form-control opacity-75"
+                  placeholder="Account Number"
+                  name="bank_number"
+                  value={bank_number}
+                  disabled
+                />
               </div>
             </div>
             <div className="row">
               <div className="col-lg-6 col-12 col-left p-0">
-                <div className="form-field">
-                  <Input
-                    type="name"
-                    className="form-control opacity-75"
-                    placeholder="First Name"
-                    name="bank_holder_first_name"
-                    value={bank_holder_first_name}
-                    disabled
-                  />
-                </div>
+                <Input
+                  type="name"
+                  className="form-control opacity-75"
+                  placeholder="First Name"
+                  name="bank_holder_first_name"
+                  value={bank_holder_first_name}
+                  disabled
+                />
               </div>
               <div className="col-lg-6 col-12 col-right p-0">
-                <div className="form-field">
-                  <Input
-                    type="name"
-                    className="form-control opacity-75"
-                    placeholder="Last Name"
-                    name="bank_holder_last_name"
-                    value={bank_holder_last_name}
-                    disabled
-                  />
-                </div>
+                <Input
+                  type="name"
+                  className="form-control opacity-75"
+                  placeholder="Last Name"
+                  name="bank_holder_last_name"
+                  value={bank_holder_last_name}
+                  disabled
+                />
               </div>
             </div>
             <div className="row">
               <div className="col-12 p-0">
-                <div className="form-field">
-                  <Input
-                    type="text"
-                    className="form-control"
-                    placeholder="Email"
-                    name="email"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.email}
-                    error={formik.touched.email && formik.errors.email}
-                  />
-                </div>
+                <Input
+                  type="text"
+                  className="form-control"
+                  placeholder="Email"
+                  name="email"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
+                  error={formik.touched.email && formik.errors.email}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-12 p-0">
+                <Input
+                  type="text"
+                  id="address"
+                  className="form-control opacity-75"
+                  placeholder="Address"
+                  name="address"
+                  value={address}
+                  disabled
+                />
               </div>
             </div>
             <div className="form-field two-fields">

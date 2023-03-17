@@ -5280,7 +5280,11 @@ p.bank-name-wrap {
 }
 .bank-account-type-wrap label {
   position: relative;
-  padding-left: 30px;
+  background-color: transparent;
+  padding: 10px 20px;
+  border-radius: 20px;
+  padding-left: 40px;
+  transition: all 0.5s ease-in-out;
 }
 .bank-account-type-wrap input {
   visibility: hidden;
@@ -5295,31 +5299,34 @@ p.bank-name-wrap {
   opacity: 1;
 }
 .bank-account-type-wrap label:before {
-  content: "";
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: block;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 1.5px solid #bdbdbd;
-  background-color: transparent;
-  left: 0;
+  content: '';
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1.5px solid #BDBDBD;
+    background-color: transparent;
+    left: 18px;
 }
 .bank-account-type-wrap label:after {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  display: block;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #363853;
-  left: 5px;
-  visibility: hidden;
-  opacity: 0;
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #363853;
+    left: 22px;
+    visibility: hidden;
+    opacity: 0;
+}
+.db-view-bank-listing li:hover .bank-account-type-wrap label{
+  background-color: rgb(36 190 239 / 25%);
 }
 .bank-logo-name-wrap {
   display: flex;
