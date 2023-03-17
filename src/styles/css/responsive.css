@@ -1214,42 +1214,62 @@
     padding-bottom: 38px;
   }
 }
+@media only screen and (max-width: 1366px) and (min-width: 992px) {
+  .business-info-right-sec {
+    padding: 40px 0px 20px 20px !important;
+  }
+}
+@media only screen and (max-width: 1199px) and (min-width: 992px) {
+  .business-info-right .profile-qr {
+    max-width: 180px;
+    margin-right: 10px;
+  }
+  .business-info-right .qr-btn {
+    padding: 13px 20px;
+  }
+}
 @media only screen and (max-width: 1100px) and (min-width: 992px) {
   .dashboard-right-sec {
-    padding-left: 40px;
-    padding-right: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
-  .wallet-main-right {
+  .wallet-main-right,
+  .wallet-top-wrap .dashboard-notification-sec {
+    width: 330px;
     padding-left: 35px;
   }
-  .wallet-main-right {
-    width: 350px;
-  }
-  .wallet-main-left {
-    width: calc(100% - 350px);
+  .wallet-main-left,
+  .wallet-top-wrap .wallet-title-wrap {
+    width: calc(100% - 330px);
   }
   .wallet-right-title h3 {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    line-height: 23px;
   }
   .wallet-slider .wallet-ac-inner {
-    height: 195px;
-    padding-top: 45px;
+    height: 175px;
+    padding-top: 30px;
   }
   .wallet-slider .wallet-ac-inner p.card-holder-nm {
-    font-size: 25px;
-    line-height: 25px;
+    font-size: 20px;
+    line-height: 20px;
   }
   .wallet-slider .card-num-date p:first-child {
-    font-size: 18px;
-    line-height: 18px;
+    font-size: 16px;
+    line-height: 16px;
   }
   .wallet-slider .card-num-date p:last-child {
-    font-size: 15px;
-    line-height: 15px;
+    font-size: 14px;
+    line-height: 14px;
   }
   .wc-details-wrap td {
     font-size: 14px;
     line-height: 20px;
+    padding: 10px 0px;
+  }
+  .wallet-card-add-btns a span {
+    max-width: 80px;
   }
   .wallet-title-btns a,
   .wallet-card-add-btns a {
@@ -1400,10 +1420,10 @@
     min-width: 230px;
   }
 }
-@media only screen and (max-width: 1100px) and (min-width: 992px) {
+/*@media only screen and (max-width: 1100px) and (min-width: 992px) {
   .dashboard-right-sec {
-    padding-left: 40px;
-    padding-right: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
   .wallet-main-right,
   .wallet-top-wrap .dashboard-notification-sec {
@@ -1468,8 +1488,8 @@
   .wallet-card-add-btns a span {
     max-width: 80px;
   }
-}
-@media only screen and (max-width: 991px) and (min-width: 768px) {
+}*/
+/*@media only screen and (max-width: 991px) and (min-width: 768px) {
   .dashboard-right-sec {
     padding: 50px 35px 50px 50px;
   }
@@ -1486,7 +1506,7 @@
   .business-info-right-sec .profile-qr {
     margin-left: auto;
   }
-}
+}*/
 @media only screen and (max-width: 991px) and (min-width: 768px) {
   .dashboard-right-sec {
     padding: 50px 35px 50px 50px;
@@ -1508,16 +1528,33 @@
   .business-info-right-sec .profile-qr {
     margin-left: auto;
   }
+  .business-info-left-content {
+    width: calc(100% - 230px);
+  }
+  .business-info-right {
+    width: 230px;
+    padding-left: 25px;
+  }
+  .profile-inner-sec .profile-qr {
+    padding-top: 75px;
+  }
+  .settings-vc-sec,
+  .business-info-right-sec {
+    padding-top: 110px;
+    height: auto;
+  }
 }
 @media only screen and (max-width: 991px) and (min-width: 820px) {
-  .profile-inner-sec .profile-left-content {
+  .profile-inner-sec .profile-left-content,
+  .business-info-left-content {
     width: calc(100% - 250px);
   }
-  .profile-right-content {
+  .profile-inner-sec .profile-right-content,
+  .business-info-right {
     width: 250px;
     padding-left: 25px;
   }
-  .profile-qr {
+  .profile-inner-sec .profile-qr {
     padding-top: 75px;
   }
 }
@@ -2760,7 +2797,7 @@
     top: 30px;
   }
   .dashboard-right-sec {
-    padding: 30px 25px;
+    padding: 30px 30px;
   }
   .mobile-toggle {
     display: block;
@@ -2834,6 +2871,17 @@
   }
   .dashboard-link-wrap ul.dashboard-main-links {
     padding-top: 20px;
+  }
+  /* CSS Added on 16-03 */
+  .business-info-right-sec {
+    padding: 30px 0px 0px !important;
+  }
+  .business-info-right .qr-btn {
+    padding: 13px 20px;
+  }
+  .settings-vc-sec,
+  .business-info-right-sec {
+    height: auto;
   }
 }
 
@@ -2977,7 +3025,7 @@
     margin-right: 15px;
   }
   .dashboard-right-sec {
-    padding: 50px 20px;
+    padding: 30px 20px;
   }
   /*sidebar toggle css close*/
   .profile-bottom-info-sec ul li {
@@ -3491,12 +3539,28 @@
     padding-bottom: 10px !important;
   }
   .settings-profile-bottom-info-sec .login-btn .btn {
-    padding: 12px 15px !important;
+    padding: 12px 12px !important;
     font-size: 15px;
     line-height: 21px;
   }
   .setting-btn-link a {
     padding-left: 22px !important;
+  }
+  .settings-inner-sec .profile-info {
+    padding-bottom: 15px;
+  }
+  /* CSS Added on  16-03 */
+  .business-info-left-content {
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .settings-profile-bottom-info-sec .login-btn .btn {
+    min-width: 140px;
+  }
+  .settings-vc-sec,
+  .business-info-right-sec {
+    padding-top: 70px;
   }
 }
 @media only screen and (max-width: 575px) {

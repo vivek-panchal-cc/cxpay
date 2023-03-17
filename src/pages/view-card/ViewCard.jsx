@@ -54,7 +54,7 @@ function ViewCard(props) {
 
   const handleCardEdit = async (card) => {
     await dispatch(setEditCard(card));
-    navigate("/wallet/edit-card");
+    navigate("/wallet/view-card/edit-card");
   };
 
   useEffect(() => {
@@ -81,7 +81,8 @@ function ViewCard(props) {
               <div className="bank-card-name-wrap"> Card Holder Name</div>
               <div className="bank-account-num-wrap">Credit Card Number</div>
               <div className="bank-account-date-wrap">Expiration Date</div>
-              <div className="bank-del-wrap"> </div>
+              <div className="bank-del-wrap"></div>
+              <div className="bank-del-wrap"></div>
             </li>
             {cardsList && cardsList.length > 0 ? (
               cardsList.map((item, index) => (

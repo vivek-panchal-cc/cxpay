@@ -27,7 +27,8 @@ const regexContainSpecialCharacter = (testStr) =>
 
 // regex
 const url_regex =
-  /^((http|https):\/\/)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/;
+  ///^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm;
+  /^((https?:\/\/)?([w]{3}[\.])?)?[a-zA-Z0-9\-_]{2,}[\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2,4})?$/;
 
 // To check file type
 const isValidFileType = (fileName, fileType) => {

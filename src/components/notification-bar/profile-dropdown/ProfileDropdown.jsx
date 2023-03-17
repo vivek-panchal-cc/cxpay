@@ -45,7 +45,7 @@ const ProfileDropdown = () => {
           <span className="h-100 w-100">
             <Image
               src={profile?.profile_image}
-              alt="profile avtar"
+              alt="profile avtars"
               fallbacksrc={
                 profile?.user_type === "business"
                   ? "/assets/images/Business-account.png"
