@@ -1,10 +1,9 @@
 import React from "react";
-import { IconCancel, IconCardBackground } from "styles/svgs";
+import { IconCancel, IconCardBackground, IconEdit } from "styles/svgs";
 
 function CardItem(props) {
-  const { item, handleDelete } = props;
+  const { item, handleDelete, handleEdit } = props;
   const {
-    account_number,
     billing_address,
     card_holder_name,
     card_number,
@@ -41,6 +40,12 @@ function CardItem(props) {
       {/* <div className="bank-bal-wrap">
         Balance : <span>1234.00</span>
       </div> */}
+      {/* <button
+        className="bank-del-wrap border-0"
+        onClick={() => handleEdit(item)}
+      >
+        <IconEdit style={{ stroke: "#9b9b9b" }} />
+      </button> */}
       <button
         className="bank-del-wrap border-0"
         onClick={() => handleDelete(item)}

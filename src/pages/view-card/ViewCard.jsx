@@ -1,13 +1,16 @@
-import { Modal } from "bootstrap";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { LoaderContext } from "context/loaderContext";
+import { setEditCard } from "features/user/userProfileSlice";
 import { apiRequest } from "helpers/apiRequests";
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import CardItem from "./component/CardItem";
 
 function ViewCard(props) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
 
   const [cardsList, setCardsList] = useState([]);
@@ -49,6 +52,11 @@ function ViewCard(props) {
     }
   };
 
+  const handleCardEdit = async (card) => {
+    await dispatch(setEditCard(card));
+    navigate("/wallet/edit-card");
+  };
+
   useEffect(() => {
     getCardsList();
   }, []);
@@ -80,6 +88,7 @@ function ViewCard(props) {
                 <CardItem
                   key={`${item.card_number}${index}`}
                   item={item}
+                  handleEdit={handleCardEdit}
                   handleDelete={handleConfirmDelete}
                 />
               ))
