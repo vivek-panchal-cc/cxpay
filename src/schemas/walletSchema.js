@@ -36,10 +36,12 @@ const addCardSchema = yup.object().shape({
     ),
   card_holder_first_name: yup
     .string()
-    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "First name is invalid"),
+    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "First name is invalid")
+    .max(35, "Maximum limit is 35 characters"),
   card_holder_last_name: yup
     .string()
-    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "Last name is invalid"),
+    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "Last name is invalid")
+    .max(35, "Maximum limit is 35 characters"),
   email: emailSchema,
   billing_address: yup
     .string()
@@ -68,11 +70,19 @@ const linkBankSchema = yup.object().shape({
     .matches(/^[0-9]*$/, "Invalid account number"),
   bank_holder_first_name: yup
     .string()
-    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "First name is invalid"),
+    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "First name is invalid")
+    .max(35, "Maximum limit is 35 characters")
+    .required("First name is required."),
   bank_holder_last_name: yup
     .string()
-    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "Last name is invalid"),
+    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "Last name is invalid")
+    .max(35, "Maximum limit is 35 characters")
+    .required("Last name is required."),
   email: emailSchema,
+  address: yup
+    .string()
+    .required("Address is required")
+    .max(55, "The billing address must not be greater than 55 characters."),
   country: yup.string().required("Please select country"),
   city: yup.string().required("Please select city"),
 });

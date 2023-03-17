@@ -57,6 +57,23 @@ function ViewCard(props) {
     navigate("/wallet/view-card/edit-card");
   };
 
+  const handleDefaultCard = async (radioe, cardId) => {
+    const checked = radioe.currentTarget.checked;
+    if (!checked) return;
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.cardMarkAsDefault({ card_id: cardId });
+      if (!data.success) throw data.message;
+      await getCardsList();
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error);
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     getCardsList();
   }, []);
@@ -79,6 +96,7 @@ function ViewCard(props) {
           <ul className="db-view-bank-listing">
             <li className="db-view-bank-div-main db-view-bank-common-div db-view-bank-heading">
               <div className="bank-card-name-wrap"> Card Holder Name</div>
+              <div className="bank-account-type-wrap">Primary Card</div>
               <div className="bank-account-num-wrap">Credit Card Number</div>
               <div className="bank-account-date-wrap">Expiration Date</div>
               <div className="bank-del-wrap"></div>
@@ -88,9 +106,11 @@ function ViewCard(props) {
               cardsList.map((item, index) => (
                 <CardItem
                   key={`${item.card_number}${index}`}
+                  index={`${item.card_number}${index}`}
                   item={item}
                   handleEdit={handleCardEdit}
                   handleDelete={handleConfirmDelete}
+                  handleDefaultCard={handleDefaultCard}
                 />
               ))
             ) : (

@@ -6,24 +6,7 @@ import { LoaderContext } from "context/loaderContext";
 function CustomizePalette(props) {
   const { setIsLoading } = useContext(LoaderContext);
 
-  const { color, handleChange, bgimg, removeBgImg } = props;
-  const [colorsPallette, setColorPalette] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      try {
-        const { data } = await apiRequest.getCardColor();
-        if (!data.success) throw data.message;
-        setColorPalette(data.data);
-        if (!color && !bgimg) handleChange(data?.data?.[0]);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, []);
+  const { color, handleChange, bgimg, removeBgImg, colorsPallette } = props;
 
   const handleSelect = (e) => {
     const scolor = e.currentTarget.dataset.value;

@@ -36,3 +36,5 @@ export const API_ONBOARD_DELETE_BANK = "/delete-bank";
 export const API_ONBOARD_DELETE_CARD = "/delete-card";
 export const API_ONBOARD_GET_CARD_COLOR = "/get-card-color";
 export const API_ONBOARD_UPDATE_CARD = "/update-card";
+export const API_ONBOARD_CARD_MARK_AS_DEFAULT = "/card-mark-as-default";
+export const API_ONBOARD_BANK_MARK_AS_DEFAULT = "/bank-mark-as-default";

@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useCountriesCities from "hooks/useCountriesCities";
 import InputSelect from "components/ui/InputSelect";
 import { setEditCard } from "features/user/userProfileSlice";
+import useCardColors from "hooks/useCardColors";
 
 function EditCard() {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ function EditCard() {
     url: card?.image,
   });
   const [countryList, cityList] = useCountriesCities();
+  const [cardColors] = useCardColors();
 
   const { country_index, country_iso } = useMemo(() => {
     if (!country) return {};
@@ -76,7 +78,7 @@ function EditCard() {
     enableReinitialize: true,
     initialValues: {
       id: id || "",
-      color: color || "",
+      color: color || cardColors?.[0],
       email: email || "",
       country: country || "",
       country_index: country_index,
@@ -167,6 +169,7 @@ function EditCard() {
               <CustomizePalette
                 color={formik.values.color}
                 bgimg={croppedImg.url}
+                colorsPallette={cardColors}
                 removeBgImg={handleRemoveImage}
                 handleChange={handleCustomizePalette}
               />
@@ -176,101 +179,87 @@ function EditCard() {
             <form onSubmit={formik.handleSubmit}>
               <div className="row">
                 <div className="col-12 col p-0">
-                  <div className="form-field">
-                    <Input
-                      type="text"
-                      className="form-control opacity-75"
-                      placeholder="Credit Card Number"
-                      name="card_number"
-                      value={"XXXX XXXX XXXX " + card?.card_number}
-                      disabled
-                    />
-                  </div>
+                  <Input
+                    type="text"
+                    className="form-control opacity-75"
+                    placeholder="Credit Card Number"
+                    name="card_number"
+                    value={"XXXX XXXX XXXX " + card?.card_number}
+                    disabled
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-lg-6 col-12 col-left col p-0">
-                  <div className="form-field">
-                    <Input
-                      type="text"
-                      id="expiry_date"
-                      className="form-control opacity-75"
-                      placeholder="Expiration Date"
-                      name="expiry_date"
-                      value={card?.expiry_date}
-                      disabled
-                    />
-                  </div>
+                  <Input
+                    type="text"
+                    id="expiry_date"
+                    className="form-control opacity-75"
+                    placeholder="Expiration Date"
+                    name="expiry_date"
+                    value={card?.expiry_date}
+                    disabled
+                  />
                 </div>
                 <div className="col-lg-6 col-12 col-right col p-0">
-                  <div className="form-field position-relative z-1">
-                    <Input
-                      type="password"
-                      id="security_code"
-                      className="form-control opacity-75"
-                      placeholder="Security Code"
-                      name="security_code"
-                      value="***"
-                      disabled
-                    />
-                  </div>
+                  <Input
+                    type="password"
+                    id="security_code"
+                    className="form-control opacity-75"
+                    placeholder="Security Code"
+                    name="security_code"
+                    value="***"
+                    disabled
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-lg-6 col-12 col-left p-0">
-                  <div className="form-field">
-                    <Input
-                      type="name"
-                      className="form-control opacity-75"
-                      placeholder="First Name"
-                      name="card_holder_first_name"
-                      value={card_holder_first_name}
-                      disabled
-                    />
-                  </div>
+                  <Input
+                    type="name"
+                    className="form-control opacity-75"
+                    placeholder="First Name"
+                    name="card_holder_first_name"
+                    value={card_holder_first_name}
+                    disabled
+                  />
                 </div>
                 <div className="col-lg-6 col-12 col-right p-0">
-                  <div className="form-field">
-                    <Input
-                      type="name"
-                      className="form-control opacity-75"
-                      placeholder="First Name"
-                      name="card_holder_last_name"
-                      value={card_holder_last_name}
-                      disabled
-                    />
-                  </div>
+                  <Input
+                    type="name"
+                    className="form-control opacity-75"
+                    placeholder="First Name"
+                    name="card_holder_last_name"
+                    value={card_holder_last_name}
+                    disabled
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 p-0">
-                  <div className="form-field">
-                    <Input
-                      type="text"
-                      className="form-control"
-                      placeholder="Email"
-                      name="email"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.email}
-                      error={formik.touched.email && formik.errors.email}
-                    />
-                  </div>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    placeholder="Email"
+                    name="email"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.email}
+                    error={formik.touched.email && formik.errors.email}
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 p-0">
-                  <div className="form-field">
-                    <Input
-                      type="text"
-                      id="billing_address"
-                      className="form-control opacity-75"
-                      placeholder="Billing Address"
-                      name="billing_address"
-                      value={billing_address}
-                      disabled
-                    />
-                  </div>
+                  <Input
+                    type="text"
+                    id="billing_address"
+                    className="form-control opacity-75"
+                    placeholder="Billing Address"
+                    name="billing_address"
+                    value={billing_address}
+                    disabled
+                  />
                 </div>
               </div>
               <div className="form-field two-fields">
@@ -320,7 +309,6 @@ function EditCard() {
                   </InputSelect>
                 </div>
               </div>
-
               <div className="row">
                 <div className="col-12 p-0 btns-inline">
                   <div className="setting-btn-link btn-wrap">
