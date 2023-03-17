@@ -235,17 +235,17 @@ $(document).ready(function (e) {
     $(".js-clearSearchBox").css("opacity", "0");
   });
 });
-$(document).ready(function () {
-  $("select.form-control").css("color", "#BDBDBD");
-  $("select.form-control").change(function () {
-    var current = $("select.form-control").val();
-    if (current !== "null") {
-      $(this).css("color", "#363853");
-    } else {
-      $(this).css("color", "#BDBDBD");
-    }
-  });
-});
+// $(document).ready(function () {
+//   $("select.form-control").css("color", "#BDBDBD");
+//   $("select.form-control").change(function () {
+//     var current = $("select.form-control").val();
+//     if (current !== "null") {
+//       $(this).css("color", "#363853");
+//     } else {
+//       $(this).css("color", "#BDBDBD");
+//     }
+//   });
+// });
 
 $(document).ready(function () {
   if ($(window).innerWidth() < 991) {

@@ -1214,25 +1214,24 @@
     padding-bottom: 38px;
   }
 }
-@media only screen and (max-width: 1366px) and (min-width:992px) {
-    .business-info-right-sec{
-        padding:40px 0px 20px 20px !important;
-    }
-
+@media only screen and (max-width: 1366px) and (min-width: 992px) {
+  .business-info-right-sec {
+    padding: 40px 0px 20px 20px !important;
+  }
 }
-@media only screen and (max-width: 1199px) and (min-width: 992px){
-    .business-info-right .profile-qr{
-      max-width: 180px;
-      margin-right: 10px;
-    }
-    .business-info-right .qr-btn{
-        padding: 13px 20px;
-    }
+@media only screen and (max-width: 1199px) and (min-width: 992px) {
+  .business-info-right .profile-qr {
+    max-width: 180px;
+    margin-right: 10px;
+  }
+  .business-info-right .qr-btn {
+    padding: 13px 20px;
+  }
 }
 @media only screen and (max-width: 1100px) and (min-width: 992px) {
   .dashboard-right-sec {
-    padding-left:30px;
-    padding-right:30px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
   .wallet-main-right,
   .wallet-top-wrap .dashboard-notification-sec {
@@ -1243,7 +1242,7 @@
   .wallet-top-wrap .wallet-title-wrap {
     width: calc(100% - 330px);
   }
-   .wallet-right-title h3 {
+  .wallet-right-title h3 {
     margin-bottom: 15px;
     font-size: 18px;
     line-height: 23px;
@@ -1529,11 +1528,10 @@
   .business-info-right-sec .profile-qr {
     margin-left: auto;
   }
-  .business-info-left-content
-   {
+  .business-info-left-content {
     width: calc(100% - 230px);
   }
-  .business-info-right{
+  .business-info-right {
     width: 230px;
     padding-left: 25px;
   }
@@ -1541,19 +1539,18 @@
     padding-top: 75px;
   }
   .settings-vc-sec,
-  .business-info-right-sec{
-    padding-top:110px;
+  .business-info-right-sec {
+    padding-top: 110px;
     height: auto;
   }
 }
 @media only screen and (max-width: 991px) and (min-width: 820px) {
   .profile-inner-sec .profile-left-content,
-  .business-info-left-content
-   {
+  .business-info-left-content {
     width: calc(100% - 250px);
   }
-  .profile-inner-sec .profile-right-content ,
-  .business-info-right{
+  .profile-inner-sec .profile-right-content,
+  .business-info-right {
     width: 250px;
     padding-left: 25px;
   }
@@ -2876,14 +2873,14 @@
     padding-top: 20px;
   }
   /* CSS Added on 16-03 */
-  .business-info-right-sec{
-    padding:30px 0px 0px !important;
+  .business-info-right-sec {
+    padding: 30px 0px 0px !important;
   }
   .business-info-right .qr-btn {
     padding: 13px 20px;
   }
   .settings-vc-sec,
-  .business-info-right-sec{
+  .business-info-right-sec {
     height: auto;
   }
 }
@@ -3028,7 +3025,7 @@
     margin-right: 15px;
   }
   .dashboard-right-sec {
-    padding:30px 20px;
+    padding: 30px 20px;
   }
   /*sidebar toggle css close*/
   .profile-bottom-info-sec ul li {
@@ -3549,21 +3546,21 @@
   .setting-btn-link a {
     padding-left: 22px !important;
   }
-  .settings-inner-sec .profile-info{
-    padding-bottom:15px;
+  .settings-inner-sec .profile-info {
+    padding-bottom: 15px;
   }
   /* CSS Added on  16-03 */
-  .business-info-left-content{
-    max-width:520px;
+  .business-info-left-content {
+    max-width: 520px;
     margin-left: auto;
     margin-right: auto;
   }
-  .settings-profile-bottom-info-sec .login-btn .btn{
+  .settings-profile-bottom-info-sec .login-btn .btn {
     min-width: 140px;
   }
-   .settings-vc-sec,
-   .business-info-right-sec{
-    padding-top:70px;
+  .settings-vc-sec,
+  .business-info-right-sec {
+    padding-top: 70px;
   }
 }
 @media only screen and (max-width: 575px) {

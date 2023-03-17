@@ -131,10 +131,7 @@ const addBusinessUrlSchema = yup.object().shape({
   business_url: yup
     .string()
     .required("Business url is required")
-    .matches(
-      /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm,
-      "Business url is not valid"
-    )
+    .matches(url_regex, "Business url is not valid")
     .nullable(),
 });
 
@@ -145,7 +142,11 @@ const inviteContactSchema = yup.object().shape({
 
 const businessInfoSchema = yup.object().shape({
   business_url: yup.string().matches(url_regex, "Business url is not valid"),
-  business_id: yup.string().required("Business id is required"),
+  business_id: yup
+    .string()
+    // .required("Please enter personal id")
+    .matches(/^\S*$/, "Space is not allowed")
+    .max(25, "Maximum limit exceeded"),
 });
 
 export {
