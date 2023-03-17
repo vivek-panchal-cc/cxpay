@@ -3,19 +3,34 @@ import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
-import { linkBankSchema } from "schemas/walletSchema";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { EditBankSchema } from "schemas/walletSchema";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import { IconLeftArrow } from "styles/svgs";
 import InputSelect from "components/ui/InputSelect";
 import useCountriesCities from "hooks/useCountriesCities";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setEditBank } from "features/user/userProfileSlice";
 
-const LinkBank = (props) => {
+const EditBank = (props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [countryList, cityList] = useCountriesCities();
-  const { profile } = useSelector((state) => state.userProfile);
-  const { first_name, last_name, email, city, country } = profile || {};
+  const { bank } = useSelector((state) => state.userProfile);
+  const {
+    email,
+    city,
+    country,
+    account_type,
+    bank_holder_first_name,
+    bank_holder_last_name,
+    bank_name,
+    bank_number,
+    id,
+    routing_number,
+  } = bank || {};
+
+  console.log(bank);
 
   const { country_index, country_iso } = useMemo(() => {
     if (!country) return {};
@@ -29,54 +44,49 @@ const LinkBank = (props) => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      account_type: "current",
-      bank_name: "",
-      routing_number: "",
-      bank_number: "",
-      bank_holder_first_name: first_name || "",
-      bank_holder_last_name: last_name || "",
+      id: id || "",
       email: email || "",
       country: country || "",
       country_index: country_index,
       country_iso: country_iso,
       city: city || "",
+      bank_number: bank_number || "", // not-required
+      routing_number: routing_number || "", // not-required
+      account_type: account_type || "", // not-required
+      //   bank_name: bank_name || "",
+      //   bank_holder_first_name: bank_holder_first_name || "",
+      //   bank_holder_last_name: bank_holder_last_name || "",
     },
-    validationSchema: linkBankSchema,
+    validationSchema: EditBankSchema,
     onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
       try {
-        const { data } = await apiRequest.linkBank(values);
+        const { data } = await apiRequest.updateBank(values);
         if (!data.success) throw data.message;
         toast.success(data.message);
-        navigate("/wallet/bank-list");
+        await dispatch(setEditBank({}));
+        navigate("/wallet/bank-list", { replace: true });
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
         setErrors({
-          bank_name: error.bank_name?.[0],
           routing_number: error.routing_number?.[0],
           bank_number: error.bank_number?.[0],
-          bank_holder_first_name: error.bank_holder_first_name?.[0],
-          bank_holder_last_name: error.bank_holder_last_name?.[0],
           email: error?.email?.[0],
           country: error?.country?.[0],
           city: error?.city?.[0],
         });
-        resetForm();
         setStatus(error);
       }
     },
   });
 
-  useEffect(() => {
-    const type = formik.values.account_type;
-    formik.resetForm();
-    formik.setFieldValue("account_type", type);
-  }, [formik.values.account_type]);
+  if (!bank || Object.keys(bank).length <= 0)
+    return <Navigate to={"/wallet/bank-list"} replace />;
 
   return (
     <div>
       <div className="wallet-link-bank-bottom">
         <div className="profile-info rm-pl-profile-info">
-          <h3>Link a Bank</h3>
+          <h3>Edit Bank</h3>
           <Breadcrumb />
         </div>
         <div className="wallet-bank_link-form-wrap">
@@ -92,10 +102,8 @@ const LinkBank = (props) => {
                   type="radio"
                   id="saving_acc_op"
                   name="account_type"
-                  value={"savings"}
-                  onChange={formik.handleChange}
-                  // checked={formik.values.account_type === "savings"}
-                  // defaultChecked
+                  defaultChecked={account_type === "saving"}
+                  disabled
                 />
                 <label className="form-check-label" htmlFor="saving_acc_op">
                   Savings
@@ -107,10 +115,8 @@ const LinkBank = (props) => {
                   type="radio"
                   id="current_acc_op"
                   name="account_type"
-                  value={"current"}
-                  onChange={formik.handleChange}
-                  // checked={formik.values.account_type === "savings"}
-                  defaultChecked
+                  defaultChecked={account_type === "current"}
+                  disabled
                 />
                 <label className="form-check-label" htmlFor="current_acc_op">
                   Current
@@ -122,13 +128,11 @@ const LinkBank = (props) => {
                 <div className="form-field">
                   <Input
                     type="text"
-                    className="form-control"
+                    className="form-control opacity-75"
                     placeholder="Bank Name"
                     name="bank_name"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.bank_name}
-                    error={formik.touched.bank_name && formik.errors.bank_name}
+                    value={bank_name}
+                    disabled
                   />
                 </div>
               </div>
@@ -138,20 +142,11 @@ const LinkBank = (props) => {
                 <div className="form-field">
                   <Input
                     type="text"
-                    className="form-control"
-                    placeholder={
-                      formik.values.account_type === "savings"
-                        ? "Routing Number"
-                        : "Routing Number"
-                    }
+                    className="form-control opacity-75"
+                    placeholder="Routing Number"
                     name="routing_number"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.routing_number}
-                    error={
-                      formik.touched.routing_number &&
-                      formik.errors.routing_number
-                    }
+                    value={routing_number}
+                    disabled
                   />
                 </div>
               </div>
@@ -161,15 +156,11 @@ const LinkBank = (props) => {
                 <div className="form-field">
                   <Input
                     type="text"
-                    className="form-control"
+                    className="form-control opacity-75"
                     placeholder="Account Number"
                     name="bank_number"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.bank_number}
-                    error={
-                      formik.touched.bank_number && formik.errors.bank_number
-                    }
+                    value={bank_number}
+                    disabled
                   />
                 </div>
               </div>
@@ -179,16 +170,11 @@ const LinkBank = (props) => {
                 <div className="form-field">
                   <Input
                     type="name"
-                    className="form-control"
+                    className="form-control opacity-75"
                     placeholder="First Name"
                     name="bank_holder_first_name"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.bank_holder_first_name}
-                    error={
-                      formik.touched.bank_holder_first_name &&
-                      formik.errors.bank_holder_first_name
-                    }
+                    value={bank_holder_first_name}
+                    disabled
                   />
                 </div>
               </div>
@@ -196,16 +182,11 @@ const LinkBank = (props) => {
                 <div className="form-field">
                   <Input
                     type="name"
-                    className="form-control"
+                    className="form-control opacity-75"
                     placeholder="Last Name"
                     name="bank_holder_last_name"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.bank_holder_last_name}
-                    error={
-                      formik.touched.bank_holder_last_name &&
-                      formik.errors.bank_holder_last_name
-                    }
+                    value={bank_holder_last_name}
+                    disabled
                   />
                 </div>
               </div>
@@ -271,12 +252,11 @@ const LinkBank = (props) => {
                 </InputSelect>
               </div>
             </div>
-
             <div className="row">
               <div className="col-12 p-0 btns-inline">
                 <div className="setting-btn-link btn-wrap">
                   <Link
-                    to="/wallet"
+                    to="/wallet/bank-list"
                     className="outline-btn w-100 text-center d-block"
                     replace
                   >
@@ -287,7 +267,7 @@ const LinkBank = (props) => {
                   <input
                     type="submit"
                     className="btn btn-primary"
-                    value="Link"
+                    value="Save Changes"
                   />
                 </div>
               </div>
@@ -299,4 +279,4 @@ const LinkBank = (props) => {
   );
 };
 
-export default LinkBank;
+export default EditBank;

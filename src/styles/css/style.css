@@ -1003,7 +1003,8 @@ form .form-field select.form-control {
   width: calc(100% - 221px);
   padding-left: 40px;
   padding-right: 40px;
-  padding-top: 40px;
+  padding-top:30px;
+  padding-bottom: 30px;
   transition: all 0.5s ease-in-out;
   -webkit-transition: all 0.5s ease-in-out;
 }
@@ -1706,7 +1707,7 @@ margin: auto;
   padding: 0 0 22px;
 }
 .business-info-right-sec {
-  padding-left: 131px;
+  padding-left:90px;
 }
 .business-info-bottom-sec {
   max-width: 559px;
@@ -5843,4 +5844,23 @@ ul.dashboard-main-links {
     margin-top: 20px;
     justify-content: center !important;
   }
+}
+/* New CSS After 15-03  */
+.settings-vc-sec{
+  height: calc(100% - 50px);
+  padding-top: 25px;
+  padding-bottom:0px;
+}
+.settings-vc-sec>.settings-edit-profile-right-sec{height:100%;}
+div.settings-note-inner-sec.setting-noti-sec-new{
+      flex-direction: column;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+.business-info-right-sec{
+  height: calc(100% - 50px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 30px 30px 30px 90px;
 }
