@@ -16,7 +16,7 @@ function CustomizePalette(props) {
         const { data } = await apiRequest.getCardColor();
         if (!data.success) throw data.message;
         setColorPalette(data.data);
-        handleChange(data?.data?.[1]);
+        if (!color && !bgimg) handleChange(data?.data?.[0]);
       } catch (error) {
         console.log(error);
       } finally {
@@ -27,9 +27,9 @@ function CustomizePalette(props) {
 
   const handleSelect = (e) => {
     const scolor = e.currentTarget.dataset.value;
-    if (scolor === "white" && bgimg) {
-      removeBgImg();
-      return;
+    if (scolor === "" && bgimg) {
+      handleChange(colorsPallette[0]);
+      return removeBgImg();
     }
     handleChange(scolor);
   };
@@ -52,7 +52,7 @@ function CustomizePalette(props) {
         ))}
         <li
           className={`radio-group-inner ${bgimg ? "selected" : ""}`}
-          data-value="white"
+          data-value=""
           onClick={handleSelect}
         >
           <div className="radio-round white overflow-hidden">

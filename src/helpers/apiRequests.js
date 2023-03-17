@@ -22,8 +22,10 @@ const API_getProfile = apiUrl.API_ONBOARD_GET_PROFILE;
 const API_registerUser = apiUrl.API_ONBOARD_REGISTER_USER;
 const API_updateUser = apiUrl.API_ONBOARD_UPDATE_USER;
 const API_linkBank = apiUrl.API_ONBOARD_ADD_BANK;
+const API_updateBank = apiUrl.API_ONBOARD_UPDATE_BANK;
 const API_addCard = apiUrl.API_ONBOARD_ADD_CARD;
 const API_deleteCard = apiUrl.API_ONBOARD_DELETE_CARD;
+const API_updateCard = apiUrl.API_ONBOARD_UPDATE_CARD;
 const API_getCountry = apiUrl.API_ONBOARD_GET_COUNTRY;
 const API_resendRegisterOtp = apiUrl.API_ONBOARD_RESEND_REGISTER_OTP;
 const API_updateBusinessUrl = apiUrl.API_ONBOARD_UPDATE_BUSINESS_URL;
@@ -137,21 +139,29 @@ export const updateUser = (params) => {
 };
 
 // POST @add-bank API
-// @params bank_number,account_number,routing_number,account_type
+// @params bank_number, routing_number, account_type (current,savings), bank_name,
+//         bank_holder_first_name, bank_holder_last_name, city, country, email
 export const linkBank = (params) => {
   return axiosOnboardInstance.post(`${API_linkBank}`, params);
 };
 
-// POST @add-bank API
-// @params bank_number,account_number,routing_number,account_type
+// POST @add-card API
+// @params card_number, expiry_date(mm/yyyy), billing_address, security_code, color, image,
+//         card_holder_first_name, card_holder_last_name, city, country, email
 export const addCard = (params) => {
   return axiosOnboardInstance.post(`${API_addCard}`, params);
 };
 
-// POST @add-bank API
+// POST @delete-card API
 // @params id(card id)
 export const deleteCard = (params) => {
   return axiosOnboardInstance.post(`${API_deleteCard}`, params);
+};
+
+// POST @update-card API
+// @params id(card id), image, color, city, country, email
+export const updateCard = (params) => {
+  return axiosOnboardInstance.post(`${API_updateCard}`, params);
 };
 
 // POST @get-country API
@@ -196,6 +206,12 @@ export const deleteBank = (params) => {
   return axiosOnboardInstance.post(`${API_deleteBank}`, params);
 };
 
+// POST @update-bank
+// @params id(bank id), bank_number, routing_number, account_type (current,savings), city, country, email
+export const updateBank = (params) => {
+  return axiosOnboardInstance.post(`${API_updateBank}`, params);
+};
+
 // GET @get-card-color
 // @params
 export const getCardColor = () => {
@@ -219,6 +235,7 @@ export const apiRequest = {
   linkBank,
   addCard,
   deleteCard,
+  updateCard,
   getCountry,
   refreshToken,
   resendLoginOtp,
@@ -229,5 +246,6 @@ export const apiRequest = {
   generateNewQrCode,
   getBankList,
   deleteBank,
+  updateBank,
   getCardColor,
 };
