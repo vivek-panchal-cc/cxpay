@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import styles from "./modal.module.scss";
 
 function Modal(props) {
-  const { children, className, id, show, setShow } = props;
+  const { children, className, classNameChild, id, show, setShow } = props;
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -24,7 +24,9 @@ function Modal(props) {
       id={id}
       role="dialog"
     >
-      <div ref={modalRef}>{children}</div>
+      <div ref={modalRef} className={classNameChild}>
+        {children}
+      </div>
     </div>
   );
 }

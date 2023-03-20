@@ -1,4 +1,4 @@
-// customer login urls
+// customer-login urls
 export const API_LOGIN_LOGIN = "/login";
 export const API_LOGIN_LOGOUT = "/logout";
 export const API_LOGIN_LOGIN_OTP = "/login-otp";
@@ -38,3 +38,6 @@ export const API_ONBOARD_GET_CARD_COLOR = "/get-card-color";
 export const API_ONBOARD_UPDATE_CARD = "/update-card";
 export const API_ONBOARD_CARD_MARK_AS_DEFAULT = "/card-mark-as-default";
 export const API_ONBOARD_BANK_MARK_AS_DEFAULT = "/bank-mark-as-default";
+
+// customer-transaction Urls
+export const API_TRANSACTION_ADD_FUND = "/add-fund";

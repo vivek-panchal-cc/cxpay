@@ -25,6 +25,7 @@ import BankList from "pages/bank-list/BankList";
 import { storageRequest } from "helpers/storageRequests";
 import EditCard from "pages/edit-card/EditCard";
 import EditBank from "pages/edit-bank/EditBank";
+import FundAccount from "pages/fund-account/FundAccount";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -79,6 +80,10 @@ function App() {
             <Route path="/wallet/view-card/edit-card" element={<EditCard />} />
             <Route path="/wallet/bank-list" element={<BankList />} />
             <Route path="/wallet/bank-list/edit-bank" element={<EditBank />} />
+            <Route
+              path="/wallet/fund-account/:fundtype?"
+              element={<FundAccount />}
+            />
             {/* contacts */}
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/profile" element={<Profile />} />

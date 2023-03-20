@@ -1,5 +1,9 @@
 import * as apiUrl from "constants/urls";
-import { axiosLoginInstance, axiosOnboardInstance } from "plugin/axios";
+import {
+  axiosLoginInstance,
+  axiosOnboardInstance,
+  axiosTransactionInstance,
+} from "plugin/axios";
 
 // LOGIN SERVICES
 const API_login = apiUrl.API_LOGIN_LOGIN;
@@ -36,6 +40,9 @@ const API_deleteBank = apiUrl.API_ONBOARD_DELETE_BANK;
 const API_getCardColor = apiUrl.API_ONBOARD_GET_CARD_COLOR;
 const API_cardMarkAsDefault = apiUrl.API_ONBOARD_CARD_MARK_AS_DEFAULT;
 const API_bankMarkAsDefault = apiUrl.API_ONBOARD_BANK_MARK_AS_DEFAULT;
+
+// TRANSACTION SERVICES
+const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 //  ------------------------------------------------------------------------------------------------------------------------------------------------>
@@ -232,6 +239,12 @@ export const getCardColor = () => {
   return axiosOnboardInstance.get(`${API_getCardColor}`);
 };
 
+// POST @add-fund
+// @params
+export const addFund = () => {
+  return axiosTransactionInstance.post(`${API_addFund}`);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -264,4 +277,5 @@ export const apiRequest = {
   updateBank,
   bankMarkAsDefault,
   getCardColor,
+  addFund,
 };

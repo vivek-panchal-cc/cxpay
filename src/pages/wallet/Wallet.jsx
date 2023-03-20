@@ -1,20 +1,27 @@
-import React from "react";
+import Modal from "components/modals/Modal";
+import FundYourAccountPopup from "components/popups/FundYourAccountPopup";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Wallet() {
+  const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
+
+  const handleFundAccountPopup = () => {
+    setShowFundAccountPopup(true);
+  };
+
   return (
     <>
-      <div className="p-4 wallet-pg-inks">
-        <h1>Wallet</h1>
-        <Link to="/wallet/add-card">Go to Add-Card</Link>
-        <div>
-          <Link to="/wallet/link-bank">Go to Link a Bank</Link>
-        </div>
-        <div>
-          <Link to="/wallet/bank-list">Bank List</Link>
-        </div>
-        <Link to="/wallet/view-card">Cards List</Link>
-      </div>
+      {/* Fund your Account Popup */}
+      <Modal
+        id="fund_acc_modal"
+        show={showPopupFundAccount}
+        setShow={setShowFundAccountPopup}
+        className="fund-acc-modal"
+        classNameChild="modal-dialog w-100"
+      >
+        <FundYourAccountPopup />
+      </Modal>
       {/* <!-- dahsboard top sec starts -->	 */}
       <div className="dashboard-top-sec wallet-top-wrap">
         <div className="col-lg-7 col-12 wallet-title-wrap">
@@ -23,19 +30,14 @@ function Wallet() {
             <p>Lorem Ipsum Dolor Sit Amet</p>
           </div>
           <div className="wallet-title-btns">
-            <a
-              href="#"
-              data-bs-target="#fund_acc_modal"
-              data-bs-toggle="modal"
-              className="wallet-top-1-btn"
-            >
+            <Link className="wallet-top-1-btn" onClick={handleFundAccountPopup}>
               <img src="/assets/images/fund_svg_wallet.svg" alt="" />
               <span>Fund your account</span>
-            </a>
-            <a href="#" className="wallet-top-2-btn">
+            </Link>
+            <Link to="/wallet/link-bank" className="wallet-top-2-btn">
               <img src="/assets/images/Bank_ic_wallet.svg" alt="" />
               <span>Link a bank</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -428,21 +430,27 @@ function Wallet() {
               </div>
             </div>
             <div className="wallet-card-add-btns mb-4">
-              <a href="#" className="w-100">
+              <Link
+                to="/wallet/bank-list"
+                className="w-100 d-flex align-items-center"
+              >
                 <img src="/assets/images/Bank_ic_wallet.svg" alt="" />
-                <span className="w-100">My Bank Accounts</span>
-              </a>
+                <span className="w-100 mw-100">My Bank Accounts</span>
+              </Link>
             </div>
             <div className="wallet-card-add-btns">
-              <a href="">
+              <Link to="/wallet/add-card">
                 <img src="/assets/images/Add_card_btn.svg" alt="" />
                 <span>Add a Card</span>
-              </a>
-              <a href="">
+              </Link>
+              <Link to="/wallet/">
                 <img src="/assets/images/Remove_card_btn.svg" alt="" />
                 <span>Remove Card</span>
-              </a>
+              </Link>
             </div>
+            <Link to="/wallet/view-card" className="my-4">
+              Cards List
+            </Link>
           </div>
         </div>
       </div>
