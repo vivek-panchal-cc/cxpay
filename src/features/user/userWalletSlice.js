@@ -15,7 +15,20 @@ const fetchCardsList = createAsyncThunk(
     try {
       const { data } = await apiRequest.cardsList();
       if (!data.success) throw data.message;
-      console.log(data.data.cards);
+      return data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+const fetchBanksList = createAsyncThunk(
+  "wallet/fetchBanksList",
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await apiRequest.getBankList();
+      if (!data.success) throw data.message;
+      console.log(data.data);
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -28,16 +41,24 @@ const userWalletSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchCardsList.fulfilled, (state, action) => {
-      state.cardsList = action.payload.cards;
-      const defaultcard = action.payload.cards?.find(
-        (card) => card.mark_as_default === 1
-      );
-      state.defaultCard = defaultcard;
-    });
+    builder
+      .addCase(fetchCardsList.fulfilled, (state, action) => {
+        state.cardsList = action.payload.cards;
+        const defaultcard = action.payload.cards?.find(
+          (card) => card.mark_as_default === 1
+        );
+        state.defaultCard = defaultcard;
+      })
+      .addCase(fetchBanksList.fulfilled, (state, action) => {
+        state.banksList = action.payload.banks;
+        const defaultBank = action.payload.banks?.find(
+          (bank) => bank.mark_as_default === 1
+        );
+        state.defaultBank = defaultBank;
+      });
   },
 });
 
-export { fetchCardsList };
+export { fetchCardsList, fetchBanksList };
 export const {} = userWalletSlice.actions;
 export default userWalletSlice.reducer;

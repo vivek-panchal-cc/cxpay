@@ -240,9 +240,10 @@ export const getCardColor = () => {
 };
 
 // POST @add-fund
-// @params
-export const addFund = () => {
-  return axiosTransactionInstance.post(`${API_addFund}`);
+// @params transactionType, transactionAmount, txn_mode, card_number, expiry_date, billing_address,
+//         save_card, card_holder_first_name, card_holder_last_name, city, country, email, card_id
+export const addFund = (params) => {
+  return axiosTransactionInstance.post(`${API_addFund}`, params);
 };
 
 export const apiRequest = {

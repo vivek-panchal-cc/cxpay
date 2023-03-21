@@ -170,7 +170,7 @@ function AddCard() {
           <div className="add-wallet-card-form-wrap">
             <form onSubmit={formik.handleSubmit}>
               <div className="row">
-                <div className="col-12 col p-0">
+                <div className="col-lg-6 col-12 col-left col p-0">
                   <Input
                     type="text"
                     className="form-control"
@@ -184,9 +184,7 @@ function AddCard() {
                     }
                   />
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-6 col-12 col-left col p-0">
+                <div className="col-lg-6 col-12 col-right col p-0">
                   <div className="form-field position-relative z-1">
                     <DatePicker
                       id="datepickeradd-card"
@@ -218,6 +216,9 @@ function AddCard() {
                     </p>
                   </div>
                 </div>
+              </div>
+              {/* <div className="row">
+                <div className="col-lg-6 col-12 col-left col p-0"></div>
                 <div className="col-lg-6 col-12 col-right col p-0">
                   <div className="position-relative">
                     <Input
@@ -246,7 +247,7 @@ function AddCard() {
                     </span>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="row">
                 <div className="col-lg-6 col-12 col-left p-0">
                   <Input

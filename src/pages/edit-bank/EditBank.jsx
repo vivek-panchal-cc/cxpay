@@ -31,8 +31,6 @@ const EditBank = (props) => {
     address,
   } = bank || {};
 
-  console.log(bank);
-
   const { country_index, country_iso } = useMemo(() => {
     if (!country) return {};
     const country_index = countryList.findIndex(
@@ -51,12 +49,13 @@ const EditBank = (props) => {
       country_index: country_index,
       country_iso: country_iso,
       city: city || "",
-      bank_number: bank_number || "", // not-required
-      routing_number: routing_number || "", // not-required
-      account_type: account_type || "", // not-required
-      //   bank_name: bank_name || "",
-      //   bank_holder_first_name: bank_holder_first_name || "",
-      //   bank_holder_last_name: bank_holder_last_name || "",
+      // bank_number: bank_number || "", // not-required
+      // routing_number: routing_number || "", // not-required
+      // account_type: account_type || "", // not-required
+      // bank_name: bank_name || "",
+      address: address || "",
+      bank_holder_first_name: bank_holder_first_name || "",
+      bank_holder_last_name: bank_holder_last_name || "",
     },
     validationSchema: EditBankSchema,
     onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
@@ -164,21 +163,31 @@ const EditBank = (props) => {
               <div className="col-lg-6 col-12 col-left p-0">
                 <Input
                   type="name"
-                  className="form-control opacity-75"
+                  className="form-control"
                   placeholder="First Name"
                   name="bank_holder_first_name"
-                  value={bank_holder_first_name}
-                  disabled
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.bank_holder_first_name}
+                  error={
+                    formik.touched.bank_holder_first_name &&
+                    formik.errors.bank_holder_first_name
+                  }
                 />
               </div>
               <div className="col-lg-6 col-12 col-right p-0">
                 <Input
                   type="name"
-                  className="form-control opacity-75"
+                  className="form-control"
                   placeholder="Last Name"
                   name="bank_holder_last_name"
-                  value={bank_holder_last_name}
-                  disabled
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.bank_holder_last_name}
+                  error={
+                    formik.touched.bank_holder_last_name &&
+                    formik.errors.bank_holder_last_name
+                  }
                 />
               </div>
             </div>
@@ -201,11 +210,13 @@ const EditBank = (props) => {
                 <Input
                   type="text"
                   id="address"
-                  className="form-control opacity-75"
+                  className="form-control"
                   placeholder="Address"
                   name="address"
-                  value={address}
-                  disabled
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.address}
+                  error={formik.touched.address && formik.errors.address}
                 />
               </div>
             </div>

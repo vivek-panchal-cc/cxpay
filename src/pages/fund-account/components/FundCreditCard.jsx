@@ -12,8 +12,11 @@ import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCardsList } from "features/user/userWalletSlice";
 import { apiRequest } from "helpers/apiRequests";
+import Modal from "components/modals/Modal";
+import AccountFundedPopup from "components/popups/AccountFundedPopup";
 
-function FundCreditCard() {
+function FundCreditCard(props) {
+  const { showPopupFunded } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userProfile, userWallet } = useSelector((state) => state);
@@ -68,9 +71,9 @@ function FundCreditCard() {
       card_number: "",
       expiry_date: "", // mm/yyyy
       security_code: "",
-      card_holder_first_name: first_name,
-      card_holder_last_name: last_name,
-      email: userEmail,
+      card_holder_first_name: first_name || "",
+      card_holder_last_name: last_name || "",
+      email: userEmail || "",
       billing_address: "",
       country: userCountry || "",
       country_index: country_index, // not required for API
@@ -78,7 +81,7 @@ function FundCreditCard() {
       city: userCity || "",
       transactionType: "PL",
       transactionAmount: "",
-      txn_mode: "",
+      txn_mode: "CARD",
       save_card: false,
     },
     validationSchema: "",
@@ -88,9 +91,9 @@ function FundCreditCard() {
         const { data } = await apiRequest.addFund(values);
         if (!data.success) throw data.message;
         toast.success(data.message);
+        showPopupFunded(values.transactionAmount);
         resetForm();
         setExpDate();
-        navigate("/wallet");
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
         setErrors({
@@ -120,13 +123,9 @@ function FundCreditCard() {
     formik.setFieldValue("expiry_date", mmyy);
   };
 
-  const handleUseDefaultCard = (e) => {
+  useEffect(() => {
     if (!(id && card_number && expiry_date && email)) return;
-    if (!e.currentTarget.checked) {
-      setDisableCardField(false);
-      setExpDate();
-      return formik.resetForm();
-    }
+    console.log("This is the ND");
     // setting country
     let country_iso = "";
     const country_index = countryList.findIndex((e) => {
@@ -140,9 +139,11 @@ function FundCreditCard() {
     const moyr = expiry_date.split("/").map((item) => parseInt(item));
     date.setFullYear(moyr[1], moyr[0] - 1);
     setExpDate(date);
+    setDisableCardField(true);
     formik.setValues({
+      ...formik.values,
       card_id: id,
-      card_number: "X".repeat(12) + card_number,
+      card_number: card_number,
       expiry_date: expiry_date,
       security_code: "...",
       card_holder_first_name: card_holder_first_name,
@@ -154,8 +155,7 @@ function FundCreditCard() {
       country_iso: country_iso,
       city: city,
     });
-    setDisableCardField(true);
-  };
+  }, [id, card_number, expiry_date, email]);
 
   return (
     <>
@@ -376,7 +376,7 @@ function FundCreditCard() {
               </div>
             </div>
             <div className="row">
-              <div className="col-6 p-0">
+              <div className="p-0">
                 <div className="form-field wallet-cb-wrap">
                   <input
                     type="checkbox"
@@ -387,19 +387,6 @@ function FundCreditCard() {
                     error={formik.touched.save_card && formik.errors.save_card}
                   />
                   <label htmlFor="save_card_acc">Save card on account</label>
-                </div>
-              </div>
-              <div className="col-6 p-0">
-                <div className="form-field wallet-cb-wrap">
-                  <input
-                    type="checkbox"
-                    id="use_default_card"
-                    name="default_card"
-                    onChange={handleUseDefaultCard}
-                  />
-                  <label htmlFor="use_default_card">
-                    Use default credit card
-                  </label>
                 </div>
               </div>
             </div>

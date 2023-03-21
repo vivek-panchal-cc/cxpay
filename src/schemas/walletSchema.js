@@ -26,14 +26,7 @@ const addCardSchema = yup.object().shape({
       "Expiry date is invalid",
       (value) => valid.expirationDate(value, 10).isValid
     ),
-  security_code: yup
-    .string()
-    .required("Security code is required")
-    .test(
-      "test-security-code",
-      "Security code is invalid",
-      (value) => valid.cvv(value).isValid
-    ),
+  security_code: yup.string(),
   card_holder_first_name: yup
     .string()
     .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "First name is invalid")
@@ -82,7 +75,7 @@ const linkBankSchema = yup.object().shape({
   address: yup
     .string()
     .required("Address is required")
-    .max(55, "The billing address must not be greater than 55 characters."),
+    .max(55, "Address must not be greater than 55 characters."),
   country: yup.string().required("Please select country"),
   city: yup.string().required("Please select city"),
 });
@@ -103,6 +96,20 @@ const EditCardSchema = yup.object().shape({
   country: yup.string().required("Please select country"),
   city: yup.string().required("Please select city"),
   color: yup.string(),
+  card_holder_first_name: yup
+    .string()
+    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "First name is invalid")
+    .max(35, "Maximum limit is 35 characters")
+    .required("First name is required."),
+  card_holder_last_name: yup
+    .string()
+    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "First name is invalid")
+    .max(35, "Maximum limit is 35 characters")
+    .required("Last name is required."),
+  billing_address: yup
+    .string()
+    .required("Address is required")
+    .max(55, "The billing address must not be greater than 55 characters."),
 });
 
 const EditBankSchema = yup.object().shape({
@@ -110,6 +117,20 @@ const EditBankSchema = yup.object().shape({
   email: emailSchema,
   country: yup.string().required("Please select country"),
   city: yup.string().required("Please select city"),
+  address: yup
+    .string()
+    .required("Address is required")
+    .max(55, "The billing address must not be greater than 55 characters."),
+  bank_holder_first_name: yup
+    .string()
+    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "First name is invalid")
+    .max(35, "Maximum limit is 35 characters")
+    .required("First name is required."),
+  bank_holder_last_name: yup
+    .string()
+    .matches(/^[ a-zA-Z\u00C0-\u00FF_@.\\/#&+-]*$/, "First name is invalid")
+    .max(35, "Maximum limit is 35 characters")
+    .required("Last name is required."),
 });
 
 export {
