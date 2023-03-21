@@ -64,65 +64,6 @@ function DashboardLayout() {
               </span>
             </div>
             <NotificationBar />
-            {/* <div className="dashboard-top-sec no-search-ontop">
-              <div className="dashboard-search-wrap col-lg-7 col-12">
-                <div className="title-content-wrap send-pay-title-sec title-common-sec ms-4">
-                  <h3>{headings.heading}</h3>
-                  <p>{headings.subHeading}</p>
-                </div>
-              </div>
-              <div className="dashboard-notification-sec col-lg-5 col-12">
-                <div className="notification-user-wrap">
-                  <div className="dashboard-notification-wrap">
-                    <div className="notification-icon">
-                      <IconNotify />
-                      <span className="notification-count">
-                        <span></span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="user-profile">
-                  <div className="user-image">
-                    <div className="user-image-wrap">
-                      <span className="user-image h-100 w-100">
-                        <Image
-                          src={profile?.profile_image}
-                          alt="profile avtar"
-                          fallbacksrc={
-                            profile?.user_type === "business"
-                              ? "/assets/images/Business-account.png"
-                              : "/assets/images/Personal.png"
-                          }
-                          className="h-100 w-100 object-fit-cover"
-                          style={{ objectPosition: "center" }}
-                        />
-                      </span>
-                    </div>
-                    <ul>
-                      <li>
-                        <Link to="/profile">
-                          <IconContact style={{ stroke: "#363853" }} />
-                          Profile
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/setting">
-                          <IconSetting style={{ stroke: "#363853" }} />
-                          Settings
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/logout" replace>
-                          <IconLogout style={{ stroke: "#363853" }} />
-                          Logout
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div> */}
             <Outlet />
           </div>
         </div>

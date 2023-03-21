@@ -34,6 +34,8 @@ const API_cardsList = apiUrl.API_ONBOARD_CARDS_LIST;
 const API_bankList = apiUrl.API_ONBOARD_BANK_LIST;
 const API_deleteBank = apiUrl.API_ONBOARD_DELETE_BANK;
 const API_getCardColor = apiUrl.API_ONBOARD_GET_CARD_COLOR;
+const API_cardMarkAsDefault = apiUrl.API_ONBOARD_CARD_MARK_AS_DEFAULT;
+const API_bankMarkAsDefault = apiUrl.API_ONBOARD_BANK_MARK_AS_DEFAULT;
 
 const API_updateBusinessData = apiUrl.API_ONBOARD_UPDATE_BUSINESS_DATA;
 const API_addContact = apiUrl.API_ONBOARD_ADD_CONTACT;
@@ -175,6 +177,12 @@ export const updateCard = (params) => {
   return axiosOnboardInstance.post(`${API_updateCard}`, params);
 };
 
+// POST @card-mark-as-default API
+// @params card_id
+export const cardMarkAsDefault = (params) => {
+  return axiosOnboardInstance.post(`${API_cardMarkAsDefault}`, params);
+};
+
 // POST @get-country API
 // @params
 export const getCountry = () => {
@@ -246,6 +254,12 @@ export const updateBank = (params) => {
   return axiosOnboardInstance.post(`${API_updateBank}`, params);
 };
 
+// POST @bank-mark-as-default API
+// @params bank_id
+export const bankMarkAsDefault = (params) => {
+  return axiosOnboardInstance.post(`${API_bankMarkAsDefault}`, params);
+};
+
 // GET @get-card-color
 // @params
 export const getCardColor = () => {
@@ -288,6 +302,7 @@ export const apiRequest = {
   addCard,
   deleteCard,
   updateCard,
+  cardMarkAsDefault,
   getCountry,
   refreshToken,
   resendLoginOtp,
@@ -306,5 +321,6 @@ export const apiRequest = {
   getBankList,
   deleteBank,
   updateBank,
+  bankMarkAsDefault,
   getCardColor,
 };

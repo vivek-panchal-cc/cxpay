@@ -1,15 +1,18 @@
+import Input from "components/ui/Input";
 import React from "react";
 import { IconCancel, IconCardBackground, IconEdit } from "styles/svgs";
 
 function CardItem(props) {
-  const { item, handleDelete, handleEdit } = props;
+  const { index, item, handleDelete, handleEdit, handleDefaultCard } = props;
   const {
+    id,
     card_holder_first_name,
     card_holder_last_name,
     card_number,
     color,
     expiry_date,
     image,
+    mark_as_default,
   } = item;
 
   return (
@@ -31,6 +34,16 @@ function CardItem(props) {
           {!image && <IconCardBackground height="100%" width="100%" />}
         </div>
         <p className="bank-cardname-wrap">{`${card_holder_first_name} ${card_holder_last_name}`}</p>
+      </div>
+      <div className="bank-account-type-wrap">
+        <input
+          type="radio"
+          id={`bnk_acc_${index}`}
+          name="bank-account-primary"
+          checked={mark_as_default === 1 ? true : false}
+          onChange={(e) => handleDefaultCard(e, id)}
+        />
+        <label htmlFor={`bnk_acc_${index}`}>Primary Card</label>
       </div>
       <div className="bank-account-num-wrap">
         XXXXXX<span>{card_number}</span>

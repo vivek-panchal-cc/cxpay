@@ -68,6 +68,25 @@ const BankList = () => {
     navigate("/wallet/bank-list/edit-bank");
   };
 
+  const handleDefaultBank = async (radioe, bankId) => {
+    const checked = radioe.currentTarget.checked;
+    if (!checked) return;
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.bankMarkAsDefault({ bank_id: bankId });
+      if (!data.success) throw data.message;
+      await getBankList();
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error);
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  console.log(bankList);
+
   return (
     <div className="">
       <div className="title-content-wrap send-pay-title-sec title-common-sec">
@@ -79,9 +98,11 @@ const BankList = () => {
           <ul className="db-view-bank-listing">
             <li className="db-view-bank-div-main db-view-bank-common-div db-view-bank-heading">
               <div className="bank-logo-name-wrap">Bank Name</div>
+              <div className="bank-account-type-wrap">Primary Account</div>
               <div className="bank-account-routing-num">Account Number</div>
               <div className="bank-account-num-wrap">Routing Number</div>
               <div className="bank-account-type-wrap">Account Type</div>
+              <div className="bank-del-wrap"> </div>
               <div className="bank-del-wrap"> </div>
             </li>
             {bankList && bankList.length > 0 ? (
@@ -99,10 +120,21 @@ const BankList = () => {
                     </div>
                     <p className="bank-name-wrap">{elm?.bank_name}</p>
                   </div>
+                  <div className="bank-account-type-wrap">
+                    <input
+                      type="radio"
+                      id={`bnk_acc_${elm.id}_${i}`}
+                      name="bank-account-primary"
+                      checked={elm.mark_as_default === 1 ? true : false}
+                      onChange={(e) => handleDefaultBank(e, elm.id)}
+                    />
+                    <label htmlFor={`bnk_acc_${elm.id}_${i}`}>
+                      Primary Account
+                    </label>
+                  </div>
                   <div className="bank-account-routing-num">
                     <span>{elm?.bank_number}</span>
                   </div>
-
                   <div className="bank-account-num-wrap">
                     <span>{elm?.routing_number}</span>
                   </div>

@@ -5349,6 +5349,9 @@ p.bank-name-wrap {
 .db-view-bank-listing li:hover .bank-account-type-wrap label {
   background-color: rgb(36 190 239 / 25%);
 }
+.db-view-bank-listing li:hover .bank-account-type-wrap label {
+  background-color: rgb(36 190 239 / 25%);
+}
 .bank-logo-name-wrap {
   display: flex;
   flex-wrap: nowrap;

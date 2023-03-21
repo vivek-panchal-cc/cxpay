@@ -17,6 +17,7 @@ import { LoaderContext } from "context/loaderContext";
 import InputSelect from "components/ui/InputSelect";
 import useCountriesCities from "hooks/useCountriesCities";
 import { useSelector } from "react-redux";
+import useCardColors from "hooks/useCardColors";
 
 function AddCard() {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ function AddCard() {
   const [expDate, setExpDate] = useState();
   const [showCvv, setShowCvv] = useState(false);
   const [countryList, cityList] = useCountriesCities();
+  const [cardColors] = useCardColors();
 
   const { country_index, country_iso } = useMemo(() => {
     if (!country) return {};
@@ -77,7 +79,7 @@ function AddCard() {
       country_index: country_index,
       country_iso: country_iso,
       city: city || "",
-      color: "",
+      color: cardColors?.[0],
     },
     validationSchema: addCardSchema,
     onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
@@ -159,6 +161,7 @@ function AddCard() {
               <CustomizePalette
                 color={formik.values.color}
                 bgimg={croppedImg.url}
+                colorsPallette={cardColors}
                 removeBgImg={handleRemoveImage}
                 handleChange={handleCustomizePalette}
               />
@@ -168,20 +171,18 @@ function AddCard() {
             <form onSubmit={formik.handleSubmit}>
               <div className="row">
                 <div className="col-12 col p-0">
-                  <div className="form-field">
-                    <Input
-                      type="text"
-                      className="form-control"
-                      placeholder="Credit Card Number"
-                      name="card_number"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.card_number}
-                      error={
-                        formik.touched.card_number && formik.errors.card_number
-                      }
-                    />
-                  </div>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    placeholder="Credit Card Number"
+                    name="card_number"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.card_number}
+                    error={
+                      formik.touched.card_number && formik.errors.card_number
+                    }
+                  />
                 </div>
               </div>
               <div className="row">
@@ -218,7 +219,7 @@ function AddCard() {
                   </div>
                 </div>
                 <div className="col-lg-6 col-12 col-right col p-0">
-                  <div className="form-field position-relative">
+                  <div className="position-relative">
                     <Input
                       type={showCvv ? "text" : "password"}
                       className="form-control"
@@ -235,7 +236,7 @@ function AddCard() {
                     />
                     <span
                       className="eye-icon position-absolute"
-                      style={{ top: "24px", right: "20px" }}
+                      style={{ top: "14px", right: "20px" }}
                     >
                       {showCvv ? (
                         <IconEyeOpen onClick={() => setShowCvv((e) => !e)} />
@@ -248,74 +249,66 @@ function AddCard() {
               </div>
               <div className="row">
                 <div className="col-lg-6 col-12 col-left p-0">
-                  <div className="form-field">
-                    <Input
-                      type="name"
-                      className="form-control"
-                      placeholder="First Name"
-                      name="card_holder_first_name"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.card_holder_first_name}
-                      error={
-                        formik.touched.card_holder_first_name &&
-                        formik.errors.card_holder_first_name
-                      }
-                    />
-                  </div>
+                  <Input
+                    type="name"
+                    className="form-control"
+                    placeholder="First Name"
+                    name="card_holder_first_name"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.card_holder_first_name}
+                    error={
+                      formik.touched.card_holder_first_name &&
+                      formik.errors.card_holder_first_name
+                    }
+                  />
                 </div>
                 <div className="col-lg-6 col-12 col-right p-0">
-                  <div className="form-field">
-                    <Input
-                      type="name"
-                      className="form-control"
-                      placeholder="Last Name"
-                      name="card_holder_last_name"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.card_holder_last_name}
-                      error={
-                        formik.touched.card_holder_last_name &&
-                        formik.errors.card_holder_last_name
-                      }
-                    />
-                  </div>
+                  <Input
+                    type="name"
+                    className="form-control"
+                    placeholder="Last Name"
+                    name="card_holder_last_name"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.card_holder_last_name}
+                    error={
+                      formik.touched.card_holder_last_name &&
+                      formik.errors.card_holder_last_name
+                    }
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 p-0">
-                  <div className="form-field">
-                    <Input
-                      type="text"
-                      className="form-control"
-                      placeholder="Email"
-                      name="email"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.email}
-                      error={formik.touched.email && formik.errors.email}
-                    />
-                  </div>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    placeholder="Email"
+                    name="email"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.email}
+                    error={formik.touched.email && formik.errors.email}
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 p-0">
-                  <div className="form-field">
-                    <Input
-                      type="text"
-                      id="billing_address"
-                      className="form-control"
-                      placeholder="Billing Address"
-                      name="billing_address"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.billing_address}
-                      error={
-                        formik.touched.billing_address &&
-                        formik.errors.billing_address
-                      }
-                    />
-                  </div>
+                  <Input
+                    type="text"
+                    id="billing_address"
+                    className="form-control"
+                    placeholder="Billing Address"
+                    name="billing_address"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.billing_address}
+                    error={
+                      formik.touched.billing_address &&
+                      formik.errors.billing_address
+                    }
+                  />
                 </div>
               </div>
               <div className="form-field two-fields">
@@ -365,7 +358,6 @@ function AddCard() {
                   </InputSelect>
                 </div>
               </div>
-
               <div className="row">
                 <div className="col-12 p-0 btns-inline">
                   <div className="setting-btn-link btn-wrap">

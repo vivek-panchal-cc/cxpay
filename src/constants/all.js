@@ -39,7 +39,7 @@ const isValidFileType = (fileName, fileType) => {
 };
 
 // theme colors
-const THEME_COLORS = ["purple", "yellow", "blue", "light_blue", "green"];
+const THEME_COLORS = ["light_blue"];
 
 // To check file size
 // const fileUploadLimit = (file, fileSize) => {
