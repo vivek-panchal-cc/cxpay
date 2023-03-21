@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import Button from "components/ui/Button";
 import Input from "components/ui/Input";
 import InputSelect from "components/ui/InputSelect";
@@ -10,12 +10,14 @@ import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { fetchUserProfile } from "features/user/userProfileSlice";
+import { LoaderContext } from "context/loaderContext";
 
 const BusinessForm = (props) => {
   const { countryList, profile } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(profile?.business_url);
+  const { setIsLoading } = useContext(LoaderContext);
+
   const formik = useFormik({
     initialValues: {
       business_url: profile?.business_url,
@@ -24,6 +26,7 @@ const BusinessForm = (props) => {
     },
     validationSchema: businessInfoSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
+      setIsLoading(true);
       try {
         const { data } = await apiRequest.updateBusinessData(values);
         if (data.success) {
@@ -34,6 +37,8 @@ const BusinessForm = (props) => {
         if (!data.success || data.data === null) throw data.message;
       } catch (error) {
         console.log("error: ", error);
+      } finally {
+        setIsLoading(false);
       }
     },
   });

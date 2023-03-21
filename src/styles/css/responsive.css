@@ -500,6 +500,9 @@
   .con-list-uimg {
     margin-right: 18px;
   }
+  .con-listing-info .con-list-uname{
+    width: calc(100% - 101px);
+  }
   .wallet-bank_link-form-wrap .radio-wrap {
     margin-bottom: 35px;
     margin-top: 25px;
@@ -1068,6 +1071,15 @@
   }
   .con-list-uimg {
     margin-right: 15px;
+    width: 45px;
+    height: 45px;
+  }
+  .con-listing-info .con-list-uname {
+    width: calc(100% - 95px);
+  }
+  .contact-top-btn-nav .con-btn-wrap>.btn{
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   .contact-top-btn-nav .con-btn-wrap .btn img {
     margin-right: 8px;
@@ -1543,6 +1555,9 @@
     padding-top: 110px;
     height: auto;
   }
+  .contact-top-btn-nav .con-btn-wrap {
+    padding-right: 30px;
+  }
 }
 @media only screen and (max-width: 991px) and (min-width: 820px) {
   .profile-inner-sec .profile-left-content,
@@ -1556,6 +1571,9 @@
   }
   .profile-inner-sec .profile-qr {
     padding-top: 75px;
+  }
+  .contact-top-btn-nav .con-btn-wrap .btn img{
+    max-width: 23px;
   }
 }
 @media only screen and (max-width: 1024px) {
@@ -2883,6 +2901,10 @@
   .business-info-right-sec {
     height: auto;
   }
+  .contact-top-btn-nav{
+    max-width: 100%;
+    justify-content: left;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -3723,9 +3745,36 @@
   .add-card-color-wrap {
     padding: 20px 15px;
   }
+  .contact-top-btn-nav .con-btn-wrap{padding-right: 5px;}
+  .contact-top-btn-nav .con-btn-wrap>.btn{
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 12px;
+  }
 }
 @media only screen and (max-width: 480px) {
   .profile-inner-sec.p-4 {
     padding: 0px !important;
   }
+  .contact-top-btn-nav .con-btn-wrap>.btn span {
+    display: block;
+    width: 100%;
+    margin:auto;
+    max-width:100px;
+  }
+  .contact-top-btn-nav .con-btn-wrap>.btn{
+    font-size: 10px;
+    line-height: 13px;
+    padding: 8px;
+  }
+  /*.contact-top-btn-nav .con-btn-wrap>.btn{display: block;}
+  .contact-top-btn-nav .con-btn-wrap>.btn img{
+    display:block;
+    margin: 0 auto 5px;
+  }
+  .contact-top-btn-nav .con-btn-wrap>.btn span {
+    display: block;
+    width: 80%;
+    margin: auto;
+  }*/
 }

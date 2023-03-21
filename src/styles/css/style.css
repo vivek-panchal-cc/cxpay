@@ -1937,11 +1937,12 @@ form.verification-code-form .form-field .form-control {
 form .search-field input[type="search"] {
   border-color: #f2f2f2 !important;
   border-radius: 12px !important;
-  padding: 15px 22px 15px 50px !important;
+  padding: 15px 25px 15px 50px !important;
   font-size: 14px;
   line-height: 16px;
   color: #969696;
   filter: none;
+  color: #363853;
 }
 form .search-field {
   max-width: 327px;
@@ -4378,7 +4379,7 @@ margin-bottom:0px;
   justify-content: space-between;
   padding-left: 30px;
 }
-.contact-top-btn-nav .btn {
+.contact-top-btn-nav .con-btn-wrap > .btn {
   box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
   border-radius: 16px;
   background: #ffffff;
@@ -4390,14 +4391,16 @@ margin-bottom:0px;
   font-size: 14px;
   line-height: 16px;
   color: #0081c5;
+  display: flex;
+  align-items: center;
 }
-.con-add-btn-wrap .btn {
+.con-add-btn-wrap > .btn {
   color: #0081c5;
 }
-.con-remove-btn-wrap .btn {
+.con-remove-btn-wrap > .btn {
   color: #936ee3;
 }
-.con-invite-btn-wrap .btn {
+.con-invite-btn-wrap > .btn {
   color: #24beef;
 }
 .contact-top-btn-nav .con-btn-wrap .btn img {
@@ -4410,8 +4413,8 @@ margin-bottom:0px;
   padding-right: 20px;
 }
 .contact-top-sec {
-  padding-bottom: 25px;
-  margin-top: -50px;
+  padding-bottom: 20px;
+  margin-top: 20px;
 }
 .contact-right-sec {
   padding-top: 40px;
@@ -4454,6 +4457,8 @@ margin-bottom:0px;
 }
 .con-listing-edit-wrap {
   display: flex;
+  align-items: center;
+  justify-content: end;
 }
 .con-listing-info .con-list-uname {
   font-family: "Visby Round CF";
@@ -4463,6 +4468,7 @@ margin-bottom:0px;
   line-height: 20px;
   color: #323232;
   white-space: normal;
+  width: calc(100% - 113px);
 }
 .contact-listing-wrap p {
   font-weight: 400;
@@ -4520,9 +4526,9 @@ cursor:pointer;
 .conlist-edit-a:first-child {
   margin-right: 20px;
 }
-.con-list-edit-star .star_fill {
+/* .con-list-edit-star .star_fill {
   display: none;
-}
+} */
 .con-list-edit-star.fill_star .star_fill {
   display: block;
 }
@@ -4555,8 +4561,8 @@ cursor:pointer;
   margin-right: 30px;
 }
 .con-list-uimg img {
-  width: 48px;
-  height: 48px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
 }
 ul::-webkit-scrollbar {
@@ -5003,7 +5009,7 @@ img.img-size {
 }
 .con-listing-check label:before {
   width: 15px;
-  height: 15;
+  height: 15px;
   border: 1px solid #323232;
   display: block;
   content: "";
@@ -5053,6 +5059,7 @@ img.img-size {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  border: none !important;
 }
 .con-list-up:hover {
   background: #0081c5;
@@ -5068,16 +5075,28 @@ img.img-size {
   margin-right: 20px;
 }
 .con-listing-info {
-  max-width: 340px;
-  padding-right: 8px;
+  max-width: 300px;
+  width: 100%;
+  word-break: break-word;
+  white-space: normal;
+  display: flex;
+  align-items: center;
+  min-width: 300px;
 }
 .con-listing-phone {
   max-width: 110px;
-  padding-right: 8px;
+  min-width: 110px;
+  width: 100%;
+  word-break: break-word;
+  white-space: normal;
 }
 .con-listing-mail {
   max-width: 200px;
+  width: 100%;
   padding-right: 8px;
+  min-width: 200px;
+  word-break: break-word;
+  white-space: normal;
 }
 .con-listing-edit-wrap {
   margin-right: 35px;
@@ -5275,12 +5294,18 @@ p.bank-name-wrap {
 .bank-account-type-wrap input:checked ~ label,
 .db-view-bank-listing li:hover .bank-account-routing-num,
 .db-view-bank-listing li:hover .bank-account-num-wrap,
-.db-view-bank-listing li:hover .bank-account-type-wrap {
+.db-view-bank-listing li:hover .bank-account-type-wrap,
+.db-view-bank-listing li:hover .bank-account-date-wrap {
   color: #363853;
+  transition: all 0.5s ease-in-out;
 }
 .bank-account-type-wrap label {
   position: relative;
-  padding-left: 30px;
+  background-color: transparent;
+  padding: 10px 20px;
+  border-radius: 20px;
+  padding-left: 40px;
+  transition: all 0.5s ease-in-out;
 }
 .bank-account-type-wrap input {
   visibility: hidden;
@@ -5305,21 +5330,24 @@ p.bank-name-wrap {
   transform: translateY(-50%);
   border: 1.5px solid #bdbdbd;
   background-color: transparent;
-  left: 0;
+  left: 18px;
 }
 .bank-account-type-wrap label:after {
   content: "";
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   display: block;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   background-color: #363853;
-  left: 5px;
+  left: 22px;
   visibility: hidden;
   opacity: 0;
+}
+.db-view-bank-listing li:hover .bank-account-type-wrap label {
+  background-color: rgb(36 190 239 / 25%);
 }
 .bank-logo-name-wrap {
   display: flex;
@@ -5429,7 +5457,7 @@ input[type="search"]::-webkit-search-cancel-button {
   cursor: pointer;
 }
 .clearsearchbox > svg {
-  width: 9px;
+  width: 8px;
 }
 .clearsearchbox > svg path {
   stroke: #0081c5;
@@ -5859,6 +5887,11 @@ div.settings-note-inner-sec.setting-noti-sec-new {
   justify-content: center;
   flex-wrap: nowrap;
 }
+div.settings-note-inner-sec.setting-noti-sec-new {
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
 .business-info-right-sec {
   height: calc(100% - 50px);
   display: flex;
@@ -5866,3 +5899,26 @@ div.settings-note-inner-sec.setting-noti-sec-new {
   align-items: center;
   padding: 30px 30px 30px 90px;
 }
+/* CSS Added on 17-03 */
+#invite_contact.modal > div {
+  width: 100%;
+  margin: 15px;
+}
+.contact-listing-wrap > li > div {
+  margin-right: 15px;
+}
+.contact-listing-wrap > li > div:last-child {
+  margin-right: 0px;
+}
+.container-fluid {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.contact-sec {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+/*.row>*{
+  padding-left: 0px;
+  padding-right: 0px;
+}*/

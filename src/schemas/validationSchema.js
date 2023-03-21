@@ -136,8 +136,13 @@ const addBusinessUrlSchema = yup.object().shape({
 });
 
 const inviteContactSchema = yup.object().shape({
-  email: emailSchema,
-  mobile: yup.string().required("Please enter mobile number."),
+  email: yup.string().email("Please enter a valid email"),
+  mobile: yup
+    .string()
+    .min(6, "Mobile number must be 6 or 7 digits")
+    .max(7, "Mobile number must be 6 or 7 digits")
+    .matches(/^[0-9]*$/, "Enter a valid mobile number")
+    .required("Please enter mobile number"),
 });
 
 const businessInfoSchema = yup.object().shape({

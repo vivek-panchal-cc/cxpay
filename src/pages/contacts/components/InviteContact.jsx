@@ -4,6 +4,7 @@ import { inviteContactSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import Input from "components/ui/Input";
 import InvitationSent from "./InvitationSent";
+import { toast } from "react-toastify";
 
 function InviteContact(props) {
   const { invitetitle } = props;
@@ -24,7 +25,13 @@ function InviteContact(props) {
         if (data.data.alreadyInvited === false) {
           setIsShowContactPopup(false);
           getConatcts(page, search);
-          return setInvitationSentPopup(true);
+          if (invitetitle === "Add Contact") {
+            toast.success("Contact details added successfully");
+            setInvitationSentPopup(false);
+            setShow(false);
+          } else {
+            return setInvitationSentPopup(true);
+          }
         } else {
           setStatus(data.message);
         }

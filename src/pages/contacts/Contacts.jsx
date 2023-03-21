@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { apiRequest } from "helpers/apiRequests";
 import Modal from "components/modals/Modal";
 import InviteContact from "./components/InviteContact";
 import Pagination from "components/pagination/Pagination";
 import { toast } from "react-toastify";
+import { LoaderContext } from "context/loaderContext";
+import ModalConfirmation from "components/modals/ModalConfirmation";
 
 const Contacts = (props) => {
+  const { setIsLoading } = useContext(LoaderContext);
   const [contacts, setContacts] = useState([]);
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [invitetitle, setInviteTitle] = useState("Invite");
   const [show, setShow] = useState(false);
+  const [confirmShow, setConfirmShow] = useState(false);
   const [favIconShow, setfavIconShow] = React.useState(false);
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
+  const [deleteContactArr, setDeleteContactArr] = useState([]);
 
   const handlePopupInvite = (e) => {
     setShow(true);
@@ -25,20 +30,32 @@ const Contacts = (props) => {
     retrieveContacts(page, val);
   };
 
-  const handleDeleteContact = async (contactArray) => {
+  const handleOpenConfirmModal = (idArr) => {
+    setDeleteContactArr(idArr);
+    console.log(deleteContactArr);
+    setConfirmShow(true);
+  };
+
+  const handleDeleteContact = async () => {
+    setIsLoading(true);
+    const id = deleteContactArr;
     try {
-      const { data } = await apiRequest.deleteContact({ mobile: contactArray });
+      const { data } = await apiRequest.deleteContact({ mobile: id });
       data["status_code"] === 200 && retrieveContacts(page);
       data["status_code"] === 200 && setSelectedContacts([]);
       toast.success(data.message);
-
+      setConfirmShow(false);
+      setDeleteContactArr("");
       if (!data.success || data.data === null) throw data.message;
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleFavContact = async (mobile, remove_flg) => {
+    setIsLoading(true);
     const reqData = {
       mobile: mobile,
       mark_as_fav: remove_flg,
@@ -53,6 +70,8 @@ const Contacts = (props) => {
       if (!data.success || data.data === null) throw data.message;
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -61,6 +80,7 @@ const Contacts = (props) => {
   }, []);
 
   const retrieveContacts = async (currentPage = 1, search) => {
+    // setIsLoading(true);
     try {
       const { data } = await apiRequest.getConatcts({
         page: currentPage,
@@ -76,6 +96,9 @@ const Contacts = (props) => {
       }
       console.log(error);
     }
+    //  finally {
+    //   setIsLoading(false);
+    // }
   };
 
   const handleChange = (e) => {
@@ -212,7 +235,7 @@ const Contacts = (props) => {
                   className="btn"
                   type="button"
                   value="Remove Contact"
-                  onClick={() => handleDeleteContact(selectedContacts)}
+                  onClick={() => handleOpenConfirmModal(selectedContacts)}
                 >
                   <img src="assets/images/Remove_icon.svg" alt="" />
                   <span>Remove Contact</span>
@@ -242,7 +265,7 @@ const Contacts = (props) => {
           </div>
           <div className="con-listing-container">
             <ul className="contact-listing-wrap">
-              {contacts?.contacts &&
+              {contacts?.contacts && contacts.contacts.length > 0 ? (
                 contacts.contacts.map((contact, index) => (
                   <li key={contact.mobile}>
                     <div className="con-listing-info">
@@ -266,13 +289,15 @@ const Contacts = (props) => {
                           alt=""
                         />
                       </div>
-                      <div className="con-list-uname">{contact.name}</div>
+                      <div className="con-list-uname">
+                        {contact?.name ? contact?.name : "Invited"}
+                      </div>
                     </div>
                     <div className="con-listing-phone">
-                      <p>{contact.mobile}</p>
+                      <p>{contact?.mobile}</p>
                     </div>
                     <div className="con-listing-mail">
-                      <p>{contact.email}</p>
+                      <p>{contact?.email}</p>
                     </div>
                     <div className="cont-listing-last-wrap">
                       <div className="con-listing-edit-wrap">
@@ -297,9 +322,10 @@ const Contacts = (props) => {
                             />
                           )}
                         </a>
-
                         <button
-                          onClick={() => handleDeleteContact([contact.mobile])}
+                          onClick={() =>
+                            handleOpenConfirmModal([contact.mobile])
+                          }
                           className="conlist-del-a con-list-up"
                         >
                           <svg
@@ -336,7 +362,10 @@ const Contacts = (props) => {
                       </div>
                     </div>
                   </li>
-                ))}
+                ))
+              ) : (
+                <p className="text-center">Contacts Not Found.</p>
+              )}
             </ul>
           </div>
           {contacts && contacts && (
@@ -349,6 +378,13 @@ const Contacts = (props) => {
           )}
         </div>
       </div>
+      <ModalConfirmation
+        heading={"Delete Contact"}
+        subHeading={"Are you sure want to delete - Contact Name?"}
+        show={confirmShow}
+        setShow={setConfirmShow}
+        handleCallback={handleDeleteContact}
+      />
     </div>
   );
 };
