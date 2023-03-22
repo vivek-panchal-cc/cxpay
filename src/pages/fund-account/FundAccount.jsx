@@ -1,5 +1,6 @@
 import Modal from "components/modals/Modal";
 import AccountFundedPopup from "components/popups/AccountFundedPopup";
+import FundProvider from "context/fundContext";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import FundBankTransfer from "./components/FundBankTransfer";
@@ -32,15 +33,17 @@ function FundAccount(props) {
 
   return (
     <div>
-      <Modal
-        id="fund_sucess_modal"
-        className="fund-sucess-modal"
-        show={visiblePopupFunded}
-        setShow={setVisiblePopupFunded}
-      >
-        <AccountFundedPopup fund={fund} balance={0} />
-      </Modal>
-      {getSelectedFund()}
+      <FundProvider>
+        <Modal
+          id="fund_sucess_modal"
+          className="fund-sucess-modal"
+          show={visiblePopupFunded}
+          setShow={setVisiblePopupFunded}
+        >
+          <AccountFundedPopup fund={fund} balance={0} />
+        </Modal>
+        {getSelectedFund()}
+      </FundProvider>
     </div>
   );
 }

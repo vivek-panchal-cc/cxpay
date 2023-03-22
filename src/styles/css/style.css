@@ -1003,7 +1003,7 @@ form .form-field select.form-control {
   width: calc(100% - 221px);
   padding-left: 40px;
   padding-right: 40px;
-  padding-top:30px;
+  padding-top: 30px;
   padding-bottom: 30px;
   transition: all 0.5s ease-in-out;
   -webkit-transition: all 0.5s ease-in-out;
@@ -1707,7 +1707,7 @@ margin: auto;
   padding: 0 0 22px;
 }
 .business-info-right-sec {
-  padding-left:90px;
+  padding-left: 90px;
 }
 .business-info-bottom-sec {
   max-width: 559px;
@@ -5299,33 +5299,33 @@ p.bank-name-wrap {
   opacity: 1;
 }
 .bank-account-type-wrap label:before {
-  content: '';
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: block;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    border: 1.5px solid #BDBDBD;
-    background-color: transparent;
-    left: 18px;
+  content: "";
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 1.5px solid #bdbdbd;
+  background-color: transparent;
+  left: 18px;
 }
 .bank-account-type-wrap label:after {
-    content: '';
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: block;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: #363853;
-    left: 22px;
-    visibility: hidden;
-    opacity: 0;
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #363853;
+  left: 22px;
+  visibility: hidden;
+  opacity: 0;
 }
-.db-view-bank-listing li:hover .bank-account-type-wrap label{
+.db-view-bank-listing li:hover .bank-account-type-wrap label {
   background-color: rgb(36 190 239 / 25%);
 }
 .bank-logo-name-wrap {
@@ -5853,21 +5853,93 @@ ul.dashboard-main-links {
   }
 }
 /* New CSS After 15-03  */
-.settings-vc-sec{
+.settings-vc-sec {
   height: calc(100% - 50px);
   padding-top: 25px;
-  padding-bottom:0px;
+  padding-bottom: 0px;
 }
-.settings-vc-sec>.settings-edit-profile-right-sec{height:100%;}
-div.settings-note-inner-sec.setting-noti-sec-new{
-      flex-direction: column;
-    justify-content: center;
-    flex-wrap: nowrap;
+.settings-vc-sec > .settings-edit-profile-right-sec {
+  height: 100%;
 }
-.business-info-right-sec{
+div.settings-note-inner-sec.setting-noti-sec-new {
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+.business-info-right-sec {
   height: calc(100% - 50px);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   padding: 30px 30px 30px 90px;
+}
+/* CSS on 22-03 */
+.form-add-cwrap {
+  font-size: 16px;
+  line-height: 20px;
+  color: #363853;
+  font-weight: 500;
+  font-family: "Quicksand";
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+.form-add-cwrap svg {
+  width: 24px;
+  margin-right: 13px;
+}
+.form-choose-act-wrap svg:first-child {
+  margin-right: 25px;
+}
+.form-choose-act-wrap {
+  background: rgba(36, 190, 239, 0.1);
+  border-radius: 16.9492px;
+  display: flex;
+  padding: 20px 18px;
+  align-items: center;
+  color: #363853;
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  margin-bottom: 15px;
+}
+.form-choose-act-wrap svg:last-child {
+  margin-left: auto;
+  margin-right: 0;
+}
+form .form-field.wallet-cb-wrap {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+.wallet-total-am-wrap .amount-total {
+  color: #363853;
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  padding-left: 20px;
+}
+.wallet-total-am-wrap {
+  margin-bottom: 20px;
+}
+.wallet-fund-tbl-amt table {
+  width: 100%;
+  margin: 15px 0px;
+}
+.wallet-fund-tbl-amt table td {
+  padding: 10px 0px;
+  color: #5b5b5b;
+}
+.wallet-fund-tbl-amt table td:last-child {
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: right;
 }
