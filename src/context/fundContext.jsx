@@ -1,4 +1,5 @@
 import Modal from "components/modals/Modal";
+import AccountFundedPopup from "components/popups/AccountFundedPopup";
 import { fetchBanksList, fetchCardsList } from "features/user/userWalletSlice";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
@@ -9,6 +10,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { fundSchema } from "schemas/fundSchema";
 import { LoaderContext } from "./loaderContext";
 
 const initialValues = {
@@ -19,7 +21,6 @@ const initialValues = {
   city: "",
   transactionType: "PL",
   transactionAmount: "",
-  txn_mode: "",
 };
 
 const cardCreds = {
@@ -32,11 +33,12 @@ const cardCreds = {
   card_holder_last_name: "",
   billing_address: "",
   save_card: false,
+  txn_mode: "CARD",
 };
 
 const bankCreds = {
   bank_id: "",
-  account_type: "",
+  account_type: "current",
   bank_name: "",
   routing_number: "",
   bank_account_number: "",
@@ -44,6 +46,7 @@ const bankCreds = {
   bank_holder_last_name: "",
   address: "",
   save_bank: false,
+  txn_mode: "BANK",
 };
 
 export const FundContext = React.createContext({});
@@ -69,6 +72,7 @@ const FundProvider = ({ children }) => {
   const [disbleBankField, setDisableBankField] = useState(false);
   const [selectExistingCard, setSelectExistingCard] = useState(false);
   const [selectExistingBank, setSelectExistingBank] = useState(false);
+  const [visiblePopupFunded, setVisiblePopupFunded] = useState(false);
 
   const { first_name, last_name, email, city, country } =
     userProfile.profile || {};
@@ -76,16 +80,20 @@ const FundProvider = ({ children }) => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {},
-    validationSchema: "",
+    validationSchema: fundSchema,
     onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
       setIsLoading(true);
       try {
         const { data } = await apiRequest.addFund(values);
         if (!data.success) throw data.message;
         toast.success(data.message);
+        setVisiblePopupFunded(true);
+        resetForm();
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
-        setErrors();
+        const errorObj = {};
+        for (const property in error) errorObj[property] = error[property]?.[0];
+        setErrors(errorObj);
       } finally {
         setIsLoading(false);
       }
@@ -203,7 +211,6 @@ const FundProvider = ({ children }) => {
             ...muValues,
             card_holder_first_name: first_name,
             card_holder_last_name: last_name,
-            txn_mode: "CARD",
           }
         );
         formik.setValues(initValCard);
@@ -218,7 +225,6 @@ const FundProvider = ({ children }) => {
             ...muValues,
             bank_holder_first_name: first_name,
             bank_holder_last_name: last_name,
-            txn_mode: "BANK",
           }
         );
         formik.setValues(initValBank);
@@ -253,6 +259,17 @@ const FundProvider = ({ children }) => {
         handleSelectExistingBank,
       }}
     >
+      <Modal
+        id="fund_sucess_modal"
+        className="fund-sucess-modal"
+        show={visiblePopupFunded}
+        setShow={setVisiblePopupFunded}
+      >
+        <AccountFundedPopup
+          fund={formik?.values?.transactionAmount}
+          balance={0}
+        />
+      </Modal>
       {params.fundtype === "card" ? (
         selectExistingCard ? (
           <SelectCard />

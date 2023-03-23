@@ -51,10 +51,10 @@ function PersonalForm(props) {
         formData.append("profile_image", values.profile_image);
         const { data } = await apiRequest.registerUser(formData);
         if (!data.success) throw data.message;
-        setSignUpCreds({ step: 0 });
+        setSignUpCreds((cs) => ({ ...cs, step: 3 }));
         toast.success(data.message);
         storageRequest.setAuth(data.data.token);
-        navigate("/");
+        navigate("/signup/bank");
       } catch (error) {
         setErrors({
           email: error.email?.[0],

@@ -1,16 +1,7 @@
 import Input from "components/ui/Input";
-import { LoaderContext } from "context/loaderContext";
-import { useFormik } from "formik";
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import { toast } from "react-toastify";
+import React, { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
-import {
-  IconCalender,
-  IconCardBackground,
-  IconEyeClose,
-  IconEyeOpen,
-  IconWallet,
-} from "styles/svgs";
+import { IconCalender, IconEyeClose, IconEyeOpen } from "styles/svgs";
 import InputSelect from "components/ui/InputSelect";
 import { Link } from "react-router-dom";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
@@ -171,7 +162,6 @@ function FundCreditCard(props) {
                     formik.touched.card_holder_first_name &&
                     formik.errors.card_holder_first_name
                   }
-                  disabled={disbleCardField}
                 />
               </div>
               <div className="col-lg-6 col-12 col-right p-0">
@@ -187,7 +177,6 @@ function FundCreditCard(props) {
                     formik.touched.card_holder_last_name &&
                     formik.errors.card_holder_last_name
                   }
-                  disabled={disbleCardField}
                 />
               </div>
             </div>
@@ -202,7 +191,6 @@ function FundCreditCard(props) {
                   onBlur={formik.handleBlur}
                   value={formik.values.email}
                   error={formik.touched.email && formik.errors.email}
-                  disabled={disbleCardField}
                 />
               </div>
             </div>
@@ -221,7 +209,6 @@ function FundCreditCard(props) {
                     formik.touched.billing_address &&
                     formik.errors.billing_address
                   }
-                  disabled={disbleCardField}
                 />
               </div>
             </div>
@@ -243,7 +230,6 @@ function FundCreditCard(props) {
                   onBlur={formik.handleBlur}
                   value={formik.values.country_index}
                   error={formik.touched.country_index && formik.errors.country}
-                  disabled={disbleCardField}
                 >
                   <option value={"-1"}>Select Country</option>
                   {countryList?.map((country, index) => (
@@ -261,7 +247,6 @@ function FundCreditCard(props) {
                   onBlur={formik.handleBlur}
                   value={formik.values.city}
                   error={formik.touched.city && formik.errors.city}
-                  disabled={disbleCardField}
                 >
                   <option value={""}>Select City</option>
                   {cityList[formik.values.country_iso]?.map((city, index) => (
@@ -275,7 +260,7 @@ function FundCreditCard(props) {
             <div className="row">
               <div className="col-12 p-0">
                 <Input
-                  type="text"
+                  type="number"
                   id="transactionAmount"
                   className="form-control"
                   placeholder="Amount"

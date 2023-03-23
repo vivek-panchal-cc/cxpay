@@ -26,6 +26,7 @@ import { storageRequest } from "helpers/storageRequests";
 import EditCard from "pages/edit-card/EditCard";
 import EditBank from "pages/edit-bank/EditBank";
 import FundAccount from "pages/fund-account/FundAccount";
+import SignupFundAccount from "pages/signup/components/SignupFundAccount";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -62,6 +63,14 @@ function App() {
         </Route>
         {/* List of Private Routes */}
         <Route element={<PrivateLayout />}>
+          <Route
+            path="/signup/:fundtype"
+            element={
+              <SignupProvider>
+                <SignupFundAccount />
+              </SignupProvider>
+            }
+          />
           <Route path="/" element={<DashboardLayout />}>
             {/* settings */}
             <Route path="/setting" element={<Setting />} />

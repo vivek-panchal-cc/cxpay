@@ -57,7 +57,12 @@ function SelectCard() {
       <div className="row mt-2">
         <div className="col-12 p-0 btns-inline">
           <div className="setting-btn-link btn-wrap">
-            <button className="outline-btn">Cancel</button>
+            <button
+              className="outline-btn"
+              onClick={() => handleSelectExistingCard(false)}
+            >
+              Cancel
+            </button>
           </div>
           <div className="btn-wrap">
             <button className={`btn btn-primary`} onClick={handleProceed}>

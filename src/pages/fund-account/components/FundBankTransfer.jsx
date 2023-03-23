@@ -100,6 +100,10 @@ function FundBankTransfer(props) {
                   name="account_type"
                   value={"savings"}
                   onChange={formik.handleChange}
+                  checked={
+                    formik.values.account_type === "savings" ? true : false
+                  }
+                  disabled={disbleBankField}
                 />
                 <label
                   className="w-100 form-check-label"
@@ -116,7 +120,10 @@ function FundBankTransfer(props) {
                   name="account_type"
                   value={"current"}
                   onChange={formik.handleChange}
-                  defaultChecked
+                  checked={
+                    formik.values.account_type === "current" ? true : false
+                  }
+                  disabled={disbleBankField}
                 />
                 <label
                   className="w-100 form-check-label"
@@ -137,6 +144,7 @@ function FundBankTransfer(props) {
                   onBlur={formik.handleBlur}
                   value={formik.values.bank_name}
                   error={formik.touched.bank_name && formik.errors.bank_name}
+                  disabled={disbleBankField}
                 />
               </div>
             </div>
@@ -158,13 +166,14 @@ function FundBankTransfer(props) {
                     formik.touched.routing_number &&
                     formik.errors.routing_number
                   }
+                  disabled={disbleBankField}
                 />
               </div>
             </div>
             <div className="row">
               <div className="col-12 col p-0">
                 <Input
-                  type="text"
+                  type="number"
                   className="form-control"
                   placeholder="Account Number"
                   name="bank_account_number"
@@ -175,6 +184,7 @@ function FundBankTransfer(props) {
                     formik.touched.bank_account_number &&
                     formik.errors.bank_account_number
                   }
+                  disabled={disbleBankField}
                 />
               </div>
             </div>

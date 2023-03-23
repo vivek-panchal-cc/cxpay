@@ -1,7 +1,5 @@
-import Modal from "components/modals/Modal";
-import AccountFundedPopup from "components/popups/AccountFundedPopup";
 import FundProvider from "context/fundContext";
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import FundBankTransfer from "./components/FundBankTransfer";
 import FundCashCredit from "./components/FundCashCredit";
@@ -9,23 +7,16 @@ import FundCreditCard from "./components/FundCreditCard";
 
 function FundAccount(props) {
   const params = useParams();
-  const [visiblePopupFunded, setVisiblePopupFunded] = useState(false);
-  const [fund, setFund] = useState(0);
-
-  const showPopupFunded = (fund) => {
-    setVisiblePopupFunded(true);
-    setFund(fund);
-  };
 
   const getSelectedFund = () => {
     if (!(params && params.fundtype)) return <></>;
     switch (params.fundtype) {
       case "card":
-        return <FundCreditCard showPopupFunded={showPopupFunded} />;
+        return <FundCreditCard />;
       case "cash":
-        return <FundCashCredit showPopupFunded={showPopupFunded} />;
+        return <FundCashCredit />;
       case "bank":
-        return <FundBankTransfer showPopupFunded={showPopupFunded} />;
+        return <FundBankTransfer />;
       default:
         <></>;
     }
@@ -33,17 +24,7 @@ function FundAccount(props) {
 
   return (
     <div>
-      <FundProvider>
-        <Modal
-          id="fund_sucess_modal"
-          className="fund-sucess-modal"
-          show={visiblePopupFunded}
-          setShow={setVisiblePopupFunded}
-        >
-          <AccountFundedPopup fund={fund} balance={0} />
-        </Modal>
-        {getSelectedFund()}
-      </FundProvider>
+      <FundProvider>{getSelectedFund()}</FundProvider>
     </div>
   );
 }
