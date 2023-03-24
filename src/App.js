@@ -64,12 +64,8 @@ function App() {
         {/* List of Private Routes */}
         <Route element={<PrivateLayout />}>
           <Route
-            path="/signup/:fundtype"
-            element={
-              <SignupProvider>
-                <SignupFundAccount />
-              </SignupProvider>
-            }
+            path="/signup/:fundtype/:encode"
+            element={<SignupFundAccount />}
           />
           <Route path="/" element={<DashboardLayout />}>
             {/* settings */}

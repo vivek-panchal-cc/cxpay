@@ -1,81 +1,22 @@
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import Input from "components/ui/Input";
-import { LoaderContext } from "context/loaderContext";
-import { useFormik } from "formik";
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import { toast } from "react-toastify";
 import InputSelect from "components/ui/InputSelect";
-import useCountriesCities from "hooks/useCountriesCities";
-import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchBanksList } from "features/user/userWalletSlice";
-import { apiRequest } from "helpers/apiRequests";
-import AccountFundedPopup from "components/popups/AccountFundedPopup";
-import Modal from "components/modals/Modal";
 import { FundContext } from "context/fundContext";
+import { IconAddBackground, IconCard, IconRightArrowBig } from "styles/svgs";
 
 function FundBankTransfer(props) {
   const {
     formik,
     countryList,
     cityList,
+    chargesDetails,
     disbleBankField,
     handleSelectNewBank,
     handleSelectExistingBank,
   } = useContext(FundContext);
   const [addNewBank, setAddNewBank] = useState(false);
-
-  // const formik = useFormik({
-  //   enableReinitialize: true,
-  //   initialValues: {
-  //     bank_id: "",
-  //     account_type: "",
-  //     bank_name: "",
-  //     routing_number: "",
-  //     bank_account_number: "",
-  //     bank_holder_first_name: first_name,
-  //     bank_holder_last_name: last_name,
-  //     email: userEmail,
-  //     address: "",
-  //     country: userCountry || "",
-  //     country_index: country_index, // not required for API
-  //     country_iso: country_iso, // not required for API
-  //     city: userCity || "",
-  //     transactionType: "PL",
-  //     transactionAmount: "",
-  //     txn_mode: "BANK",
-  //     save_bank: false,
-  //   },
-  //   validationSchema: "",
-  //   onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
-  //     setIsLoading(true);
-  //     try {
-  //       console.log(values);
-  //       const { data } = await apiRequest.addFund(values);
-  //       if (!data.success) throw data.message;
-  //       toast.success(data.message);
-  //       showPopupFunded(values.transactionAmount);
-  //       resetForm();
-  //     } catch (error) {
-  //       if (typeof error === "string") return toast.error(error);
-  //       setErrors({
-  //         account_type: error?.account_type?.[0],
-  //         bank_name: error?.bank_name?.[0],
-  //         routing_number: error?.routing_number?.[0],
-  //         bank_account_number: error?.bank_account_number?.[0],
-  //         bank_holder_first_name: error?.bank_holder_first_name?.[0],
-  //         bank_holder_last_name: error?.bank_holder_last_name?.[0],
-  //         email: error?.email?.[0],
-  //         address: error?.address?.[0],
-  //         country: error?.country?.[0],
-  //         city: error?.city?.[0],
-  //         transactionAmount: error?.transactionAmount?.[0],
-  //       });
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   },
-  // });
 
   const handleNewBank = () => {
     setAddNewBank(true);
@@ -94,7 +35,9 @@ function FundBankTransfer(props) {
             <div className="radio-wrap mb-4 mw-100">
               <div className="col-6 form-check">
                 <input
-                  className="form-check-input"
+                  className={`form-check-input ${
+                    disbleBankField ? "cursor-not-allowed" : ""
+                  }`}
                   type="radio"
                   id="saving_acc_op"
                   name="account_type"
@@ -114,7 +57,9 @@ function FundBankTransfer(props) {
               </div>
               <div className="col-6 form-check">
                 <input
-                  className="form-check-input"
+                  className={`form-check-input ${
+                    disbleBankField ? "cursor-not-allowed" : ""
+                  }`}
                   type="radio"
                   id="current_acc_op"
                   name="account_type"
@@ -297,7 +242,7 @@ function FundBankTransfer(props) {
             <div className="row">
               <div className="col-12 p-0">
                 <Input
-                  type="text"
+                  type="number"
                   id="transactionAmount"
                   className="form-control"
                   placeholder="Amount"
@@ -334,121 +279,37 @@ function FundBankTransfer(props) {
                       onClick={handleNewBank}
                       className="form-add-cwrap cursor-pointer"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="27"
-                        height="27"
-                        viewBox="0 0 27 27"
-                        fill="none"
-                      >
-                        <path
-                          d="M0.519514 8.76035C1.47866 4.67137 4.67137 1.47866 8.76036 0.519513C11.7134 -0.173171 14.7866 -0.173171 17.7396 0.519513C21.8286 1.47866 25.0213 4.67138 25.9805 8.76036C26.6732 11.7134 26.6732 14.7866 25.9805 17.7396C25.0213 21.8286 21.8286 25.0213 17.7396 25.9805C14.7866 26.6732 11.7134 26.6732 8.76036 25.9805C4.67138 25.0213 1.47866 21.8286 0.519514 17.7396C-0.173171 14.7866 -0.173171 11.7134 0.519514 8.76035Z"
-                          fill="#24BEEF"
-                        ></path>
-                        <path
-                          d="M13 18V8"
-                          stroke="white"
-                          strokeWidth="2.16959"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        ></path>
-                        <path
-                          d="M8 13L18 13"
-                          stroke="white"
-                          strokeWidth="2.16959"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        ></path>
-                      </svg>
+                      <IconAddBackground style={{ fill: "#24BEEF" }} />
                       <span>Link New Bank Account</span>
                     </a>
                   </div>
                 )}
               </div>
             </div>
-
             <div className="row">
               <div className="col-12 p-0">
-                <div className="form-field">
+                <div className="form-field cursor-pointer">
                   <a
                     onClick={() => handleSelectExistingBank(true)}
                     className="form-choose-act-wrap"
                   >
-                    <svg
-                      width="29"
-                      height="29"
-                      viewBox="0 0 29 29"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M14.5 1L2.5 7H26.5L14.5 1Z"
-                        stroke="#363853"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M14.5 11V23"
-                        stroke="#363853"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M5.5 11V23"
-                        stroke="#363853"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M23.5 11V23"
-                        stroke="#363853"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M1 27.5H27.5"
-                        stroke="#363853"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                    <IconCard style={{ stroke: "#363853" }} />
                     <span>Choose from Linked Banks</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="8"
-                      height="14"
-                      viewBox="0 0 8 14"
-                      fill="none"
-                    >
-                      <path
-                        d="M1 12.3851L6.34 7.04508L1 1.70508"
-                        stroke="#0081C5"
-                        strokeWidth="2"
-                        stroke-miterlimit="10"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      ></path>
-                    </svg>
+                    <IconRightArrowBig style={{ stroke: "#0081C5" }} />
                   </a>
                 </div>
               </div>
             </div>
-
             <div className="row wallet-fund-row-amt wallet-fund-row-amt-final">
               <div className="col-12 p-0">
                 <table>
                   <tr>
                     <td>Fees</td>
-                    <td>0 Nafl</td>
+                    <td>{chargesDetails?.percentage} %</td>
                   </tr>
                   <tr>
-                    <td>Amount Pending</td>
-                    <td> {formik.values.transactionAmount} Nafl </td>
+                    <td>Amount</td>
+                    <td> {formik.values.chargedAmount} Nafl </td>
                   </tr>
                 </table>
               </div>

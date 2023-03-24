@@ -1,18 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import Input from "components/ui/Input";
 import InputSelect from "components/ui/InputSelect";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FundContext } from "context/fundContext";
 
 function FundBank() {
-  const {
-    formik,
-    countryList,
-    cityList,
-    handleSelectNewBank,
-    handleSelectExistingBank,
-  } = useContext(FundContext);
-  const [addNewBank, setAddNewBank] = useState(false);
+  const { formik, countryList, cityList, chargesDetails } =
+    useContext(FundContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (formik.values.bank_id) navigate("/", { replace: true });
+  }, [formik?.values]);
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -203,7 +202,7 @@ function FundBank() {
       <div className="row">
         <div className="col-12 p-0">
           <Input
-            type="text"
+            type="number"
             id="transactionAmount"
             className="form-control"
             placeholder="Amount"
@@ -233,20 +232,20 @@ function FundBank() {
           </div>
         </div>
       </div>
-      {/* <div className="row wallet-fund-row-amt wallet-fund-row-amt-final">
-            <div className="col-12 p-0">
-              <table>
-                <tr>
-                  <td>Fees</td>
-                  <td>0 Nafl</td>
-                </tr>
-                <tr>
-                  <td>Amount Pending</td>
-                  <td> {formik.values.transactionAmount} Nafl </td>
-                </tr>
-              </table>
-            </div>
-          </div> */}
+      <div className="row wallet-fund-row-amt wallet-fund-row-amt-final">
+        <div className="col-12 p-0">
+          <table>
+            <tr>
+              <td>Fees</td>
+              <td>{chargesDetails?.percentage} %</td>
+            </tr>
+            <tr>
+              <td>Amount</td>
+              <td> {formik.values.chargedAmount} Nafl </td>
+            </tr>
+          </table>
+        </div>
+      </div>
       <div className="row">
         <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
           <div className="btn-wrap">

@@ -1,56 +1,31 @@
-import Input from "components/ui/Input";
 import React, { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
-import { IconCalender, IconEyeClose, IconEyeOpen } from "styles/svgs";
-import InputSelect from "components/ui/InputSelect";
 import { Link } from "react-router-dom";
+import Input from "components/ui/Input";
+import InputSelect from "components/ui/InputSelect";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import { FundContext } from "context/fundContext";
+import {
+  IconAddBackground,
+  IconCalender,
+  IconCard,
+  IconEyeClose,
+  IconEyeOpen,
+  IconRightArrowBig,
+} from "styles/svgs";
 
 function FundCreditCard(props) {
   const {
     formik,
     countryList,
     cityList,
+    chargesDetails,
     disbleCardField,
     handleSelectNewCard,
     handleSelectExistingCard,
   } = useContext(FundContext);
   const [showCvv, setShowCvv] = useState(false);
   const [addNewCard, setAddNewCard] = useState(false);
-
-  // const formik = useFormik({
-  //   enableReinitialize: true,
-  //   initialValues: {},
-  //   validationSchema: "",
-  //   onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
-  //     setIsLoading(true);
-  //     try {
-  //       const { data } = await apiRequest.addFund(values);
-  //       if (!data.success) throw data.message;
-  //       toast.success(data.message);
-  //       showPopupFunded(values.transactionAmount);
-  //       resetForm();
-  //       setExpDate();
-  //     } catch (error) {
-  //       if (typeof error === "string") return toast.error(error);
-  //       setErrors({
-  //         card_number: error?.card_number?.[0],
-  //         expiry_date: error?.expiry_date?.[0],
-  //         security_code: error?.security_code?.[0],
-  //         card_holder_first_name: error?.card_holder_first_name?.[0],
-  //         card_holder_last_name: error?.card_holder_last_name?.[0],
-  //         email: error?.email?.[0],
-  //         billing_address: error?.billing_address?.[0],
-  //         country: error?.country?.[0],
-  //         city: error?.city?.[0],
-  //         transactionAmount: error?.transactionAmount?.[0],
-  //       });
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   },
-  // });
 
   const handleNewCard = () => {
     setAddNewCard(true);
@@ -101,7 +76,9 @@ function FundCreditCard(props) {
                     onChange={handleExpiryDateChange}
                     name="expiry_date"
                     dateFormat="MM/yyyy"
-                    className="form-control"
+                    className={`form-control ${
+                      disbleCardField ? "cursor-not-allowed" : ""
+                    }`}
                     placeholderText="Expiration Date"
                     onBlur={formik.handleBlur}
                     showMonthYearPicker
@@ -124,7 +101,7 @@ function FundCreditCard(props) {
                   <Input
                     type={showCvv ? "text" : "password"}
                     className="form-control"
-                    placeholder="Security Code"
+                    placeholder="CVV"
                     name="security_code"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -297,32 +274,7 @@ function FundCreditCard(props) {
                       onClick={handleNewCard}
                       className="form-add-cwrap cursor-pointer"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="27"
-                        height="27"
-                        viewBox="0 0 27 27"
-                        fill="none"
-                      >
-                        <path
-                          d="M0.519514 8.76035C1.47866 4.67137 4.67137 1.47866 8.76036 0.519513C11.7134 -0.173171 14.7866 -0.173171 17.7396 0.519513C21.8286 1.47866 25.0213 4.67138 25.9805 8.76036C26.6732 11.7134 26.6732 14.7866 25.9805 17.7396C25.0213 21.8286 21.8286 25.0213 17.7396 25.9805C14.7866 26.6732 11.7134 26.6732 8.76036 25.9805C4.67138 25.0213 1.47866 21.8286 0.519514 17.7396C-0.173171 14.7866 -0.173171 11.7134 0.519514 8.76035Z"
-                          fill="#24BEEF"
-                        />
-                        <path
-                          d="M13 18V8"
-                          stroke="white"
-                          strokeWidth="2.16959"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M8 13L18 13"
-                          stroke="white"
-                          strokeWidth="2.16959"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
+                      <IconAddBackground style={{ fill: "#24BEEF" }} />
                       <span>Add New Card</span>
                     </a>
                   </div>
@@ -336,73 +288,25 @@ function FundCreditCard(props) {
                     onClick={() => handleSelectExistingCard(true)}
                     className="form-choose-act-wrap"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="35"
-                      height="33"
-                      viewBox="0 0 35 33"
-                      fill="none"
-                    >
-                      <path
-                        d="M9.79956 8.80646H16.9315"
-                        stroke="#363853"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M1.89258 18.1302H33.5363"
-                        stroke="#363853"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M2.74805 23.2615H32.6813"
-                        stroke="#363853"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M1.20605 16.0254C1.20605 4.77455 5.28982 1.02539 17.5444 1.02539C29.7974 1.02539 33.8812 4.77455 33.8812 16.0254C33.8812 27.2746 29.7974 31.0254 17.5444 31.0254C5.28982 31.0254 1.20605 27.2746 1.20605 16.0254Z"
-                        stroke="#363853"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                    <IconCard style={{ stroke: "#363853" }} />
                     <span>Choose from Existing Cards</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="8"
-                      height="14"
-                      viewBox="0 0 8 14"
-                      fill="none"
-                    >
-                      <path
-                        d="M1 12.3851L6.34 7.04508L1 1.70508"
-                        stroke="#0081C5"
-                        strokeWidth="2"
-                        strokeMiterlimit="10"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                    <IconRightArrowBig style={{ stroke: "#0081C5" }} />
                   </a>
                 </div>
               </div>
             </div>
-            <div className="row">
+            <div className="row wallet-fund-row-amt wallet-fund-row-amt-final">
               <div className="col-12 p-0">
-                <div className="form-field wallet-total-am-wrap">
-                  Amount:{" "}
-                  <span className="amount-total">
-                    {formik.values.transactionAmount} Nafl
-                  </span>
-                </div>
+                <table>
+                  <tr>
+                    <td>Fees</td>
+                    <td>{chargesDetails?.percentage} %</td>
+                  </tr>
+                  <tr>
+                    <td>Amount</td>
+                    <td> {formik.values.chargedAmount} Nafl </td>
+                  </tr>
+                </table>
               </div>
             </div>
             <div className="row">

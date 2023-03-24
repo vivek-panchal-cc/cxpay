@@ -32,3 +32,5 @@ export { default as IconEyeOpen } from "./EyeOpen";
 export { default as IconEyeClose } from "./EyeClose";
 export { default as IconCancleBg } from "./CancelBg";
 export { default as IconCheckBg } from "./CheckBg";
+export { default as IconCard } from "./Card";
+export { default as IconAddBackground } from "./AddBackground";

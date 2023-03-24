@@ -1,7 +1,6 @@
 import InputSelect from "components/ui/InputSelect";
 import FundProvider from "context/fundContext";
 import { LoaderContext } from "context/loaderContext";
-import { SignupContext } from "context/signupContext";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import React, { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -10,11 +9,11 @@ import FundBank from "./FundBank";
 import FundCard from "./FundCard";
 
 function SignupFundAccount() {
-  const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const { setIsLoading } = useContext(LoaderContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
+  const creds = JSON.parse(window.atob(params.encode));
 
   useEffect(() => {
     (async () => {
@@ -26,7 +25,7 @@ function SignupFundAccount() {
 
   const handleFundTypeChange = (e) => {
     const fundType = e.currentTarget.value;
-    navigate(`/signup/${fundType}`, { replace: true });
+    navigate(`/signup/${fundType}/${params.encode}`, { replace: true });
   };
 
   const getFundForm = () => {
@@ -43,7 +42,7 @@ function SignupFundAccount() {
     }
   };
 
-  if (!(signUpCreds && signUpCreds.step === 3 && signUpCreds.mobile_number))
+  if (!(creds && creds.step === 3 && creds.mobile_number))
     return navigate("/", { replace: true });
 
   return (

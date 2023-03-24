@@ -1,22 +1,20 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Input from "components/ui/Input";
 import InputSelect from "components/ui/InputSelect";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FundContext } from "context/fundContext";
 import DatePicker from "react-datepicker";
 import { IconCalender, IconEyeClose, IconEyeOpen } from "styles/svgs";
 
 function FundCard() {
-  const {
-    formik,
-    countryList,
-    cityList,
-    disbleCardField,
-    handleSelectNewCard,
-    handleSelectExistingCard,
-  } = useContext(FundContext);
+  const { formik, countryList, cityList, chargesDetails } =
+    useContext(FundContext);
+  const navigate = useNavigate();
   const [showCvv, setShowCvv] = useState(false);
-  const [addNewCard, setAddNewCard] = useState(false);
+
+  useEffect(() => {
+    if (formik.values.card_id) navigate("/", { replace: true });
+  }, [formik?.values]);
 
   const handleExpiryDateChange = (dt) => {
     const mmyy = dt?.toLocaleDateString("en", {
@@ -40,7 +38,6 @@ function FundCard() {
             onBlur={formik.handleBlur}
             value={formik.values.card_number}
             error={formik.touched.card_number && formik.errors.card_number}
-            disabled={disbleCardField}
           />
         </div>
       </div>
@@ -54,10 +51,9 @@ function FundCard() {
               name="expiry_date"
               dateFormat="MM/yyyy"
               className="form-control"
-              placeholderText="Expiration Date"
+              placeholderText="Expiry Date"
               onBlur={formik.handleBlur}
               showMonthYearPicker
-              disabled={disbleCardField}
             />
             <label
               htmlFor="datepickeradd-card"
@@ -76,7 +72,7 @@ function FundCard() {
             <Input
               type={showCvv ? "text" : "password"}
               className="form-control"
-              placeholder="Security Code"
+              placeholder="CVV"
               name="security_code"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -237,16 +233,20 @@ function FundCard() {
           </div>
         </div>
       </div>
-      {/* <div className="row">
+      <div className="row wallet-fund-row-amt wallet-fund-row-amt-final">
         <div className="col-12 p-0">
-          <div className="form-field wallet-total-am-wrap">
-            Amount:{" "}
-            <span className="amount-total">
-              {formik.values.transactionAmount} Nafl
-            </span>
-          </div>
+          <table>
+            <tr>
+              <td>Fees</td>
+              <td>{chargesDetails?.percentage} %</td>
+            </tr>
+            <tr>
+              <td>Amount</td>
+              <td> {formik.values.chargedAmount} Nafl </td>
+            </tr>
+          </table>
         </div>
-      </div> */}
+      </div>
       <div className="row">
         <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
           <div className="btn-wrap">

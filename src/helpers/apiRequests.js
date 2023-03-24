@@ -40,6 +40,7 @@ const API_deleteBank = apiUrl.API_ONBOARD_DELETE_BANK;
 const API_getCardColor = apiUrl.API_ONBOARD_GET_CARD_COLOR;
 const API_cardMarkAsDefault = apiUrl.API_ONBOARD_CARD_MARK_AS_DEFAULT;
 const API_bankMarkAsDefault = apiUrl.API_ONBOARD_BANK_MARK_AS_DEFAULT;
+const API_getCharges = apiUrl.API_ONBOARD_GET_CHARGES;
 
 // TRANSACTION SERVICES
 const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
@@ -239,6 +240,12 @@ export const getCardColor = () => {
   return axiosOnboardInstance.get(`${API_getCardColor}`);
 };
 
+// GET @get-charges
+// @params
+export const getCharges = () => {
+  return axiosOnboardInstance.get(`${API_getCharges}`);
+};
+
 // POST @add-fund
 // @params transactionType, transactionAmount, txn_mode, card_number, expiry_date, billing_address,
 //         save_card, card_holder_first_name, card_holder_last_name, city, country, email, card_id
@@ -278,5 +285,6 @@ export const apiRequest = {
   updateBank,
   bankMarkAsDefault,
   getCardColor,
+  getCharges,
   addFund,
 };

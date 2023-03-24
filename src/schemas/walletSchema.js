@@ -1,5 +1,4 @@
 import * as yup from "yup";
-import valid from "card-validator";
 import { isValidFileType } from "constants/all";
 import {
   addressSchema,
@@ -20,8 +19,8 @@ const addCardSchema = yup.object().shape({
   card_number: cardNumberSchema,
   expiry_date: cardExpirySchema,
   security_code: yup.string(),
-  card_holder_first_name: firstNameSchema,
-  card_holder_last_name: lastNameSchema,
+  card_holder_first_name: firstNameSchema.required("Please enter First name"),
+  card_holder_last_name: lastNameSchema.required("Please enter Last name"),
   email: emailSchema,
   billing_address: billingAddressSchema,
   country: countrySchema,
@@ -34,8 +33,8 @@ const linkBankSchema = yup.object().shape({
   bank_name: bankNameSchema,
   routing_number: routingNumberSchema,
   bank_number: bankNumberSchema,
-  bank_holder_first_name: firstNameSchema.required("First name is required."),
-  bank_holder_last_name: lastNameSchema.required("Last name is required."),
+  bank_holder_first_name: firstNameSchema.required("Please enter First name"),
+  bank_holder_last_name: lastNameSchema.required("Please enter Last name"),
   email: emailSchema,
   address: addressSchema,
   country: countrySchema,
@@ -58,8 +57,8 @@ const EditCardSchema = yup.object().shape({
   country: countrySchema,
   city: citySchema,
   color: yup.string(),
-  card_holder_first_name: firstNameSchema.required("First name is required."),
-  card_holder_last_name: lastNameSchema.required("Last name is required."),
+  card_holder_first_name: firstNameSchema.required("Please enter First name"),
+  card_holder_last_name: lastNameSchema.required("Please enter Last name"),
   billing_address: billingAddressSchema,
 });
 
@@ -69,8 +68,8 @@ const EditBankSchema = yup.object().shape({
   country: countrySchema,
   city: citySchema,
   address: addressSchema,
-  bank_holder_first_name: firstNameSchema.required("First name is required."),
-  bank_holder_last_name: lastNameSchema.required("Last name is required."),
+  bank_holder_first_name: firstNameSchema.required("Please enter First name"),
+  bank_holder_last_name: lastNameSchema.required("Please enter Last name"),
 });
 
 export {

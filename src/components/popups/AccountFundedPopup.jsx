@@ -21,7 +21,11 @@ function AccountFundedPopup(props) {
             <br />
             <span className="available-bal-acc">{balance} Nafl</span>
           </p>
-          <Link to="/wallet" className="btn btn-primary fund-done-btn">
+          <Link
+            to="/wallet"
+            className="btn btn-primary fund-done-btn"
+            replace={true}
+          >
             Done
           </Link>
         </div>

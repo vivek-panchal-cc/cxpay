@@ -21,6 +21,7 @@ const initialValues = {
   city: "",
   transactionType: "PL",
   transactionAmount: "",
+  chargedAmount: "", // not required for API
 };
 
 const cardCreds = {
@@ -73,6 +74,8 @@ const FundProvider = ({ children }) => {
   const [selectExistingCard, setSelectExistingCard] = useState(false);
   const [selectExistingBank, setSelectExistingBank] = useState(false);
   const [visiblePopupFunded, setVisiblePopupFunded] = useState(false);
+  const [fundedDetails, setFundedDetails] = useState({ fund: "", balance: "" });
+  const [chargesDetails, setChargesDetails] = useState({});
 
   const { first_name, last_name, email, city, country } =
     userProfile.profile || {};
@@ -87,6 +90,7 @@ const FundProvider = ({ children }) => {
         const { data } = await apiRequest.addFund(values);
         if (!data.success) throw data.message;
         toast.success(data.message);
+        setFundedDetails({ fund: values.transactionAmount, balance: "" });
         setVisiblePopupFunded(true);
         resetForm();
       } catch (error) {
@@ -188,7 +192,21 @@ const FundProvider = ({ children }) => {
     formik.setValues(values);
   };
 
-  //   -------------------------------------------------------------------------------
+  //   ---------------------------------------------------------------------------------------------------------------
+  useEffect(() => {
+    (async () => {
+      setIsLoading(true);
+      try {
+        const { data } = await apiRequest.getCharges();
+        if (!data.success) throw data.message;
+        setChargesDetails(data.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     if (
@@ -243,6 +261,14 @@ const FundProvider = ({ children }) => {
     userWallet.defaultBank && integrateBankDetails(userWallet.defaultBank);
   }, [userWallet.defaultBank]);
 
+  useEffect(() => {
+    if (!formik.values.transactionAmount || !chargesDetails) return;
+    const amount = parseFloat(formik.values.transactionAmount);
+    const percentage = parseFloat(chargesDetails.percentage);
+    const actualAmount = amount - amount * (percentage / 100);
+    formik.setFieldValue("chargedAmount", actualAmount.toFixed(2).toString());
+  }, [formik.values.transactionAmount]);
+
   return (
     <FundContext.Provider
       value={{
@@ -251,6 +277,7 @@ const FundProvider = ({ children }) => {
         cityList,
         disbleCardField,
         disbleBankField,
+        chargesDetails,
         integrateCardDetails,
         integrateBankDetails,
         handleSelectNewCard,
@@ -263,12 +290,8 @@ const FundProvider = ({ children }) => {
         id="fund_sucess_modal"
         className="fund-sucess-modal"
         show={visiblePopupFunded}
-        setShow={setVisiblePopupFunded}
       >
-        <AccountFundedPopup
-          fund={formik?.values?.transactionAmount}
-          balance={0}
-        />
+        <AccountFundedPopup {...fundedDetails} />
       </Modal>
       {params.fundtype === "card" ? (
         selectExistingCard ? (
