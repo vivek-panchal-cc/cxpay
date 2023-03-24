@@ -500,7 +500,7 @@
   .con-list-uimg {
     margin-right: 18px;
   }
-  .con-listing-info .con-list-uname{
+  .con-listing-info .con-list-uname {
     width: calc(100% - 101px);
   }
   .wallet-bank_link-form-wrap .radio-wrap {
@@ -1077,7 +1077,7 @@
   .con-listing-info .con-list-uname {
     width: calc(100% - 95px);
   }
-  .contact-top-btn-nav .con-btn-wrap>.btn{
+  .contact-top-btn-nav .con-btn-wrap > .btn {
     padding-top: 10px;
     padding-bottom: 10px;
   }
@@ -1558,6 +1558,17 @@
   .contact-top-btn-nav .con-btn-wrap {
     padding-right: 30px;
   }
+  .con-details-modal .modal-body {
+    padding: 80px 28px 40px;
+  }
+  .con-details-modal .modal-body h3 {
+    font-size: 24px;
+    line-height: 29px;
+  }
+  .cu-details-wrap p:last-child {
+    font-size: 20px;
+    line-height: 25px;
+  }
 }
 @media only screen and (max-width: 991px) and (min-width: 820px) {
   .profile-inner-sec .profile-left-content,
@@ -1572,7 +1583,7 @@
   .profile-inner-sec .profile-qr {
     padding-top: 75px;
   }
-  .contact-top-btn-nav .con-btn-wrap .btn img{
+  .contact-top-btn-nav .con-btn-wrap .btn img {
     max-width: 23px;
   }
 }
@@ -2901,9 +2912,13 @@
   .business-info-right-sec {
     height: auto;
   }
-  .contact-top-btn-nav{
+  .contact-top-btn-nav {
     max-width: 100%;
     justify-content: left;
+  }
+  .notification-rm-wrap svg {
+    opacity: 1;
+    visibility: visible;
   }
 }
 
@@ -3584,6 +3599,58 @@
   .business-info-right-sec {
     padding-top: 70px;
   }
+  .con-details-modal .modal-body {
+    padding: 65px 15px 35px;
+  }
+  .con-details-modal .modal-body h3 {
+    font-size: 22px;
+    line-height: 27px;
+    margin-bottom: 20px !important;
+  }
+  .cu-details-wrap p:last-child {
+    font-size: 18px;
+    line-height: 23px;
+  }
+  .con-modal-btn-wrap .btn {
+    font-size: 15px;
+    line-height: 17px;
+    min-width: 135px;
+    padding: 14px 10px !important;
+  }
+  .con-modal-btn-wrap .btn svg {
+    width: 20px;
+    margin-right: 12px;
+  }
+  .con-modal-rm-wrap a {
+    font-size: 18px;
+  }
+  .notification-pg-list-wrap .notification-pcw {
+    width: calc(100% - 30px);
+    padding-right: 15px;
+  }
+  .notification-rm-wrap svg {
+    width: 30px;
+  }
+  .notification-pcw .notifi-ic-wrap {
+    width: 45px;
+  }
+  .notification-pcw .notifi-ic-wrap svg {
+    width: 45px;
+  }
+  .notification-pcw .notifi-content {
+    width: calc(100% - 45px);
+  }
+  .notification-pg-list-wrap .notifi-content p {
+    font-size: 12px !important;
+    line-height: 20px !important;
+  }
+  .notification-pg-list-wrap ul li {
+    padding: 13px 13px !important;
+  }
+  .title-content-wrap h3 {
+    font-size: 24px;
+    line-height: 29px;
+  }
 }
 @media only screen and (max-width: 575px) {
   .logo-content-wrap h4 {
@@ -3745,8 +3812,10 @@
   .add-card-color-wrap {
     padding: 20px 15px;
   }
-  .contact-top-btn-nav .con-btn-wrap{padding-right: 5px;}
-  .contact-top-btn-nav .con-btn-wrap>.btn{
+  .contact-top-btn-nav .con-btn-wrap {
+    padding-right: 5px;
+  }
+  .contact-top-btn-nav .con-btn-wrap > .btn {
     padding-left: 10px;
     padding-right: 10px;
     font-size: 12px;
@@ -3756,13 +3825,13 @@
   .profile-inner-sec.p-4 {
     padding: 0px !important;
   }
-  .contact-top-btn-nav .con-btn-wrap>.btn span {
+  .contact-top-btn-nav .con-btn-wrap > .btn span {
     display: block;
     width: 100%;
-    margin:auto;
-    max-width:100px;
+    margin: auto;
+    max-width: 100px;
   }
-  .contact-top-btn-nav .con-btn-wrap>.btn{
+  .contact-top-btn-nav .con-btn-wrap > .btn {
     font-size: 10px;
     line-height: 13px;
     padding: 8px;
@@ -3777,4 +3846,8 @@
     width: 80%;
     margin: auto;
   }*/
+  .con-modal-btn-wrap .btn {
+    min-width: 125px;
+    padding: 10px 10px !important;
+  }
 }

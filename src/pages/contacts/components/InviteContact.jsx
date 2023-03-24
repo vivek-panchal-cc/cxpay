@@ -3,13 +3,19 @@ import { useFormik } from "formik";
 import { inviteContactSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import Input from "components/ui/Input";
-import InvitationSent from "./InvitationSent";
-import { toast } from "react-toastify";
 
 function InviteContact(props) {
-  const { invitetitle } = props;
-  const { setShow, getConatcts, page, search } = props;
-  const [showInvitationSentPopup, setInvitationSentPopup] = useState(false);
+  const {
+    invitetitle,
+    contactData,
+    setConatctData,
+    setInvitationSentPopup,
+    setConatctDetailPopup,
+    setShow,
+    getConatcts,
+    page,
+    search,
+  } = props;
   const [isShowContactPopup, setIsShowContactPopup] = useState(true);
 
   const formik = useFormik({
@@ -21,17 +27,24 @@ function InviteContact(props) {
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
         const { data } = await apiRequest.addContact(values);
+
         if (!data.success) throw data.message;
-        if (data.data.alreadyInvited === false) {
+        if (
+          data.data.alreadyAdded === false ||
+          data.data.alreadyInvited === false
+        ) {
           setIsShowContactPopup(false);
           getConatcts(page, search);
-          if (invitetitle === "Add Contact") {
-            toast.success("Contact details added successfully");
-            setInvitationSentPopup(false);
+          if (data.data.contactDetails) {
+            setConatctData(data.data.contactDetails);
+            setConatctDetailPopup(true);
             setShow(false);
           } else {
-            return setInvitationSentPopup(true);
+            setConatctData("");
+            setInvitationSentPopup(true);
+            setShow(false);
           }
+          alert(contactData);
         } else {
           setStatus(data.message);
         }
@@ -44,18 +57,19 @@ function InviteContact(props) {
 
   return (
     <>
-      {/* <Modal
-        id="invitation_sent"
-        show={showInvitationSentPopup}
-        setShow={setShow}
-      > */}
-      <InvitationSent
+      {/* <InvitationSent
         id="invitation_sent"
         show={showInvitationSentPopup}
         setShow={setInvitationSentPopup}
         handleClose={setShow}
       />
-      {/* </Modal> */}
+      <ContactDetail
+        id="contact_detail"
+        data={contactAddedData}
+        show={showConatctDetailPopup}
+        setShow={setConatctDetailPopup}
+        handleClose={setShow}
+      /> */}
 
       <div
         className="invite-contact-modal contact-pg-popup"
@@ -114,6 +128,14 @@ function InviteContact(props) {
                     value={invitetitle === "Add Contact" ? "Add" : "Invite"}
                     data-bs-dismiss="modal"
                   />
+                </div>
+                <div className="pop-cancel-btn text-center">
+                  <button
+                    data-bs-dismiss="modal"
+                    onClick={() => setShow(false)}
+                  >
+                    Cancel
+                  </button>
                 </div>
               </form>
             </div>

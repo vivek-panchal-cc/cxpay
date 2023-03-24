@@ -45,3 +45,4 @@ export const API_ONBOARD_UPDATE_CUSTOMER_NOTIFICATION =
 export const API_ONBOARD_UPDATE_CARD = "/update-card";
 export const API_ONBOARD_CARD_MARK_AS_DEFAULT = "/card-mark-as-default";
 export const API_ONBOARD_BANK_MARK_AS_DEFAULT = "/bank-mark-as-default";
+export const API_ONBOARD_INVITED_CONTACT_LIST = "/invited-contacts-list";
