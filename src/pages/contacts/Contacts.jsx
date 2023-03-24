@@ -314,7 +314,7 @@ const Contacts = (props) => {
                     onClick={() => handleInvitedContacts()}
                   >
                     <img
-                      src="assets/images/Invite_icon.svg"
+                      src="assets/images/invite_group-ic.svg"
                       alt=""
                       className="invited-contacts-img"
                     />
@@ -327,7 +327,7 @@ const Contacts = (props) => {
                     value={"Contacts"}
                     onClick={() => retrieveContacts()}
                   >
-                    <img src="assets/images/Invite_icon.svg" alt="" />
+                    <img src="assets/images/invite_group-ic.svg" alt="" />
                     <span>Contacts</span>
                   </button>
                 )}

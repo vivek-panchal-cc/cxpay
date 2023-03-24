@@ -83,7 +83,7 @@ code {
   border-radius: 50% !important;
 }
 .invited-contacts-img {
-  height: 33px;
+  max-width: 33px;
 }
 .invited-con-mail {
   min-width: 300px;

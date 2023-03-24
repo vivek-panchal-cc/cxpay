@@ -734,7 +734,7 @@ form .form-field {
   line-height: 20px;
   text-align: center;
   color: #ffffff;
-  padding: 19px 10px;
+  padding: 18px 20px;
   min-width: 240px;
   border-radius: 15px !important;
   box-shadow: 4px 4px 30px 5px rgba(48, 106, 255, 0.1);
@@ -4367,16 +4367,15 @@ margin-bottom:0px;
 }
 /* Contact Page */
 .contact-serch-main {
-  width: calc(100% - 620px);
+  width:50%;
 }
 .contact-serch-main form .search-field {
   max-width: 100%;
 }
 .contact-top-btn-nav {
-  width: 100%;
-  max-width: 620px;
+  width:50%;
   display: flex;
-  justify-content: space-between;
+  justify-content:end;
   padding-left: 30px;
 }
 .contact-top-btn-nav .con-btn-wrap > .btn {
@@ -4393,6 +4392,7 @@ margin-bottom:0px;
   color: #0081c5;
   display: flex;
   align-items: center;
+  height: 100%;
 }
 .con-add-btn-wrap > .btn {
   color: #0081c5;
@@ -5281,8 +5281,11 @@ p.bank-name-wrap {
   justify-content: center;
   cursor: pointer;
 }
-.bank-del-wrap:hover svg path,
+/*.bank-del-wrap:hover svg path,
 .db-view-bank-listing li:hover .bank-del-wrap svg path {
+  stroke: #ff3333;
+}*/
+.bank-del-wrap:hover svg path{
   stroke: #ff3333;
 }
 /*.db-view-bank-listing li:hover .bank-bal-wrap,
@@ -5305,7 +5308,7 @@ p.bank-name-wrap {
   padding: 10px 20px;
   border-radius: 20px;
   padding-left: 40px;
-  transition: all 0.5s ease-in-out;
+  /*transition: all 0.5s ease-in-out;*/
 }
 .bank-account-type-wrap input {
   visibility: hidden;
@@ -5330,7 +5333,8 @@ p.bank-name-wrap {
   transform: translateY(-50%);
   border: 1.5px solid #bdbdbd;
   background-color: transparent;
-  left: 18px;
+  left: 15px;
+  transition: all 0.5s ease-in-out;
 }
 .bank-account-type-wrap label:after {
   content: "";
@@ -5342,7 +5346,7 @@ p.bank-name-wrap {
   top: 50%;
   transform: translateY(-50%);
   background-color: #363853;
-  left: 22px;
+  left: 19px;
   visibility: hidden;
   opacity: 0;
 }
@@ -5351,6 +5355,9 @@ p.bank-name-wrap {
 }
 .db-view-bank-listing li:hover .bank-account-type-wrap label {
   background-color: rgb(36 190 239 / 25%);
+}
+.db-view-bank-listing li:hover .bank-account-type-wrap label:before {
+  border-color: #363853;
 }
 .bank-logo-name-wrap {
   display: flex;
@@ -5930,7 +5937,6 @@ div.settings-note-inner-sec.setting-noti-sec-new {
   background-color: transparent;
   padding: 0px;
   border-radius: 0px;
-  margin: 20px 15px;
   box-shadow: none !important;
 }
 .con-details-modal .modal-header {
@@ -6118,4 +6124,29 @@ div.settings-note-inner-sec.setting-noti-sec-new {
   font-family: "Comfortaa";
   color: #0080c4;
   padding-bottom: 0px !important;
+}
+/* CSS on 24-03 */
+.modal>div{
+  width: 100%;
+  margin: 15px;
+}
+#con-details-popup .con-modal-btn-wrap .btn{
+  margin-left: 0px !important;
+  padding: 15px 12px !important;
+}
+.contact-top-btn-nav .btn img{
+  max-width: 33px;
+  width: 100%;
+}
+.db-view-bank-wrapper .bank-del-wrap {
+  margin: 0px 7px;
+}
+.db-view-bank-heading .bank-account-type-wrap{
+  padding-left: 18px;
+}
+.del-modal-main .modal-dialog {
+  padding: 15px !important;
+}
+.del-modal-main .modal-header p{
+  text-align: center;
 }
