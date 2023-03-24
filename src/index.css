@@ -82,3 +82,13 @@ code {
 .upload-profile-image .profile-wrap {
   border-radius: 50% !important;
 }
+.invited-contacts-img {
+  height: 33px;
+}
+.invited-con-mail {
+  min-width: 300px;
+}
+.invited-con-info {
+  display: flex;
+  align-items: center;
+}

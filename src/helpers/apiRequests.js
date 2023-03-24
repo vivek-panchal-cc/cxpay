@@ -47,6 +47,7 @@ const API_getCustomerNotification =
   apiUrl.API_ONBOARD_GET_CUSTOMER_NOTIFICATION;
 const API_updateCustomerNotification =
   apiUrl.API_ONBOARD_UPDATE_CUSTOMER_NOTIFICATION;
+const API_invitedContactList = apiUrl.API_ONBOARD_INVITED_CONTACT_LIST;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 //  ------------------------------------------------------------------------------------------------------------------------------------------------>
@@ -284,6 +285,12 @@ export const updateCustomerNotification = (params) => {
   return axiosOnboardInstance.post(`${API_updateCustomerNotification}`, params);
 };
 
+// POST @invited-contacts-list API
+// @params auth_token
+export const invitedConatcts = (params) => {
+  return axiosOnboardInstance.post(`${API_invitedContactList}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -323,4 +330,5 @@ export const apiRequest = {
   updateBank,
   bankMarkAsDefault,
   getCardColor,
+  invitedConatcts,
 };

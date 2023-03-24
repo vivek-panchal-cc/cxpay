@@ -6,6 +6,9 @@ import Pagination from "components/pagination/Pagination";
 import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
 import ModalConfirmation from "components/modals/ModalConfirmation";
+import InvitationSent from "./components/InvitationSent";
+import ContactDetail from "./components/ContactDetail";
+import Delete from "styles/svgs/Delete";
 
 const Contacts = (props) => {
   const { setIsLoading } = useContext(LoaderContext);
@@ -18,6 +21,13 @@ const Contacts = (props) => {
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
   const [deleteContactArr, setDeleteContactArr] = useState([]);
+  const [removeConfirmShow, setRemoveConfirmShow] = useState(false);
+
+  const [showInvitationSentPopup, setInvitationSentPopup] = useState(false);
+  const [showConatctDetailPopup, setConatctDetailPopup] = useState(false);
+  const [contactData, setConatctData] = useState([]);
+  const [contactsOrInvited, setContactsOrInvited] = useState("");
+  const [contactName, setContactName] = useState("");
 
   const handlePopupInvite = (e) => {
     setShow(true);
@@ -27,13 +37,22 @@ const Contacts = (props) => {
   const handleChangeFilter = (e) => {
     const val = e.target.value;
     setSearch(val);
-    retrieveContacts(page, val);
+    if (contactsOrInvited === "contacts") {
+      retrieveContacts(page, val);
+    } else {
+      handleInvitedContacts(page, val);
+    }
   };
 
-  const handleOpenConfirmModal = (idArr) => {
+  const handleOpenConfirmModal = (idArr, name) => {
+    setContactName(name);
     setDeleteContactArr(idArr);
-    console.log(deleteContactArr);
     setConfirmShow(true);
+  };
+
+  const handleRemoveConfirmModal = (idArr) => {
+    setDeleteContactArr(idArr);
+    setRemoveConfirmShow(true);
   };
 
   const handleDeleteContact = async () => {
@@ -41,10 +60,14 @@ const Contacts = (props) => {
     const id = deleteContactArr;
     try {
       const { data } = await apiRequest.deleteContact({ mobile: id });
-      data["status_code"] === 200 && retrieveContacts(page);
+      data["status_code"] === 200 &&
+        (contactsOrInvited === "contacts"
+          ? retrieveContacts(page)
+          : handleInvitedContacts(page));
       data["status_code"] === 200 && setSelectedContacts([]);
       toast.success(data.message);
       setConfirmShow(false);
+      setRemoveConfirmShow(false);
       setDeleteContactArr("");
       if (!data.success || data.data === null) throw data.message;
     } catch (error) {
@@ -63,7 +86,10 @@ const Contacts = (props) => {
     try {
       const { data } = await apiRequest.favContact(reqData);
 
-      data["status_code"] === 200 && retrieveContacts(page);
+      data["status_code"] === 200 &&
+        (contactsOrInvited === "contacts"
+          ? retrieveContacts(page)
+          : handleInvitedContacts(page));
       setfavIconShow(favIconShow);
       toast.success(data.message);
 
@@ -86,8 +112,30 @@ const Contacts = (props) => {
         page: currentPage,
         search: search,
       });
-
       if (!data.success || data.data === null) throw data.message;
+      setContactsOrInvited("contacts");
+      setPage(currentPage);
+      setContacts(data.data);
+    } catch (error) {
+      if (error === "Contact not found") {
+        setContacts(null);
+      }
+      console.log(error);
+    }
+    //  finally {
+    //   setIsLoading(false);
+    // }
+  };
+
+  const handleInvitedContacts = async (currentPage = 1, search) => {
+    // setIsLoading(true);
+    try {
+      const { data } = await apiRequest.invitedConatcts({
+        page: currentPage,
+        search: search,
+      });
+      if (!data.success || data.data === null) throw data.message;
+      setContactsOrInvited("invited");
       setPage(currentPage);
       setContacts(data.data);
     } catch (error) {
@@ -111,9 +159,18 @@ const Contacts = (props) => {
     }
   };
 
+  function isDisabled() {
+    const len = selectedContacts.filter((conatct) => conatct).length;
+    return len === 0;
+  }
+
   const handleResetFilter = () => {
     setSearch("");
-    retrieveContacts();
+    if (contactsOrInvited === "contacts") {
+      retrieveContacts();
+    } else {
+      handleInvitedContacts();
+    }
   };
 
   return (
@@ -191,32 +248,6 @@ const Contacts = (props) => {
                     </svg>
                   </div>
                 </div>
-                {/* <div className="form-field search-field">
-                  <div className="js-clearSearchBox clearsearchbox">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M13 1L0.999999 13"
-                        stroke="#9B9B9B"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M1 1L13 13"
-                        stroke="#9B9B9B"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </div> */}
               </form>
             </div>
             <div className="contact-top-btn-nav">
@@ -232,10 +263,11 @@ const Contacts = (props) => {
               </div>
               <div className="con-btn-wrap con-remove-btn-wrap">
                 <button
+                  disabled={isDisabled()}
                   className="btn"
                   type="button"
                   value="Remove Contact"
-                  onClick={() => handleOpenConfirmModal(selectedContacts)}
+                  onClick={() => handleRemoveConfirmModal(selectedContacts)}
                 >
                   <img src="assets/images/Remove_icon.svg" alt="" />
                   <span>Remove Contact</span>
@@ -244,22 +276,61 @@ const Contacts = (props) => {
               <div className="con-btn-wrap con-invite-btn-wrap">
                 <Modal id="invite_contact" show={show} setShow={setShow}>
                   <InviteContact
-                    getConatcts={retrieveContacts}
+                    getConatcts={
+                      contactData.length > 0
+                        ? retrieveContacts
+                        : handleInvitedContacts
+                    }
                     page={page}
                     search={search}
                     setShow={setShow}
+                    contactData={contactData}
+                    setConatctData={setConatctData}
+                    showInvitationSentPopup={showInvitationSentPopup}
+                    setInvitationSentPopup={setInvitationSentPopup}
+                    showConatctDetailPopup={showConatctDetailPopup}
+                    setConatctDetailPopup={setConatctDetailPopup}
                     {...{ invitetitle }}
                   />
                 </Modal>
-                <button
-                  className="btn"
-                  type="button"
-                  value={"Invite Contact"}
-                  onClick={handlePopupInvite}
-                >
-                  <img src="assets/images/Invite_icon.svg" alt="" />
-                  <span>Invite Contact</span>
-                </button>
+                <InvitationSent
+                  id="invitation_sent"
+                  show={showInvitationSentPopup}
+                  setShow={setInvitationSentPopup}
+                  handleClose={setInvitationSentPopup}
+                />
+                <ContactDetail
+                  id="contact_detail"
+                  data={contactData}
+                  show={showConatctDetailPopup}
+                  setShow={setConatctDetailPopup}
+                  handleClose={setConatctDetailPopup}
+                />
+                {contactsOrInvited === "contacts" ? (
+                  <button
+                    className="btn"
+                    type="button"
+                    value={"Invited Contacts"}
+                    onClick={() => handleInvitedContacts()}
+                  >
+                    <img
+                      src="assets/images/Invite_icon.svg"
+                      alt=""
+                      className="invited-contacts-img"
+                    />
+                    <span>Invited Contacts</span>
+                  </button>
+                ) : (
+                  <button
+                    className="btn"
+                    type="button"
+                    value={"Contacts"}
+                    onClick={() => retrieveContacts()}
+                  >
+                    <img src="assets/images/Invite_icon.svg" alt="" />
+                    <span>Contacts</span>
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -268,7 +339,11 @@ const Contacts = (props) => {
               {contacts?.contacts && contacts.contacts.length > 0 ? (
                 contacts.contacts.map((contact, index) => (
                   <li key={contact.mobile}>
-                    <div className="con-listing-info">
+                    <div
+                      className={`${
+                        contact?.name ? "con-listing-info" : "invited-con-info"
+                      }`}
+                    >
                       <div className="con-listing-check">
                         <input
                           id={contact.mobile}
@@ -289,14 +364,21 @@ const Contacts = (props) => {
                           alt=""
                         />
                       </div>
-                      <div className="con-list-uname">
-                        {contact?.name ? contact?.name : "Invited"}
-                      </div>
+                      {contact?.name ? (
+                        <div className="con-list-uname">{contact?.name}</div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                     <div className="con-listing-phone">
                       <p>{contact?.mobile}</p>
                     </div>
-                    <div className="con-listing-mail">
+
+                    <div
+                      className={`${
+                        contact?.name ? "con-listing-mail" : "invited-con-mail"
+                      }`}
+                    >
                       <p>{contact?.email}</p>
                     </div>
                     <div className="cont-listing-last-wrap">
@@ -324,32 +406,14 @@ const Contacts = (props) => {
                         </a>
                         <button
                           onClick={() =>
-                            handleOpenConfirmModal([contact.mobile])
+                            handleOpenConfirmModal(
+                              [contact.mobile],
+                              contact.name ? contact.name : "this contact"
+                            )
                           }
                           className="conlist-del-a con-list-up"
                         >
-                          <svg
-                            width="16"
-                            height="18"
-                            viewBox="0 0 16 18"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M1 4.11133H2.55556H15"
-                              stroke="white"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            ></path>
-                            <path
-                              d="M13.4446 4.11111V15C13.4446 15.4126 13.2807 15.8082 12.9889 16.0999C12.6972 16.3917 12.3016 16.5556 11.889 16.5556H4.11122C3.69866 16.5556 3.303 16.3917 3.01128 16.0999C2.71955 15.8082 2.55566 15.4126 2.55566 15V4.11111M4.889 4.11111V2.55556C4.889 2.143 5.05289 1.74733 5.34461 1.45561C5.63633 1.16389 6.03199 1 6.44455 1H9.55566C9.96822 1 10.3639 1.16389 10.6556 1.45561C10.9473 1.74733 11.1112 2.143 11.1112 2.55556V4.11111"
-                              stroke="white"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            ></path>
-                          </svg>
+                          <Delete />
                         </button>
                       </div>
                       <div className="con-listing-btn-wrap">
@@ -373,16 +437,27 @@ const Contacts = (props) => {
               active={page}
               size={contacts?.pagination?.last_page}
               siblingCount={1}
-              onClickHandler={retrieveContacts}
+              onClickHandler={
+                contactsOrInvited === "contacts"
+                  ? retrieveContacts
+                  : handleInvitedContacts
+              }
             ></Pagination>
           )}
         </div>
       </div>
       <ModalConfirmation
         heading={"Delete Contact"}
-        subHeading={"Are you sure want to delete - Contact Name?"}
+        subHeading={`Are you sure to remove ${contactName} ?`}
         show={confirmShow}
         setShow={setConfirmShow}
+        handleCallback={handleDeleteContact}
+      />
+      <ModalConfirmation
+        heading={"Delete Contact"}
+        subHeading={"Are you sure to remove contacts?"}
+        show={removeConfirmShow}
+        setShow={setRemoveConfirmShow}
         handleCallback={handleDeleteContact}
       />
     </div>
