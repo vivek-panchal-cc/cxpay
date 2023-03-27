@@ -5,6 +5,7 @@ import Businessform from "./components/BusinessForm";
 import PersonalForm from "./components/PersonalForm";
 import { SignupContext } from "context/signupContext";
 import FundAccount from "pages/fund-account/FundAccount";
+import { Navigate } from "react-router-dom";
 
 const Signup = () => {
   const { signUpCreds } = useContext(SignupContext);
@@ -25,7 +26,7 @@ const Signup = () => {
             return <EnterPhone />;
         }
       case 3:
-        return <FundAccount />;
+        return <Navigate to={"/signup/bank"} replace={true} />;
       default:
         return <EnterPhone />;
     }

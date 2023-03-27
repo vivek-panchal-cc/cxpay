@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { IconEyeClose, IconEyeOpen, IconLeftArrow } from "styles/svgs";
 import { LoaderContext } from "context/loaderContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function ChangePassword() {
   const { setIsLoading } = useContext(LoaderContext);
@@ -181,10 +181,10 @@ function ChangePassword() {
                 </div>
                 <div className="login-btn">
                   <div className="setting-btn-link">
-                    <a href="/setting">
+                    <Link to="/setting" replace={true}>
                       <IconLeftArrow style={{ stroke: "#0081C5" }} />
                       Settings
-                    </a>
+                    </Link>
                   </div>
                   <input
                     type="submit"

@@ -34,3 +34,7 @@ export { default as IconCancleBg } from "./CancelBg";
 export { default as IconCheckBg } from "./CheckBg";
 export { default as IconCard } from "./Card";
 export { default as IconAddBackground } from "./AddBackground";
+export { default as IconNotifyDelete } from "./NotifyDelete";
+export { default as IconNotifyContact } from "./NotifyContact";
+export { default as IconNotifyMoneySent } from "./NotifyMoneySent";
+export { default as IconNotifyMoneySentFailed } from "./NotifyMoneySentFailed";

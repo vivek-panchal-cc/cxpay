@@ -6,7 +6,9 @@ const ProfileDropItem = (props) => {
 
   return (
     <li {...props}>
-      <Link to={path}>{children}</Link>
+      <Link to={path} replace={true}>
+        {children}
+      </Link>
     </li>
   );
 };

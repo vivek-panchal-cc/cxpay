@@ -47,6 +47,8 @@ export const API_ONBOARD_CARD_MARK_AS_DEFAULT = "/card-mark-as-default";
 export const API_ONBOARD_BANK_MARK_AS_DEFAULT = "/bank-mark-as-default";
 export const API_ONBOARD_INVITED_CONTACT_LIST = "/invited-contacts-list";
 export const API_ONBOARD_GET_CHARGES = "/get-charges";
+export const API_ONBOARD_GET_ALL_NOTIFICATIONS = "/get-all-notifications";
 
 // customer-transaction Urls
 export const API_TRANSACTION_ADD_FUND = "/add-fund";
+export const API_TRANSACTION_GET_BALANCE = "/get-balance";

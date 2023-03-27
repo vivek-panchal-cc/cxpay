@@ -2,30 +2,37 @@ import InputSelect from "components/ui/InputSelect";
 import FundProvider from "context/fundContext";
 import { LoaderContext } from "context/loaderContext";
 import { fetchUserProfile } from "features/user/userProfileSlice";
-import React, { useContext, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { storageRequest } from "helpers/storageRequests";
+import React, { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import FundBank from "./FundBank";
 import FundCard from "./FundCard";
 
 function SignupFundAccount() {
   const { setIsLoading } = useContext(LoaderContext);
+  const [accessible, setAccessible] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
-  const creds = JSON.parse(window.atob(params.encode));
+  const creds = storageRequest.getCredsFromtStorage();
 
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      await dispatch(fetchUserProfile());
+  const getUserDataFirstTime = async () => {
+    try {
+      const { payload } = await dispatch(fetchUserProfile());
+      if (!creds || !payload || payload.mobile_number !== creds.mobile_number)
+        throw payload;
+    } catch (error) {
+      console.log("User profile not found", error);
+      setAccessible(false);
+    } finally {
       setIsLoading(false);
-    })();
-  }, []);
+    }
+  };
 
   const handleFundTypeChange = (e) => {
     const fundType = e.currentTarget.value;
-    navigate(`/signup/${fundType}/${params.encode}`, { replace: true });
+    navigate(`/signup/${fundType}`, { replace: true });
   };
 
   const getFundForm = () => {
@@ -42,8 +49,12 @@ function SignupFundAccount() {
     }
   };
 
-  if (!(creds && creds.step === 3 && creds.mobile_number))
-    return navigate("/", { replace: true });
+  useEffect(() => {
+    setIsLoading(true);
+    getUserDataFirstTime();
+  }, []);
+
+  if (!accessible) return navigate("/", { replace: true });
 
   return (
     <div className="login-signup common-body-bg">

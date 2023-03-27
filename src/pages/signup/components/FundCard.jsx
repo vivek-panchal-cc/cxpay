@@ -9,12 +9,7 @@ import { IconCalender, IconEyeClose, IconEyeOpen } from "styles/svgs";
 function FundCard() {
   const { formik, countryList, cityList, chargesDetails } =
     useContext(FundContext);
-  const navigate = useNavigate();
   const [showCvv, setShowCvv] = useState(false);
-
-  useEffect(() => {
-    if (formik.values.card_id) navigate("/", { replace: true });
-  }, [formik?.values]);
 
   const handleExpiryDateChange = (dt) => {
     const mmyy = dt?.toLocaleDateString("en", {

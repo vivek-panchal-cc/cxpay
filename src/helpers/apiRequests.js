@@ -41,21 +41,21 @@ const API_getCardColor = apiUrl.API_ONBOARD_GET_CARD_COLOR;
 const API_cardMarkAsDefault = apiUrl.API_ONBOARD_CARD_MARK_AS_DEFAULT;
 const API_bankMarkAsDefault = apiUrl.API_ONBOARD_BANK_MARK_AS_DEFAULT;
 const API_getCharges = apiUrl.API_ONBOARD_GET_CHARGES;
-
-// TRANSACTION SERVICES
-const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
-
 const API_updateBusinessData = apiUrl.API_ONBOARD_UPDATE_BUSINESS_DATA;
 const API_addContact = apiUrl.API_ONBOARD_ADD_CONTACT;
 const API_getConatcts = apiUrl.API_ONBOARD_GET_CONTACT_LIST;
 const API_deleteContact = apiUrl.API_ONBOARD_DELETE_CONTACT;
 const API_favContact = apiUrl.API_ONBOARD_FAV_CONTACT;
-
 const API_getCustomerNotification =
   apiUrl.API_ONBOARD_GET_CUSTOMER_NOTIFICATION;
 const API_updateCustomerNotification =
   apiUrl.API_ONBOARD_UPDATE_CUSTOMER_NOTIFICATION;
 const API_invitedContactList = apiUrl.API_ONBOARD_INVITED_CONTACT_LIST;
+const API_getAllNotifications = apiUrl.API_ONBOARD_GET_ALL_NOTIFICATIONS;
+
+// TRANSACTION SERVICES
+const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
+const API_getBalance = apiUrl.API_TRANSACTION_GET_BALANCE;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 //  ------------------------------------------------------------------------------------------------------------------------------------------------>
@@ -293,6 +293,12 @@ export const updateCustomerNotification = (params) => {
   return axiosOnboardInstance.post(`${API_updateCustomerNotification}`, params);
 };
 
+// POST @get-all-notifications
+// @params page
+export const getAllNotifications = (params) => {
+  return axiosOnboardInstance.post(`${API_getAllNotifications}`, params);
+};
+
 // POST @invited-contacts-list API
 // @params auth_token
 export const invitedConatcts = (params) => {
@@ -310,6 +316,12 @@ export const getCharges = () => {
 //         save_card, card_holder_first_name, card_holder_last_name, city, country, email, card_id
 export const addFund = (params) => {
   return axiosTransactionInstance.post(`${API_addFund}`, params);
+};
+
+// POST @get-balance
+// @params
+export const getBalance = () => {
+  return axiosTransactionInstance.post(`${API_getBalance}`);
 };
 
 export const apiRequest = {
@@ -342,6 +354,7 @@ export const apiRequest = {
   favContact,
   updateBusinessUrl,
   generateNewQrCode,
+  getAllNotifications,
   getCustomerNotification,
   updateCustomerNotification,
   cardsList,
@@ -354,4 +367,5 @@ export const apiRequest = {
   invitedConatcts,
   getCharges,
   addFund,
+  getBalance,
 };

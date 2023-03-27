@@ -4367,15 +4367,15 @@ margin-bottom:0px;
 }
 /* Contact Page */
 .contact-serch-main {
-  width:50%;
+  width: 50%;
 }
 .contact-serch-main form .search-field {
   max-width: 100%;
 }
 .contact-top-btn-nav {
-  width:50%;
+  width: 50%;
   display: flex;
-  justify-content:end;
+  justify-content: end;
   padding-left: 30px;
 }
 .contact-top-btn-nav .con-btn-wrap > .btn {
@@ -5285,7 +5285,7 @@ p.bank-name-wrap {
 .db-view-bank-listing li:hover .bank-del-wrap svg path {
   stroke: #ff3333;
 }*/
-.bank-del-wrap:hover svg path{
+.bank-del-wrap:hover svg path {
   stroke: #ff3333;
 }
 /*.db-view-bank-listing li:hover .bank-bal-wrap,
@@ -6126,28 +6126,28 @@ div.settings-note-inner-sec.setting-noti-sec-new {
   padding-bottom: 0px !important;
 }
 /* CSS on 24-03 */
-.modal>div{
+.modal > div {
   width: 100%;
   margin: 15px;
 }
-#con-details-popup .con-modal-btn-wrap .btn{
+#con-details-popup .con-modal-btn-wrap .btn {
   margin-left: 0px !important;
   padding: 15px 12px !important;
 }
-.contact-top-btn-nav .btn img{
+.contact-top-btn-nav .btn img {
   max-width: 33px;
   width: 100%;
 }
 .db-view-bank-wrapper .bank-del-wrap {
   margin: 0px 7px;
 }
-.db-view-bank-heading .bank-account-type-wrap{
+.db-view-bank-heading .bank-account-type-wrap {
   padding-left: 18px;
 }
 .del-modal-main .modal-dialog {
   padding: 15px !important;
 }
-.del-modal-main .modal-header p{
+.del-modal-main .modal-header p {
   text-align: center;
 }
 /* CSS on 22-03 */
@@ -6219,4 +6219,130 @@ form .form-field.wallet-cb-wrap {
   font-size: 24px;
   line-height: 29px;
   text-align: right;
+}
+
+/* CSS On 20-03 for Notification DD */
+.dashboard-notification-wrap {
+  border-radius: 11px;
+  padding: 20px 15px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  background-color: #fff;
+  z-index: 99;
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
+}
+.notification-dd-wrap {
+  position: absolute;
+  top: 55px;
+  min-width: 320px;
+  right: 0;
+  background-color: #fff;
+  z-index: 9;
+  box-shadow: 4px 4px 24px rgb(0 0 0 / 8%);
+  border-radius: 11px;
+  padding: 20px 10px 10px;
+  border-top-right-radius: 0px;
+  visibility: hidden;
+  transition: all 0.5s ease-in-out;
+  transform: translateY(-5px);
+}
+.notification-user-wrap {
+  position: relative;
+}
+ul.notification-list-wrap {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+ul.notification-list-wrap li {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 15px 0px;
+}
+ul.notification-list-wrap li:first-child {
+  padding-top: 0px;
+}
+ul.notification-list-wrap li:last-child {
+  border-bottom: 0px;
+  padding-bottom: 5px;
+}
+.notification-content-wrap {
+  display: flex;
+  width: 100%;
+  align-items: start;
+}
+.notification-content-wrap .notifi-ic-wrap {
+  width: 45px;
+}
+.notification-content-wrap .notifi-content {
+  width: calc(100% - 45px);
+  padding-left: 12px;
+}
+.notification-content-wrap .notifi-content p {
+  color: #bdbdbd;
+  font-size: 12px;
+  line-height: 20px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  font-weight: 600;
+}
+.notification-content-wrap .notifi-content p:first-child {
+  color: #363853;
+  padding-bottom: 2px;
+}
+.see-all-notifi {
+  text-align: center;
+  padding: 20px 0px 10px;
+  width: calc(100% - 20px);
+  margin-left: auto;
+  margin-right: auto;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+.see-all-notifi a {
+  font-size: 12px;
+  line-height: 12px;
+  font-family: "Inter";
+  font-weight: 500;
+}
+.notification-user-wrap:hover {
+  transition: all 0.5s ease-in-out;
+}
+
+/* CSS Added on 20-03 */
+.notification-user-wrap:hover .dashboard-notification-wrap {
+  box-shadow: 0px -10px 15px 0px rgb(0 0 0 / 8%);
+}
+.notification-user-wrap:hover .notification-dd-wrap {
+  visibility: visible;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* CSS Added on 20-03 for Notification DD */
+.notification-user-wrap.active-dd .dashboard-notification-wrap {
+  box-shadow: 0px -10px 15px 0px rgb(0 0 0 / 8%);
+}
+.notification-user-wrap.active-dd .notification-dd-wrap {
+  visibility: visible;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.notification-dd-wrap {
+  min-width: 300px;
+}
+
+@media only screen and (max-width: 400px) {
+  .notification-user-wrap {
+    position: static;
+  }
+  .notification-dd-wrap {
+    min-width: calc(100% - 40px);
+    margin: auto;
+    top: 80px;
+    left: 10px;
+    right: 20px;
+    border-top-right-radius: 11px;
+  }
 }

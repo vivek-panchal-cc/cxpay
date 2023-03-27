@@ -118,7 +118,7 @@ function FundBankTransfer(props) {
             <div className="row">
               <div className="col-12 col p-0">
                 <Input
-                  type="number"
+                  type="text"
                   className="form-control"
                   placeholder="Account Number"
                   name="bank_account_number"

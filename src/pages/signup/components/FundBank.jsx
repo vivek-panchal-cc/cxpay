@@ -7,11 +7,6 @@ import { FundContext } from "context/fundContext";
 function FundBank() {
   const { formik, countryList, cityList, chargesDetails } =
     useContext(FundContext);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (formik.values.bank_id) navigate("/", { replace: true });
-  }, [formik?.values]);
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -82,7 +77,7 @@ function FundBank() {
       <div className="row">
         <div className="col-12 col p-0">
           <Input
-            type="number"
+            type="text"
             className="form-control"
             placeholder="Account Number"
             name="bank_account_number"

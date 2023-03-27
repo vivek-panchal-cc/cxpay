@@ -29,6 +29,7 @@ import EditCard from "pages/edit-card/EditCard";
 import EditBank from "pages/edit-bank/EditBank";
 import FundAccount from "pages/fund-account/FundAccount";
 import SignupFundAccount from "pages/signup/components/SignupFundAccount";
+import ViewNotification from "pages/view-notification/ViewNotification";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -39,7 +40,8 @@ function App() {
 
   useEffect(() => {
     loadData();
-    if (location.pathname !== "/signup") storageRequest.removeSignupCreds();
+    if (!location.pathname.includes("/signup"))
+      storageRequest.removeSignupCreds();
   }, [location.pathname]);
 
   return (
@@ -65,10 +67,7 @@ function App() {
         </Route>
         {/* List of Private Routes */}
         <Route element={<PrivateLayout />}>
-          <Route
-            path="/signup/:fundtype/:encode"
-            element={<SignupFundAccount />}
-          />
+          <Route path="/signup/:fundtype" element={<SignupFundAccount />} />
           <Route path="/" element={<DashboardLayout />}>
             {/* settings */}
             <Route path="/setting" element={<Setting />} />
@@ -94,6 +93,7 @@ function App() {
             {/* contacts */}
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/view-notification" element={<ViewNotification />} />
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Route>

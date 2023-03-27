@@ -443,14 +443,11 @@ function Wallet() {
                 <img src="/assets/images/Add_card_btn.svg" alt="" />
                 <span>Add a Card</span>
               </Link>
-              <Link to="/wallet/">
-                <img src="/assets/images/Remove_card_btn.svg" alt="" />
-                <span>Remove Card</span>
+              <Link to="/wallet/view-card">
+                <img src="/assets/images/View_cards_btn.svg" alt="" />
+                <span>View Cards</span>
               </Link>
             </div>
-            <Link to="/wallet/view-card" className="my-4">
-              Cards List
-            </Link>
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import AccountFundedPopup from "components/popups/AccountFundedPopup";
 import { fetchBanksList, fetchCardsList } from "features/user/userWalletSlice";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
+import { storageRequest } from "helpers/storageRequests";
 import useCountriesCities from "hooks/useCountriesCities";
 import SelectBank from "pages/fund-account/components/SelectBank";
 import SelectCard from "pages/fund-account/components/SelectCard";
@@ -87,12 +88,19 @@ const FundProvider = ({ children }) => {
     onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
       setIsLoading(true);
       try {
-        const { data } = await apiRequest.addFund(values);
-        if (!data.success) throw data.message;
-        toast.success(data.message);
-        setFundedDetails({ fund: values.transactionAmount, balance: "" });
+        const [{ data: dataFund }, { data: dataBalance }] = await Promise.all([
+          await apiRequest.addFund(values),
+          await apiRequest.getBalance(),
+        ]);
+        if (!dataFund.success || !dataBalance.success)
+          throw dataFund.success ? dataBalance.message : dataFund.message;
+        toast.success(dataFund.message);
+        setFundedDetails({
+          fund: values.transactionAmount,
+          balance: dataBalance?.data?.available_balance,
+        });
         setVisiblePopupFunded(true);
-        resetForm();
+        storageRequest.removeSignupCreds();
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
         const errorObj = {};
