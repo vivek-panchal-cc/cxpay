@@ -4374,13 +4374,13 @@ margin-bottom:0px;
 }
 /* Contact Page */
 .contact-serch-main {
-  width: 50%;
+  width: 40%;
 }
 .contact-serch-main form .search-field {
   max-width: 100%;
 }
 .contact-top-btn-nav {
-  width: 50%;
+  width: 60%;
   display: flex;
   justify-content: end;
   padding-left: 30px;
@@ -4417,7 +4417,7 @@ margin-bottom:0px;
   padding-right: 0px;
 }
 .contact-top-btn-nav .con-btn-wrap {
-  padding-right: 20px;
+  padding-right: 10px;
 }
 .contact-top-sec {
   padding-bottom: 20px;

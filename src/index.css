@@ -92,3 +92,17 @@ code {
   display: flex;
   align-items: center;
 }
+.common-body-bg{
+  height: initial;
+  padding-top: 30px;
+  padding-bottom: 30px;;
+}
+.wallet-acc-fund-btns .btn-wrap .btn{
+  line-height: 22px !important;
+}
+.wallet-acc-fund-btns .btn-wrap input.btn{
+    border:1px solid #363853;
+}
+.wallet-acc-fund-btns .btn-wrap input.btn:hover{
+  border:1px solid #0080c4;
+}

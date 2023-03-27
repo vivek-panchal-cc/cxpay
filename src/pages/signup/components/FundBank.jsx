@@ -254,7 +254,7 @@ function FundBank() {
             />
           </div>
           <div className="btn-wrap">
-            <Link to={"/"} className="btn outline-btn py-2" replace={true}>
+            <Link to={"/"} className="btn outline-btn" replace={true}>
               {"Skip >>"}
             </Link>
           </div>
