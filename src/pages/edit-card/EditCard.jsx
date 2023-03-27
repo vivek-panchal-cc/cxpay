@@ -72,8 +72,6 @@ function EditCard() {
   const handleClosePopupUpload = () => setShowPopupUpload(false);
   const handleClosePopupCrop = () => setShowPopupCrop(false);
 
-  console.log("LOG", card);
-
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -84,17 +82,18 @@ function EditCard() {
       country_index: country_index,
       country_iso: country_iso,
       city: city || "",
+      //
+      card_holder_first_name: card_holder_first_name,
+      card_holder_last_name: card_holder_last_name,
+      billing_address: billing_address,
     },
     validationSchema: EditCardSchema,
     onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
       setIsLoading(true);
       try {
         const formData = new FormData();
-        formData.append("id", values.id);
-        formData.append("email", values.email);
-        formData.append("country", values.country);
-        formData.append("city", values.city);
-        if (card.color !== values.color) formData.append("color", values.color);
+        for (let key in values) formData.append(key, values[key]);
+        // if (card.color !== values.color) formData.append("color", values.color);
         if (croppedImg.file) formData.append("image", croppedImg.file);
         const { data } = await apiRequest.updateCard(formData);
         if (!data.success) throw data.message;
@@ -178,7 +177,7 @@ function EditCard() {
           <div className="add-wallet-card-form-wrap">
             <form onSubmit={formik.handleSubmit}>
               <div className="row">
-                <div className="col-12 col p-0">
+                <div className="col-lg-6 col-12 col-left col p-0">
                   <Input
                     type="text"
                     className="form-control opacity-75"
@@ -188,9 +187,7 @@ function EditCard() {
                     disabled
                   />
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-6 col-12 col-left col p-0">
+                <div className="col-lg-6 col-12 col-right col p-0">
                   <Input
                     type="text"
                     id="expiry_date"
@@ -201,6 +198,8 @@ function EditCard() {
                     disabled
                   />
                 </div>
+              </div>
+              {/* <div className="row">
                 <div className="col-lg-6 col-12 col-right col p-0">
                   <Input
                     type="password"
@@ -212,26 +211,36 @@ function EditCard() {
                     disabled
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="row">
                 <div className="col-lg-6 col-12 col-left p-0">
                   <Input
                     type="name"
-                    className="form-control opacity-75"
+                    className="form-control"
                     placeholder="First Name"
                     name="card_holder_first_name"
-                    value={card_holder_first_name}
-                    disabled
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.card_holder_first_name}
+                    error={
+                      formik.touched.card_holder_first_name &&
+                      formik.errors.card_holder_first_name
+                    }
                   />
                 </div>
                 <div className="col-lg-6 col-12 col-right p-0">
                   <Input
                     type="name"
-                    className="form-control opacity-75"
-                    placeholder="First Name"
+                    className="form-control"
+                    placeholder="Last Name"
                     name="card_holder_last_name"
-                    value={card_holder_last_name}
-                    disabled
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.card_holder_last_name}
+                    error={
+                      formik.touched.card_holder_last_name &&
+                      formik.errors.card_holder_last_name
+                    }
                   />
                 </div>
               </div>
@@ -254,11 +263,16 @@ function EditCard() {
                   <Input
                     type="text"
                     id="billing_address"
-                    className="form-control opacity-75"
+                    className="form-control"
                     placeholder="Billing Address"
                     name="billing_address"
-                    value={billing_address}
-                    disabled
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.billing_address}
+                    error={
+                      formik.touched.billing_address &&
+                      formik.errors.billing_address
+                    }
                   />
                 </div>
               </div>

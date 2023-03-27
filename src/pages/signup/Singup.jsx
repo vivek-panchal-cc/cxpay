@@ -4,6 +4,7 @@ import AccountType from "./components/AccountType";
 import Businessform from "./components/BusinessForm";
 import PersonalForm from "./components/PersonalForm";
 import { SignupContext } from "context/signupContext";
+import FundAccount from "pages/fund-account/FundAccount";
 
 const Signup = () => {
   const { signUpCreds } = useContext(SignupContext);
@@ -23,6 +24,8 @@ const Signup = () => {
           default:
             return <EnterPhone />;
         }
+      case 3:
+        return <FundAccount />;
       default:
         return <EnterPhone />;
     }

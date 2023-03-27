@@ -16,7 +16,7 @@ const RightArrowBig = (props) => {
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
-        stroke="#363853"
+        stroke="inherit"
       />
     </svg>
   );

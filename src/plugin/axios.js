@@ -22,6 +22,9 @@ const axiosTransactionInstance = axios.create({
 // Define inteceptors
 const requestInterceptor = (config) => {
   const token = storageRequest.getAuth();
+  // var ua = navigator.userAgent;
+  config.headers["Os-Version"] = "Chrome/111.0.0.0";
+  config.headers["Device-Type"] = "web";
   if (token) config.headers.Authorization = `Bearer ${token}`;
   // const accountNumber = getCookie("auth._account_number");
   // if (accountNumber) config.headers.accountnumber = accountNumber;

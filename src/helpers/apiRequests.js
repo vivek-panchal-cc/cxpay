@@ -1,5 +1,9 @@
 import * as apiUrl from "constants/urls";
-import { axiosLoginInstance, axiosOnboardInstance } from "plugin/axios";
+import {
+  axiosLoginInstance,
+  axiosOnboardInstance,
+  axiosTransactionInstance,
+} from "plugin/axios";
 
 // LOGIN SERVICES
 const API_login = apiUrl.API_LOGIN_LOGIN;
@@ -36,6 +40,10 @@ const API_deleteBank = apiUrl.API_ONBOARD_DELETE_BANK;
 const API_getCardColor = apiUrl.API_ONBOARD_GET_CARD_COLOR;
 const API_cardMarkAsDefault = apiUrl.API_ONBOARD_CARD_MARK_AS_DEFAULT;
 const API_bankMarkAsDefault = apiUrl.API_ONBOARD_BANK_MARK_AS_DEFAULT;
+const API_getCharges = apiUrl.API_ONBOARD_GET_CHARGES;
+
+// TRANSACTION SERVICES
+const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
 
 const API_updateBusinessData = apiUrl.API_ONBOARD_UPDATE_BUSINESS_DATA;
 const API_addContact = apiUrl.API_ONBOARD_ADD_CONTACT;
@@ -291,6 +299,19 @@ export const invitedConatcts = (params) => {
   return axiosOnboardInstance.post(`${API_invitedContactList}`, params);
 };
 
+// GET @get-charges
+// @params
+export const getCharges = () => {
+  return axiosOnboardInstance.get(`${API_getCharges}`);
+};
+
+// POST @add-fund
+// @params transactionType, transactionAmount, txn_mode, card_number, expiry_date, billing_address,
+//         save_card, card_holder_first_name, card_holder_last_name, city, country, email, card_id
+export const addFund = (params) => {
+  return axiosTransactionInstance.post(`${API_addFund}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -331,4 +352,6 @@ export const apiRequest = {
   bankMarkAsDefault,
   getCardColor,
   invitedConatcts,
+  getCharges,
+  addFund,
 };
