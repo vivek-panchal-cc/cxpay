@@ -5,12 +5,16 @@ import InviteContact from "./components/InviteContact";
 import Pagination from "components/pagination/Pagination";
 import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
+import CreateGroup from './components/CreateGroup';
 import ModalConfirmation from "components/modals/ModalConfirmation";
+import { useNavigate } from "react-router-dom";
 import InvitationSent from "./components/InvitationSent";
 import ContactDetail from "./components/ContactDetail";
 import Delete from "styles/svgs/Delete";
 
 const Contacts = (props) => {
+  
+  const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
   const [contacts, setContacts] = useState([]);
   const [selectedContacts, setSelectedContacts] = useState([]);
@@ -21,8 +25,8 @@ const Contacts = (props) => {
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
   const [deleteContactArr, setDeleteContactArr] = useState([]);
+  const [showCreateGroupPopup, setShowCreateGroupPopup] = useState(false);
   const [removeConfirmShow, setRemoveConfirmShow] = useState(false);
-
   const [showInvitationSentPopup, setInvitationSentPopup] = useState(false);
   const [showConatctDetailPopup, setConatctDetailPopup] = useState(false);
   const [contactData, setConatctData] = useState([]);
@@ -33,6 +37,10 @@ const Contacts = (props) => {
     setShow(true);
     setInviteTitle(e.currentTarget.value);
   };
+
+  const handleCreateGroup = async () => {
+    setShowCreateGroupPopup(true);
+  }
 
   const handleChangeFilter = (e) => {
     const val = e.target.value;
@@ -106,7 +114,6 @@ const Contacts = (props) => {
   }, []);
 
   const retrieveContacts = async (currentPage = 1, search) => {
-    // setIsLoading(true);
     try {
       const { data } = await apiRequest.getConatcts({
         page: currentPage,
@@ -144,14 +151,10 @@ const Contacts = (props) => {
       }
       console.log(error);
     }
-    //  finally {
-    //   setIsLoading(false);
-    // }
   };
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { checked, value } = e.target;
-
     if (checked) {
       setSelectedContacts([...selectedContacts, value]);
     } else {
@@ -332,6 +335,17 @@ const Contacts = (props) => {
                   </button>
                 )}
               </div>
+              <div className="con-btn-wrap con-add-btn-wrap">
+                <button
+                  className="btn"
+                  value="Create Group"
+                  onClick={handleCreateGroup}
+                  disabled={selectedContacts.length < 2}
+                >
+                  <img src="assets/images/Add_icon.svg" alt="" />
+                  <span>Create Group</span>
+                </button>
+              </div>
             </div>
           </div>
           <div className="con-listing-container">
@@ -453,6 +467,13 @@ const Contacts = (props) => {
         setShow={setConfirmShow}
         handleCallback={handleDeleteContact}
       />
+      <Modal
+        id="create-group-popup"
+        show={showCreateGroupPopup}
+        setShow={setShowCreateGroupPopup}
+      >
+          <CreateGroup values={selectedContacts} />
+      </Modal>
       <ModalConfirmation
         heading={"Delete Contact"}
         subHeading={"Are you sure to remove contacts?"}

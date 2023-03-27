@@ -394,7 +394,7 @@
   }
   .send-top-sec {
     padding-bottom: 40px;
-    padding-right: 30px;
+    padding-right:0px;
   }
   .send-whom-slider .contact-name {
     font-size: 17px;
@@ -416,7 +416,7 @@
   }
   .send-btn-wrap .btn-next,
   .pay-btn-wrap .btn-send-payment {
-    margin: 0 35px 0 20px;
+    margin: 0 20px 0 20px;
     font-size: 17px;
     line-height: 23px;
     padding: 11px 42px;
@@ -924,7 +924,7 @@
   }
   .send-btn-wrap .btn-next,
   .pay-btn-wrap .btn-send-payment {
-    margin: 0 25px 0 15px;
+    margin: 0 15px 0 15px;
     font-size: 15px;
     line-height: 23px;
     padding: 11px 34px;
@@ -2068,9 +2068,9 @@
   .send-group-slider .contact-name {
     max-width: 90px;
   }
-  .send-group-slider .img-wrap {
+  /*.send-group-slider .img-wrap {
     height: 104px;
-  }
+  }*/
   .request-pay-footer-block .amount {
     font-size: 22px;
     line-height: 20px;
@@ -2927,6 +2927,16 @@
     width: 100%;  
     justify-content: left;
   }
+  .send-top-sec form .search-field{
+      margin-left: 0px;
+      width: 100%;
+  }
+  .send-top-sec>form{
+    width: 100% !important;
+  }
+  .send-top-sec form .search-field {
+    max-width:500px;
+  }
   .notification-rm-wrap svg {
     opacity: 1;
     visibility: visible;
@@ -3457,8 +3467,8 @@
   }
   .send-top-sec h3,
   .send-pay-title-sec h3 {
-    font-size: 18px;
-    line-height: 23px;
+    font-size: 20px;
+    line-height: 25px;
   }
   .send-top-sec p,
   .send-pay-title-sec p {
@@ -3727,6 +3737,16 @@
     justify-content: flex-start;
     flex-wrap: wrap;
   }
+  .send-top-right-sec .main-search-wrap{
+      width: 100% !important;
+  }
+  .send-top-sec form{
+      width:100% !important;
+  }
+  .send-top-sec form .search-field{
+    margin-left: 0px;
+    max-width: 100%;
+  }
   .send-top-right-sec {
     width: 100%;
     padding-left: 0;
@@ -3757,10 +3777,10 @@
   }
   .send-btn-wrap .btn-next,
   .pay-btn-wrap .btn-send-payment {
-    margin: 0 12px 0 12px;
+    margin: 0 6px 0 6px;
     font-size: 14px;
     line-height: 19px;
-    padding: 11px 34px;
+    padding: 11px 30px;
   }
   .send-btn-wrap .save-group-btn,
   .pay-btn-wrap .schedule-pay-btn,
