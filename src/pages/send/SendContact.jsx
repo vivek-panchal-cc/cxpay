@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext,useEffect, useState } from "react";
 import Input from "components/ui/Input";
 import ContactList from "components/contacts-list/ContactList";
 import { apiRequest } from "helpers/apiRequests";
@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { IconSearch, IconSend, IconEdit } from "styles/svgs";
 import { useNavigate } from "react-router-dom";
+import { LoaderContext } from "context/loaderContext";
 
 export default function AddGroup() {
     const [inviteContactList, setInviteContactList] = useState([]);
@@ -24,8 +25,10 @@ export default function AddGroup() {
     const [totalInvitedData, setTotalInvitedData] = useState(0);
     const [searchText, setSearchText] = useState('');
     const navigate = useNavigate();
+    const { setIsLoading } = useContext(LoaderContext);
 
     const getInviteContactList = async (page, search) => {
+        setIsLoading(true);
         try {
             let param = { page: page, search: search };
             const { data } = await apiRequest.getInviteContactList(param);
@@ -37,13 +40,16 @@ export default function AddGroup() {
                 var allData = inviteContactList.concat(data.data.app_contacts);
                 setInviteContactList(allData);
             }
+            setIsLoading(false);
         } catch (error) {
             setTotalInvitedData(0)
             setInviteContactList([])
+            setIsLoading(false);
         }
     };
 
     const getGroupsList  = async (page,searchText) => {
+        setIsLoading(true);
         try {
             var param = {"page" : page,'search' : searchText};
             const { data } = await apiRequest.getGroupsList(param);
@@ -55,9 +61,11 @@ export default function AddGroup() {
                 var allData = groupList.concat(data.data.groups);
                 setGroupList(allData);
             }
+            setIsLoading(false);
         }catch (error) {
             setTotalGroupData(0);
             setGroupList([]);
+            setIsLoading(false);
         }
     }
 
@@ -105,6 +113,7 @@ export default function AddGroup() {
     }
 
     const deleteGroup = async (id) => {
+        setIsLoading(true);
         try {
             var param = {"group_id" : id};
             const { data } = await apiRequest.deleteGroup(param);
@@ -113,8 +122,10 @@ export default function AddGroup() {
             setGroupList([]);
             getGroupsList(1,searchData);
             setShowDeleteGroupPopup(false);
+            setIsLoading(false);
+            toast.success(data.message);
         }catch (error) {
-
+            setIsLoading(false);
         }
     }
 

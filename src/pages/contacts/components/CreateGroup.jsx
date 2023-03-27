@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext,useState } from "react";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import Input from "components/ui/Input";
@@ -7,10 +7,12 @@ import InputFile from "components/ui/InputImage";
 import { apiRequest } from "helpers/apiRequests";
 import { useNavigate } from "react-router-dom";
 import styles from "../addGroup.css";
+import { LoaderContext } from "context/loaderContext";
 
 export default function CreateGroup(props){
     const profile_image = null;
     const navigate = useNavigate();
+    const { setIsLoading } = useContext(LoaderContext);
 
     const formik = useFormik({
         initialValues: {
@@ -18,9 +20,12 @@ export default function CreateGroup(props){
           group_image : "",
           contact : props.values
         },
+        validateOnChange: false, // this one
+        validateOnBlur: false, // and this one
         validationSchema: createGroupSchema,
         onSubmit: async (values, { resetForm, setStatus }) => {
             console.log(values);
+            setIsLoading(true);
             const formData = new FormData();
             for (let key in values) {
                 if (key === "group_image") continue;
@@ -34,6 +39,7 @@ export default function CreateGroup(props){
             const { data } = await apiRequest.addGroup(formData);
             if (!data.success) throw data.message;
             toast.success(data.message);
+            setIsLoading(false);
             navigate('/send'); 
         }
     });
