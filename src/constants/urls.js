@@ -1,4 +1,4 @@
-// customer login urls
+// customer-login urls
 export const API_LOGIN_LOGIN = "/login";
 export const API_LOGIN_LOGOUT = "/logout";
 export const API_LOGIN_LOGIN_OTP = "/login-otp";
@@ -53,3 +53,10 @@ export const API_ONBOARD_GET_GROUP_DETAIL = "/groups-details";
 export const API_ONBOARD_DELETE_GROUP_MEMBER = "/delete-contact-from-group";
 export const API_ONBOARD_UPDATE_GROUP = "/update-group";
 export const API_ONBOARD_GET_REMAINING_GROUP_CONTACT = "/get-remain-contacts";
+export const API_ONBOARD_INVITED_CONTACT_LIST = "/invited-contacts-list";
+export const API_ONBOARD_GET_CHARGES = "/get-charges";
+export const API_ONBOARD_GET_ALL_NOTIFICATIONS = "/get-all-notifications";
+
+// customer-transaction Urls
+export const API_TRANSACTION_ADD_FUND = "/add-fund";
+export const API_TRANSACTION_GET_BALANCE = "/get-balance";

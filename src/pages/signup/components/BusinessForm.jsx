@@ -15,7 +15,6 @@ import { storageRequest } from "helpers/storageRequests";
 function Businessform(props) {
   const { setIsLoading } = useContext(LoaderContext);
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState({
     new: false,
     confirm: false,
@@ -49,10 +48,9 @@ function Businessform(props) {
         formData.append("profile_image", values.profile_image);
         const { data } = await apiRequest.registerUser(formData);
         if (!data.success) throw data.message;
-        setSignUpCreds({ step: 0 });
         toast.success(data.message);
         storageRequest.setAuth(data.data.token);
-        navigate("/");
+        setSignUpCreds((cs) => ({ ...cs, step: 3 }));
       } catch (error) {
         setErrors({
           email: error.email?.[0],

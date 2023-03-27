@@ -4,6 +4,8 @@ import AccountType from "./components/AccountType";
 import Businessform from "./components/BusinessForm";
 import PersonalForm from "./components/PersonalForm";
 import { SignupContext } from "context/signupContext";
+import FundAccount from "pages/fund-account/FundAccount";
+import { Navigate } from "react-router-dom";
 
 const Signup = () => {
   const { signUpCreds } = useContext(SignupContext);
@@ -23,6 +25,8 @@ const Signup = () => {
           default:
             return <EnterPhone />;
         }
+      case 3:
+        return <Navigate to={"/signup/bank"} replace={true} />;
       default:
         return <EnterPhone />;
     }

@@ -29,7 +29,7 @@ function ModalConfirmation(props) {
   if (!show) return null;
   return (
     <div
-      className={`modal fade show ${styles.modal} ${className}`}
+      className={`modal fade show ${styles.modal} ${className} del-modal-main`}
       id={id}
       role="dialog"
     >
@@ -51,7 +51,7 @@ function ModalConfirmation(props) {
                 Cancel
               </button>
               <button
-              type="button"
+                type="button"
                 className="btn btn-primary px-4 py-3"
                 style={{ minWidth: "initial" }}
                 onClick={handleCallback}

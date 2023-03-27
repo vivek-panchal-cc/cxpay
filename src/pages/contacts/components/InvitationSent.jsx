@@ -7,23 +7,23 @@ function InvitationSent(props) {
   return (
     <Modal id={id} show={show} setShow={setShow}>
       <div
-        class="invite-sent-modal contact-pg-popup"
+        className="invite-sent-modal contact-pg-popup"
         id="invite-sent-popup"
         role="dialog"
       >
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-body text-center">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-body text-center">
               <img
                 src="assets/images/invite-sent.svg"
                 alt=""
-                class="invite-sent-logo"
+                className="invite-sent-logo"
               />
               <h3>Invitation Sent</h3>
-              <div class="invite-send-btn">
+              <div className="invite-send-btn">
                 <button
                   onClick={() => handleClose(false)}
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   data-bs-dismiss="modal"
                 >
                   Done

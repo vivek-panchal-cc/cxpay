@@ -1,4 +1,3 @@
-import Input from "components/ui/Input";
 import React from "react";
 import { IconCancel, IconCardBackground, IconEdit } from "styles/svgs";
 
@@ -14,6 +13,8 @@ function CardItem(props) {
     image,
     mark_as_default,
   } = item;
+
+  console.log(image,color);
 
   return (
     <li className="db-view-bank-div-main db-view-bank-common-div">

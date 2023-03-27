@@ -49,11 +49,12 @@ const BankList = () => {
     try {
       const { data } = await apiRequest.deleteBank({ id });
       if (!data.success) throw data.message;
+      await getBankList();
       toast.success(data.message);
       setSelectedBank("");
       setShow(false);
-      getBankList();
     } catch (error) {
+      toast.error(error);
       console.log("error: ", error);
     } finally {
       setIsLoading(false);
