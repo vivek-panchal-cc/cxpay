@@ -27,6 +27,8 @@ import BankList from "pages/bank-list/BankList";
 import { storageRequest } from "helpers/storageRequests";
 import EditCard from "pages/edit-card/EditCard";
 import EditBank from "pages/edit-bank/EditBank";
+import Send from "pages/send/SendContact";
+import EditGroup from "pages/edit-group/EditGroup";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -84,6 +86,8 @@ function App() {
             {/* contacts */}
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/send" element={<Send />} />
+            <Route path="/edit-group/:id" element={<EditGroup />} />
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Route>

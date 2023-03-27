@@ -51,6 +51,7 @@ function ModalConfirmation(props) {
                 Cancel
               </button>
               <button
+              type="button"
                 className="btn btn-primary px-4 py-3"
                 style={{ minWidth: "initial" }}
                 onClick={handleCallback}

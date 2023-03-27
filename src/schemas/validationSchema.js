@@ -158,6 +158,12 @@ const businessInfoSchema = yup.object().shape({
     .max(25, "Maximum limit exceeded"),
 });
 
+const createGroupSchema = yup.object().shape({
+  group_image: profileImageSchema.required('Group image is required'),
+  group_name: yup.string().required("Group name is required")
+  .max(55, "Maximum limit is 55 characters"),
+});
+
 export {
   LoginSchema,
   enterPhoneSchema,
@@ -173,4 +179,5 @@ export {
   inviteContactSchema,
   addBusinessUrlSchema,
   businessInfoSchema,
+  createGroupSchema
 };

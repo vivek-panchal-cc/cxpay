@@ -48,6 +48,15 @@ const API_getCustomerNotification =
 const API_updateCustomerNotification =
   apiUrl.API_ONBOARD_UPDATE_CUSTOMER_NOTIFICATION;
 
+const API_getInviteContactList = apiUrl.API_ONBOARD_GET_INVITE_CONCAT_LIST;
+const API_addGroup = apiUrl.API_ONBOARD_ADD_GROUP;
+const API_groupsList = apiUrl.API_ONBOARD_GET_GROUP_LIST;
+const API_deleteGroup = apiUrl.API_ONBOARD_DELETE_GROUP;
+const API_getGroupDetail = apiUrl.API_ONBOARD_GET_GROUP_DETAIL;
+const API_deleteGroupMember = apiUrl.API_ONBOARD_DELETE_GROUP_MEMBER;
+const API_updateGroup = apiUrl.API_ONBOARD_UPDATE_GROUP;
+const API_getRemainingGroupContact = apiUrl.API_ONBOARD_GET_REMAINING_GROUP_CONTACT;
+
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 //  ------------------------------------------------------------------------------------------------------------------------------------------------>
 
@@ -284,6 +293,53 @@ export const updateCustomerNotification = (params) => {
   return axiosOnboardInstance.post(`${API_updateCustomerNotification}`, params);
 };
 
+//POST @get-contact-invite-list API
+// @params
+export const getInviteContactList = (params) => {
+  return axiosOnboardInstance.post(`${API_getInviteContactList}`, params);
+};
+
+// POST @add-group API
+// @params group_name,group_image,contact
+export const addGroup = (params) => {
+  return axiosOnboardInstance.post(`${API_addGroup}`, params);
+};
+
+//POST @group-list
+// @params page,search
+export const getGroupsList = (params) => {
+  return axiosOnboardInstance.post(`${API_groupsList}`, params);
+}
+
+//POST @delete-group
+// @params group_id
+export const deleteGroup = (params) => {
+  return axiosOnboardInstance.post(`${API_deleteGroup}`, params);
+}
+
+//POST @get-group-detail
+// @params group_id
+export const getGroupDetail = (params) => {
+  return axiosOnboardInstance.post(`${API_getGroupDetail}`,params);
+}
+//POST @delete-group-member
+// @params group_id,member_account_number[]
+export const deleteGroupMember = (params) => {
+  return axiosOnboardInstance.post(`${API_deleteGroupMember}`,params);
+}
+
+//POST @update-group
+// @params group_id,group_name,group_image,contact[]
+export const updateGroup = (params) => {
+  return axiosOnboardInstance.post(`${API_updateGroup}`,params);
+}
+
+//POST @get-remaining-group-contact 
+//@params group_id
+export const getRemainingGroupContact = (params) =>{
+  return axiosOnboardInstance.post(`${API_getRemainingGroupContact}`,params);
+}
+
 export const apiRequest = {
   login,
   logout,
@@ -323,4 +379,12 @@ export const apiRequest = {
   updateBank,
   bankMarkAsDefault,
   getCardColor,
+  getInviteContactList,
+  addGroup,
+  getGroupsList,
+  deleteGroup,
+  getGroupDetail,
+  deleteGroupMember,
+  updateGroup,
+  getRemainingGroupContact
 };

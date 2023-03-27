@@ -3,7 +3,7 @@ import userProfileReducer from "../features/user/userProfileSlice";
 
 export const store = configureStore({
   reducer: {
-    userProfile: userProfileReducer,
+    userProfile: userProfileReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

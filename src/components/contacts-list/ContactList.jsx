@@ -2,12 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { A11y, Navigation, Scrollbar } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import ContactCard from './ContactCard';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 const ContactList = (props) => {
-    const {fullWidth = false, isSelectable = false, selectedItems, className} = props;
+    const {fullWidth = false, isSelectable = false, selectedItems, className,data,containerClassName,onReachEnd,isMultiSelect = true} = props;
     const [selectedContact, setSelectedContact] = useState([]);
     
-    // static contact list in future will replace with api data
+    const groupDefaultBackgroundImages = ['yellow-bg','blue-bg','green-bg','light-blue-bg','purple-bg','dark-yellow-bg','dark-blue-bg'];
+
+    const getActiveColor  = (index) => {
+        return (index % groupDefaultBackgroundImages.length);
+    }
+
     const contactsList = [
         {
             id: 1,
@@ -52,9 +61,9 @@ const ContactList = (props) => {
 
     ];
     
-    const resizeListener = () => {
-        setWidth(window.innerWidth)
-    } 
+    // const resizeListener = () => {
+    //     setWidth(window.innerWidth)
+    // } 
 
     const breakpoints = fullWidth ? {
         1300: {
@@ -102,19 +111,24 @@ const ContactList = (props) => {
     
     const handleSelectChange = (e) => {
         const checked = e.target.checked;
-        const value = parseInt(e.target.value)
+        var value = e.target.value
         let selectedArray = []
-        if(checked){
+        if(isMultiSelect){   
+            if(checked){
             selectedArray = [...selectedContact, value]
-        }else{
-            selectedArray = selectedContact.filter((elm) => elm !== value);
+            }else{
+                selectedArray = selectedContact.filter((elm) => elm !== value);
+            }
+        }else {
+            value = parseInt(e.target.value)
+            selectedArray = [value]
         }
         setSelectedContact(selectedArray);
         selectedItems(selectedArray)
     }
     
     return (
-        <div className={`${fullWidth? "send-whom-slider" : "recent-contact-slider"}`}>
+        <div className={`${fullWidth? "send-whom-slider" : "recent-contact-slider"} ${containerClassName}`}>
             <Swiper
                 // install Swiper modules
                 modules={[Navigation, Scrollbar, A11y]}
@@ -124,11 +138,21 @@ const ContactList = (props) => {
                 navigation
                 pagination={{ clickable: true }}
                 scrollbar={{ draggable: false }}
+                onReachEnd = {onReachEnd}
             >
                 <div className={`swiper-wrapper ${className}`}>
-                    {contactsList?.map((elm) => (
-                        <SwiperSlide key={'slider' + elm?.id}>
-                            <ContactCard isSelectable={isSelectable} selectedContact={selectedContact} handleSelectChange={handleSelectChange} fullWidth={fullWidth} imgUrl={elm.imgUrl} name={elm.name} id={elm.id}/>
+                    {data?.map((elm,index) => (
+                        <SwiperSlide key={'slider' + (elm.group_id ? elm.group_id : elm.mobile)} >
+                            <ContactCard 
+                                isSelectable={isSelectable} 
+                                selectedContact={selectedContact} 
+                                handleSelectChange={handleSelectChange} 
+                                fullWidth={fullWidth}
+                                backgroundColor= {elm.group_image !== undefined ? (elm.group_image != '' ? '' : groupDefaultBackgroundImages[getActiveColor(index)]) : ''}
+                                imgUrl={elm.group_image !== undefined ? (elm.group_image != '' ? elm.group_image : 'assets/images/group-payment-black-icon.png'): (elm.profile_image != '' ? elm.profile_image : '')} 
+                                name={elm.group_name ?? elm.name} 
+                                id={elm.group_id ? elm.group_id : elm.mobile} 
+                                isMultiSelect={isMultiSelect} />
                         </SwiperSlide>
                     ))}
                 </div>

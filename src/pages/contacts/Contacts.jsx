@@ -5,9 +5,13 @@ import InviteContact from "./components/InviteContact";
 import Pagination from "components/pagination/Pagination";
 import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
+import CreateGroup from './components/CreateGroup';
 import ModalConfirmation from "components/modals/ModalConfirmation";
+import { useNavigate } from "react-router-dom";
 
 const Contacts = (props) => {
+  
+  const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
   const [contacts, setContacts] = useState([]);
   const [selectedContacts, setSelectedContacts] = useState([]);
@@ -18,6 +22,12 @@ const Contacts = (props) => {
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState("");
   const [deleteContactArr, setDeleteContactArr] = useState([]);
+  const [showCreateGroupPopup, setShowCreateGroupPopup] = useState(false);
+  
+
+  const handleCreateGroup = async () => {
+    setShowCreateGroupPopup(true);
+  }
 
   const handlePopupInvite = (e) => {
     setShow(true);
@@ -62,7 +72,6 @@ const Contacts = (props) => {
     };
     try {
       const { data } = await apiRequest.favContact(reqData);
-
       data["status_code"] === 200 && retrieveContacts(page);
       setfavIconShow(favIconShow);
       toast.success(data.message);
@@ -80,7 +89,6 @@ const Contacts = (props) => {
   }, []);
 
   const retrieveContacts = async (currentPage = 1, search) => {
-    // setIsLoading(true);
     try {
       const { data } = await apiRequest.getConatcts({
         page: currentPage,
@@ -96,14 +104,10 @@ const Contacts = (props) => {
       }
       console.log(error);
     }
-    //  finally {
-    //   setIsLoading(false);
-    // }
   };
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { checked, value } = e.target;
-
     if (checked) {
       setSelectedContacts([...selectedContacts, value]);
     } else {
@@ -261,6 +265,17 @@ const Contacts = (props) => {
                   <span>Invite Contact</span>
                 </button>
               </div>
+              <div className="con-btn-wrap con-add-btn-wrap">
+                <button
+                  className="btn"
+                  value="Create Group"
+                  onClick={handleCreateGroup}
+                  disabled={selectedContacts.length < 2}
+                >
+                  <img src="assets/images/Add_icon.svg" alt="" />
+                  <span>Create Group</span>
+                </button>
+              </div>
             </div>
           </div>
           <div className="con-listing-container">
@@ -385,6 +400,13 @@ const Contacts = (props) => {
         setShow={setConfirmShow}
         handleCallback={handleDeleteContact}
       />
+      <Modal
+        id="create-group-popup"
+        show={showCreateGroupPopup}
+        setShow={setShowCreateGroupPopup}
+      >
+          <CreateGroup values={selectedContacts} />
+      </Modal>
     </div>
   );
 };

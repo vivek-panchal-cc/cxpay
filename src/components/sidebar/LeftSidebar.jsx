@@ -45,7 +45,7 @@ function LeftSidebar() {
             </Link>
           </li>
           <li className={`${thisRoute === "send" ? "active" : ""}`}>
-            <Link to="/" replace>
+            <Link to="/send" replace>
               <IconSend style={{ stroke: "#F3F3F3" }} />
               <span>Send</span>
             </Link>

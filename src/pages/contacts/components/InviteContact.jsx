@@ -22,6 +22,7 @@ function InviteContact(props) {
       try {
         const { data } = await apiRequest.addContact(values);
         if (!data.success) throw data.message;
+        console.log(data);
         if (data.data.alreadyInvited === false) {
           setIsShowContactPopup(false);
           getConatcts(page, search);
