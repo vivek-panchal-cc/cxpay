@@ -1257,10 +1257,10 @@
     padding: 11px 10px;
   }
   .contact-top-btn-nav .btn img{
-    max-width: 27px;
+    max-width: 22px;
   }
   .contact-top-btn-nav .con-btn-wrap > .btn{
-    font-size: 13px;
+    font-size: 12px;
   }
 }
 @media only screen and (max-width: 1199px) and (min-width: 992px) {
