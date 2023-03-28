@@ -25,6 +25,7 @@ function InviteContact(props) {
     },
     validationSchema: inviteContactSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
+      console.log("GEEE###");
       try {
         const { data } = await apiRequest.addContact(values);
 

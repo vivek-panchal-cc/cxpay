@@ -125,6 +125,7 @@ const Contacts = (props) => {
       setContacts(data.data);
     } catch (error) {
       if (error === "Contact not found") {
+        setContactsOrInvited("contacts");
         setContacts(null);
       }
       console.log(error);
@@ -147,6 +148,7 @@ const Contacts = (props) => {
       setContacts(data.data);
     } catch (error) {
       if (error === "Contact not found") {
+        setContactsOrInvited("invited");
         setContacts(null);
       }
       console.log(error);
@@ -182,7 +184,7 @@ const Contacts = (props) => {
         <div className="contact-sec">
           <div className="contact-top-sec">
             <div className="title-content-wrap">
-              <h3>Contacts</h3>
+              <h3>{ contactsOrInvited === "contacts" ? 'Contacts' : 'Invited Contacts'}</h3>
             </div>
           </div>
           <div className="contact-top-search-sec d-flex align-items-center">
@@ -279,11 +281,7 @@ const Contacts = (props) => {
               <div className="con-btn-wrap con-invite-btn-wrap">
                 <Modal id="invite_contact" show={show} setShow={setShow}>
                   <InviteContact
-                    getConatcts={
-                      contactData.length > 0
-                        ? retrieveContacts
-                        : handleInvitedContacts
-                    }
+                    getConatcts={contactsOrInvited === "contacts" ? retrieveContacts : handleInvitedContacts}
                     page={page}
                     search={search}
                     setShow={setShow}
@@ -335,17 +333,19 @@ const Contacts = (props) => {
                   </button>
                 )}
               </div>
-              <div className="con-btn-wrap con-add-btn-wrap">
-                <button
-                  className="btn"
-                  value="Create Group"
-                  onClick={handleCreateGroup}
-                  disabled={selectedContacts.length < 2}
-                >
-                  <img src="assets/images/Add_icon.svg" alt="" />
-                  <span>Create Group</span>
-                </button>
-              </div>
+              {contactsOrInvited === "contacts" ? (
+                <div className="con-btn-wrap con-add-btn-wrap">
+                  <button
+                    className="btn"
+                    value="Create Group"
+                    onClick={handleCreateGroup}
+                    disabled={selectedContacts.length < 2}
+                  >
+                    <img src="assets/images/Add_icon.svg" alt="" />
+                    <span>Create Group</span>
+                  </button>
+                </div>
+              ) : ''}
             </div>
           </div>
           <div className="con-listing-container">

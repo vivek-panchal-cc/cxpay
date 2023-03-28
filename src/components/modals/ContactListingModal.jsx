@@ -28,6 +28,8 @@ function ContactListingModal(props) {
     getCurrentData = getCurrentData.map((item) => item.member_mobile_number);
     const searchContactData = (e) => {
         setSearchContactName(e.target.value);
+        retriveRemainingContact(1,e.target.value);
+        setCurrentListPage(1);
     }
    
 
@@ -57,14 +59,14 @@ function ContactListingModal(props) {
         if (bottom) { 
             if(currentListPage*10 < listingTotalData){
                 setCurrentListPage(currentListPage + 1);
-                retriveRemainingContact(currentListPage + 1);
+                retriveRemainingContact(currentListPage + 1,searchContactName);
             }
         }
     }
 
-    const retriveRemainingContact = async(page) =>{
+    const retriveRemainingContact = async(page,searchText) =>{
         try {
-            const { data } = await apiRequest.getRemainingGroupContact({ group_id: groupId,page : page});
+            const { data } = await apiRequest.getRemainingGroupContact({ group_id: groupId,page : page,search : searchText});
             if (!data.success) throw data.message;
             setListingTotalData(data.data.pagination.total); 
             if (page == 1) {
@@ -79,7 +81,7 @@ function ContactListingModal(props) {
     
     useEffect(() => {
         if(show){
-            retriveRemainingContact(currentListPage);
+            retriveRemainingContact(currentListPage,searchContactName);
         }
         function handleclickOutside(event) {
             if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -117,7 +119,7 @@ function ContactListingModal(props) {
                         </div>
                         <div className="cml-container">
                             <ul onScroll={onScroll}>
-                                {(remainingContactListing.length > 0 ? remainingContactListing?.filter((item)=> item.member_name.toLowerCase().startsWith(searchContactName.toLowerCase()) && !getCurrentData.includes(item.member_mobile_number)).map((ele) => (
+                                {(remainingContactListing.length > 0 ? remainingContactListing.map((ele) => (
                                     <li key={"li-"+ele.member_mobile_number}>
                                         <div className="modal-contact-list-wrap">
                                             <div className="cm-listing-check">
