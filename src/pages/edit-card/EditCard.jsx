@@ -39,7 +39,7 @@ function EditCard() {
   const [cardBackImg, setCardBackImg] = useState("");
   const [croppedImg, setCroppedImg] = useState({
     file: "",
-    url: card?.image,
+    url: card ?.image,
   });
   const [countryList, cityList] = useCountriesCities();
   const [cardColors] = useCardColors();
@@ -103,10 +103,10 @@ function EditCard() {
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
         setErrors({
-          id: error?.id?.[0],
-          email: error?.email?.[0],
-          country: error?.country?.[0],
-          city: error?.city?.[0],
+          id: error ?.id ?.[0],
+          email: error ?.email ?.[0],
+          country: error ?.country ?.[0],
+          city: error ?.city ?.[0],
         });
       } finally {
         setIsLoading(false);
@@ -183,7 +183,7 @@ function EditCard() {
                     className="form-control opacity-75"
                     placeholder="Credit Card Number"
                     name="card_number"
-                    value={"XXXX XXXX XXXX " + card?.card_number}
+                    value={"XXXX XXXX XXXX " + card ?.card_number}
                     disabled
                   />
                 </div>
@@ -194,7 +194,7 @@ function EditCard() {
                     className="form-control opacity-75"
                     placeholder="Expiration Date"
                     name="expiry_date"
-                    value={card?.expiry_date}
+                    value={card ?.expiry_date}
                     disabled
                   />
                 </div>
@@ -284,10 +284,10 @@ function EditCard() {
                     onChange={({ currentTarget }) => {
                       const i = parseInt(currentTarget.value);
                       formik.setFieldValue("country_index", i);
-                      formik.setFieldValue("country_iso", countryList[i]?.iso);
+                      formik.setFieldValue("country_iso", countryList[i] ?.iso);
                       formik.setFieldValue(
                         "country",
-                        countryList[i]?.country_name
+                        countryList[i] ?.country_name
                       );
                       formik.setFieldValue("city", "");
                     }}
@@ -298,7 +298,7 @@ function EditCard() {
                     }
                   >
                     <option value={"-1"}>Select Country</option>
-                    {countryList?.map((country, index) => (
+                    {countryList ?.map((country, index) => (
                       <option key={index} value={index}>
                         {country.country_name}
                       </option>
@@ -339,7 +339,7 @@ function EditCard() {
                       type="submit"
                       className={`btn btn-primary ${
                         formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
-                      } ${formik.isValid ? "" : "opacity-75"}`}
+                        } ${formik.isValid ? "" : "opacity-75"}`}
                       disabled={formik.isSubmitting}
                       value="Save Changes"
                     />
