@@ -1,4 +1,4 @@
-* CSS for Edit Group Page */
+/* CSS for Edit Group Page */
 .edit-group-section-main{
 	padding-top:20px;
 }
@@ -192,7 +192,7 @@
   overflow-y: auto;
   padding-right: 25px;
 }
-.con-list-pop .modal-content{
+.con-list-pop.modal-content{
   padding-left: 30px !important;
   padding-right: 30px !important;
 }

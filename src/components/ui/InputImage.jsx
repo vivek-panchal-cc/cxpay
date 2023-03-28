@@ -20,7 +20,7 @@ function InputImage(props) {
     className = "",
     accept = "image/*",
     showLoader = false,
-    isGroup = false
+    isGroup = false,
   } = props;
 
   const { setIsLoading } = useContext(LoaderContext);
@@ -61,7 +61,7 @@ function InputImage(props) {
       >
         {showPreview && (
           <span
-            className={`profile-wrap overflow-hidden mx-auto ${classNameBorder} ${isGroup ? (preview.includes('group-icon-image.png') ? '' : 'profile-user-up-img') : ''}`}
+            className={`${(showPreview != null) ? (showPreview.includes('group-icon-image.png') ? '' : 'profile-wrap') : ''}  overflow-hidden mx-auto ${classNameBorder} ${isGroup ? (preview.includes('group-icon-image.png') ? '' : 'profile-user-up-img') : ''}`}
           >
             <img
               src={preview}

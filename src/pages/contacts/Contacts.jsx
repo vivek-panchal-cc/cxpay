@@ -281,11 +281,7 @@ const Contacts = (props) => {
               <div className="con-btn-wrap con-invite-btn-wrap">
                 <Modal id="invite_contact" show={show} setShow={setShow}>
                   <InviteContact
-                    getConatcts={
-                      contactData.length > 0
-                        ? retrieveContacts
-                        : handleInvitedContacts
-                    }
+                    getConatcts={contactsOrInvited === "contacts" ? retrieveContacts : handleInvitedContacts}
                     page={page}
                     search={search}
                     setShow={setShow}

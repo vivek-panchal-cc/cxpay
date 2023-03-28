@@ -20,8 +20,8 @@ export default function CreateGroup(props){
           group_image : "",
           contact : props.values
         },
-        validateOnChange: false, // this one
-        validateOnBlur: false, // and this one
+        // validateOnChange: false, 
+        // validateOnBlur: false, 
         validationSchema: createGroupSchema,
         onSubmit: async (values, { resetForm, setStatus }) => {
             console.log(values);
