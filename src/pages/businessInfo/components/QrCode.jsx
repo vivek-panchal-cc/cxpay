@@ -31,7 +31,11 @@ const QrCode = (props) => {
   return (
     <div className="profile-qr">
       <div className="profile-qr-inner">
-        <Image src={qrCodeImg} alt="QR code image" />
+        <Image
+          src={qrCodeImg || ""}
+          fallbacksrc={"/assets/images/QR_not_found.png"}
+          alt="QR code image"
+        />
       </div>
       <Button onClick={handleGenerateQrCode} className="btn qr-btn">
         Request new QR

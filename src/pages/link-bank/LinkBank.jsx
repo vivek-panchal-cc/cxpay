@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { linkBankSchema } from "schemas/walletSchema";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
-import { IconLeftArrow } from "styles/svgs";
 import InputSelect from "components/ui/InputSelect";
 import useCountriesCities from "hooks/useCountriesCities";
 import { useSelector } from "react-redux";

@@ -2,15 +2,8 @@ import React from "react";
 import { IconCardBackground } from "styles/svgs";
 
 function CreditCard(props) {
-  const {
-    index,
-    defaultText,
-    item,
-    handleDelete,
-    handleEdit,
-    defaultSelected,
-    handleDefaultCard,
-  } = props;
+  const { index, defaultText, item, defaultSelected, handleDefaultCard } =
+    props;
   const {
     id,
     card_holder_first_name,
@@ -19,7 +12,6 @@ function CreditCard(props) {
     color,
     expiry_date,
     image,
-    mark_as_default,
   } = item;
 
   return (

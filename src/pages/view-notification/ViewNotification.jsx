@@ -1,28 +1,20 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import NotificationListItem from "components/items/NotificationListItem";
-import { fetchGetAllNotifications } from "features/user/userNotificationSlice";
 
 function ViewNotification(props) {
   const { notifications } = useSelector((state) => state.userNotification);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    (async () => {
-      await dispatch(fetchGetAllNotifications(1));
-    })();
-  }, []);
 
   return (
     <div>
-      <div class="notification-list-sec">
-        <div class="notification-top-sec">
-          <div class="title-content-wrap">
+      <div className="notification-list-sec">
+        <div className="notification-top-sec">
+          <div className="title-content-wrap">
             <h3>Notifications</h3>
             <p>Lorem Ipsum Dolor</p>
           </div>
         </div>
-        <div class="notification-pg-list-wrap">
+        <div className="notification-pg-list-wrap">
           <ul>
             {notifications?.map((item, index) => (
               <NotificationListItem
@@ -33,8 +25,8 @@ function ViewNotification(props) {
             ))}
 
             {/* <li>
-              <div class="notification-pcw">
-                <div class="notifi-ic-wrap">
+              <div className="notification-pcw">
+                <div className="notifi-ic-wrap">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="45"
@@ -74,18 +66,18 @@ function ViewNotification(props) {
                     ></path>
                   </svg>
                 </div>
-                <div class="notifi-content">
+                <div className="notifi-content">
                   <p>
                     Money sent to (<span>Contact Name</span>)
                   </p>
-                  <p class="notifi-tran-idw">
+                  <p className="notifi-tran-idw">
                     Transection ID : <span>Lorem Ipsum</span>
                     <br />
                     Amount : <span>1234</span>
                   </p>
                 </div>
               </div>
-              <div class="notification-rm-wrap">
+              <div className="notification-rm-wrap">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="48"
@@ -112,8 +104,8 @@ function ViewNotification(props) {
               </div>
             </li>
             <li>
-              <div class="notification-pcw">
-                <div class="notifi-ic-wrap">
+              <div className="notification-pcw">
+                <div className="notifi-ic-wrap">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="45"
@@ -160,18 +152,18 @@ function ViewNotification(props) {
                     ></path>
                   </svg>
                 </div>
-                <div class="notifi-content">
+                <div className="notifi-content">
                   <p>
                     Money sent failed (<span>Contact Name</span>)
                   </p>
-                  <p class="notifi-tran-idw">
+                  <p className="notifi-tran-idw">
                     Transection ID : <span>Lorem Ipsum</span>
                     <br />
                     Amount : <span>1234</span>
                   </p>
                 </div>
               </div>
-              <div class="notification-rm-wrap">
+              <div className="notification-rm-wrap">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="48"
@@ -198,8 +190,8 @@ function ViewNotification(props) {
               </div>
             </li>
             <li>
-              <div class="notification-pcw">
-                <div class="notifi-ic-wrap">
+              <div className="notification-pcw">
+                <div className="notifi-ic-wrap">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="45"
@@ -239,14 +231,14 @@ function ViewNotification(props) {
                     ></path>
                   </svg>
                 </div>
-                <div class="notifi-content">
+                <div className="notifi-content">
                   <p>
                     (<span>Contact Name</span>) Invited You
                   </p>
-                  <p class="notifi-tran-idw">Lorem Ipsum Dolor</p>
+                  <p className="notifi-tran-idw">Lorem Ipsum Dolor</p>
                 </div>
               </div>
-              <div class="notification-rm-wrap">
+              <div className="notification-rm-wrap">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="48"
@@ -273,8 +265,8 @@ function ViewNotification(props) {
               </div>
             </li>
             <li>
-              <div class="notification-pcw">
-                <div class="notifi-ic-wrap">
+              <div className="notification-pcw">
+                <div className="notifi-ic-wrap">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="45"
@@ -314,14 +306,14 @@ function ViewNotification(props) {
                     ></path>
                   </svg>
                 </div>
-                <div class="notifi-content">
+                <div className="notifi-content">
                   <p>
                     (<span>Contact Name</span>) Accepted Invitation
                   </p>
-                  <p class="notifi-tran-idw">Lorem Ipsum Dolor</p>
+                  <p className="notifi-tran-idw">Lorem Ipsum Dolor</p>
                 </div>
               </div>
-              <div class="notification-rm-wrap">
+              <div className="notification-rm-wrap">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="48"
@@ -348,8 +340,8 @@ function ViewNotification(props) {
               </div>
             </li>
             <li>
-              <div class="notification-pcw">
-                <div class="notifi-ic-wrap">
+              <div className="notification-pcw">
+                <div className="notifi-ic-wrap">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="45"
@@ -389,18 +381,18 @@ function ViewNotification(props) {
                     ></path>
                   </svg>
                 </div>
-                <div class="notifi-content">
+                <div className="notifi-content">
                   <p>
                     Money sent to (<span>Group Name</span>)
                   </p>
-                  <p class="notifi-tran-idw">
+                  <p className="notifi-tran-idw">
                     Transection ID : <span>Lorem Ipsum</span>
                     <br />
                     Amount : <span>1234</span>
                   </p>
                 </div>
               </div>
-              <div class="notification-rm-wrap">
+              <div className="notification-rm-wrap">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="48"

@@ -33,7 +33,7 @@ function AddCard() {
     url: "",
   });
   const [expDate, setExpDate] = useState();
-  const [showCvv, setShowCvv] = useState(false);
+  // const [showCvv, setShowCvv] = useState(false);
   const [countryList, cityList] = useCountriesCities();
   const [cardColors] = useCardColors();
 

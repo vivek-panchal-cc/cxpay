@@ -1,14 +1,13 @@
 import { apiRequest } from "helpers/apiRequests";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import BusinessForm from "./components/BusinessForm";
 import "./businessInfo.css";
 import QrCode from "./components/QrCode";
+import Breadcrumb from "components/breadcrumb/Breadcrumb";
 
 const BusinessInfo = () => {
   const { profile } = useSelector((state) => state.userProfile);
-  const { user_type = "personal" } = profile || {};
   const [countryList, setCountryList] = useState([]);
 
   const getCountries = async () => {
@@ -24,6 +23,7 @@ const BusinessInfo = () => {
   useEffect(() => {
     getCountries();
   }, []);
+
   return (
     <div className="profile-right-sec business-info-right-sec">
       <div className="profile-inner-sec">
@@ -31,12 +31,7 @@ const BusinessInfo = () => {
           <div className="business-info-sec">
             <div className="profile-info">
               <h3>Business Info</h3>
-              <ul className="breadcrumb">
-                <li>
-                  <Link to="/setting">Settings</Link>
-                </li>
-                <li>Business Info</li>
-              </ul>
+              <Breadcrumb />
             </div>
           </div>
           <div className="settings-profile-bottom-info-sec business-info-bottom-sec">

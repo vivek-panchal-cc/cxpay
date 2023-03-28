@@ -3,6 +3,7 @@ import { storageRequest } from "helpers/storageRequests";
 import { apiRequest } from "helpers/apiRequests";
 import { API_LOGIN_REFRESH_TOKEN } from "constants/urls";
 import { toast } from "react-toastify";
+import { browserName, fullVersion } from "../helpers/headerRequests";
 
 // define API_URL in env file
 const axiosLoginInstance = axios.create({
@@ -22,12 +23,9 @@ const axiosTransactionInstance = axios.create({
 // Define inteceptors
 const requestInterceptor = (config) => {
   const token = storageRequest.getAuth();
-  // var ua = navigator.userAgent;
-  config.headers["Os-Version"] = "Chrome/111.0.0.0";
+  config.headers["Os-Version"] = `${browserName}/${fullVersion}`;
   config.headers["Device-Type"] = "web";
   if (token) config.headers.Authorization = `Bearer ${token}`;
-  // const accountNumber = getCookie("auth._account_number");
-  // if (accountNumber) config.headers.accountnumber = accountNumber;
   return config;
 };
 

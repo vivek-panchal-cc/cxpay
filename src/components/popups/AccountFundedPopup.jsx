@@ -12,14 +12,14 @@ function AccountFundedPopup(props) {
         </div>
         <div className="modal-body">
           <h3>
-            <span className="transfer-amt">{fund} Nafl</span>
+            <span className="transfer-amt">NAFl {fund}</span>
             <br />
             Funded to your account
           </h3>
           <p>
             Available balance
             <br />
-            <span className="available-bal-acc">{balance} Nafl</span>
+            <span className="available-bal-acc">NAFl {balance}</span>
           </p>
           <Link
             to="/wallet"

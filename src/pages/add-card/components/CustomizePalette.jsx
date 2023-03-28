@@ -1,10 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { IconImage } from "styles/svgs";
-import { LoaderContext } from "context/loaderContext";
 
 function CustomizePalette(props) {
-  const { setIsLoading } = useContext(LoaderContext);
-
   const { color, handleChange, bgimg, removeBgImg, colorsPallette } = props;
 
   const handleSelect = (e) => {

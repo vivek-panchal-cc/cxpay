@@ -34,7 +34,7 @@ function Businessform(props) {
     );
     const { iso } = countryList.find((e) => e.country_name === country) || {};
     return { country_index, country_iso: iso };
-  }, [country_code, countryList]);
+  }, [country_code, countryList, country]);
 
   const formik = useFormik({
     enableReinitialize: true,

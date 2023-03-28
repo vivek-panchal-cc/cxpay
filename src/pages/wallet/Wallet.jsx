@@ -70,7 +70,7 @@ function Wallet() {
                       <div className="activity-use-img">
                         <img
                           src="/assets/images/activity-use-image01.jpg"
-                          alt="user image"
+                          alt="user img"
                         />
                       </div>
                       <h4>Contact Name</h4>
@@ -79,7 +79,7 @@ function Wallet() {
                     <div className="price-info">+123.45 Nafl</div>
                     <div className="act-edit-btn">
                       <a
-                        href=""
+                        href="/"
                         data-bs-toggle="modal"
                         data-bs-target="#user-details-popup"
                       >
@@ -106,7 +106,7 @@ function Wallet() {
                       <div className="activity-use-img">
                         <img
                           src="/assets/images/activity-use-image01.jpg"
-                          alt="user image"
+                          alt="user img"
                         />
                       </div>
                       <h4>Contact Name</h4>
@@ -117,7 +117,7 @@ function Wallet() {
                     </div>
                     <div className="act-edit-btn">
                       <a
-                        href=""
+                        href="/"
                         data-bs-toggle="modal"
                         data-bs-target="#user-details-popup"
                       >
@@ -141,7 +141,7 @@ function Wallet() {
                       <div className="activity-use-img">
                         <img
                           src="/assets/images/activity-use-image01.jpg"
-                          alt="user image"
+                          alt="user img"
                         />
                       </div>
                       <h4>Contact Name</h4>
@@ -150,7 +150,7 @@ function Wallet() {
                     <div className="price-info">+123.45 Nafl</div>
                     <div className="act-edit-btn">
                       <a
-                        href=""
+                        href="/"
                         data-bs-toggle="modal"
                         data-bs-target="#user-details-popup"
                       >
@@ -174,7 +174,7 @@ function Wallet() {
                       <div className="activity-use-img">
                         <img
                           src="/assets/images/activity-use-image01.jpg"
-                          alt="user image"
+                          alt="user img"
                         />
                       </div>
                       <h4>Contact Name</h4>
@@ -185,7 +185,7 @@ function Wallet() {
                     </div>
                     <div className="act-edit-btn">
                       <a
-                        href=""
+                        href="/"
                         data-bs-toggle="modal"
                         data-bs-target="#user-details-popup"
                       >
@@ -205,7 +205,7 @@ function Wallet() {
                 </li>
               </ul>
               <div className="view-history-btn">
-                <a href="#">View all history</a>
+                <a href="/">View all history</a>
               </div>
             </div>
             {/* <!-- recent activity section close--> */}
@@ -326,106 +326,114 @@ function Wallet() {
             <div className="wc-details-wrap">
               <div className="card-detail js-card-section" id="cardId_0">
                 <table>
-                  <tr>
-                    <td>Bank</td>
-                    <td>MCB Bank</td>
-                  </tr>
-                  <tr>
-                    <td>Card Number</td>
-                    <td>
-                      <span>•••• •••• •••• 7430</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Expiry Date</td>
-                    <td>MM/YY</td>
-                  </tr>
-                  <tr>
-                    <td>Lorem Ipsum</td>
-                    <td>Lorem Ipsum</td>
-                  </tr>
-                  <tr>
-                    <td>Lorem Ipsum</td>
-                    <td>Lorem Ipsum</td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td>Bank</td>
+                      <td>MCB Bank</td>
+                    </tr>
+                    <tr>
+                      <td>Card Number</td>
+                      <td>
+                        <span>•••• •••• •••• 7430</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Expiry Date</td>
+                      <td>MM/YY</td>
+                    </tr>
+                    <tr>
+                      <td>Lorem Ipsum</td>
+                      <td>Lorem Ipsum</td>
+                    </tr>
+                    <tr>
+                      <td>Lorem Ipsum</td>
+                      <td>Lorem Ipsum</td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
               <div className="card-detail js-card-section" id="cardId_1">
                 <table>
-                  <tr>
-                    <td>Bank</td>
-                    <td>HDFC Bank</td>
-                  </tr>
-                  <tr>
-                    <td>Card Number</td>
-                    <td>
-                      <span>•••• •••• •••• 1111</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Expiry Date</td>
-                    <td>MM/YY</td>
-                  </tr>
-                  <tr>
-                    <td>Lorem Ipsum</td>
-                    <td>Lorem Ipsum</td>
-                  </tr>
-                  <tr>
-                    <td>Lorem Ipsum</td>
-                    <td>Lorem Ipsum</td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td>Bank</td>
+                      <td>HDFC Bank</td>
+                    </tr>
+                    <tr>
+                      <td>Card Number</td>
+                      <td>
+                        <span>•••• •••• •••• 1111</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Expiry Date</td>
+                      <td>MM/YY</td>
+                    </tr>
+                    <tr>
+                      <td>Lorem Ipsum</td>
+                      <td>Lorem Ipsum</td>
+                    </tr>
+                    <tr>
+                      <td>Lorem Ipsum</td>
+                      <td>Lorem Ipsum</td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
               <div className="card-detail js-card-section" id="cardId_2">
                 <table>
-                  <tr>
-                    <td>Bank</td>
-                    <td>ICICI Bank</td>
-                  </tr>
-                  <tr>
-                    <td>Card Number</td>
-                    <td>
-                      <span>•••• •••• •••• 2222</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Expiry Date</td>
-                    <td>MM/YY</td>
-                  </tr>
-                  <tr>
-                    <td>Lorem Ipsum</td>
-                    <td>Lorem Ipsum</td>
-                  </tr>
-                  <tr>
-                    <td>Lorem Ipsum</td>
-                    <td>Lorem Ipsum</td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td>Bank</td>
+                      <td>ICICI Bank</td>
+                    </tr>
+                    <tr>
+                      <td>Card Number</td>
+                      <td>
+                        <span>•••• •••• •••• 2222</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Expiry Date</td>
+                      <td>MM/YY</td>
+                    </tr>
+                    <tr>
+                      <td>Lorem Ipsum</td>
+                      <td>Lorem Ipsum</td>
+                    </tr>
+                    <tr>
+                      <td>Lorem Ipsum</td>
+                      <td>Lorem Ipsum</td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
               <div className="card-detail js-card-section" id="cardId_3">
                 <table>
-                  <tr>
-                    <td>Bank</td>
-                    <td>SBI Bank</td>
-                  </tr>
-                  <tr>
-                    <td>Card Number</td>
-                    <td>
-                      <span>•••• •••• •••• 3333</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Expiry Date</td>
-                    <td>MM/YY</td>
-                  </tr>
-                  <tr>
-                    <td>Lorem Ipsum</td>
-                    <td>Lorem Ipsum</td>
-                  </tr>
-                  <tr>
-                    <td>Lorem Ipsum</td>
-                    <td>Lorem Ipsum</td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td>Bank</td>
+                      <td>SBI Bank</td>
+                    </tr>
+                    <tr>
+                      <td>Card Number</td>
+                      <td>
+                        <span>•••• •••• •••• 3333</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Expiry Date</td>
+                      <td>MM/YY</td>
+                    </tr>
+                    <tr>
+                      <td>Lorem Ipsum</td>
+                      <td>Lorem Ipsum</td>
+                    </tr>
+                    <tr>
+                      <td>Lorem Ipsum</td>
+                      <td>Lorem Ipsum</td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>

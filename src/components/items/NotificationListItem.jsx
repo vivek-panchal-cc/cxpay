@@ -7,13 +7,13 @@ function NotificationListItem(props) {
 
   return (
     <li>
-      <div class={`notification-pcw ${className}`}>
-        <div class="notifi-ic-wrap">
+      <div className={`notification-pcw ${className}`}>
+        <div className="notifi-ic-wrap">
           <IconNotifyMoneySent />
         </div>
-        <div class="notifi-content">
+        <div className="notifi-content">
           <p>{message}</p>
-          <p class="notifi-tran-idw">
+          <p className="notifi-tran-idw">
             Transection ID : <span>{id}</span>
             <br />
             Amount : <span>1234</span>
@@ -21,7 +21,7 @@ function NotificationListItem(props) {
         </div>
       </div>
       {showDeleteButton && (
-        <div class="notification-rm-wrap">
+        <div className="notification-rm-wrap">
           <IconNotifyDelete />
         </div>
       )}

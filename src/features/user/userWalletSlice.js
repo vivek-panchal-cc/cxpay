@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { apiRequest } from "helpers/apiRequests";
-import { toast } from "react-toastify";
 
 const initialState = {
   cardsList: {},
@@ -28,7 +27,6 @@ const fetchBanksList = createAsyncThunk(
     try {
       const { data } = await apiRequest.getBankList();
       if (!data.success) throw data.message;
-      console.log(data.data);
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -60,5 +58,4 @@ const userWalletSlice = createSlice({
 });
 
 export { fetchCardsList, fetchBanksList };
-export const {} = userWalletSlice.actions;
 export default userWalletSlice.reducer;

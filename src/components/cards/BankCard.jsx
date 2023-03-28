@@ -11,7 +11,6 @@ function BankCard(props) {
     bank_number,
     routing_number,
     account_type,
-    mark_as_default,
   } = item;
 
   const getCapitalized = (text) => {

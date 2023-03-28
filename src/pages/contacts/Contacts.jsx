@@ -6,16 +6,13 @@ import InviteContact from "./components/InviteContact";
 import Pagination from "components/pagination/Pagination";
 import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
-import CreateGroup from './components/CreateGroup';
+import CreateGroup from "./components/CreateGroup";
 import ModalConfirmation from "components/modals/ModalConfirmation";
-import { useNavigate } from "react-router-dom";
 import InvitationSent from "./components/InvitationSent";
 import ContactDetail from "./components/ContactDetail";
 import Delete from "styles/svgs/Delete";
 
 const Contacts = (props) => {
-  
-  const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
   const [contacts, setContacts] = useState([]);
   const [selectedContacts, setSelectedContacts] = useState([]);
@@ -41,7 +38,7 @@ const Contacts = (props) => {
 
   const handleCreateGroup = async () => {
     setShowCreateGroupPopup(true);
-  }
+  };
 
   const handleChangeFilter = (e) => {
     const val = e.target.value;
@@ -185,7 +182,11 @@ const Contacts = (props) => {
         <div className="contact-sec">
           <div className="contact-top-sec">
             <div className="title-content-wrap">
-              <h3>{ contactsOrInvited === "contacts" ? 'Contacts' : 'Invited Contacts'}</h3>
+              <h3>
+                {contactsOrInvited === "contacts"
+                  ? "Contacts"
+                  : "Invited Contacts"}
+              </h3>
             </div>
           </div>
           <div className="contact-top-search-sec d-flex align-items-center">
@@ -347,7 +348,9 @@ const Contacts = (props) => {
                     <span>Create Group</span>
                   </button>
                 </div>
-              ) : ''}
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <div className="con-listing-container">
@@ -474,7 +477,7 @@ const Contacts = (props) => {
         show={showCreateGroupPopup}
         setShow={setShowCreateGroupPopup}
       >
-          <CreateGroup values={selectedContacts} />
+        <CreateGroup values={selectedContacts} />
       </Modal>
       <ModalConfirmation
         heading={"Delete Contact"}
