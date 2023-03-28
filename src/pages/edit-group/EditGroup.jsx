@@ -1,7 +1,7 @@
 import Input from "components/ui/Input";
 import InputFile from "components/ui/InputImage";
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useContext,useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styles from "../contacts/addGroup.css";
 import "./editGroup.css";
@@ -11,6 +11,7 @@ import { apiRequest } from "helpers/apiRequests";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import ModalConfirmation from "components/modals/ModalConfirmation";
+import { LoaderContext } from "context/loaderContext";
 
 export default function EditGroup() {
     let {id} = useParams();
@@ -19,6 +20,7 @@ export default function EditGroup() {
     const [groupDetail,setGroupDetail] = useState(null);
     const [profileImage, setProfileImage] = useState(null);
     const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
+    const { setIsLoading } = useContext(LoaderContext);
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -44,12 +46,13 @@ export default function EditGroup() {
             formData.append("group_image", values.group_image);
             const { data } = await apiRequest.updateGroup(formData);
             if (!data.success) throw data.message;
-            toast.success('Group updated successfully');
+            toast.success(data.message);
             navigate('/send');
         }
     })
 
     const getGroupDetail = async (id) => {
+        setIsLoading(true);
         try {
           const { data } = await apiRequest.getGroupDetail({ group_id: id });
           if (!data.success || data.data === null) throw data.message;
@@ -57,11 +60,13 @@ export default function EditGroup() {
           formik.setValues({'group_id' : data.data.group_details.group_id,'group_name' : data.data.group_details.group_name,'group_image' : data.data.group_details.group_image,'contact' : []});
           setProfileImage(data.data.group_details.group_image)
           setContactList(data.data.group_details.group_member_details);
+          setIsLoading(false);
         } catch (error) {
           if (error === "Contact not found") {
             setGroupDetail(null);
             setContactList(null);
           }
+          setIsLoading(false);
         }
     };
 

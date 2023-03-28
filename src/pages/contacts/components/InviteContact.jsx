@@ -44,7 +44,6 @@ function InviteContact(props) {
             setInvitationSentPopup(true);
             setShow(false);
           }
-          alert(contactData);
         } else {
           setStatus(data.message);
         }

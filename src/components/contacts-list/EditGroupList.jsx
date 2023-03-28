@@ -6,6 +6,7 @@ import AddContactData from "components/modals/ContactListingModal";
 import { apiRequest } from "helpers/apiRequests";
 import { useNavigate } from "react-router";
 import { LoaderContext } from "context/loaderContext";
+import { toast } from "react-toastify";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -91,7 +92,8 @@ const EditGroupList = (props) => {
     const deleteCurrentGroup = async (id) => {
         await apiRequest.deleteGroup({"group_id" : id});
         setShowDeleteGroupPopup(false);
-        console.log("Don!@@@@@@");
+        setIsLoading(false);
+        toast.success("Group deleted successfully.");
         navigate('/send');
     }
 
@@ -106,7 +108,6 @@ const EditGroupList = (props) => {
             deleteCurrentGroup(groupId)
         } catch (error) {
             setShowDeleteGroupPopup(false);
-        }finally{
             setIsLoading(false);
         }
     }

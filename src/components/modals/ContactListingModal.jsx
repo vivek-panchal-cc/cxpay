@@ -66,8 +66,13 @@ function ContactListingModal(props) {
         try {
             const { data } = await apiRequest.getRemainingGroupContact({ group_id: groupId,page : page});
             if (!data.success) throw data.message;
-            setListingTotalData(data.data.pagination.total);
-            setRemainingContactListing(data.data.remain_contacts)
+            setListingTotalData(data.data.pagination.total); 
+            if (page == 1) {
+                setRemainingContactListing(data.data.remain_contacts)
+            } else {
+                var allData = remainingContactListing.concat(data.data.remain_contacts);
+                setRemainingContactListing(allData);
+            }
         }catch(error){
         }
     }
