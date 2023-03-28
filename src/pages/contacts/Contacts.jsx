@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import Input from "components/ui/Input";
 import { apiRequest } from "helpers/apiRequests";
 import Modal from "components/modals/Modal";
 import InviteContact from "./components/InviteContact";
@@ -218,7 +219,7 @@ const Contacts = (props) => {
                       ></path>
                     </svg>
                   </div>
-                  <input
+                  <Input
                     type="search"
                     className="form-control js-searchBox-input"
                     name="search-field"

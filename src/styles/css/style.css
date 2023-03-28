@@ -5472,6 +5472,7 @@ input[type="search"]::-webkit-search-cancel-button {
   left: auto;
   opacity: 0;
   cursor: pointer;
+  z-index: 9;
 }
 .clearsearchbox > svg {
   width: 8px;
@@ -6370,4 +6371,7 @@ ul.notification-list-wrap li:last-child {
     right: 20px;
     border-top-right-radius: 11px;
   }
+}
+.form-control.js-searchBox-input{
+  background-color: transparent !important;
 }

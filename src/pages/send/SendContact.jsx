@@ -27,6 +27,18 @@ export default function AddGroup() {
     const navigate = useNavigate();
     const { setIsLoading } = useContext(LoaderContext);
 
+    const handleResetContactData = () => {
+        setSearchText('');
+        setCurrentPage(1);
+        getInviteContactList(1, '');
+    }
+
+    const handleResetGroupData = () => {
+        setSearchData('');
+        setGroupCurrentPage(1);
+        getGroupsList(1,'');
+    }
+
     const getInviteContactList = async (page, search) => {
         setIsLoading(true);
         try {
@@ -144,6 +156,33 @@ export default function AddGroup() {
                     </div>
                     <form style={{ width: "40%", marginTop: "15px" }}>
                         <div className="form-field search-field">
+                            <div
+                                className="js-clearSearchBox clearsearchbox"
+                                onClick={handleResetContactData}
+                            >
+                                <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 14 14"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M13 1L0.999999 13"
+                                        stroke="#9B9B9B"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    ></path>
+                                    <path
+                                        d="M1 1L13 13"
+                                        stroke="#9B9B9B"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    ></path>
+                                </svg>
+                            </div>
                             <Input type="search" className="form-control js-searchBox-input" name="search-field" placeholder="Search..." onChange={getSearchContact}  />
                             <div className="search-btn">
                                 <IconSearch />
@@ -172,7 +211,7 @@ export default function AddGroup() {
                 }
                 <div className="login-btn">
                     <div className="setting-btn-link send-btn-wrap pay-btn-wrap">
-                        <button href="#" className="btn btn-next" onClick={checkedCheckBoxData}>
+                        <button href="#" className="btn btn-next ms-0" onClick={checkedCheckBoxData}>
                             Send
                         </button>
                     </div>
@@ -188,7 +227,33 @@ export default function AddGroup() {
                     <div className="main-search-wrap"> */}
                         <form style={{ width: "40%", marginTop: "15px" }}>
                             <div className="form-field search-field">
-
+                                <div
+                                    className="js-clearSearchBox clearsearchbox"
+                                    onClick={handleResetGroupData}
+                                >
+                                    <svg
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 14 14"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M13 1L0.999999 13"
+                                            stroke="#9B9B9B"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        ></path>
+                                        <path
+                                            d="M1 1L13 13"
+                                            stroke="#9B9B9B"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        ></path>
+                                    </svg>
+                                </div>
                                 <Input type="search" className="form-control js-searchBox-input" name="search-field" placeholder="Search..." onChange={getSearchGroup} />
                                 <div className="search-btn">
                                     <IconSearch />
