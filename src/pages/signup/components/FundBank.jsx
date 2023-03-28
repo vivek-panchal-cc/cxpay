@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import Input from "components/ui/Input";
 import InputSelect from "components/ui/InputSelect";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FundContext } from "context/fundContext";
 
 function FundBank() {
@@ -197,7 +197,7 @@ function FundBank() {
       <div className="row">
         <div className="col-12 p-0">
           <Input
-            type="number"
+            type="text"
             id="transactionAmount"
             className="form-control"
             placeholder="Amount"

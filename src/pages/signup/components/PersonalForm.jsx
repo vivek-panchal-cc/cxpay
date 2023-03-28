@@ -3,7 +3,6 @@ import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { signUpPersonalAccountSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { SignupContext } from "context/signupContext";
 import InputFile from "components/ui/InputImage";

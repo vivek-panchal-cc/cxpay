@@ -4,7 +4,7 @@ import { LoaderContext } from "context/loaderContext";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { storageRequest } from "helpers/storageRequests";
 import React, { useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import FundBank from "./FundBank";
 import FundCard from "./FundCard";

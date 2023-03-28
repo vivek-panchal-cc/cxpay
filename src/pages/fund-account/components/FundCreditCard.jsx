@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { Link } from "react-router-dom";
 import Input from "components/ui/Input";
@@ -27,8 +27,12 @@ function FundCreditCard(props) {
   const [showCvv, setShowCvv] = useState(false);
   const [addNewCard, setAddNewCard] = useState(false);
 
+  useEffect(() => {
+    if (formik.values.card_id) setAddNewCard(false);
+    else setAddNewCard(true);
+  }, [formik.values]);
+
   const handleNewCard = () => {
-    setAddNewCard(true);
     handleSelectNewCard();
   };
 
@@ -59,7 +63,11 @@ function FundCreditCard(props) {
                   name="card_number"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.card_number}
+                  value={
+                    disbleCardField
+                      ? "X".repeat(12) + formik.values.card_number
+                      : formik.values.card_number
+                  }
                   error={
                     formik.touched.card_number && formik.errors.card_number
                   }
@@ -237,7 +245,7 @@ function FundCreditCard(props) {
             <div className="row">
               <div className="col-12 p-0">
                 <Input
-                  type="number"
+                  type="text"
                   id="transactionAmount"
                   className="form-control"
                   placeholder="Amount"
