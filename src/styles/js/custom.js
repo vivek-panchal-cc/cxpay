@@ -217,9 +217,9 @@ $(document).ready(function (e) {
   $(".js-clearSearchBox").css("opacity", "0");
   $(".js-searchBox-input").keyup(function () {
     if ($(this).val() !== "") {
-      $(".js-clearSearchBox").css("opacity", "1");
+      $(this).parent('div').parent('div').children('.js-clearSearchBox').css("opacity", "1");
     } else {
-      $(".js-clearSearchBox").css("opacity", "0");
+      $(this).parent('div').parent('div').children('.js-clearSearchBox').css("opacity", "0");
     }
 
     $(window).bind("keydown", function (e) {
