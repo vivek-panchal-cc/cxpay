@@ -282,7 +282,8 @@ const Contacts = (props) => {
               <div className="con-btn-wrap con-invite-btn-wrap">
                 <Modal id="invite_contact" show={show} setShow={setShow}>
                   <InviteContact
-                    getConatcts={contactsOrInvited === "contacts" ? retrieveContacts : handleInvitedContacts}
+                    getConatcts={retrieveContacts}
+                    getInvitedConatcts={handleInvitedContacts}
                     page={page}
                     search={search}
                     setShow={setShow}

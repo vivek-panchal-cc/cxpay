@@ -160,7 +160,7 @@ function ContactListingModal(props) {
                                             </div>
                                         </div>
                                     </li>
-                                )) : '')}
+                                )) : 'No contacts found')}
                             </ul>
                         </div>
                     </div>
