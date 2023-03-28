@@ -54,7 +54,7 @@ function SelectBank() {
           </ul>
         </div>
       </div>
-      <div className="row mt-2">
+      <div className="row mt-3">
         <div className="col-12 p-0 btns-inline">
           <div className="setting-btn-link btn-wrap">
             <button

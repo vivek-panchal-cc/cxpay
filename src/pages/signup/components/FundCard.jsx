@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Input from "components/ui/Input";
 import InputSelect from "components/ui/InputSelect";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FundContext } from "context/fundContext";
 import DatePicker from "react-datepicker";
 import { IconCalender, IconEyeClose, IconEyeOpen } from "styles/svgs";
@@ -198,7 +198,7 @@ function FundCard() {
       <div className="row">
         <div className="col-12 p-0">
           <Input
-            type="number"
+            type="text"
             id="transactionAmount"
             className="form-control"
             placeholder="Amount"

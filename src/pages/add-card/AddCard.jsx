@@ -9,7 +9,7 @@ import CustomizePalette from "./components/CustomizePalette";
 import UploadImage from "./components/UploadImage";
 import DatePicker from "react-datepicker";
 import { Link, useNavigate } from "react-router-dom";
-import { IconCalender, IconEyeClose, IconEyeOpen } from "styles/svgs";
+import { IconCalender } from "styles/svgs";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";

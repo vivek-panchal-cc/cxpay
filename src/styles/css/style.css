@@ -2614,10 +2614,10 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   /*padding-right: 40px;*/
   padding-top: 30px;
 }
-.send-top-sec .send-inner-sec{
+.send-top-sec .send-inner-sec {
   padding-bottom: 20px;
 }
-.send-top-sec .main-search-wrap{
+.send-top-sec .main-search-wrap {
   margin-right: 0px;
 }
 .send-top-sec h3,
@@ -4382,7 +4382,7 @@ margin-bottom:0px;
 .contact-top-btn-nav {
   width: 60%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   padding-left: 30px;
 }
 .contact-top-btn-nav .con-btn-wrap > .btn {
@@ -4465,7 +4465,7 @@ margin-bottom:0px;
 .con-listing-edit-wrap {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 }
 .con-listing-info .con-list-uname {
   font-family: "Visby Round CF";
@@ -5807,7 +5807,7 @@ ul.dashboard-main-links {
 .dashboard-logo-wrap {
   padding: 40px 5px 0px;
   height: 125px;
-  justify-content: start;
+  justify-content: flex-start;
 }
 .dashboard-logo-wrap a:first-child {
   display: flex;
@@ -5952,10 +5952,10 @@ div.settings-note-inner-sec.setting-noti-sec-new {
 .send-btn-wrap .btn:hover svg path {
   stroke: #fff;
 }
-.send-btn-wrap .btn svg{
+.send-btn-wrap .btn svg {
   margin-right: 5px;
 }
-.send-group-slider .contact-name{
+.send-group-slider .contact-name {
   word-break: break-word;
 }
 /* CSS Added for Contact Modal */
@@ -6107,7 +6107,7 @@ div.settings-note-inner-sec.setting-noti-sec-new {
 .notification-pcw {
   display: flex;
   width: 100%;
-  align-items: start;
+  align-items: flex-start;
 }
 .notification-pcw .notifi-ic-wrap {
   width: 53px;
@@ -6296,7 +6296,7 @@ ul.notification-list-wrap li:last-child {
 .notification-content-wrap {
   display: flex;
   width: 100%;
-  align-items: start;
+  align-items: flex-start;
 }
 .notification-content-wrap .notifi-ic-wrap {
   width: 45px;
@@ -6358,19 +6358,8 @@ ul.notification-list-wrap li:last-child {
 .notification-dd-wrap {
   min-width: 300px;
 }
-
-@media only screen and (max-width: 400px) {
-  .notification-user-wrap {
-    position: static;
-  }
-  .notification-dd-wrap {
-    min-width: calc(100% - 40px);
-    margin: auto;
-    top: 80px;
-    left: 10px;
-    right: 20px;
-    border-top-right-radius: 11px;
-  }
+#fund_acc_modal > .modal-dialog {
+  margin: 15px;
 }
 .form-control.js-searchBox-input{
   background-color: transparent !important;

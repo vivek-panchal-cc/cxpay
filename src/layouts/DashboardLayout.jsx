@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import LeftSidebar from "components/sidebar/LeftSidebar";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile } from "features/user/userProfileSlice";
-import { IconNotify, IconContact, IconSetting, IconLogout } from "styles/svgs";
-import Image from "components/ui/Image";
 import { LoaderContext } from "context/loaderContext";
 import NotificationBar from "components/notification-bar/NotificationBar";
 

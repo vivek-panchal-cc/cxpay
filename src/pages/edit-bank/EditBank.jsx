@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { EditBankSchema } from "schemas/walletSchema";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
-import { IconLeftArrow } from "styles/svgs";
 import InputSelect from "components/ui/InputSelect";
 import useCountriesCities from "hooks/useCountriesCities";
 import { useDispatch, useSelector } from "react-redux";

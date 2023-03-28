@@ -2,7 +2,6 @@ import { apiRequest } from "helpers/apiRequests";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { IconLeftArrow } from "styles/svgs";
 import BusinessForm from "./components/BusinessForm";
 import "./businessInfo.css";
 import QrCode from "./components/QrCode";

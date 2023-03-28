@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { IconImage } from "styles/svgs";
-import { apiRequest } from "helpers/apiRequests";
 import { LoaderContext } from "context/loaderContext";
 
 function CustomizePalette(props) {

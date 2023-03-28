@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Input from "components/ui/Input";
 import InputSelect from "components/ui/InputSelect";
@@ -18,8 +18,12 @@ function FundBankTransfer(props) {
   } = useContext(FundContext);
   const [addNewBank, setAddNewBank] = useState(false);
 
+  useEffect(() => {
+    if (formik.values.bank_id) setAddNewBank(false);
+    else setAddNewBank(true);
+  }, [formik.values]);
+
   const handleNewBank = () => {
-    setAddNewBank(true);
     handleSelectNewBank();
   };
 
@@ -242,7 +246,7 @@ function FundBankTransfer(props) {
             <div className="row">
               <div className="col-12 p-0">
                 <Input
-                  type="number"
+                  type="text"
                   id="transactionAmount"
                   className="form-control"
                   placeholder="Amount"

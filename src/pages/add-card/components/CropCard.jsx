@@ -2,7 +2,7 @@ import { LoaderContext } from "context/loaderContext";
 import getCroppedImg from "helpers/croppedImage";
 import React, { useCallback, useContext, useState } from "react";
 import Cropper from "react-easy-crop";
-import { IconCancel, IconCancleBg, IconCheckBg, IconImage } from "styles/svgs";
+import { IconCancleBg, IconCheckBg, IconImage } from "styles/svgs";
 import styles from "../addCard.module.scss";
 
 function CropCard(props) {
