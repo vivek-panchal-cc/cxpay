@@ -13,6 +13,7 @@ function InviteContact(props) {
     setConatctDetailPopup,
     setShow,
     getConatcts,
+    getInvitedConatcts,
     page,
     search,
   } = props;
@@ -35,15 +36,17 @@ function InviteContact(props) {
           data.data.alreadyInvited === false
         ) {
           setIsShowContactPopup(false);
-          getConatcts(page, search);
+          //getConatcts(page, search);
           if (data.data.contactDetails) {
             setConatctData(data.data.contactDetails);
             setConatctDetailPopup(true);
             setShow(false);
+            getConatcts(1,'');
           } else {
             setConatctData("");
             setInvitationSentPopup(true);
             setShow(false);
+            getInvitedConatcts(1,'')
           }
         } else {
           setStatus(data.message);
