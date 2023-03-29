@@ -165,7 +165,6 @@ const EditGroupList = (props) => {
             <SwiperSlide key={"swiper" + i}>
               <div className="eg-wrap-main">
                 <a
-                  href="/"
                   className="eg-close-btn"
                   onClick={(e) =>
                     memberDeleteConfirmation(
@@ -195,7 +194,7 @@ const EditGroupList = (props) => {
           ))}
         </div>
         <div className="eg-add-con-wrap">
-          <a href="/" onClick={() => showAddContactPopupData()}>
+          <a onClick={() => showAddContactPopupData()} className="custom-link-color">
             + Add Contact
           </a>
         </div>

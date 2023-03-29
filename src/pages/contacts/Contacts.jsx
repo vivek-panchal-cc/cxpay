@@ -435,14 +435,16 @@ const Contacts = (props) => {
                           <Delete />
                         </button>
                       </div>
-                      <div className="con-listing-btn-wrap">
-                        <a href="/" className="btn btn-primary con-send-btn">
-                          Send
-                        </a>
-                        <a href="/" className="btn btn-primary con-req-btn">
-                          Request
-                        </a>
-                      </div>
+                      { (contactsOrInvited === "contacts"  ?
+                        <div className="con-listing-btn-wrap">
+                          <a href="/" className="btn btn-primary con-send-btn">
+                            Send
+                          </a>
+                          <a href="/" className="btn btn-primary con-req-btn">
+                            Request
+                          </a>
+                        </div>
+                      : '')}
                     </div>
                   </li>
                 ))

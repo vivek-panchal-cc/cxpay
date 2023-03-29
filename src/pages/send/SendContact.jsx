@@ -148,7 +148,7 @@ export default function SendContact() {
       <div className="send-inner-sec col-12">
         <div className="send-top-sec">
           <div className="title-content-wrap">
-            <h3>For whom to send</h3>
+            <h3>For whom to send?</h3>
             <p>Please select contacts to whom you want to send money</p>
           </div>
           <form style={{ width: "40%", marginTop: "15px" }}>
@@ -213,9 +213,8 @@ export default function SendContact() {
           </div>
         )}
         <div className="login-btn">
-          <div className="setting-btn-link send-btn-wrap pay-btn-wrap">
+          <div className="setting-btn-link send-btn-wrap pay-btn-wrap pt-2">
             <button
-              href="/"
               className="btn btn-next ms-0"
               onClick={checkedCheckBoxData}
             >
@@ -297,21 +296,21 @@ export default function SendContact() {
           <p className="loading-data">No data found</p>
         </div>
       )}
-      <div className="send-btn-wrap pay-btn-wrap">
+      <div className="send-btn-wrap pay-btn-wrap pt-2">
         <a
           className="btn btn-cancel-payment"
           onClick={(e) => checkGroupSelected(1)}
         >
           <IconEdit style={{ stroke: "#0081c5" }} /> Edit
         </a>
-        <a className="btn btn-next" onClick={(e) => checkGroupSelected(2)}>
+        {/* <a className="btn btn-next" onClick={(e) => checkGroupSelected(2)}>
           Delete
-        </a>
+        </a> */}
         <a
-          className="btn btn-cancel-payment"
+          className="btn btn-next"
           onClick={(e) => checkGroupSelected(3)}
         >
-          <IconSend style={{ stroke: "#0081c5" }} /> Send{" "}
+          <IconSend style={{ stroke: "#fff" }} /> Send{" "}
         </a>
       </div>
       <ModalConfirmation

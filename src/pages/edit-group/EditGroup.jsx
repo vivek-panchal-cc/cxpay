@@ -138,7 +138,7 @@ export default function EditGroup() {
               className="cursor-pointer"
               style={{ color: "#0081c5" }}
             >
-              Add Group Image
+              Select Group Image
             </label>
           </p>
           <div className="form-field">
@@ -170,7 +170,7 @@ export default function EditGroup() {
               value="Save Group"
             />
           </div>
-          <a className="eg-del-grp" href="/" onClick={deleteGroupData}>
+          <a className="eg-del-grp custom-link-color" onClick={deleteGroupData} >
             Delete Group
           </a>
         </div>
