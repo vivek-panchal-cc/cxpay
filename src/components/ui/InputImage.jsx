@@ -52,7 +52,7 @@ function InputImage(props) {
   const clickedFileInput = useCallback(() => {
     window.addEventListener("focus", handleFocusBack);
   }, [handleFocusBack]);
-
+  console.log(isGroup);
   return (
     <div className={`upload-profile-image text-center ${className}`}>
       <label
@@ -72,7 +72,7 @@ function InputImage(props) {
               isGroup
                 ? preview.includes("group-icon-image.png")
                   ? ""
-                  : "profile-user-up-img"
+                  : "profile-wrap profile-user-up-img"
                 : ""
             }`}
           >

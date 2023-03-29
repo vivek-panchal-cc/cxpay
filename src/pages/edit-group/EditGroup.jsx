@@ -129,6 +129,7 @@ export default function EditGroup() {
               classNameInput="d-none"
               classNameBorder={`overflow-visible group-icon-image ${styles.set_group_background_image}`}
               classNameImage={`${styles.set_group_image}`}
+              isGroup={true}
             />
           </div>
           <h3>Edit Group</h3>
