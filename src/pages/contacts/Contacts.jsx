@@ -112,6 +112,7 @@ const Contacts = (props) => {
   }, []);
 
   const retrieveContacts = async (currentPage = 1, search) => {
+    setIsLoading(true);
     try {
       const { data } = await apiRequest.getConatcts({
         page: currentPage,
@@ -121,12 +122,14 @@ const Contacts = (props) => {
       setContactsOrInvited("contacts");
       setPage(currentPage);
       setContacts(data.data);
+      setIsLoading(false);
     } catch (error) {
       if (error === "Contact not found") {
         setContactsOrInvited("contacts");
         setContacts(null);
       }
       console.log(error);
+      setIsLoading(false);
     }
     //  finally {
     //   setIsLoading(false);
@@ -135,6 +138,7 @@ const Contacts = (props) => {
 
   const handleInvitedContacts = async (currentPage = 1, search) => {
     // setIsLoading(true);
+    setIsLoading(true);
     try {
       const { data } = await apiRequest.invitedConatcts({
         page: currentPage,
@@ -144,12 +148,14 @@ const Contacts = (props) => {
       setContactsOrInvited("invited");
       setPage(currentPage);
       setContacts(data.data);
+      setIsLoading(false);
     } catch (error) {
       if (error === "Contact not found") {
         setContactsOrInvited("invited");
         setContacts(null);
       }
       console.log(error);
+      setIsLoading(false);
     }
   };
 
