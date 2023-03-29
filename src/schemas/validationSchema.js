@@ -138,18 +138,22 @@ const inviteContactSchema = yup.object().shape({
 });
 
 const businessInfoSchema = yup.object().shape({
-  business_url: yup.string().matches(url_regex, "Business url is not valid"),
+  business_url: yup
+    .string()
+    .matches(url_regex, "Please enter valid business URL"),
   business_id: yup
     .string()
     // .required("Please enter personal id")
     .matches(/^\S*$/, "Space is not allowed")
-    .max(25, "Maximum limit exceeded"),
+    .max(25, "Business ID must not be greater than 25 characters."),
 });
 
 const createGroupSchema = yup.object().shape({
-  group_image: profileImageSchema.required('Group image is required'),
-  group_name: yup.string().required("Group name is required")
-  .max(55, "Maximum limit is 55 characters"),
+  group_image: profileImageSchema.required("Group image is required"),
+  group_name: yup
+    .string()
+    .required("Group name is required")
+    .max(55, "Maximum limit is 55 characters"),
 });
 
 export {
@@ -167,5 +171,5 @@ export {
   inviteContactSchema,
   addBusinessUrlSchema,
   businessInfoSchema,
-  createGroupSchema
+  createGroupSchema,
 };

@@ -7,7 +7,6 @@ import { IconNotify } from "styles/svgs";
 const NotificationDropdown = (props) => {
   const dropdownref = useRef(null);
   const { notifications } = useSelector((state) => state.userNotification);
-  const [showDrop, setShowDrop] = useState(false);
 
   return (
     <div className="notification-user-wrap">
@@ -20,8 +19,8 @@ const NotificationDropdown = (props) => {
         </div>
       </div>
       {/* <!-- Notification Dropdown Start --> */}
-      <div class="notification-dd-wrap" ref={dropdownref}>
-        <ul class="notification-list-wrap">
+      <div className="notification-dd-wrap" ref={dropdownref}>
+        <ul className="notification-list-wrap">
           {notifications?.map((item, index) => (
             <NotificationListItem
               className="notification-content-wrap"
@@ -31,11 +30,17 @@ const NotificationDropdown = (props) => {
             />
           ))}
         </ul>
-        <div class="see-all-notifi">
-          <Link to="/view-notification" replace>
-            See All
-          </Link>
-        </div>
+        {notifications && notifications.length > 0 ? (
+          <div className="see-all-notifi">
+            <Link to="/view-notification" replace>
+              See All
+            </Link>
+          </div>
+        ) : (
+          <div className="see-all-notifi">
+            <p>No Notifications Yet</p>
+          </div>
+        )}
       </div>
       {/* <!-- Notification Dropdown End --> */}
     </div>

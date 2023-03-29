@@ -306,14 +306,16 @@ function FundCreditCard(props) {
             <div className="row wallet-fund-row-amt wallet-fund-row-amt-final">
               <div className="col-12 p-0">
                 <table>
-                  <tr>
-                    <td>Fees</td>
-                    <td>{chargesDetails?.percentage} %</td>
-                  </tr>
-                  <tr>
-                    <td>Amount</td>
-                    <td> {formik.values.chargedAmount} Nafl </td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td>Fees</td>
+                      <td>NAFl {chargesDetails?.fees}</td>
+                    </tr>
+                    <tr>
+                      <td>Amount</td>
+                      <td>NAFl {formik.values.chargedAmount} </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>

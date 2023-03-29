@@ -270,10 +270,16 @@ const FundProvider = ({ children }) => {
   }, [userWallet.defaultBank]);
 
   useEffect(() => {
-    if (!formik.values.transactionAmount || !chargesDetails) return;
+    if (!formik.values.transactionAmount || !chargesDetails) {
+      setChargesDetails((cs) => ({ ...cs, fees: "" }));
+      formik.setFieldValue("chargedAmount", "");
+      return;
+    }
     const amount = parseFloat(formik.values.transactionAmount);
     const percentage = parseFloat(chargesDetails.percentage);
-    const actualAmount = amount - amount * (percentage / 100);
+    const fees = amount * (percentage / 100);
+    const actualAmount = amount - fees;
+    setChargesDetails((cs) => ({ ...cs, fees: fees.toFixed(2).toString() }));
     formik.setFieldValue("chargedAmount", actualAmount.toFixed(2).toString());
   }, [formik.values.transactionAmount]);
 

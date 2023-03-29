@@ -32,7 +32,7 @@ const yupWhenBank = (validations) => {
 const yupWhenCash = "";
 
 const cardNumberSchema2 = yup.string().when("card_id", {
-  is: (card_id) => card_id && card_id.length > 0,
+  is: (card_id) => card_id && card_id > 0,
   then: yup
     .string()
     .matches(/^[0-9]*$/, "Credit card number is invalid")
@@ -52,7 +52,7 @@ const fundSchema = yup.object().shape({
     .required("Please enter Amount"),
   txn_mode: yup.string().required(),
   // Validations For CARD
-  card_id: yupWhenCard(yup.string()),
+  card_id: yupWhenCard(yup.number()),
   card_number: yupWhenCard(cardNumberSchema2),
   expiry_date: yupWhenCard(cardExpirySchema),
   security_code: yupWhenCard(cardCvvSchema),

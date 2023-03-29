@@ -36,7 +36,12 @@ const BusinessForm = (props) => {
         }
         if (!data.success || data.data === null) throw data.message;
       } catch (error) {
-        console.log("error: ", error);
+        if (typeof error === "string") return toast.error(error);
+        setErrors({
+          business_url: error?.business_url?.[0],
+          business_id: error?.business_id?.[0],
+          business_country: error?.business_country?.[0],
+        });
       } finally {
         setIsLoading(false);
       }

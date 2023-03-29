@@ -133,7 +133,7 @@ const cardCvvSchema = yup
 const billingAddressSchema = yup
   .string()
   .required("Please enter Billing address")
-  .max(55, "The billing address must not be greater than 55 characters.");
+  .max(55, "The address must not be greater than 55 characters.");
 
 const addressSchema = yup
   .string()
