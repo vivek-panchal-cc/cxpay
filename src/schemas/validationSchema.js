@@ -131,8 +131,8 @@ const inviteContactSchema = yup.object().shape({
   email: yup.string().email("Please enter a valid email"),
   mobile: yup
     .string()
-    .min(6, "Mobile number must be 6 or 7 digits")
-    .max(7, "Mobile number must be 6 or 7 digits")
+    .min(6, "The mobile number must be between 6 and 7 digits")
+    .max(7, "The mobile number must be between 6 and 7 digits")
     .matches(/^[0-9]*$/, "Please enter valid mobile number.")
     .required("Please enter mobile number"),
 });
@@ -149,7 +149,7 @@ const businessInfoSchema = yup.object().shape({
 });
 
 const createGroupSchema = yup.object().shape({
-  group_image: profileImageSchema.required("Group image is required"),
+  group_image: profileImageSchema,
   group_name: yup
     .string()
     .required("Group name is required")

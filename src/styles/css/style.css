@@ -6364,3 +6364,7 @@ ul.notification-list-wrap li:last-child {
 .form-control.js-searchBox-input{
   background-color: transparent !important;
 }
+.custom-link-color{
+  color: #0081c5;
+  cursor: pointer;
+}

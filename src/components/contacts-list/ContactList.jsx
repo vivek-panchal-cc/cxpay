@@ -139,7 +139,11 @@ const ContactList = (props) => {
       }
     } else {
       value = parseInt(e.target.value);
-      selectedArray = [value];
+      if (checked) {
+        selectedArray = [value];
+      }else{
+        selectedArray = [];
+      }
     }
     setSelectedContact(selectedArray);
     selectedItems(selectedArray);

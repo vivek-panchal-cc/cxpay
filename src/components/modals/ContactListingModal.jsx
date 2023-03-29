@@ -165,7 +165,6 @@ function ContactListingModal(props) {
               </form>
               <div className="con-md-del-wrap">
                 <a
-                  href="#"
                   className="btn btn-primary con-md-delbtn"
                   onClick={submitContactData}
                 >
