@@ -293,7 +293,7 @@ export default function SendContact() {
         />
       ) : (
         <div className="loading">
-          <p className="loading-data">No data found</p>
+          <p className="loading-data">{searchData != '' ? 'Group not found' : 'No data found'}</p>
         </div>
       )}
       <div className="send-btn-wrap pay-btn-wrap pt-2">
