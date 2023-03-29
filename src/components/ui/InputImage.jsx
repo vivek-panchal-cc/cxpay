@@ -52,7 +52,7 @@ function InputImage(props) {
   const clickedFileInput = useCallback(() => {
     window.addEventListener("focus", handleFocusBack);
   }, [handleFocusBack]);
-  console.log(showPreview)
+
   return (
     <div className={`upload-profile-image text-center ${className}`}>
       <label
@@ -61,7 +61,20 @@ function InputImage(props) {
       >
         {showPreview && (
           <span
-            className={`${(preview != null && preview != '') ? (preview.includes('group-icon-image.png') ? '' : 'profile-wrap') : ''}  overflow-hidden mx-auto ${classNameBorder} ${isGroup ? (preview.includes('group-icon-image.png') ? '' : 'profile-user-up-img') : ''}`}
+            className={`${
+              showPreview != null
+                ? typeof showPreview === "string" &&
+                  showPreview.includes("group-icon-image.png")
+                  ? ""
+                  : "profile-wrap"
+                : ""
+            }  overflow-hidden mx-auto ${classNameBorder} ${
+              isGroup
+                ? preview.includes("group-icon-image.png")
+                  ? ""
+                  : "profile-user-up-img"
+                : ""
+            }`}
           >
             <img
               src={preview}

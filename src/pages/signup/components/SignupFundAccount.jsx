@@ -1,4 +1,5 @@
 import InputSelect from "components/ui/InputSelect";
+import { FUND_BANK, FUND_CARD, FUND_CASH } from "constants/all";
 import FundProvider from "context/fundContext";
 import { LoaderContext } from "context/loaderContext";
 import { fetchUserProfile } from "features/user/userProfileSlice";
@@ -38,11 +39,11 @@ function SignupFundAccount() {
   const getFundForm = () => {
     const type = params ? params.fundtype : "";
     switch (type) {
-      case "card":
+      case FUND_CARD:
         return <FundCard />;
-      case "bank":
+      case FUND_BANK:
         return <FundBank />;
-      case "cash":
+      case FUND_CASH:
         return <>CASH</>;
       default:
         return <></>;
@@ -73,14 +74,20 @@ function SignupFundAccount() {
               <h4 className="blue-text text-center">fund your Account</h4>
               <form action="">
                 <InputSelect
-                  className="form-select form-control"
+                  className="form-select form-control text-capitalize"
                   name="fund_type"
                   value={params?.fundtype}
                   onChange={handleFundTypeChange}
                 >
-                  <option value={"card"}> Card </option>
-                  <option value={"bank"}> Bank </option>
-                  <option value={"cash"}> Cash </option>
+                  <option value={FUND_CARD}>
+                    {FUND_CARD.replace(/-/g, " ")}{" "}
+                  </option>
+                  <option value={FUND_BANK}>
+                    {FUND_BANK.replace(/-/g, " ")}{" "}
+                  </option>
+                  <option value={FUND_CASH}>
+                    {FUND_CASH.replace(/-/g, " ")}{" "}
+                  </option>
                 </InputSelect>
               </form>
               {/* </div> */}

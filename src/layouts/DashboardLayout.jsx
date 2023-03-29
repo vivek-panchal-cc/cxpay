@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { LoaderContext } from "context/loaderContext";
 import NotificationBar from "components/notification-bar/NotificationBar";
-import { fetchGetAllNotifications } from "features/user/userNotificationSlice";
+import { fetchGetNotifications } from "features/user/userNotificationSlice";
 
 function DashboardLayout() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ function DashboardLayout() {
     (async () => {
       setIsLoading(true);
       await dispatch(fetchUserProfile());
-      await dispatch(fetchGetAllNotifications(1));
+      await dispatch(fetchGetNotifications(1));
       setIsLoading(false);
     })();
   }, [dispatch]);

@@ -1,14 +1,44 @@
+import React, { useContext, useEffect, useState } from "react";
+import CardList from "components/card-list/CardList";
 import Modal from "components/modals/Modal";
 import FundYourAccountPopup from "components/popups/FundYourAccountPopup";
-import React, { useState } from "react";
+import { LoaderContext } from "context/loaderContext";
+import { apiRequest } from "helpers/apiRequests";
 import { Link } from "react-router-dom";
+import CardDetails from "components/card-list/CardDetails";
 
 function Wallet() {
+  const { setIsLoading } = useContext(LoaderContext);
+  const [cardsList, setCardsList] = useState([]);
   const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
+  const [slideCard, setSlideCard] = useState({});
+
+  const getCardsList = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.cardsList();
+      if (!data.success) throw data.message;
+      setCardsList(data.data.cards);
+      setSlideCard(data.data.cards?.[0]);
+    } catch (error) {
+      setCardsList([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleFundAccountPopup = () => {
     setShowFundAccountPopup(true);
   };
+
+  const handleGetCurrentSlideCard = (card, slide) => {
+    if (!card) return;
+    setSlideCard(card);
+  };
+
+  useEffect(() => {
+    getCardsList();
+  }, []);
 
   return (
     <>
@@ -214,229 +244,19 @@ function Wallet() {
         {/* <!-- Dashboard card section starts --> */}
         <div className="wallet-main-right">
           <div className="">
-            <div className="wallet-right-title">
-              <h3>My Cards</h3>
-            </div>
-            <div className="wallet-slider">
-              <div className="swiper">
-                {/* <!-- Additional required wrapper --> */}
-                <div className="swiper-wrapper">
-                  {/* <!-- Slides --> */}
-                  <div className="swiper-slide">
-                    <div
-                      className="wallet-ac-inner"
-                      // style="background-color: #936EE3;"
-                    >
-                      <img
-                        src="/assets/images/card_top_left.png"
-                        className="w-card-top-img"
-                        alt=""
-                      />
-                      <img
-                        src="/assets/images/card_bottom_right.png"
-                        className="w-card-bottom-img"
-                        alt=""
-                      />
-                      <p className="card-holder-nm">XXXXXX</p>
-                      <div className="card-num-date">
-                        <p className="">.... .... .... XXXX</p>
-                        <p className="">XX XXX XXXX</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="swiper-slide">
-                    <div
-                      className="wallet-ac-inner"
-                      // style="background-color: #0081C5;"
-                    >
-                      <img
-                        src="/assets/images/card_top_left.png"
-                        className="w-card-top-img"
-                        alt=""
-                      />
-                      <img
-                        src="/assets/images/card_bottom_right.png"
-                        className="w-card-bottom-img"
-                        alt=""
-                      />
-                      <p className="card-holder-nm">XXXXXX</p>
-                      <div className="card-num-date">
-                        <p className="">.... .... .... XXXX</p>
-                        <p className="">XX XXX XXXX</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="swiper-slide">
-                    <div
-                      className="wallet-ac-inner"
-                      // style="background-color:#93E06F;"
-                    >
-                      <img
-                        src="/assets/images/card_top_left.png"
-                        className="w-card-top-img"
-                        alt=""
-                      />
-                      <img
-                        src="/assets/images/card_bottom_right.png"
-                        className="w-card-bottom-img"
-                        alt=""
-                      />
-                      <p className="card-holder-nm">XXXXXX</p>
-                      <div className="card-num-date">
-                        <p className="">.... .... .... XXXX</p>
-                        <p className="">XX XXX XXXX</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="swiper-slide">
-                    <div
-                      className="wallet-ac-inner"
-                      // style="background-color:#24BEEF;"
-                    >
-                      <img
-                        src="/assets/images/card_top_left.png"
-                        className="w-card-top-img"
-                        alt=""
-                      />
-                      <img
-                        src="/assets/images/card_bottom_right.png"
-                        className="w-card-bottom-img"
-                        alt=""
-                      />
-                      <p className="card-holder-nm">XXXXXX</p>
-                      <div className="card-num-date">
-                        <p className="">.... .... .... XXXX</p>
-                        <p className="">XX XXX XXXX</p>
-                      </div>
-                    </div>
-                  </div>
+            {cardsList && cardsList.length > 0 && (
+              <>
+                <div className="wallet-right-title">
+                  <h3>My Cards</h3>
                 </div>
-                {/* <!-- If we need pagination --> */}
-                <div className="swiper-pagination"></div>
-
-                {/* <!-- If we need navigation buttons --> */}
-                <div className="swiper-button-prev"></div>
-                <div className="swiper-button-next"></div>
-
-                {/* <!-- If we need scrollbar --> */}
-                <div className="swiper-scrollbar"></div>
-              </div>
-            </div>
-
-            <div className="wc-details-wrap">
-              <div className="card-detail js-card-section" id="cardId_0">
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>Bank</td>
-                      <td>MCB Bank</td>
-                    </tr>
-                    <tr>
-                      <td>Card Number</td>
-                      <td>
-                        <span>•••• •••• •••• 7430</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Expiry Date</td>
-                      <td>MM/YY</td>
-                    </tr>
-                    <tr>
-                      <td>Lorem Ipsum</td>
-                      <td>Lorem Ipsum</td>
-                    </tr>
-                    <tr>
-                      <td>Lorem Ipsum</td>
-                      <td>Lorem Ipsum</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div className="card-detail js-card-section" id="cardId_1">
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>Bank</td>
-                      <td>HDFC Bank</td>
-                    </tr>
-                    <tr>
-                      <td>Card Number</td>
-                      <td>
-                        <span>•••• •••• •••• 1111</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Expiry Date</td>
-                      <td>MM/YY</td>
-                    </tr>
-                    <tr>
-                      <td>Lorem Ipsum</td>
-                      <td>Lorem Ipsum</td>
-                    </tr>
-                    <tr>
-                      <td>Lorem Ipsum</td>
-                      <td>Lorem Ipsum</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div className="card-detail js-card-section" id="cardId_2">
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>Bank</td>
-                      <td>ICICI Bank</td>
-                    </tr>
-                    <tr>
-                      <td>Card Number</td>
-                      <td>
-                        <span>•••• •••• •••• 2222</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Expiry Date</td>
-                      <td>MM/YY</td>
-                    </tr>
-                    <tr>
-                      <td>Lorem Ipsum</td>
-                      <td>Lorem Ipsum</td>
-                    </tr>
-                    <tr>
-                      <td>Lorem Ipsum</td>
-                      <td>Lorem Ipsum</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div className="card-detail js-card-section" id="cardId_3">
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>Bank</td>
-                      <td>SBI Bank</td>
-                    </tr>
-                    <tr>
-                      <td>Card Number</td>
-                      <td>
-                        <span>•••• •••• •••• 3333</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Expiry Date</td>
-                      <td>MM/YY</td>
-                    </tr>
-                    <tr>
-                      <td>Lorem Ipsum</td>
-                      <td>Lorem Ipsum</td>
-                    </tr>
-                    <tr>
-                      <td>Lorem Ipsum</td>
-                      <td>Lorem Ipsum</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+                <CardList
+                  cardsList={cardsList}
+                  getCurrentSlideCard={handleGetCurrentSlideCard}
+                  walletSlider={true}
+                />
+                <CardDetails card={slideCard} />
+              </>
+            )}
             <div className="wallet-card-add-btns mb-4">
               <Link
                 to="/wallet/bank-list"

@@ -47,6 +47,10 @@ const THEME_COLORS = ["light_blue"];
 //   return file && validFileSize[file].indexOf(file.split(".").pop()) > -1;
 // };
 
+const FUND_CARD = "credit-card";
+const FUND_CASH = "cash-credit";
+const FUND_BANK = "bank-transfer";
+
 export {
   exp0ContainWhitespace,
   exp0ContainWordPassword,
@@ -57,6 +61,9 @@ export {
   otpCounterTime,
   url_regex,
   THEME_COLORS,
+  FUND_CARD,
+  FUND_CASH,
+  FUND_BANK,
 };
 export {
   regexContainCapitalLetter,

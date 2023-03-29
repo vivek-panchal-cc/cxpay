@@ -122,8 +122,8 @@ const resetPasswordSchema = yup.object().shape({
 const addBusinessUrlSchema = yup.object().shape({
   business_url: yup
     .string()
-    .required("Business url is required")
-    .matches(url_regex, "Business url is not valid")
+    .required("Please enter business URL")
+    .matches(url_regex, "Please enter valid business URL")
     .nullable(),
 });
 

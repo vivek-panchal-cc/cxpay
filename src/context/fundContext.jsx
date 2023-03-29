@@ -1,5 +1,6 @@
 import Modal from "components/modals/Modal";
 import AccountFundedPopup from "components/popups/AccountFundedPopup";
+import { FUND_BANK, FUND_CARD, FUND_CASH } from "constants/all";
 import { fetchBanksList, fetchCardsList } from "features/user/userWalletSlice";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
@@ -230,7 +231,7 @@ const FundProvider = ({ children }) => {
       { ...LocationCreds, email }
     );
     switch (params.fundtype) {
-      case "card":
+      case FUND_CARD:
         const initValCard = Object.assign(
           { ...cardCreds },
           {
@@ -242,9 +243,9 @@ const FundProvider = ({ children }) => {
         formik.setValues(initValCard);
         attachDefaultCard();
         return;
-      case "cash":
+      case FUND_CASH:
         return;
-      case "bank":
+      case FUND_BANK:
         const initValBank = Object.assign(
           { ...bankCreds },
           {
@@ -260,12 +261,12 @@ const FundProvider = ({ children }) => {
   }, [userProfile.profile, countryList, params]);
 
   useEffect(() => {
-    if (params.fundtype !== "card" || countryList.length <= 0) return;
+    if (params.fundtype !== FUND_CARD || countryList.length <= 0) return;
     userWallet.defaultCard && integrateCardDetails(userWallet.defaultCard);
   }, [userWallet.defaultCard]);
 
   useEffect(() => {
-    if (params.fundtype !== "bank" || countryList.length <= 0) return;
+    if (params.fundtype !== FUND_BANK || countryList.length <= 0) return;
     userWallet.defaultBank && integrateBankDetails(userWallet.defaultBank);
   }, [userWallet.defaultBank]);
 
@@ -307,19 +308,21 @@ const FundProvider = ({ children }) => {
       >
         <AccountFundedPopup {...fundedDetails} />
       </Modal>
-      {params.fundtype === "card" ? (
+      {params.fundtype === FUND_CARD ? (
         selectExistingCard ? (
           <SelectCard />
         ) : (
           children
         )
-      ) : params.fundtype === "bank" ? (
+      ) : params.fundtype === FUND_BANK ? (
         selectExistingBank ? (
           <SelectBank />
         ) : (
           children
         )
-      ) : null}
+      ) : (
+        children
+      )}
     </FundContext.Provider>
   );
 };

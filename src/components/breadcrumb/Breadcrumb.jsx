@@ -41,9 +41,13 @@ function Breadcrumb(props) {
       <ul className="breadcrumb">
         {crumbs.map((item, index) => (
           <li key={`${item.url}-${index}`} className="text-capitalize">
-            <Link to={item.url} replace>
-              {item.title}
-            </Link>
+            {index < crumbs.length - 1 ? (
+              <Link to={item.url} replace>
+                {item.title}
+              </Link>
+            ) : (
+              <a className="cursor-pointer">{item.title}</a>
+            )}
           </li>
         ))}
       </ul>

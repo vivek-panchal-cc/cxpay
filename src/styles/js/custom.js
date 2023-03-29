@@ -107,34 +107,34 @@ $(document).ready(function (e) {
 });
 
 /* Wallet Page Slider*/
-$(document).ready(function (e) {
-  const swiper = new Swiper(".wallet-slider .swiper", {
-    loop: false,
-    slidesPerView: 1.15,
-    spaceBetween: 0,
-    centeredSlides: false,
-    effect: "cards",
-    grabCursor: true,
-    autoResize: false,
-    cardsEffect: {
-      rotate: 0,
-    },
-    // Navigation arrows
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    // And if we need scrollbar
-    scrollbar: {
-      el: ".swiper-scrollbar",
-    },
-  });
-  swiper.on("slideChange", function (s) {
-    $(".js-card-section").hide();
-    $("#cardId_" + s.activeIndex).show();
-  });
-  $("#cardId_0").show();
-});
+// $(document).ready(function (e) {
+//   const swiper = new Swiper(".wallet-slider .swiper", {
+//     loop: false,
+//     slidesPerView: 1.15,
+//     spaceBetween: 0,
+//     centeredSlides: false,
+//     effect: "cards",
+//     grabCursor: true,
+//     autoResize: false,
+//     cardsEffect: {
+//       rotate: 0,
+//     },
+//     // Navigation arrows
+//     navigation: {
+//       nextEl: ".swiper-button-next",
+//       prevEl: ".swiper-button-prev",
+//     },
+//     // And if we need scrollbar
+//     scrollbar: {
+//       el: ".swiper-scrollbar",
+//     },
+//   });
+//   swiper.on("slideChange", function (s) {
+//     $(".js-card-section").hide();
+//     $("#cardId_" + s.activeIndex).show();
+//   });
+//   $("#cardId_0").show();
+// });
 
 /* date picket js */
 // $(function () {

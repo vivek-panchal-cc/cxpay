@@ -1,6 +1,7 @@
-import FundProvider from "context/fundContext";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { FUND_BANK, FUND_CARD, FUND_CASH } from "constants/all";
+import FundProvider from "context/fundContext";
 import FundBankTransfer from "./components/FundBankTransfer";
 import FundCashCredit from "./components/FundCashCredit";
 import FundCreditCard from "./components/FundCreditCard";
@@ -16,11 +17,11 @@ function FundAccount(props) {
   const getSelectedFund = () => {
     if (!(params && params.fundtype)) return <></>;
     switch (params.fundtype) {
-      case "card":
+      case FUND_CARD:
         return <FundCreditCard />;
-      case "cash":
+      case FUND_CASH:
         return <FundCashCredit />;
-      case "bank":
+      case FUND_BANK:
         return <FundBankTransfer />;
       default:
         <></>;

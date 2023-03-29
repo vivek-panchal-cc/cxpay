@@ -49,6 +49,7 @@ function FundCard() {
               placeholderText="Expiry Date"
               onBlur={formik.handleBlur}
               showMonthYearPicker
+              showTwoColumnMonthYearPicker
             />
             <label
               htmlFor="datepickeradd-card"
