@@ -123,6 +123,8 @@ const EditGroupList = (props) => {
   };
 
   const deleteMember = async (memberAccountNumber, memberMobileNumber) => {
+    console.log(getItem);
+    console.log(memberMobileNumber);
     if (memberAccountNumber !== "undefined") {
       try {
         const { data } = await apiRequest.deleteGroupMember({
@@ -145,6 +147,11 @@ const EditGroupList = (props) => {
       setContactsList(contactData);
       setShowDeletePopup(false);
     }
+    var index = getItem.indexOf(memberMobileNumber);
+    if (index > -1) { // only splice array when item is found
+      getItem.splice(index, 1); // 2nd parameter means remove one item only
+    }
+    selectedItems(getItem);
   };
 
   return (

@@ -4,6 +4,7 @@ import { IconSearch } from "styles/svgs";
 import styles from "./modal.module.scss";
 import "./contactList.css";
 import { apiRequest } from "helpers/apiRequests";
+import { toast } from "react-toastify";
 
 function ContactListingModal(props) {
   const {
@@ -42,12 +43,18 @@ function ContactListingModal(props) {
   };
 
   const submitContactData = () => {
+    
     let difference = selectedRemainingContact.filter(
       (x) => !getCurrentData.includes(x)
     );
     let selectedFullArrayDifference = selectedFullContactArray.filter((item) =>
       difference.includes(item.member_mobile_number)
     );
+    console.log(difference);
+    if(difference.length == 0){
+      toast.warning('Please select atleast one contact');
+      return false;
+    }
     selectedFullItem(selectedFullArrayDifference);
     selectedItem(selectedRemainingContact);
     handleCallback(false);
@@ -87,31 +94,22 @@ function ContactListingModal(props) {
       });
       if (!data.success) throw data.message;
       setListingTotalData(data.data.pagination.total);
-      console.log(alldata);
-      if (page == 1) {
-        // data.data.remain_contacts = data.data.remain_contacts.filter((item) => !getItem.includes(item.member_mobile_number));
-        console.log(data.data.remain_contacts);
-        
-        
-
-        let filterData = [];
-
-        data.data.remain_contacts.foreach(item => {
-          console.log('item', item);
-          alldata.foreach(elm => {
-            console.log('elm', elm);
-            if(item.member_email !== elm.member_email){
-              filterData.push(item);
-            }
-          })
+      let filterData = [];
+      data.data.remain_contacts.forEach(item => {
+        var findElement = 0;
+        alldata.forEach(elm => {
+          if(item.member_email == elm.member_email){
+            findElement = 1;
+          }
         })
-        console.log(filterData);
-
-        console.log(data.data.remain_contacts);
+        if(findElement == 0){
+          filterData.push(item);
+        }
+      })
+      if (page == 1) {
         setRemainingContactListing(filterData);
       } else {
-        var allData2 = remainingContactListing.concat(data.data.remain_contacts);
-        allData2 = allData2.filter((item1) => alldata.map((item2) => item1.member_mobile_number != item2.member_mobile_number));
+        var allData2 = remainingContactListing.concat(filterData);
         setRemainingContactListing(allData2);
       }
     } catch (error) {}
