@@ -1284,6 +1284,15 @@
   .business-info-right .qr-btn {
     padding: 13px 20px;
   }
+  .wallet-top-nwrap .wallet-title-wrap{
+    display: block;
+  }
+  .wallet-top-nwrap .wallet-title-btns{
+    width: 100%;
+    max-width: 100%;
+    margin-top: 12px;
+    justify-content:left  !important;
+  }
 }
 @media only screen and (max-width: 1100px) and (min-width: 992px) {
   .dashboard-right-sec {
@@ -1478,6 +1487,7 @@
     max-width: 230px;
     min-width: 230px;
   }
+
 }
 /*@media only screen and (max-width: 1100px) and (min-width: 992px) {
   .dashboard-right-sec {
@@ -1694,9 +1704,14 @@
   .dashboard-top-sec.wallet-top-wrap {
     padding-top:10px;
   }
-  .wallet-main-right{
-    margin-top: -30px;
+  .wallet-top-nwrap .wallet-title-btns {
+    display: flex;
+    justify-content: end;
+    flex-wrap: wrap;
   }
+}
+@media only screen and (max-width: 1023px) and (min-width: 992px) {
+  
 }
 @media only screen and (max-width: 991px) {
   .logo-image img {
@@ -2649,7 +2664,7 @@
   }
   .wallet-title-wrap {
     flex-wrap: wrap;
-    margin-top: 30px;
+    margin-top: 20px;
   }
   .wallet-title-btns {
     margin-left: auto;
@@ -3878,13 +3893,19 @@
     margin: auto;
   }
   .fund-payment-option-wrap {
-    display: block;
+    /*display: block;*/
     width: 100%;
     margin: auto;
   }
+  .fund-payment-option-wrap>a:first-child {
+    margin-right: 10px;
+  }
+  .fund-payment-option-wrap>a:last-child {
+    margin-left: 10px;
+  }
   .fund-payment-option-wrap .fund-payment-option {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
   .fund-payment-option-wrap a {
     display: block;

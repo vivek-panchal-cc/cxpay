@@ -113,18 +113,18 @@ export default function EditGroup() {
               showPreview={
                 profileImage
                   ? profileImage
-                  : "/assets/images/group-icon-image.png"
+                  : "/assets/images/group-svg-92.svg"
               }
               showLabel={false}
               previewSrc={
                 profileImage
                   ? profileImage
-                  : "/assets/images/group-icon-image.png"
+                  : "/assets/images/group-svg-92.svg"
               }
               fallbackSrc={
                 profileImage
                   ? profileImage
-                  : "/assets/images/group-icon-image.png"
+                  : "/assets/images/group-svg-92.svg"
               }
               classNameInput="d-none"
               classNameBorder={`overflow-visible group-icon-image ${styles.set_group_background_image}`}

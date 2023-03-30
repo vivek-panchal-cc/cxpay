@@ -49,7 +49,7 @@ const CardList = (props) => {
         onSlideChange={(e) => {
           getCurrentSlideCard(cardsList[e.activeIndex], e.activeIndex + 1);
         }}
-        onSwiper={(swiper) => console.log(swiper)}
+        // onSwiper={(swiper) => console.log(swiper)}
       >
         <div className="swiper-wrapper">
           {cardsList?.map((elm, i) => (

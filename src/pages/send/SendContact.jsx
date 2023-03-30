@@ -214,10 +214,8 @@ export default function SendContact() {
         )}
         <div className="login-btn">
           <div className="setting-btn-link send-btn-wrap pay-btn-wrap pt-3">
-            <button
-              className="btn btn-next ms-0"
-              onClick={checkedCheckBoxData}
-            >
+            <button className="btn btn-next ms-0 ps-4 pe-4" onClick={checkedCheckBoxData}>
+              <IconSend className="me-2" style={{ stroke: "#fff" }} />
               Send
             </button>
           </div>
@@ -293,7 +291,9 @@ export default function SendContact() {
         />
       ) : (
         <div className="loading">
-          <p className="loading-data">{searchData != '' ? 'Group not found' : 'No data found'}</p>
+          <p className="loading-data">
+            {searchData != "" ? "Group not found" : "No data found"}
+          </p>
         </div>
       )}
       <div className="send-btn-wrap pay-btn-wrap pt-2">
