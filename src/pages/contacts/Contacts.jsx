@@ -459,7 +459,7 @@ const Contacts = (props) => {
               )}
             </ul>
           </div>
-          {contacts && contacts && (
+          {contacts && (contacts.pagination && contacts.pagination.total > 10) && (
             <Pagination
               active={page}
               size={contacts?.pagination?.last_page}

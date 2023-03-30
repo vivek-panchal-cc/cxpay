@@ -505,10 +505,11 @@ body.app-bg,
   background-image: url("../../../public/assets/images/bg-body-img.jpg");
   background-repeat: repeat;
   background-position: center center;
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
   background-blend-mode: multiply;
   position: relative;
+  min-height: 100%;
 }
 html,
 body {
@@ -2610,9 +2611,9 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding-bottom: 80px;
+  padding-bottom: 30px;
   /*padding-right: 40px;*/
-  padding-top: 30px;
+  padding-top: 10px;
 }
 .send-top-sec .send-inner-sec {
   padding-bottom: 20px;
@@ -2685,11 +2686,11 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
 .send-whom-slider .img-wrap {
   /*max-width: 153px;
   max-height: 153px;*/
-  width: 145px;
-  height: 145px;
-  border-radius: 50%;
+  width: 99px;
+  height: 99px;
+  border-radius: 47%;
   box-shadow: 0px 20.434px 40.868px rgba(0, 0, 0, 0.08);
-  border: 4px solid transparent;
+  border: 0px solid transparent;
   position: relative;
   transition: all 0.5s ease-in-out;
   margin: 0 auto 18px;
@@ -2699,14 +2700,14 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   content: "";
   display: block;
   left: auto;
-  right: 0;
-  top: 0;
+  right: 3px;
+  top: 3px;
   bottom: auto;
   margin: auto;
-  width: 36px;
+  width: 24px;
   pointer-events: none;
-  height: 36px;
-  border-radius: 50%;
+  height: 24px;
+  border-radius: 18px;
   background-color: #56be15;
   background-image: url("../../../public/assets/images/tick-arrow.png");
   background-repeat: no-repeat;
@@ -2714,6 +2715,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   opacity: 0;
   visibility: hidden;
   transition: all 0.5s ease-in-out;
+  background-size: 11px auto;
 }
 .send-whom-slider .img-wrap.selected,
 .send-whom-slider .img-wrap.active,
@@ -2745,14 +2747,14 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   font-family: "Visby Round CF";
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 18px;
+  line-height: 23px;
   text-align: center;
   color: #969696;
-  padding: 0 8px;
+  padding: 0 5px;
 }
 .send-whom-slider .swiper-wrapper {
-  padding-bottom: 59px;
+  padding-bottom: 30px;
 }
 .send-whom-slider .swiper-horizontal > .swiper-scrollbar,
 .send-whom-slider .swiper-scrollbar.swiper-scrollbar-horizontal {
@@ -3304,7 +3306,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   /*max-height: 54px;*/
   width: auto;
   margin: 0 auto;
-  max-width: 85px;
+  max-width: 56px;
   height: auto;
   border-radius: 0 !important;
 }
@@ -4421,7 +4423,7 @@ margin-bottom:0px;
 }
 .contact-top-sec {
   padding-bottom: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .contact-right-sec {
   padding-top: 40px;
@@ -6250,7 +6252,7 @@ form .form-field.wallet-cb-wrap {
 /* CSS On 20-03 for Notification DD */
 .dashboard-notification-wrap {
   border-radius: 11px;
-  padding: 20px 15px;
+  padding: 15px 15px;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
   background-color: #fff;
@@ -6260,7 +6262,7 @@ form .form-field.wallet-cb-wrap {
 }
 .notification-dd-wrap {
   position: absolute;
-  top: 55px;
+  top: 50px;
   min-width: 320px;
   right: 0;
   background-color: #fff;
@@ -6367,4 +6369,43 @@ ul.notification-list-wrap li:last-child {
 .custom-link-color{
   color: #0081c5;
   cursor: pointer;
+}
+.contact-top-search-sec .form-field.search-field .form-field{
+  margin-bottom: 0px;
+}
+.con-listing-container{
+  margin-left: -10px;
+  margin-right: -10px;
+}
+.contact-listing-wrap li{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.text-danger:not(:empty){
+  font-family: 'Comfortaa' !important;
+  font-weight: 700 !important;
+}
+.invite-contact-modal .form-control + .text-danger:not(:empty){
+  text-align: left;
+}
+/* Gropu User CSS */
+.send-whom-slider .img-wrap:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  border: 4px solid transparent;
+  position: absolute;
+  border-radius: 47%;
+}
+.send-whom-slider .img-wrap.selected:before,
+.send-whom-slider .img-wrap.active:before,
+.send-whom-slider input:checked ~ .img-wrap:before{
+    border-color: #56be15;
+}
+.send-btn-wrap .btn-next.ws--btn{
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+.wc-details-wrap td{
+  word-break: break-word;
 }

@@ -37,7 +37,7 @@ const Pagination = (props) => {
                             className="page-item"
                             onClick={(e) => onClickHandler(active - 1)}
                         >
-                            <span className="page-link prev">{'PREV >>'}</span>
+                            <span className="page-link prev">{'<< PREV'}</span>
                         </li>
                     )}
                     {size > showingNumbers + startNumber ? (

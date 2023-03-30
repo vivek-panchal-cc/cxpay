@@ -14,6 +14,7 @@ function ContactListingModal(props) {
     handleCallback,
     groupId,
     selectedItem,
+    getItem,
     selectedFullItem,
     alldata,
   } = props;
@@ -77,7 +78,6 @@ function ContactListingModal(props) {
       }
     }
   };
-
   const retriveRemainingContact = async (page, searchText) => {
     try {
       const { data } = await apiRequest.getRemainingGroupContact({
@@ -87,11 +87,32 @@ function ContactListingModal(props) {
       });
       if (!data.success) throw data.message;
       setListingTotalData(data.data.pagination.total);
+      console.log(alldata);
       if (page == 1) {
-        setRemainingContactListing(data.data.remain_contacts);
+        // data.data.remain_contacts = data.data.remain_contacts.filter((item) => !getItem.includes(item.member_mobile_number));
+        console.log(data.data.remain_contacts);
+        
+        
+
+        let filterData = [];
+
+        data.data.remain_contacts.foreach(item => {
+          console.log('item', item);
+          alldata.foreach(elm => {
+            console.log('elm', elm);
+            if(item.member_email !== elm.member_email){
+              filterData.push(item);
+            }
+          })
+        })
+        console.log(filterData);
+
+        console.log(data.data.remain_contacts);
+        setRemainingContactListing(filterData);
       } else {
-        var allData = remainingContactListing.concat(data.data.remain_contacts);
-        setRemainingContactListing(allData);
+        var allData2 = remainingContactListing.concat(data.data.remain_contacts);
+        allData2 = allData2.filter((item1) => alldata.map((item2) => item1.member_mobile_number != item2.member_mobile_number));
+        setRemainingContactListing(allData2);
       }
     } catch (error) {}
   };
@@ -110,7 +131,6 @@ function ContactListingModal(props) {
       document.removeEventListener("mousedown", handleclickOutside);
     };
   }, [modalRef, setShow, show]);
-
   if (!show) return null;
   return (
     <div
