@@ -83,34 +83,38 @@ const ContactList = (props) => {
 
   const breakpoints = fullWidth
     ? {
-        1300: {
-          slidesPerView: 6.5,
-          spaceBetween: 28,
+      1381: {
+        slidesPerView: 9.5,
+        spaceBetween: 24,
+      },
+      1380: {
+          slidesPerView: 8.6,
+          spaceBetween: 24,
         },
         1199: {
+          slidesPerView: 7.5,
+          spaceBetween: 24,
+        },
+        768: {
           slidesPerView: 5.5,
           spaceBetween: 20,
         },
-        768: {
-          slidesPerView: 4.5,
-          spaceBetween: 20,
-        },
         576: {
-          slidesPerView: 3.5,
+          slidesPerView: 4.5,
           spaceBetween: 15,
         },
         0: {
-          slidesPerView: 2.3,
+          slidesPerView: 2.5,
           spaceBetween: 15,
         },
       }
     : {
         1199: {
-          slidesPerView: 5.5,
+          slidesPerView: 9.5,
           spaceBetween: 10,
         },
         992: {
-          slidesPerView: 4.5,
+          slidesPerView: 6.5,
           spaceBetween: 10,
         },
         650: {

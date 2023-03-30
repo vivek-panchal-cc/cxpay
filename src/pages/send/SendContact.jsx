@@ -213,7 +213,7 @@ export default function SendContact() {
           </div>
         )}
         <div className="login-btn">
-          <div className="setting-btn-link send-btn-wrap pay-btn-wrap pt-2">
+          <div className="setting-btn-link send-btn-wrap pay-btn-wrap pt-3">
             <button
               className="btn btn-next ms-0"
               onClick={checkedCheckBoxData}
@@ -223,15 +223,15 @@ export default function SendContact() {
           </div>
         </div>
       </div>
-      <hr />
+      {/* <hr /> */}
       <div className="send-top-sec">
         <div className="title-content-wrap">
           <h3>Groups</h3>
-          <p>Please select group to whom you want to send money</p>
+          {/* <p>Please select group to whom you want to send money</p> */}
         </div>
         {/* <div className="send-top-right-sec">
                     <div className="main-search-wrap"> */}
-        <form style={{ width: "40%", marginTop: "15px" }}>
+        <form style={{ width: "40%", marginTop: "0px" }}>
           <div className="form-field search-field">
             <div
               className="js-clearSearchBox clearsearchbox"
@@ -307,7 +307,7 @@ export default function SendContact() {
           Delete
         </a> */}
         <a
-          className="btn btn-next"
+          className="btn btn-next ws--btn"
           onClick={(e) => checkGroupSelected(3)}
         >
           <IconSend style={{ stroke: "#fff" }} /> Send{" "}

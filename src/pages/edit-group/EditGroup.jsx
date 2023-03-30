@@ -159,6 +159,7 @@ export default function EditGroup() {
           data={contactList}
           groupId={id}
           selectedItems={(items) => formik.setFieldValue("contact", items)}
+          getItem={formik.values.contact}
         />
         <div className="edit-group-bottom-main text-center">
           <div>
