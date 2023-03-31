@@ -43,7 +43,6 @@ function ContactListingModal(props) {
   };
 
   const submitContactData = () => {
-    
     let difference = selectedRemainingContact.filter(
       (x) => !getCurrentData.includes(x)
     );
@@ -51,8 +50,8 @@ function ContactListingModal(props) {
       difference.includes(item.member_mobile_number)
     );
     console.log(difference);
-    if(difference.length == 0){
-      toast.warning('Please select atleast one contact');
+    if (difference.length == 0) {
+      toast.warning("Please select atleast one contact");
       return false;
     }
     selectedFullItem(selectedFullArrayDifference);
@@ -95,17 +94,17 @@ function ContactListingModal(props) {
       if (!data.success) throw data.message;
       setListingTotalData(data.data.pagination.total);
       let filterData = [];
-      data.data.remain_contacts.forEach(item => {
+      data.data.remain_contacts.forEach((item) => {
         var findElement = 0;
-        alldata.forEach(elm => {
-          if(item.member_email == elm.member_email){
+        alldata.forEach((elm) => {
+          if (item.member_email == elm.member_email) {
             findElement = 1;
           }
-        })
-        if(findElement == 0){
+        });
+        if (findElement == 0) {
           filterData.push(item);
         }
-      })
+      });
       if (page == 1) {
         setRemainingContactListing(filterData);
       } else {
@@ -139,6 +138,7 @@ function ContactListingModal(props) {
       <div className="modal-dialog modal-dialog-centered" ref={modalRef}>
         <div className="modal-content">
           <div className="modal-body">
+            <h1 className="text-center mb-4">Add Contacts</h1>
             <div className="con-md-search-wrap">
               <form name="sdsa">
                 <div className="form-field search-field">

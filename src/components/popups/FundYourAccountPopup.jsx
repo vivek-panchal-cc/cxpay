@@ -23,12 +23,12 @@ function FundYourAccountPopup() {
                 <p>Credit Card</p>
               </div>
             </Link>
-            <Link to={`/wallet/fund-account/${FUND_CASH}`}>
+            {/* <Link to={`/wallet/fund-account/${FUND_CASH}`}>
               <div className="fund-payment-option">
                 <img src="/assets/images/fund_case.svg" alt="" />
                 <p>Cash Credit</p>
               </div>
-            </Link>
+            </Link> */}
             <Link to={`/wallet/fund-account/${FUND_BANK}`}>
               <div className="fund-payment-option">
                 <img src="/assets/images/fund_bt.svg" alt="" />

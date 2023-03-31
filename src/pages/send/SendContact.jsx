@@ -218,11 +218,8 @@ export default function SendContact() {
         <div className="login-btn">
           <div className="setting-btn-link send-btn-wrap pay-btn-wrap pt-3">
             {inviteContactList.length > 0 ? (
-              <button
-                className="btn btn-next ms-0"
-                onClick={checkedCheckBoxData}
-              >
-                Send
+              <button className="btn btn-next ms-0 ps-4 pe-4" onClick={checkedCheckBoxData}>
+                <IconSend className="me-2" style={{ stroke: "#fff" }} />Send
               </button>
             ) : (
               <button
@@ -232,6 +229,7 @@ export default function SendContact() {
                 + Add Contact
               </button>
             )} 
+            
           </div>
         </div>
       </div>
@@ -305,7 +303,6 @@ export default function SendContact() {
             }}
             isMultiSelect={false}
           />
-        
           <div className="send-btn-wrap pay-btn-wrap pt-2">
             <a
               className="btn btn-cancel-payment"

@@ -85,9 +85,9 @@ function SignupFundAccount() {
                   <option value={FUND_BANK}>
                     {FUND_BANK.replace(/-/g, " ")}{" "}
                   </option>
-                  <option value={FUND_CASH}>
+                  {/* <option value={FUND_CASH}>
                     {FUND_CASH.replace(/-/g, " ")}{" "}
-                  </option>
+                  </option> */}
                 </InputSelect>
               </form>
               {/* </div> */}

@@ -12,6 +12,7 @@ function Wallet() {
   const [cardsList, setCardsList] = useState([]);
   const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
   const [slideCard, setSlideCard] = useState({});
+  const [balance, setBalance] = useState(null);
 
   const getCardsList = async () => {
     setIsLoading(true);
@@ -22,6 +23,19 @@ function Wallet() {
       setSlideCard(data.data.cards?.[0]);
     } catch (error) {
       setCardsList([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getBalance = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.getBalance();
+      if (!data.success) throw data.message;
+      setBalance(data.data?.available_balance);
+    } catch (error) {
+      setBalance(null);
     } finally {
       setIsLoading(false);
     }
@@ -38,6 +52,7 @@ function Wallet() {
 
   useEffect(() => {
     getCardsList();
+    getBalance();
   }, []);
 
   return (
@@ -52,36 +67,47 @@ function Wallet() {
       >
         <FundYourAccountPopup />
       </Modal>
-      {/* <!-- dahsboard top sec starts -->	 */}
-      <div className="dashboard-top-sec wallet-top-wrap">
-        <div className="col-lg-7 col-12 wallet-title-wrap">
-          <div className="wallet-title-container">
-            <h2>Wallet</h2>
-            <p>Lorem Ipsum Dolor Sit Amet</p>
-          </div>
-          <div className="wallet-title-btns">
-            <Link className="wallet-top-1-btn" onClick={handleFundAccountPopup}>
-              <img src="/assets/images/fund_svg_wallet.svg" alt="" />
-              <span>Fund your account</span>
-            </Link>
-            <Link to="/wallet/link-bank" className="wallet-top-2-btn">
-              <img src="/assets/images/Bank_ic_wallet.svg" alt="" />
-              <span>Link a bank</span>
-            </Link>
-          </div>
-        </div>
-      </div>
       {/* <!-- dahsboard top sec close -->   */}
       <div className="dashboard-bottom-sec">
         <div className="wallet-main-left">
+          {/* <!-- dahsboard top sec starts -->	 */}
+          <div className="wallet-top-wrap wallet-top-nwrap">
+            <div className="wallet-title-wrap w-100">
+              <div className="wallet-title-container">
+                <h2>Wallet</h2>
+                <p>Lorem Ipsum Dolor Sit Amet</p>
+              </div>
+              <div className="wallet-title-btns">
+                <Link
+                  className="wallet-top-1-btn"
+                  onClick={handleFundAccountPopup}
+                >
+                  <img src="/assets/images/fund_svg_wallet.svg" alt="" />
+                  <span>Fund your account</span>
+                </Link>
+                <Link to="/wallet/link-bank" className="wallet-top-2-btn">
+                  <img src="/assets/images/Bank_ic_wallet.svg" alt="" />
+                  <span>Link a bank</span>
+                </Link>
+              </div>
+            </div>
+          </div>
           <div className="wallet-chart-container chart-container-common">
             {/* <!--<div id="chartContainer" style="height: 370px; width: 100%;"></div> --> */}
-            <div className="wallet-chart-wrap common-chart-wrap">
+            <div className="wallet-chart-wrap common-chart-wrap position-relative">
               <img
                 className="img-size"
                 src="/assets/images/chart-duumy.png"
                 alt=""
               />
+              {balance && (
+                <div className="position-absolute top-0 p-4">
+                  <h6 className="h6" style={{ color: "#0081c5" }}>
+                    Available Balance
+                  </h6>
+                  <h2 className="h3 text-black fw-bolder"> NAFl {balance} </h2>
+                </div>
+              )}
             </div>
           </div>
           <div className="wallet-recent-activity-sec-wrap">

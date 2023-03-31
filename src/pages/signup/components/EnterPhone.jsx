@@ -90,7 +90,7 @@ function EnterPhone(props) {
                       }
                       onChange={formik.handleChange}
                     >
-                      <option value={""}>Code</option>
+                      <option value={""}>Country</option>
                       {countryList?.map((country, index) => (
                         <option value={country.phonecode} key={index}>
                           {country.phonecode} &nbsp; {country.country_name}
