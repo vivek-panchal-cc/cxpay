@@ -289,17 +289,29 @@ const FundProvider = ({ children }) => {
   useEffect(() => {
     if (!formik.values || !formik.values.account_type) return;
     if (formik.values.bank_id) return;
-    const values = Object.assign(
-      { ...formik.values },
-      {
-        account_type: formik.values.account_type,
-        bank_name: "",
-        routing_number: "",
-        bank_account_number: "",
-        address: "",
-      }
-    );
-    formik.setValues(values);
+    (async () => {
+      const values = Object.assign(
+        { ...formik.values },
+        {
+          account_type: formik.values.account_type,
+          bank_name: "",
+          routing_number: "",
+          bank_account_number: "",
+          address: "",
+        }
+      );
+      const errors = Object.assign(
+        { ...formik.errors },
+        {
+          bank_name: "",
+          routing_number: "",
+          bank_account_number: "",
+          address: "",
+        }
+      );
+      await formik.setValues(values);
+      await formik.setErrors(errors);
+    })();
   }, [formik.values.account_type]);
 
   return (

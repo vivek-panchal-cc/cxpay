@@ -5,7 +5,7 @@ const expContainCapitalLetter = /^(?=.*[A-Z])/;
 const expContainNumber = /^(?=.*[0-9])/;
 const expContainSpecialChar = /^(?=.*[!@#\$%\^&\*])/;
 const validFileExtensions = {
-  image: ["jpg", "png", "jpeg", "svg"],
+  image: ["jpg", "png", "jpeg", "svg", "heif", "hevc"],
 };
 // const validFileSize = "5MB";
 const otpCounterTime = 180;

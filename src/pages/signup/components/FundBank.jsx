@@ -195,7 +195,8 @@ function FundBank() {
         </div>
       </div>
       <div className="row">
-        <div className="col-12 p-0">
+        <div className="col-12 p-0 amt-with-currency">
+          <span>NAFl</span>
           <Input
             type="text"
             id="transactionAmount"

@@ -52,7 +52,7 @@ function InputImage(props) {
   const clickedFileInput = useCallback(() => {
     window.addEventListener("focus", handleFocusBack);
   }, [handleFocusBack]);
-  console.log(isGroup);
+
   return (
     <div className={`upload-profile-image text-center ${className}`}>
       <label
@@ -101,7 +101,7 @@ function InputImage(props) {
         type={"file"}
         className={`${classNameInput}`}
         onChange={handleChange}
-        onClick={clickedFileInput}
+        // onClick={clickedFileInput}
         accept={accept}
       />
       {error && (

@@ -5267,7 +5267,7 @@ p.bank-name-wrap {
 }
 .bank-account-num-wrap {
   max-width: 230px;
-  min-width: 180px;
+  min-width: 200px;
   width: 100%;
   padding-right: 10px;
 }
@@ -5770,8 +5770,8 @@ li.db-view-bank-heading:hover {
 }
 .bank-account-routing-num {
   width: 100%;
-  max-width: 180px;
-  min-width: 180px;
+  max-width: 160px;
+  min-width: 160px;
   white-space: normal;
   word-break: break-all;
 }
@@ -6480,4 +6480,10 @@ ul.notification-list-wrap li:last-child {
 }
 .amt-with-currency .form-field input.form-control {
   padding-left: 60px !important;
+}
+.bank-account-type-wrap-1 {
+  max-width: 180px;
+  min-width: 180px;
+  width: 100%;
+  padding-right: 10px;
 }

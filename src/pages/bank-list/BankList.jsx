@@ -100,9 +100,9 @@ const BankList = () => {
             <li className="db-view-bank-div-main db-view-bank-common-div db-view-bank-heading">
               <div className="bank-logo-name-wrap">Bank Name</div>
               <div className="bank-account-type-wrap">Primary Account</div>
-              <div className="bank-account-routing-num">Account Number</div>
-              <div className="bank-account-num-wrap">Routing Number</div>
-              <div className="bank-account-type-wrap">Account Type</div>
+              <div className="bank-account-num-wrap">Account Number</div>
+              <div className="bank-account-routing-num">Routing Number</div>
+              <div className="bank-account-type-wrap-1">Account Type</div>
               <div className="bank-del-wrap"> </div>
               <div className="bank-del-wrap"> </div>
             </li>
@@ -133,13 +133,13 @@ const BankList = () => {
                       Primary Account
                     </label>
                   </div>
-                  <div className="bank-account-routing-num">
+                  <div className="bank-account-num-wrap">
                     <span>{elm?.bank_number}</span>
                   </div>
-                  <div className="bank-account-num-wrap">
+                  <div className=" bank-account-routing-num">
                     <span>{elm?.routing_number}</span>
                   </div>
-                  <div className="bank-account-type-wrap">
+                  <div className="bank-account-type-wrap-1">
                     {getCapitalized(elm?.account_type) + " Account"}
                   </div>
                   {/* <div className="bank-bal-wrap">Balance : <span>0</span></div> */}
