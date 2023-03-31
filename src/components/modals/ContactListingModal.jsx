@@ -1,10 +1,11 @@
 import Input from "components/ui/Input";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useContext,useState, useEffect, useRef } from "react";
 import { IconSearch } from "styles/svgs";
 import styles from "./modal.module.scss";
 import "./contactList.css";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
+import { LoaderContext } from "context/loaderContext";
 
 function ContactListingModal(props) {
   const {
@@ -35,6 +36,7 @@ function ContactListingModal(props) {
     retriveRemainingContact(1, e.target.value);
     setCurrentListPage(1);
   };
+  const { setIsLoading } = useContext(LoaderContext);
 
   const handleResetContactData = () => {
     setSearchContactName("");
@@ -43,20 +45,22 @@ function ContactListingModal(props) {
   };
 
   const submitContactData = () => {
-    let difference = selectedRemainingContact.filter(
-      (x) => !getCurrentData.includes(x)
-    );
-    let selectedFullArrayDifference = selectedFullContactArray.filter((item) =>
-      difference.includes(item.member_mobile_number)
-    );
-    console.log(difference);
-    if (difference.length == 0) {
-      toast.warning("Please select atleast one contact");
-      return false;
+    if(remainingContactListing.length > 0){
+      let difference = selectedRemainingContact.filter(
+        (x) => !getCurrentData.includes(x)
+      );
+      let selectedFullArrayDifference = selectedFullContactArray.filter((item) =>
+        difference.includes(item.member_mobile_number)
+      );
+      console.log(difference);
+      if (difference.length == 0) {
+        toast.warning("Please select atleast one contact");
+        return false;
+      }
+      selectedFullItem(selectedFullArrayDifference);
+      selectedItem(selectedRemainingContact);
+      handleCallback(false);
     }
-    selectedFullItem(selectedFullArrayDifference);
-    selectedItem(selectedRemainingContact);
-    handleCallback(false);
   };
 
   const handleChange = async (e) => {
@@ -86,6 +90,7 @@ function ContactListingModal(props) {
   };
   const retriveRemainingContact = async (page, searchText) => {
     try {
+      setIsLoading(true);
       const { data } = await apiRequest.getRemainingGroupContact({
         group_id: groupId,
         page: page,
@@ -111,7 +116,10 @@ function ContactListingModal(props) {
         var allData2 = remainingContactListing.concat(filterData);
         setRemainingContactListing(allData2);
       }
-    } catch (error) {}
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {

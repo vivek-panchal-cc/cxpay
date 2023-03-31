@@ -42,14 +42,22 @@
 .edit-group-top-main{
     max-width: 580px;
     margin-left: auto;
-    padding-bottom: 40px;
+    padding-bottom: 10px;
     margin-right: auto;
 }
 .edit-group-slider-main {
-    max-width: 1100px;
+    max-width: 1125px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 45px;
+    width:100%;
+}
+.edit-group-slider-main .swiper{
+    padding:25px 25px 0px;
+}
+.edit-group-slider-main .swiper-horizontal > .swiper-scrollbar, .swiper-scrollbar.swiper-scrollbar-horizontal {
+  width: calc(100% - 98px);
+  left: 25px;
 }
 .edit-group-bottom-main .eg-del-grp{
 	color: #FF3333;
@@ -120,9 +128,6 @@
 @media only screen and (max-height: 768px) {
   .eg-add-gi-wrap {
     margin-bottom: 25px;
-  }
-  .edit-group-top-main{
-    padding-bottom: 30px;
   }
   .edit-group-slider-main{
     margin-bottom: 30px;

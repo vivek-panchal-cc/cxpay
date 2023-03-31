@@ -1832,7 +1832,7 @@ margin: auto;
   border-radius: 40px;
   padding: 55px 60px 40px;
   border: none;
-  box-shadow: 0px 12px 50px rgba(37, 31, 48, 0.2);
+  box-shadow: 0px 12px 15px rgba(37, 31, 48, 0.2);
 }
 .modal-body h3 {
   font-size: 32px;
@@ -2686,14 +2686,15 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
 .send-whom-slider .img-wrap {
   /*max-width: 153px;
   max-height: 153px;*/
-  width: 99px;
-  height: 99px;
+  width: 105px;
+  height: 105px;
   border-radius: 47%;
   box-shadow: 0px 20.434px 40.868px rgba(0, 0, 0, 0.08);
+  /* box-shadow: 0px 5.434px 20.868px rgba(0, 0, 0, 0.08); */
   border: 0px solid transparent;
   position: relative;
   transition: all 0.5s ease-in-out;
-  margin: 0 auto 18px;
+  margin: 35px auto 22px;
 }
 .send-whom-slider .img-wrap::after {
   position: absolute;
@@ -4431,7 +4432,7 @@ margin-bottom:0px;
   padding-bottom: 30px;
 }
 .con-listing-container {
-  margin-top: 50px;
+  margin-top:30px;
 }
 .contact-listing-wrap {
   margin-bottom: 50px;
@@ -4441,11 +4442,14 @@ margin-bottom:0px;
   overflow-x: auto;
   width: 100%;
 }
+.contact-listing-wrap li:first-child{
+  margin-top: 20px;
+}
 .contact-listing-wrap li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px;
+  padding: 10px 12px;
   box-shadow: none;
   border-radius: 15px;
   transition: all 0.5s ease-in-out;
@@ -4453,12 +4457,13 @@ margin-bottom:0px;
   font-size: 14px;
   line-height: 16px;
   color: #969696;
-  margin-bottom: 10px;
+  margin: 0px 25px 20px;
   flex-wrap: nowrap;
   white-space: nowrap;
   min-width: -webkit-fit-content;
   min-width: -moz-fit-content;
   min-width: fit-content;
+  cursor: pointer;
 }
 .contact-listing-wrap li:hover {
   background-color: #fff;
@@ -4577,19 +4582,21 @@ cursor:pointer;
 ul::-webkit-scrollbar {
   width: 3px;
   height: 3px;
-  background: #f2f2f2;
+  /* background: #f2f2f2; */
+  background:rgba(0, 0, 0, 0.08);
 }
 ul::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 0px rgba(0, 0, 0, 0);
 }
 ul::-webkit-scrollbar-thumb {
-  background: #0081c5;
+  background: rgba(0, 0, 0, 0.17);
   border-radius: 0px;
-  width: 3px;
-  height: 3px;
+  width: 10px;
+  height: 10px;
+  overflow: visible;
 }
 ul::-webkit-scrollbar-thumb:hover {
-  background: #363853;
+  background:#363853;
 }
 /*ul::-webkit-scrollbar:vertical{display: none;}*/
 .contact-pg-popup form {
@@ -5254,7 +5261,7 @@ p.bank-name-wrap {
 }
 .bank-account-type-wrap {
   max-width: 210px;
-  min-width: 180px;
+  min-width: 210px;
   width: 100%;
   padding-right: 10px;
 }
@@ -6380,12 +6387,8 @@ ul.notification-list-wrap li:last-child {
   margin-bottom: 0px;
 }
 .con-listing-container{
-  margin-left: -10px;
-  margin-right: -10px;
-}
-.contact-listing-wrap li{
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: -25px;
+  margin-right: -25px;
 }
 .text-danger:not(:empty){
   font-family: 'Comfortaa' !important;
@@ -6420,11 +6423,61 @@ ul.notification-list-wrap li:last-child {
 .contact-listing-wrap li:hover .con-listing-mail p{
   color: #323232;
 }
-.send-whom-slider .contact-name{
+.send-whom-slider .contact-name,
+.eg-wrap-main>p{
   -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     display: -webkit-box;
+}
+/* CSS Added on 31-03 */
+.dashboard-right-sec.send-page-wrapper {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.dashboard-right-sec.send-page-wrapper .send-top-sec,
+.dashboard-right-sec.send-page-wrapper .send-btn-wrap,
+.dashboard-right-sec.send-page-wrapper .dashboard-top-sec,
+.dashboard-right-sec.send-page-wrapper .loading {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.dashboard-right-sec.send-page-wrapper .send-whom-slider .swiper{
+  padding-left: 40px;
+}
+.dashboard-right-sec.send-page-wrapper .send-top-sec{
+  padding-bottom: 0px !Important;
+}
+.send-page-wrapper .send-whom-slider .swiper-horizontal > .swiper-scrollbar,
+.send-page-wrapper .send-whom-slider .swiper-scrollbar.swiper-scrollbar-horizontal{
+  width: calc(100% - 150px);
+  left: 40px;
+}
+.send-page-wrapper .send-top-sec{
+  padding-bottom: 0px !Important;
+}
+.dashboard-notification-sec>.user-profile{
+  cursor: pointer;
+}
+.send-page-wrapper .loading {
+  margin-top: 20px;
+}
+.amt-with-currency {
+  position: relative;
+}
+.amt-with-currency span {
+  position: absolute;
+  z-index: 9;
+  top: 14px;
+  left: 15px;
+  color: #363853;
+  font-weight: 800;
+  display: block;
+  font-family: "Comfortaa";
+  font-style: normal;
+}
+.amt-with-currency .form-field input.form-control {
+  padding-left: 60px !important;
 }

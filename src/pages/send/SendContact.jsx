@@ -223,10 +223,13 @@ export default function SendContact() {
               </button>
             ) : (
               <button
-                className="btn btn-next ms-0"
+                className="btn btn-next ms-0 ps-4 pe-4 add-con-nf"
                 onClick={navigateToContactScreen}
               >
-                + Add Contact
+                  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="19" viewBox="0 0 17 19" fill="none" className="me-2">
+                    <path d="M14.7142 9.36439H2.14453M8.42937 16.4348L8.42937 2.29395" stroke="#363853" strokeWidth="4" strokeLinecap="round" style={{ color: "#fff",stroke: "#fff" }}></path>
+                  </svg>
+                Add Contact
               </button>
             )} 
             
@@ -234,7 +237,7 @@ export default function SendContact() {
         </div>
       </div>
       {/* <hr /> */}
-      {groupList.length > 0 ? (
+      {(searchData != '') || groupList.length > 0 ? (
         <>
           <div className="send-top-sec">
             <div className="title-content-wrap">
@@ -287,22 +290,27 @@ export default function SendContact() {
             {/* </div>
                     </div> */}
           </div>
-        
-          <ContactList
-            data={groupList}
-            fullWidth={true}
-            containerClassName={"send-group-slider"}
-            isSelectable={true}
-            selectedItems={(items) => setSelectedGroup(items)}
-            onReachEnd={() => {
-              console.log(totalGroupData);
-              if (groupCurrentPage * 10 < totalGroupData) {
-                setGroupCurrentPage(groupCurrentPage + 1);
-                getGroupsList(groupCurrentPage + 1, searchData);
-              }
-            }}
-            isMultiSelect={false}
-          />
+          {(groupList.length > 0) ? ( 
+            <ContactList
+              data={groupList}
+              fullWidth={true}
+              containerClassName={"send-group-slider"}
+              isSelectable={true}
+              selectedItems={(items) => setSelectedGroup(items)}
+              onReachEnd={() => {
+                console.log(totalGroupData);
+                if (groupCurrentPage * 10 < totalGroupData) {
+                  setGroupCurrentPage(groupCurrentPage + 1);
+                  getGroupsList(groupCurrentPage + 1, searchData);
+                }
+              }}
+              isMultiSelect={false}
+            />
+          ) : 
+            <div className="loading">
+              <p className="loading-data">No data found</p>
+            </div>
+          }
           <div className="send-btn-wrap pay-btn-wrap pt-2">
             <a
               className="btn btn-cancel-payment"
