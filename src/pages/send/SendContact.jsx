@@ -26,6 +26,9 @@ export default function SendContact() {
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
 
+  const navigateToContactScreen = () => {
+    navigate('/contacts');
+  }
   const handleResetContactData = () => {
     setSearchText("");
     setCurrentPage(1);
@@ -214,105 +217,114 @@ export default function SendContact() {
         )}
         <div className="login-btn">
           <div className="setting-btn-link send-btn-wrap pay-btn-wrap pt-3">
-            <button
-              className="btn btn-next ms-0"
-              onClick={checkedCheckBoxData}
-            >
-              Send
-            </button>
+            {inviteContactList.length > 0 ? (
+              <button
+                className="btn btn-next ms-0"
+                onClick={checkedCheckBoxData}
+              >
+                Send
+              </button>
+            ) : (
+              <button
+                className="btn btn-next ms-0"
+                onClick={navigateToContactScreen}
+              >
+                + Add Contact
+              </button>
+            )} 
           </div>
         </div>
       </div>
       {/* <hr /> */}
-      <div className="send-top-sec">
-        <div className="title-content-wrap">
-          <h3>Groups</h3>
-          {/* <p>Please select group to whom you want to send money</p> */}
-        </div>
-        {/* <div className="send-top-right-sec">
-                    <div className="main-search-wrap"> */}
-        <form style={{ width: "40%", marginTop: "0px" }}>
-          <div className="form-field search-field">
-            <div
-              className="js-clearSearchBox clearsearchbox"
-              onClick={handleResetGroupData}
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M13 1L0.999999 13"
-                  stroke="#9B9B9B"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                ></path>
-                <path
-                  d="M1 1L13 13"
-                  stroke="#9B9B9B"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                ></path>
-              </svg>
-            </div>
-            <Input
-              type="search"
-              className="form-control js-searchBox-input"
-              name="search-field"
-              placeholder="Search..."
-              onChange={getSearchGroup}
-            />
-            <div className="search-btn">
-              <IconSearch />
-            </div>
-          </div>
-        </form>
-        {/* </div>
-                </div> */}
-      </div>
       {groupList.length > 0 ? (
-        <ContactList
-          data={groupList}
-          fullWidth={true}
-          containerClassName={"send-group-slider"}
-          isSelectable={true}
-          selectedItems={(items) => setSelectedGroup(items)}
-          onReachEnd={() => {
-            console.log(totalGroupData);
-            if (groupCurrentPage * 10 < totalGroupData) {
-              setGroupCurrentPage(groupCurrentPage + 1);
-              getGroupsList(groupCurrentPage + 1, searchData);
-            }
-          }}
-          isMultiSelect={false}
-        />
-      ) : (
-        <div className="loading">
-          <p className="loading-data">{searchData != '' ? 'Group not found' : 'No data found'}</p>
-        </div>
-      )}
-      <div className="send-btn-wrap pay-btn-wrap pt-2">
-        <a
-          className="btn btn-cancel-payment"
-          onClick={(e) => checkGroupSelected(1)}
-        >
-          <IconEdit style={{ stroke: "#0081c5" }} /> Edit
-        </a>
-        {/* <a className="btn btn-next" onClick={(e) => checkGroupSelected(2)}>
-          Delete
-        </a> */}
-        <a
-          className="btn btn-next ws--btn"
-          onClick={(e) => checkGroupSelected(3)}
-        >
-          <IconSend style={{ stroke: "#fff" }} /> Send{" "}
-        </a>
-      </div>
+        <>
+          <div className="send-top-sec">
+            <div className="title-content-wrap">
+              <h3>Groups</h3>
+              {/* <p>Please select group to whom you want to send money</p> */}
+            </div>
+            {/* <div className="send-top-right-sec">
+                        <div className="main-search-wrap"> */}
+            <form style={{ width: "40%", marginTop: "0px" }}>
+              <div className="form-field search-field">
+                <div
+                  className="js-clearSearchBox clearsearchbox"
+                  onClick={handleResetGroupData}
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13 1L0.999999 13"
+                      stroke="#9B9B9B"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    ></path>
+                    <path
+                      d="M1 1L13 13"
+                      stroke="#9B9B9B"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    ></path>
+                  </svg>
+                </div>
+                <Input
+                  type="search"
+                  className="form-control js-searchBox-input"
+                  name="search-field"
+                  placeholder="Search..."
+                  onChange={getSearchGroup}
+                />
+                <div className="search-btn">
+                  <IconSearch />
+                </div>
+              </div>
+            </form>
+            {/* </div>
+                    </div> */}
+          </div>
+        
+          <ContactList
+            data={groupList}
+            fullWidth={true}
+            containerClassName={"send-group-slider"}
+            isSelectable={true}
+            selectedItems={(items) => setSelectedGroup(items)}
+            onReachEnd={() => {
+              console.log(totalGroupData);
+              if (groupCurrentPage * 10 < totalGroupData) {
+                setGroupCurrentPage(groupCurrentPage + 1);
+                getGroupsList(groupCurrentPage + 1, searchData);
+              }
+            }}
+            isMultiSelect={false}
+          />
+        
+          <div className="send-btn-wrap pay-btn-wrap pt-2">
+            <a
+              className="btn btn-cancel-payment"
+              onClick={(e) => checkGroupSelected(1)}
+            >
+              <IconEdit style={{ stroke: "#0081c5" }} /> Edit
+            </a>
+            {/* <a className="btn btn-next" onClick={(e) => checkGroupSelected(2)}>
+              Delete
+            </a> */}
+            <a
+              className="btn btn-next ws--btn"
+              onClick={(e) => checkGroupSelected(3)}
+            >
+              <IconSend style={{ stroke: "#fff" }} /> Send{" "}
+            </a>
+          </div>
+        </>
+      ) : '' }
       <ModalConfirmation
         id="create-group-popup"
         show={showDeleteGroupPopup}
