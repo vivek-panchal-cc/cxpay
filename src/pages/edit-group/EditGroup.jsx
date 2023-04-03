@@ -87,6 +87,7 @@ export default function EditGroup() {
       const { data } = await apiRequest.deleteGroup(param);
       if (!data.success) throw data.message;
       setShowDeleteGroupPopup(false);
+      toast.success(data.message);
       navigate("/send");
     } catch (error) {}
   };
@@ -111,20 +112,14 @@ export default function EditGroup() {
               }}
               error={formik.errors.group_image}
               showPreview={
-                profileImage
-                  ? profileImage
-                  : "/assets/images/group-svg-92.svg"
+                profileImage ? profileImage : "/assets/images/group-svg-92.svg"
               }
               showLabel={false}
               previewSrc={
-                profileImage
-                  ? profileImage
-                  : "/assets/images/group-svg-92.svg"
+                profileImage ? profileImage : "/assets/images/group-svg-92.svg"
               }
               fallbackSrc={
-                profileImage
-                  ? profileImage
-                  : "/assets/images/group-svg-92.svg"
+                profileImage ? profileImage : "/assets/images/group-svg-92.svg"
               }
               classNameInput="d-none"
               classNameBorder={`overflow-visible group-icon-image ${styles.set_group_background_image}`}
@@ -172,7 +167,7 @@ export default function EditGroup() {
               value="Save Group"
             />
           </div>
-          <a className="eg-del-grp custom-link-color" onClick={deleteGroupData} >
+          <a className="eg-del-grp custom-link-color" onClick={deleteGroupData}>
             Delete Group
           </a>
         </div>

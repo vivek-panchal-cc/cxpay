@@ -123,7 +123,7 @@ const addBusinessUrlSchema = yup.object().shape({
   business_url: yup
     .string()
     .required("Please enter business URL")
-    .matches(url_regex, "Please enter valid business URL")
+    // .matches(url_regex, "Please enter valid business URL")
     .nullable(),
 });
 
@@ -138,9 +138,8 @@ const inviteContactSchema = yup.object().shape({
 });
 
 const businessInfoSchema = yup.object().shape({
-  business_url: yup
-    .string()
-    .matches(url_regex, "Please enter valid business URL"),
+  business_url: yup.string(),
+  // .matches(url_regex, "Please enter valid business URL"),
   business_id: yup
     .string()
     // .required("Please enter personal id")
