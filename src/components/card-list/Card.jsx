@@ -1,20 +1,31 @@
 import Image from "components/ui/Image";
 import React from "react";
+import { IconCardBackground } from "styles/svgs";
 
 const Card = (props) => {
-  const { cardBg, cardHolderName, cardDate, cardNumber, customClass } = props;
+  const {
+    cardHolderName,
+    cardDate,
+    cardNumber,
+    customClass,
+    cardBgImg,
+    cardBgColor,
+  } = props;
   return (
-    <div className={`${customClass}`} style={{ backgroundColor: cardBg }}>
-      <Image
-        src={"assets/images/card_top_left.png"}
-        className={"w-card-top-img"}
-        alt=""
-      />
-      <Image
-        src={"assets/images/card_bottom_right.png"}
-        className={"w-card-bottom-img"}
-        alt=""
-      />
+    <div
+      className={`${customClass}`}
+      style={
+        cardBgImg
+          ? {
+              background: `url(${cardBgImg})`,
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+            }
+          : { backgroundColor: cardBgColor }
+      }
+    >
+      {!cardBgImg && <IconCardBackground />}
       <p className="card-holder-nm">{cardHolderName}</p>
       <div className="card-num-date">
         <p className="">{cardNumber}</p>

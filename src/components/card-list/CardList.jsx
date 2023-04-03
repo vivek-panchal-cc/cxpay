@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { A11y, EffectCards, Navigation, Scrollbar } from "swiper";
+import React from "react";
+import { EffectCards, Navigation, Scrollbar } from "swiper";
 import { SwiperSlide, Swiper } from "swiper/react";
 import Card from "./Card";
 
@@ -56,7 +55,8 @@ const CardList = (props) => {
             <SwiperSlide key={"swiper" + i}>
               <Card
                 customClass={customClass}
-                cardBg={elm.color}
+                cardBgImg={elm.image}
+                cardBgColor={elm.color}
                 cardHolderName={`${elm.card_holder_first_name} ${elm.card_holder_last_name}`}
                 cardDate={elm.expiry_date}
                 cardNumber={".... .... .... " + elm.card_number}

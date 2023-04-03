@@ -23,7 +23,7 @@ const initialValues = {
   city: "",
   transactionType: "PL",
   transactionAmount: "",
-  chargedAmount: "0.0", // not required for API
+  chargedAmount: "0.00", // not required for API
 };
 
 const cardCreds = {
@@ -77,7 +77,7 @@ const FundProvider = ({ children }) => {
   const [selectExistingBank, setSelectExistingBank] = useState(false);
   const [visiblePopupFunded, setVisiblePopupFunded] = useState(false);
   const [fundedDetails, setFundedDetails] = useState({ fund: "", balance: "" });
-  const [chargesDetails, setChargesDetails] = useState({ fees: "0.0" });
+  const [chargesDetails, setChargesDetails] = useState({ fees: "0.00" });
 
   const { first_name, last_name, email, city, country } =
     userProfile.profile || {};
@@ -208,7 +208,7 @@ const FundProvider = ({ children }) => {
       try {
         const { data } = await apiRequest.getCharges();
         if (!data.success) throw data.message;
-        setChargesDetails({ ...data.data, fees: "0.0" });
+        setChargesDetails({ ...data.data, fees: "0.00" });
       } catch (error) {
         console.log(error);
       } finally {
@@ -275,8 +275,8 @@ const FundProvider = ({ children }) => {
       ? parseFloat(formik.values.transactionAmount)
       : "";
     if (!formik.values.transactionAmount || !chargesDetails || isNaN(amount)) {
-      setChargesDetails((cs) => ({ ...cs, fees: "0.0" }));
-      formik.setFieldValue("chargedAmount", "0.0");
+      setChargesDetails((cs) => ({ ...cs, fees: "0.00" }));
+      formik.setFieldValue("chargedAmount", "0.00");
       return;
     }
     const percentage = parseFloat(chargesDetails.percentage);

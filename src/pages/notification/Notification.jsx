@@ -1,45 +1,69 @@
-import { apiRequest } from "helpers/apiRequests";
 import React, { useEffect, useState } from "react";
+import InputSwitch from "components/ui/InputSwitch";
+import { LoaderContext } from "context/loaderContext";
+import { useFormik } from "formik";
+import { apiRequest } from "helpers/apiRequests";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import LeftArrow from "styles/svgs/LeftArrow";
-
 const Notification = () => {
   const navigate = useNavigate();
-  const [customerNotification, setCustomerNotification] = useState({
-    sms_notification: false,
-    email_notification: false,
-    push_notification: false,
-    whatsapp_notification: false,
+  const { setIsLoading } = useContext(LoaderContext);
+  const [changeName, setChangeName] = useState("");
+
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      email_notification: false,
+      sms_notification: false,
+      whatsapp_notification: false,
+      push_notification: false,
+    },
+    onSubmit: async (values, { setStatus, setErrors }) => {
+      setIsLoading(true);
+      try {
+        const { data } = await apiRequest.updateCustomerNotification({
+          [changeName]: values[changeName].toString(),
+        });
+        if (!data.success) throw data.message;
+        toast.success(data.message);
+      } catch (error) {
+        if (typeof error === "string") toast.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
   });
 
+  // Onchange of Notification Checkbox
+  const handleChange = async (e) => {
+    if (!e.target.name) return;
+    setChangeName(e.target.name);
+    await formik.handleChange(e);
+    await formik.submitForm();
+  };
+
+  // Getting notification from the API
   useEffect(() => {
-    getCustomerNotification();
+    (async () => {
+      setIsLoading(true);
+      try {
+        const { data } = await apiRequest.getCustomerNotification();
+        if (!data.success) throw data.message;
+        const notification = data.data?.customerNotificationData;
+        if (!notification) return;
+        await formik.setValues({ ...notification });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
   }, []);
 
-  const getCustomerNotification = async () => {
-    const { data } = await apiRequest.getCustomerNotification();
-    console.log("data: ", data);
-    if (data?.data) {
-      setCustomerNotification(data?.data?.customerNotificationData);
-    }
-  };
-
-  const handleChange = async (e) => {
-    try {
-      const { name, checked } = e.target;
-      let config = customerNotification;
-      config[name] = checked;
-      const { data } = await apiRequest.updateCustomerNotification(config);
-      if (data.success) getCustomerNotification();
-      if (!data.success || data.data === null) throw data.message;
-    } catch (error) {
-      console.log("error: ", error);
-      toast.error(error);
-    }
-  };
   return (
-    <div className="settings-note-inner-sec">
+    <div className="settings-note-inner-sec settings-vc-sec setting-noti-sec-new">
       <div className="profile-info">
         <h3>Notification</h3>
         <ul className="breadcrumb">
@@ -53,107 +77,47 @@ const Notification = () => {
         <ul>
           <li>
             <span className="settings">Email</span>
-            <div className="form-check form-switch">
-              <input
-                onChange={handleChange}
-                value={customerNotification?.email_notification}
-                checked={customerNotification?.email_notification}
-                name="email_notification"
-                className="form-check-input"
-                type="checkbox"
-                id="flexSwitchCheckDefault"
-              />
-              <label
-                className="form-check-label"
-                htmlFor="flexSwitchCheckDefault"
-              >
-                OFF
-              </label>
-              <label
-                className="form-check-label"
-                htmlFor="flexSwitchCheckDefault"
-              >
-                ON
-              </label>
-            </div>
+            <InputSwitch
+              name="email_notification"
+              className="form-check-input"
+              labelOffText="OFF"
+              labelOnText="ON"
+              onChange={handleChange}
+              checked={formik.values.email_notification}
+            />
           </li>
           <li>
             <span className="settings">SMS</span>
-            <div className="form-check form-switch">
-              <input
-                onChange={handleChange}
-                value={customerNotification?.sms_notification}
-                checked={customerNotification?.sms_notification}
-                name="sms_notification"
-                className="form-check-input"
-                type="checkbox"
-                id="flexSwitchCheckDefault"
-              />
-              <label
-                className="form-check-label"
-                htmlFor="flexSwitchCheckDefault"
-              >
-                OFF
-              </label>
-              <label
-                className="form-check-label"
-                htmlFor="flexSwitchCheckDefault"
-              >
-                ON
-              </label>
-            </div>
+            <InputSwitch
+              name="sms_notification"
+              className="form-check-input"
+              labelOffText="OFF"
+              labelOnText="ON"
+              onChange={handleChange}
+              checked={formik.values.sms_notification}
+            />
           </li>
           <li>
             <span className="settings">Whatsapp</span>
-            <div className="form-check form-switch">
-              <input
-                onChange={handleChange}
-                value={customerNotification?.whatsapp_notification}
-                checked={customerNotification?.whatsapp_notification}
-                name="whatsapp_notification"
-                className="form-check-input"
-                type="checkbox"
-                id="flexSwitchCheckDefault"
-              />
-              <label
-                className="form-check-label"
-                htmlFor="flexSwitchCheckDefault"
-              >
-                OFF
-              </label>
-              <label
-                className="form-check-label"
-                htmlFor="flexSwitchCheckDefault"
-              >
-                ON
-              </label>
-            </div>
+            <InputSwitch
+              name="whatsapp_notification"
+              className="form-check-input"
+              labelOffText="OFF"
+              labelOnText="ON"
+              onChange={handleChange}
+              checked={formik.values.whatsapp_notification}
+            />
           </li>
           <li>
             <span className="settings">Mobile app</span>
-            <div className="form-check form-switch">
-              <input
-                onChange={handleChange}
-                value={customerNotification?.push_notification}
-                checked={customerNotification?.push_notification}
-                name="push_notification"
-                className="form-check-input"
-                type="checkbox"
-                id="flexSwitchCheckDefault"
-              />
-              <label
-                className="form-check-label"
-                htmlFor="flexSwitchCheckDefault"
-              >
-                OFF
-              </label>
-              <label
-                className="form-check-label"
-                htmlFor="flexSwitchCheckDefault"
-              >
-                ON
-              </label>
-            </div>
+            <InputSwitch
+              name="push_notification"
+              className="form-check-input"
+              labelOffText="OFF"
+              labelOnText="ON"
+              onChange={handleChange}
+              checked={formik.values.push_notification}
+            />
           </li>
         </ul>
         <div className="setting-btn-link">

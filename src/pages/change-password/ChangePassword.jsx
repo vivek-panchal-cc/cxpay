@@ -48,7 +48,7 @@ function ChangePassword() {
   });
 
   return (
-    <div className="settings-password-right-sec">
+    <div className="settings-password-right-sec settings-vc-sec">
       <div className="settings-note-inner-sec">
         <div className="profile-info">
           <h3>Change Password</h3>

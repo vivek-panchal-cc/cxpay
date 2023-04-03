@@ -2,14 +2,14 @@
   .login-logo-image img {
     max-width: 110px;
   }
-  .login-signup form .form-field .form-control {
+  /* .login-signup form .form-field .form-control {
     padding: 11px 19px !important;
   }
   form .form-field select.form-control.form-select {
     padding: 11px 24px 11px 11px !important;
     background-position: right 10px center !important;
     background-size: 10px auto !important;
-  }
+  }*/
   .login-logo-image {
     margin-bottom: 10px;
   }
@@ -34,12 +34,12 @@
     font-size: 14px;
     line-height: 18px;
   }
-  .login-signup .login-signup-inner {
-    padding: 30px 50px;
+  /* .login-signup .login-signup-inner {
+    padding: 30px;
   }
   .login-signup-01 .login-signup-inner {
-    padding: 30px 50px;
-  }
+    padding: 30px;
+  } */
   /*.login-signup-content-wrap {
     max-height: 95vh;
   }*/
@@ -69,9 +69,9 @@
   .wallet-link-bank-bottom {
     padding-top: 40px;
   }
-  .dashboard-right-sec {
+  /* .dashboard-right-sec {
     padding-top: 30px;
-  }
+  } */
   /* Wallet Page Start */
   .wallet-chart-container,
   .wallet-top-wrap {
@@ -151,10 +151,10 @@
   .wallet-total-am-wrap {
     margin-top: 10px;
   }
-  form .form-field .form-control,
+  /*form .form-field .form-control,
   .select-form-field select {
     padding: 13px 22px !important;
-  }
+  }*/
   .wallet-acc-fund-btns {
     margin-top: 10px;
   }
@@ -955,7 +955,7 @@
     line-height: 22px;
   }
   .send-top-sec {
-    padding-bottom:0px;
+    padding-bottom: 0px;
     padding-right: 0px;
   }
   .one-time-pay-main-sec {
@@ -1268,6 +1268,12 @@
   .wallet-ac-inner .card-num-date p:last-child {
     font-size: 14px;
     line-height: 14px;
+  }
+  form .form-field .form-control{
+    padding: 11px 15px !important;
+  }
+  .amt-with-currency span{
+    top:11.5px;
   }
 }
 @media only screen and (max-width: 1199px) and (min-width: 992px) {
@@ -1602,7 +1608,7 @@
   }
   .settings-vc-sec,
   .business-info-right-sec {
-    padding-top: 110px;
+    padding-top: 20px;
     height: auto;
   }
   .contact-top-btn-nav .con-btn-wrap {
@@ -1619,18 +1625,20 @@
     font-size: 20px;
     line-height: 25px;
   }
-    .dashboard-right-sec.send-page-wrapper .send-top-sec,
+  .dashboard-right-sec.send-page-wrapper .send-top-sec,
   .dashboard-right-sec.send-page-wrapper .send-btn-wrap,
-  .dashboard-right-sec.send-page-wrapper .dashboard-top-sec ,
-  .dashboard-right-sec.send-page-wrapper .loading{
+  .dashboard-right-sec.send-page-wrapper .dashboard-top-sec,
+  .dashboard-right-sec.send-page-wrapper .loading {
     padding-left: 30px;
     padding-right: 30px;
   }
-  .dashboard-right-sec.send-page-wrapper .send-whom-slider .swiper{
+  .dashboard-right-sec.send-page-wrapper .send-whom-slider .swiper {
     padding-left: 30px;
   }
   .send-page-wrapper .send-whom-slider .swiper-horizontal > .swiper-scrollbar,
-  .send-page-wrapper .send-whom-slider .swiper-scrollbar.swiper-scrollbar-horizontal{
+  .send-page-wrapper
+    .send-whom-slider
+    .swiper-scrollbar.swiper-scrollbar-horizontal {
     width: calc(100% - 120px);
     left: 30px;
   }
@@ -1717,7 +1725,7 @@
     justify-content: flex-end;
     flex-wrap: wrap;
   }
-  .send-page-wrapper .send-btn-wrap .btn-cancel-payment{
+  .send-page-wrapper .send-btn-wrap .btn-cancel-payment {
     padding-left: 26px;
     padding-right: 26px;
   }
@@ -1732,6 +1740,15 @@
     font-size: 26px;
     line-height: 35x;
     padding: 38px 0 40px;
+  }
+  .login-signup .login-signup-inner {
+    padding: 35px 30px;
+  }
+  .login-signup-01 .login-signup-inner {
+    padding: 35px 30px;
+  }
+  form .form-field .form-control {
+    padding: 11px 15px !important;
   }
   /*.login-signup-content-wrap {
     max-height: 85vh;
@@ -2672,7 +2689,7 @@
   }
   .wallet-title-wrap {
     flex-wrap: wrap;
-    margin-top: 20px;
+    /* margin-top: 20px; */
   }
   .wallet-title-btns {
     margin-left: auto;
@@ -2845,13 +2862,13 @@
     width: 100%;
   }
   form .form-field select.form-control.form-select {
-    padding: 11px 22px 11px 11px !important;
+    /* padding: 11px 22px 11px 11px !important; */
     background-position: right 10px center !important;
     background-size: 10px auto !important;
   }
-  .login-signup-content-wrap select.form-control.form-select {
+  /*.login-signup-content-wrap select.form-control.form-select {
     height: 43.58px;
-  }
+  }*/
   .db-view-bank-main ul.db-view-bank-listing {
     max-height: calc(100vh - 235px);
     height: auto;
@@ -2902,11 +2919,12 @@
   }
   .mobile-toggle .toggle-admin-btn {
     position: absolute;
+    /* position: fixed; */
     left: 0px;
     transform: translateX(20px);
     right: auto;
     z-index: 99;
-    top: 30px;
+    top: 40px;
     bottom: auto;
     margin: auto;
     width: 30px;
@@ -2997,19 +3015,29 @@
     opacity: 1;
     visibility: visible;
   }
-  .send-top-sec{
+  .send-top-sec {
     padding-top: 20px;
   }
-  .contact-top-sec{
+  .contact-top-sec {
     margin-top: 20px;
   }
-  .edit-group-slider-main{
-      margin-left: -20px;
-      margin-right: -20px;
+  .edit-group-slider-main {
+    margin-left: -20px;
+    margin-right: -20px;
   }
-  .edit-group-slider-main .swiper{
-    padding-left:20px;
+  .edit-group-slider-main .swiper {
+    padding-left: 20px;
     padding-right: 20px;
+  }
+  .dashboard-link-wrap ul li a span {
+    padding-left: 10px;
+  }
+  .profile-inner-sec.p-4 {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+  .amt-with-currency span{
+    top:11.5px;
   }
 }
 
@@ -3022,21 +3050,21 @@
   .logo-image img {
     max-width: 240px;
   }
-  .login-signup-content-wrap {
+  /* .login-signup-content-wrap {
     padding: 25px 20px 30px;
-  }
+  } */
   .login-signup-content-wrap h4 {
     margin-bottom: 15px;
     font-size: 22px;
   }
   form .form-field .form-control {
     border-radius: 12px !important;
-    padding: 12px 15px !important;
+    padding: 11px 15px !important;
     font-size: 14px;
   }
-  form .form-field select.form-control {
+  /* form .form-field select.form-control {
     font-size: 10px;
-  }
+  } */
   form .form-control::placeholder {
     font-size: 14px;
     line-height: 26px;
@@ -3689,7 +3717,8 @@
   }
   .settings-vc-sec,
   .business-info-right-sec {
-    padding-top: 70px;
+    /* padding-top: 70px; */
+    padding-top: 20px;
   }
   .con-details-modal .modal-body {
     padding: 70px 15px 35px;
@@ -3781,35 +3810,37 @@
     padding-left: 20px;
     padding-right: 20px;
   }
-  .dashboard-right-sec.send-page-wrapper .send-whom-slider .swiper{
+  .dashboard-right-sec.send-page-wrapper .send-whom-slider .swiper {
     padding-left: 20px;
   }
   .send-page-wrapper .send-whom-slider .swiper-horizontal > .swiper-scrollbar,
-  .send-page-wrapper .send-whom-slider .swiper-scrollbar.swiper-scrollbar-horizontal{
+  .send-page-wrapper
+    .send-whom-slider
+    .swiper-scrollbar.swiper-scrollbar-horizontal {
     width: calc(100% - 130px);
     left: 20px;
   }
-  .con-listing-container{
+  .con-listing-container {
     margin-top: 20px;
   }
-  .contact-listing-wrap li{
-    margin-left:20px;
+  .contact-listing-wrap li {
+    margin-left: 20px;
     margin-right: 20px;
   }
   .con-listing-container {
     margin-left: -20px;
     margin-right: -20px;
   }
-  .edit-group-slider-main{
+  .edit-group-slider-main {
     margin-left: -15px;
     margin-right: -15px;
   }
-  .edit-group-slider-main .swiper{
-    padding-left:15px;
+  .edit-group-slider-main .swiper {
+    padding-left: 15px;
     padding-right: 15px;
   }
-  .amt-with-currency span{
-    top:11px;
+  .amt-with-currency span {
+    top: 11px;
   }
 }
 @media only screen and (max-width: 575px) {
@@ -3824,6 +3855,9 @@
   .profile-info-right-desc .edit-button {
     margin: 5px 0 5px 15px;
     margin-left: auto;
+  }
+  .acount-type-wrap .cust-radio-wrap {
+    margin: 15px 8px;
   }
   /*20-01-2023*/
   .recent-contact-slider .swiper::after {
@@ -3971,9 +4005,14 @@
   .fund-payment-option-wrap a:last-child .fund-payment-option {
     margin-bottom: 0px;
   }
-  .login-signup .login-signup-inner {
+  /* .login-signup .login-signup-inner {
     padding-left: 10px;
     padding-right: 10px;
+  } */
+  .login-signup-01 .login-signup-inner,
+  .login-signup .login-signup-inner {
+    padding-left: 25px;
+    padding-right: 25px;
   }
   .login-signup-content-wrap h5,
   .login-signup-content-wrap h4.blue-text {
@@ -4015,11 +4054,15 @@
   .contact-top-btn-nav .con-btn-wrap {
     margin-bottom: 10px;
   }
+  .profile-top-sec > .profile-avtar {
+    width: 90px;
+    height: 90px;
+  }
 }
 @media only screen and (max-width: 480px) {
-  .profile-inner-sec.p-4 {
+  /* .profile-inner-sec.p-4 {
     padding: 0px !important;
-  }
+  } */
   .contact-top-btn-nav .con-btn-wrap > .btn span {
     display: block;
     width: 100%;
@@ -4057,5 +4100,8 @@
     left: 10px;
     right: 20px;
     border-top-right-radius: 11px;
+  }
+  .sticky_appear .notification-dd-wrap {
+    top: 60px;
   }
 }

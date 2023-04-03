@@ -20,6 +20,7 @@ function DashboardLayout() {
       setIsLoading(false);
     })();
   }, [dispatch]);
+
   return (
     <div className="dashboard-page wallet-page">
       <div className="container-fluid">
@@ -27,7 +28,11 @@ function DashboardLayout() {
           <div className="col-xs-12 col-lg-3 dashboard-left-sec">
             <LeftSidebar />
           </div>
-          <div className={`col-xs-12 col-lg-9 dashboard-right-sec min-vh-100 ${window.location.pathname == '/send' ? 'send-page-wrapper' : ''}`}>
+          <div
+            className={`col-xs-12 col-lg-9 dashboard-right-sec min-vh-100 ${
+              window.location.pathname == "/send" ? "send-page-wrapper" : ""
+            }`}
+          >
             <div className="mobile-toggle">
               <span className="toggle-admin-btn">
                 <img
