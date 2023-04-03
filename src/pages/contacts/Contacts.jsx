@@ -11,6 +11,7 @@ import ModalConfirmation from "components/modals/ModalConfirmation";
 import InvitationSent from "./components/InvitationSent";
 import ContactDetail from "./components/ContactDetail";
 import Delete from "styles/svgs/Delete";
+import { Link } from "react-router-dom";
 
 const Contacts = (props) => {
   const { setIsLoading } = useContext(LoaderContext);
@@ -28,7 +29,6 @@ const Contacts = (props) => {
   const [showInvitationSentPopup, setInvitationSentPopup] = useState(false);
   const [showConatctDetailPopup, setConatctDetailPopup] = useState(false);
   const [contactData, setConatctData] = useState([]);
-  const [contactsOrInvited, setContactsOrInvited] = useState("");
   const [contactName, setContactName] = useState("");
 
   const handlePopupInvite = (e) => {
@@ -43,11 +43,7 @@ const Contacts = (props) => {
   const handleChangeFilter = (e) => {
     const val = e.target.value;
     setSearch(val);
-    if (contactsOrInvited === "contacts") {
-      retrieveContacts(page, val);
-    } else {
-      handleInvitedContacts(page, val);
-    }
+    retrieveContacts(page, val);
   };
 
   const handleOpenConfirmModal = (idArr, name) => {
@@ -67,9 +63,7 @@ const Contacts = (props) => {
     try {
       const { data } = await apiRequest.deleteContact({ mobile: id });
       data["status_code"] === 200 &&
-        (contactsOrInvited === "contacts"
-          ? retrieveContacts(page)
-          : handleInvitedContacts(page));
+      retrieveContacts(page)
       data["status_code"] === 200 && setSelectedContacts([]);
       toast.success(data.message);
       setConfirmShow(false);
@@ -93,9 +87,7 @@ const Contacts = (props) => {
       const { data } = await apiRequest.favContact(reqData);
 
       data["status_code"] === 200 &&
-        (contactsOrInvited === "contacts"
-          ? retrieveContacts(page)
-          : handleInvitedContacts(page));
+      retrieveContacts(page);
       setfavIconShow(favIconShow);
       toast.success(data.message);
 
@@ -119,13 +111,11 @@ const Contacts = (props) => {
         search: search,
       });
       if (!data.success || data.data === null) throw data.message;
-      setContactsOrInvited("contacts");
       setPage(currentPage);
       setContacts(data.data);
       setIsLoading(false);
     } catch (error) {
       if (error === "Contact not found") {
-        setContactsOrInvited("contacts");
         setContacts(null);
       }
       console.log(error);
@@ -134,29 +124,6 @@ const Contacts = (props) => {
     //  finally {
     //   setIsLoading(false);
     // }
-  };
-
-  const handleInvitedContacts = async (currentPage = 1, search) => {
-    // setIsLoading(true);
-    setIsLoading(true);
-    try {
-      const { data } = await apiRequest.invitedConatcts({
-        page: currentPage,
-        search: search,
-      });
-      if (!data.success || data.data === null) throw data.message;
-      setContactsOrInvited("invited");
-      setPage(currentPage);
-      setContacts(data.data);
-      setIsLoading(false);
-    } catch (error) {
-      if (error === "Contact not found") {
-        setContactsOrInvited("invited");
-        setContacts(null);
-      }
-      console.log(error);
-      setIsLoading(false);
-    }
   };
 
   const handleChange = async (e) => {
@@ -175,11 +142,7 @@ const Contacts = (props) => {
 
   const handleResetFilter = () => {
     setSearch("");
-    if (contactsOrInvited === "contacts") {
-      retrieveContacts();
-    } else {
-      handleInvitedContacts();
-    }
+    retrieveContacts();
   };
 
   return (
@@ -188,11 +151,7 @@ const Contacts = (props) => {
         <div className="contact-sec">
           <div className="contact-top-sec">
             <div className="title-content-wrap">
-              <h3>
-                {contactsOrInvited === "contacts"
-                  ? "Contacts"
-                  : "Invited Contacts"}
-              </h3>
+              <h3>Contacts</h3>
             </div>
           </div>
           <div className="contact-top-search-sec d-flex align-items-center">
@@ -290,7 +249,7 @@ const Contacts = (props) => {
                 <Modal id="invite_contact" show={show} setShow={setShow}>
                   <InviteContact
                     getConatcts={retrieveContacts}
-                    getInvitedConatcts={handleInvitedContacts}
+                    getInvitedConatcts={[]}
                     page={page}
                     search={search}
                     setShow={setShow}
@@ -303,12 +262,6 @@ const Contacts = (props) => {
                     {...{ invitetitle }}
                   />
                 </Modal>
-                <InvitationSent
-                  id="invitation_sent"
-                  show={showInvitationSentPopup}
-                  setShow={setInvitationSentPopup}
-                  handleClose={setInvitationSentPopup}
-                />
                 <ContactDetail
                   id="contact_detail"
                   data={contactData}
@@ -316,47 +269,32 @@ const Contacts = (props) => {
                   setShow={setConatctDetailPopup}
                   handleClose={setConatctDetailPopup}
                 />
-                {contactsOrInvited === "contacts" ? (
-                  <button
+                <button
                     className="btn"
                     type="button"
                     value={"Invited Contacts"}
-                    onClick={() => handleInvitedContacts()}
                   >
-                    <img
-                      src="assets/images/invite_group-ic.svg"
-                      alt=""
-                      className="invited-contacts-img"
-                    />
-                    <span>Invited Contacts</span>
-                  </button>
-                ) : (
-                  <button
-                    className="btn"
-                    type="button"
-                    value={"Contacts"}
-                    onClick={() => retrieveContacts()}
-                  >
-                    <img src="assets/images/invite_group-ic.svg" alt="" />
-                    <span>Contacts</span>
-                  </button>
-                )}
+                    <Link to="/contacts/invited">
+                      <img
+                        src="assets/images/invite_group-ic.svg"
+                        alt=""
+                        className="invited-contacts-img"
+                      />
+                      <span>Invited Contacts</span>
+                    </Link>
+                </button>
               </div>
-              {contactsOrInvited === "contacts" ? (
-                <div className="con-btn-wrap con-add-btn-wrap">
-                  <button
-                    className="btn"
-                    value="Create Group"
-                    onClick={handleCreateGroup}
-                    disabled={selectedContacts.length < 2}
-                  >
-                    <img src="assets/images/Add_icon.svg" alt="" />
-                    <span>Create Group</span>
-                  </button>
-                </div>
-              ) : (
-                ""
-              )}
+              <div className="con-btn-wrap con-add-btn-wrap">
+                <button
+                  className="btn"
+                  value="Create Group"
+                  onClick={handleCreateGroup}
+                  disabled={selectedContacts.length < 2}
+                >
+                  <img src="assets/images/Add_icon.svg" alt="" />
+                  <span>Create Group</span>
+                </button>
+              </div>
             </div>
           </div>
           <div className="con-listing-container">
@@ -441,16 +379,14 @@ const Contacts = (props) => {
                           <Delete />
                         </button>
                       </div>
-                      { (contactsOrInvited === "contacts"  ?
-                        <div className="con-listing-btn-wrap">
-                          <a href="/" className="btn btn-primary con-send-btn">
-                            Send
-                          </a>
-                          <a href="/" className="btn btn-primary con-req-btn">
-                            Request
-                          </a>
-                        </div>
-                      : '')}
+                      <div className="con-listing-btn-wrap">
+                        <a href="/" className="btn btn-primary con-send-btn">
+                          Send
+                        </a>
+                        <a href="/" className="btn btn-primary con-req-btn">
+                          Request
+                        </a>
+                      </div>
                     </div>
                   </li>
                 ))
@@ -464,11 +400,7 @@ const Contacts = (props) => {
               active={page}
               size={contacts?.pagination?.last_page}
               siblingCount={1}
-              onClickHandler={
-                contactsOrInvited === "contacts"
-                  ? retrieveContacts
-                  : handleInvitedContacts
-              }
+              onClickHandler={retrieveContacts}
             ></Pagination>
           )}
         </div>

@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { inviteContactSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import Input from "components/ui/Input";
+import { useNavigate } from "react-router-dom";
 
 function InviteContact(props) {
   const {
@@ -16,8 +17,10 @@ function InviteContact(props) {
     getInvitedConatcts,
     page,
     search,
+    isInvitedFlag = false
   } = props;
   const [isShowContactPopup, setIsShowContactPopup] = useState(true);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -41,12 +44,21 @@ function InviteContact(props) {
             setConatctData(data.data.contactDetails);
             setConatctDetailPopup(true);
             setShow(false);
-            getConatcts(1,'');
+            if(isInvitedFlag){
+              navigate('/contacts');
+            }else{
+              getConatcts(1,'');
+            }
           } else {
             setConatctData("");
             setInvitationSentPopup(true);
             setShow(false);
-            getInvitedConatcts(1,'')
+            //getInvitedConatcts(1,'')
+            if(isInvitedFlag){
+              getInvitedConatcts(1,'')
+            }else{
+              navigate('/contacts/invited');
+            }
           }
         } else {
           setStatus(data.message);
@@ -82,7 +94,7 @@ function InviteContact(props) {
           <div className="modal-content">
             <div className="modal-body text-center">
               <img
-                src="assets/images/invite-con-img.svg"
+                src={`${isInvitedFlag ? "../assets/images/invite-con-img.svg" : "assets/images/invite-con-img.svg"}`}
                 alt=""
                 className="invite-logo"
               />
