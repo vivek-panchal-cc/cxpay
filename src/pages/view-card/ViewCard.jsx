@@ -16,6 +16,7 @@ function ViewCard(props) {
   const [cardsList, setCardsList] = useState([]);
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [deleteCard, setDeleteCard] = useState(null);
+  const [popupError, setPopupError] = useState(""); // Error for popup
 
   const getCardsList = async () => {
     setIsLoading(true);
@@ -31,21 +32,24 @@ function ViewCard(props) {
     }
   };
 
+  // Getting confirmation before deleting card
   const handleConfirmDelete = (card) => {
+    setPopupError("");
     setShowConfirmPopup(true);
     setDeleteCard(card);
   };
 
+  // For Deleting card after confirmation
   const handleCardDelete = async () => {
-    setShowConfirmPopup(false);
     setIsLoading(true);
     try {
       const { data } = await apiRequest.deleteCard({ id: deleteCard.id });
       if (!data.success) throw data.message;
-      getCardsList();
+      setShowConfirmPopup(false);
+      await getCardsList();
       toast.success(data.message);
     } catch (error) {
-      toast.error(error);
+      setPopupError(error);
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -87,6 +91,7 @@ function ViewCard(props) {
       <ModalConfirmation
         heading="Are you sure?"
         subHeading="Are you sure to delete this card?"
+        error={popupError}
         show={showConfirmPopup}
         setShow={setShowConfirmPopup}
         handleCallback={handleCardDelete}

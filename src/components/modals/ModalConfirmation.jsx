@@ -11,6 +11,7 @@ function ModalConfirmation(props) {
     handleCallback,
     heading = "Confirm",
     subHeading = "",
+    error = "",
   } = props;
   const modalRef = useRef(null);
 
@@ -38,6 +39,7 @@ function ModalConfirmation(props) {
           <div className="modal-header flex-column">
             <h3 className="text-center">{heading}</h3>
             <p>{subHeading}</p>
+            {error && <p className="text-danger text-center">{error}</p>}
           </div>
           <div className="modal-body">
             <div>{children}</div>

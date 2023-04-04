@@ -29,10 +29,10 @@
     padding-bottom: 10px;
   }
   .login-signup input[type="submit"] {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    font-size: 14px;
-    line-height: 18px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 16px;
+    line-height: 20px;
   }
   /* .login-signup .login-signup-inner {
     padding: 30px;
@@ -1269,11 +1269,11 @@
     font-size: 14px;
     line-height: 14px;
   }
-  form .form-field .form-control{
+  form .form-field .form-control {
     padding: 11px 15px !important;
   }
-  .amt-with-currency span{
-    top:11.5px;
+  .amt-with-currency span {
+    top: 11.5px;
   }
 }
 @media only screen and (max-width: 1199px) and (min-width: 992px) {
@@ -3033,8 +3033,8 @@
     padding-left: 0px !important;
     padding-right: 0px !important;
   }
-  .amt-with-currency span{
-    top:11.5px;
+  .amt-with-currency span {
+    top: 11.5px;
   }
 }
 
@@ -3843,6 +3843,14 @@
   .amt-with-currency span {
     top: 11px;
   }
+  .wallet-chart-wrap h2 {
+    font-size: 25px;
+    line-height: 30px;
+  }
+  .wallet-chart-wrap h6 {
+    font-size: 17px;
+    line-height: 22px;
+  }
 }
 @media only screen and (max-width: 575px) {
   .logo-content-wrap h4 {
@@ -4058,6 +4066,12 @@
   .profile-top-sec > .profile-avtar {
     width: 90px;
     height: 90px;
+  }
+  .wallet-card-add-btns a span {
+    max-width: 70px;
+  }
+  .wallet-card-add-btns a {
+    font-size: 14px;
   }
 }
 @media only screen and (max-width: 480px) {

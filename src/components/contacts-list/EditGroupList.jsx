@@ -13,7 +13,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 const EditGroupList = (props) => {
-  const { data, groupId, selectedItems,getItem, fullWidth = false } = props;
+  const { data, groupId, selectedItems, getItem, fullWidth = false } = props;
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
   const [showAddContactPopup, setShowAddContactPopup] = useState(false);
@@ -90,8 +90,8 @@ const EditGroupList = (props) => {
     if (contactsList.length === 1) {
       setShowDeleteGroupPopup(true);
     } else {
-      //setShowDeletePopup(true);
-      deleteMember(memberAccountNumber, memberMobileNumber);
+      setShowDeletePopup(true);
+      // deleteMember(memberAccountNumber, memberMobileNumber);
     }
   };
   const deleteCurrentGroup = async (id) => {
@@ -148,7 +148,8 @@ const EditGroupList = (props) => {
       setShowDeletePopup(false);
     }
     var index = getItem.indexOf(memberMobileNumber);
-    if (index > -1) { // only splice array when item is found
+    if (index > -1) {
+      // only splice array when item is found
       getItem.splice(index, 1); // 2nd parameter means remove one item only
     }
     selectedItems(getItem);
@@ -201,7 +202,10 @@ const EditGroupList = (props) => {
           ))}
         </div>
         <div className="eg-add-con-wrap">
-          <a onClick={() => showAddContactPopupData()} className="custom-link-color">
+          <a
+            onClick={() => showAddContactPopupData()}
+            className="custom-link-color"
+          >
             + Add Contact
           </a>
         </div>

@@ -19,6 +19,7 @@ const BankList = () => {
   const [bankList, setBankList] = useState([]);
   const [show, setShow] = useState(false);
   const [selectedBank, setSelectedBank] = useState("");
+  const [popupError, setPopupError] = useState(""); // Error for popup
 
   useEffect(() => {
     getBankList();
@@ -38,23 +39,26 @@ const BankList = () => {
     }
   };
 
+  // Getting confirmation before deleting bank
   const handleOpenConfirmModal = (id) => {
+    setPopupError("");
     setSelectedBank(id);
     setShow(true);
   };
 
+  // For Deleting bank after confirmation
   const handleDeleteBank = async () => {
-    setIsLoading(true);
     const id = selectedBank;
+    setIsLoading(true);
     try {
       const { data } = await apiRequest.deleteBank({ id });
       if (!data.success) throw data.message;
+      setSelectedBank("");
       await getBankList();
       toast.success(data.message);
-      setSelectedBank("");
       setShow(false);
     } catch (error) {
-      toast.error(error);
+      setPopupError(error);
       console.log("error: ", error);
     } finally {
       setIsLoading(false);
@@ -169,6 +173,7 @@ const BankList = () => {
       <ModalConfirmation
         heading={"Delete bank account"}
         subHeading={"All your data will be permanently deleted."}
+        error={popupError}
         show={show}
         setShow={setShow}
         handleCallback={handleDeleteBank}

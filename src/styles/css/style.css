@@ -4687,7 +4687,7 @@ ul::-webkit-scrollbar-thumb:hover {
 }
 .wallet-recent-activity-sec ul li .user-info:hover {
   background-color: #fff;
-  box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.08);
 }
 .wallet-recent-activity-sec .activity-use-img {
   max-width: 48px;
@@ -5250,15 +5250,18 @@ img.img-size {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   white-space: nowrap;
   min-width: fit-content;
   flex-wrap: nowrap;
   width: 100%;
+  /* border:1px solid transparent; */
 }
 .db-view-bank-listing li:hover {
   background-color: #fff;
-  box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.08);
+  /* border-color:#0081C5; */
+  cursor: pointer;
 }
 p.bank-name-wrap {
   color: #363853;
@@ -5319,7 +5322,8 @@ p.bank-name-wrap {
 .db-view-bank-listing li:hover .bank-del-wrap svg path {
   stroke: #ff3333;
 }*/
-.bank-del-wrap:hover svg path {
+.bank-del-wrap:hover svg path,
+.db-view-bank-listing li:hover .bank-del-wrap svg path {
   stroke: #ff3333;
 }
 /*.db-view-bank-listing li:hover .bank-bal-wrap,
@@ -5332,7 +5336,8 @@ p.bank-name-wrap {
 .db-view-bank-listing li:hover .bank-account-routing-num,
 .db-view-bank-listing li:hover .bank-account-num-wrap,
 .db-view-bank-listing li:hover .bank-account-type-wrap,
-.db-view-bank-listing li:hover .bank-account-date-wrap {
+.db-view-bank-listing li:hover .bank-account-date-wrap,
+.db-view-bank-listing li:hover .bank-account-type-wrap-1 {
   color: #363853;
   transition: all 0.5s ease-in-out;
 }
@@ -6531,6 +6536,7 @@ ul.notification-list-wrap li:last-child {
   padding-bottom: 10px;
   z-index: 9;
   height: 75px;
+  overflow-anchor: none;
 }
 .sticky_appear .dashboard-left-wrap .toggle-admin-btn {
   top: 25px;
@@ -6540,4 +6546,42 @@ ul.notification-list-wrap li:last-child {
 }
 a.eg-close-btn {
   cursor: pointer;
+}
+/* CSS on 04-04 */
+.wallet-card-add-btns.mb-4 a:last-child {
+  margin-right: 0px;
+}
+.wallet-recent-activity-sec ul {
+  margin-left: -20px;
+  width: calc(100% + 40px);
+}
+.wallet-recent-activity-sec ul li,
+.wallet-recent-activity-sec .view-history-btn {
+  padding: 0px 20px 15px;
+  min-width: fit-content;
+}
+.wallet-recent-activity-sec ul li:first-child {
+  padding-top: 20px;
+}
+.wallet-recent-activity-sec .activity-month {
+  padding-bottom: 0px !important;
+}
+.wallet-recent-activity-sec .user-info:hover .date-info {
+  color: #323232;
+}
+.wallet-chart-wrap h6 {
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 25px;
+  color: #0081c5;
+}
+.wallet-chart-wrap h2 {
+  font-family: "Visby Round CF";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  color: #363853;
 }

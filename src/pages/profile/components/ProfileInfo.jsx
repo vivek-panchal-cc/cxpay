@@ -8,6 +8,7 @@ import { IconEdit } from "styles/svgs";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
+import { Link } from "react-router-dom";
 
 const ProfileInfo = (props) => {
   const { setIsLoading } = useContext(LoaderContext);
@@ -64,15 +65,21 @@ const ProfileInfo = (props) => {
           <div className="pi-title-div">Business URL</div>
           <div className="profile-info-right-desc with-edit-ic">
             {!isEditable && (
-              <>
-                <p>{business_url ?? "-"}</p>
+              <div className="d-flex align-items-center">
+                <Link
+                  to={business_url}
+                  target="_blank"
+                  className="text-break w-100"
+                >
+                  {business_url ?? "-"}
+                </Link>
                 <button
                   onClick={handleEditUlr}
-                  className="edit-button border-0"
+                  className="edit-button border-0 ms-3"
                 >
                   <IconEdit />
                 </button>
-              </>
+              </div>
             )}
             {isEditable && (
               <form
