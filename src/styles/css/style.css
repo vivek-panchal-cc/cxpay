@@ -943,6 +943,7 @@ form .form-field select.form-control {
   background-size: 13px auto;
   cursor: pointer;
   padding-right: 33px !important;
+  padding-left: 15px !important;
 }
 .login-signup-03 .login-btn {
   display: flex;
