@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import Input from "components/ui/Input";
@@ -13,7 +13,7 @@ export default function CreateGroup(props) {
   const profile_image = null;
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
-
+  const [isProfileImage,setIsProfileImage] = useState(0);
   const formik = useFormik({
     initialValues: {
       group_name: "",
@@ -54,6 +54,7 @@ export default function CreateGroup(props) {
             name="profile_image"
             onChange={(e) => {
               formik.setFieldValue("group_image", e.currentTarget.files[0]);
+              setIsProfileImage(1);
             }}
             error={formik.errors.group_image}
             showPreview={
@@ -86,7 +87,7 @@ export default function CreateGroup(props) {
               className="cursor-pointer"
               style={{ color: "#0081c5" }}
             >
-              Change Group Image
+              { isProfileImage == '1' ? "Change Group Image" : "Select Group Image" }
             </label>
           </p>
           <form onSubmit={formik.handleSubmit} className="save-group-form">
