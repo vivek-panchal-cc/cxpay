@@ -6585,3 +6585,7 @@ a.eg-close-btn {
   line-height: 38px;
   color: #363853;
 }
+.contact-top-btn-nav .con-btn-wrap > .btn > a {
+  display: flex;
+  align-items: center;
+}
