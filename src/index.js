@@ -13,6 +13,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/effect-cards";
+// Import popper css
+import "react-popper-tooltip/dist/styles.css";
 
 import "./index.css";
 // JAVASCRIPTS

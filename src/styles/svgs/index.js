@@ -41,3 +41,4 @@ export { default as IconNotifyDelete } from "./NotifyDelete";
 export { default as IconNotifyContact } from "./NotifyContact";
 export { default as IconNotifyMoneySent } from "./NotifyMoneySent";
 export { default as IconNotifyMoneySentFailed } from "./NotifyMoneySentFailed";
+export { default as IconPlus } from "./Plus";

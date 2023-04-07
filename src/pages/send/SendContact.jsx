@@ -1,34 +1,45 @@
 import React, { useContext, useEffect, useState } from "react";
-import Input from "components/ui/Input";
-import ContactList from "components/contacts-list/ContactList";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import ModalConfirmation from "components/modals/ModalConfirmation";
-import { IconSearch, IconSend, IconEdit } from "styles/svgs";
+import { IconSend, IconEdit, IconPlus } from "styles/svgs";
 import { useNavigate } from "react-router-dom";
 import { LoaderContext } from "context/loaderContext";
+import ContactsSelection from "components/contacts-selection/ContactsSelection";
+import Button from "components/ui/Button";
+import ContactCard from "components/cards/ContactCard";
+import { SendPaymentContext } from "context/sendPaymentContext";
 
-export default function SendContact() {
+function SendContact() {
   const [inviteContactList, setInviteContactList] = useState([]);
   const [groupList, setGroupList] = useState([]);
   const [totalGroupData, setTotalGroupData] = useState(0);
   const [groupCurrentPage, setGroupCurrentPage] = useState(1);
   const [searchData, setSearchData] = useState("");
-  const [selectedGroup, setSelectedGroup] = useState([]);
   const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
   const [deleteGroupId, setDeleteGroupId] = useState("");
   const [deleteGroupName, setDeleteGroupName] = useState("");
 
-  const [selectedContactList, setSelectedContactList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalInvitedData, setTotalInvitedData] = useState(0);
   const [searchText, setSearchText] = useState("");
-  const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
 
+  const [selectedGroup, setSelectedGroup] = useState([]);
+  const [selectedContacts, setSelectedContacts] = useState([]);
+
+  const navigate = useNavigate();
+  const {
+    handleSelectedContacts,
+    handleSelectedGroup,
+    handleSendContacts,
+    handleSendGroup,
+  } = useContext(SendPaymentContext);
+
   const navigateToContactScreen = () => {
-    navigate('/contacts');
-  }
+    navigate("/contacts");
+  };
+
   const handleResetContactData = () => {
     setSearchText("");
     setCurrentPage(1);
@@ -88,16 +99,18 @@ export default function SendContact() {
     setCurrentPage(1);
     getInviteContactList(1, e.target.value);
   };
+
   const getSearchGroup = (e) => {
     setSearchData(e.target.value);
     setGroupCurrentPage(1);
     getGroupsList(1, e.target.value);
   };
+
   const checkedCheckBoxData = (e) => {
-    if (selectedContactList.length === 0) {
+    if (selectedContacts.length === 0) {
       toast.warning("Please select at least one contact");
     } else {
-      console.log("Process Here!!!!!");
+      console.log(selectedContacts);
     }
   };
 
@@ -112,6 +125,7 @@ export default function SendContact() {
         });
         setDeleteGroupName(filtered[0].group_name);
       } else if (flag === 3) {
+        console.log(selectedGroup);
       }
     } else {
       toast.warning("Please select at least one group");
@@ -141,6 +155,25 @@ export default function SendContact() {
     }
   };
 
+  const handleReachEndContacts = () => {
+    if (currentPage * 10 < totalInvitedData) {
+      setCurrentPage(currentPage + 1);
+      getInviteContactList(currentPage + 1, searchText);
+    }
+  };
+
+  const handleReachEndGroups = () => {
+    if (groupCurrentPage * 10 < totalGroupData) {
+      setGroupCurrentPage(groupCurrentPage + 1);
+      getGroupsList(groupCurrentPage + 1, searchData);
+    }
+  };
+
+  const handleEditGroup = () => {
+    console.log(selectedGroup);
+    navigate("/edit-group/" + selectedGroup[0].group_id);
+  };
+
   useEffect(() => {
     getInviteContactList(currentPage, searchText);
     getGroupsList(groupCurrentPage, searchData);
@@ -148,188 +181,96 @@ export default function SendContact() {
 
   return (
     <div className="send-bottom-sec">
-      <div className="send-inner-sec col-12">
-        <div className="send-top-sec">
-          <div className="title-content-wrap">
-            <h3>For whom to send?</h3>
-            <p>Please select contacts to whom you want to send money</p>
-          </div>
-          <form style={{ width: "40%", marginTop: "15px" }}>
-            <div className="form-field search-field">
-              <div
-                className="js-clearSearchBox clearsearchbox"
-                onClick={handleResetContactData}
-              >
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M13 1L0.999999 13"
-                    stroke="#9B9B9B"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></path>
-                  <path
-                    d="M1 1L13 13"
-                    stroke="#9B9B9B"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></path>
-                </svg>
-              </div>
-              <Input
-                type="search"
-                className="form-control js-searchBox-input"
-                name="search-field"
-                placeholder="Search..."
-                onChange={getSearchContact}
-              />
-              <div className="search-btn">
-                <IconSearch />
-              </div>
-            </div>
-          </form>
-        </div>
-        {inviteContactList.length > 0 ? (
-          <ContactList
-            data={inviteContactList}
-            fullWidth={true}
-            containerClassName={"send-group-slider"}
-            isSelectable={true}
-            selectedItems={(items) => setSelectedContactList(items)}
-            onReachEnd={() => {
-              if (currentPage * 10 < totalInvitedData) {
-                setCurrentPage(currentPage + 1);
-                getInviteContactList(currentPage + 1, searchText);
-              }
-            }}
-          />
-        ) : (
-          <div className="loading">
-            <p className="loading-data">Contact not found</p>
-          </div>
-        )}
-        <div className="login-btn">
-          <div className="setting-btn-link send-btn-wrap pay-btn-wrap pt-3">
-            {inviteContactList.length > 0 ? (
-              <button className="btn btn-next ms-0 ps-4 pe-4" onClick={checkedCheckBoxData}>
-                <IconSend className="me-2" style={{ stroke: "#fff" }} />Send
-              </button>
-            ) : (
-              <button
-                className="btn btn-next ms-0 ps-4 pe-4 add-con-nf"
-                onClick={navigateToContactScreen}
-              >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="19" viewBox="0 0 17 19" fill="none" className="me-2">
-                    <path d="M14.7142 9.36439H2.14453M8.42937 16.4348L8.42937 2.29395" stroke="#363853" strokeWidth="4" strokeLinecap="round" style={{ color: "#fff",stroke: "#fff" }}></path>
-                  </svg>
-                Add Contact
-              </button>
-            )} 
-            
-          </div>
-        </div>
-      </div>
-      {/* <hr /> */}
-      {(searchData != '') || groupList.length > 0 ? (
-        <>
-          <div className="send-top-sec">
-            <div className="title-content-wrap">
-              <h3>Groups</h3>
-              {/* <p>Please select group to whom you want to send money</p> */}
-            </div>
-            {/* <div className="send-top-right-sec">
-                        <div className="main-search-wrap"> */}
-            <form style={{ width: "40%", marginTop: "0px" }}>
-              <div className="form-field search-field">
-                <div
-                  className="js-clearSearchBox clearsearchbox"
-                  onClick={handleResetGroupData}
-                >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M13 1L0.999999 13"
-                      stroke="#9B9B9B"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    ></path>
-                    <path
-                      d="M1 1L13 13"
-                      stroke="#9B9B9B"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    ></path>
-                  </svg>
-                </div>
-                <Input
-                  type="search"
-                  className="form-control js-searchBox-input"
-                  name="search-field"
-                  placeholder="Search..."
-                  onChange={getSearchGroup}
-                />
-                <div className="search-btn">
-                  <IconSearch />
-                </div>
-              </div>
-            </form>
-            {/* </div>
-                    </div> */}
-          </div>
-          {(groupList.length > 0) ? ( 
-            <ContactList
-              data={groupList}
-              fullWidth={true}
-              containerClassName={"send-group-slider"}
-              isSelectable={true}
-              selectedItems={(items) => setSelectedGroup(items)}
-              onReachEnd={() => {
-                console.log(totalGroupData);
-                if (groupCurrentPage * 10 < totalGroupData) {
-                  setGroupCurrentPage(groupCurrentPage + 1);
-                  getGroupsList(groupCurrentPage + 1, searchData);
-                }
-              }}
-              isMultiSelect={false}
-            />
-          ) : 
-            <div className="loading">
-              <p className="loading-data">Group not found</p>
-            </div>
-          }
-          <div className="send-btn-wrap pay-btn-wrap pt-2">
-            <a
-              className="btn btn-cancel-payment"
-              onClick={(e) => checkGroupSelected(1)}
-            >
-              <IconEdit style={{ stroke: "#0081c5" }} /> Edit
-            </a>
-            {/* <a className="btn btn-next" onClick={(e) => checkGroupSelected(2)}>
-              Delete
-            </a> */}
-            <a
+      {/* Contacts Selection Component  ----- For Personal Contacts Selection */}
+      <ContactsSelection className="col-12">
+        <ContactsSelection.Header
+          className=""
+          heading="For whom to send?"
+          subHeading="Please select contacts to whom you want to send money"
+          handleSearch={getSearchContact}
+        />
+        <ContactsSelection.Body
+          classNameContainer="send-group-slider"
+          contacts={inviteContactList}
+          fullWidth={true}
+          isMultiSelect={true}
+          handleReachEnd={handleReachEndContacts}
+          emptyListMsg="Contact not found"
+          handleSelectedItems={handleSelectedContacts}
+          ListItemComponent={ContactCard}
+          ListItemComponentProps={{
+            fullWidth: true,
+            isSelectable: true,
+            fallbackImgUrl: "assets/images/profile-default.svg",
+          }}
+          ListItemComponentAlias={{
+            account_number: "id",
+            name: "title",
+            profile_image: "imgUrl",
+          }}
+        />
+        <ContactsSelection.Footer>
+          {inviteContactList.length > 0 ? (
+            <Button
               className="btn btn-next ws--btn"
-              onClick={(e) => checkGroupSelected(3)}
+              onClick={handleSendContacts}
             >
-              <IconSend style={{ stroke: "#fff" }} /> Send{" "}
-            </a>
-          </div>
-        </>
-      ) : '' }
+              <IconSend style={{ stroke: "#fff" }} />
+              Send
+            </Button>
+          ) : (
+            <Button
+              className="btn btn-next ms-0"
+              onClick={navigateToContactScreen}
+            >
+              <IconPlus style={{ stroke: "#fff" }} />
+              Add Contact
+            </Button>
+          )}
+        </ContactsSelection.Footer>
+      </ContactsSelection>
+
+      {/* Contacts Selection Component  ----- For Contacts Group Selection */}
+      <ContactsSelection className="col-12">
+        <ContactsSelection.Header
+          className=""
+          heading="Groups"
+          subHeading=""
+          handleSearch={getSearchGroup}
+        />
+        <ContactsSelection.Body
+          classNameContainer="send-group-slider"
+          contacts={groupList}
+          fullWidth={true}
+          isMultiSelect={false}
+          handleReachEnd={handleReachEndGroups}
+          emptyListMsg="Group not found"
+          handleSelectedItems={handleSelectedGroup}
+          ListItemComponent={ContactCard}
+          ListItemComponentProps={{
+            fullWidth: true,
+            isSelectable: true,
+            fallbackImgUrl: "assets/images/group-payment-black-icon.png",
+          }}
+          ListItemComponentAlias={{
+            group_id: "id",
+            group_name: "title",
+            group_image: "imgUrl",
+          }}
+        />
+        <ContactsSelection.Footer>
+          <Button className="btn btn-cancel-payment" onClick={handleEditGroup}>
+            <IconEdit style={{ stroke: "#0081c5" }} />
+            Edit
+          </Button>
+          <Button className="btn btn-next ws--btn" onClick={handleSendGroup}>
+            <IconSend style={{ stroke: "#fff" }} />
+            Send
+          </Button>
+        </ContactsSelection.Footer>
+      </ContactsSelection>
+
+      {/* Confirmation Modal for delete Group */}
       <ModalConfirmation
         id="create-group-popup"
         show={showDeleteGroupPopup}
@@ -341,3 +282,5 @@ export default function SendContact() {
     </div>
   );
 }
+
+export default SendContact;

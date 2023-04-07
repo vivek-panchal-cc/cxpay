@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styles from "../contacts/addGroup.css";
 import "./editGroup.css";
-import EditGroupList from "components/contacts-list/EditGroupList";
+import EditGroupList from "components/lists/EditGroupList";
 import { createGroupSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { useNavigate } from "react-router";

@@ -311,6 +311,18 @@
     overflow-y: auto;
   }
 }
+@media only screen and (min-width: 1367px) {
+  form .form-field .eye-icon {
+    top: 17px !important;
+  }
+  .payment-blocks-listing .input-select-wrap.form-field > p.ip_currancy {
+    right: 50px;
+    padding-left: 15px !important;
+  }
+  .payment-blocks-inner form .input-select-wrap .form-control {
+    padding-right: 100px !important;
+  }
+}
 @media only screen and (max-width: 1366px) {
   .profile-right-sec {
     padding: 30px 50px 30px 50px;
@@ -437,9 +449,9 @@
     height: 30px;
     background-size: 15px auto;
   }*/
-  .payment-blocks-listing li {
+  /* .payment-blocks-listing li {
     padding: 16px 20px;
-  }
+  } */
   .payee-name h4 {
     font-size: 16px;
     padding-left: 16px;
@@ -447,27 +459,15 @@
   .payment-blocks-listing li > div.specification-input {
     min-width: 300px;
   }
-  .payment-footer-block {
-    padding: 35px 60px;
-  }
-  .payment-footer-block ul .payment-footer-col-label {
-    font-size: 20px;
-    line-height: 24px;
-    padding: 0 0 12px;
-  }
-  .payment-footer-block .amount {
-    font-size: 27px;
-    line-height: 26px;
-  }
   .amount-currency-wrap .selec-wrap select {
     font-size: 26px;
     line-height: 26px;
     max-width: 78px;
     padding-right: 20px;
   }
-  .payment-footer-block ul > li:nth-child(2) {
+  /* .payment-footer-block ul > li:nth-child(2) {
     padding: 0 30px;
-  }
+  } */
   .payment-footer-block ul {
     justify-content: space-between;
   }
@@ -664,6 +664,9 @@
   }
   .contact-top-btn-nav .con-btn-wrap .btn img {
     margin-right: 5px;
+  }
+  form .form-field .eye-icon {
+    top: 10px !important;
   }
 }
 @media only screen and (max-width: 1299px) {
@@ -964,10 +967,10 @@
   .payment-blocks-listing li {
     padding: 15px 15px;
   }
-  .payment-blocks-inner form .input-select-wrap .form-control {
+  /* .payment-blocks-inner form .input-select-wrap .form-control {
     font-size: 18px;
     padding: 9px 18px !important;
-  }
+  } */
   .payment-blocks-listing .input-select-wrap .selec-wrap::after,
   .amount-currency-wrap .selec-wrap::after {
     right: 7px;
@@ -982,10 +985,10 @@
     padding: 0 20px 0 13px !important;
     max-width: 75px;
   }
-  .payment-blocks-inner form .input-select-wrap .form-control {
+  /* .payment-blocks-inner form .input-select-wrap .form-control {
     font-size: 15px;
     padding: 12px 17px !important;
-  }
+  } */
   .payment-blocks-listing .input-select-wrap .selec-wrap {
     right: 18px;
     top: 6px;
@@ -999,31 +1002,22 @@
     font-size: 15px;
   }
   .payment-blocks-inner form .input-select-wrap .form-control {
-    padding-right: 93px !important;
+    padding-right: 65px !important;
+  }
+  .input-select-wrap.form-field > p.ip_currancy {
+    right: 20px;
   }
   .payment-blocks-inner form .form-field .form-control::placeholder {
     font-size: 14px;
   }
   .payment-blocks-listing li > div.specification-input {
-    min-width: 240px;
+    min-width: 250px;
   }
   .payment-blocks-inner form .input-select-wrap .form-control::placeholder {
     font-size: 16px;
   }
   .payment-blocks-listing li > div {
     padding: 0 8px;
-  }
-  .payment-footer-block {
-    padding: 35px 25px;
-  }
-  .payment-footer-block .amount {
-    font-size: 22px;
-    line-height: 20px;
-  }
-  .payment-footer-block ul .payment-footer-col-label {
-    font-size: 17px;
-    line-height: 21px;
-    padding: 0 0 9px;
   }
   .amount-currency-wrap .selec-wrap select {
     font-size: 20px;
@@ -1034,19 +1028,22 @@
   .amount-currency-wrap .selec-wrap {
     padding-left: 12px;
   }
-  .payment-blocks-listing {
+  /* .payment-blocks-listing {
     padding-bottom: 29px;
-  }
+  } */
   .payment-blocks-listing li {
     padding: 15px 10px;
   }
   .payee-name h4 {
-    font-size: 14px;
+    font-size: 13px;
     padding-left: 10px;
   }
   .payee-name-img-wrap .payee-img {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
+  }
+  .payment-blocks-listing .payee-name {
+    width: calc(100% - 45px);
   }
   .send-group-slider .contact-name {
     max-width: 95px;
@@ -1293,6 +1290,12 @@
     margin-top: 12px;
     justify-content: left !important;
   }
+  .input-select-wrap.form-field > p.ip_currancy {
+    font-size: 16px;
+  }
+  .one-time-pay-wrap .amount > span {
+    padding-left: 15px;
+  }
 }
 @media only screen and (max-width: 1100px) and (min-width: 992px) {
   .dashboard-right-sec {
@@ -1484,8 +1487,11 @@
     left: 13px;
   }
   .payment-blocks-listing .payee-name-img-wrap {
-    max-width: 230px;
-    min-width: 230px;
+    max-width: 200px;
+    min-width: 200px;
+  }
+  .payment-blocks-listing li > div.specification-input {
+    min-width: 200px;
   }
 }
 /*@media only screen and (max-width: 1100px) and (min-width: 992px) {
@@ -1641,6 +1647,35 @@
     .swiper-scrollbar.swiper-scrollbar-horizontal {
     width: calc(100% - 120px);
     left: 30px;
+  }
+  .payment-blocks-listing li .payee-name-img-wrap {
+    max-width: 100%;
+    min-width: 100% !important;
+  }
+  .payment-blocks-listing li > div.specification-input {
+    max-width: 50%;
+    min-width: 50% !important;
+  }
+  .payment-blocks-listing .input-select-wrap {
+    max-width: 220px;
+    min-width: 220px;
+  }
+  /* .payment-blocks-listing{
+    max-height: calc(100vh - 441px);
+  } */
+  .one-time-pay-wrap .payment-blocks-inner {
+    padding-top: 9px;
+  }
+  .payment-footer-block {
+    padding: 22px 20px;
+  }
+  .payment-footer-block ul .payment-footer-col-label,
+  .payment-footer-block .amount {
+    font-size: 18px;
+    line-height: 20px;
+  }
+  .wallet-top-wrap {
+    margin-bottom: 30px;
   }
 }
 @media only screen and (max-width: 991px) and (min-width: 820px) {
@@ -2042,7 +2077,7 @@
   .payment-blocks-inner form .form-field .form-control {
     padding: 10px 11px !important;
     font-size: 14px;
-    border-radius: 11px !important;
+    /* border-radius: 11px !important; */
   }
   .payment-blocks-inner form .input-select-wrap select.form-control {
     font-size: 15px;
@@ -2055,7 +2090,7 @@
     top: 5px;
   }
   .payment-blocks-inner form .input-select-wrap .form-control {
-    padding-right: 78px !important;
+    padding-right: 65px !important;
   }
   .payment-blocks-listing .input-select-wrap {
     max-width: 185px;
@@ -2075,27 +2110,27 @@
     width: 17px;
     height: 2px;
   }
-  .payment-footer-block {
+  /* .payment-footer-block {
     padding: 25px 15px;
-  }
-  .payment-footer-block ul .payment-footer-col-label {
+  } */
+  /* .payment-footer-block ul .payment-footer-col-label {
     font-size: 16px;
     line-height: 20px;
     padding: 0 0 7px;
-  }
-  .payment-footer-block .amount {
+  } */
+  /* .payment-footer-block .amount {
     font-size: 19px;
     line-height: 21px;
-  }
+  } */
   .amount-currency-wrap .selec-wrap select {
     font-size: 17px;
     line-height: 24px;
     max-width: 59px;
     padding-right: 22px;
   }
-  .payment-footer-block ul > li:nth-child(2) {
+  /* .payment-footer-block ul > li:nth-child(2) {
     padding: 0 10px;
-  }
+  } */
   .pay-btn-wrap {
     padding-top: 27px;
   }
@@ -2545,10 +2580,10 @@
   }
   .payment-blocks-listing li > div {
     padding: 0 10px !important;
-    margin: 8px 0;
+    margin: 5px 0;
   }
   .payment-blocks-listing li {
-    padding: 10px 5px;
+    padding: 7px 5px;
   }
   .payment-blocks-listing li > div.specification-input {
     min-width: 230px;
@@ -2556,7 +2591,7 @@
   .payment-blocks-inner form .form-field .form-control {
     padding: 10px 11px !important;
     font-size: 14px;
-    border-radius: 11px !important;
+    /* border-radius: 11px !important; */
   }
   .payment-blocks-inner form .input-select-wrap select.form-control {
     font-size: 15px;
@@ -2569,7 +2604,7 @@
     top: 5px;
   }
   .payment-blocks-inner form .input-select-wrap .form-control {
-    padding-right: 78px !important;
+    padding-right: 65px !important;
   }
   .payment-blocks-listing .input-select-wrap {
     max-width: 185px;
@@ -2589,27 +2624,24 @@
     width: 17px;
     height: 2px;
   }
-  .payment-footer-block {
-    padding: 25px 15px;
-  }
-  .payment-footer-block ul .payment-footer-col-label {
-    font-size: 16px;
+  /* .payment-footer-block ul .payment-footer-col-label {
+    font-size: 18px;
     line-height: 20px;
     padding: 0 0 7px;
-  }
-  .payment-footer-block .amount {
+  } */
+  /* .payment-footer-block .amount {
     font-size: 19px;
     line-height: 21px;
-  }
+  } */
   .amount-currency-wrap .selec-wrap select {
     font-size: 17px;
     line-height: 24px;
     max-width: 59px;
     padding-right: 22px;
   }
-  .payment-footer-block ul > li:nth-child(2) {
+  /* .payment-footer-block ul > li:nth-child(2) {
     padding: 0 10px;
-  }
+  } */
   .pay-btn-wrap {
     padding-top: 27px;
   }
@@ -3036,6 +3068,16 @@
   .amt-with-currency span {
     top: 11.5px;
   }
+  .input-select-wrap.form-field > p.ip_currancy {
+    font-size: 14px;
+    line-height: 32px;
+  }
+  .input-select-wrap.form-field > p.ip_currancy {
+    right: 20px;
+  }
+  .one-time-pay-wrap .amount > span {
+    padding-left: 5px;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -3131,7 +3173,6 @@
   }
   form .form-field .eye-icon {
     right: 15px;
-    top: 16px;
   }
   form .form-control[type="password"] {
     padding-right: 35px;
@@ -3456,37 +3497,41 @@
   .one-time-pay-main-sec .dashboard-top-sec {
     padding: 0;
   }
-  .payment-blocks-listing li {
+  /* .payment-blocks-listing li {
     padding: 6px 5px;
     min-width: fit-content;
     width: 100%;
     flex-wrap: nowrap;
-  }
-  .payment-blocks-listing {
+  } */
+  /* .payment-blocks-listing {
     overflow-x: auto;
     white-space: nowrap;
     flex-wrap: nowrap;
     margin-bottom: 25px;
-  }
+  } */
   .payment-footer-block .amount {
-    font-size: 18px;
-    line-height: 20px;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: right;
+  }
+  .one-time-pay-wrap .amount > span {
+    font-size: 15px;
   }
   .payment-footer-block ul .payment-footer-col-label {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 20px;
-    padding: 0 0 6px;
+    padding: 0px;
   }
   .payment-footer-block {
-    padding: 22px 12px;
+    padding: 20px 15px;
   }
   .payment-blocks-listing .input-select-wrap .selec-wrap::after,
   .amount-currency-wrap .selec-wrap::after {
     right: 4px;
   }
-  .payment-blocks-listing {
+  /* .payment-blocks-listing {
     padding-bottom: 25px;
-  }
+  } */
   .payment-blocks-inner form .form-field .form-control::placeholder {
     font-size: 13px;
   }
@@ -3851,6 +3896,68 @@
     font-size: 17px;
     line-height: 22px;
   }
+  .payment-blocks-listing li .payee-name-img-wrap,
+  .payment-blocks-listing li > div.specification-input {
+    max-width: 100%;
+    min-width: 100% !important;
+  }
+  .payment-blocks-listing .input-select-wrap {
+    max-width: 220px;
+    min-width: 220px;
+  }
+  .payment-blocks-listing li {
+    box-shadow: 4px 4px 20px rgb(0 0 0 / 8%);
+    margin-bottom: 15px;
+  }
+  .payment-footer-block ul li {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 18px;
+  }
+  .payment-footer-block ul li:last-child {
+    margin-bottom: 0px;
+  }
+  .payment-footer-block ul li > * {
+    width: 40%;
+  }
+  .payment-footer-block ul li > div {
+    width: 60%;
+    justify-content: start;
+  }
+  .payment-footer-block ul li > div:last-child {
+    align-items: center;
+    justify-content: end;
+  }
+  /* .payment-footer-block li>div:last-child .amount{
+    font-size: 20px;
+  } */
+  .one-time-pay-wrap .pay-btn-wrap {
+    padding-top: 15px;
+  }
+  .one-time-pay-wrap .payment-blocks-inner {
+    padding-top: 0px;
+  }
+  .amount-currency-wrap .selec-wrap {
+    padding-left: 10px;
+  }
+  .payment-blocks-listing {
+    max-height: none;
+    margin-bottom: 0px;
+  }
+  .payee-name h4 {
+    font-size: 15px;
+    line-height: 20px;
+  }
+  .payment-footer-block {
+    padding: 20px 15px;
+  }
+  .resend-otp-wrap p {
+    font-size: 16px !important;
+  }
+  .wallet-top-wrap {
+    margin-bottom: 30px;
+  }
 }
 @media only screen and (max-width: 575px) {
   .logo-content-wrap h4 {
@@ -3962,7 +4069,7 @@
     min-width: 285px;
     max-width: 320px;
   }
-  .payment-footer-block ul li {
+  /* .payment-footer-block ul li {
     padding: 10px;
   }
   .payment-footer-block ul > li:nth-child(2) {
@@ -3970,7 +4077,7 @@
   }
   .payment-footer-block {
     padding: 17px 10px;
-  }
+  } */
   .pay-btn-wrap .schedule-pay-btn,
   .pay-btn-wrap .print-details-btn {
     margin: 10px 5px !important;
@@ -4073,6 +4180,15 @@
   .wallet-card-add-btns a {
     font-size: 14px;
   }
+  .login-otp-numbers .form-field input.form-control {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    line-height: 18px;
+  }
+  .resend-otp-wrap {
+    margin-bottom: 20px;
+  }
 }
 @media only screen and (max-width: 480px) {
   /* .profile-inner-sec.p-4 {
@@ -4103,7 +4219,7 @@
     min-width: 125px;
     padding: 10px 10px !important;
   }
-  .contact-top-btn-nav .con-btn-wrap > .btn > a{
+  .contact-top-btn-nav .con-btn-wrap > .btn > a {
     font-size: 10px;
     line-height: 13px;
     padding: 0px;
@@ -4124,5 +4240,8 @@
   }
   .sticky_appear .notification-dd-wrap {
     top: 60px;
+  }
+  .payment-footer-block ul .payment-footer-col-label {
+    font-size: 15px;
   }
 }

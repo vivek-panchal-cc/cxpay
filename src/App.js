@@ -33,6 +33,8 @@ import EditGroup from "pages/edit-group/EditGroup";
 import FundAccount from "pages/fund-account/FundAccount";
 import SignupFundAccount from "pages/signup/components/SignupFundAccount";
 import ViewNotification from "pages/view-notification/ViewNotification";
+import SendPaymentLayout from "layouts/SendPaymentLayout";
+import SendPayment from "pages/send-payment/SendPayment";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -97,7 +99,10 @@ function App() {
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/contacts/invited" element={<Invited />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/send" element={<Send />} />
+            <Route element={<SendPaymentLayout />}>
+              <Route path="/send" element={<Send />} />
+              <Route path="/send-payment" element={<SendPayment />} />
+            </Route>
             <Route path="/edit-group/:id" element={<EditGroup />} />
             <Route path="/view-notification" element={<ViewNotification />} />
           </Route>

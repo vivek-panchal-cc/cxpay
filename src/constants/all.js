@@ -43,13 +43,23 @@ const THEME_COLORS = ["light_blue"];
 
 // To check file size
 // const fileUploadLimit = (file, fileSize) => {
-//
 //   return file && validFileSize[file].indexOf(file.split(".").pop()) > -1;
 // };
 
+// Fund account flow constants
 const FUND_CARD = "credit-card";
 const FUND_CASH = "cash-credit";
 const FUND_BANK = "bank-transfer";
+
+// Rename Keys with provided alias
+const renameKeys = (keysMap, object) =>
+  Object.keys(object).reduce(
+    (acc, key) => ({
+      ...acc,
+      ...{ [keysMap[key] || key]: object[key] },
+    }),
+    {}
+  );
 
 export {
   exp0ContainWhitespace,
@@ -74,4 +84,5 @@ export {
   // ~NOT
   regexNotContainWhitespace,
   regexNotContainWordPassword,
+  renameKeys,
 };
