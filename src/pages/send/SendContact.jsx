@@ -25,15 +25,14 @@ function SendContact() {
   const [searchText, setSearchText] = useState("");
   const { setIsLoading } = useContext(LoaderContext);
 
-  const [selectedGroup, setSelectedGroup] = useState([]);
-  const [selectedContacts, setSelectedContacts] = useState([]);
-
   const navigate = useNavigate();
   const {
     handleSelectedContacts,
     handleSelectedGroup,
     handleSendContacts,
     handleSendGroup,
+    selectedContacts,
+    selectedGroup,
   } = useContext(SendPaymentContext);
 
   const navigateToContactScreen = () => {
@@ -170,8 +169,8 @@ function SendContact() {
   };
 
   const handleEditGroup = () => {
-    console.log(selectedGroup);
-    navigate("/edit-group/" + selectedGroup[0].group_id);
+    if (!selectedGroup || !selectedGroup[0]?.group_id) return;
+    navigate("/edit-group/" + selectedGroup[0]?.group_id);
   };
 
   useEffect(() => {

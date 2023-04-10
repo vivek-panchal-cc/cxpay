@@ -18,14 +18,14 @@ import {
 const yupWhenCard = (validations) => {
   return yup.mixed().when("txn_mode", {
     is: (txn_mode) => txn_mode === "CARD",
-    then: validations,
+    then: () => validations,
   });
 };
 
 const yupWhenBank = (validations) => {
   return yup.mixed().when("txn_mode", {
     is: (txn_mode) => txn_mode === "BANK",
-    then: validations,
+    then: () => validations,
   });
 };
 
@@ -33,12 +33,13 @@ const yupWhenCash = "";
 
 const cardNumberSchema2 = yup.string().when("card_id", {
   is: (card_id) => card_id && card_id > 0,
-  then: yup
-    .string()
-    .matches(/^[0-9]*$/, "Credit card number is invalid")
-    .min(4, "Credit card number is invalid")
-    .required(),
-  otherwise: cardNumberSchema.required("Please enter card number"),
+  then: () =>
+    yup
+      .string()
+      .matches(/^[0-9]*$/, "Credit card number is invalid")
+      .min(4, "Credit card number is invalid")
+      .required(),
+  otherwise: () => cardNumberSchema.required("Please enter card number"),
 });
 
 const fundSchema = yup.object().shape({

@@ -52,11 +52,6 @@ const API_updateCustomerNotification =
   apiUrl.API_ONBOARD_UPDATE_CUSTOMER_NOTIFICATION;
 const API_invitedContactList = apiUrl.API_ONBOARD_INVITED_CONTACT_LIST;
 const API_getAllNotifications = apiUrl.API_ONBOARD_GET_ALL_NOTIFICATIONS;
-
-// TRANSACTION SERVICES
-const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
-const API_getBalance = apiUrl.API_TRANSACTION_GET_BALANCE;
-
 const API_getInviteContactList = apiUrl.API_ONBOARD_GET_INVITE_CONCAT_LIST;
 const API_addGroup = apiUrl.API_ONBOARD_ADD_GROUP;
 const API_groupsList = apiUrl.API_ONBOARD_GET_GROUP_LIST;
@@ -64,8 +59,17 @@ const API_deleteGroup = apiUrl.API_ONBOARD_DELETE_GROUP;
 const API_getGroupDetail = apiUrl.API_ONBOARD_GET_GROUP_DETAIL;
 const API_deleteGroupMember = apiUrl.API_ONBOARD_DELETE_GROUP_MEMBER;
 const API_updateGroup = apiUrl.API_ONBOARD_UPDATE_GROUP;
-const API_getRemainingGroupContact = apiUrl.API_ONBOARD_GET_REMAINING_GROUP_CONTACT;
+const API_getRemainingGroupContact =
+  apiUrl.API_ONBOARD_GET_REMAINING_GROUP_CONTACT;
 
+// TRANSACTION SERVICES
+const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
+const API_getBalance = apiUrl.API_TRANSACTION_GET_BALANCE;
+const API_walletTransferOtp = apiUrl.API_TRANSACTION_WALLET_TRANSFER_OTP;
+const API_walletPersonalOtpVerify =
+  apiUrl.API_TRANSACTION_WALLET_PERSONAL_OTP_VERIFY;
+const API_resendWalletTransferOtp =
+  apiUrl.API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP;
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 //  ------------------------------------------------------------------------------------------------------------------------------------------------>
 
@@ -318,36 +322,36 @@ export const addGroup = (params) => {
 // @params page,search
 export const getGroupsList = (params) => {
   return axiosOnboardInstance.post(`${API_groupsList}`, params);
-}
+};
 
 //POST @delete-group
 // @params group_id
 export const deleteGroup = (params) => {
   return axiosOnboardInstance.post(`${API_deleteGroup}`, params);
-}
+};
 
 //POST @get-group-detail
 // @params group_id
 export const getGroupDetail = (params) => {
-  return axiosOnboardInstance.post(`${API_getGroupDetail}`,params);
-}
+  return axiosOnboardInstance.post(`${API_getGroupDetail}`, params);
+};
 //POST @delete-group-member
 // @params group_id,member_account_number[]
 export const deleteGroupMember = (params) => {
-  return axiosOnboardInstance.post(`${API_deleteGroupMember}`,params);
-}
+  return axiosOnboardInstance.post(`${API_deleteGroupMember}`, params);
+};
 
 //POST @update-group
 // @params group_id,group_name,group_image,contact[]
 export const updateGroup = (params) => {
-  return axiosOnboardInstance.post(`${API_updateGroup}`,params);
-}
+  return axiosOnboardInstance.post(`${API_updateGroup}`, params);
+};
 
-//POST @get-remaining-group-contact 
+//POST @get-remaining-group-contact
 //@params group_id
-export const getRemainingGroupContact = (params) =>{
-  return axiosOnboardInstance.post(`${API_getRemainingGroupContact}`,params);
-}
+export const getRemainingGroupContact = (params) => {
+  return axiosOnboardInstance.post(`${API_getRemainingGroupContact}`, params);
+};
 // POST @get-all-notifications
 // @params page
 export const getAllNotifications = (params) => {
@@ -362,8 +366,8 @@ export const invitedConatcts = (params) => {
 
 // GET @get-charges
 // @params
-export const getCharges = () => {
-  return axiosOnboardInstance.get(`${API_getCharges}`);
+export const getCharges = (params) => {
+  return axiosOnboardInstance.get(`${API_getCharges}?${params}`);
 };
 
 // POST @add-fund
@@ -377,6 +381,30 @@ export const addFund = (params) => {
 // @params
 export const getBalance = () => {
   return axiosTransactionInstance.post(`${API_getBalance}`);
+};
+
+// POST @wallet-transfer-otp
+// @params wallet, fees, total_amount, group_id
+export const walletTransferOtp = (params) => {
+  return axiosTransactionInstance.post(`${API_walletTransferOtp}`, params);
+};
+
+// POST @wallet-personal-otp-verify
+// @params mobile_number, wallet_transfer_otp
+export const walletPersonalOtpVerify = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_walletPersonalOtpVerify}`,
+    params
+  );
+};
+
+// POST @resend-wallet-transfer-otp
+// @params mobile_number
+export const resendWalletTransferOtp = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_resendWalletTransferOtp}`,
+    params
+  );
 };
 
 export const apiRequest = {
@@ -431,4 +459,7 @@ export const apiRequest = {
   getCharges,
   addFund,
   getBalance,
+  walletTransferOtp,
+  walletPersonalOtpVerify,
+  resendWalletTransferOtp,
 };

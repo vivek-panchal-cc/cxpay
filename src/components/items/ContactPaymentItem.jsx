@@ -1,18 +1,21 @@
 import React, { forwardRef } from "react";
 import Button from "components/ui/Button";
 import { usePopperTooltip } from "react-popper-tooltip";
+import Input from "components/ui/Input";
 
 const ContactPaymentItem = forwardRef((props, ref) => {
   const {
-    name,
-    imgUrl,
+    item,
     handleDelete,
-    fieldName,
-    fieldValue,
-    fieldChange,
+    fieldNameAmount,
+    fieldValueAmount,
+    fieldNameSpecifications,
+    fieldValueSpecifications,
+    fieldOnChange,
     fieldOnBlur,
-    fieldError,
+    fieldErrorAmount,
   } = props;
+  const { name, profile_image: imgUrl } = item;
 
   const {
     getArrowProps,
@@ -24,51 +27,58 @@ const ContactPaymentItem = forwardRef((props, ref) => {
 
   return (
     <li>
-      <div class="payee-name-img-wrap">
-        <div class="payee-img">
+      <div className="payee-name-img-wrap">
+        <div className="payee-img">
           <img src={imgUrl} alt="contact 1 img" />
         </div>
-        <div class="payee-name">
+        <div className="payee-name">
           <h4>{name}</h4>
         </div>
       </div>
-      <div class="specification-input form-field">
-        <input
+      <div className="specification-input form-field">
+        <Input
           type="text"
-          class="form-control"
-          id="specification-input"
+          name={fieldNameSpecifications}
+          value={fieldValueSpecifications}
+          onChange={fieldOnChange}
+          onBlur={fieldOnBlur}
+          className="form-control"
           placeholder="Type your specification Here"
         />
       </div>
-      <div class="input-select-wrap form-field">
-        <input
+      <div className="input-select-wrap form-field">
+        <Input
           type="text"
-          name={fieldName}
-          value={fieldValue}
-          onChange={fieldChange}
+          inputmode="decimal"
+          name={fieldNameAmount}
+          value={fieldValueAmount}
+          onChange={fieldOnChange}
           onBlur={fieldOnBlur}
-          class={`form-control ${fieldError ? "error-field" : ""}`}
-          id="specification-input"
+          className={`form-control ${fieldErrorAmount ? "error-field" : ""}`}
           placeholder="0.00"
           ref={ref}
         />
-        {fieldError && (
+        {fieldErrorAmount && (
           <div
             ref={setTooltipRef}
             {...getTooltipProps({
-              className: "tooltip-container tooltip-invalid",
+              className: "tooltip-container tooltip-invalid z-1",
             })}
           >
             <div {...getArrowProps({ className: "tooltip-arrow" })} />
-            Tooltip Element
+            {fieldErrorAmount}
           </div>
         )}
-        <p class="ip_currancy" ref={setTriggerRef}>
+        <p className="ip_currancy" ref={setTriggerRef}>
           NAFl
         </p>
       </div>
-      <div class="remove-btn">
-        <Button class="close-icons" onClick={handleDelete}></Button>
+      <div className="remove-btn">
+        <Button
+          type="button"
+          className="close-icons"
+          onClick={() => handleDelete(item)}
+        ></Button>
       </div>
     </li>
   );

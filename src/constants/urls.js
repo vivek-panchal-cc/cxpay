@@ -60,3 +60,8 @@ export const API_ONBOARD_GET_ALL_NOTIFICATIONS = "/get-all-notifications";
 // customer-transaction Urls
 export const API_TRANSACTION_ADD_FUND = "/add-fund";
 export const API_TRANSACTION_GET_BALANCE = "/get-balance";
+export const API_TRANSACTION_WALLET_TRANSFER_OTP = "/wallet-transfer-otp";
+export const API_TRANSACTION_WALLET_PERSONAL_OTP_VERIFY =
+  "/wallet-personal-otp-verify";
+export const API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP =
+  "/resend-wallet-transfer-otp";

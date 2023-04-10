@@ -4,6 +4,7 @@ import { inviteContactSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import Input from "components/ui/Input";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function InviteContact(props) {
   const {
@@ -17,22 +18,24 @@ function InviteContact(props) {
     getInvitedConatcts,
     page,
     search,
-    isInvitedFlag = false
+    isInvitedFlag = false,
   } = props;
   const [isShowContactPopup, setIsShowContactPopup] = useState(true);
   const navigate = useNavigate();
+  const { profile } = useSelector((state) => state.userProfile);
+  const { country_code } = profile || {};
 
   const formik = useFormik({
     initialValues: {
       mobile: "",
       email: "",
+      mobile_code: country_code,
     },
     validationSchema: inviteContactSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       console.log("GEEE###");
       try {
         const { data } = await apiRequest.addContact(values);
-
         if (!data.success) throw data.message;
         if (
           data.data.alreadyAdded === false ||
@@ -44,20 +47,20 @@ function InviteContact(props) {
             setConatctData(data.data.contactDetails);
             setConatctDetailPopup(true);
             setShow(false);
-            if(isInvitedFlag){
-              navigate('/contacts');
-            }else{
-              getConatcts(1,'');
+            if (isInvitedFlag) {
+              navigate("/contacts");
+            } else {
+              getConatcts(1, "");
             }
           } else {
             setConatctData("");
             setInvitationSentPopup(true);
             setShow(false);
             //getInvitedConatcts(1,'')
-            if(isInvitedFlag){
-              getInvitedConatcts(1,'')
-            }else{
-              navigate('/contacts/invited');
+            if (isInvitedFlag) {
+              getInvitedConatcts(1, "");
+            } else {
+              navigate("/contacts/invited");
             }
           }
         } else {
@@ -94,7 +97,11 @@ function InviteContact(props) {
           <div className="modal-content">
             <div className="modal-body text-center">
               <img
-                src={`${isInvitedFlag ? "../assets/images/invite-con-img.svg" : "assets/images/invite-con-img.svg"}`}
+                src={`${
+                  isInvitedFlag
+                    ? "../assets/images/invite-con-img.svg"
+                    : "assets/images/invite-con-img.svg"
+                }`}
                 alt=""
                 className="invite-logo"
               />

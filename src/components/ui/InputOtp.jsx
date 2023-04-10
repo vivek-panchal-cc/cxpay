@@ -71,6 +71,7 @@ function InputOtp(props) {
             className={`${className}`}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
+            inputMode="numeric"
           />
         ))}
       </div>

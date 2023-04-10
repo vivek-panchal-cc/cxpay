@@ -248,6 +248,7 @@ function FundBankTransfer(props) {
                 <span>NAFl</span>
                 <Input
                   type="text"
+                  inputmode="decimal"
                   id="transactionAmount"
                   className="form-control"
                   placeholder="Amount"

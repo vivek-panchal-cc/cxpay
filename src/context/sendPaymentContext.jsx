@@ -1,15 +1,19 @@
 import { renameKeys } from "constants/all";
-import React, { useState, useRef, useEffect } from "react";
+import { apiRequest } from "helpers/apiRequests";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { LoaderContext } from "./loaderContext";
 
 export const SendPaymentContext = React.createContext({});
 
 const SendPaymentProvider = ({ children }) => {
   const navigate = useNavigate();
+  const { setIsLoading } = useContext(LoaderContext);
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState([]);
-  const [sendCreds, setSendCreds] = useState({ contacts: [] });
+  const [sendCreds, setSendCreds] = useState({ wallet: [] });
+  const [charges, setCharges] = useState([]);
 
   // For Send contacts button click
   const handleSendContacts = () => {
@@ -23,8 +27,7 @@ const SendPaymentProvider = ({ children }) => {
       personal_amount: "",
       specifications: "",
     }));
-    console.log(listAlias);
-    setSendCreds({ contacts: listAlias });
+    setSendCreds({ wallet: listAlias });
     navigate("/send-payment");
   };
 
@@ -46,9 +49,13 @@ const SendPaymentProvider = ({ children }) => {
       personal_amount: "",
       specifications: "",
     }));
-    console.log(listAlias);
-    setSendCreds({ group_id, contacts: [...listAlias] });
+    setSendCreds({ group_id, wallet: [...listAlias] });
     navigate("/send-payment");
+  };
+
+  // For making change (like remove) in the selected contacts
+  const handleSendCreds = (credsContacts) => {
+    setSendCreds((cs) => ({ ...cs, wallet: credsContacts }));
   };
 
   // For getting selected contacts list
@@ -63,6 +70,27 @@ const SendPaymentProvider = ({ children }) => {
     setSelectedGroup(group);
   };
 
+  // For getting the charges of payment from API
+  const getPaymentCharges = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.getCharges("pay_type=WW");
+      if (!data.success) throw data.message;
+      setCharges(data.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!sendCreds || sendCreds.length <= 0) return;
+    (async () => {
+      await getPaymentCharges();
+    })();
+  }, [sendCreds]);
+
   return (
     <SendPaymentContext.Provider
       value={{
@@ -70,7 +98,11 @@ const SendPaymentProvider = ({ children }) => {
         handleSelectedGroup,
         handleSendContacts,
         handleSendGroup,
+        handleSendCreds,
+        selectedContacts,
+        selectedGroup,
         sendCreds,
+        charges,
       }}
     >
       {children}

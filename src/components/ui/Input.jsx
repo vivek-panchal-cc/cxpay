@@ -1,6 +1,7 @@
-import React from "react";
+import React, { forwardRef } from "react";
+import styles from "./input.module.scss";
 
-function Input(props) {
+const Input = forwardRef((props, ref) => {
   const { labelname, error, disabled, type } = props;
 
   const getType = () => {
@@ -38,11 +39,14 @@ function Input(props) {
         {...props}
         type={getType()}
         onChange={(e) => props?.onChange(changeElement(e))}
-        className={`${props.className} ${disabled ? "cursor-not-allowed" : ""}`}
+        className={`${styles.number_input} ${props.className} ${
+          disabled ? "cursor-not-allowed" : ""
+        }`}
+        ref={ref}
       />
       {error && <p className="text-danger ps-2">{error}</p>}
     </div>
   );
-}
+});
 
 export default Input;
