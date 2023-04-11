@@ -29,11 +29,10 @@ function InviteContact(props) {
     initialValues: {
       mobile: "",
       email: "",
-      mobile_code: country_code,
+      country_code: country_code,
     },
     validationSchema: inviteContactSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
-      console.log("GEEE###");
       try {
         const { data } = await apiRequest.addContact(values);
         if (!data.success) throw data.message;

@@ -22,7 +22,7 @@ const getChargedAmount = (charges = [], amounts = []) => {
     return thisCharge;
   });
   return {
-    allCharges, 
+    allCharges,
     grandTotal,
     total,
   };

@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { apiRequest } from "helpers/apiRequests";
-import { toast } from "react-toastify";
-import ModalConfirmation from "components/modals/ModalConfirmation";
 import { IconSend, IconEdit, IconPlus } from "styles/svgs";
 import { useNavigate } from "react-router-dom";
 import { LoaderContext } from "context/loaderContext";
@@ -11,19 +9,17 @@ import ContactCard from "components/cards/ContactCard";
 import { SendPaymentContext } from "context/sendPaymentContext";
 
 function SendContact() {
+  const { setIsLoading } = useContext(LoaderContext);
+
   const [inviteContactList, setInviteContactList] = useState([]);
   const [groupList, setGroupList] = useState([]);
   const [totalGroupData, setTotalGroupData] = useState(0);
   const [groupCurrentPage, setGroupCurrentPage] = useState(1);
-  const [searchData, setSearchData] = useState("");
-  const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
-  const [deleteGroupId, setDeleteGroupId] = useState("");
-  const [deleteGroupName, setDeleteGroupName] = useState("");
-
   const [currentPage, setCurrentPage] = useState(1);
   const [totalInvitedData, setTotalInvitedData] = useState(0);
-  const [searchText, setSearchText] = useState("");
-  const { setIsLoading } = useContext(LoaderContext);
+  // For Search Inputs in both list header
+  const [searchContactText, setSearchContactText] = useState("");
+  const [searchGroupText, setSearchGroupText] = useState("");
 
   const navigate = useNavigate();
   const {
@@ -40,13 +36,13 @@ function SendContact() {
   };
 
   const handleResetContactData = () => {
-    setSearchText("");
+    setSearchContactText("");
     setCurrentPage(1);
     getInviteContactList(1, "");
   };
 
   const handleResetGroupData = () => {
-    setSearchData("");
+    setSearchGroupText("");
     setGroupCurrentPage(1);
     getGroupsList(1, "");
   };
@@ -93,78 +89,27 @@ function SendContact() {
     }
   };
 
-  const getSearchContact = (e) => {
-    setSearchText(e.target.value);
-    setCurrentPage(1);
-    getInviteContactList(1, e.target.value);
+  // For searching the contacts with name given in search bar
+  const handleSearchContact = (e) => {
+    setSearchContactText(e.target.value);
   };
 
-  const getSearchGroup = (e) => {
-    setSearchData(e.target.value);
-    setGroupCurrentPage(1);
-    getGroupsList(1, e.target.value);
-  };
-
-  const checkedCheckBoxData = (e) => {
-    if (selectedContacts.length === 0) {
-      toast.warning("Please select at least one contact");
-    } else {
-      console.log(selectedContacts);
-    }
-  };
-
-  const checkGroupSelected = (flag) => {
-    if (selectedGroup.length > 0) {
-      if (flag === 1) {
-        navigate("/edit-group/" + selectedGroup[0]);
-      } else if (flag === 2) {
-        handleDeleteConfirmation(selectedGroup[0]);
-        const filtered = groupList.filter((group) => {
-          return group.group_id === selectedGroup[0];
-        });
-        setDeleteGroupName(filtered[0].group_name);
-      } else if (flag === 3) {
-        console.log(selectedGroup);
-      }
-    } else {
-      toast.warning("Please select at least one group");
-    }
-  };
-
-  const handleDeleteConfirmation = (groupId) => {
-    setDeleteGroupId(groupId);
-    setDeleteGroupName();
-    setShowDeleteGroupPopup(true);
-  };
-
-  const deleteGroup = async (id) => {
-    setIsLoading(true);
-    try {
-      var param = { group_id: id };
-      const { data } = await apiRequest.deleteGroup(param);
-      if (!data.success) throw data.message;
-      setGroupCurrentPage(1);
-      setGroupList([]);
-      getGroupsList(1, searchData);
-      setShowDeleteGroupPopup(false);
-      setIsLoading(false);
-      toast.success(data.message);
-    } catch (error) {
-      setIsLoading(false);
-    }
+  // For searching the groups with name given in search bar
+  const handleSearchGroup = (e) => {
+    setSearchGroupText(e.target.value);
   };
 
   const handleReachEndContacts = () => {
     if (currentPage * 10 < totalInvitedData) {
       setCurrentPage(currentPage + 1);
-      getInviteContactList(currentPage + 1, searchText);
+      getInviteContactList(currentPage + 1, searchContactText);
     }
   };
 
   const handleReachEndGroups = () => {
     if (groupCurrentPage * 10 < totalGroupData) {
       setGroupCurrentPage(groupCurrentPage + 1);
-      getGroupsList(groupCurrentPage + 1, searchData);
+      getGroupsList(groupCurrentPage + 1, searchGroupText);
     }
   };
 
@@ -174,9 +119,27 @@ function SendContact() {
   };
 
   useEffect(() => {
-    getInviteContactList(currentPage, searchText);
-    getGroupsList(groupCurrentPage, searchData);
+    getInviteContactList(currentPage, searchContactText);
+    getGroupsList(groupCurrentPage, searchGroupText);
   }, []);
+
+  // Debouncing for contacts
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      setCurrentPage(1);
+      getInviteContactList(1, searchContactText);
+    }, 1000);
+    return () => clearTimeout(timeOut);
+  }, [searchContactText]);
+
+  // Debouncing for groups
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      setGroupCurrentPage(1);
+      getGroupsList(1, searchGroupText);
+    }, 1000);
+    return () => clearTimeout(timeOut);
+  }, [searchGroupText]);
 
   return (
     <div className="send-bottom-sec">
@@ -186,7 +149,9 @@ function SendContact() {
           className=""
           heading="For whom to send?"
           subHeading="Please select contacts to whom you want to send money"
-          handleSearch={getSearchContact}
+          searchValue={searchContactText}
+          handleSearch={handleSearchContact}
+          clearSearch={handleResetContactData}
         />
         <ContactsSelection.Body
           classNameContainer="send-group-slider"
@@ -200,7 +165,7 @@ function SendContact() {
           ListItemComponentProps={{
             fullWidth: true,
             isSelectable: true,
-            fallbackImgUrl: "assets/images/profile-default.svg",
+            fallbackImgUrl: "assets/images/single_contact_profile.png",
           }}
           ListItemComponentAlias={{
             account_number: "id",
@@ -235,7 +200,9 @@ function SendContact() {
           className=""
           heading="Groups"
           subHeading=""
-          handleSearch={getSearchGroup}
+          searchValue={searchGroupText}
+          handleSearch={handleSearchGroup}
+          clearSearch={handleResetGroupData}
         />
         <ContactsSelection.Body
           classNameContainer="send-group-slider"
@@ -249,7 +216,7 @@ function SendContact() {
           ListItemComponentProps={{
             fullWidth: true,
             isSelectable: true,
-            fallbackImgUrl: "assets/images/group-payment-black-icon.png",
+            fallbackImgUrl: "assets/images/group_contact_profile.png",
           }}
           ListItemComponentAlias={{
             group_id: "id",
@@ -268,16 +235,6 @@ function SendContact() {
           </Button>
         </ContactsSelection.Footer>
       </ContactsSelection>
-
-      {/* Confirmation Modal for delete Group */}
-      <ModalConfirmation
-        id="create-group-popup"
-        show={showDeleteGroupPopup}
-        setShow={setShowDeleteGroupPopup}
-        heading="Delete Group"
-        subHeading={`Are you sure want to delete ${deleteGroupName}?`}
-        handleCallback={() => deleteGroup(deleteGroupId)}
-      ></ModalConfirmation>
     </div>
   );
 }

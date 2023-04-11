@@ -1,5 +1,5 @@
 import Input from "components/ui/Input";
-import React, { useContext,useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { IconSearch } from "styles/svgs";
 import styles from "./modal.module.scss";
 import "./contactList.css";
@@ -9,8 +9,9 @@ import { LoaderContext } from "context/loaderContext";
 
 function ContactListingModal(props) {
   const {
-    className,
     id,
+    className,
+    classNameChild,
     show,
     setShow,
     handleCallback,
@@ -45,12 +46,12 @@ function ContactListingModal(props) {
   };
 
   const submitContactData = () => {
-    if(remainingContactListing.length > 0){
+    if (remainingContactListing.length > 0) {
       let difference = selectedRemainingContact.filter(
         (x) => !getCurrentData.includes(x)
       );
-      let selectedFullArrayDifference = selectedFullContactArray.filter((item) =>
-        difference.includes(item.member_mobile_number)
+      let selectedFullArrayDifference = selectedFullContactArray.filter(
+        (item) => difference.includes(item.member_mobile_number)
       );
       console.log(difference);
       if (difference.length == 0) {
@@ -123,19 +124,19 @@ function ContactListingModal(props) {
   };
 
   useEffect(() => {
-    if (show) {
-      retriveRemainingContact(currentListPage, searchContactName);
-    }
+    if (show) retriveRemainingContact(currentListPage, searchContactName);
     function handleclickOutside(event) {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setShow(false);
-      }
+      if (!modalRef.current) return;
+      const childDialog = modalRef.current?.children[0];
+      if (childDialog && !childDialog.contains(event.target))
+        setShow && setShow(false);
     }
     document.addEventListener("mousedown", handleclickOutside);
     return () => {
       document.removeEventListener("mousedown", handleclickOutside);
     };
   }, [modalRef, setShow, show]);
+
   if (!show) return null;
   return (
     <div
@@ -143,86 +144,88 @@ function ContactListingModal(props) {
       id={id}
       role="dialog"
     >
-      <div className="modal-dialog modal-dialog-centered" ref={modalRef}>
-        <div className="modal-content">
-          <div className="modal-body">
-            <h1 className="text-center mb-4">Add Contacts</h1>
-            <div className="con-md-search-wrap">
-              <form name="sdsa">
-                <div className="form-field search-field">
-                  <div
-                    className="js-clearSearchBox clearsearchbox"
-                    onClick={handleResetContactData}
-                  >
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+      <div ref={modalRef} className={classNameChild}>
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-body">
+              <h1 className="text-center mb-4">Add Contacts</h1>
+              <div className="con-md-search-wrap">
+                <form name="sdsa">
+                  <div className="form-field search-field">
+                    <div
+                      className="js-clearSearchBox clearsearchbox"
+                      onClick={handleResetContactData}
                     >
-                      <path
-                        d="M13 1L0.999999 13"
-                        stroke="#9B9B9B"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      ></path>
-                      <path
-                        d="M1 1L13 13"
-                        stroke="#9B9B9B"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      ></path>
-                    </svg>
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M13 1L0.999999 13"
+                          stroke="#9B9B9B"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        ></path>
+                        <path
+                          d="M1 1L13 13"
+                          stroke="#9B9B9B"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        ></path>
+                      </svg>
+                    </div>
+                    <Input
+                      type="search"
+                      className="form-control js-searchBox-input"
+                      name="search-field"
+                      placeholder="Search..."
+                      onChange={searchContactData}
+                    />
+                    <div className="search-btn">
+                      <IconSearch />
+                    </div>
                   </div>
-                  <Input
-                    type="search"
-                    className="form-control js-searchBox-input"
-                    name="search-field"
-                    placeholder="Search..."
-                    onChange={searchContactData}
-                  />
-                  <div className="search-btn">
-                    <IconSearch />
-                  </div>
+                </form>
+                <div className="con-md-del-wrap">
+                  <a
+                    className="btn btn-primary con-md-delbtn"
+                    onClick={submitContactData}
+                  >
+                    Add
+                  </a>
                 </div>
-              </form>
-              <div className="con-md-del-wrap">
-                <a
-                  className="btn btn-primary con-md-delbtn"
-                  onClick={submitContactData}
-                >
-                  Add
-                </a>
               </div>
-            </div>
-            <div className="cml-container">
-              <ul onScroll={onScroll}>
-                {remainingContactListing.length > 0
-                  ? remainingContactListing.map((ele) => (
-                      <li key={"li-" + ele.member_mobile_number}>
-                        <div className="modal-contact-list-wrap">
-                          <div className="cm-listing-check">
-                            <input
-                              id={ele.member_mobile_number}
-                              type="checkbox"
-                              value={ele.member_mobile_number}
-                              onChange={handleChange}
-                              checked={selectedRemainingContact.includes(
-                                ele.member_mobile_number
-                              )}
-                            />
-                            <label htmlFor={ele.member_mobile_number}>
-                              {ele.member_name}
-                            </label>
+              <div className="cml-container">
+                <ul onScroll={onScroll}>
+                  {remainingContactListing.length > 0
+                    ? remainingContactListing.map((ele) => (
+                        <li key={"li-" + ele.member_mobile_number}>
+                          <div className="modal-contact-list-wrap">
+                            <div className="cm-listing-check">
+                              <input
+                                id={ele.member_mobile_number}
+                                type="checkbox"
+                                value={ele.member_mobile_number}
+                                onChange={handleChange}
+                                checked={selectedRemainingContact.includes(
+                                  ele.member_mobile_number
+                                )}
+                              />
+                              <label htmlFor={ele.member_mobile_number}>
+                                {ele.member_name}
+                              </label>
+                            </div>
                           </div>
-                        </div>
-                      </li>
-                    ))
-                  : "No contacts found"}
-              </ul>
+                        </li>
+                      ))
+                    : "No contacts found"}
+                </ul>
+              </div>
             </div>
           </div>
         </div>

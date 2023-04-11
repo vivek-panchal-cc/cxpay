@@ -1,4 +1,4 @@
-import { renameKeys } from "constants/all";
+import { MAX_PAYMENT_CONTACTS, renameKeys } from "constants/all";
 import { apiRequest } from "helpers/apiRequests";
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -16,13 +16,19 @@ const SendPaymentProvider = ({ children }) => {
   const [charges, setCharges] = useState([]);
 
   // For Send contacts button click
-  const handleSendContacts = () => {
-    if (!selectedContacts || selectedContacts.length <= 0)
+  const handleSendContacts = (contacts = null) => {
+    const sendContactsList =
+      contacts && contacts.length > 0 ? contacts : selectedContacts;
+    if (!sendContactsList || sendContactsList.length <= 0)
       return toast.warning("Please select at least one contact");
+    if (sendContactsList.length > MAX_PAYMENT_CONTACTS)
+      return toast.warning(
+        `Maximum contacts limit is ${MAX_PAYMENT_CONTACTS} contacts`
+      );
     const alias = {
       account_number: "receiver_account_number",
     };
-    const listAlias = selectedContacts.map((item) => ({
+    const listAlias = sendContactsList.map((item) => ({
       ...renameKeys(alias, item),
       personal_amount: "",
       specifications: "",
@@ -36,6 +42,10 @@ const SendPaymentProvider = ({ children }) => {
     if (!selectedGroup || selectedGroup.length <= 0)
       return toast.warning("Please select at least one group");
     const { group_details, group_id } = selectedGroup[0];
+    if (group_details.length > MAX_PAYMENT_CONTACTS)
+      return toast.warning(
+        `Group contains more than ${MAX_PAYMENT_CONTACTS} contacts`
+      );
     const alias = {
       member_account_number: "receiver_account_number",
       member_profile_image: "profile_image",

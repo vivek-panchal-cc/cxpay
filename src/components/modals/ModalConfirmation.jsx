@@ -5,6 +5,7 @@ function ModalConfirmation(props) {
   const {
     children,
     className,
+    classNameChild,
     id,
     show,
     setShow,
@@ -17,9 +18,10 @@ function ModalConfirmation(props) {
 
   useEffect(() => {
     function handleclickOutside(event) {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setShow(false);
-      }
+      if (!modalRef.current) return;
+      const childDialog = modalRef.current?.children[0];
+      if (childDialog && !childDialog.contains(event.target))
+        setShow && setShow(false);
     }
     document.addEventListener("mousedown", handleclickOutside);
     return () => {
@@ -34,32 +36,34 @@ function ModalConfirmation(props) {
       id={id}
       role="dialog"
     >
-      <div className="modal-dialog modal-dialog-centered" ref={modalRef}>
-        <div className="modal-content">
-          <div className="modal-header flex-column">
-            <h3 className="text-center">{heading}</h3>
-            <p>{subHeading}</p>
-            {error && <p className="text-danger text-center">{error}</p>}
-          </div>
-          <div className="modal-body">
-            <div>{children}</div>
-            <div className="popup-btn-wrap d-flex align-items-center justify-content-center gap-4">
-              <button
-                type="button"
-                className="outline-btn px-4"
-                style={{ minWidth: "initial" }}
-                onClick={() => setShow(false)}
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary px-4 py-3"
-                style={{ minWidth: "initial" }}
-                onClick={handleCallback}
-              >
-                confirm
-              </button>
+      <div ref={modalRef} className={classNameChild}>
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header flex-column">
+              <h3 className="text-center">{heading}</h3>
+              <p>{subHeading}</p>
+              {error && <p className="text-danger text-center">{error}</p>}
+            </div>
+            <div className="modal-body">
+              <div>{children}</div>
+              <div className="popup-btn-wrap d-flex align-items-center justify-content-center gap-4">
+                <button
+                  type="button"
+                  className="outline-btn px-4"
+                  style={{ minWidth: "initial" }}
+                  onClick={() => setShow(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary px-4 py-3"
+                  style={{ minWidth: "initial" }}
+                  onClick={handleCallback}
+                >
+                  confirm
+                </button>
+              </div>
             </div>
           </div>
         </div>

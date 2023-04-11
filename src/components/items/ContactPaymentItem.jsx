@@ -2,6 +2,7 @@ import React, { forwardRef } from "react";
 import Button from "components/ui/Button";
 import { usePopperTooltip } from "react-popper-tooltip";
 import Input from "components/ui/Input";
+import Image from "components/ui/Image";
 
 const ContactPaymentItem = forwardRef((props, ref) => {
   const {
@@ -14,6 +15,7 @@ const ContactPaymentItem = forwardRef((props, ref) => {
     fieldOnChange,
     fieldOnBlur,
     fieldErrorAmount,
+    fallbackImgUrl,
   } = props;
   const { name, profile_image: imgUrl } = item;
 
@@ -29,7 +31,13 @@ const ContactPaymentItem = forwardRef((props, ref) => {
     <li>
       <div className="payee-name-img-wrap">
         <div className="payee-img">
-          <img src={imgUrl} alt="contact 1 img" />
+          <Image
+            src={imgUrl}
+            fallbacksrc={fallbackImgUrl}
+            className=""
+            style={{ objectPosition: "center", objectFit: "cover" }}
+            alt="contact img"
+          />
         </div>
         <div className="payee-name">
           <h4>{name}</h4>
@@ -49,7 +57,7 @@ const ContactPaymentItem = forwardRef((props, ref) => {
       <div className="input-select-wrap form-field">
         <Input
           type="text"
-          inputmode="decimal"
+          inputMode="decimal"
           name={fieldNameAmount}
           value={fieldValueAmount}
           onChange={fieldOnChange}

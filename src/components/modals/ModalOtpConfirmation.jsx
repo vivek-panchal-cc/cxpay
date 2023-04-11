@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import InputOtp from "components/ui/InputOtp";
-// import { otpCounterTime } from "constants/all";
+import { otpCounterTime } from "constants/all";
 import { useFormik } from "formik";
 import styles from "./modal.module.scss";
-const otpCounterTime = 10;
 
 function ModalOtpConfirmation(props) {
   const {
@@ -67,7 +66,9 @@ function ModalOtpConfirmation(props) {
   // For closing the modal on click of outside the modal area
   useEffect(() => {
     function handleclickOutside(event) {
-      if (modalRef.current && !modalRef.current.contains(event.target))
+      if (!modalRef.current) return;
+      const childDialog = modalRef.current?.children[0];
+      if (childDialog && !childDialog.contains(event.target))
         setShow && setShow(false);
     }
     document.addEventListener("mousedown", handleclickOutside);
@@ -83,11 +84,15 @@ function ModalOtpConfirmation(props) {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm, setValues }) => {
-      await handleSubmitOtp(values.otp);
-      setValues({ otp: "" });
-      setIsActive(false);
-      setShow(false);
-      resetForm();
+      try {
+        const result = await handleSubmitOtp(values.otp);
+        if (!result) return setValues({ otp: "" });
+        setIsActive(false);
+        setShow(false);
+        resetForm();
+      } catch (error) {
+        console.log("HELLO", error);
+      }
     },
   });
 
@@ -97,8 +102,6 @@ function ModalOtpConfirmation(props) {
   });
   let counterTime =
     Math.floor(counter / 60) + ":" + (formattedNumber ? formattedNumber : "00");
-
-  console.log("END", isActive);
 
   if (!show) return;
   return (

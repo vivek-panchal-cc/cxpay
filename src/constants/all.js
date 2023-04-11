@@ -50,6 +50,7 @@ const THEME_COLORS = ["light_blue"];
 const FUND_CARD = "credit-card";
 const FUND_CASH = "cash-credit";
 const FUND_BANK = "bank-transfer";
+const MAX_PAYMENT_CONTACTS = 4;
 
 // Rename Keys with provided alias
 const renameKeys = (keysMap, object) =>
@@ -74,6 +75,7 @@ export {
   FUND_CARD,
   FUND_CASH,
   FUND_BANK,
+  MAX_PAYMENT_CONTACTS,
 };
 export {
   regexContainCapitalLetter,

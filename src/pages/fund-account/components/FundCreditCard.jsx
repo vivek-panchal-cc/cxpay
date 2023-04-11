@@ -247,6 +247,7 @@ function FundCreditCard(props) {
                 <span>NAFl</span>
                 <Input
                   type="text"
+                  inputMode="decimal"
                   id="transactionAmount"
                   className="form-control"
                   placeholder="Amount"

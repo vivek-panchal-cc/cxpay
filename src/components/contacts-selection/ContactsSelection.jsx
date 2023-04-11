@@ -1,7 +1,7 @@
 import React from "react";
 import SwipeContactList from "components/lists/SwipeContactList";
 import Input from "components/ui/Input";
-import { IconSearch } from "styles/svgs";
+import { IconCross, IconSearch } from "styles/svgs";
 
 const ContactsSelection = (props) => {
   const { className, children } = props;
@@ -9,7 +9,14 @@ const ContactsSelection = (props) => {
 };
 
 ContactsSelection.Header = (props) => {
-  const { className, heading, subHeading, handleSearch } = props;
+  const {
+    className,
+    heading,
+    subHeading,
+    searchValue,
+    handleSearch,
+    clearSearch,
+  } = props;
   return (
     <div className={`send-top-sec ${className}`}>
       <div className="title-content-wrap">
@@ -18,15 +25,23 @@ ContactsSelection.Header = (props) => {
       </div>
       <form>
         <div className="form-field search-field">
+          <div
+            className="clearsearchbox"
+            style={{ opacity: searchValue ? 1 : 0 }}
+            onClick={clearSearch}
+          >
+            <IconCross />
+          </div>
           <Input
             type="search"
             className="form-control js-searchBox-input"
             name="search_field"
             placeholder="Search..."
+            value={searchValue}
             onChange={handleSearch}
           />
           <div className="search-btn">
-            <IconSearch />
+            <IconSearch style={{ stroke: "#0081c5" }} />
           </div>
         </div>
       </form>

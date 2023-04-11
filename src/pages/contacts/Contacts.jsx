@@ -12,9 +12,12 @@ import InvitationSent from "./components/InvitationSent";
 import ContactDetail from "./components/ContactDetail";
 import Delete from "styles/svgs/Delete";
 import { Link } from "react-router-dom";
+import { SendPaymentContext } from "context/sendPaymentContext";
 
 const Contacts = (props) => {
   const { setIsLoading } = useContext(LoaderContext);
+  const { handleSendContacts } = useContext(SendPaymentContext);
+
   const [contacts, setContacts] = useState([]);
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [invitetitle, setInviteTitle] = useState("Invite");
@@ -62,8 +65,7 @@ const Contacts = (props) => {
     const id = deleteContactArr;
     try {
       const { data } = await apiRequest.deleteContact({ mobile: id });
-      data["status_code"] === 200 &&
-      retrieveContacts(page)
+      data["status_code"] === 200 && retrieveContacts(page);
       data["status_code"] === 200 && setSelectedContacts([]);
       toast.success(data.message);
       setConfirmShow(false);
@@ -86,8 +88,7 @@ const Contacts = (props) => {
     try {
       const { data } = await apiRequest.favContact(reqData);
 
-      data["status_code"] === 200 &&
-      retrieveContacts(page);
+      data["status_code"] === 200 && retrieveContacts(page);
       setfavIconShow(favIconShow);
       toast.success(data.message);
 
@@ -270,18 +271,18 @@ const Contacts = (props) => {
                   handleClose={setConatctDetailPopup}
                 />
                 <button
-                    className="btn"
-                    type="button"
-                    value={"Invited Contacts"}
-                  >
-                    <Link to="/contacts/invited">
-                      <img
-                        src="assets/images/invite_group-ic.svg"
-                        alt=""
-                        className="invited-contacts-img"
-                      />
-                      <span>Invited Contacts</span>
-                    </Link>
+                  className="btn"
+                  type="button"
+                  value={"Invited Contacts"}
+                >
+                  <Link to="/contacts/invited">
+                    <img
+                      src="assets/images/invite_group-ic.svg"
+                      alt=""
+                      className="invited-contacts-img"
+                    />
+                    <span>Invited Contacts</span>
+                  </Link>
                 </button>
               </div>
               <div className="con-btn-wrap con-add-btn-wrap">
@@ -322,8 +323,9 @@ const Contacts = (props) => {
                           src={
                             contact.profile_image
                               ? contact.profile_image
-                              : "assets/images/user-avatar.png"
+                              : "assets/images/single_contact_profile.png"
                           }
+                          className="blue-bg"
                           alt=""
                         />
                       </div>
@@ -380,9 +382,12 @@ const Contacts = (props) => {
                         </button>
                       </div>
                       <div className="con-listing-btn-wrap">
-                        <a href="/" className="btn btn-primary con-send-btn">
+                        <button
+                          className="btn btn-primary con-send-btn"
+                          onClick={() => handleSendContacts([contact])}
+                        >
                           Send
-                        </a>
+                        </button>
                         <a href="/" className="btn btn-primary con-req-btn">
                           Request
                         </a>
@@ -395,14 +400,16 @@ const Contacts = (props) => {
               )}
             </ul>
           </div>
-          {contacts && (contacts.pagination && contacts.pagination.total > 10) && (
-            <Pagination
-              active={page}
-              size={contacts?.pagination?.last_page}
-              siblingCount={1}
-              onClickHandler={retrieveContacts}
-            ></Pagination>
-          )}
+          {contacts &&
+            contacts.pagination &&
+            contacts.pagination.total > 10 && (
+              <Pagination
+                active={page}
+                size={contacts?.pagination?.last_page}
+                siblingCount={1}
+                onClickHandler={retrieveContacts}
+              ></Pagination>
+            )}
         </div>
       </div>
       <ModalConfirmation

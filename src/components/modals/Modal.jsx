@@ -7,9 +7,10 @@ function Modal(props) {
 
   useEffect(() => {
     function handleclickOutside(event) {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
+      if (!modalRef.current) return;
+      const childDialog = modalRef.current?.children[0];
+      if (childDialog && !childDialog.contains(event.target))
         setShow && setShow(false);
-      }
     }
     document.addEventListener("mousedown", handleclickOutside);
     return () => {

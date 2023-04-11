@@ -9,7 +9,8 @@ import { toast } from "react-toastify";
 import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
 import { LoaderContext } from "context/loaderContext";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import ModalAlert from "components/modals/ModalAlert";
 
 function SendPayment(props) {
   const {} = props;
@@ -22,6 +23,8 @@ function SendPayment(props) {
   const { wallet } = sendCreds || [];
 
   const [showOtpPoup, setShowOtpPopup] = useState(false);
+  const [showSentPopup, setShowSentPopup] = useState(false);
+  const [moneySentMsg, setMoneySentMsg] = useState("");
   const [paymentDetails, setPaymentDetails] = useState({
     allCharges: [],
     grandTotal: 0.0,
@@ -73,15 +76,26 @@ function SendPayment(props) {
         mobile_number,
         wallet_transfer_otp: otp,
       });
-      if (!data.success) throw data.message;
+      if (!data.success) throw data;
       toast.success(data.message);
+      setMoneySentMsg(data.message);
+      setShowSentPopup(true);
+      return true;
     } catch (error) {
-      if (typeof error === "string") toast.error(error);
+      const { message, data } = error || {};
+      const { wrong_otp_attempts } = data || {};
+      if (wrong_otp_attempts && wrong_otp_attempts >= 3) {
+        handleSendCreds([]);
+        navigate("/send", { replace: true });
+      }
+      if (typeof message === "string") toast.error(message);
+      return false;
     } finally {
       setIsLoading(false);
     }
   };
 
+  // For resending the OTP after timeout
   const handleResendOtp = async () => {
     setIsLoading(true);
     try {
@@ -97,6 +111,7 @@ function SendPayment(props) {
     }
   };
 
+  // For deleting the contacts from payment list
   const handleDeleteContact = (ditem) => {
     const filteredContacts = wallet?.filter(
       (item) => item.email !== ditem.email && item.mobile !== ditem.mobile
@@ -129,35 +144,52 @@ function SendPayment(props) {
     navigate("/send", { replace: true });
   return (
     <>
+      {/* Modal For OTP confirmation */}
       <ModalOtpConfirmation
+        id="group_pay_otp_modal"
+        className="otp-verification-modal group_pay_otp_modal"
         show={showOtpPoup}
         setShow={setShowOtpPopup}
         heading="OTP Verification"
-        headingImg="/assets/images/Send-payment-popup.svg"
+        headingImg="/assets/images/send-payment-pop.svg"
         subHeading="We have sent you verification code to initiate group payment. Enter OTP below"
         handleSubmitOtp={handleSubmitOtp}
         handleResendOtp={handleResendOtp}
       />
-      <div class="col-12 send-payment-ttile-wrap">
-        <div class="title-content-wrap send-pay-title-sec">
+      {/* Moadal For Money Sent successfully */}
+      <ModalAlert
+        id="money_sent_modal"
+        className="money-sent-modal"
+        show={showSentPopup}
+        heading="Money Sent"
+        subHeading={moneySentMsg}
+        headingImg="/assets/images/sent-payment-pop.svg"
+        linkText="Done"
+        linkRedirect="/send"
+      />
+      <div className="col-12 send-payment-ttile-wrap">
+        <div className="title-content-wrap send-pay-title-sec">
           <h3>One Time Payment</h3>
           <p>Please insert amount of money you want to send</p>
         </div>
       </div>
       {/* <!-- payment block form starts -->  */}
       <form onSubmit={formik.handleSubmit}>
-        <div class="one-time-pay-sec one-time-pay-wrap">
-          <div class="one-time-pay-sec-inner-sec col-12">
+        <div className="one-time-pay-sec one-time-pay-wrap">
+          <div className="one-time-pay-sec-inner-sec col-12">
             {/* <!-- one time payment block starts -->	*/}
-            <div class="payment-blocks-wrap">
-              <div class="payment-blocks-inner">
+            <div className="payment-blocks-wrap">
+              <div className="payment-blocks-inner">
                 {/* <!-- payment-blocks-listing starts --> */}
-                <ul class="payment-blocks-listing">
+                <ul className="payment-blocks-listing">
                   {wallet.map((item, index) => {
                     return (
                       <ContactPaymentItem
                         key={index}
                         item={item}
+                        fallbackImgUrl={
+                          "assets/images/single_contact_profile.png"
+                        }
                         fieldNameAmount={`wallet[${index}].personal_amount`}
                         fieldValueAmount={
                           formik.values?.wallet?.[index]?.personal_amount
@@ -179,20 +211,22 @@ function SendPayment(props) {
                   })}
                 </ul>
                 {/* <!-- payment blocks footer section starts --> */}
-                <div class="payment-footer-block">
+                <div className="payment-footer-block">
                   <ul>
                     {paymentDetails?.allCharges?.map((item, index) => (
                       <li>
-                        <div class="payment-footer-col-label">{item?.desc}</div>
-                        <h4 class="amount">
+                        <div className="payment-footer-col-label">
+                          {item?.desc}
+                        </div>
+                        <h4 className="amount">
                           <span>NAFl</span> {item?.amount?.toFixed(2)}
                         </h4>
                       </li>
                     ))}
                     <li>
-                      <div class="payment-footer-col-label">Total</div>
-                      <div class="amount-currency-wrap">
-                        <h4 class="amount">
+                      <div className="payment-footer-col-label">Total</div>
+                      <div className="amount-currency-wrap">
+                        <h4 className="amount">
                           <span>NAFl</span>{" "}
                           {paymentDetails?.grandTotal?.toFixed(2)}
                         </h4>
@@ -202,11 +236,11 @@ function SendPayment(props) {
                 </div>
               </div>
             </div>
-            <div class="pay-btn-wrap">
-              <button href="#" class="btn btn-cancel-payment">
+            <div className="pay-btn-wrap">
+              <Link to={"/send"} className="btn btn-cancel-payment">
                 Cancel
-              </button>
-              <button type="submit" class="btn btn-send-payment">
+              </Link>
+              <button type="submit" className="btn btn-send-payment">
                 Send
               </button>
             </div>

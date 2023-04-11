@@ -96,10 +96,10 @@ function App() {
               element={<FundAccount />}
             />
             {/* contacts */}
-            <Route path="/contacts" element={<Contacts />} />
             <Route path="/contacts/invited" element={<Invited />} />
             <Route path="/profile" element={<Profile />} />
             <Route element={<SendPaymentLayout />}>
+              <Route path="/contacts" element={<Contacts />} />
               <Route path="/send" element={<Send />} />
               <Route path="/send-payment" element={<SendPayment />} />
             </Route>
