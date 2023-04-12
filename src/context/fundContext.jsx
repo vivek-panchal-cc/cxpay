@@ -14,12 +14,11 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { fundSchema } from "schemas/fundSchema";
 import { LoaderContext } from "./loaderContext";
+import useCountryBanks from "hooks/useCountryBanks";
 
 const initialValues = {
   email: "",
   country: "",
-  country_index: -1, // not required for API
-  country_iso: "", // not required for API
   city: "",
   transactionType: "PL",
   transactionAmount: "",
@@ -54,23 +53,14 @@ const bankCreds = {
 
 export const FundContext = React.createContext({});
 
-const getCountryCityCreds = (countryList, countryName, cityName) => {
-  const i = countryList?.findIndex((e) => e.country_name === countryName);
-  return {
-    country_index: i,
-    country_iso: countryList?.[i]?.iso,
-    country: countryName,
-    city: cityName,
-  };
-};
-
 const FundProvider = ({ children }) => {
   const params = useParams();
   const dispatch = useDispatch();
-  const { userProfile, userWallet } = useSelector((state) => state);
   const { setIsLoading } = useContext(LoaderContext);
+  const { userProfile, userWallet } = useSelector((state) => state);
   const [countryList, cityList] = useCountriesCities();
-  //
+  const [banksList] = useCountryBanks();
+
   const [disbleCardField, setDisableCardField] = useState(false);
   const [disbleBankField, setDisableBankField] = useState(false);
   const [selectExistingCard, setSelectExistingCard] = useState(false);
@@ -79,7 +69,7 @@ const FundProvider = ({ children }) => {
   const [fundedDetails, setFundedDetails] = useState({ fund: "", balance: "" });
   const [chargesDetails, setChargesDetails] = useState({ fees: "0.00" });
 
-  const { first_name, last_name, email, city, country } =
+  const { first_name, last_name, email, city, country, address } =
     userProfile.profile || {};
 
   const formik = useFormik({
@@ -122,18 +112,20 @@ const FundProvider = ({ children }) => {
 
   const integrateCardDetails = (card) => {
     if (!card || Object.keys(card).length <= 0) return;
-    const LocationCreds = getCountryCityCreds(
-      countryList,
-      card.country,
-      card.city
-    );
+    // const LocationCreds = getCountryCityCreds(
+    //   countryList,
+    //   card.country,
+    //   card.city
+    // );
     const date = new Date();
     const moyr = card?.expiry_date?.split("/").map((item) => parseInt(item));
     date.setFullYear(moyr[1], moyr[0] - 1);
     const muValues = Object.assign(
       { ...formik.values },
       {
-        ...LocationCreds,
+        // ...LocationCreds,
+        country: card.country,
+        city: card.city,
         email: card.email,
         card_id: card.id,
         card_number: card.card_number,
@@ -167,15 +159,17 @@ const FundProvider = ({ children }) => {
 
   const integrateBankDetails = (bank) => {
     if (!bank || Object.keys(bank).length <= 0) return;
-    const LocationCreds = getCountryCityCreds(
-      countryList,
-      bank.country,
-      bank.city
-    );
+    // const LocationCreds = getCountryCityCreds(
+    //   countryList,
+    //   bank.country,
+    //   bank.city
+    // );
     const muValues = Object.assign(
       { ...formik.values },
       {
-        ...LocationCreds,
+        // ...LocationCreds,
+        country: bank.country,
+        city: bank.city,
         email: bank.email,
         bank_id: bank.id,
         account_type: bank.account_type,
@@ -225,10 +219,10 @@ const FundProvider = ({ children }) => {
       !params.fundtype
     )
       return;
-    const LocationCreds = getCountryCityCreds(countryList, country, city);
+    // const LocationCreds = getCountryCityCreds(countryList, country, city);
     const muValues = Object.assign(
       { ...initialValues },
-      { ...LocationCreds, email }
+      { country, city, email }
     );
     switch (params.fundtype) {
       case FUND_CARD:
@@ -238,6 +232,7 @@ const FundProvider = ({ children }) => {
             ...muValues,
             card_holder_first_name: first_name,
             card_holder_last_name: last_name,
+            billing_address: address,
           }
         );
         formik.setValues(initValCard);
@@ -252,6 +247,7 @@ const FundProvider = ({ children }) => {
             ...muValues,
             bank_holder_first_name: first_name,
             bank_holder_last_name: last_name,
+            address: address,
           }
         );
         formik.setValues(initValBank);
@@ -320,6 +316,7 @@ const FundProvider = ({ children }) => {
         formik,
         countryList,
         cityList,
+        banksList,
         disbleCardField,
         disbleBankField,
         chargesDetails,

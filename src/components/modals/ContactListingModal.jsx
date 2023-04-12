@@ -53,7 +53,6 @@ function ContactListingModal(props) {
       let selectedFullArrayDifference = selectedFullContactArray.filter(
         (item) => difference.includes(item.member_mobile_number)
       );
-      console.log(difference);
       if (difference.length == 0) {
         toast.warning("Please select atleast one contact");
         return false;

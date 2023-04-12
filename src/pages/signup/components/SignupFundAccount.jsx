@@ -21,10 +21,13 @@ function SignupFundAccount() {
   const getUserDataFirstTime = async () => {
     try {
       const { payload } = await dispatch(fetchUserProfile());
-      if (!creds || !payload || payload.mobile_number !== creds.mobile_number)
+      if (
+        !creds ||
+        !payload ||
+        !payload?.mobile_number?.includes(creds.mobile_number)
+      )
         throw payload;
     } catch (error) {
-      console.log("User profile not found", error);
       setAccessible(false);
     } finally {
       setIsLoading(false);
@@ -56,7 +59,6 @@ function SignupFundAccount() {
   }, []);
 
   if (!accessible) return navigate("/", { replace: true });
-
   return (
     <div className="login-signup common-body-bg">
       <div className="container login-signup-01 login-signup-02">
@@ -85,9 +87,6 @@ function SignupFundAccount() {
                   <option value={FUND_BANK}>
                     {FUND_BANK.replace(/-/g, " ")}{" "}
                   </option>
-                  {/* <option value={FUND_CASH}>
-                    {FUND_CASH.replace(/-/g, " ")}{" "}
-                  </option> */}
                 </InputSelect>
               </form>
               {/* </div> */}

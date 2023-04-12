@@ -44,15 +44,6 @@ function EditCard() {
   const [countryList, cityList] = useCountriesCities();
   const [cardColors] = useCardColors();
 
-  const { country_index, country_iso } = useMemo(() => {
-    if (!country) return {};
-    const country_index = countryList.findIndex(
-      (e) => e.country_name === country
-    );
-    const { iso } = countryList.find((e) => e.country_name === country) || {};
-    return { country_index, country_iso: iso };
-  }, [country, countryList]);
-
   const handleUploadImage = (img) => {
     setCardBackImg(img);
     setShowPopupCrop(true);
@@ -79,10 +70,7 @@ function EditCard() {
       color: color || cardColors?.[0],
       email: email || "",
       country: country || "",
-      country_index: country_index,
-      country_iso: country_iso,
       city: city || "",
-      //
       card_holder_first_name: card_holder_first_name,
       card_holder_last_name: card_holder_last_name,
       billing_address: billing_address,
@@ -280,26 +268,15 @@ function EditCard() {
                 <div className="field-half">
                   <InputSelect
                     className="form-select form-control"
-                    name="country_index"
-                    onChange={({ currentTarget }) => {
-                      const i = parseInt(currentTarget.value);
-                      formik.setFieldValue("country_index", i);
-                      formik.setFieldValue("country_iso", countryList[i]?.iso);
-                      formik.setFieldValue(
-                        "country",
-                        countryList[i]?.country_name
-                      );
-                      formik.setFieldValue("city", "");
-                    }}
+                    name="country"
+                    onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.country_index}
-                    error={
-                      formik.touched.country_index && formik.errors.country
-                    }
+                    value={formik.values.country}
+                    error={formik.touched.country && formik.errors.country}
                   >
-                    <option value={"-1"}>Select Country</option>
+                    <option value={""}>Select Country</option>
                     {countryList?.map((country, index) => (
-                      <option key={index} value={index}>
+                      <option key={index} value={country.iso}>
                         {country.country_name}
                       </option>
                     ))}
@@ -315,7 +292,7 @@ function EditCard() {
                     error={formik.touched.city && formik.errors.city}
                   >
                     <option value={""}>Select City</option>
-                    {cityList[formik.values.country_iso]?.map((city, index) => (
+                    {cityList[formik.values.country]?.map((city, index) => (
                       <option key={index} value={city.city_name}>
                         {city.city_name}
                       </option>

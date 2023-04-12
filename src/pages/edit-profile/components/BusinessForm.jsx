@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { editProfileBusinessUserSchema } from "schemas/validationSchema";
@@ -10,6 +10,7 @@ import InputFile from "components/ui/InputImage";
 import { IconLeftArrow } from "styles/svgs";
 import InputSelect from "components/ui/InputSelect";
 import { fetchUserProfile } from "features/user/userProfileSlice";
+import { LoaderContext } from "context/loaderContext";
 
 function Businessform(props) {
   const { countryList, cityList } = props;
@@ -18,6 +19,7 @@ function Businessform(props) {
     company_name,
     user_type,
     email,
+    address,
     mobile_number,
     country_code,
     country,
@@ -26,32 +28,24 @@ function Businessform(props) {
   } = profile;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { country_index, country_iso } = useMemo(() => {
-    if (!country) return {};
-    const country_index = countryList.findIndex(
-      (e) => e.country_name === country
-    );
-    const { iso } = countryList.find((e) => e.country_name === country) || {};
-    return { country_index, country_iso: iso };
-  }, [country_code, countryList, country]);
+  const { setIsLoading } = useContext(LoaderContext);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       email: email || "", //not required for API
+      address: address || "",
       mobile_number: mobile_number || "", //not required for API
       profile_image: profile_image || "",
       user_type: user_type || "",
       company_name: company_name || "",
-      country_index: country_index, //not required for API
+      country_code: country_code,
       country: country || "",
-      country_iso: country_iso || "", //not required for API
-      mobile_code: country_code,
       city: city || "",
     },
     validationSchema: editProfileBusinessUserSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
+      setIsLoading(true);
       try {
         const formData = new FormData();
         for (let key in values) {
@@ -72,6 +66,8 @@ function Businessform(props) {
           country: error.country?.[0],
           city: error.city?.[0],
         });
+      } finally {
+        setIsLoading(false);
       }
     },
   });
@@ -155,28 +151,29 @@ function Businessform(props) {
               error={formik.touched.email && formik.errors.email}
               autoComplete={"new-email"}
             />
+            <Input
+              type="text"
+              className="form-control"
+              placeholder="address"
+              name="address"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.address}
+              error={formik.touched.address && formik.errors.address}
+            />
             <div className="form-field two-fields">
               <div className="field-half">
                 <InputSelect
                   className="form-select form-control"
-                  name="country_index"
-                  onChange={({ currentTarget }) => {
-                    const i = parseInt(currentTarget.value);
-                    formik.setFieldValue("country_index", i);
-                    formik.setFieldValue("country_iso", countryList[i]?.iso);
-                    formik.setFieldValue(
-                      "country",
-                      countryList[i]?.country_name
-                    );
-                    formik.setFieldValue("city", "");
-                  }}
+                  name="country"
+                  onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.country_index}
-                  error={formik.touched.country_index && formik.errors.country}
+                  value={formik.values.country}
+                  error={formik.touched.country && formik.errors.country}
                 >
-                  <option value={"-1"}>Select Country</option>
+                  <option value={""}>Select Country</option>
                   {countryList?.map((country, index) => (
-                    <option key={index} value={index}>
+                    <option key={index} value={country.iso}>
                       {country.country_name}
                     </option>
                   ))}
@@ -192,7 +189,7 @@ function Businessform(props) {
                   error={formik.touched.city && formik.errors.city}
                 >
                   <option value={""}>Select City</option>
-                  {cityList[formik.values.country_iso]?.map((city, index) => (
+                  {cityList[formik.values.country]?.map((city, index) => (
                     <option key={index} value={city.city_name}>
                       {city.city_name}
                     </option>

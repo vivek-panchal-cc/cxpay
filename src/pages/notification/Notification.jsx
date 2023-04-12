@@ -87,17 +87,6 @@ const Notification = () => {
             />
           </li>
           <li>
-            <span className="settings">SMS</span>
-            <InputSwitch
-              name="sms_notification"
-              className="form-check-input"
-              labelOffText="OFF"
-              labelOnText="ON"
-              onChange={handleChange}
-              checked={formik.values.sms_notification}
-            />
-          </li>
-          <li>
             <span className="settings">Whatsapp</span>
             <InputSwitch
               name="whatsapp_notification"

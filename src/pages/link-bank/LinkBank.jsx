@@ -9,21 +9,16 @@ import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import InputSelect from "components/ui/InputSelect";
 import useCountriesCities from "hooks/useCountriesCities";
 import { useSelector } from "react-redux";
+import useCountryBanks from "hooks/useCountryBanks";
 
 const LinkBank = (props) => {
   const navigate = useNavigate();
   const [countryList, cityList] = useCountriesCities();
-  const { profile } = useSelector((state) => state.userProfile);
-  const { first_name, last_name, email, city, country } = profile || {};
+  const [banksList] = useCountryBanks();
 
-  const { country_index, country_iso } = useMemo(() => {
-    if (!country) return {};
-    const country_index = countryList.findIndex(
-      (e) => e.country_name === country
-    );
-    const { iso } = countryList.find((e) => e.country_name === country) || {};
-    return { country_index, country_iso: iso };
-  }, [country, countryList]);
+  const { profile } = useSelector((state) => state.userProfile);
+  const { first_name, last_name, email, address, city, country } =
+    profile || {};
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -35,10 +30,8 @@ const LinkBank = (props) => {
       bank_holder_first_name: first_name || "",
       bank_holder_last_name: last_name || "",
       email: email || "",
-      address: "",
+      address: address || "",
       country: country || "",
-      country_index: country_index,
-      country_iso: country_iso,
       city: city || "",
     },
     validationSchema: linkBankSchema,
@@ -116,16 +109,21 @@ const LinkBank = (props) => {
             </div>
             <div className="row">
               <div className="col-12 col p-0">
-                <Input
-                  type="text"
-                  className="form-control"
-                  placeholder="Bank Name"
+                <InputSelect
+                  className="form-select form-control"
                   name="bank_name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.bank_name}
                   error={formik.touched.bank_name && formik.errors.bank_name}
-                />
+                >
+                  <option value={""}>Select Bank</option>
+                  {banksList?.map((bank, index) => (
+                    <option key={index} value={bank.id}>
+                      {bank.bank_name}
+                    </option>
+                  ))}
+                </InputSelect>
               </div>
             </div>
             <div className="row">
@@ -230,24 +228,15 @@ const LinkBank = (props) => {
               <div className="field-half">
                 <InputSelect
                   className="form-select form-control"
-                  name="country_index"
-                  onChange={({ currentTarget }) => {
-                    const i = parseInt(currentTarget.value);
-                    formik.setFieldValue("country_index", i);
-                    formik.setFieldValue("country_iso", countryList[i]?.iso);
-                    formik.setFieldValue(
-                      "country",
-                      countryList[i]?.country_name
-                    );
-                    formik.setFieldValue("city", "");
-                  }}
+                  name="country"
+                  onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.country_index}
-                  error={formik.touched.country_index && formik.errors.country}
+                  value={formik.values.country}
+                  error={formik.touched.country && formik.errors.country}
                 >
-                  <option value={"-1"}>Select Country</option>
+                  <option value={""}>Select Country</option>
                   {countryList?.map((country, index) => (
-                    <option key={index} value={index}>
+                    <option key={index} value={country.iso}>
                       {country.country_name}
                     </option>
                   ))}
@@ -263,7 +252,7 @@ const LinkBank = (props) => {
                   error={formik.touched.city && formik.errors.city}
                 >
                   <option value={""}>Select City</option>
-                  {cityList[formik.values.country_iso]?.map((city, index) => (
+                  {cityList[formik.values.country]?.map((city, index) => (
                     <option key={index} value={city.city_name}>
                       {city.city_name}
                     </option>

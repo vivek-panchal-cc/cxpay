@@ -123,8 +123,6 @@ const EditGroupList = (props) => {
   };
 
   const deleteMember = async (memberAccountNumber, memberMobileNumber) => {
-    console.log(getItem);
-    console.log(memberMobileNumber);
     if (memberAccountNumber !== "undefined") {
       try {
         const { data } = await apiRequest.deleteGroupMember({

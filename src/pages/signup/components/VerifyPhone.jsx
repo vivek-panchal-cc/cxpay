@@ -12,6 +12,7 @@ function VerifyPhone(props) {
   const [counter, setCounter] = useState(otpCounterTime);
   const [isTimerOver, setIsTimerOver] = useState(true);
   const [error, setError] = useState(false);
+  const { mobile_number, country_code } = signUpCreds || {};
 
   React.useEffect(() => {
     const timer =
@@ -32,18 +33,19 @@ function VerifyPhone(props) {
 
   const formik = useFormik({
     initialValues: {
-      mobile_number: signUpCreds.mobile_number,
+      mobile_number: mobile_number,
+      country_code: country_code,
       user_otp: "",
     },
     validationSchema: verifyOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
         const { data } = await apiRequest.verifyRegisterOtp(values);
-        if (!data.success || data.data === null) throw data.message;
+        if (!data.success) throw data.message;
         setSignUpCreds((cs) => ({ ...cs, user_otp: values.user_otp, step: 1 }));
       } catch (error) {
         resetForm();
-        setStatus(error);
+        if (typeof error === "string") setStatus(error);
       }
     },
   });
@@ -55,18 +57,17 @@ function VerifyPhone(props) {
     handleTimeOut();
     try {
       const { data } = await apiRequest.resendRegisterOtp({
-        mobile_number: signUpCreds.mobile_number,
+        mobile_number,
+        country_code,
       });
-      if (!data.success || data.data === null) throw data.message;
-
+      if (!data.success) throw data.message;
       toast.success(data.data.otp);
       toast.success(data.message);
     } catch (error) {
-      if (typeof error === "string") {
-        setIsTimerOver(true);
-        formik.setStatus(error);
-        setError(true);
-      }
+      if (!(typeof error === "string")) return;
+      setIsTimerOver(true);
+      formik.setStatus(error);
+      setError(true);
     }
   };
 

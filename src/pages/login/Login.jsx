@@ -8,12 +8,15 @@ import { fetchLogin } from "features/user/userProfileSlice";
 import { storageRequest } from "helpers/storageRequests";
 import { IconEyeClose, IconEyeOpen } from "styles/svgs";
 import { LoaderContext } from "context/loaderContext";
+import InputSelect from "components/ui/InputSelect";
+import useCountriesCities from "hooks/useCountriesCities";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { setIsLoading } = useContext(LoaderContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [countryList, cities] = useCountriesCities();
 
   useEffect(() => {
     const token = storageRequest.getAuth();
@@ -22,6 +25,7 @@ const Login = () => {
 
   const formik = useFormik({
     initialValues: {
+      country_code: "",
       user_name: "",
       password: "",
     },
@@ -58,19 +62,41 @@ const Login = () => {
                 </div>
                 <h5 className="text-center">Login</h5>
                 <form onSubmit={formik.handleSubmit}>
-                  <div className="form-field">
-                    <Input
-                      type="mobile"
-                      className="form-control"
-                      placeholder="Mobile Number"
-                      name="user_name"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.user_name}
-                      error={
-                        formik.touched.user_name && formik.errors.user_name
-                      }
-                    />
+                  <div className="row form-field">
+                    <div className="col-4 ps-0">
+                      <InputSelect
+                        className="form-select form-control"
+                        name="country_code"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.country_code}
+                        error={
+                          formik.touched.country_code &&
+                          formik.errors.country_code
+                        }
+                      >
+                        <option value={""}>Country</option>
+                        {countryList?.map((country, index) => (
+                          <option value={country.phonecode} key={index}>
+                            {country.phonecode} &nbsp; {country.country_name}
+                          </option>
+                        ))}
+                      </InputSelect>
+                    </div>
+                    <div className="col-8 px-0">
+                      <Input
+                        type="mobile"
+                        className="form-control"
+                        placeholder="Mobile Number"
+                        name="user_name"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.user_name}
+                        error={
+                          formik.touched.user_name && formik.errors.user_name
+                        }
+                      />
+                    </div>
                   </div>
                   <div className="form-field">
                     <Input

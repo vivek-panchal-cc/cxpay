@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { FundContext } from "context/fundContext";
 
 function FundBank() {
-  const { formik, countryList, cityList, chargesDetails } =
+  const { formik, countryList, cityList, chargesDetails, banksList } =
     useContext(FundContext);
 
   return (
@@ -42,16 +42,21 @@ function FundBank() {
       </div>
       <div className="row">
         <div className="col-12 col p-0">
-          <Input
-            type="text"
-            className="form-control"
-            placeholder="Bank Name"
+          <InputSelect
+            className="form-select form-control"
             name="bank_name"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.bank_name}
             error={formik.touched.bank_name && formik.errors.bank_name}
-          />
+          >
+            <option value={""}>Select Bank</option>
+            {banksList?.map((bank, index) => (
+              <option key={index} value={bank.id}>
+                {bank.bank_name}
+              </option>
+            ))}
+          </InputSelect>
         </div>
       </div>
       <div className="row">
@@ -156,21 +161,15 @@ function FundBank() {
         <div className="field-half">
           <InputSelect
             className="form-select form-control"
-            name="country_index"
-            onChange={({ currentTarget }) => {
-              const i = parseInt(currentTarget.value);
-              formik.setFieldValue("country_index", i);
-              formik.setFieldValue("country_iso", countryList[i]?.iso);
-              formik.setFieldValue("country", countryList[i]?.country_name);
-              formik.setFieldValue("city", "");
-            }}
+            name="country"
+            onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.country_index}
-            error={formik.touched.country_index && formik.errors.country}
+            value={formik.values.country}
+            error={formik.touched.country && formik.errors.country}
           >
-            <option value={"-1"}>Select Country</option>
+            <option value={""}>Select Country</option>
             {countryList?.map((country, index) => (
-              <option key={index} value={index}>
+              <option key={index} value={country.iso}>
                 {country.country_name}
               </option>
             ))}
@@ -186,7 +185,7 @@ function FundBank() {
             error={formik.touched.city && formik.errors.city}
           >
             <option value={""}>Select City</option>
-            {cityList[formik.values.country_iso]?.map((city, index) => (
+            {cityList[formik.values.country]?.map((city, index) => (
               <option key={index} value={city.city_name}>
                 {city.city_name}
               </option>

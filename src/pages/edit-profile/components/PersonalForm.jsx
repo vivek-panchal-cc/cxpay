@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { editProfilePersonalUserSchema } from "schemas/validationSchema";
@@ -10,6 +10,7 @@ import InputFile from "components/ui/InputImage";
 import { IconLeftArrow } from "styles/svgs";
 import InputSelect from "components/ui/InputSelect";
 import { fetchUserProfile } from "features/user/userProfileSlice";
+import { LoaderContext } from "context/loaderContext";
 
 function PersonalForm(props) {
   const { countryList, cityList } = props;
@@ -19,6 +20,7 @@ function PersonalForm(props) {
     last_name,
     user_type,
     email,
+    address,
     mobile_number,
     country_code,
     city,
@@ -28,34 +30,26 @@ function PersonalForm(props) {
   } = profile || {};
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { country_index, country_iso } = useMemo(() => {
-    if (!country) return {};
-    const country_index = countryList.findIndex(
-      (e) => e.country_name === country
-    );
-    const { iso } = countryList.find((e) => e.country_name === country) || {};
-    return { country_index, country_iso: iso };
-  }, [country, countryList]);
+  const { setIsLoading } = useContext(LoaderContext);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       email: email || "", //not required for API
+      address: address || "",
       mobile_number: mobile_number || "", //not required for API
       first_name: first_name || "",
       last_name: last_name || "",
       personal_id: personal_id || "",
       user_type: user_type || "",
       profile_image: profile_image || "",
-      country_index: country_index, //not required for API
-      country_iso: country_iso || "", //not required for API
+      country_code: country_code,
       country: country || "",
-      mobile_code: country_code,
       city: city || "",
     },
     validationSchema: editProfilePersonalUserSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
+      setIsLoading(true);
       try {
         const formData = new FormData();
         for (let key in values) {
@@ -77,6 +71,8 @@ function PersonalForm(props) {
           country: error.country?.[0],
           city: error.city?.[0],
         });
+      } finally {
+        setIsLoading(false);
       }
     },
   });
@@ -154,68 +150,62 @@ function PersonalForm(props) {
                 />
               </div>
             </div>
-            <div className="form-field">
-              <Input
-                type="text"
-                className="form-control"
-                placeholder="Personal ID"
-                name="personal_id"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.personal_id}
-                error={formik.touched.personal_id && formik.errors.personal_id}
-              />
-            </div>
-            <div className="form-field">
-              <Input
-                type="text"
-                disabled
-                className="form-control"
-                placeholder="Mobile Number"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.mobile_number}
-                error={
-                  formik.touched.mobile_number && formik.errors.mobile_number
-                }
-              />
-            </div>
-            <div className="form-field">
-              <Input
-                type="text"
-                disabled
-                className="form-control"
-                placeholder="Email"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
-                error={formik.touched.email && formik.errors.email}
-                autoComplete={"new-email"}
-              />
-            </div>
-
+            <Input
+              type="text"
+              className="form-control"
+              placeholder="Personal ID"
+              name="personal_id"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.personal_id}
+              error={formik.touched.personal_id && formik.errors.personal_id}
+            />
+            <Input
+              type="text"
+              disabled
+              className="form-control"
+              placeholder="Mobile Number"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.mobile_number}
+              error={
+                formik.touched.mobile_number && formik.errors.mobile_number
+              }
+            />
+            <Input
+              type="text"
+              disabled
+              className="form-control"
+              placeholder="Email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+              error={formik.touched.email && formik.errors.email}
+              autoComplete={"new-email"}
+            />
+            <Input
+              type="text"
+              className="form-control"
+              placeholder="Address"
+              name="address"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.address}
+              error={formik.touched.address && formik.errors.address}
+            />
             <div className="form-field two-fields">
               <div className="field-half">
                 <InputSelect
                   className="form-select form-control"
-                  name="country_index"
-                  onChange={({ currentTarget }) => {
-                    const i = parseInt(currentTarget.value);
-                    formik.setFieldValue("country_index", i);
-                    formik.setFieldValue("country_iso", countryList[i]?.iso);
-                    formik.setFieldValue(
-                      "country",
-                      countryList[i]?.country_name
-                    );
-                    formik.setFieldValue("city", "");
-                  }}
+                  name="country"
+                  onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.country_index}
-                  error={formik.touched.country_index && formik.errors.country}
+                  value={formik.values.country}
+                  error={formik.touched.country && formik.errors.country}
                 >
-                  <option value={"-1"}>Select Country</option>
+                  <option value={""}>Select Country</option>
                   {countryList?.map((country, index) => (
-                    <option key={index} value={index}>
+                    <option key={index} value={country.iso}>
                       {country.country_name}
                     </option>
                   ))}
@@ -231,7 +221,7 @@ function PersonalForm(props) {
                   error={formik.touched.city && formik.errors.city}
                 >
                   <option value={""}>Select City</option>
-                  {cityList[formik.values.country_iso]?.map((city, index) => (
+                  {cityList[formik.values.country]?.map((city, index) => (
                     <option key={index} value={city.city_name}>
                       {city.city_name}
                     </option>

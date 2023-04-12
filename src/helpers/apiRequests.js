@@ -61,6 +61,7 @@ const API_deleteGroupMember = apiUrl.API_ONBOARD_DELETE_GROUP_MEMBER;
 const API_updateGroup = apiUrl.API_ONBOARD_UPDATE_GROUP;
 const API_getRemainingGroupContact =
   apiUrl.API_ONBOARD_GET_REMAINING_GROUP_CONTACT;
+const API_getCountryBanks = apiUrl.API_ONBOARD_GET_COUNTRY_BANKS;
 
 // TRANSACTION SERVICES
 const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
@@ -259,9 +260,15 @@ export const generateNewQrCode = () => {
 };
 
 // POST @banks-list API
-// @params
+// @params token
 export const getBankList = () => {
   return axiosOnboardInstance.post(`${API_bankList}`);
+};
+
+// POST @get-country-banks API
+// @params token
+export const getCountryBanks = (params) => {
+  return axiosOnboardInstance.post(`${API_getCountryBanks}`, params);
 };
 
 // POST @delete-bank
@@ -443,6 +450,7 @@ export const apiRequest = {
   cardsList,
   updateBusinessData,
   getBankList,
+  getCountryBanks,
   deleteBank,
   updateBank,
   bankMarkAsDefault,

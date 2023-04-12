@@ -105,7 +105,6 @@ export default function EditGroup() {
               id="_upPersonal"
               name="profile_image"
               onChange={(e) => {
-                console.log();
                 if (e.currentTarget.files[0] !== undefined) {
                   formik.setFieldValue("group_image", e.currentTarget.files[0]);
                 }

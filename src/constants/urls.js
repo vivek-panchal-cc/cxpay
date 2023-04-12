@@ -56,6 +56,7 @@ export const API_ONBOARD_GET_REMAINING_GROUP_CONTACT = "/get-remain-contacts";
 export const API_ONBOARD_INVITED_CONTACT_LIST = "/invited-contacts-list";
 export const API_ONBOARD_GET_CHARGES = "/get-charges";
 export const API_ONBOARD_GET_ALL_NOTIFICATIONS = "/get-all-notifications";
+export const API_ONBOARD_GET_COUNTRY_BANKS = "/get-country-banks";
 
 // customer-transaction Urls
 export const API_TRANSACTION_ADD_FUND = "/add-fund";

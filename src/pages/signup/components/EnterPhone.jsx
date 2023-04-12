@@ -11,16 +11,10 @@ import InputSelect from "components/ui/InputSelect";
 import { toast } from "react-toastify";
 
 function EnterPhone(props) {
-  const { signUpCreds, setSignUpCreds, getCountries } =
-    useContext(SignupContext);
+  const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const [showRegisteredPopup, setShowregisteredPopup] = useState(false);
   const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
-  // const [username, setUsername] = useState("USERNAME");
   const { countryList } = signUpCreds || {};
-
-  useEffect(() => {
-    getCountries();
-  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -33,13 +27,12 @@ function EnterPhone(props) {
         const { data } = await apiRequest.verifyMobileNumber(values);
         if (!data.success || data.data === null) throw data.message;
         if (data.data.isAlreadyRegster === "1") {
-          // setUsername(data.data?.user_name);
           return setShowregisteredPopup(true);
         }
         setSignUpCreds((cs) => ({
           ...cs,
           mobile_number: values.mobile_number,
-          mobile_code: values.country_code,
+          country_code: values.country_code,
         }));
         setShowVerifyPhonePopup(true);
         toast.success(data.data.otp);
@@ -63,7 +56,6 @@ function EnterPhone(props) {
                 <VerifyPhone {...{ signUpCreds, setSignUpCreds }} />
               </Modal>
               <Modal id="already_register_user" show={showRegisteredPopup}>
-                {/* <AlreadyRegistered username={username} /> */}
                 <AlreadyRegistered />
               </Modal>
               <h4 className="text-center">Welcome to</h4>

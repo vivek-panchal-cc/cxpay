@@ -26,16 +26,15 @@ function PersonalForm(props) {
       last_name: "",
       user_type: signUpCreds.user_type || "personal",
       mobile_number: signUpCreds.mobile_number,
+      country_code: signUpCreds.country_code,
       personal_id: "",
       email: "",
+      address: "",
       password: "",
       confirm_password: "", //not required for API
-      profile_image: "",
-      country_index: -1, //not required for API
       country: "",
-      country_iso: "", //not required for API
-      mobile_code: signUpCreds.mobile_code,
       city: "",
+      profile_image: "",
     },
     validationSchema: signUpPersonalAccountSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
@@ -54,8 +53,8 @@ function PersonalForm(props) {
         setSignUpCreds((cs) => ({ ...cs, step: 3 }));
       } catch (error) {
         setErrors({
-          email: error.email?.[0],
-          mobile_number: error.mobile_number?.[0],
+          email: error?.email?.[0],
+          mobile_number: error?.mobile_number?.[0],
         });
       } finally {
         setIsLoading(false);
@@ -125,26 +124,15 @@ function PersonalForm(props) {
                 <div className="col-lg-6 col-12 col-left col p-0">
                   <InputSelect
                     className="form-select form-control"
-                    name="country_index"
-                    onChange={({ currentTarget }) => {
-                      const i = parseInt(currentTarget.value);
-                      formik.setFieldValue("country_index", i);
-                      formik.setFieldValue("country_iso", countryList[i]?.iso);
-                      formik.setFieldValue(
-                        "country",
-                        countryList[i]?.country_name
-                      );
-                      formik.setFieldValue("city", ""); // imp
-                    }}
+                    name="country"
+                    onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.country_index}
-                    error={
-                      formik.touched.country_index && formik.errors.country
-                    }
+                    value={formik.values.country}
+                    error={formik.touched.country && formik.errors.country}
                   >
-                    <option value={"-1"}>Select Country</option>
+                    <option value={""}>Select Country</option>
                     {countryList?.map((country, index) => (
-                      <option key={index} value={index}>
+                      <option key={index} value={country.iso}>
                         {country.country_name}
                       </option>
                     ))}
@@ -160,7 +148,7 @@ function PersonalForm(props) {
                     error={formik.touched.city && formik.errors.city}
                   >
                     <option value={""}>Select City</option>
-                    {cityList[formik.values.country_iso]?.map((city, index) => (
+                    {cityList[formik.values.country]?.map((city, index) => (
                       <option key={index} value={city.city_name}>
                         {city.city_name}
                       </option>
@@ -168,124 +156,120 @@ function PersonalForm(props) {
                   </InputSelect>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-12 p-0">
-                  <Input
-                    type="text"
-                    className="form-control"
-                    placeholder="Personal ID"
-                    name="personal_id"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.personal_id}
-                    error={
-                      formik.touched.personal_id && formik.errors.personal_id
-                    }
-                    autoComplete={"new-id"}
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-12 p-0">
-                  <Input
-                    type="text"
-                    className="form-control"
-                    placeholder="Email"
-                    name="email"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.email}
-                    error={formik.touched.email && formik.errors.email}
-                    autoComplete={"new-email"}
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-12 col p-0">
-                  <div className="form-field">
-                    <Input
-                      type={showPassword.new ? "text" : "password"}
-                      className="form-control w-100"
-                      placeholder="Password"
-                      name="password"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.password}
-                      error={formik.touched.password && formik.errors.password}
-                      autoComplete={"new-password"}
-                      onCopy={(e) => e.preventDefault()}
-                      onPaste={(e) => e.preventDefault()}
-                    />
-                    <span className="eye-icon" style={{ top: "24px" }}>
-                      {showPassword.new ? (
-                        <IconEyeOpen
-                          onClick={() =>
-                            setShowPassword((e) => ({ ...e, new: !e.new }))
-                          }
-                        />
-                      ) : (
-                        <IconEyeClose
-                          onClick={() =>
-                            setShowPassword((e) => ({ ...e, new: !e.new }))
-                          }
-                        />
-                      )}
-                    </span>
-                  </div>
-                </div>
-                <div className="col-12 col p-0">
-                  <div className="form-field">
-                    <Input
-                      type={showPassword.confirm ? "text" : "password"}
-                      className="form-control"
-                      placeholder="Confirm password"
-                      name="confirm_password"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.confirm_password}
-                      error={
-                        formik.touched.confirm_password &&
-                        formik.errors.confirm_password
+              <Input
+                type="text"
+                className="form-control"
+                placeholder="Personal ID"
+                name="personal_id"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.personal_id}
+                error={formik.touched.personal_id && formik.errors.personal_id}
+                autoComplete={"new-id"}
+              />
+              <Input
+                type="text"
+                className="form-control"
+                placeholder="Email"
+                name="email"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+                error={formik.touched.email && formik.errors.email}
+                autoComplete={"new-email"}
+              />
+              <Input
+                type="text"
+                className="form-control"
+                placeholder="Address"
+                name="address"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.address}
+                error={formik.touched.address && formik.errors.address}
+              />
+
+              <div className="form-field">
+                <Input
+                  type={showPassword.new ? "text" : "password"}
+                  className="form-control w-100"
+                  placeholder="Password"
+                  name="password"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
+                  error={formik.touched.password && formik.errors.password}
+                  autoComplete={"new-password"}
+                  onCopy={(e) => e.preventDefault()}
+                  onPaste={(e) => e.preventDefault()}
+                />
+                <span className="eye-icon" style={{ top: "24px" }}>
+                  {showPassword.new ? (
+                    <IconEyeOpen
+                      onClick={() =>
+                        setShowPassword((e) => ({ ...e, new: !e.new }))
                       }
-                      onCopy={(e) => e.preventDefault()}
-                      onPaste={(e) => e.preventDefault()}
                     />
-                    {formik.touched.confirm_password &&
-                      !formik.errors.confirm_password && (
-                        <span
-                          className="eye-icon"
-                          style={{ top: "24px", right: "45px" }}
-                        >
-                          <img
-                            className="eye-close"
-                            src="/assets/images/green-tick.svg"
-                            alt="eye close icon"
-                          />
-                        </span>
-                      )}
-                    <span className="eye-icon" style={{ top: "24px" }}>
-                      {showPassword.confirm ? (
-                        <IconEyeOpen
-                          onClick={() =>
-                            setShowPassword((e) => ({
-                              ...e,
-                              confirm: !e.confirm,
-                            }))
-                          }
-                        />
-                      ) : (
-                        <IconEyeClose
-                          onClick={() =>
-                            setShowPassword((e) => ({
-                              ...e,
-                              confirm: !e.confirm,
-                            }))
-                          }
-                        />
-                      )}
+                  ) : (
+                    <IconEyeClose
+                      onClick={() =>
+                        setShowPassword((e) => ({ ...e, new: !e.new }))
+                      }
+                    />
+                  )}
+                </span>
+              </div>
+
+              <div className="form-field">
+                <Input
+                  type={showPassword.confirm ? "text" : "password"}
+                  className="form-control"
+                  placeholder="Confirm password"
+                  name="confirm_password"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.confirm_password}
+                  error={
+                    formik.touched.confirm_password &&
+                    formik.errors.confirm_password
+                  }
+                  onCopy={(e) => e.preventDefault()}
+                  onPaste={(e) => e.preventDefault()}
+                />
+                {formik.touched.confirm_password &&
+                  !formik.errors.confirm_password && (
+                    <span
+                      className="eye-icon"
+                      style={{ top: "24px", right: "45px" }}
+                    >
+                      <img
+                        className="eye-close"
+                        src="/assets/images/green-tick.svg"
+                        alt="eye close icon"
+                      />
                     </span>
-                  </div>
-                </div>
+                  )}
+                <span className="eye-icon" style={{ top: "24px" }}>
+                  {showPassword.confirm ? (
+                    <IconEyeOpen
+                      onClick={() =>
+                        setShowPassword((e) => ({
+                          ...e,
+                          confirm: !e.confirm,
+                        }))
+                      }
+                    />
+                  ) : (
+                    <IconEyeClose
+                      onClick={() =>
+                        setShowPassword((e) => ({
+                          ...e,
+                          confirm: !e.confirm,
+                        }))
+                      }
+                    />
+                  )}
+                </span>
               </div>
               <div className="text-center login-btn personal-sign-up">
                 <input

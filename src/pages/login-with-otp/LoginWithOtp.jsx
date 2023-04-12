@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "shared/cookies";
 import Input from "components/ui/Input";
@@ -8,9 +8,14 @@ import { apiRequest } from "helpers/apiRequests";
 import Modal from "components/modals/Modal";
 import VerifyLoginOtp from "./components/VerifyLoginOtp";
 import { toast } from "react-toastify";
+import { LoaderContext } from "context/loaderContext";
+import InputSelect from "components/ui/InputSelect";
+import useCountriesCities from "hooks/useCountriesCities";
 
 const LoginWithOtp = (props) => {
   const navigate = useNavigate();
+  const { setIsLoading } = useContext(LoaderContext);
+  const [countryList] = useCountriesCities();
 
   useEffect(() => {
     const token = getCookie("auth._token.Bearer");
@@ -22,10 +27,12 @@ const LoginWithOtp = (props) => {
 
   const formik = useFormik({
     initialValues: {
+      country_code: "",
       mobile_number: "",
     },
     validationSchema: loginWithOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
+      setIsLoading(true);
       try {
         const { data } = await apiRequest.loginOtp(values);
         if (!data.success || data.data === null) throw data.message;
@@ -36,6 +43,8 @@ const LoginWithOtp = (props) => {
       } catch (error) {
         resetForm();
         setStatus(error);
+      } finally {
+        setIsLoading(false);
       }
     },
   });
@@ -68,20 +77,42 @@ const LoginWithOtp = (props) => {
                   Please Enter Mobile Number
                 </h4>
                 <form onSubmit={formik.handleSubmit}>
-                  <div className="form-field">
-                    <Input
-                      type="mobile"
-                      className="form-control"
-                      placeholder="Mobile Number"
-                      name="mobile_number"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.mobile_number}
-                      error={
-                        formik.touched.mobile_number &&
-                        formik.errors.mobile_number
-                      }
-                    />
+                  <div className="row form-field">
+                    <div className="col-4 ps-0">
+                      <InputSelect
+                        className="form-select form-control"
+                        name="country_code"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.country_code}
+                        error={
+                          formik.touched.country_code &&
+                          formik.errors.country_code
+                        }
+                      >
+                        <option value={""}>Country</option>
+                        {countryList?.map((country, index) => (
+                          <option value={country.phonecode} key={index}>
+                            {country.phonecode} &nbsp; {country.country_name}
+                          </option>
+                        ))}
+                      </InputSelect>
+                    </div>
+                    <div className="col-8 px-0">
+                      <Input
+                        type="mobile"
+                        className="form-control"
+                        placeholder="Mobile Number"
+                        name="mobile_number"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.mobile_number}
+                        error={
+                          formik.touched.mobile_number &&
+                          formik.errors.mobile_number
+                        }
+                      />
+                    </div>
                   </div>
                   <div className="text-center send-cd-btn">
                     {formik.status && (

@@ -43,24 +43,22 @@ function ModalOtpConfirmation(props) {
     setIsActive(true);
   }, [show]);
 
+  // For set counter for given time
   useEffect(() => {
     let interval = null;
-    if (isActive) {
+    if (isActive)
       interval = setInterval(() => {
         setCounter((counter) => (counter - 1 > 0 ? counter - 1 : 0));
       }, 1000);
-    } else {
-      clearInterval(interval);
-    }
+    else clearInterval(interval);
     return () => {
       clearInterval(interval);
     };
   }, [isActive]);
 
+  // For stop counter when timeout
   useEffect(() => {
-    if (counter <= 0) {
-      setIsActive(false);
-    }
+    if (counter <= 0) setIsActive(false);
   }, [counter]);
 
   // For closing the modal on click of outside the modal area
@@ -91,7 +89,7 @@ function ModalOtpConfirmation(props) {
         setShow(false);
         resetForm();
       } catch (error) {
-        console.log("HELLO", error);
+        console.log(error);
       }
     },
   });

@@ -136,38 +136,7 @@ const SwipeContactList = (props) => {
         scrollbar={{ draggable: false }}
         onReachEnd={handleReachEnd}
       >
-        <div className={`swiper-wrapper ${className}`}>
-          {ListItems}
-          {/* {data?.map((elm, index) => (
-            <SwiperSlide
-              key={"slider" + (elm.group_id ? elm.group_id : elm.mobile)}
-            >
-              <ContactCard
-                isSelectable={isSelectable}
-                selectedContact={selectedContact}
-                handleSelectChange={handleSelectChange}
-                fullWidth={fullWidth}
-                backgroundColor={
-                  elm.group_image
-                    ? ""
-                    : groupDefaultBackgroundImages[getActiveColor(index)]
-                }
-                imgUrl={
-                  elm.group_image !== undefined
-                    ? elm.group_image !== ""
-                      ? elm.group_image
-                      : "assets/images/group-payment-black-icon.png"
-                    : elm.profile_image !== ""
-                    ? elm.profile_image
-                    : ""
-                }
-                name={elm.group_name ?? elm.name}
-                id={elm.group_id ? elm.group_id : elm.mobile}
-                isMultiSelect={isMultiSelect}
-              />
-            </SwiperSlide>
-          ))} */}
-        </div>
+        <div className={`swiper-wrapper ${className}`}>{ListItems}</div>
       </Swiper>
     </div>
   );

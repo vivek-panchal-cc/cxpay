@@ -11,7 +11,7 @@ const LoaderProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <LoaderContext.Provider value={{ setIsLoading }}>
+    <LoaderContext.Provider value={{ setIsLoading, isLoading }}>
       {isLoading && <DefaultLoader />}
       {children}
     </LoaderContext.Provider>

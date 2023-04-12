@@ -24,16 +24,15 @@ function Businessform(props) {
     initialValues: {
       company_name: "",
       user_type: signUpCreds.user_type || "business",
+      mobile_number: signUpCreds.mobile_number,
+      country_code: signUpCreds.country_code,
       email: "",
+      address: "",
       password: "",
       confirm_password: "", //not required for API
-      mobile_number: signUpCreds.mobile_number,
-      profile_image: "",
-      country_index: -1, //not required for API
       country: "",
-      country_iso: "", //not required for API
-      mobile_code: signUpCreds.mobile_code,
       city: "",
+      profile_image: "",
     },
     validationSchema: signUpBusinessAccountSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
@@ -52,8 +51,8 @@ function Businessform(props) {
         setSignUpCreds((cs) => ({ ...cs, step: 3 }));
       } catch (error) {
         setErrors({
-          email: error.email?.[0],
-          mobile_number: error.mobile_number?.[0],
+          email: error?.email?.[0],
+          mobile_number: error?.mobile_number?.[0],
         });
       } finally {
         setIsLoading(false);
@@ -117,21 +116,15 @@ function Businessform(props) {
               />
               <InputSelect
                 className="form-select form-control"
-                name="country_index"
-                onChange={({ currentTarget }) => {
-                  const i = parseInt(currentTarget.value);
-                  formik.setFieldValue("country_index", i);
-                  formik.setFieldValue("country_iso", countryList[i]?.iso);
-                  formik.setFieldValue("country", countryList[i]?.country_name);
-                  formik.setFieldValue("city", ""); // imp
-                }}
+                name="country"
+                onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.country_index}
+                value={formik.values.country}
                 error={formik.touched.country && formik.errors.country}
               >
-                <option value={"-1"}>Select Country</option>
+                <option value={""}>Select Country</option>
                 {countryList?.map((country, index) => (
-                  <option key={index} value={index}>
+                  <option key={index} value={country.iso}>
                     {country.country_name}
                   </option>
                 ))}
@@ -145,7 +138,7 @@ function Businessform(props) {
                 error={formik.touched.city && formik.errors.city}
               >
                 <option value={""}>Select City</option>
-                {cityList[formik.values.country_iso]?.map((city, index) => (
+                {cityList[formik.values.country]?.map((city, index) => (
                   <option key={index} value={city.city_name}>
                     {city.city_name}
                   </option>
@@ -161,6 +154,16 @@ function Businessform(props) {
                 value={formik.values.email}
                 error={formik.touched.email && formik.errors.email}
                 autoComplete={"new-email"}
+              />
+              <Input
+                type="text"
+                className="form-control"
+                placeholder="Address"
+                name="address"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.address}
+                error={formik.touched.address && formik.errors.address}
               />
               <div className="form-field">
                 <Input
