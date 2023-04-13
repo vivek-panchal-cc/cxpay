@@ -319,7 +319,7 @@
     right: 50px;
     padding-left: 15px !important;
   }
-  .payment-blocks-inner form .input-select-wrap .form-control {
+  .payment-blocks-inner .input-select-wrap .form-control {
     padding-right: 100px !important;
   }
 }
@@ -425,7 +425,7 @@
     margin: 0 20px 0 20px;
     font-size: 17px;
     line-height: 23px;
-    padding: 11px 42px;
+    padding: 11px 40px;
     border-radius: 15px !important;
   }
   .send-btn-wrap .save-group-btn,
@@ -612,7 +612,7 @@
     max-width: 210px;
   }
   .act-user-content-wrap {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
   }
   .act-user-content-wrap .activity-month {
     padding-bottom: 10px;
@@ -626,9 +626,6 @@
   }
   .activity-date-wrap {
     padding: 20px 0px 25px;
-  }
-  .act-user-content-wrap {
-    padding-bottom: 10px;
   }
   .activities-top-sec .title-content-wrap h3,
   .wallet-title-container h2 {
@@ -646,8 +643,12 @@
     max-width: 75px !important;
     font-size: 14px;
   }
+  .wallet-title-wrap .wallet-title-container {
+    width: calc(100% - 320px);
+  }
   .wallet-title-btns {
-    max-width: 320px;
+    width: 320px;
+    padding-left: 10px;
   }
   .dashboard-link-wrap {
     padding-top: 22px;
@@ -749,9 +750,9 @@
     /* width: calc(100% - 200px); */
     width: 100% !important;
   }
-  .wallet-top-wrap .dashboard-notification-sec {
+  /* .wallet-top-wrap .dashboard-notification-sec {
     width: 200px;
-  }
+  } */
   .contact-top-search-sec {
     display: block !important;
   }
@@ -909,9 +910,9 @@
     line-height: 32px;
     margin-bottom: 9px;
   }
-  .send-top-sec .title-content-wrap {
+  /* .send-top-sec .title-content-wrap {
     width: 43%;
-  }
+  } */
   .send-top-right-sec {
     width: 57%;
     padding-left: 12px;
@@ -967,7 +968,7 @@
   .payment-blocks-listing li {
     padding: 15px 15px;
   }
-  /* .payment-blocks-inner form .input-select-wrap .form-control {
+  /* .payment-blocks-inner .input-select-wrap .form-control {
     font-size: 18px;
     padding: 9px 18px !important;
   } */
@@ -985,7 +986,7 @@
     padding: 0 20px 0 13px !important;
     max-width: 75px;
   }
-  /* .payment-blocks-inner form .input-select-wrap .form-control {
+  /* .payment-blocks-inner  .input-select-wrap .form-control {
     font-size: 15px;
     padding: 12px 17px !important;
   } */
@@ -997,23 +998,23 @@
     width: 40px;
     height: 40px;
   }
-  .payment-blocks-inner form .form-field .form-control {
+  .payment-blocks-inner .form-field .form-control {
     padding: 12px 17px !important;
     font-size: 15px;
   }
-  .payment-blocks-inner form .input-select-wrap .form-control {
+  .payment-blocks-inner .input-select-wrap .form-control {
     padding-right: 65px !important;
   }
   .input-select-wrap.form-field > p.ip_currancy {
     right: 20px;
   }
-  .payment-blocks-inner form .form-field .form-control::placeholder {
+  .payment-blocks-inner .form-field .form-control::placeholder {
     font-size: 14px;
   }
   .payment-blocks-listing li > div.specification-input {
     min-width: 250px;
   }
-  .payment-blocks-inner form .input-select-wrap .form-control::placeholder {
+  .payment-blocks-inner .input-select-wrap .form-control::placeholder {
     font-size: 16px;
   }
   .payment-blocks-listing li > div {
@@ -1114,10 +1115,6 @@
   .wallet-title-btns a img {
     margin-right: 8px;
     max-width: 32px;
-  }
-  .wallet-ac-inner p.card-holder-nm {
-    font-size: 26px;
-    line-height: 26px;
   }
   .card-num-date p:first-child {
     font-size: 20px;
@@ -1255,8 +1252,8 @@
     font-size: 12px;
   }
   .wallet-ac-inner p.card-holder-nm {
-    font-size: 24px;
-    line-height: 28px;
+    font-size: 22px;
+    line-height: 25px;
   }
   .wallet-ac-inner .card-num-date p:first-child {
     font-size: 20px;
@@ -1284,17 +1281,21 @@
   .wallet-top-nwrap .wallet-title-wrap {
     display: block;
   }
+  .wallet-title-wrap .wallet-title-container {
+    width: 100%;
+  }
   .wallet-top-nwrap .wallet-title-btns {
     width: 100%;
     max-width: 100%;
     margin-top: 12px;
     justify-content: left !important;
+    padding-left: 0px;
   }
   .input-select-wrap.form-field > p.ip_currancy {
     font-size: 16px;
   }
   .one-time-pay-wrap .amount > span {
-    padding-left: 15px;
+    padding-right: 15px;
   }
 }
 @media only screen and (max-width: 1100px) and (min-width: 992px) {
@@ -1302,14 +1303,13 @@
     padding-left: 30px;
     padding-right: 30px;
   }
-  .wallet-main-right,
-  .wallet-top-wrap .dashboard-notification-sec {
-    width: 330px;
+  .wallet-main-right {
+    width: 320px;
     padding-left: 35px;
   }
-  .wallet-main-left,
-  .wallet-top-wrap .wallet-title-wrap {
-    width: calc(100% - 330px);
+  .wallet-main-left {
+    width: calc(100% - 320px);
+    padding-right: 15px;
   }
   .wallet-right-title h3 {
     margin-bottom: 15px;
@@ -1321,8 +1321,8 @@
     padding-top: 30px;
   }
   .wallet-slider .wallet-ac-inner p.card-holder-nm {
-    font-size: 20px;
-    line-height: 20px;
+    font-size: 21px;
+    line-height: 21px;
   }
   .wallet-slider .card-num-date p:first-child {
     font-size: 16px;
@@ -1371,23 +1371,12 @@
   .wallet-main-right .wallet-card-add-btns a {
     font-size: 12px;
   }
-  .wallet-ac-inner p.card-holder-nm {
-    font-size: 26px;
-    line-height: 26px;
-  }
   .card-num-date p:first-child {
     font-size: 20px;
     line-height: 20px;
   }
   .wallet-slider .wallet-ac-inner {
     padding-left: 25px;
-  }
-  .wallet-main-right,
-  .wallet-top-wrap .dashboard-notification-sec {
-    width: 320px;
-  }
-  .wallet-main-left {
-    width: calc(100% - 320px);
   }
   .wallet-title-btns a.wallet-top-1-btn {
     margin-right: 10px;
@@ -1592,9 +1581,9 @@
   .sidebar-open .dashboard-link-wrap ul li a span {
     display: block;
   }
-  .wallet-title-container {
+  /* .wallet-title-container {
     margin-right: 20px;
-  }
+  } */
   .business-info-right-sec .business-info-left-content {
     max-width: 559px;
     margin: auto;
@@ -1677,6 +1666,23 @@
   .wallet-top-wrap {
     margin-bottom: 30px;
   }
+  .input-select-wrap.form-field > p.ip_currancy {
+    right: 30px !important;
+  }
+  .payment-blocks-inner .input-select-wrap .form-control {
+    padding-right: 70px !important;
+  }
+  .payment-blocks-listing li {
+    padding: 15px;
+  }
+  .payee-name h4 {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  /* .wallet-ac-inner p.card-holder-nm{
+    font-size: 20px;
+    line-height: 24px;
+  } */
 }
 @media only screen and (max-width: 991px) and (min-width: 820px) {
   .profile-inner-sec .profile-left-content,
@@ -1763,6 +1769,14 @@
   .send-page-wrapper .send-btn-wrap .btn-cancel-payment {
     padding-left: 26px;
     padding-right: 26px;
+  }
+  .send-page-wrapper .send-top-sec .title-content-wrap {
+    width: 60%;
+    padding-right: 20px;
+  }
+  .send-page-wrapper .send-top-sec form {
+    max-width: 327px;
+    width: 40%;
   }
 }
 @media only screen and (max-width: 1023px) and (min-width: 992px) {
@@ -2074,7 +2088,7 @@
   .payment-blocks-listing li > div.specification-input {
     min-width: auto;
   }
-  .payment-blocks-inner form .form-field .form-control {
+  .payment-blocks-inner .form-field .form-control {
     padding: 10px 11px !important;
     font-size: 14px;
     /* border-radius: 11px !important; */
@@ -2089,13 +2103,13 @@
     right: 14px;
     top: 5px;
   }
-  .payment-blocks-inner form .input-select-wrap .form-control {
+  .payment-blocks-inner .input-select-wrap .form-control {
     padding-right: 65px !important;
   }
   .payment-blocks-listing .input-select-wrap {
     max-width: 185px;
   }
-  .payment-blocks-inner form .form-field .form-control::placeholder {
+  .payment-blocks-inner .form-field .form-control::placeholder {
     font-size: 14px;
   }
   .payment-blocks-inner form .form-field select.form-control::placeholder {
@@ -2583,13 +2597,14 @@
     margin: 5px 0;
   }
   .payment-blocks-listing li {
-    padding: 7px 5px;
+    /* padding: 7px 5px; */
+    padding: 15px 12px;
   }
   .payment-blocks-listing li > div.specification-input {
     min-width: 230px;
   }
-  .payment-blocks-inner form .form-field .form-control {
-    padding: 10px 11px !important;
+  .payment-blocks-inner .form-field .form-control {
+    padding: 10px 14px !important;
     font-size: 14px;
     /* border-radius: 11px !important; */
   }
@@ -2603,16 +2618,16 @@
     right: 14px;
     top: 5px;
   }
-  .payment-blocks-inner form .input-select-wrap .form-control {
+  .payment-blocks-inner .input-select-wrap .form-control {
     padding-right: 65px !important;
   }
   .payment-blocks-listing .input-select-wrap {
     max-width: 185px;
   }
-  .payment-blocks-inner form .form-field .form-control::placeholder {
+  .payment-blocks-inner .form-field .form-control::placeholder {
     font-size: 14px;
   }
-  .payment-blocks-inner form .form-field select.form-control::placeholder {
+  .payment-blocks-inner .form-field select.form-control::placeholder {
     font-size: 15px;
   }
   .remove-btn .close-icons {
@@ -2864,31 +2879,27 @@
   .wallet-ac-info-wrap .wallet-ac-inner {
     width: 350px;
   }
-  .wallet-top-wrap .wallet-title-container {
+  /* .wallet-top-wrap .wallet-title-container {
     width: 50%;
-  }
+  } */
   .wallet-slider .wallet-ac-inner {
-    height: 185px;
-  }
-  .wallet-ac-inner p.card-holder-nm {
-    font-size: 22px;
-    line-height: 22px;
+    height: 210px;
   }
   .card-num-date p:first-child {
-    font-size: 16px;
-    line-height: 16px;
+    font-size: 15px;
+    line-height: 15px;
   }
   .card-num-date p:last-child {
     font-size: 14px;
     line-height: 14px;
   }
-  .wallet-slider .wallet-ac-inner {
+  /* .wallet-slider .wallet-ac-inner {
     padding-top: 30px;
-  }
-  .wallet-top-wrap .dashboard-notification-sec {
+  } */
+  /* .wallet-top-wrap .dashboard-notification-sec {
     padding-left: 0px;
     width: 100%;
-  }
+  } */
   .wallet-main-left,
   .wallet-top-wrap .wallet-title-wrap {
     width: 100%;
@@ -3076,7 +3087,14 @@
     right: 20px;
   }
   .one-time-pay-wrap .amount > span {
-    padding-left: 5px;
+    padding-right: 10px;
+  }
+  .wallet-slider {
+    padding-right: 12px;
+  }
+  .wallet-ac-inner p.card-holder-nm {
+    font-size: 20px;
+    line-height: 24px;
   }
 }
 
@@ -3492,7 +3510,9 @@
   }
   .payment-blocks-listing li > div.remove-btn {
     padding-right: 6px !important;
-    margin: 0 0 0 auto;
+    margin-left: auto;
+    margin-right: 0px;
+    margin-bottom: 0px;
   }
   .one-time-pay-main-sec .dashboard-top-sec {
     padding: 0;
@@ -3515,7 +3535,7 @@
     text-align: right;
   }
   .one-time-pay-wrap .amount > span {
-    font-size: 15px;
+    font-size: 13px;
   }
   .payment-footer-block ul .payment-footer-col-label {
     font-size: 16px;
@@ -3532,7 +3552,7 @@
   /* .payment-blocks-listing {
     padding-bottom: 25px;
   } */
-  .payment-blocks-inner form .form-field .form-control::placeholder {
+  .payment-blocks-inner .form-field .form-control::placeholder {
     font-size: 13px;
   }
   .group-save-modal-content .modal-body p {
@@ -3614,11 +3634,11 @@
     font-size: 20px;
     line-height: 25px;
   }
-  .send-top-sec p,
+  /* .send-top-sec p,
   .send-pay-title-sec p {
     font-size: 13px;
     line-height: 20px;
-  }
+  } */
   .db-view-card-main .db-view-bank-listing li,
   .db-view-bank-listing li {
     padding: 10px 8px;
@@ -3701,9 +3721,11 @@
   .wallet-title-container {
     width: 100% !important;
   }
-  .wallet-title-btns {
+  .wallet-title-wrap .wallet-title-btns {
     margin-left: 0 !important;
     margin-top: 20px;
+    padding-left: 0px;
+    width: 100%;
   }
   /* 09-03*/
   .acount-type-wrap label {
@@ -3919,10 +3941,10 @@
     margin-bottom: 0px;
   }
   .payment-footer-block ul li > * {
-    width: 40%;
+    width: 50%;
   }
   .payment-footer-block ul li > div {
-    width: 60%;
+    width: 50%;
     justify-content: start;
   }
   .payment-footer-block ul li > div:last-child {
@@ -3957,6 +3979,9 @@
   }
   .wallet-top-wrap {
     margin-bottom: 30px;
+  }
+  .one-time-pay-wrap .amount > span {
+    padding-right: 5px;
   }
 }
 @media only screen and (max-width: 575px) {
@@ -4243,5 +4268,12 @@
   }
   .payment-footer-block ul .payment-footer-col-label {
     font-size: 15px;
+  }
+  .payment-blocks-listing .input-select-wrap {
+    max-width: 210px;
+    min-width: 210px;
+  }
+  .wallet-slider .wallet-ac-inner {
+    height: 190px;
   }
 }

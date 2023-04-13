@@ -1600,9 +1600,9 @@ margin: auto;
 .setting-btn-link a,
 .outline-btn {
   background-color: #fff;
-  border: 1.5px solid #0081c5;
-  border-radius: 12px;
-  padding: 13px 32px 13px 22px;
+  border: 1px solid #0081c5;
+  border-radius: 15px;
+  padding: 13px 22px;
   font-family: "Visby Round CF";
   font-style: normal;
   font-weight: 500;
@@ -2614,7 +2614,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   justify-content: space-between;
   padding-bottom: 30px;
   /*padding-right: 40px;*/
-  padding-top: 10px;
+  padding-top: 20px;
 }
 .send-top-sec .send-inner-sec {
   padding-bottom: 20px;
@@ -2663,9 +2663,9 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   color: #0081c5;
   min-width: auto;
 }
-.send-top-sec .title-content-wrap {
+/* .send-top-sec .title-content-wrap {
   width: 49%;
-}
+} */
 .add-contact-btn-wrap .btn:hover,
 .send-btn-wrap .btn-group-payment:hover,
 .pay-btn-wrap .btn-cancel-payment:hover,
@@ -2907,6 +2907,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   min-width: fit-content;
   width: 100%;
   flex-wrap: nowrap;
+  margin-bottom: 10px;
 }
 .payment-blocks-listing li:hover {
   background-color: #fff;
@@ -2966,14 +2967,14 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   bottom: auto;
   margin: auto;
 }
-.payment-blocks-inner form .form-field .form-control {
+.payment-blocks-inner .form-field .form-control {
   border-color: #bdbdbd !important;
   font-family: "Quicksand";
   filter: none;
   padding: 12px 20px !important;
   transition: all 0.5s ease-in-out;
 }
-.payment-blocks-inner form .input-select-wrap .form-control {
+.payment-blocks-inner .input-select-wrap .form-control {
   font-family: "Visby Round CF";
   font-weight: 700;
   font-size: 20px;
@@ -2981,7 +2982,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   box-shadow: none;
   padding: 9px 22px !important;
 }
-.payment-blocks-inner form .input-select-wrap .form-control::placeholder {
+.payment-blocks-inner .input-select-wrap .form-control::placeholder {
   font-size: 20px;
   font-weight: 700;
   color: #9b9b9b;
@@ -3003,8 +3004,8 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   background-image: none;
   max-width: 91px;
 }
-.payment-blocks-inner form .input-select-wrap .form-control {
-  padding-right: 65px !important;
+.payment-blocks-inner .input-select-wrap .form-control {
+  padding-right: 72px !important;
   appearance: textfield;
   -webkit-appearance: textfield;
 }
@@ -3039,7 +3040,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
 .remove-btn .close-icons::after {
   transform: rotate(45deg);
 }
-.payment-blocks-inner form li:hover .form-field .form-control {
+.payment-blocks-inner li:hover .form-field .form-control {
   border-color: #0081c5 !important;
   /* filter: drop-shadow(0px 3.76623px 15.6926px rgba(37, 31, 48, 0.2)); */
   color: #363853;
@@ -3050,7 +3051,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
 .payment-blocks-inner form li:hover .form-field select.form-control {
   color: #0081c5;
 }
-.payment-blocks-inner form .input-select-wrap .form-control::placeholder {
+.payment-blocks-inner .input-select-wrap .form-control::placeholder {
   font-family: "Visby Round CF";
 }
 .payment-blocks-listing .input-select-wrap .selec-wrap::after,
@@ -3109,7 +3110,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   padding-top: 20px;
   padding-bottom: 20px;
   margin-left: -20px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 .one-time-pay-wrap .payment-blocks-listing::after {
   display: none;
@@ -3523,6 +3524,9 @@ span.date-cal {
   overflow-x: auto;
   white-space: nowrap;
   flex-wrap: nowrap;
+  margin-left: -20px;
+  width: calc(100% + 40px);
+  padding-top: 20px;
 }
 .act-user-content-wrap li {
   display: flex;
@@ -3540,10 +3544,13 @@ span.date-cal {
   font-size: 14px;
   line-height: 16px;
   color: #969696;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 .act-user-content-wrap li:hover {
   background-color: #fff;
-  box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
+  /* box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08);
 }
 .act-user-content-wrap .user-thumb-name {
   display: flex;
@@ -3623,7 +3630,8 @@ img.img-hover {
   font-size: 14px;
   line-height: 18px;
   color: #969696;
-  padding: 0px 0px 20px;
+  /* padding: 0px 0px 20px; */
+  padding: 0px 0px 0px;
 }
 /* Signup OPT Popup */
 .login-otp-numbers .form-field {
@@ -3929,7 +3937,7 @@ form .row {
   min-width: 185px;
 }
 .add-wallet-card-form-wrap .btns-inline {
-  margin-top: 25px;
+  margin-top: 10px;
 }
 ul.radio-group-wrap {
   display: flex;
@@ -4022,6 +4030,9 @@ div.row {
   z-index: 9;
   text-shadow: -1px -1px 3px rgb(255 255 255 / 55%),
     2px 2px 4px rgb(0 0 0 / 45%);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .card-num-date p:first-child {
   font-family: "Comfortaa";
@@ -4690,9 +4701,9 @@ ul::-webkit-scrollbar-thumb:hover {
   color: #363853;
 }
 /* Wallet Page Start */
-.wallet-main-right {
+/* .wallet-main-right {
   margin-bottom: 50px;
-}
+} */
 .wallet-recent-activity-sec ul li .user-info {
   display: flex;
   flex-wrap: nowrap;
@@ -4731,7 +4742,7 @@ ul::-webkit-scrollbar-thumb:hover {
 }
 .wallet-recent-activity-sec ul li .user-info:hover {
   background-color: #fff;
-  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08);
 }
 .wallet-recent-activity-sec .activity-use-img {
   max-width: 48px;
@@ -4782,13 +4793,16 @@ ul::-webkit-scrollbar-thumb:hover {
 }
 .wallet-title-wrap {
   display: flex;
-  align-items: center;
+  align-items: start;
+}
+.wallet-title-wrap .wallet-title-container {
+  width: calc(100% - 365px);
 }
 .wallet-title-btns {
-  max-width: 365px;
+  width: 365px;
+  padding-left: 15px;
   margin-left: auto;
   margin-right: 0;
-  width: 100%;
 }
 /*.wallet-title-btns span.wallet-icon-span {
   background: #0081C5;
@@ -4847,15 +4861,13 @@ ul::-webkit-scrollbar-thumb:hover {
 .wallet-slider .swiper-button-prev {
   bottom: -50px;
 }
-.wallet-main-left,
-.wallet-top-wrap .wallet-title-wrap {
+.wallet-main-left {
   width: calc(100% - 420px);
   padding-right: 60px;
 }
-.wallet-main-right,
-.wallet-top-wrap .dashboard-notification-sec {
+.wallet-main-right {
   width: 420px;
-  padding-left: 45px;
+  padding-left: 50px;
 }
 /* Wallet Page End */
 .wallet-card-add-btns {
@@ -4923,7 +4935,7 @@ ul::-webkit-scrollbar-thumb:hover {
   padding-top: 40px;
 }
 .wallet-top-wrap {
-  margin-bottom: 50px;
+  margin-bottom: 45px;
 }
 .wallet-chart-container {
   margin-bottom: 50px;
@@ -6030,7 +6042,8 @@ div.settings-note-inner-sec.setting-noti-sec-new {
   stroke: #fff;
 }
 .send-btn-wrap .btn svg {
-  margin-right: 5px;
+  /* margin-right: 5px; */
+  margin-right: 10px;
 }
 .send-group-slider .contact-name {
   word-break: break-word;
@@ -6668,7 +6681,7 @@ a.eg-close-btn {
 }
 .one-time-pay-wrap .amount > span {
   color: #0081c5 !important;
-  padding-left: 35px;
+  padding-right: 35px;
 }
 .contact-top-btn-nav .con-btn-wrap > .btn > a {
   display: flex;
@@ -6731,4 +6744,32 @@ a.eg-close-btn {
   background: #dc3545e6;
   border-color: #dc3545e6;
   color: #ffffff;
+}
+/* CSS on 12-04 */
+.send-page-wrapper .send-btn-wrap .btn {
+  padding-left: 25px !important;
+  padding-right: 25px !important;
+}
+.send-page-wrapper .login-btn .send-btn-wrap .btn.addc > svg {
+  vertical-align: middle;
+  width: 13px;
+}
+.loading p.loading-data {
+  color: #363853;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.send-page-wrapper .send-top-sec form .form-field,
+.payment-blocks-listing .form-field {
+  margin-bottom: 0px;
+}
+.send-page-wrapper .send-top-sec form .search-field input[type="search"] {
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+}
+.payment-blocks-listing .remove-btn .close-icons {
+  border: none !important;
 }
