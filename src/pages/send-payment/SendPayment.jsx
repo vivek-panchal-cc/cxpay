@@ -17,9 +17,11 @@ function SendPayment(props) {
   const navigate = useNavigate();
   const inputAmountRefs = useRef([]);
   const { setIsLoading } = useContext(LoaderContext);
-  const { sendCreds, handleSendCreds, charges } =
+  const { sendCreds, handleSendCreds, handleCancelPayment, charges } =
     useContext(SendPaymentContext);
-  const { mobile_number } = useSelector((state) => state?.userProfile?.profile);
+  const { mobile_number, country_code } = useSelector(
+    (state) => state?.userProfile?.profile
+  );
   const { wallet } = sendCreds || [];
 
   const [showOtpPoup, setShowOtpPopup] = useState(false);
@@ -69,10 +71,11 @@ function SendPayment(props) {
 
   // For submitting OTP to API to make payment
   const handleSubmitOtp = async (otp) => {
-    if (!otp || !mobile_number) return;
+    if (!otp || !mobile_number || !country_code) return;
     setIsLoading(true);
     try {
       const { data } = await apiRequest.walletPersonalOtpVerify({
+        country_code,
         mobile_number,
         wallet_transfer_otp: otp,
       });
@@ -85,7 +88,7 @@ function SendPayment(props) {
       const { message, data } = error || {};
       const { wrong_otp_attempts } = data || {};
       if (wrong_otp_attempts && wrong_otp_attempts >= 3) {
-        handleSendCreds([]);
+        handleCancelPayment([]);
         navigate("/send", { replace: true });
       }
       if (typeof message === "string") toast.error(message);
@@ -134,7 +137,7 @@ function SendPayment(props) {
   // For calculating charges when amount changes for any contact
   useEffect(() => {
     if (!formik.values.wallet) return;
-    const amounts = formik.values.wallet.map((item) =>
+    const amounts = formik.values.wallet?.map((item) =>
       item.personal_amount ? parseFloat(item.personal_amount) : 0
     );
     setPaymentDetails(getChargedAmount(charges, amounts));
@@ -149,6 +152,7 @@ function SendPayment(props) {
         id="group_pay_otp_modal"
         className="otp-verification-modal group_pay_otp_modal"
         show={showOtpPoup}
+        allowClickOutSide={true}
         setShow={setShowOtpPopup}
         heading="OTP Verification"
         headingImg="/assets/images/send-payment-pop.svg"
@@ -164,8 +168,8 @@ function SendPayment(props) {
         heading="Money Sent"
         subHeading={moneySentMsg}
         headingImg="/assets/images/sent-payment-pop.svg"
-        linkText="Done"
-        linkRedirect="/send"
+        btnText="Done"
+        handleBtnClick={handleCancelPayment}
       />
       <div className="col-12 send-payment-ttile-wrap">
         <div className="title-content-wrap send-pay-title-sec">
@@ -182,7 +186,7 @@ function SendPayment(props) {
               <div className="payment-blocks-inner">
                 {/* <!-- payment-blocks-listing starts --> */}
                 <ul className="payment-blocks-listing">
-                  {wallet.map((item, index) => {
+                  {wallet?.map((item, index) => {
                     return (
                       <ContactPaymentItem
                         key={index}
@@ -237,9 +241,12 @@ function SendPayment(props) {
               </div>
             </div>
             <div className="pay-btn-wrap">
-              <Link to={"/send"} className="btn btn-cancel-payment">
+              <button
+                onClick={handleCancelPayment}
+                className="btn btn-cancel-payment"
+              >
                 Cancel
-              </Link>
+              </button>
               <button type="submit" className="btn btn-send-payment">
                 Send
               </button>

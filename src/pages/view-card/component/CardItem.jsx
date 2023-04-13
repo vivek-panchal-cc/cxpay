@@ -14,8 +14,6 @@ function CardItem(props) {
     mark_as_default,
   } = item;
 
-  console.log(image,color);
-
   return (
     <li className="db-view-bank-div-main db-view-bank-common-div">
       <div className="bank-card-name-wrap">

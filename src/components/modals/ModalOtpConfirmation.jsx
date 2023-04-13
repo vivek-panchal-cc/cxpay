@@ -17,6 +17,7 @@ function ModalOtpConfirmation(props) {
     handleSubmitOtp,
     handleResendOtp,
     validationSchema,
+    allowClickOutSide,
   } = props;
   const modalRef = useRef(null);
 
@@ -67,7 +68,7 @@ function ModalOtpConfirmation(props) {
       if (!modalRef.current) return;
       const childDialog = modalRef.current?.children[0];
       if (childDialog && !childDialog.contains(event.target))
-        setShow && setShow(false);
+        !allowClickOutSide && setShow && setShow(false);
     }
     document.addEventListener("mousedown", handleclickOutside);
     return () => {
@@ -162,9 +163,9 @@ function ModalOtpConfirmation(props) {
                     value="Verify"
                   />
                 </div>
-                {/* <div className="pop-cancel-btn text-center">
+                <div className="pop-cancel-btn text-center">
                   <button onClick={() => setShow(false)}>Cancel</button>
-                </div> */}
+                </div>
               </form>
             </div>
           </div>

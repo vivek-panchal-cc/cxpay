@@ -90,8 +90,6 @@ const BankList = () => {
     }
   };
 
-  console.log(bankList);
-
   return (
     <div className="">
       <div className="title-content-wrap send-pay-title-sec title-common-sec">

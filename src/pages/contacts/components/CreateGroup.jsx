@@ -13,7 +13,7 @@ export default function CreateGroup(props) {
   const profile_image = null;
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
-  const [isProfileImage,setIsProfileImage] = useState(0);
+  const [isProfileImage, setIsProfileImage] = useState(0);
   const formik = useFormik({
     initialValues: {
       group_name: "",
@@ -24,7 +24,6 @@ export default function CreateGroup(props) {
     validateOnBlur: false, // and this one
     validationSchema: createGroupSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
-      console.log(values);
       setIsLoading(true);
       const formData = new FormData();
       for (let key in values) {
@@ -87,7 +86,9 @@ export default function CreateGroup(props) {
               className="cursor-pointer"
               style={{ color: "#0081c5" }}
             >
-              { isProfileImage == '1' ? "Change Group Image" : "Select Group Image" }
+              {isProfileImage == "1"
+                ? "Change Group Image"
+                : "Select Group Image"}
             </label>
           </p>
           <form onSubmit={formik.handleSubmit} className="save-group-form">

@@ -55,6 +55,7 @@ ContactsSelection.Body = (props) => {
     className,
     classNameContainer,
     contacts,
+    selectedContacts,
     fullWidth,
     isMultiSelect,
     emptyListMsg,
@@ -70,6 +71,7 @@ ContactsSelection.Body = (props) => {
       {contacts && contacts.length > 0 ? (
         <SwipeContactList
           list={contacts}
+          selectedList={selectedContacts}
           className={className}
           containerClassName={classNameContainer}
           fullWidth={fullWidth}

@@ -29,7 +29,7 @@ function ContactListingModal(props) {
   const [currentListPage, setCurrentListPage] = useState(1);
   const [listingTotalData, setListingTotalData] = useState(0);
   var getCurrentData = alldata.filter((item) =>
-    selectedRemainingContact.includes(item.member_mobile_number)
+    selectedRemainingContact.includes(item.account_number)
   );
   getCurrentData = getCurrentData.map((item) => item.member_mobile_number);
   const searchContactData = (e) => {
@@ -51,7 +51,7 @@ function ContactListingModal(props) {
         (x) => !getCurrentData.includes(x)
       );
       let selectedFullArrayDifference = selectedFullContactArray.filter(
-        (item) => difference.includes(item.member_mobile_number)
+        (item) => difference.includes(item.account_number)
       );
       if (difference.length == 0) {
         toast.warning("Please select atleast one contact");
@@ -73,7 +73,7 @@ function ContactListingModal(props) {
       selectedArray = selectedRemainingContact.filter((elm) => elm !== value);
     }
     var fullArray = remainingContactListing.filter((item) =>
-      selectedArray.includes(item.member_mobile_number)
+      selectedArray.includes(item.account_number)
     );
     setSelectedRemainingContact(selectedArray);
     setSelectedFullContactArray(fullArray);
@@ -203,19 +203,19 @@ function ContactListingModal(props) {
                 <ul onScroll={onScroll}>
                   {remainingContactListing.length > 0
                     ? remainingContactListing.map((ele) => (
-                        <li key={"li-" + ele.member_mobile_number}>
+                        <li key={"li-" + ele.account_number}>
                           <div className="modal-contact-list-wrap">
                             <div className="cm-listing-check">
                               <input
-                                id={ele.member_mobile_number}
+                                id={ele.account_number}
                                 type="checkbox"
-                                value={ele.member_mobile_number}
+                                value={ele.account_number}
                                 onChange={handleChange}
                                 checked={selectedRemainingContact.includes(
-                                  ele.member_mobile_number
+                                  ele.account_number
                                 )}
                               />
-                              <label htmlFor={ele.member_mobile_number}>
+                              <label htmlFor={ele.account_number}>
                                 {ele.member_name}
                               </label>
                             </div>

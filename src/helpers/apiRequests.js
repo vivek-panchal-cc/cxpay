@@ -9,7 +9,7 @@ import {
 const API_login = apiUrl.API_LOGIN_LOGIN;
 const API_logout = apiUrl.API_LOGIN_LOGOUT;
 const API_loginOtp = apiUrl.API_LOGIN_LOGIN_OTP;
-const API_verifyLoginOtp = apiUrl.API_LOGIN_LOGIN_OTP_VERIFY;
+const API_LoginOtpVerify = apiUrl.API_LOGIN_LOGIN_OTP_VERIFY;
 const API_passwordChange = apiUrl.API_LOGIN_PASSWORD_CHANGE;
 const API_generateForgotPasswordOtp =
   apiUrl.API_LOGIN_GENERATE_FORGOT_PASSWORD_OTP;
@@ -75,7 +75,7 @@ const API_resendWalletTransferOtp =
 //  ------------------------------------------------------------------------------------------------------------------------------------------------>
 
 // POST @login API
-// @params user_name, password
+// @params country_code, user_name, password
 export const login = (creds) => {
   return axiosLoginInstance.post(`${API_login}`, creds);
 };
@@ -87,15 +87,15 @@ export const logout = () => {
 };
 
 // POST @login-otp API
-// @params mobile_number
+// @params mobile_number, country_code
 export const loginOtp = (params) => {
   return axiosLoginInstance.post(`${API_loginOtp}`, params);
 };
 
-// POST @verifyLoginOtp API
-// @params mobile_number, user_otp
-export const verifyLoginOtp = (params) => {
-  return axiosLoginInstance.post(`${API_verifyLoginOtp}`, params);
+// POST @login-otp-verify API
+// @params mobile_number, user_otp, country_code
+export const loginOtpVerify = (params) => {
+  return axiosLoginInstance.post(`${API_LoginOtpVerify}`, params);
 };
 
 // POST @password-change API
@@ -105,7 +105,7 @@ export const passwordChange = (params) => {
 };
 
 // POST @generate-forgot-password-otp-change API
-// @params mobile_number
+// @params country_code, mobile_number
 export const generateForgotPasswordOtpChange = (params) => {
   return axiosLoginInstance.post(`${API_generateForgotPasswordOtp}`, params);
 };
@@ -418,10 +418,10 @@ export const apiRequest = {
   login,
   logout,
   loginOtp,
+  loginOtpVerify,
   getUserProfile,
   verifyMobileNumber,
   verifyRegisterOtp,
-  verifyLoginOtp,
   registerUser,
   updateUser,
   passwordChange,

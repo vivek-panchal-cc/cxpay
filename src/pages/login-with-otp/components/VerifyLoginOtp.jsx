@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import InputOtp from "components/ui/InputOtp";
 import { useFormik } from "formik";
 import { verifyLoginOtpSchema } from "schemas/validationSchema";
-import { fetchLoginOtp } from "features/user/userProfileSlice";
+import { fetchLoginOtpVerify } from "features/user/userProfileSlice";
 import { useDispatch } from "react-redux";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { otpCounterTime } from "constants/all";
 
 function VerifyLoginOtp(props) {
-  const { mobileNumber, setShow } = props;
-  
+  const { mobileNumber, countryCode, setShow } = props;
+
   const [counter, setCounter] = useState(otpCounterTime);
   const [isTimerOver, setIsTimerOver] = useState(true);
   const [error, setError] = useState(false);
@@ -42,13 +42,14 @@ function VerifyLoginOtp(props) {
 
   const formik = useFormik({
     initialValues: {
+      country_code: countryCode,
       mobile_number: mobileNumber,
       login_otp: "",
     },
     validationSchema: verifyLoginOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
-        const { error, payload } = await dispatch(fetchLoginOtp(values));
+        const { error, payload } = await dispatch(fetchLoginOtpVerify(values));
         if (error) throw payload;
       } catch (error) {
         resetForm();
@@ -64,6 +65,7 @@ function VerifyLoginOtp(props) {
     handleTimeOut();
     try {
       const { data } = await apiRequest.resendLoginOtp({
+        country_code: countryCode,
         mobile_number: mobileNumber,
       });
       if (!data.success) throw data.message;

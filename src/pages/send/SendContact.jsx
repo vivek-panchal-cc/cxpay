@@ -7,17 +7,23 @@ import Button from "components/ui/Button";
 import ContactCard from "components/cards/ContactCard";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import LoaderSendContact from "loaders/LoaderSendContact";
+import LoaderSendContactButtons from "loaders/LoaderSendContactButtons";
 
 function SendContact() {
-  const [inviteContactList, setInviteContactList] = useState([]);
+  const [contactsList, setContactsList] = useState([]);
   const [groupList, setGroupList] = useState([]);
+  // For selected contacts || group
+  const [selectedContactsIds, setSelectedContactsIds] = useState([]);
+  const [selectedGroupIds, setSelectedGroupIds] = useState([]);
+  // For total present data in List
   const [totalGroupData, setTotalGroupData] = useState(0);
-  const [groupCurrentPage, setGroupCurrentPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
   const [totalInvitedData, setTotalInvitedData] = useState(0);
+  // For current page counts
+  const [currentPage, setCurrentPage] = useState(1);
+  const [groupCurrentPage, setGroupCurrentPage] = useState(1);
   // For Search Inputs in both list header
-  const [searchContactText, setSearchContactText] = useState("");
   const [searchGroupText, setSearchGroupText] = useState("");
+  const [searchContactText, setSearchContactText] = useState("");
   // Loaders
   const [isLoadingContacts, setIsLoadingContacts] = useState(true);
   const [isLoadingGroups, setIsLoadingGroups] = useState(true);
@@ -53,18 +59,16 @@ function SendContact() {
     try {
       let param = { page: page, search: search };
       const { data } = await apiRequest.getInviteContactList(param);
-      console.log("THIS IS THE END", data);
       if (!data.success) throw data.message;
+      const appContacts = data?.data?.app_contacts || [];
+      const cList = page === 1 ? appContacts : contactsList.concat(appContacts);
+      const selecteds = selectedContacts?.map((item) => item?.account_number);
+      setSelectedContactsIds(selecteds);
       setTotalInvitedData(data.data?.pagination?.total);
-      if (page === 1) {
-        setInviteContactList(data.data?.app_contacts);
-      } else {
-        var allData = [...inviteContactList].concat(data.data?.app_contacts);
-        setInviteContactList(allData);
-      }
+      setContactsList(cList);
     } catch (error) {
       setTotalInvitedData(0);
-      setInviteContactList([]);
+      setContactsList([]);
     } finally {
       setIsLoadingContacts(false);
     }
@@ -76,13 +80,14 @@ function SendContact() {
       var param = { page: page, search: searchText };
       const { data } = await apiRequest.getGroupsList(param);
       if (!data.success) throw data.message;
+      const groups = data?.data?.groups || [];
+      const gList = page === 1 ? groups : groupList.concat(groups);
+      const selecteds = selectedGroup?.map((item) =>
+        item?.group_id?.toString()
+      );
+      setSelectedGroupIds(selecteds);
       setTotalGroupData(data.data?.pagination?.total);
-      if (page === 1) {
-        setGroupList(data.data?.groups);
-      } else {
-        var allData = [...groupList].concat(data.data?.groups);
-        setGroupList(allData);
-      }
+      setGroupList(gList);
     } catch (error) {
       setTotalGroupData(0);
       setGroupList([]);
@@ -103,21 +108,49 @@ function SendContact() {
 
   const handleReachEndContacts = () => {
     if (currentPage * 10 < totalInvitedData) {
-      setCurrentPage(currentPage + 1);
+      setCurrentPage((cp) => cp + 1);
       getInviteContactList(currentPage + 1, searchContactText);
     }
   };
 
   const handleReachEndGroups = () => {
     if (groupCurrentPage * 10 < totalGroupData) {
-      setGroupCurrentPage(groupCurrentPage + 1);
+      setGroupCurrentPage((cp) => cp + 1);
       getGroupsList(groupCurrentPage + 1, searchGroupText);
     }
   };
 
   const handleEditGroup = () => {
-    if (!selectedGroup || !selectedGroup[0]?.group_id) return;
-    navigate("/edit-group/" + selectedGroup[0]?.group_id);
+    if (!selectedGroupIds || selectedGroupIds.length <= 0) return;
+    navigate("/edit-group/" + selectedGroupIds[0]);
+  };
+
+  // handle selected contacts
+  const handleSelectContact = (e) => {
+    const value = e?.currentTarget?.value;
+    const checked = e?.currentTarget?.checked;
+    let updatedIds = [...selectedContactsIds];
+    if (!value) return;
+    if (checked) updatedIds = [...selectedContactsIds, value];
+    else updatedIds.splice(selectedContactsIds.indexOf(value), 1);
+    setSelectedContactsIds(updatedIds);
+    const sconts = contactsList.filter((item) =>
+      updatedIds.includes(item?.account_number)
+    );
+    handleSelectedContacts(sconts);
+  };
+
+  // handle selected group
+  const handleSelectGroup = (e) => {
+    const value = e?.currentTarget?.value;
+    const checked = e?.currentTarget?.checked;
+    if (!value) return;
+    if (checked) setSelectedGroupIds([value]);
+    else setSelectedGroupIds([]);
+    const sgrps = groupList.filter(
+      (item) => item.group_id.toString() === value
+    );
+    handleSelectedGroup(sgrps);
   };
 
   // Debouncing for contacts
@@ -164,18 +197,19 @@ function SendContact() {
             style={{ paddingLeft: "40px" }}
           >
             {[1, 2, 3, 4, 5, 6].map((item) => (
-              <LoaderSendContact />
+              <LoaderSendContact key={item} />
             ))}
           </div>
         ) : (
           <ContactsSelection.Body
             classNameContainer="send-group-slider"
-            contacts={inviteContactList}
+            contacts={contactsList}
+            selectedContacts={selectedContactsIds}
+            handleSelectedItems={handleSelectContact}
+            handleReachEnd={handleReachEndContacts}
             fullWidth={true}
             isMultiSelect={true}
-            handleReachEnd={handleReachEndContacts}
             emptyListMsg="Contact not found"
-            handleSelectedItems={handleSelectedContacts}
             ListItemComponent={ContactCard}
             ListItemComponentProps={{
               fullWidth: true,
@@ -190,9 +224,11 @@ function SendContact() {
           />
         )}
         <ContactsSelection.Footer>
-          {inviteContactList.length > 0 ? (
+          {isLoadingContacts ? (
+            <LoaderSendContactButtons />
+          ) : contactsList.length > 0 ? (
             <Button
-              className="btn btn-next ws--btn"
+              className="btn btn-next ws--btn ms-0"
               onClick={handleSendContacts}
             >
               <IconSend style={{ stroke: "#fff" }} />
@@ -226,18 +262,19 @@ function SendContact() {
             style={{ paddingLeft: "40px" }}
           >
             {[1, 2, 3, 4, 5, 6].map((item) => (
-              <LoaderSendContact />
+              <LoaderSendContact key={item} />
             ))}
           </div>
         ) : (
           <ContactsSelection.Body
             classNameContainer="send-group-slider"
             contacts={groupList}
+            selectedContacts={selectedGroupIds}
+            handleSelectedItems={handleSelectGroup}
             fullWidth={true}
             isMultiSelect={false}
             handleReachEnd={handleReachEndGroups}
             emptyListMsg="Group not found"
-            handleSelectedItems={handleSelectedGroup}
             ListItemComponent={ContactCard}
             ListItemComponentProps={{
               fullWidth: true,
@@ -252,14 +289,28 @@ function SendContact() {
           />
         )}
         <ContactsSelection.Footer>
-          <Button className="btn btn-cancel-payment" onClick={handleEditGroup}>
-            <IconEdit style={{ stroke: "#0081c5" }} />
-            Edit
-          </Button>
-          <Button className="btn btn-next ws--btn" onClick={handleSendGroup}>
-            <IconSend style={{ stroke: "#fff" }} />
-            Send
-          </Button>
+          {isLoadingContacts ? (
+            <LoaderSendContactButtons />
+          ) : (
+            <>
+              <Button
+                type="button"
+                className="btn btn-cancel-payment"
+                onClick={handleEditGroup}
+              >
+                <IconEdit style={{ stroke: "#0081c5" }} />
+                Edit
+              </Button>
+              <Button
+                type="button"
+                className="btn btn-next ws--btn"
+                onClick={handleSendGroup}
+              >
+                <IconSend style={{ stroke: "#fff" }} />
+                Send
+              </Button>
+            </>
+          )}
         </ContactsSelection.Footer>
       </ContactsSelection>
     </div>

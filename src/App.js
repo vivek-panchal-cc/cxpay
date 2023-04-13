@@ -58,7 +58,7 @@ function App() {
           <Route path="/login-with-otp" element={<LoginWithOtp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route
-            path="/reset-password/:mobile/:token"
+            path="/reset-password/:code/:mobile/:token"
             element={<ResetPassword />}
           />
           <Route

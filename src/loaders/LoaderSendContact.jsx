@@ -6,7 +6,7 @@ const LoaderSendContact = (props) => {
   return (
     <ContentLoader
       width={140}
-      height={200}
+      height={230}
       viewBox="0 0 140 200"
       backgroundColor="#f3f3f3"
       foregroundColor="#ecebeb"

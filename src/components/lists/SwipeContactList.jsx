@@ -6,6 +6,7 @@ import { renameKeys } from "constants/all";
 const SwipeContactList = (props) => {
   const {
     list,
+    selectedList = [],
     className,
     fullWidth = false,
     isMultiSelect = false,
@@ -81,45 +82,6 @@ const SwipeContactList = (props) => {
         },
       };
 
-  const [conList, setConList] = useState(list);
-
-  useEffect(() => {
-    if (!list) return;
-    const alteredList = list.map((item) => {
-      const itemAltered = renameKeys(ListItemComponentAlias, item);
-      const selected =
-        conList?.find((item) => item.id === itemAltered.id)?.isSelected ||
-        false;
-      return { ...itemAltered, isSelected: selected };
-    });
-    setConList(alteredList);
-  }, [list]);
-
-  const handleSelect = (e) => {
-    const value = e?.currentTarget?.value;
-    const checked = e?.currentTarget?.checked;
-    if (!value) return;
-    const selectedList = conList.map((item) => {
-      if (item.id.toString() === value.toString())
-        return { ...item, isSelected: checked ? true : false };
-      return isMultiSelect ? item : { ...item, isSelected: false };
-    });
-    setConList(selectedList);
-    const filteredList = list.filter(
-      (li, index) => selectedList[index].isSelected
-    );
-    handleSelectedItems(filteredList);
-  };
-
-  const ListItems = conList?.map((item, index) => (
-    <SwiperSlide key={`${item?.id}_${index}`}>
-      <ListItemComponent
-        {...{ ...ListItemComponentProps, ...item }}
-        handleSelect={handleSelect}
-      />
-    </SwiperSlide>
-  ));
-
   return (
     <div
       className={`${
@@ -136,7 +98,19 @@ const SwipeContactList = (props) => {
         scrollbar={{ draggable: false }}
         onReachEnd={handleReachEnd}
       >
-        <div className={`swiper-wrapper ${className}`}>{ListItems}</div>
+        <div className={`swiper-wrapper ${className}`}>
+          {list?.map((item, index) => (
+            <SwiperSlide key={`${item?.id}_${index}`}>
+              <ListItemComponent
+                item={item}
+                selectedList={selectedList}
+                alias={ListItemComponentAlias}
+                handleSelect={handleSelectedItems}
+                {...ListItemComponentProps}
+              />
+            </SwiperSlide>
+          ))}
+        </div>
       </Swiper>
     </div>
   );

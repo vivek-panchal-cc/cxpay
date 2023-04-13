@@ -61,6 +61,17 @@ const loginWithOtpSchema = yup.object().shape({
 
 const verifyOtpSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
+  mobile_number: mobileSchema,
+  user_otp: yup
+    .string()
+    .length(4, "OTP length must be 4 digits")
+    .matches(/^[0-9]*$/, "OTP should be number")
+    .required("OTP is required"),
+});
+
+const verifyForgotPasswordOtpSchema = yup.object().shape({
+  country_code: yup.string().required("Code is required"),
+  mobile_number: mobileSchema,
   user_otp: yup
     .string()
     .length(4, "OTP length must be 4 digits")
@@ -118,6 +129,7 @@ const editProfilePersonalUserSchema = yup.object().shape({
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 const forgotPasswordSchema = yup.object().shape({
+  country_code: yup.string().required("Code is required"),
   mobile_number: mobileSchema,
 });
 
@@ -172,6 +184,7 @@ export {
   editProfileBusinessUserSchema,
   editProfilePersonalUserSchema,
   forgotPasswordSchema,
+  verifyForgotPasswordOtpSchema,
   resetPasswordSchema,
   loginWithOtpSchema,
   inviteContactSchema,

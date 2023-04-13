@@ -3,12 +3,12 @@ import InputOtp from "components/ui/InputOtp";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
 import { useNavigate } from "react-router-dom";
-import { verifyOtpSchema } from "schemas/validationSchema";
+import { verifyForgotPasswordOtpSchema } from "schemas/validationSchema";
 import { otpCounterTime } from "constants/all";
 import { toast } from "react-toastify";
 
 function VerifyOtp(props) {
-  const { mobile_number } = props.values;
+  const { mobile_number, country_code } = props.values;
 
   const navigate = useNavigate();
 
@@ -43,21 +43,22 @@ function VerifyOtp(props) {
 
   const formik = useFormik({
     initialValues: {
+      country_code: country_code,
       mobile_number: mobile_number,
       user_otp: "",
     },
-    validationSchema: verifyOtpSchema,
+    validationSchema: verifyForgotPasswordOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
         const { data } = await apiRequest.verifyForgotPasswordOtp(values);
         if (!data.success || data.data === null) throw data.message;
         if (data.data.mobile_number)
           navigate(
-            `/reset-password/${data.data.mobile_number}/${data.data.password_token}`
+            `/reset-password/${values.country_code}/${data.data.mobile_number}/${data.data.password_token}`
           );
       } catch (error) {
         resetForm();
-        setStatus(error);
+        if (typeof error === "string") setStatus(error);
       }
     },
   });
@@ -69,6 +70,7 @@ function VerifyOtp(props) {
     handleTimeOut();
     try {
       const { data } = await apiRequest.resendForgotPasswordOtp({
+        country_code: country_code,
         mobile_number: mobile_number,
       });
       if (!data.success || data.data === null) throw data.message;
@@ -76,8 +78,8 @@ function VerifyOtp(props) {
       toast.success(data.message);
     } catch (error) {
       if (typeof error === "string") {
+        if (typeof error === "string") formik.setStatus(error);
         setIsTimerOver(true);
-        formik.setStatus(error);
         setError(true);
       }
     }

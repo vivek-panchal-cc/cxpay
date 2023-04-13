@@ -23,6 +23,7 @@ const LoginWithOtp = (props) => {
   }, [navigate]);
 
   const [mobileNumber, setMobileNumber] = useState("");
+  const [countryCode, setCountryCode] = useState("");
   const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
 
   const formik = useFormik({
@@ -37,6 +38,7 @@ const LoginWithOtp = (props) => {
         const { data } = await apiRequest.loginOtp(values);
         if (!data.success || data.data === null) throw data.message;
         setMobileNumber(values.mobile_number);
+        setCountryCode(values.country_code);
         toast.success(data.data.login_otp);
         toast.success(data.message);
         setShowVerifyPhonePopup(true);
@@ -63,7 +65,7 @@ const LoginWithOtp = (props) => {
                 >
                   <VerifyLoginOtp
                     setShow={setShowVerifyPhonePopup}
-                    mobileNumber={mobileNumber}
+                    {...{ mobileNumber, countryCode }}
                   />
                 </Modal>
                 <h4 className="text-center">Welcome to</h4>

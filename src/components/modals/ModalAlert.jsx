@@ -12,8 +12,8 @@ function ModalAlert(props) {
     heading,
     headingImg,
     subHeading,
-    linkRedirect,
-    linkText,
+    btnText,
+    handleBtnClick,
   } = props;
   const modalRef = useRef(null);
 
@@ -49,13 +49,13 @@ function ModalAlert(props) {
               <h3>{heading}</h3>
               <p>{subHeading}</p>
               <div className="verify-code-btn-wrap">
-                <Link
-                  to={linkRedirect}
+                <button
+                  onClick={handleBtnClick}
                   className="btn money-sent-pop-close"
                   replace={true}
                 >
-                  {linkText}
-                </Link>
+                  {btnText}
+                </button>
               </div>
             </div>
           </div>

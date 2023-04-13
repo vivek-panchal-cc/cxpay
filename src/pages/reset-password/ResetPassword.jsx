@@ -19,10 +19,11 @@ function ResetPassword() {
 
   const formik = useFormik({
     initialValues: {
+      country_code: params.code,
       mobile_number: params.mobile,
+      token: params.token,
       password: "",
       confirm_password: "",
-      token: params.token,
     },
     validationSchema: resetPasswordSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {

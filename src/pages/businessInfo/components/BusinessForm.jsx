@@ -97,7 +97,7 @@ const BusinessForm = (props) => {
         >
           <option value={""}>Select Country</option>
           {countryList?.map((country, index) => (
-            <option key={index} value={country.country_name}>
+            <option key={index} value={country.iso}>
               {country.country_name}
             </option>
           ))}

@@ -62,9 +62,16 @@ const Contacts = (props) => {
 
   const handleDeleteContact = async () => {
     setIsLoading(true);
-    const id = deleteContactArr;
+    const accountNos = deleteContactArr;
+    const selectedConts = contacts?.contacts?.filter((con) =>
+      accountNos.includes(con.account_number)
+    );
+    const ids = selectedConts.map(({ country_code, mobile }) => ({
+      country_code,
+      mobile,
+    }));
     try {
-      const { data } = await apiRequest.deleteContact({ mobile: id });
+      const { data } = await apiRequest.deleteContact({ contacts: ids });
       data["status_code"] === 200 && retrieveContacts(page);
       data["status_code"] === 200 && setSelectedContacts([]);
       toast.success(data.message);
@@ -302,7 +309,7 @@ const Contacts = (props) => {
             <ul className="contact-listing-wrap">
               {contacts?.contacts && contacts.contacts.length > 0 ? (
                 contacts.contacts.map((contact, index) => (
-                  <li key={contact.mobile}>
+                  <li key={index}>
                     <div
                       className={`${
                         contact?.name ? "con-listing-info" : "invited-con-info"
@@ -310,13 +317,15 @@ const Contacts = (props) => {
                     >
                       <div className="con-listing-check">
                         <input
-                          id={contact.mobile}
+                          id={contact.account_number}
                           type="checkbox"
                           onChange={handleChange}
-                          checked={selectedContacts.includes(contact.mobile)}
-                          value={contact.mobile}
+                          checked={selectedContacts.includes(
+                            contact.account_number
+                          )}
+                          value={contact.account_number}
                         />
-                        <label htmlFor={contact.mobile}></label>
+                        <label htmlFor={contact.account_number}></label>
                       </div>
                       <div className="con-list-uimg">
                         <img
@@ -332,7 +341,7 @@ const Contacts = (props) => {
                       {contact?.name ? (
                         <div className="con-list-uname">{contact?.name}</div>
                       ) : (
-                        ""
+                        contact?.mobile
                       )}
                     </div>
                     <div className="con-listing-phone">
@@ -372,7 +381,7 @@ const Contacts = (props) => {
                         <button
                           onClick={() =>
                             handleOpenConfirmModal(
-                              [contact.mobile],
+                              [contact.account_number],
                               contact.name ? contact.name : "this contact"
                             )
                           }

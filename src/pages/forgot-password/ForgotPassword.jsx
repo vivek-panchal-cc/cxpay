@@ -6,12 +6,16 @@ import VerifyOtp from "./components/VerifyOtp";
 import { apiRequest } from "helpers/apiRequests";
 import { forgotPasswordSchema } from "schemas/validationSchema";
 import { toast } from "react-toastify";
+import useCountriesCities from "hooks/useCountriesCities";
+import InputSelect from "components/ui/InputSelect";
 
 function ForgotPassword() {
   const [showOtpPopup, setShowOtpPopup] = useState(false);
+  const [countryList] = useCountriesCities();
 
   const formik = useFormik({
     initialValues: {
+      country_code: "",
       mobile_number: "",
     },
     validationSchema: forgotPasswordSchema,
@@ -54,20 +58,42 @@ function ForgotPassword() {
                   <VerifyOtp setShow={setShowOtpPopup} values={formik.values} />
                 </Modal>
                 <form onSubmit={formik.handleSubmit}>
-                  <div className="form-field">
-                    <Input
-                      type="mobile"
-                      className="form-control w-100"
-                      placeholder="Mobile Number"
-                      name="mobile_number"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.mobile_number}
-                      error={
-                        formik.touched.mobile_number &&
-                        formik.errors.mobile_number
-                      }
-                    />
+                  <div className="row">
+                    <div className="col-4 ps-0">
+                      <InputSelect
+                        className="form-select form-control"
+                        name="country_code"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.country_code}
+                        error={
+                          formik.touched.country_code &&
+                          formik.errors.country_code
+                        }
+                      >
+                        <option value={""}>Country</option>
+                        {countryList?.map((country, index) => (
+                          <option value={country.phonecode} key={index}>
+                            {country.phonecode} &nbsp; {country.country_name}
+                          </option>
+                        ))}
+                      </InputSelect>
+                    </div>
+                    <div className="col-8 px-0">
+                      <Input
+                        type="mobile"
+                        className="form-control w-100"
+                        placeholder="Mobile Number"
+                        name="mobile_number"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.mobile_number}
+                        error={
+                          formik.touched.mobile_number &&
+                          formik.errors.mobile_number
+                        }
+                      />
+                    </div>
                   </div>
                   {formik.status && (
                     <p className="text-danger text-center">{formik.status}</p>

@@ -1,19 +1,20 @@
 import Image from "components/ui/Image";
+import { renameKeys } from "constants/all";
 import React from "react";
 
 const ContactCard = (props) => {
   const {
     isSelectable,
-    isSelected = false,
+    selectedList = [],
     handleSelect,
     fullWidth,
-    id,
-    title,
-    imgUrl,
-    bgColor,
+    item,
+    alias = {},
     fallbackImgUrl,
     className = "",
   } = props;
+  const { id, title, imgUrl, bgColor } = renameKeys(alias, item);
+  const isChecked = selectedList.includes(id.toString());
   return (
     <div className={className}>
       <div className="cb-div">
@@ -22,7 +23,7 @@ const ContactCard = (props) => {
             type={"checkbox"}
             value={id}
             onChange={handleSelect}
-            checked={isSelected}
+            checked={isChecked}
           />
         )}
         <div

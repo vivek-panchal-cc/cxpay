@@ -21,11 +21,11 @@ const fetchLogin = createAsyncThunk("user/login", async (creds, thunkAPI) => {
   }
 });
 
-const fetchLoginOtp = createAsyncThunk(
-  "user/loginOtp",
+const fetchLoginOtpVerify = createAsyncThunk(
+  "user/loginOtpVerify",
   async (creds, thunkAPI) => {
     try {
-      const { data } = await apiRequest.verifyLoginOtp(creds);
+      const { data } = await apiRequest.loginOtpVerify(creds);
       if (!data.success) throw data.message;
       storageRequest.setAuth(data.data.token);
       return data.message;
@@ -86,10 +86,10 @@ const userProfileSlice = createSlice({
       .addCase(fetchLogin.rejected, (state, action) => {
         console.log("Error getting user data", action.payload);
       })
-      .addCase(fetchLoginOtp.fulfilled, (state, action) => {
+      .addCase(fetchLoginOtpVerify.fulfilled, (state, action) => {
         document.location.href = "/";
       })
-      .addCase(fetchLoginOtp.rejected, (state, action) => {
+      .addCase(fetchLoginOtpVerify.rejected, (state, action) => {
         console.log("Error getting user data", action.payload);
       })
       .addCase(fetchLogout.fulfilled, (state, action) => {
@@ -105,7 +105,7 @@ const userProfileSlice = createSlice({
   },
 });
 
-export { fetchLogin, fetchLogout, fetchUserProfile, fetchLoginOtp };
+export { fetchLogin, fetchLogout, fetchUserProfile, fetchLoginOtpVerify };
 export const { setUserProfile, setEditCard, setEditBank } =
   userProfileSlice.actions;
 export default userProfileSlice.reducer;

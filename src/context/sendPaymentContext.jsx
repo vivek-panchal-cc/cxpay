@@ -42,6 +42,8 @@ const SendPaymentProvider = ({ children }) => {
     if (!selectedGroup || selectedGroup.length <= 0)
       return toast.warning("Please select at least one group");
     const { group_details, group_id } = selectedGroup[0];
+    if (!group_details || group_details.length <= 0)
+      return toast.warning(`Group contains no contacts`);
     if (group_details.length > MAX_PAYMENT_CONTACTS)
       return toast.warning(
         `Group contains more than ${MAX_PAYMENT_CONTACTS} contacts`
@@ -66,6 +68,15 @@ const SendPaymentProvider = ({ children }) => {
   // For making change (like remove) in the selected contacts
   const handleSendCreds = (credsContacts) => {
     setSendCreds((cs) => ({ ...cs, wallet: credsContacts }));
+    if (selectedContacts && selectedContacts.length > 0) {
+      const accountsNo = credsContacts?.map(
+        (item) => item.receiver_account_number
+      );
+      const filter = selectedContacts.filter((con) =>
+        accountsNo.includes(con.account_number)
+      );
+      setSelectedContacts(filter);
+    }
   };
 
   // For getting selected contacts list
@@ -78,6 +89,13 @@ const SendPaymentProvider = ({ children }) => {
   const handleSelectedGroup = (group) => {
     if (!group) return;
     setSelectedGroup(group);
+  };
+
+  // For cancel the transaction
+  const handleCancelPayment = () => {
+    setSelectedContacts([]);
+    setSelectedGroup([]);
+    setSendCreds([]);
   };
 
   // For getting the charges of payment from API
@@ -109,6 +127,7 @@ const SendPaymentProvider = ({ children }) => {
         handleSendContacts,
         handleSendGroup,
         handleSendCreds,
+        handleCancelPayment,
         selectedContacts,
         selectedGroup,
         sendCreds,
