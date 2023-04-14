@@ -21,6 +21,7 @@ const ProfileInfo = (props) => {
     country_code,
     mobile_number,
     country,
+    is_email_verify,
   } = profile || {};
 
   const [isEditable, setIsEditable] = useState(false);
@@ -28,6 +29,19 @@ const ProfileInfo = (props) => {
 
   const handleEditUlr = () => {
     setIsEditable(!isEditable);
+  };
+
+  const handleVerifyEmail = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.resendVerifyEmail();
+      if (!data.success) throw data.message;
+      if (typeof data.message === "string") toast.success(data.message);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const formik = useFormik({
@@ -111,7 +125,17 @@ const ProfileInfo = (props) => {
       <li>
         <div className="pi-title-div">Email</div>
         <div className="profile-info-right-desc">
-          <p>{email}</p>
+          <div className="d-flex justify-content-center align-items-center column-gap-3">
+            <p className="">{email}</p>
+            {!is_email_verify && (
+              <button
+                className="badge rounded-pill text-bg-primary border-0 border-primary"
+                onClick={handleVerifyEmail}
+              >
+                Verify Email
+              </button>
+            )}
+          </div>
         </div>
       </li>
       <li>

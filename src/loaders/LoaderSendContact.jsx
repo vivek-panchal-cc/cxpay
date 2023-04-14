@@ -2,7 +2,6 @@ import React from "react";
 import ContentLoader from "react-content-loader";
 
 const LoaderSendContact = (props) => {
-  const arr = [1, 2, 3, 4, 5, 6];
   return (
     <ContentLoader
       width={140}

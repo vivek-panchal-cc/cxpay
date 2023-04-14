@@ -13,6 +13,7 @@ import ContactDetail from "./components/ContactDetail";
 import Delete from "styles/svgs/Delete";
 import { Link } from "react-router-dom";
 import { SendPaymentContext } from "context/sendPaymentContext";
+import { MAX_GROUP_MEMBERS } from "constants/all";
 
 const Contacts = (props) => {
   const { setIsLoading } = useContext(LoaderContext);
@@ -40,6 +41,10 @@ const Contacts = (props) => {
   };
 
   const handleCreateGroup = async () => {
+    if (selectedContacts.length > MAX_GROUP_MEMBERS) {
+      toast.error(`Maximum ${MAX_GROUP_MEMBERS} members allowed in a group`);
+      return;
+    }
     setShowCreateGroupPopup(true);
   };
 
@@ -121,17 +126,14 @@ const Contacts = (props) => {
       if (!data.success || data.data === null) throw data.message;
       setPage(currentPage);
       setContacts(data.data);
-      setIsLoading(false);
     } catch (error) {
       if (error === "Contact not found") {
         setContacts(null);
       }
       console.log(error);
+    } finally {
       setIsLoading(false);
     }
-    //  finally {
-    //   setIsLoading(false);
-    // }
   };
 
   const handleChange = async (e) => {
@@ -148,9 +150,9 @@ const Contacts = (props) => {
     return len === 0;
   }
 
-  const handleResetFilter = () => {
+  const handleResetFilter = async () => {
     setSearch("");
-    retrieveContacts();
+    await retrieveContacts();
   };
 
   return (

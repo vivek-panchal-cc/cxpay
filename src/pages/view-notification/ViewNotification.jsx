@@ -4,6 +4,7 @@ import NotificationListItem from "components/items/NotificationListItem";
 import Pagination from "components/pagination/Pagination";
 import { fetchGetAllNotifications } from "features/user/userNotificationSlice";
 import { LoaderContext } from "context/loaderContext";
+import { notificationType } from "constants/all";
 
 function ViewNotification(props) {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function ViewNotification(props) {
           <ul>
             {allNotifications?.map((item, index) => (
               <NotificationListItem
+                Icon={notificationType[item?.type]?.icon}
                 notification={item}
                 showDeleteButton={true}
                 key={index}

@@ -1,16 +1,14 @@
 import React from "react";
-import { IconNotifyDelete, IconNotifyMoneySent } from "styles/svgs";
+import { IconNotifyDelete } from "styles/svgs";
 
 function NotificationListItem(props) {
-  const { showDeleteButton, notification, className } = props;
+  const { showDeleteButton, notification, className, Icon } = props;
   const { id, message } = notification || {};
 
   return (
     <li>
       <div className={`notification-pcw ${className}`}>
-        <div className="notifi-ic-wrap">
-          <IconNotifyMoneySent />
-        </div>
+        <div className="notifi-ic-wrap">{Icon && <Icon />}</div>
         <div className="notifi-content">
           <p>{message}</p>
           <p className="notifi-tran-idw">

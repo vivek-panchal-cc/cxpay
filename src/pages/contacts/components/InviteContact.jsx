@@ -5,6 +5,8 @@ import { apiRequest } from "helpers/apiRequests";
 import Input from "components/ui/Input";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import InputSelect from "components/ui/InputSelect";
+import useCountriesCities from "hooks/useCountriesCities";
 
 function InviteContact(props) {
   const {
@@ -20,9 +22,10 @@ function InviteContact(props) {
     search,
     isInvitedFlag = false,
   } = props;
-  const [isShowContactPopup, setIsShowContactPopup] = useState(true);
   const navigate = useNavigate();
   const { profile } = useSelector((state) => state.userProfile);
+  const [countryList] = useCountriesCities();
+  const [isShowContactPopup, setIsShowContactPopup] = useState(true);
   const { country_code } = profile || {};
 
   const formik = useFormik({
@@ -106,20 +109,39 @@ function InviteContact(props) {
               />
               <h3>{invitetitle}</h3>
               <form onSubmit={formik.handleSubmit}>
-                <div className="row">
-                  <div className="col-12 col p-0">
-                    <div className="form-field">
-                      <Input
-                        type="text"
-                        className="form-control"
-                        placeholder="Mobile Number"
-                        name="mobile"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.mobile}
-                        error={formik.touched.mobile && formik.errors.mobile}
-                      />
-                    </div>
+                <div className="row form-field">
+                  <div className="col-4 ps-0">
+                    <InputSelect
+                      className="form-select form-control"
+                      name="country_code"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.country_code}
+                      error={
+                        formik.touched.country_code &&
+                        formik.errors.country_code
+                      }
+                      disabled={true}
+                    >
+                      <option value={""}>Country</option>
+                      {countryList?.map((country, index) => (
+                        <option value={country.phonecode} key={index}>
+                          {country.phonecode} &nbsp; {country.country_name}
+                        </option>
+                      ))}
+                    </InputSelect>
+                  </div>
+                  <div className="col-8 px-0">
+                    <Input
+                      type="text"
+                      className="form-control"
+                      placeholder="Mobile Number"
+                      name="mobile"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.mobile}
+                      error={formik.touched.mobile && formik.errors.mobile}
+                    />
                   </div>
                 </div>
                 <div className="row">

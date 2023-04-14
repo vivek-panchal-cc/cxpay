@@ -12,6 +12,7 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { LoaderContext } from "context/loaderContext";
+import { MAX_GROUP_MEMBERS } from "constants/all";
 
 export default function EditGroup() {
   let { id } = useParams();
@@ -32,6 +33,11 @@ export default function EditGroup() {
     },
     validationSchema: createGroupSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
+      const allMembers = [...contactList, ...values.contact];
+      if (allMembers.length > MAX_GROUP_MEMBERS) {
+        toast.error(`Maximum ${MAX_GROUP_MEMBERS} members allowed in a group`);
+        return;
+      }
       const formData = new FormData();
       for (let key in values) {
         if (key === "group_image") continue;

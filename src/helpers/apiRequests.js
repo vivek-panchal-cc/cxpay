@@ -62,6 +62,7 @@ const API_updateGroup = apiUrl.API_ONBOARD_UPDATE_GROUP;
 const API_getRemainingGroupContact =
   apiUrl.API_ONBOARD_GET_REMAINING_GROUP_CONTACT;
 const API_getCountryBanks = apiUrl.API_ONBOARD_GET_COUNTRY_BANKS;
+const API_resendVerifyEmail = apiUrl.API_ONBOARD_RESEND_VERIFY_EMAIL;
 
 // TRANSACTION SERVICES
 const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
@@ -147,6 +148,12 @@ export const refreshToken = (token) => {
 // @params mobile_number, country_code
 export const verifyMobileNumber = (params) => {
   return axiosOnboardInstance.post(`${API_verifyMobileNumber}`, params);
+};
+
+// POST @resend-verify-email API
+// @params token
+export const resendVerifyEmail = () => {
+  return axiosOnboardInstance.post(`${API_resendVerifyEmail}`);
 };
 
 // POST @verify-register-otp API
@@ -470,4 +477,5 @@ export const apiRequest = {
   walletTransferOtp,
   walletPersonalOtpVerify,
   resendWalletTransferOtp,
+  resendVerifyEmail,
 };

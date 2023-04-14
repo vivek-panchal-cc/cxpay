@@ -1,4 +1,6 @@
 import NotificationListItem from "components/items/NotificationListItem";
+import { notificationType } from "constants/all";
+import LoaderNotificationDropdown from "loaders/LoaderNotificationDropdown";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -6,7 +8,9 @@ import { IconNotify } from "styles/svgs";
 
 const NotificationDropdown = (props) => {
   const dropdownref = useRef(null);
-  const { dropNotifications } = useSelector((state) => state.userNotification);
+  const { dropNotifications, initialLoading } = useSelector(
+    (state) => state.userNotification
+  );
   const [showDrop, setShowDrop] = useState(false);
 
   useEffect(() => {
@@ -41,14 +45,19 @@ const NotificationDropdown = (props) => {
         ref={dropdownref}
       >
         <ul className="notification-list-wrap">
-          {dropNotifications?.map((item, index) => (
-            <NotificationListItem
-              className="notification-content-wrap"
-              notification={item}
-              showDeleteButton={false}
-              key={index}
-            />
-          ))}
+          {initialLoading
+            ? [1, 2, 3, 4, 5].map((item) => (
+                <LoaderNotificationDropdown key={item} />
+              ))
+            : dropNotifications?.map((item, index) => (
+                <NotificationListItem
+                  Icon={notificationType[item?.type]?.icon}
+                  className="notification-content-wrap"
+                  notification={item}
+                  showDeleteButton={false}
+                  key={index}
+                />
+              ))}
         </ul>
         {dropNotifications && dropNotifications.length > 0 ? (
           <div className="see-all-notifi">

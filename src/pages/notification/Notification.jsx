@@ -7,8 +7,10 @@ import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import LeftArrow from "styles/svgs/LeftArrow";
+import { useSelector } from "react-redux";
 const Notification = () => {
   const navigate = useNavigate();
+  const { is_email_verify } = useSelector((state) => state.userProfile.profile);
   const { setIsLoading } = useContext(LoaderContext);
   const [changeName, setChangeName] = useState("");
 
@@ -16,7 +18,6 @@ const Notification = () => {
     enableReinitialize: true,
     initialValues: {
       email_notification: false,
-      sms_notification: false,
       whatsapp_notification: false,
       push_notification: false,
     },
@@ -77,14 +78,29 @@ const Notification = () => {
         <ul>
           <li>
             <span className="settings">Email</span>
-            <InputSwitch
-              name="email_notification"
-              className="form-check-input"
-              labelOffText="OFF"
-              labelOnText="ON"
-              onChange={handleChange}
-              checked={formik.values.email_notification}
-            />
+            {is_email_verify ? (
+              <InputSwitch
+                name="email_notification"
+                className="form-check-input"
+                labelOffText="OFF"
+                labelOnText="ON"
+                onChange={handleChange}
+                checked={formik.values.email_notification}
+              />
+            ) : (
+              <div className="badge border border-danger-subtle bg-danger-subtle text-wrap m-0 p-2">
+                <div className="text-dark">
+                  Please verify your Email
+                  <Link
+                    to="/profile"
+                    className="ms-2"
+                    style={{ textDecoration: "underline" }}
+                  >
+                    Goto Profile
+                  </Link>
+                </div>
+              </div>
+            )}
           </li>
           <li>
             <span className="settings">Whatsapp</span>

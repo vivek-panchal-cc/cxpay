@@ -1,7 +1,56 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { A11y, Navigation, Scrollbar } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { renameKeys } from "constants/all";
+
+const fullwidthPoints = {
+  1381: {
+    slidesPerView: 9.5,
+    spaceBetween: 24,
+  },
+  1380: {
+    slidesPerView: 8.6,
+    spaceBetween: 24,
+  },
+  1199: {
+    slidesPerView: 7.5,
+    spaceBetween: 24,
+  },
+  768: {
+    slidesPerView: 5.5,
+    spaceBetween: 20,
+  },
+  576: {
+    slidesPerView: 4.5,
+    spaceBetween: 15,
+  },
+  0: {
+    slidesPerView: 2.5,
+    spaceBetween: 15,
+  },
+};
+
+const otherWidthPoints = {
+  1199: {
+    slidesPerView: 9.5,
+    spaceBetween: 10,
+  },
+  992: {
+    slidesPerView: 6.5,
+    spaceBetween: 10,
+  },
+  650: {
+    slidesPerView: 5.5,
+    spaceBetween: 10,
+  },
+  575: {
+    slidesPerView: 4.5,
+    spaceBetween: 10,
+  },
+  0: {
+    slidesPerView: 3.5,
+    spaceBetween: 10,
+  },
+};
 
 const SwipeContactList = (props) => {
   const {
@@ -18,69 +67,7 @@ const SwipeContactList = (props) => {
     ListItemComponentAlias = {},
   } = props;
 
-  // const groupDefaultBackgroundImages = [
-  //   "yellow-bg",
-  //   "blue-bg",
-  //   "green-bg",
-  //   "light-blue-bg",
-  //   "purple-bg",
-  //   "dark-yellow-bg",
-  //   "dark-blue-bg",
-  // ];
-
-  // const getActiveColor = (index) => {
-  //   return index % groupDefaultBackgroundImages.length;
-  // };
-
-  const breakpoints = fullWidth
-    ? {
-        1381: {
-          slidesPerView: 9.5,
-          spaceBetween: 24,
-        },
-        1380: {
-          slidesPerView: 8.6,
-          spaceBetween: 24,
-        },
-        1199: {
-          slidesPerView: 7.5,
-          spaceBetween: 24,
-        },
-        768: {
-          slidesPerView: 5.5,
-          spaceBetween: 20,
-        },
-        576: {
-          slidesPerView: 4.5,
-          spaceBetween: 15,
-        },
-        0: {
-          slidesPerView: 2.5,
-          spaceBetween: 15,
-        },
-      }
-    : {
-        1199: {
-          slidesPerView: 9.5,
-          spaceBetween: 10,
-        },
-        992: {
-          slidesPerView: 6.5,
-          spaceBetween: 10,
-        },
-        650: {
-          slidesPerView: 5.5,
-          spaceBetween: 10,
-        },
-        575: {
-          slidesPerView: 4.5,
-          spaceBetween: 10,
-        },
-        0: {
-          slidesPerView: 3.5,
-          spaceBetween: 10,
-        },
-      };
+  const breakpoints = fullWidth ? fullwidthPoints : otherWidthPoints;
 
   return (
     <div

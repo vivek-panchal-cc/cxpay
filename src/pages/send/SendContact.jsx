@@ -137,7 +137,7 @@ function SendContact() {
     const sconts = contactsList.filter((item) =>
       updatedIds.includes(item?.account_number)
     );
-    handleSelectedContacts(sconts);
+    handleSelectedContacts && handleSelectedContacts(sconts);
   };
 
   // handle selected group
@@ -150,7 +150,7 @@ function SendContact() {
     const sgrps = groupList.filter(
       (item) => item.group_id.toString() === value
     );
-    handleSelectedGroup(sgrps);
+    handleSelectedGroup && handleSelectedGroup(sgrps);
   };
 
   // Debouncing for contacts
@@ -196,7 +196,7 @@ function SendContact() {
             className="d-inline-flex column-gap-4"
             style={{ paddingLeft: "40px" }}
           >
-            {[1, 2, 3, 4, 5, 6].map((item) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
               <LoaderSendContact key={item} />
             ))}
           </div>
@@ -261,7 +261,7 @@ function SendContact() {
             className="d-inline-flex column-gap-4"
             style={{ paddingLeft: "40px" }}
           >
-            {[1, 2, 3, 4, 5, 6].map((item) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
               <LoaderSendContact key={item} />
             ))}
           </div>

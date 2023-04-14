@@ -1,4 +1,4 @@
-import { url_regex } from "constants/all";
+import { MAX_GROUP_MEMBERS, url_regex } from "constants/all";
 import * as yup from "yup";
 import {
   confirmPasswordSchema,
@@ -172,6 +172,12 @@ const createGroupSchema = yup.object().shape({
     .string()
     .required("Group name is required")
     .max(55, "Maximum limit is 55 characters"),
+  contact: yup
+    .array()
+    .max(
+      MAX_GROUP_MEMBERS,
+      `Maximum ${MAX_GROUP_MEMBERS} members allowed in a group`
+    ),
 });
 
 export {

@@ -34,6 +34,7 @@ function SendPayment(props) {
   });
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: sendCreds,
     validationSchema: sendPaymentSchema,
     onSubmit: async (values, { setValues, setErrors }) => {

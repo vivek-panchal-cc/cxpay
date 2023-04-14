@@ -1,3 +1,9 @@
+import {
+  IconNotifyContact,
+  IconNotifyMoneySent,
+  IconNotifyMoneySentFailed,
+} from "styles/svgs";
+
 // Expressions
 const exp0ContainWhitespace = /^\S*$/;
 const exp0ContainWordPassword = /^((?!password).)*$/gim;
@@ -51,6 +57,7 @@ const FUND_CARD = "credit-card";
 const FUND_CASH = "cash-credit";
 const FUND_BANK = "bank-transfer";
 const MAX_PAYMENT_CONTACTS = 30;
+const MAX_GROUP_MEMBERS = 30;
 
 // Rename Keys with provided alias
 const renameKeys = (keysMap, object) =>
@@ -62,6 +69,30 @@ const renameKeys = (keysMap, object) =>
     {}
   );
 
+// Notifications Type Constants
+const notificationType = {
+  request: {
+    icon: IconNotifyMoneySent,
+    redirects: "/contacts",
+  },
+  receive: {
+    icon: IconNotifyMoneySent,
+    redirects: "/contacts",
+  },
+  payment_fail: {
+    icon: IconNotifyMoneySentFailed,
+    redirects: "/contacts",
+  },
+  contact_register: {
+    icon: IconNotifyContact,
+    redirects: "/contacts",
+  },
+  "": {
+    icon: IconNotifyContact,
+    redirects: "/contacts",
+  },
+};
+
 export {
   exp0ContainWhitespace,
   exp0ContainWordPassword,
@@ -71,10 +102,12 @@ export {
   validFileExtensions,
   otpCounterTime,
   url_regex,
+  notificationType,
   THEME_COLORS,
   FUND_CARD,
   FUND_CASH,
   FUND_BANK,
+  MAX_GROUP_MEMBERS,
   MAX_PAYMENT_CONTACTS,
 };
 export {

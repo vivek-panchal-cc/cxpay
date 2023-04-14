@@ -2,6 +2,7 @@ import { apiRequest } from "helpers/apiRequests";
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
 const initialState = {
+  initialLoading: true,
   dropNotifications: [],
   allNotifications: [],
   pagination: {
@@ -47,9 +48,11 @@ const userNotificationslice = createSlice({
     builder
       .addCase(fetchGetNotifications.fulfilled, (state, action) => {
         state.dropNotifications = action.payload.notifications;
+        state.initialLoading = false;
       })
       .addCase(fetchGetNotifications.rejected, (state, action) => {
         state.dropNotifications = [];
+        state.initialLoading = false;
       })
       .addCase(fetchGetAllNotifications.fulfilled, (state, action) => {
         state.allNotifications = action.payload.notifications;
