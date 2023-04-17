@@ -3,6 +3,7 @@ import Button from "components/ui/Button";
 import { usePopperTooltip } from "react-popper-tooltip";
 import Input from "components/ui/Input";
 import Image from "components/ui/Image";
+import Tooltip from "components/tooltips/Tooltip";
 
 const ContactPaymentItem = forwardRef((props, ref) => {
   const {
@@ -15,6 +16,7 @@ const ContactPaymentItem = forwardRef((props, ref) => {
     fieldOnChange,
     fieldOnBlur,
     fieldErrorAmount,
+    fieldErrorSpecifications,
     fallbackImgUrl,
   } = props;
   const { name, profile_image: imgUrl } = item;
@@ -50,8 +52,14 @@ const ContactPaymentItem = forwardRef((props, ref) => {
           value={fieldValueSpecifications}
           onChange={fieldOnChange}
           onBlur={fieldOnBlur}
-          className="form-control"
+          className={`form-control ${
+            fieldErrorSpecifications ? "error-field" : ""
+          }`}
           placeholder="Type your specification Here"
+        />
+        <Tooltip
+          isVisible={fieldErrorSpecifications}
+          tooltipText={fieldErrorSpecifications}
         />
       </div>
       <div className="input-select-wrap form-field">
@@ -66,17 +74,7 @@ const ContactPaymentItem = forwardRef((props, ref) => {
           placeholder="0.00"
           ref={ref}
         />
-        {fieldErrorAmount && (
-          <div
-            ref={setTooltipRef}
-            {...getTooltipProps({
-              className: "tooltip-container tooltip-invalid z-1",
-            })}
-          >
-            <div {...getArrowProps({ className: "tooltip-arrow" })} />
-            {fieldErrorAmount}
-          </div>
-        )}
+        <Tooltip isVisible={fieldErrorAmount} tooltipText={fieldErrorAmount} />
         <p className="ip_currancy" ref={setTriggerRef}>
           NAFl
         </p>

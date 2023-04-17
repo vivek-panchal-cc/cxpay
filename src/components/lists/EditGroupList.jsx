@@ -13,7 +13,14 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 const EditGroupList = (props) => {
-  const { data, groupId, selectedItems, getItem, fullWidth = false } = props;
+  const {
+    data,
+    groupId,
+    selectedItems,
+    getItem,
+    fullWidth = false,
+    getGroupDetail,
+  } = props;
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
   const [showAddContactPopup, setShowAddContactPopup] = useState(false);
@@ -135,6 +142,7 @@ const EditGroupList = (props) => {
         );
         setContactsList(contactData);
         setShowDeletePopup(false);
+        getGroupDetail && (await getGroupDetail());
       } catch (error) {
         setShowDeletePopup(false);
       }

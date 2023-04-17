@@ -60,7 +60,8 @@ function SendPayment(props) {
         for (const key in muValues) formData.append(key, muValues[key]);
         const { data } = await apiRequest.walletTransferOtp(formData);
         if (!data.success) throw data.message;
-        toast.success(data.data.otp);
+        toast.success(`${data.data.otp}`);
+        toast.success(`${data.message}`);
         setShowOtpPopup(true);
       } catch (error) {
         if (typeof error === "string") toast.error(error);
@@ -139,7 +140,9 @@ function SendPayment(props) {
   useEffect(() => {
     if (!formik.values.wallet) return;
     const amounts = formik.values.wallet?.map((item) =>
-      item.personal_amount ? parseFloat(item.personal_amount) : 0
+      item.personal_amount && !isNaN(item.personal_amount)
+        ? parseFloat(item.personal_amount)
+        : 0
     );
     setPaymentDetails(getChargedAmount(charges, amounts));
   }, [formik.values?.wallet]);
@@ -157,7 +160,7 @@ function SendPayment(props) {
         setShow={setShowOtpPopup}
         heading="OTP Verification"
         headingImg="/assets/images/send-payment-pop.svg"
-        subHeading="We have sent you verification code to initiate group payment. Enter OTP below"
+        subHeading="We have sent you verification code to initiate payment. Enter OTP below"
         handleSubmitOtp={handleSubmitOtp}
         handleResendOtp={handleResendOtp}
       />
@@ -207,6 +210,10 @@ function SendPayment(props) {
                         fieldValueSpecifications={
                           formik.values?.wallet?.[index]?.specifications
                         }
+                        fieldErrorSpecifications={
+                          formik.touched?.wallet?.[index]?.specifications &&
+                          formik.errors?.wallet?.[index]?.specifications
+                        }
                         fieldOnChange={formik.handleChange}
                         fieldOnBlur={formik.handleBlur}
                         handleDelete={handleDeleteContact}
@@ -243,6 +250,7 @@ function SendPayment(props) {
             </div>
             <div className="pay-btn-wrap">
               <button
+                type="button"
                 onClick={handleCancelPayment}
                 className="btn btn-cancel-payment"
               >

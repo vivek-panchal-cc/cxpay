@@ -43,6 +43,7 @@ function ViewNotification(props) {
             {allNotifications?.map((item, index) => (
               <NotificationListItem
                 Icon={notificationType[item?.type]?.icon}
+                redirect={notificationType[item?.type]?.redirect}
                 notification={item}
                 showDeleteButton={true}
                 key={index}

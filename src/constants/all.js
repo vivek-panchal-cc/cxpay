@@ -73,23 +73,23 @@ const renameKeys = (keysMap, object) =>
 const notificationType = {
   request: {
     icon: IconNotifyMoneySent,
-    redirects: "/contacts",
+    redirect: "/contacts",
   },
   receive: {
     icon: IconNotifyMoneySent,
-    redirects: "/contacts",
+    redirect: "/contacts",
   },
   payment_fail: {
     icon: IconNotifyMoneySentFailed,
-    redirects: "/contacts",
+    redirect: "/contacts",
   },
   contact_register: {
     icon: IconNotifyContact,
-    redirects: "/contacts",
+    redirect: "/contacts",
   },
   "": {
-    icon: IconNotifyContact,
-    redirects: "/contacts",
+    icon: "",
+    redirect: "/wallet",
   },
 };
 

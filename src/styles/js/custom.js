@@ -25,86 +25,86 @@ $(document).ready(function (e) {
   });
 });
 
-$(document).ready(function (e) {
-  const swiper = new Swiper(".card-slider .swiper", {
-    loop: true,
-    slidesPerView: 2.2,
-    spaceBetween: 8,
-    centeredSlides: false,
+// $(document).ready(function (e) {
+//   const swiper = new Swiper(".card-slider .swiper", {
+//     loop: true,
+//     slidesPerView: 2.2,
+//     spaceBetween: 8,
+//     centeredSlides: false,
 
-    // Navigation arrows
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
+//     // Navigation arrows
+//     navigation: {
+//       nextEl: ".swiper-button-next",
+//       prevEl: ".swiper-button-prev",
+//     },
 
-    // And if we need scrollbar
-    scrollbar: {
-      el: ".swiper-scrollbar",
-    },
-  });
-});
+//     // And if we need scrollbar
+//     scrollbar: {
+//       el: ".swiper-scrollbar",
+//     },
+//   });
+// });
 
-$(document).ready(function (e) {
-  const swiper = new Swiper(".send-whom-slider .swiper", {
-    loop: true,
-    slidesPerView: 6.6,
-    spaceBetween: 28,
-    centeredSlides: false,
+// $(document).ready(function (e) {
+//   const swiper = new Swiper(".send-whom-slider .swiper", {
+//     loop: true,
+//     slidesPerView: 6.6,
+//     spaceBetween: 28,
+//     centeredSlides: false,
 
-    // Navigation arrows
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
+//     // Navigation arrows
+//     navigation: {
+//       nextEl: ".swiper-button-next",
+//       prevEl: ".swiper-button-prev",
+//     },
 
-    // And if we need scrollbar
-    scrollbar: {
-      el: ".swiper-scrollbar",
-    },
-    breakpoints: {
-      // when window width is <= 499px
-      1200: {
-        slidesPerView: 6.5,
-        spaceBetween: 28,
-      },
-      992: {
-        slidesPerView: 5.5,
-        spaceBetween: 20,
-      },
-      576: {
-        slidesPerView: 4.5,
-        spaceBetween: 15,
-      },
-      // when window width is <= 999px
-      0: {
-        slidesPerView: 2.5,
-        spaceBetween: 15,
-      },
-    },
-  });
-});
+//     // And if we need scrollbar
+//     scrollbar: {
+//       el: ".swiper-scrollbar",
+//     },
+//     breakpoints: {
+//       // when window width is <= 499px
+//       1200: {
+//         slidesPerView: 6.5,
+//         spaceBetween: 28,
+//       },
+//       992: {
+//         slidesPerView: 5.5,
+//         spaceBetween: 20,
+//       },
+//       576: {
+//         slidesPerView: 4.5,
+//         spaceBetween: 15,
+//       },
+//       // when window width is <= 999px
+//       0: {
+//         slidesPerView: 2.5,
+//         spaceBetween: 15,
+//       },
+//     },
+//   });
+// });
 
 /* send whom contact slider */
-$(document).ready(function (e) {
-  const swiper = new Swiper(".recent-contact-slider .swiper", {
-    loop: true,
-    slidesPerView: 5.5,
-    spaceBetween: 16,
-    centeredSlides: false,
+// $(document).ready(function (e) {
+//   const swiper = new Swiper(".recent-contact-slider .swiper", {
+//     loop: true,
+//     slidesPerView: 5.5,
+//     spaceBetween: 16,
+//     centeredSlides: false,
 
-    // Navigation arrows
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
+//     // Navigation arrows
+//     navigation: {
+//       nextEl: ".swiper-button-next",
+//       prevEl: ".swiper-button-prev",
+//     },
 
-    // And if we need scrollbar
-    scrollbar: {
-      el: ".swiper-scrollbar",
-    },
-  });
-});
+//     // And if we need scrollbar
+//     scrollbar: {
+//       el: ".swiper-scrollbar",
+//     },
+//   });
+// });
 
 /* Wallet Page Slider*/
 // $(document).ready(function (e) {

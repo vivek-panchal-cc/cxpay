@@ -52,6 +52,7 @@ const NotificationDropdown = (props) => {
             : dropNotifications?.map((item, index) => (
                 <NotificationListItem
                   Icon={notificationType[item?.type]?.icon}
+                  redirect={notificationType[item?.type]?.redirect}
                   className="notification-content-wrap"
                   notification={item}
                   showDeleteButton={false}

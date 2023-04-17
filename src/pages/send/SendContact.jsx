@@ -106,17 +106,17 @@ function SendContact() {
     setSearchGroupText(e.target.value);
   };
 
-  const handleReachEndContacts = () => {
+  const handleReachEndContacts = async () => {
     if (currentPage * 10 < totalInvitedData) {
       setCurrentPage((cp) => cp + 1);
-      getInviteContactList(currentPage + 1, searchContactText);
+      await getInviteContactList(currentPage + 1, searchContactText);
     }
   };
 
-  const handleReachEndGroups = () => {
+  const handleReachEndGroups = async () => {
     if (groupCurrentPage * 10 < totalGroupData) {
       setGroupCurrentPage((cp) => cp + 1);
-      getGroupsList(groupCurrentPage + 1, searchGroupText);
+      await getGroupsList(groupCurrentPage + 1, searchGroupText);
     }
   };
 
@@ -147,9 +147,9 @@ function SendContact() {
     if (!value) return;
     if (checked) setSelectedGroupIds([value]);
     else setSelectedGroupIds([]);
-    const sgrps = groupList.filter(
-      (item) => item.group_id.toString() === value
-    );
+    const sgrps = checked
+      ? groupList.filter((item) => item.group_id.toString() === value)
+      : [];
     handleSelectedGroup && handleSelectedGroup(sgrps);
   };
 
@@ -191,38 +191,27 @@ function SendContact() {
           handleSearch={handleSearchContact}
           clearSearch={handleResetContactData}
         />
-        {isLoadingContacts ? (
-          <div
-            className="d-inline-flex column-gap-4"
-            style={{ paddingLeft: "40px" }}
-          >
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-              <LoaderSendContact key={item} />
-            ))}
-          </div>
-        ) : (
-          <ContactsSelection.Body
-            classNameContainer="send-group-slider"
-            contacts={contactsList}
-            selectedContacts={selectedContactsIds}
-            handleSelectedItems={handleSelectContact}
-            handleReachEnd={handleReachEndContacts}
-            fullWidth={true}
-            isMultiSelect={true}
-            emptyListMsg="Contact not found"
-            ListItemComponent={ContactCard}
-            ListItemComponentProps={{
-              fullWidth: true,
-              isSelectable: true,
-              fallbackImgUrl: "assets/images/single_contact_profile.png",
-            }}
-            ListItemComponentAlias={{
-              account_number: "id",
-              name: "title",
-              profile_image: "imgUrl",
-            }}
-          />
-        )}
+        <ContactsSelection.Body
+          isLoading={isLoadingContacts}
+          classNameContainer="send-group-slider"
+          contacts={contactsList}
+          selectedContacts={selectedContactsIds}
+          handleSelectedItems={handleSelectContact}
+          handleReachEnd={handleReachEndContacts}
+          fullWidth={true}
+          emptyListMsg="Contact not found"
+          ListItemComponent={ContactCard}
+          ListItemComponentProps={{
+            fullWidth: true,
+            isSelectable: true,
+            fallbackImgUrl: "assets/images/single_contact_profile.png",
+          }}
+          ListItemComponentAlias={{
+            account_number: "id",
+            name: "title",
+            profile_image: "imgUrl",
+          }}
+        />
         <ContactsSelection.Footer>
           {isLoadingContacts ? (
             <LoaderSendContactButtons />
@@ -256,38 +245,28 @@ function SendContact() {
           handleSearch={handleSearchGroup}
           clearSearch={handleResetGroupData}
         />
-        {isLoadingGroups ? (
-          <div
-            className="d-inline-flex column-gap-4"
-            style={{ paddingLeft: "40px" }}
-          >
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-              <LoaderSendContact key={item} />
-            ))}
-          </div>
-        ) : (
-          <ContactsSelection.Body
-            classNameContainer="send-group-slider"
-            contacts={groupList}
-            selectedContacts={selectedGroupIds}
-            handleSelectedItems={handleSelectGroup}
-            fullWidth={true}
-            isMultiSelect={false}
-            handleReachEnd={handleReachEndGroups}
-            emptyListMsg="Group not found"
-            ListItemComponent={ContactCard}
-            ListItemComponentProps={{
-              fullWidth: true,
-              isSelectable: true,
-              fallbackImgUrl: "assets/images/group_contact_profile.png",
-            }}
-            ListItemComponentAlias={{
-              group_id: "id",
-              group_name: "title",
-              group_image: "imgUrl",
-            }}
-          />
-        )}
+
+        <ContactsSelection.Body
+          isLoading={isLoadingGroups}
+          classNameContainer="send-group-slider"
+          contacts={groupList}
+          selectedContacts={selectedGroupIds}
+          handleSelectedItems={handleSelectGroup}
+          handleReachEnd={handleReachEndGroups}
+          fullWidth={true}
+          emptyListMsg="Group not found"
+          ListItemComponent={ContactCard}
+          ListItemComponentProps={{
+            fullWidth: true,
+            isSelectable: true,
+            fallbackImgUrl: "assets/images/group_contact_profile.png",
+          }}
+          ListItemComponentAlias={{
+            group_id: "id",
+            group_name: "title",
+            group_image: "imgUrl",
+          }}
+        />
         <ContactsSelection.Footer>
           {isLoadingContacts ? (
             <LoaderSendContactButtons />
