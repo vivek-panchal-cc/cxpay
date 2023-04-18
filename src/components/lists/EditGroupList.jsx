@@ -15,6 +15,7 @@ import "swiper/css/scrollbar";
 const EditGroupList = (props) => {
   const {
     data,
+    setData,
     groupId,
     selectedItems,
     getItem,
@@ -120,7 +121,7 @@ const EditGroupList = (props) => {
       var contactData = contactsList.filter(
         (obj) => obj.member_account_number !== memberAccountNumber
       );
-      setContactsList(contactData);
+      setData(contactData);
       //selectedItems(contactData);
       deleteCurrentGroup(groupId);
     } catch (error) {
@@ -140,7 +141,7 @@ const EditGroupList = (props) => {
         var contactData = contactsList.filter(
           (obj) => obj.member_account_number !== memberAccountNumber
         );
-        setContactsList(contactData);
+        setData(contactData);
         setShowDeletePopup(false);
         getGroupDetail && (await getGroupDetail());
       } catch (error) {
@@ -150,7 +151,7 @@ const EditGroupList = (props) => {
       var contactData = contactsList.filter(
         (obj) => obj.member_mobile_number !== memberMobileNumber
       );
-      setContactsList(contactData);
+      setData(contactData);
       setShowDeletePopup(false);
     }
     var index = getItem.indexOf(memberMobileNumber);
@@ -243,7 +244,7 @@ const EditGroupList = (props) => {
         groupId={groupId}
         selectedItem={(item) => selectedItems(item)}
         alldata={contactsList}
-        selectedFullItem={(item) => setContactsList([...contactsList, ...item])}
+        selectedFullItem={(item) => setData([...contactsList, ...item])}
         getItem={getItem}
       ></AddContactData>
     </div>

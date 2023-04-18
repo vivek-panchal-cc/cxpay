@@ -6,6 +6,7 @@ import { LoaderContext } from "context/loaderContext";
 import { apiRequest } from "helpers/apiRequests";
 import { Link } from "react-router-dom";
 import CardDetails from "components/card-list/CardDetails";
+import { CURRENCY_SYMBOL } from "constants/all";
 
 function Wallet() {
   const { setIsLoading } = useContext(LoaderContext);
@@ -105,7 +106,10 @@ function Wallet() {
                   <h6 className="h6" style={{ color: "#0081c5" }}>
                     Available Balance
                   </h6>
-                  <h2 className="h3 text-black fw-bolder"> NAFl {balance} </h2>
+                  <h2 className="h3 text-black fw-bolder">
+                    {" "}
+                    {CURRENCY_SYMBOL} {balance}{" "}
+                  </h2>
                 </div>
               )}
             </div>

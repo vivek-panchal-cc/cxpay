@@ -33,8 +33,7 @@ export default function EditGroup() {
     },
     validationSchema: createGroupSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
-      const allMembers = contactList.concat(values.contact);
-      if (allMembers.length > MAX_GROUP_MEMBERS) {
+      if (contactList.length > MAX_GROUP_MEMBERS) {
         toast.error(`Maximum ${MAX_GROUP_MEMBERS} members allowed in a group`);
         return;
       }
@@ -158,8 +157,9 @@ export default function EditGroup() {
         </div>
         <EditGroupList
           data={contactList}
+          setData={setContactList}
           groupId={id}
-          getGroupDetail={() => getGroupDetail(id)}
+          // getGroupDetail={() => getGroupDetail(id)}
           selectedItems={(items) => formik.setFieldValue("contact", items)}
           getItem={formik.values.contact}
         />

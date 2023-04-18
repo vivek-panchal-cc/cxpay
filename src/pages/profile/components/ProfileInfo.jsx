@@ -4,7 +4,7 @@ import { apiRequest } from "helpers/apiRequests";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addBusinessUrlSchema } from "schemas/validationSchema";
-import { IconEdit } from "styles/svgs";
+import { IconCross, IconEdit, IconSave } from "styles/svgs";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
@@ -115,7 +115,14 @@ const ProfileInfo = (props) => {
                   />
                 </div>
                 <button type="submit" className="edit-button">
-                  <IconEdit />
+                  <IconSave />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsEditable(false)}
+                  className="edit-button"
+                >
+                  <IconCross style={{ stroke: "#0081C5" }} />
                 </button>
               </form>
             )}

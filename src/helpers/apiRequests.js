@@ -40,7 +40,6 @@ const API_deleteBank = apiUrl.API_ONBOARD_DELETE_BANK;
 const API_getCardColor = apiUrl.API_ONBOARD_GET_CARD_COLOR;
 const API_cardMarkAsDefault = apiUrl.API_ONBOARD_CARD_MARK_AS_DEFAULT;
 const API_bankMarkAsDefault = apiUrl.API_ONBOARD_BANK_MARK_AS_DEFAULT;
-const API_getCharges = apiUrl.API_ONBOARD_GET_CHARGES;
 const API_updateBusinessData = apiUrl.API_ONBOARD_UPDATE_BUSINESS_DATA;
 const API_addContact = apiUrl.API_ONBOARD_ADD_CONTACT;
 const API_getConatcts = apiUrl.API_ONBOARD_GET_CONTACT_LIST;
@@ -73,6 +72,7 @@ const API_walletPersonalOtpVerify =
   apiUrl.API_TRANSACTION_WALLET_PERSONAL_OTP_VERIFY;
 const API_resendWalletTransferOtp =
   apiUrl.API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP;
+const API_getCharges = apiUrl.API_TRANSACTION_GET_CHARGES;
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 //  ------------------------------------------------------------------------------------------------------------------------------------------------>
 
@@ -389,7 +389,7 @@ export const invitedConatcts = (params) => {
 // GET @get-charges
 // @params
 export const getCharges = (params) => {
-  return axiosOnboardInstance.get(`${API_getCharges}?${params}`);
+  return axiosTransactionInstance.get(`${API_getCharges}?${params}`);
 };
 
 // POST @add-fund

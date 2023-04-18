@@ -1,6 +1,8 @@
 import {
-  IconNotifyContact,
-  IconNotifyMoneySent,
+  IconNotifyContactAccept,
+  IconNotifyContactInvite,
+  IconNotifyMoneyRecieved,
+  IconNotifyMoneyRequest,
   IconNotifyMoneySentFailed,
 } from "styles/svgs";
 
@@ -13,8 +15,7 @@ const expContainSpecialChar = /^(?=.*[!@#\$%\^&\*])/;
 const validFileExtensions = {
   image: ["jpg", "png", "jpeg", "svg", "heif", "hevc"],
 };
-// const validFileSize = "5MB";
-const otpCounterTime = 180;
+
 // Test Functions
 const regexNotContainWhitespace = (testStr) =>
   new RegExp(exp0ContainWhitespace).test(testStr);
@@ -44,6 +45,9 @@ const isValidFileType = (fileName, fileType) => {
   );
 };
 
+// const validFileSize = "5MB";
+const otpCounterTime = 180;
+
 // theme colors
 const THEME_COLORS = ["light_blue"];
 
@@ -72,11 +76,11 @@ const renameKeys = (keysMap, object) =>
 // Notifications Type Constants
 const notificationType = {
   request: {
-    icon: IconNotifyMoneySent,
+    icon: IconNotifyMoneyRequest,
     redirect: "/contacts",
   },
   receive: {
-    icon: IconNotifyMoneySent,
+    icon: IconNotifyMoneyRecieved,
     redirect: "/contacts",
   },
   payment_fail: {
@@ -84,7 +88,7 @@ const notificationType = {
     redirect: "/contacts",
   },
   contact_register: {
-    icon: IconNotifyContact,
+    icon: IconNotifyContactAccept,
     redirect: "/contacts",
   },
   "": {
@@ -92,6 +96,9 @@ const notificationType = {
     redirect: "/wallet",
   },
 };
+
+// Currency Symbol
+const CURRENCY_SYMBOL = "ANG";
 
 export {
   exp0ContainWhitespace,
@@ -104,6 +111,7 @@ export {
   url_regex,
   notificationType,
   THEME_COLORS,
+  CURRENCY_SYMBOL,
   FUND_CARD,
   FUND_CASH,
   FUND_BANK,

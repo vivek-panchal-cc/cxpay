@@ -11,6 +11,7 @@ import { LoaderContext } from "context/loaderContext";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ModalAlert from "components/modals/ModalAlert";
+import { CURRENCY_SYMBOL } from "constants/all";
 
 function SendPayment(props) {
   const {} = props;
@@ -177,7 +178,7 @@ function SendPayment(props) {
       />
       <div className="col-12 send-payment-ttile-wrap">
         <div className="title-content-wrap send-pay-title-sec">
-          <h3>One Time Payment</h3>
+          <h3>{sendCreds.group_id ? "Group Payment" : "One Time Payment"}</h3>
           <p>Please insert amount of money you want to send</p>
         </div>
       </div>
@@ -216,6 +217,7 @@ function SendPayment(props) {
                         }
                         fieldOnChange={formik.handleChange}
                         fieldOnBlur={formik.handleBlur}
+                        showDelete={wallet.length > 1 ? true : false}
                         handleDelete={handleDeleteContact}
                         ref={(el) => (inputAmountRefs[index] = el)}
                       />
@@ -231,7 +233,8 @@ function SendPayment(props) {
                           {item?.desc}
                         </div>
                         <h4 className="amount">
-                          <span>NAFl</span> {item?.amount?.toFixed(2)}
+                          <span>{CURRENCY_SYMBOL}</span>{" "}
+                          {item?.amount?.toFixed(2)}
                         </h4>
                       </li>
                     ))}
@@ -239,7 +242,7 @@ function SendPayment(props) {
                       <div className="payment-footer-col-label">Total</div>
                       <div className="amount-currency-wrap">
                         <h4 className="amount">
-                          <span>NAFl</span>{" "}
+                          <span>{CURRENCY_SYMBOL}</span>{" "}
                           {paymentDetails?.grandTotal?.toFixed(2)}
                         </h4>
                       </div>

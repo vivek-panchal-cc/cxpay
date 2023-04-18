@@ -1,13 +1,14 @@
 import React, { forwardRef } from "react";
 import Button from "components/ui/Button";
-import { usePopperTooltip } from "react-popper-tooltip";
 import Input from "components/ui/Input";
 import Image from "components/ui/Image";
 import Tooltip from "components/tooltips/Tooltip";
+import { CURRENCY_SYMBOL } from "constants/all";
 
 const ContactPaymentItem = forwardRef((props, ref) => {
   const {
     item,
+    showDelete,
     handleDelete,
     fieldNameAmount,
     fieldValueAmount,
@@ -20,14 +21,6 @@ const ContactPaymentItem = forwardRef((props, ref) => {
     fallbackImgUrl,
   } = props;
   const { name, profile_image: imgUrl } = item;
-
-  const {
-    getArrowProps,
-    getTooltipProps,
-    setTooltipRef,
-    setTriggerRef,
-    visible,
-  } = usePopperTooltip({ placement: "bottom-end" });
 
   return (
     <li>
@@ -75,16 +68,16 @@ const ContactPaymentItem = forwardRef((props, ref) => {
           ref={ref}
         />
         <Tooltip isVisible={fieldErrorAmount} tooltipText={fieldErrorAmount} />
-        <p className="ip_currancy" ref={setTriggerRef}>
-          NAFl
-        </p>
+        <p className="ip_currancy">{CURRENCY_SYMBOL}</p>
       </div>
       <div className="remove-btn">
-        <Button
-          type="button"
-          className="close-icons"
-          onClick={() => handleDelete(item)}
-        ></Button>
+        {showDelete && (
+          <Button
+            type="button"
+            className="close-icons"
+            onClick={() => handleDelete(item)}
+          ></Button>
+        )}
       </div>
     </li>
   );

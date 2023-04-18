@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FundContext } from "context/fundContext";
 import DatePicker from "react-datepicker";
 import { IconCalender, IconEyeClose, IconEyeOpen } from "styles/svgs";
+import { CURRENCY_SYMBOL } from "constants/all";
 
 function FundCard() {
   const { formik, countryList, cityList, chargesDetails } =
@@ -192,7 +193,7 @@ function FundCard() {
       </div>
       <div className="row">
         <div className="col-12 p-0 amt-with-currency">
-          <span>NAFl</span>
+          <span>{CURRENCY_SYMBOL}</span>
           <Input
             type="text"
             id="transactionAmount"
@@ -230,11 +231,15 @@ function FundCard() {
             <tbody>
               <tr>
                 <td>Fees</td>
-                <td>NAFl {chargesDetails?.fees}</td>
+                <td>
+                  {CURRENCY_SYMBOL} {chargesDetails?.fees}
+                </td>
               </tr>
               <tr>
                 <td>Amount</td>
-                <td>NAFl {formik.values.chargedAmount}</td>
+                <td>
+                  {CURRENCY_SYMBOL} {formik.values.chargedAmount}
+                </td>
               </tr>
             </tbody>
           </table>
