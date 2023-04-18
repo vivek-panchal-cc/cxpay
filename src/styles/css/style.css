@@ -6550,7 +6550,8 @@ ul.notification-list-wrap li:last-child {
 .amt-with-currency span {
   position: absolute;
   z-index: 9;
-  top: 14px;
+  /* top: 14px; */
+  top: 18px;
   left: 15px;
   color: #363853;
   font-weight: 800;
@@ -6727,7 +6728,7 @@ a.eg-close-btn {
   line-height: 22px;
 }
 
-/* New Added */
+/* For Error Field */
 .form-field input.form-control.error-field {
   border-color: red !important;
 }
@@ -6772,4 +6773,7 @@ a.eg-close-btn {
 }
 .payment-blocks-listing .remove-btn .close-icons {
   border: none !important;
+}
+.send-payment-ttile-wrap {
+  padding-top: 20px;
 }

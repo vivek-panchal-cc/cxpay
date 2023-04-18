@@ -1,9 +1,17 @@
+import Button from "components/ui/Button";
 import React from "react";
 import { Link } from "react-router-dom";
 import { IconNotifyDelete } from "styles/svgs";
 
 function NotificationListItem(props) {
-  const { showDeleteButton, notification, className, Icon, redirect } = props;
+  const {
+    showDeleteButton,
+    handleDelete,
+    notification,
+    className,
+    Icon,
+    redirect,
+  } = props;
   const { id, message } = notification || {};
 
   return (
@@ -22,9 +30,13 @@ function NotificationListItem(props) {
         </div>
       </Link>
       {showDeleteButton && (
-        <div className="notification-rm-wrap">
+        <Button
+          type="button"
+          className="notification-rm-wrap"
+          onClick={() => handleDelete(id)}
+        >
           <IconNotifyDelete />
-        </div>
+        </Button>
       )}
     </li>
   );

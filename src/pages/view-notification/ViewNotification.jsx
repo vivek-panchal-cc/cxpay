@@ -5,6 +5,8 @@ import Pagination from "components/pagination/Pagination";
 import { fetchGetAllNotifications } from "features/user/userNotificationSlice";
 import { LoaderContext } from "context/loaderContext";
 import { notificationType } from "constants/all";
+import { apiRequest } from "helpers/apiRequests";
+import { toast } from "react-toastify";
 
 function ViewNotification(props) {
   const dispatch = useDispatch();
@@ -20,6 +22,21 @@ function ViewNotification(props) {
       await dispatch(fetchGetAllNotifications(page));
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleMarkAsRead = async (id) => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.markAsRead({ id });
+      if (!data.success) throw data.message;
+      await handleNotificationPageChange(1);
+      toast.success(data.message);
+    } catch (error) {
+      console.log(error);
+      if (typeof error === "string") toast.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -44,6 +61,7 @@ function ViewNotification(props) {
               <NotificationListItem
                 Icon={notificationType[item?.type]?.icon}
                 redirect={notificationType[item?.type]?.redirect}
+                handleDelete={handleMarkAsRead}
                 notification={item}
                 showDeleteButton={true}
                 key={index}
