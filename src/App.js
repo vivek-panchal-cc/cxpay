@@ -35,6 +35,7 @@ import SignupFundAccount from "pages/signup/components/SignupFundAccount";
 import ViewNotification from "pages/view-notification/ViewNotification";
 import SendPaymentLayout from "layouts/SendPaymentLayout";
 import SendPayment from "pages/send-payment/SendPayment";
+import ContactsLayout from "layouts/ContactsLayout";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -96,14 +97,22 @@ function App() {
               element={<FundAccount />}
             />
             {/* contacts */}
-            <Route path="/contacts/invited" element={<Invited />} />
             <Route path="/profile" element={<Profile />} />
-            <Route element={<SendPaymentLayout />}>
+
+            {/* <Route element={<SendPaymentLayout />}>
+              {/* <Route path="/contacts" element={<Contacts />} /> 
+              <Route path="/send" element={<Send />} />
+               <Route path="/send-payment" element={<SendPayment />} /> 
+            </Route> */}
+
+            <Route element={<ContactsLayout />}>
               <Route path="/contacts" element={<Contacts />} />
+              <Route path="/contacts-invited" element={<Invited />} />
+              <Route path="/edit-group/:id" element={<EditGroup />} />
               <Route path="/send" element={<Send />} />
               <Route path="/send-payment" element={<SendPayment />} />
             </Route>
-            <Route path="/edit-group/:id" element={<EditGroup />} />
+
             <Route path="/view-notification" element={<ViewNotification />} />
           </Route>
           <Route path="/logout" element={<Logout />} />

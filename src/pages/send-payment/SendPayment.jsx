@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
 import { LoaderContext } from "context/loaderContext";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ModalAlert from "components/modals/ModalAlert";
 
 function SendPayment(props) {
@@ -17,8 +17,9 @@ function SendPayment(props) {
   const navigate = useNavigate();
   const inputAmountRefs = useRef([]);
   const { setIsLoading } = useContext(LoaderContext);
-  const { sendCreds, handleSendCreds, handleCancelPayment, charges } =
+  const { sendCreds, charges, handleSendCreds, handleCancelPayment } =
     useContext(SendPaymentContext);
+
   const { mobile_number, country_code } = useSelector(
     (state) => state?.userProfile?.profile
   );
@@ -219,7 +220,7 @@ function SendPayment(props) {
                 <div className="payment-footer-block">
                   <ul>
                     {paymentDetails?.allCharges?.map((item, index) => (
-                      <li>
+                      <li key={index}>
                         <div className="payment-footer-col-label">
                           {item?.desc}
                         </div>

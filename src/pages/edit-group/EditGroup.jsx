@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { LoaderContext } from "context/loaderContext";
 import { MAX_GROUP_MEMBERS } from "constants/all";
+import { SendPaymentContext } from "context/sendPaymentContext";
 
 export default function EditGroup() {
   let { id } = useParams();
@@ -20,8 +21,14 @@ export default function EditGroup() {
   const [contactList, setContactList] = useState([]);
   const [groupDetail, setGroupDetail] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
-  const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
   const { setIsLoading } = useContext(LoaderContext);
+
+  const {
+    setShowDeleteGroupPopup,
+    showDeleteGroupPopup,
+    deleteGroup,
+    deleteGroupData,
+  } = useContext(SendPaymentContext);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -81,21 +88,6 @@ export default function EditGroup() {
       }
       setIsLoading(false);
     }
-  };
-
-  const deleteGroupData = () => {
-    setShowDeleteGroupPopup(true);
-  };
-
-  const deleteGroup = async (id) => {
-    try {
-      var param = { group_id: id };
-      const { data } = await apiRequest.deleteGroup(param);
-      if (!data.success) throw data.message;
-      setShowDeleteGroupPopup(false);
-      toast.success(data.message);
-      navigate("/send");
-    } catch (error) {}
   };
 
   useEffect(() => {

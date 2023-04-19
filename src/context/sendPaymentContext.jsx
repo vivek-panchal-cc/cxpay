@@ -1,6 +1,6 @@
 import { MAX_PAYMENT_CONTACTS, renameKeys } from "constants/all";
 import { apiRequest } from "helpers/apiRequests";
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LoaderContext } from "./loaderContext";
@@ -14,6 +14,7 @@ const SendPaymentProvider = ({ children }) => {
   const [selectedGroup, setSelectedGroup] = useState([]);
   const [sendCreds, setSendCreds] = useState({ wallet: [] });
   const [charges, setCharges] = useState([]);
+  const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
 
   // For Send contacts button click
   const handleSendContacts = (contacts = null) => {
@@ -119,6 +120,22 @@ const SendPaymentProvider = ({ children }) => {
     })();
   }, [sendCreds]);
 
+  
+  const deleteGroupData = () => {
+    setShowDeleteGroupPopup(true);
+  };
+
+  const deleteGroup = async (id) => {
+    try {
+      var param = { group_id: id };
+      const { data } = await apiRequest.deleteGroup(param);
+      if (!data.success) throw data.message;
+      setShowDeleteGroupPopup(false);
+      toast.success(data.message);
+      navigate("/send");
+    } catch (error) {}
+  };
+
   return (
     <SendPaymentContext.Provider
       value={{
@@ -128,10 +145,14 @@ const SendPaymentProvider = ({ children }) => {
         handleSendGroup,
         handleSendCreds,
         handleCancelPayment,
+        deleteGroup,
+        deleteGroupData,
         selectedContacts,
         selectedGroup,
         sendCreds,
         charges,
+        showDeleteGroupPopup,
+        setShowDeleteGroupPopup
       }}
     >
       {children}

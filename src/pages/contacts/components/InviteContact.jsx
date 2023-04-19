@@ -62,7 +62,7 @@ function InviteContact(props) {
             if (isInvitedFlag) {
               getInvitedConatcts(1, "");
             } else {
-              navigate("/contacts/invited");
+              navigate("/contacts-invited");
             }
           }
         } else {
