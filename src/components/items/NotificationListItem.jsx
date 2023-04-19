@@ -7,16 +7,19 @@ function NotificationListItem(props) {
   const {
     showDeleteButton,
     handleDelete,
+    handleRead,
     notification,
     className,
     Icon,
-    redirect,
   } = props;
-  const { id, message } = notification || {};
+  const { id, message, status } = notification || {};
 
   return (
-    <li>
-      <Link to={redirect} className="w-100">
+    <li className={status ? "un-read-notification" : ""}>
+      <div
+        onClick={() => handleRead(notification)}
+        className="w-100 cursor-pointer"
+      >
         <div className={`notification-pcw ${className}`}>
           <div className="notifi-ic-wrap">{Icon && <Icon />}</div>
           <div className="notifi-content">
@@ -28,12 +31,12 @@ function NotificationListItem(props) {
             </p>
           </div>
         </div>
-      </Link>
+      </div>
       {showDeleteButton && (
         <Button
           type="button"
           className="notification-rm-wrap"
-          onClick={() => handleDelete(id)}
+          onClick={() => handleDelete(notification)}
         >
           <IconNotifyDelete />
         </Button>

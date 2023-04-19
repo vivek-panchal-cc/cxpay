@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import ContactPaymentItem from "components/items/ContactPaymentItem";
 import { sendPaymentSchema } from "schemas/sendPaymentSchema";
-import { getChargedAmount } from "helpers/commonHelpers";
+import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
@@ -58,7 +58,8 @@ function SendPayment(props) {
         );
         muValues.fees = charges;
         muValues.total_amount = paymentDetails.grandTotal;
-        for (const key in muValues) formData.append(key, muValues[key]);
+        for (const key in muValues)
+          addObjToFormData(muValues[key], key, formData);
         const { data } = await apiRequest.walletTransferOtp(formData);
         if (!data.success) throw data.message;
         toast.success(`${data.data.otp}`);

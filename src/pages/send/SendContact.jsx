@@ -8,6 +8,7 @@ import ContactCard from "components/cards/ContactCard";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import LoaderSendContact from "loaders/LoaderSendContact";
 import LoaderSendContactButtons from "loaders/LoaderSendContactButtons";
+import { toast } from "react-toastify";
 
 function SendContact() {
   const [contactsList, setContactsList] = useState([]);
@@ -121,7 +122,10 @@ function SendContact() {
   };
 
   const handleEditGroup = () => {
-    if (!selectedGroupIds || selectedGroupIds.length <= 0) return;
+    if (!selectedGroupIds || selectedGroupIds.length <= 0) {
+      toast.warning("Please select at least one group");
+      return;
+    }
     navigate("/edit-group/" + selectedGroupIds[0]);
   };
 

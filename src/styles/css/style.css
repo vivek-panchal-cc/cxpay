@@ -6387,7 +6387,7 @@ ul.notification-list-wrap li:last-child {
   border-bottom: 0px;
   padding-bottom: 5px;
 }
-ul.notification-list-wrap li a {
+ul.notification-list-wrap li > div {
   transition: all 0s ease-in-out !important;
 }
 .notification-content-wrap {

@@ -52,6 +52,7 @@ const API_updateCustomerNotification =
 const API_invitedContactList = apiUrl.API_ONBOARD_INVITED_CONTACT_LIST;
 const API_getAllNotifications = apiUrl.API_ONBOARD_GET_ALL_NOTIFICATIONS;
 const API_markAsRead = apiUrl.API_ONBOARD_MARK_AS_READ;
+const API_deleteNotifications = apiUrl.API_ONBOARD_DELETE_NOTIFICATIONS;
 const API_getInviteContactList = apiUrl.API_ONBOARD_GET_INVITE_CONCAT_LIST;
 const API_addGroup = apiUrl.API_ONBOARD_ADD_GROUP;
 const API_groupsList = apiUrl.API_ONBOARD_GET_GROUP_LIST;
@@ -380,6 +381,12 @@ export const markAsRead = (params) => {
   return axiosOnboardInstance.post(`${API_markAsRead}`, params);
 };
 
+// POST @delete-notifications
+// @params notification_id[], auth_token
+export const deleteNotifications = (params) => {
+  return axiosOnboardInstance.post(`${API_deleteNotifications}`, params);
+};
+
 // POST @invited-contacts-list API
 // @params auth_token
 export const invitedConatcts = (params) => {
@@ -461,6 +468,7 @@ export const apiRequest = {
   generateNewQrCode,
   getAllNotifications,
   markAsRead,
+  deleteNotifications,
   getCustomerNotification,
   updateCustomerNotification,
   cardsList,
