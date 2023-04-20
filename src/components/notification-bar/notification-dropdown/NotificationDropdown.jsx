@@ -1,13 +1,19 @@
 import NotificationListItem from "components/items/NotificationListItem";
 import { notificationType } from "constants/all";
+import { LoaderContext } from "context/loaderContext";
+import { fetchMarkAsRead } from "features/user/userNotificationSlice";
 import LoaderNotificationDropdown from "loaders/LoaderNotificationDropdown";
-import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { IconNotify } from "styles/svgs";
 
 const NotificationDropdown = (props) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const dropdownref = useRef(null);
+  const { setIsLoading } = useContext(LoaderContext);
   const { dropNotifications, initialLoading } = useSelector(
     (state) => state.userNotification
   );
@@ -24,6 +30,21 @@ const NotificationDropdown = (props) => {
       document.removeEventListener("mousedown", handleclickOutside);
     };
   }, [dropdownref]);
+
+  const handleMarkAsRead = async ({ id, status, type }) => {
+    if (status) return navigate(notificationType[type]?.redirect);
+    setIsLoading(true);
+    try {
+      const { error, payload } = await dispatch(fetchMarkAsRead(id));
+      if (error) throw payload;
+      toast.success(payload);
+      navigate(notificationType[type]?.redirect);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="notification-user-wrap">
@@ -51,11 +72,12 @@ const NotificationDropdown = (props) => {
               ))
             : dropNotifications?.map((item, index) => (
                 <NotificationListItem
+                  key={index}
                   Icon={notificationType[item?.type]?.icon}
                   className="notification-content-wrap"
                   notification={item}
                   showDeleteButton={false}
-                  key={index}
+                  handleRead={handleMarkAsRead}
                 />
               ))}
         </ul>

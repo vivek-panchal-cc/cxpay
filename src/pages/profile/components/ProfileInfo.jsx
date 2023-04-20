@@ -4,15 +4,16 @@ import { apiRequest } from "helpers/apiRequests";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addBusinessUrlSchema } from "schemas/validationSchema";
-import { IconEdit } from "styles/svgs";
+import { IconCross, IconEdit, IconSave } from "styles/svgs";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
 import { Link } from "react-router-dom";
+import useCountriesCities from "hooks/useCountriesCities";
 
 const ProfileInfo = (props) => {
   const { setIsLoading } = useContext(LoaderContext);
-
+  const [countryList] = useCountriesCities();
   const { profile } = props;
   const {
     user_type = "personal",
@@ -115,7 +116,14 @@ const ProfileInfo = (props) => {
                   />
                 </div>
                 <button type="submit" className="edit-button">
-                  <IconEdit />
+                  <IconSave />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsEditable(false)}
+                  className="edit-button"
+                >
+                  <IconCross style={{ stroke: "#0081C5" }} />
                 </button>
               </form>
             )}
@@ -149,7 +157,7 @@ const ProfileInfo = (props) => {
       <li>
         <div className="pi-title-div">Country</div>
         <div className="profile-info-right-desc">
-          <p>{country}</p>
+          <p>{countryList?.find(({ iso }) => iso === country)?.country_name}</p>
         </div>
       </li>
     </ul>

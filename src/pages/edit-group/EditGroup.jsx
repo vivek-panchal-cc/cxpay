@@ -40,8 +40,7 @@ export default function EditGroup() {
     },
     validationSchema: createGroupSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
-      const allMembers = [...contactList, ...values.contact];
-      if (allMembers.length > MAX_GROUP_MEMBERS) {
+      if (contactList.length > MAX_GROUP_MEMBERS) {
         toast.error(`Maximum ${MAX_GROUP_MEMBERS} members allowed in a group`);
         return;
       }
@@ -76,10 +75,11 @@ export default function EditGroup() {
         group_id: data.data.group_details.group_id,
         group_name: data.data.group_details.group_name,
         group_image: data.data.group_details.group_image,
-        contact: [],
+        contact: [...formik.values.contact],
       });
       setProfileImage(data.data.group_details.group_image);
-      setContactList(data.data.group_details.group_member_details);
+      const members = data.data.group_details.group_member_details;
+      setContactList(members);
       setIsLoading(false);
     } catch (error) {
       if (error === "Contact not found") {
@@ -149,7 +149,9 @@ export default function EditGroup() {
         </div>
         <EditGroupList
           data={contactList}
+          setData={setContactList}
           groupId={id}
+          // getGroupDetail={() => getGroupDetail(id)}
           selectedItems={(items) => formik.setFieldValue("contact", items)}
           getItem={formik.values.contact}
         />

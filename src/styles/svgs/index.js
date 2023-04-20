@@ -37,8 +37,12 @@ export { default as IconAddWithBackground } from "./AddWithBackground";
 export { default as IconDelete } from "./Delete";
 export { default as IconCard } from "./Card";
 export { default as IconAddBackground } from "./AddBackground";
-export { default as IconNotifyDelete } from "./NotifyDelete";
-export { default as IconNotifyContact } from "./NotifyContact";
-export { default as IconNotifyMoneySent } from "./NotifyMoneySent";
-export { default as IconNotifyMoneySentFailed } from "./NotifyMoneySentFailed";
 export { default as IconPlus } from "./Plus";
+// Notification related icons
+export { default as IconNotifyDelete } from "./NotifyDelete";
+export { default as IconNotifyContactInvite } from "./NotifyContactInvite";
+export { default as IconNotifyContactAccept } from "./NotifyContactAccept";
+export { default as IconNotifyMoneySent } from "./NotifyMoneySent";
+export { default as IconNotifyMoneyRequest } from "./NotifyMoneyRequest";
+export { default as IconNotifyMoneyRecieved } from "./NotifyMoneyRecieved";
+export { default as IconNotifyMoneySentFailed } from "./NotifyMoneySentFailed";

@@ -1,7 +1,7 @@
 import { MAX_PAYMENT_CONTACTS, renameKeys } from "constants/all";
 import { apiRequest } from "helpers/apiRequests";
-import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LoaderContext } from "./loaderContext";
 
@@ -9,6 +9,7 @@ export const SendPaymentContext = React.createContext({});
 
 const SendPaymentProvider = ({ children }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { setIsLoading } = useContext(LoaderContext);
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState([]);
@@ -23,9 +24,7 @@ const SendPaymentProvider = ({ children }) => {
     if (!sendContactsList || sendContactsList.length <= 0)
       return toast.warning("Please select at least one contact");
     if (sendContactsList.length > MAX_PAYMENT_CONTACTS)
-      return toast.warning(
-        `Maximum contacts limit is ${MAX_PAYMENT_CONTACTS} contacts`
-      );
+      return toast.warning(`You have exceed the contact limit.`);
     const alias = {
       account_number: "receiver_account_number",
     };
@@ -120,21 +119,10 @@ const SendPaymentProvider = ({ children }) => {
     })();
   }, [sendCreds]);
 
-  
-  const deleteGroupData = () => {
-    setShowDeleteGroupPopup(true);
-  };
-
-  const deleteGroup = async (id) => {
-    try {
-      var param = { group_id: id };
-      const { data } = await apiRequest.deleteGroup(param);
-      if (!data.success) throw data.message;
-      setShowDeleteGroupPopup(false);
-      toast.success(data.message);
-      navigate("/send");
-    } catch (error) {}
-  };
+  useEffect(() => {
+    if (location.pathname && location.pathname.includes("/contacts"))
+      handleCancelPayment();
+  }, [location.pathname]);
 
   return (
     <SendPaymentContext.Provider

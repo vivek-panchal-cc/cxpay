@@ -6181,6 +6181,10 @@ div.settings-note-inner-sec.setting-noti-sec-new {
 .notification-pg-list-wrap ul li:hover {
   box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
   background-color: #0081c50d;
+  /* background-color: #fff; */
+}
+.notification-pg-list-wrap ul li.un-read-notification {
+  background: #f4f4f4;
 }
 .notification-rm-wrap svg {
   cursor: pointer;
@@ -6383,6 +6387,9 @@ ul.notification-list-wrap li:last-child {
   border-bottom: 0px;
   padding-bottom: 5px;
 }
+ul.notification-list-wrap li > div {
+  transition: all 0s ease-in-out !important;
+}
 .notification-content-wrap {
   display: flex;
   width: 100%;
@@ -6550,7 +6557,8 @@ ul.notification-list-wrap li:last-child {
 .amt-with-currency span {
   position: absolute;
   z-index: 9;
-  top: 14px;
+  /* top: 14px; */
+  top: 18px;
   left: 15px;
   color: #363853;
   font-weight: 800;
@@ -6727,7 +6735,7 @@ a.eg-close-btn {
   line-height: 22px;
 }
 
-/* New Added */
+/* For Error Field */
 .form-field input.form-control.error-field {
   border-color: red !important;
 }
@@ -6772,4 +6780,19 @@ a.eg-close-btn {
 }
 .payment-blocks-listing .remove-btn .close-icons {
   border: none !important;
+}
+.send-payment-ttile-wrap {
+  padding-top: 20px;
+}
+/* CSS on 18-04 */
+button.notification-rm-wrap {
+  border: 0px !important;
+  background-color: transparent;
+  padding: 0px !important;
+}
+.invite-contact-modal .form-field p.text-danger {
+  padding-bottom: 0px !important;
+}
+.cu-details-wrap p {
+  word-wrap: break-word;
 }

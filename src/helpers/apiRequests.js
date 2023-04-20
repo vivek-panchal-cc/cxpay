@@ -40,7 +40,6 @@ const API_deleteBank = apiUrl.API_ONBOARD_DELETE_BANK;
 const API_getCardColor = apiUrl.API_ONBOARD_GET_CARD_COLOR;
 const API_cardMarkAsDefault = apiUrl.API_ONBOARD_CARD_MARK_AS_DEFAULT;
 const API_bankMarkAsDefault = apiUrl.API_ONBOARD_BANK_MARK_AS_DEFAULT;
-const API_getCharges = apiUrl.API_ONBOARD_GET_CHARGES;
 const API_updateBusinessData = apiUrl.API_ONBOARD_UPDATE_BUSINESS_DATA;
 const API_addContact = apiUrl.API_ONBOARD_ADD_CONTACT;
 const API_getConatcts = apiUrl.API_ONBOARD_GET_CONTACT_LIST;
@@ -52,6 +51,8 @@ const API_updateCustomerNotification =
   apiUrl.API_ONBOARD_UPDATE_CUSTOMER_NOTIFICATION;
 const API_invitedContactList = apiUrl.API_ONBOARD_INVITED_CONTACT_LIST;
 const API_getAllNotifications = apiUrl.API_ONBOARD_GET_ALL_NOTIFICATIONS;
+const API_markAsRead = apiUrl.API_ONBOARD_MARK_AS_READ;
+const API_deleteNotifications = apiUrl.API_ONBOARD_DELETE_NOTIFICATIONS;
 const API_getInviteContactList = apiUrl.API_ONBOARD_GET_INVITE_CONCAT_LIST;
 const API_addGroup = apiUrl.API_ONBOARD_ADD_GROUP;
 const API_groupsList = apiUrl.API_ONBOARD_GET_GROUP_LIST;
@@ -72,6 +73,7 @@ const API_walletPersonalOtpVerify =
   apiUrl.API_TRANSACTION_WALLET_PERSONAL_OTP_VERIFY;
 const API_resendWalletTransferOtp =
   apiUrl.API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP;
+const API_getCharges = apiUrl.API_TRANSACTION_GET_CHARGES;
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 //  ------------------------------------------------------------------------------------------------------------------------------------------------>
 
@@ -366,10 +368,23 @@ export const updateGroup = (params) => {
 export const getRemainingGroupContact = (params) => {
   return axiosOnboardInstance.post(`${API_getRemainingGroupContact}`, params);
 };
+
 // POST @get-all-notifications
 // @params page
 export const getAllNotifications = (params) => {
   return axiosOnboardInstance.post(`${API_getAllNotifications}`, params);
+};
+
+// POST @mark-as-read
+// @params id (notification id), auth token
+export const markAsRead = (params) => {
+  return axiosOnboardInstance.post(`${API_markAsRead}`, params);
+};
+
+// POST @delete-notifications
+// @params notification_id[], auth_token
+export const deleteNotifications = (params) => {
+  return axiosOnboardInstance.post(`${API_deleteNotifications}`, params);
 };
 
 // POST @invited-contacts-list API
@@ -381,7 +396,7 @@ export const invitedConatcts = (params) => {
 // GET @get-charges
 // @params
 export const getCharges = (params) => {
-  return axiosOnboardInstance.get(`${API_getCharges}?${params}`);
+  return axiosTransactionInstance.get(`${API_getCharges}?${params}`);
 };
 
 // POST @add-fund
@@ -452,6 +467,8 @@ export const apiRequest = {
   updateBusinessUrl,
   generateNewQrCode,
   getAllNotifications,
+  markAsRead,
+  deleteNotifications,
   getCustomerNotification,
   updateCustomerNotification,
   cardsList,

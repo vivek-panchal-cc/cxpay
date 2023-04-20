@@ -5,6 +5,7 @@ import InputSelect from "components/ui/InputSelect";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import { FundContext } from "context/fundContext";
 import { IconAddBackground, IconCard, IconRightArrowBig } from "styles/svgs";
+import { CURRENCY_SYMBOL } from "constants/all";
 
 function FundBankTransfer(props) {
   const {
@@ -255,7 +256,7 @@ function FundBankTransfer(props) {
             </div>
             <div className="row">
               <div className="col-12 p-0 amt-with-currency">
-                <span>NAFl</span>
+                <span>{CURRENCY_SYMBOL}</span>
                 <Input
                   type="text"
                   inputMode="decimal"
@@ -322,11 +323,15 @@ function FundBankTransfer(props) {
                   <tbody>
                     <tr>
                       <td>Fees</td>
-                      <td>NAFl {chargesDetails?.fees}</td>
+                      <td>
+                        {CURRENCY_SYMBOL} {chargesDetails?.fees}
+                      </td>
                     </tr>
                     <tr>
                       <td>Amount</td>
-                      <td>NAFl {formik.values.chargedAmount}</td>
+                      <td>
+                        {CURRENCY_SYMBOL} {formik.values.chargedAmount}
+                      </td>
                     </tr>
                   </tbody>
                 </table>

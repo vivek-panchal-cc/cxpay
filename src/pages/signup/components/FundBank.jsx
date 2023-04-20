@@ -3,6 +3,7 @@ import Input from "components/ui/Input";
 import InputSelect from "components/ui/InputSelect";
 import { Link } from "react-router-dom";
 import { FundContext } from "context/fundContext";
+import { CURRENCY_SYMBOL } from "constants/all";
 
 function FundBank() {
   const { formik, countryList, cityList, chargesDetails, banksList } =
@@ -195,7 +196,7 @@ function FundBank() {
       </div>
       <div className="row">
         <div className="col-12 p-0 amt-with-currency">
-          <span>NAFl</span>
+          <span>{CURRENCY_SYMBOL}</span>
           <Input
             type="text"
             id="transactionAmount"
@@ -233,11 +234,15 @@ function FundBank() {
             <tbody>
               <tr>
                 <td>Fees</td>
-                <td>NAFl {chargesDetails?.fees}</td>
+                <td>
+                  {CURRENCY_SYMBOL} {chargesDetails?.fees}
+                </td>
               </tr>
               <tr>
                 <td>Amount</td>
-                <td>NAFl {formik.values.chargedAmount}</td>
+                <td>
+                  {CURRENCY_SYMBOL} {formik.values.chargedAmount}
+                </td>
               </tr>
             </tbody>
           </table>

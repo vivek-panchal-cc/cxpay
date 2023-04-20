@@ -1,4 +1,5 @@
-import React from "react";
+import LoaderSendContact from "loaders/LoaderSendContact";
+import React, { useEffect, useState } from "react";
 import { A11y, Navigation, Scrollbar } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -54,11 +55,11 @@ const otherWidthPoints = {
 
 const SwipeContactList = (props) => {
   const {
+    isLoading = false,
     list,
     selectedList = [],
     className,
     fullWidth = false,
-    isMultiSelect = false,
     containerClassName,
     handleReachEnd,
     handleSelectedItems,
@@ -68,26 +69,50 @@ const SwipeContactList = (props) => {
   } = props;
 
   const breakpoints = fullWidth ? fullwidthPoints : otherWidthPoints;
+  const [swiperRef, setSwiperRef] = useState(null);
+  const [swiperList, setSwiperList] = useState(list || []);
+
+  useEffect(() => {
+    if (list && swiperList && list.length !== swiperList.length) {
+      setSwiperList([...list]);
+      swiperRef && swiperRef?.update();
+    }
+  }, [list]);
 
   return (
     <div
-      className={`${
+      className={`position-relative ${
         fullWidth ? "send-whom-slider" : "recent-contact-slider"
       } ${containerClassName}`}
+      style={isLoading ? { minHeight: "220px" } : {}}
     >
+      {isLoading && (
+        <div
+          className="position-absolute bg-white z-2 ps-4 h-100 w-100"
+          style={{ top: "10px", left: "0px" }}
+        >
+          <div className="d-inline-flex column-gap-2">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
+              <LoaderSendContact key={item} />
+            ))}
+          </div>
+        </div>
+      )}
       <Swiper
         navigation
         modules={[Navigation, Scrollbar, A11y]}
         spaceBetween={10}
-        slidesPerView={fullWidth ? 6.6 : 5.5}
+        slidesPerView={"auto"}
         breakpoints={breakpoints}
         pagination={{ clickable: true }}
         scrollbar={{ draggable: false }}
         onReachEnd={handleReachEnd}
+        loop={false}
+        onSwiper={(swiper) => setSwiperRef(swiper)}
       >
         <div className={`swiper-wrapper ${className}`}>
-          {list?.map((item, index) => (
-            <SwiperSlide key={`${item?.id}_${index}`}>
+          {swiperList?.map((item, index) => (
+            <SwiperSlide key={index}>
               <ListItemComponent
                 item={item}
                 selectedList={selectedList}

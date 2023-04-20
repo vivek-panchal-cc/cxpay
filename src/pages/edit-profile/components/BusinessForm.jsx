@@ -11,6 +11,7 @@ import { IconLeftArrow } from "styles/svgs";
 import InputSelect from "components/ui/InputSelect";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { LoaderContext } from "context/loaderContext";
+import { CURRENCY_SYMBOL } from "constants/all";
 
 function Businessform(props) {
   const { countryList, cityList } = props;
@@ -198,7 +199,8 @@ function Businessform(props) {
               </div>
             </div>
             <p className="currency-wrap">
-              Currency: <span className="selected-currency">Nafl</span>
+              Currency:{" "}
+              <span className="selected-currency">{CURRENCY_SYMBOL}</span>
             </p>
             <div className="login-btn">
               <div className="setting-btn-link">

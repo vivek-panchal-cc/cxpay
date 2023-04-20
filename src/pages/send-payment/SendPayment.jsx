@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import ContactPaymentItem from "components/items/ContactPaymentItem";
 import { sendPaymentSchema } from "schemas/sendPaymentSchema";
-import { getChargedAmount } from "helpers/commonHelpers";
+import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
@@ -11,6 +11,7 @@ import { LoaderContext } from "context/loaderContext";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ModalAlert from "components/modals/ModalAlert";
+import { CURRENCY_SYMBOL } from "constants/all";
 
 function SendPayment(props) {
   const {} = props;
@@ -58,10 +59,12 @@ function SendPayment(props) {
         );
         muValues.fees = charges;
         muValues.total_amount = paymentDetails.grandTotal;
-        for (const key in muValues) formData.append(key, muValues[key]);
+        for (const key in muValues)
+          addObjToFormData(muValues[key], key, formData);
         const { data } = await apiRequest.walletTransferOtp(formData);
         if (!data.success) throw data.message;
-        toast.success(data.data.otp);
+        toast.success(`${data.data.otp}`);
+        toast.success(`${data.message}`);
         setShowOtpPopup(true);
       } catch (error) {
         if (typeof error === "string") toast.error(error);
@@ -140,7 +143,9 @@ function SendPayment(props) {
   useEffect(() => {
     if (!formik.values.wallet) return;
     const amounts = formik.values.wallet?.map((item) =>
-      item.personal_amount ? parseFloat(item.personal_amount) : 0
+      item.personal_amount && !isNaN(item.personal_amount)
+        ? parseFloat(item.personal_amount)
+        : 0
     );
     setPaymentDetails(getChargedAmount(charges, amounts));
   }, [formik.values?.wallet]);
@@ -158,7 +163,7 @@ function SendPayment(props) {
         setShow={setShowOtpPopup}
         heading="OTP Verification"
         headingImg="/assets/images/send-payment-pop.svg"
-        subHeading="We have sent you verification code to initiate group payment. Enter OTP below"
+        subHeading="We have sent you verification code to initiate payment. Enter OTP below"
         handleSubmitOtp={handleSubmitOtp}
         handleResendOtp={handleResendOtp}
       />
@@ -175,7 +180,7 @@ function SendPayment(props) {
       />
       <div className="col-12 send-payment-ttile-wrap">
         <div className="title-content-wrap send-pay-title-sec">
-          <h3>One Time Payment</h3>
+          <h3>{sendCreds.group_id ? "Group Payment" : "One Time Payment"}</h3>
           <p>Please insert amount of money you want to send</p>
         </div>
       </div>
@@ -208,8 +213,13 @@ function SendPayment(props) {
                         fieldValueSpecifications={
                           formik.values?.wallet?.[index]?.specifications
                         }
+                        fieldErrorSpecifications={
+                          formik.touched?.wallet?.[index]?.specifications &&
+                          formik.errors?.wallet?.[index]?.specifications
+                        }
                         fieldOnChange={formik.handleChange}
                         fieldOnBlur={formik.handleBlur}
+                        showDelete={wallet.length > 1 ? true : false}
                         handleDelete={handleDeleteContact}
                         ref={(el) => (inputAmountRefs[index] = el)}
                       />
@@ -225,7 +235,8 @@ function SendPayment(props) {
                           {item?.desc}
                         </div>
                         <h4 className="amount">
-                          <span>NAFl</span> {item?.amount?.toFixed(2)}
+                          <span>{CURRENCY_SYMBOL}</span>{" "}
+                          {item?.amount?.toFixed(2)}
                         </h4>
                       </li>
                     ))}
@@ -233,7 +244,7 @@ function SendPayment(props) {
                       <div className="payment-footer-col-label">Total</div>
                       <div className="amount-currency-wrap">
                         <h4 className="amount">
-                          <span>NAFl</span>{" "}
+                          <span>{CURRENCY_SYMBOL}</span>{" "}
                           {paymentDetails?.grandTotal?.toFixed(2)}
                         </h4>
                       </div>
@@ -244,6 +255,7 @@ function SendPayment(props) {
             </div>
             <div className="pay-btn-wrap">
               <button
+                type="button"
                 onClick={handleCancelPayment}
                 className="btn btn-cancel-payment"
               >

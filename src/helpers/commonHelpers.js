@@ -28,4 +28,29 @@ const getChargedAmount = (charges = [], amounts = []) => {
   };
 };
 
-export { getChargedAmount };
+function addObjToFormData(obj, pkey, formData) {
+  switch (Object.prototype.toString.call(obj)) {
+    case "[object Array]":
+      for (let i = 0; i < obj.length; i++) {
+        const nKey = `${pkey}[${i}]`;
+        addObjToFormData(obj[i], nKey, formData);
+      }
+      return;
+    case "[object Object]":
+      for (const key in obj) {
+        const nKey = `${pkey}[${key}]`;
+        addObjToFormData(obj[key], nKey, formData);
+      }
+      return;
+    case "[object String]":
+      formData.append(`${pkey}`, obj);
+      return;
+    case "[object Number]":
+      formData.append(`${pkey}`, obj);
+      return "obj";
+    default:
+      return;
+  }
+}
+
+export { getChargedAmount, addObjToFormData };

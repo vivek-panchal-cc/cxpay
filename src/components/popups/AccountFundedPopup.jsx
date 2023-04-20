@@ -1,3 +1,4 @@
+import { CURRENCY_SYMBOL } from "constants/all";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -12,14 +13,18 @@ function AccountFundedPopup(props) {
         </div>
         <div className="modal-body">
           <h3>
-            <span className="transfer-amt">NAFl {fund}</span>
+            <span className="transfer-amt">
+              {CURRENCY_SYMBOL} {fund}
+            </span>
             <br />
             Funded to your account
           </h3>
           <p>
             Available balance
             <br />
-            <span className="available-bal-acc">NAFl {balance}</span>
+            <span className="available-bal-acc">
+              {CURRENCY_SYMBOL} {balance}
+            </span>
           </p>
           <Link
             to="/wallet"

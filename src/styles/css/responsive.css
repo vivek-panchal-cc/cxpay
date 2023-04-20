@@ -4176,6 +4176,9 @@
     padding-right: 10px;
     font-size: 12px;
   }
+  .contact-top-btn-nav .con-btn-wrap > .btn > a {
+    font-size: 12px;
+  }
   .wallet-acc-fund-btns .btn {
     min-width: auto;
   }

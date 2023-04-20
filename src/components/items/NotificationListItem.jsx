@@ -1,27 +1,45 @@
+import Button from "components/ui/Button";
 import React from "react";
+import { Link } from "react-router-dom";
 import { IconNotifyDelete } from "styles/svgs";
 
 function NotificationListItem(props) {
-  const { showDeleteButton, notification, className, Icon } = props;
-  const { id, message } = notification || {};
+  const {
+    showDeleteButton,
+    handleDelete,
+    handleRead,
+    notification,
+    className,
+    Icon,
+  } = props;
+  const { id, message, status } = notification || {};
 
   return (
-    <li>
-      <div className={`notification-pcw ${className}`}>
-        <div className="notifi-ic-wrap">{Icon && <Icon />}</div>
-        <div className="notifi-content">
-          <p>{message}</p>
-          <p className="notifi-tran-idw">
-            Transection ID : <span>{id}</span>
-            <br />
-            Amount : <span>1234</span>
-          </p>
+    <li className={status ? "un-read-notification" : ""}>
+      <div
+        onClick={() => handleRead(notification)}
+        className="w-100 cursor-pointer"
+      >
+        <div className={`notification-pcw ${className}`}>
+          <div className="notifi-ic-wrap">{Icon && <Icon />}</div>
+          <div className="notifi-content">
+            <p>{message}</p>
+            <p className="notifi-tran-idw">
+              Transection ID : <span>{id}</span>
+              <br />
+              Amount : <span>1234</span>
+            </p>
+          </div>
         </div>
       </div>
       {showDeleteButton && (
-        <div className="notification-rm-wrap">
+        <Button
+          type="button"
+          className="notification-rm-wrap"
+          onClick={() => handleDelete(notification)}
+        >
           <IconNotifyDelete />
-        </div>
+        </Button>
       )}
     </li>
   );

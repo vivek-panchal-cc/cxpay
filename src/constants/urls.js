@@ -54,8 +54,9 @@ export const API_ONBOARD_DELETE_GROUP_MEMBER = "/delete-contact-from-group";
 export const API_ONBOARD_UPDATE_GROUP = "/update-group";
 export const API_ONBOARD_GET_REMAINING_GROUP_CONTACT = "/get-remain-contacts";
 export const API_ONBOARD_INVITED_CONTACT_LIST = "/invited-contacts-list";
-export const API_ONBOARD_GET_CHARGES = "/get-charges";
 export const API_ONBOARD_GET_ALL_NOTIFICATIONS = "/get-all-notifications";
+export const API_ONBOARD_MARK_AS_READ = "/mark-as-read";
+export const API_ONBOARD_DELETE_NOTIFICATIONS = "/delete-notifications";
 export const API_ONBOARD_GET_COUNTRY_BANKS = "/get-country-banks";
 export const API_ONBOARD_RESEND_VERIFY_EMAIL = "/resend-verify-email";
 
@@ -67,3 +68,4 @@ export const API_TRANSACTION_WALLET_PERSONAL_OTP_VERIFY =
   "/wallet-personal-otp-verify";
 export const API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP =
   "/resend-wallet-transfer-otp";
+export const API_TRANSACTION_GET_CHARGES = "/get-charges";

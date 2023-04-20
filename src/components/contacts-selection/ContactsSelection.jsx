@@ -52,12 +52,12 @@ ContactsSelection.Header = (props) => {
 
 ContactsSelection.Body = (props) => {
   const {
+    isLoading,
     className,
     classNameContainer,
     contacts,
     selectedContacts,
     fullWidth,
-    isMultiSelect,
     emptyListMsg,
     handleReachEnd,
     handleSelectedItems,
@@ -68,14 +68,14 @@ ContactsSelection.Body = (props) => {
 
   return (
     <>
-      {contacts && contacts.length > 0 ? (
+      {(contacts && contacts.length > 0) || isLoading ? (
         <SwipeContactList
+          isLoading={isLoading}
           list={contacts}
           selectedList={selectedContacts}
           className={className}
           containerClassName={classNameContainer}
           fullWidth={fullWidth}
-          isMultiSelect={isMultiSelect}
           handleReachEnd={handleReachEnd}
           handleSelectedItems={handleSelectedItems}
           ListItemComponent={ListItemComponent}
