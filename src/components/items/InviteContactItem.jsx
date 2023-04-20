@@ -1,6 +1,6 @@
-import { ContactsContext } from "context/contatcsContext";
+import { ContactsContext } from "context/contactsContext";
 import React, { useContext } from "react";
-import Delete from "styles/svgs/Delete";
+import { IconDelete } from "styles/svgs";
 
 const InviteContactItem = (props) => {
   const { contact, selectedContacts, handleCallback } = props;
@@ -56,7 +56,7 @@ const InviteContactItem = (props) => {
               <img
                 src="../assets/images/Star.svg"
                 onClick={() =>
-                  handleFavContact(contact?.mobile, 1, "inviteContactsItem")
+                  handleFavContact(contact?.mobile,contact?.country_code, 1, "inviteContactsItem")
                 }
                 className="star_border"
                 alt=""
@@ -66,7 +66,7 @@ const InviteContactItem = (props) => {
                 src="../assets/images/star_fill.svg"
                 className="star_fill"
                 onClick={() =>
-                  handleFavContact(contact?.mobile, 0, "inviteContactsItem")
+                  handleFavContact(contact?.mobile,contact?.country_code, 0, "inviteContactsItem")
                 }
                 alt=""
               />
@@ -82,7 +82,7 @@ const InviteContactItem = (props) => {
             }
             className="conlist-del-a con-list-up"
           >
-            <Delete />
+            <IconDelete />
           </button>
         </div>
       </div>

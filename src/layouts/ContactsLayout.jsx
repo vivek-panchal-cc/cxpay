@@ -1,13 +1,13 @@
-import ContatcsProvider from "context/contatcsContext";
+import ContactsProvider from "context/contactsContext";
 import SendPaymentProvider from "context/sendPaymentContext";
 import React from "react";
 import { Outlet } from "react-router";
 
 const ContactsLayout = () => {
   return (
-    <ContatcsProvider>
+    <ContactsProvider>
       <SendPaymentProvider>{<Outlet />}</SendPaymentProvider>
-    </ContatcsProvider>
+    </ContactsProvider>
   );
 };
 

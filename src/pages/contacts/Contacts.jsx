@@ -6,12 +6,11 @@ import ModalConfirmation from "components/modals/ModalConfirmation";
 import ContactDetail from "./components/ContactDetail";
 import { Link } from "react-router-dom";
 import { MAX_GROUP_MEMBERS } from "constants/all";
-import Search from "styles/svgs/Search";
-import Cross from "styles/svgs/Cross";
 import ModalCreateGroup from "components/modals/ModalCreateGroup";
 import ModalAddContact from "components/modals/ModalAddContact";
-import { ContactsContext } from "context/contatcsContext";
+import { ContactsContext } from "context/contactsContext";
 import ContactsItem from "components/items/ContactsItem";
+import { IconCross, IconSearch } from "styles/svgs";
 
 const Contacts = () => {
   const {
@@ -86,7 +85,7 @@ const Contacts = () => {
                     className="js-clearSearchBox clearsearchbox"
                     onClick={() => handleResetFilter("contactsItem")}
                   >
-                    <Cross />
+                    <IconCross />
                   </div>
                   <Input
                     type="search"
@@ -97,7 +96,7 @@ const Contacts = () => {
                     placeholder="Search..."
                   />
                   <div className="search-btn">
-                    <Search />
+                    <IconSearch />
                   </div>
                 </div>
               </form>

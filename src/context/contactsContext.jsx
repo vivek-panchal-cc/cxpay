@@ -2,10 +2,12 @@ import { apiRequest } from "helpers/apiRequests";
 import React, { useState, useContext } from "react";
 import { toast } from "react-toastify";
 import { LoaderContext } from "./loaderContext";
+import { useNavigate } from "react-router";
 
 export const ContactsContext = React.createContext({});
 
-const ContatcsProvider = ({ children }) => {
+const ContactsProvider = ({ children }) => {
+  const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [favIconShow, setfavIconShow] = useState(false);
@@ -19,40 +21,40 @@ const ContatcsProvider = ({ children }) => {
   const [confirmShow, setConfirmShow] = useState(false);
   const [contactsOrInvited, setContactsOrInvited] = useState("");
   const [removeConfirmShow, setRemoveConfirmShow] = useState(false);
+  const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
 
   //For add contacts to favourite list
-  const handleFavContact = async (mobile, remove_flg, type) => {
+  const handleFavContact = async (mobile, country_code, remove_flg, type) => {
     setIsLoading(true);
-    let selectedConts = [];
-    if (type == "contactsItem") {
-      selectedConts = contacts?.contacts?.filter((con) => mobile == con.mobile);
-    } else {
-      selectedConts = contactsInvited?.contacts?.filter(
-        (con) => mobile == con.mobile
-      );
-    }
-    const selectedData = selectedConts.map(({ country_code, mobile }) => ({
-      country_code,
-      mobile,
-      mark_as_fav: remove_flg,
-    }));
 
-    let reqData = {};
-    if (selectedData.length > 0) {
-      reqData = selectedData[0];
-    }
- 
+    let reqData = {
+      country_code: country_code,
+      mobile: mobile,
+      mark_as_fav: remove_flg,
+    };
+
     try {
-      const { data } = await apiRequest.favContact(reqData);
+      const { data } = await apiRequest.markAsFavourite(reqData);
+
+      if (!data.success) throw data.message;
+
       if (type == "contactsItem") {
-        data["status_code"] === 200 && retrieveContacts(page);
+        contacts?.contacts?.filter((con) => {
+          if (con.mobile == mobile && con.country_code == country_code) {
+            return (con.is_favourite = con.is_favourite ? false : true);
+          }
+        });
+        setContacts(contacts);
       } else {
-        data["status_code"] === 200 && handleInvitedContacts(page);
+        contactsInvited?.contacts?.filter((con) => {
+          if (con.mobile == mobile && con.country_code == country_code) {
+            return (con.is_favourite = con.is_favourite ? false : true);
+          }
+        });
+        setContactsInvited(contactsInvited);
       }
       setfavIconShow(favIconShow);
       toast.success(data.message);
-
-      if (!data.success || data.data === null) throw data.message;
     } catch (error) {
       console.log(error);
     } finally {
@@ -64,15 +66,15 @@ const ContatcsProvider = ({ children }) => {
   const retrieveContacts = async (currentPage = 1, search) => {
     setIsLoading(true);
     try {
-      const { data } = await apiRequest.getConatcts({
+      const { data } = await apiRequest.contactsList({
         page: currentPage,
         search: search,
       });
-      if (!data.success || data.data === null) throw data.message;
+      if (!data.success) throw data.message;
       setPage(currentPage);
       setContacts(data.data);
     } catch (error) {
-      if (error === "Contact not found") {
+      if (typeof error === "string") {
         setContacts(null);
       }
       console.log(error);
@@ -98,34 +100,35 @@ const ContatcsProvider = ({ children }) => {
   // For delete contacts from the list
   const handleDeleteContact = async () => {
     setIsLoading(true);
-    let selectedConts = [];
-    const accountNos = deleteContactArr;
-    if (contactsType == "contactsItem") {
-      selectedConts = contacts?.contacts?.filter((con) =>
-        accountNos.includes(con.account_number)
-      );
-    } else {
-      selectedConts = contactsInvited?.contacts?.filter((con) =>
-        accountNos.includes(con.mobile)
-      );
-    }
-    const ids = selectedConts.map(({ country_code, mobile }) => ({
-      country_code,
-      mobile,
-    }));
     try {
-      const { data } = await apiRequest.deleteContact({ contacts: ids });
+      let selectedConts = [];
+      const accountNos = deleteContactArr;
       if (contactsType == "contactsItem") {
-        data["status_code"] === 200 && retrieveContacts(page);
+        selectedConts = contacts?.contacts?.filter((con) =>
+          accountNos.includes(con.account_number)
+        );
       } else {
-        data["status_code"] === 200 && handleInvitedContacts(page);
+        selectedConts = contactsInvited?.contacts?.filter((con) =>
+          accountNos.includes(con.mobile)
+        );
       }
-      data["status_code"] === 200 && setSelectedContacts([]);
+      const ids = selectedConts.map(({ country_code, mobile }) => ({
+        country_code,
+        mobile,
+      }));
+      const { data } = await apiRequest.deleteContact({ contacts: ids });
+      if (!data.success) throw data.message;
+
+      if (contactsType == "contactsItem") {
+        retrieveContacts(page);
+      } else {
+        handleInvitedContacts(page);
+      }
+      setSelectedContacts([]);
       toast.success(data.message);
       setConfirmShow(false);
       setRemoveConfirmShow(false);
       setDeleteContactArr("");
-      if (!data.success || data.data === null) throw data.message;
     } catch (error) {
       console.log(error);
     } finally {
@@ -143,21 +146,21 @@ const ContatcsProvider = ({ children }) => {
   const handleInvitedContacts = async (currentPage = 1, search) => {
     setIsLoading(true);
     try {
-      const { data } = await apiRequest.invitedConatcts({
+      const { data } = await apiRequest.invitedContactsList({
         page: currentPage,
         search: search,
       });
-      if (!data.success || data.data === null) throw data.message;
+      if (!data.success) throw data.message;
       setContactsOrInvited("invited");
       setPage(currentPage);
       setContactsInvited(data.data);
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
-      if (error === "Contact not found") {
+      if (typeof error === "string") {
         setContactsOrInvited("invited");
         setContactsInvited(null);
       }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -189,6 +192,21 @@ const ContatcsProvider = ({ children }) => {
     }
   };
 
+  const deleteGroupData = () => {
+    setShowDeleteGroupPopup(true);
+  };
+
+  const deleteGroup = async (id) => {
+    try {
+      var param = { group_id: id };
+      const { data } = await apiRequest.deleteGroup(param);
+      if (!data.success) throw data.message;
+      setShowDeleteGroupPopup(false);
+      toast.success(data.message);
+      navigate("/send");
+    } catch (error) {}
+  };
+
   return (
     <ContactsContext.Provider
       value={{
@@ -212,6 +230,10 @@ const ContatcsProvider = ({ children }) => {
         handleChangeFilter,
         handleResetFilter,
         search,
+        deleteGroup,
+        deleteGroupData,
+        showDeleteGroupPopup,
+        setShowDeleteGroupPopup,
       }}
     >
       {children}
@@ -219,4 +241,4 @@ const ContatcsProvider = ({ children }) => {
   );
 };
 
-export default ContatcsProvider;
+export default ContactsProvider;

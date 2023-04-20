@@ -34,7 +34,7 @@ const BusinessForm = (props) => {
           toast.success("Business data updated successfully.");
           navigate("/setting");
         }
-        if (!data.success || data.data === null) throw data.message;
+        if (!data.success) throw data.message;
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
         setErrors({

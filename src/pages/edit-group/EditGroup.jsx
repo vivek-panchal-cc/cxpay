@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { LoaderContext } from "context/loaderContext";
 import { MAX_GROUP_MEMBERS } from "constants/all";
-import { SendPaymentContext } from "context/sendPaymentContext";
+import { ContactsContext } from "context/contactsContext";
 
 export default function EditGroup() {
   let { id } = useParams();
@@ -28,7 +28,7 @@ export default function EditGroup() {
     showDeleteGroupPopup,
     deleteGroup,
     deleteGroupData,
-  } = useContext(SendPaymentContext);
+  } = useContext(ContactsContext);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -40,28 +40,34 @@ export default function EditGroup() {
     },
     validationSchema: createGroupSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
-      if (contactList.length > MAX_GROUP_MEMBERS) {
-        toast.error(`Maximum ${MAX_GROUP_MEMBERS} members allowed in a group`);
-        return;
-      }
-      const formData = new FormData();
-      for (let key in values) {
-        if (key === "group_image") continue;
-        if (key === "contact") {
-          if (values[key].length > 0) {
-            values[key].forEach((contact) =>
-              formData.append("contact[]", contact)
-            );
-          }
-        } else {
-          formData.append(key, values[key]);
+      try {
+        if (contactList.length > MAX_GROUP_MEMBERS) {
+          toast.error(
+            `Maximum ${MAX_GROUP_MEMBERS} members allowed in a group`
+          );
+          return;
         }
+        const formData = new FormData();
+        for (let key in values) {
+          if (key === "group_image") continue;
+          if (key === "contact") {
+            if (values[key].length > 0) {
+              values[key].forEach((contact) =>
+                formData.append("contact[]", contact)
+              );
+            }
+          } else {
+            formData.append(key, values[key]);
+          }
+        }
+        formData.append("group_image", values.group_image);
+        const { data } = await apiRequest.updateGroup(formData);
+        if (!data.success) throw data.message;
+        toast.success(data.message);
+        navigate("/send");
+      } catch (error) {
+        console.log(error);
       }
-      formData.append("group_image", values.group_image);
-      const { data } = await apiRequest.updateGroup(formData);
-      if (!data.success) throw data.message;
-      toast.success(data.message);
-      navigate("/send");
     },
   });
 
@@ -69,7 +75,7 @@ export default function EditGroup() {
     setIsLoading(true);
     try {
       const { data } = await apiRequest.getGroupDetail({ group_id: id });
-      if (!data.success || data.data === null) throw data.message;
+      if (!data.success) throw data.message;
       setGroupDetail(data.data.group_details);
       formik.setValues({
         group_id: data.data.group_details.group_id,
@@ -80,12 +86,12 @@ export default function EditGroup() {
       setProfileImage(data.data.group_details.group_image);
       const members = data.data.group_details.group_member_details;
       setContactList(members);
-      setIsLoading(false);
     } catch (error) {
-      if (error === "Contact not found") {
+      if (typeof error === "string") {
         setGroupDetail(null);
         setContactList(null);
       }
+    } finally {
       setIsLoading(false);
     }
   };

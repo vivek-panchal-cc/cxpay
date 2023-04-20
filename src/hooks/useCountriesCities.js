@@ -9,7 +9,7 @@ const useCountriesCities = () => {
     (async () => {
       try {
         const { data } = await apiRequest.getCountry();
-        if (!data.success || data.data === null) throw data.message;
+        if (!data.success) throw data.message;
         setCountries(data?.data?.country_list);
         setCities(data?.data?.city_list);
       } catch (error) {

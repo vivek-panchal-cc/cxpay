@@ -42,9 +42,9 @@ const API_cardMarkAsDefault = apiUrl.API_ONBOARD_CARD_MARK_AS_DEFAULT;
 const API_bankMarkAsDefault = apiUrl.API_ONBOARD_BANK_MARK_AS_DEFAULT;
 const API_updateBusinessData = apiUrl.API_ONBOARD_UPDATE_BUSINESS_DATA;
 const API_addContact = apiUrl.API_ONBOARD_ADD_CONTACT;
-const API_getConatcts = apiUrl.API_ONBOARD_GET_CONTACT_LIST;
+const API_contactsList = apiUrl.API_ONBOARD_GET_CONTACT_LIST;
 const API_deleteContact = apiUrl.API_ONBOARD_DELETE_CONTACT;
-const API_favContact = apiUrl.API_ONBOARD_FAV_CONTACT;
+const API_markAsFavourite = apiUrl.API_ONBOARD_FAV_CONTACT;
 const API_getCustomerNotification =
   apiUrl.API_ONBOARD_GET_CUSTOMER_NOTIFICATION;
 const API_updateCustomerNotification =
@@ -234,8 +234,8 @@ export const addContact = (params) => {
 
 // POST @contacts-list API
 // @params auth_token
-export const getConatcts = (params) => {
-  return axiosOnboardInstance.post(`${API_getConatcts}`, params);
+export const contactsList = (params) => {
+  return axiosOnboardInstance.post(`${API_contactsList}`, params);
 };
 
 // POST @delete-contact API
@@ -246,8 +246,8 @@ export const deleteContact = (params) => {
 
 // POST @mark-as-favourite API
 // @params mobile
-export const favContact = (params) => {
-  return axiosOnboardInstance.post(`${API_favContact}`, params);
+export const markAsFavourite = (params) => {
+  return axiosOnboardInstance.post(`${API_markAsFavourite}`, params);
 };
 
 // POST @cards-list API
@@ -389,7 +389,7 @@ export const deleteNotifications = (params) => {
 
 // POST @invited-contacts-list API
 // @params auth_token
-export const invitedConatcts = (params) => {
+export const invitedContactsList = (params) => {
   return axiosOnboardInstance.post(`${API_invitedContactList}`, params);
 };
 
@@ -461,9 +461,9 @@ export const apiRequest = {
   resendForgotPasswordOtp,
   resendRegisterOtp,
   addContact,
-  getConatcts,
+  contactsList,
   deleteContact,
-  favContact,
+  markAsFavourite,
   updateBusinessUrl,
   generateNewQrCode,
   getAllNotifications,
@@ -487,7 +487,7 @@ export const apiRequest = {
   deleteGroupMember,
   updateGroup,
   getRemainingGroupContact,
-  invitedConatcts,
+  invitedContactsList,
   getCharges,
   addFund,
   getBalance,

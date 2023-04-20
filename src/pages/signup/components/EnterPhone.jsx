@@ -25,7 +25,7 @@ function EnterPhone(props) {
     onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
       try {
         const { data } = await apiRequest.verifyMobileNumber(values);
-        if (!data.success || data.data === null) throw data.message;
+        if (!data.success) throw data.message;
         if (data.data.isAlreadyRegster === "1") {
           return setShowregisteredPopup(true);
         }

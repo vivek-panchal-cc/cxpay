@@ -103,11 +103,16 @@ const EditGroupList = (props) => {
     }
   };
   const deleteCurrentGroup = async (id) => {
-    await apiRequest.deleteGroup({ group_id: id });
-    setShowDeleteGroupPopup(false);
-    setIsLoading(false);
-    toast.success("Group deleted successfully.");
-    navigate("/send");
+    try {
+      await apiRequest.deleteGroup({ group_id: id });
+      setShowDeleteGroupPopup(false);
+      toast.success("Group deleted successfully.");
+      navigate("/send");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const deleteMemberWithGroup = async (memberAccountNumber) => {
@@ -126,6 +131,7 @@ const EditGroupList = (props) => {
       deleteCurrentGroup(groupId);
     } catch (error) {
       setShowDeleteGroupPopup(false);
+    } finally {
       setIsLoading(false);
     }
   };

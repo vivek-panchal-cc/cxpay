@@ -133,8 +133,6 @@ const SendPaymentProvider = ({ children }) => {
         handleSendGroup,
         handleSendCreds,
         handleCancelPayment,
-        deleteGroup,
-        deleteGroupData,
         selectedContacts,
         selectedGroup,
         sendCreds,

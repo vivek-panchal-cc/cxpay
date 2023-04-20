@@ -50,7 +50,7 @@ const fetchUserProfile = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await apiRequest.getUserProfile();
-      if (!data.success || data.data === null) throw data.message;
+      if (!data.success) throw data.message;
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

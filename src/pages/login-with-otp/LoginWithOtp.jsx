@@ -36,7 +36,7 @@ const LoginWithOtp = (props) => {
       setIsLoading(true);
       try {
         const { data } = await apiRequest.loginOtp(values);
-        if (!data.success || data.data === null) throw data.message;
+        if (!data.success) throw data.message;
         setMobileNumber(values.mobile_number);
         setCountryCode(values.country_code);
         toast.success(data.data.login_otp);

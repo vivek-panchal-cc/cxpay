@@ -1,7 +1,7 @@
-import { ContactsContext } from "context/contatcsContext";
+import { ContactsContext } from "context/contactsContext";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import React, { useContext } from "react";
-import Delete from "styles/svgs/Delete";
+import { IconDelete } from "styles/svgs";
 
 const ContactsItem = (props) => {
   const { contact, selectedContacts, handleCallback } = props;
@@ -63,7 +63,7 @@ const ContactsItem = (props) => {
               <img
                 src="assets/images/Star.svg"
                 onClick={() =>
-                  handleFavContact(contact?.mobile, 1, "contactsItem")
+                  handleFavContact(contact?.mobile,contact?.country_code, 1, "contactsItem")
                 }
                 className="star_border"
                 alt=""
@@ -73,7 +73,7 @@ const ContactsItem = (props) => {
                 src="assets/images/star_fill.svg"
                 className="star_fill"
                 onClick={() =>
-                  handleFavContact(contact?.mobile, 0, "contactsItem")
+                  handleFavContact(contact?.mobile,contact?.country_code, 0, "contactsItem")
                 }
                 alt=""
               />
@@ -89,7 +89,7 @@ const ContactsItem = (props) => {
             }
             className="conlist-del-a con-list-up"
           >
-            <Delete />
+            <IconDelete />
           </button>
         </div>
         <div className="con-listing-btn-wrap">

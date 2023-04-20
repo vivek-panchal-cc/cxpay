@@ -25,23 +25,28 @@ export default function CreateGroup(props) {
     validationSchema: createGroupSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       setIsLoading(true);
-      const formData = new FormData();
-      for (let key in values) {
-        if (key === "group_image") continue;
-        if (key === "contact") {
-          values[key].forEach((contact) =>
-            formData.append("contact[]", contact)
-          );
-        } else {
-          formData.append(key, values[key]);
+      try {
+        const formData = new FormData();
+        for (let key in values) {
+          if (key === "group_image") continue;
+          if (key === "contact") {
+            values[key].forEach((contact) =>
+              formData.append("contact[]", contact)
+            );
+          } else {
+            formData.append(key, values[key]);
+          }
         }
+        formData.append("group_image", values.group_image);
+        const { data } = await apiRequest.addGroup(formData);
+        if (!data.success) throw data.message;
+        toast.success(data.message);
+        navigate("/send");
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
       }
-      formData.append("group_image", values.group_image);
-      const { data } = await apiRequest.addGroup(formData);
-      if (!data.success) throw data.message;
-      toast.success(data.message);
-      setIsLoading(false);
-      navigate("/send");
     },
   });
   return (

@@ -17,7 +17,7 @@ import Wallet from "pages/wallet/Wallet";
 import AddCard from "pages/add-card/AddCard";
 import LinkBank from "pages/link-bank/LinkBank";
 import Contacts from "pages/contacts/Contacts";
-import Invited from "pages/contacts/Invited";
+import ContactsInvited from "pages/contacts-invited/ContactsInvited";
 import Logout from "pages/logout/Logout";
 import PublicLayout from "layouts/PublicLayout";
 import ViewCard from "pages/view-card/ViewCard";
@@ -107,7 +107,7 @@ function App() {
 
             <Route element={<ContactsLayout />}>
               <Route path="/contacts" element={<Contacts />} />
-              <Route path="/contacts-invited" element={<Invited />} />
+              <Route path="/contacts-invited" element={<ContactsInvited />} />
               <Route path="/edit-group/:id" element={<EditGroup />} />
               <Route path="/send" element={<Send />} />
               <Route path="/send-payment" element={<SendPayment />} />

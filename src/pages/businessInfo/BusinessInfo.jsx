@@ -13,7 +13,7 @@ const BusinessInfo = () => {
   const getCountries = async () => {
     try {
       const { data } = await apiRequest.getCountry();
-      if (!data.success || data.data === null) throw data.message;
+      if (!data.success) throw data.message;
       setCountryList(data?.data?.country_list);
     } catch (error) {
       console.log(error);

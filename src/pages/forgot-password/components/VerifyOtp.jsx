@@ -51,7 +51,7 @@ function VerifyOtp(props) {
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
         const { data } = await apiRequest.verifyForgotPasswordOtp(values);
-        if (!data.success || data.data === null) throw data.message;
+        if (!data.success) throw data.message;
         if (data.data.mobile_number)
           navigate(
             `/reset-password/${values.country_code}/${data.data.mobile_number}/${data.data.password_token}`
@@ -73,7 +73,7 @@ function VerifyOtp(props) {
         country_code: country_code,
         mobile_number: mobile_number,
       });
-      if (!data.success || data.data === null) throw data.message;
+      if (!data.success) throw data.message;
       toast.success(data.data.login_otp);
       toast.success(data.message);
     } catch (error) {

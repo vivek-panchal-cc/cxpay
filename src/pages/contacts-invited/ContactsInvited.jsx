@@ -2,14 +2,13 @@ import React, { useEffect, useState, useContext } from "react";
 import Input from "components/ui/Input";
 import Pagination from "components/pagination/Pagination";
 import ModalConfirmation from "components/modals/ModalConfirmation";
-import InvitationSent from "./components/InvitationSent";
-import ContactDetail from "./components/ContactDetail";
+import InvitationSent from "../contacts/components/InvitationSent";
+import ContactDetail from "../contacts/components/ContactDetail";
 import { Link } from "react-router-dom";
-import Cross from "styles/svgs/Cross";
-import Search from "styles/svgs/Search";
 import ModalAddContact from "components/modals/ModalAddContact";
 import InviteContactItem from "components/items/InviteContactItem";
-import { ContactsContext } from "context/contatcsContext";
+import { ContactsContext } from "context/contactsContext";
+import { IconCross, IconSearch } from "styles/svgs";
 
 const Invited = () => {
   const [selectedContacts, setSelectedContacts] = useState([]);
@@ -72,7 +71,7 @@ const Invited = () => {
                   className="js-clearSearchBox clearsearchbox"
                   onClick={() => handleResetFilter("inviteContactsItem")}
                 >
-                  <Cross />
+                  <IconCross />
                 </div>
                 <Input
                   type="search"
@@ -83,7 +82,7 @@ const Invited = () => {
                   placeholder="Search..."
                 />
                 <div className="search-btn">
-                  <Search />
+                  <IconSearch />
                 </div>
               </div>
             </form>

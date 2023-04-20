@@ -24,7 +24,7 @@ function ForgotPassword() {
         const { data } = await apiRequest.generateForgotPasswordOtpChange(
           values
         );
-        if (!data.success || data.data === null) throw data.message;
+        if (!data.success) throw data.message;
         toast.success(data.data.login_otp);
         toast.success(data.message);
         setShowOtpPopup(true);

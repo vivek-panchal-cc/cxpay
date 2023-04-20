@@ -116,8 +116,9 @@ function ContactListingModal(props) {
         var allData2 = remainingContactListing.concat(filterData);
         setRemainingContactListing(allData2);
       }
-      setIsLoading(false);
     } catch (error) {
+      console.log(error);
+    } finally {
       setIsLoading(false);
     }
   };

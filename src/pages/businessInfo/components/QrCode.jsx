@@ -21,7 +21,7 @@ const QrCode = (props) => {
         toast.success("QR code generated successfully.");
       }
 
-      if (!data.success || data.data === null) throw data.message;
+      if (!data.success) throw data.message;
     } catch (err) {
       console.error("err: ", err.message);
     } finally {
