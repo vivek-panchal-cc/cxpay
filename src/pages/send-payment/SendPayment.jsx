@@ -107,6 +107,7 @@ function SendPayment(props) {
     setIsLoading(true);
     try {
       const { data } = await apiRequest.resendWalletTransferOtp({
+        country_code,
         mobile_number,
       });
       if (!data.success) throw data.message;

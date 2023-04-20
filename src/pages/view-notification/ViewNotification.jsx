@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NotificationListItem from "components/items/NotificationListItem";
 import Pagination from "components/pagination/Pagination";
 import {
-  fetchDeleteNotification,
+  fetchDeleteNotifications,
   fetchGetAllNotifications,
   fetchMarkAsRead,
 } from "features/user/userNotificationSlice";
@@ -51,7 +51,24 @@ function ViewNotification(props) {
   const handleDelete = async ({ id }) => {
     setIsLoading(true);
     try {
-      const { error, payload } = await dispatch(fetchDeleteNotification(id));
+      const { error, payload } = await dispatch(
+        fetchDeleteNotifications({ id })
+      );
+      if (error) throw payload;
+      toast.success(payload);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteAll = async () => {
+    setIsLoading(true);
+    try {
+      const { error, payload } = await dispatch(
+        fetchDeleteNotifications({ delete_all: true })
+      );
       if (error) throw payload;
       toast.success(payload);
     } catch (error) {
@@ -74,9 +91,11 @@ function ViewNotification(props) {
             <p>Lorem Ipsum Dolor</p>
           </div>
           <div className="pr-4">
-            <Button type="button" className="btn">
-              Clear All
-            </Button>
+            {allNotifications && allNotifications.length > 0 && (
+              <Button type="button" className="btn" onClick={handleDeleteAll}>
+                Clear All
+              </Button>
+            )}
           </div>
         </div>
         <div className="notification-pg-list-wrap">
@@ -93,7 +112,7 @@ function ViewNotification(props) {
             ))}
           </ul>
         </div>
-        {!(current_page <= 1 && total < 10) && (
+        {!(current_page <= 1 && total <= 10) && (
           <Pagination
             {...{
               active: current_page,

@@ -382,7 +382,7 @@ export const markAsRead = (params) => {
 };
 
 // POST @delete-notifications
-// @params notification_id[], auth_token
+// @params notification_id[], delete_all, auth_token
 export const deleteNotifications = (params) => {
   return axiosOnboardInstance.post(`${API_deleteNotifications}`, params);
 };
@@ -428,7 +428,7 @@ export const walletPersonalOtpVerify = (params) => {
 };
 
 // POST @resend-wallet-transfer-otp
-// @params mobile_number
+// @params mobile_number, country_code
 export const resendWalletTransferOtp = (params) => {
   return axiosTransactionInstance.post(
     `${API_resendWalletTransferOtp}`,

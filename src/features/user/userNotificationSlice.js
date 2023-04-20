@@ -5,6 +5,7 @@ const initialState = {
   initialLoading: true,
   dropNotifications: [],
   allNotifications: [],
+  pendingRead: false,
   pagination: {
     current_page: 1,
     total: 1,
@@ -53,12 +54,14 @@ export const fetchMarkAsRead = createAsyncThunk(
   }
 );
 
-export const fetchDeleteNotification = createAsyncThunk(
+export const fetchDeleteNotifications = createAsyncThunk(
   "notify/deleteNotification",
-  async (id, thunkAPI) => {
+  async ({ id = "", delete_all = false }, thunkAPI) => {
     try {
+      const ids = id ? { notification_id: [id] } : {};
       const { data } = await apiRequest.deleteNotifications({
-        notification_id: [id],
+        ...ids,
+        delete_all,
       });
       if (!data.success) throw data.message;
       await thunkAPI.dispatch(fetchGetNotifications());
@@ -77,15 +80,25 @@ const userNotificationslice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchGetNotifications.fulfilled, (state, action) => {
+        if (!action.payload) {
+          state = initialState;
+          return;
+        }
         state.dropNotifications = action.payload.notifications;
+        state.pendingRead = action.payload.unreadNotificationCount;
         state.initialLoading = false;
       })
       .addCase(fetchGetNotifications.rejected, (state, action) => {
-        state.dropNotifications = [];
-        state.initialLoading = false;
+        state = initialState;
       })
       .addCase(fetchGetAllNotifications.fulfilled, (state, action) => {
+        console.log("LALALALAL",action);
+        if (!action.payload) {
+          state = initialState;
+          return;
+        }
         state.allNotifications = action.payload.notifications;
+        state.pendingRead = action.payload.unreadNotificationCount;
         state.pagination = {
           current_page: action.payload?.pagination?.current_page,
           total: action.payload?.pagination?.total,
@@ -101,8 +114,8 @@ const userNotificationslice = createSlice({
       .addCase(fetchMarkAsRead.rejected, (state, action) => {
         console.log("ERROR ", action.payload);
       })
-      .addCase(fetchDeleteNotification.fulfilled, (state, action) => {})
-      .addCase(fetchDeleteNotification.rejected, (state, action) => {
+      .addCase(fetchDeleteNotifications.fulfilled, (state, action) => {})
+      .addCase(fetchDeleteNotifications.rejected, (state, action) => {
         console.log("ERROR ", action.payload);
       });
   },
