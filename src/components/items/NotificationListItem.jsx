@@ -15,7 +15,7 @@ function NotificationListItem(props) {
   const { id, message, status } = notification || {};
 
   return (
-    <li className={status ? "un-read-notification" : ""}>
+    <li className={status ? "" : "un-read-notification"}>
       <div
         onClick={() => handleRead(notification)}
         className="w-100 cursor-pointer"
@@ -24,11 +24,9 @@ function NotificationListItem(props) {
           <div className="notifi-ic-wrap">{Icon && <Icon />}</div>
           <div className="notifi-content">
             <p>{message}</p>
-            <p className="notifi-tran-idw">
-              Transection ID : <span>{id}</span>
+            {/* <p className="notifi-tran-idw">
               <br />
-              Amount : <span>1234</span>
-            </p>
+            </p> */}
           </div>
         </div>
       </div>

@@ -11,6 +11,7 @@ import { LoaderContext } from "context/loaderContext";
 import { notificationType } from "constants/all";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Button from "components/ui/Button";
 
 function ViewNotification(props) {
   const dispatch = useDispatch();
@@ -67,10 +68,15 @@ function ViewNotification(props) {
   return (
     <div>
       <div className="notification-list-sec">
-        <div className="notification-top-sec">
+        <div className="notification-top-sec d-flex justify-content-between align-items-center">
           <div className="title-content-wrap">
             <h3>Notifications</h3>
             <p>Lorem Ipsum Dolor</p>
+          </div>
+          <div className="pr-4">
+            <Button type="button" className="btn">
+              Clear All
+            </Button>
           </div>
         </div>
         <div className="notification-pg-list-wrap">
