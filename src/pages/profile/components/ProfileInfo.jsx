@@ -89,6 +89,7 @@ const ProfileInfo = (props) => {
                   {business_url ?? "-"}
                 </Link>
                 <button
+                  type="button"
                   onClick={handleEditUlr}
                   className="edit-button border-0 ms-3"
                 >
@@ -115,7 +116,11 @@ const ProfileInfo = (props) => {
                     }
                   />
                 </div>
-                <button type="submit" className="edit-button">
+                <button
+                  type="submit"
+                  className="edit-button"
+                  disabled={formik.isSubmitting}
+                >
                   <IconSave />
                 </button>
                 <button
@@ -137,6 +142,7 @@ const ProfileInfo = (props) => {
             <p className="">{email}</p>
             {!is_email_verify && (
               <button
+                type="button"
                 className="badge rounded-pill text-bg-primary border-0 border-primary"
                 onClick={handleVerifyEmail}
               >

@@ -602,6 +602,14 @@ ul {
   margin-top: 15px;
   margin-bottom: 30px;
 }
+.btn.disabled,
+.btn:disabled,
+fieldset:disabled .btn {
+  color: #fff;
+  background-color: #363853;
+  border-color: #363853;
+  opacity: 0.6;
+}
 /* login signup page css starts*/
 /*.common-body-bg::before {
 position: absolute;

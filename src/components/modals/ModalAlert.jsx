@@ -50,6 +50,7 @@ function ModalAlert(props) {
               <p>{subHeading}</p>
               <div className="verify-code-btn-wrap">
                 <button
+                  type="button"
                   onClick={handleBtnClick}
                   className="btn money-sent-pop-close"
                   replace={true}

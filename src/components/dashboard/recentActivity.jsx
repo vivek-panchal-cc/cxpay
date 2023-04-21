@@ -113,7 +113,7 @@ const RecentActivity = () => {
                           <div className="price-info">+123.45 Nafl</div>
                           <div className="quick-info-btn">
                             <a href="/">
-                            <IconQuickInfo />
+                              <IconQuickInfo />
                             </a>
                           </div>
                         </div>

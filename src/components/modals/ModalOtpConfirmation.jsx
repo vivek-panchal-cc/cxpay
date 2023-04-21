@@ -35,15 +35,6 @@ function ModalOtpConfirmation(props) {
     }
   };
 
-  useEffect(() => {
-    if (!show) {
-      setIsActive(false);
-      setCounter(otpCounterTime);
-      return;
-    }
-    setIsActive(true);
-  }, [show]);
-
   // For set counter for given time
   useEffect(() => {
     let interval = null;
@@ -95,6 +86,16 @@ function ModalOtpConfirmation(props) {
     },
   });
 
+  useEffect(() => {
+    if (!show) {
+      setIsActive(false);
+      setCounter(otpCounterTime);
+      formik.resetForm();
+      return;
+    }
+    setIsActive(true);
+  }, [show]);
+
   let formattedNumber = (counter % 60).toLocaleString("en-US", {
     minimumIntegerDigits: 2,
     useGrouping: false,
@@ -131,7 +132,8 @@ function ModalOtpConfirmation(props) {
                     className={"form-control"}
                     value={formik.values.otp}
                     onChange={formik.handleChange}
-                    handleSubmit={formik.handleSubmit}
+                    onBlur={formik.handleBlur}
+                    handleSubmit={!formik.isSubmitting && formik.handleSubmit}
                     error={formik.touched.otp && formik.errors.otp}
                   />
                 </div>
@@ -152,7 +154,6 @@ function ModalOtpConfirmation(props) {
                     Resend OTP
                   </button>
                 </div>
-
                 <div className="popup-btn-wrap">
                   {formik.status && (
                     <p className="text-danger">{formik.status}</p>
@@ -161,10 +162,13 @@ function ModalOtpConfirmation(props) {
                     type="submit"
                     className="btn btn-primary"
                     value="Verify"
+                    disabled={formik.isSubmitting}
                   />
                 </div>
                 <div className="pop-cancel-btn text-center">
-                  <button onClick={() => setShow(false)}>Cancel</button>
+                  <button type="button" onClick={() => setShow(false)}>
+                    Cancel
+                  </button>
                 </div>
               </form>
             </div>

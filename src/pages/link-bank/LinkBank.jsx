@@ -277,6 +277,7 @@ const LinkBank = (props) => {
                     type="submit"
                     className="btn btn-primary"
                     value="Link"
+                    disabled={formik.isSubmitting}
                   />
                 </div>
               </div>

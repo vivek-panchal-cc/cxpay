@@ -146,6 +146,7 @@ const BankList = () => {
                   </div>
                   {/* <div className="bank-bal-wrap">Balance : <span>0</span></div> */}
                   <button
+                    type="button"
                     className="bank-del-wrap border-0"
                     onClick={() => handleEditBank(elm)}
                   >

@@ -3,9 +3,9 @@ import styles from "./input.module.scss";
 
 function InputOtp(props) {
   const {
-    labelname,
+    labelname = "",
     error,
-    otpSize,
+    otpSize = 4,
     onChange,
     className,
     name,
@@ -59,10 +59,10 @@ function InputOtp(props) {
         </label>
       )}
       <div className="d-flex">
-        {inputArr.map((item, index) => (
+        {inputArr?.map((item, index) => (
           <input
             key={index}
-            type={"text"}
+            type="text"
             min={0}
             max={9}
             maxLength={1}

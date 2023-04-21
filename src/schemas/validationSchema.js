@@ -11,6 +11,7 @@ import {
   countrySchema,
   citySchema,
   addressSchema,
+  otpSchema,
 } from "./commonSchema";
 
 const signUpPersonalAccountSchema = yup.object().shape({
@@ -62,21 +63,13 @@ const loginWithOtpSchema = yup.object().shape({
 const verifyOtpSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
   mobile_number: mobileSchema,
-  user_otp: yup
-    .string()
-    .length(4, "OTP length must be 4 digits")
-    .matches(/^[0-9]*$/, "OTP should be number")
-    .required("OTP is required"),
+  user_otp: otpSchema,
 });
 
 const verifyForgotPasswordOtpSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
   mobile_number: mobileSchema,
-  user_otp: yup
-    .string()
-    .length(4, "OTP length must be 4 digits")
-    .matches(/^[0-9]*$/, "OTP should be number")
-    .required("OTP is required"),
+  user_otp: otpSchema,
 });
 
 const LoginSchema = yup.object().shape({
@@ -89,11 +82,7 @@ const LoginSchema = yup.object().shape({
 });
 
 const verifyLoginOtpSchema = yup.object().shape({
-  login_otp: yup
-    .string()
-    .length(4, "OTP length must be 4 digits")
-    .matches(/^[0-9]*$/, "OTP should be number")
-    .required("OTP is required"),
+  login_otp: otpSchema,
 });
 
 const editProfileBusinessUserSchema = yup.object().shape({

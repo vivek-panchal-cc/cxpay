@@ -110,12 +110,12 @@ function VerifyPhone(props) {
               )}
               <p>Didn't receive any code?</p>
               <button
+                type="button"
                 className={isTimerOver ? "disabled" : ""}
                 disabled={isTimerOver}
                 onClick={handleResendBtn}
                 tabIndex="0"
-                data-toggle="tooltip"
-                title="Tooltip on top"
+                title="Tooltip on top"  
               >
                 Resend OTP
               </button>
@@ -126,7 +126,7 @@ function VerifyPhone(props) {
                 type="submit"
                 className="btn btn-primary"
                 value="Verify"
-                data-bs-dismiss="modal"
+                disabled={formik.isSubmitting}
               />
             </div>
           </form>

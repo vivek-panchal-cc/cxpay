@@ -110,7 +110,11 @@ const BusinessForm = (props) => {
             Settings
           </Link>
         </div>
-        <Button type="submit" className="btn btn-primary">
+        <Button
+          type="submit"
+          className="btn btn-primary"
+          disabled={formik.isSubmitting}
+        >
           Save Changes
         </Button>
       </div>

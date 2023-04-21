@@ -58,6 +58,7 @@ function SelectCard() {
         <div className="col-12 p-0 btns-inline">
           <div className="setting-btn-link btn-wrap">
             <button
+              type="button"
               className="outline-btn"
               onClick={() => handleSelectExistingCard(false)}
             >
@@ -65,7 +66,11 @@ function SelectCard() {
             </button>
           </div>
           <div className="btn-wrap">
-            <button className={`btn btn-primary`} onClick={handleProceed}>
+            <button
+              type="button"
+              className={`btn btn-primary`}
+              onClick={handleProceed}
+            >
               Proceed
             </button>
           </div>

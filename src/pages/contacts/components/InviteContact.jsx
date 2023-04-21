@@ -169,11 +169,13 @@ function InviteContact(props) {
                     type="submit"
                     className="btn btn-primary"
                     value={invitetitle === "Add Contact" ? "Add" : "Invite"}
+                    disabled={formik.isSubmitting}
                     data-bs-dismiss="modal"
                   />
                 </div>
                 <div className="pop-cancel-btn text-center">
                   <button
+                    type="button"
                     data-bs-dismiss="modal"
                     onClick={() => setShow(false)}
                   >

@@ -2,7 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import ContactPaymentItem from "components/items/ContactPaymentItem";
-import { sendPaymentSchema } from "schemas/sendPaymentSchema";
+import {
+  sendPaymentOtpSchema,
+  sendPaymentSchema,
+} from "schemas/sendPaymentSchema";
 import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
@@ -40,6 +43,7 @@ function SendPayment(props) {
     validationSchema: sendPaymentSchema,
     onSubmit: async (values, { setValues, setErrors }) => {
       try {
+        if (showOtpPoup || showSentPopup) return;
         setIsLoading(true);
         const formData = new FormData();
         const muValues = { ...values };
@@ -62,7 +66,7 @@ function SendPayment(props) {
           addObjToFormData(muValues[key], key, formData);
         const { data } = await apiRequest.walletTransferOtp(formData);
         if (!data.success) throw data.message;
-        toast.success(`${data.data.otp}`);
+        toast.success(`${data?.data?.otp}`);
         toast.success(`${data.message}`);
         setShowOtpPopup(true);
       } catch (error) {
@@ -111,6 +115,7 @@ function SendPayment(props) {
         mobile_number,
       });
       if (!data.success) throw data.message;
+      toast.success(`${data?.data?.login_otp}`);
       toast.success(data.message);
     } catch (error) {
       if (typeof error === "string") toast.error(error);
@@ -164,6 +169,7 @@ function SendPayment(props) {
         heading="OTP Verification"
         headingImg="/assets/images/send-payment-pop.svg"
         subHeading="We have sent you verification code to initiate payment. Enter OTP below"
+        validationSchema={sendPaymentOtpSchema}
         handleSubmitOtp={handleSubmitOtp}
         handleResendOtp={handleResendOtp}
       />
@@ -261,7 +267,11 @@ function SendPayment(props) {
               >
                 Cancel
               </button>
-              <button type="submit" className="btn btn-send-payment">
+              <button
+                type="submit"
+                className="btn btn-send-payment"
+                disabled={formik.isSubmitting}
+              >
                 Send
               </button>
             </div>

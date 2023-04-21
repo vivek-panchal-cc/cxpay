@@ -49,12 +49,14 @@ function CardItem(props) {
       </div>
       <div className="bank-account-date-wrap">{expiry_date}</div>
       <button
+        type="button"
         className="bank-del-wrap border-0"
         onClick={() => handleEdit(item)}
       >
         <IconEdit style={{ stroke: "#9b9b9b" }} />
       </button>
       <button
+        type="button"
         className="bank-del-wrap border-0"
         onClick={() => handleDelete(item)}
       >

@@ -255,6 +255,7 @@ const EditBank = (props) => {
                     type="submit"
                     className="btn btn-primary"
                     value="Save Changes"
+                    disabled={formik.isSubmitting}
                   />
                 </div>
               </div>
