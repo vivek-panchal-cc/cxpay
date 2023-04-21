@@ -159,8 +159,11 @@ function ModalOtpConfirmation(props) {
                   )}
                   <input
                     type="submit"
-                    className="btn btn-primary"
+                    className={`btn btn-primary ${
+                      formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                    }`}
                     value="Verify"
+                    disabled={formik.isSubmitting}
                   />
                 </div>
                 <div className="pop-cancel-btn text-center">

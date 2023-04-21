@@ -261,7 +261,13 @@ function SendPayment(props) {
               >
                 Cancel
               </button>
-              <button type="submit" className="btn btn-send-payment">
+              <button
+                type="submit"
+                className={`btn btn-send-payment ${
+                  formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                }`}
+                disabled={formik.isSubmitting}
+              >
                 Send
               </button>
             </div>

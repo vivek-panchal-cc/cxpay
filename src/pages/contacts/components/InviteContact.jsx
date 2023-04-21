@@ -167,9 +167,12 @@ function InviteContact(props) {
                   )}
                   <input
                     type="submit"
-                    className="btn btn-primary"
+                    className={`btn btn-primary ${
+                      formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                    }`}
                     value={invitetitle === "Add Contact" ? "Add" : "Invite"}
                     data-bs-dismiss="modal"
+                    disabled={formik.isSubmitting}
                   />
                 </div>
                 <div className="pop-cancel-btn text-center">

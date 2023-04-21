@@ -40,7 +40,7 @@ function ModalAddContact(props) {
     },
     validationSchema: inviteContactSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
-      console.log(values)
+      console.log(values);
       try {
         const { data } = await apiRequest.addContact(values);
         if (!data.success) throw data.message;
@@ -178,8 +178,11 @@ function ModalAddContact(props) {
                     )}
                     <input
                       type="submit"
-                      className="btn btn-primary"
+                      className={`btn btn-primary ${
+                        formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                      }`}
                       value={invitetitle === "Add Contact" ? "Add" : "Invite"}
+                      disabled={formik.isSubmitting}
                       data-bs-dismiss="modal"
                     />
                   </div>
