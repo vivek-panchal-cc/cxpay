@@ -46,7 +46,7 @@ const Contacts = () => {
 
   const handleCreateGroup = async () => {
     if (selectedContacts.length > MAX_GROUP_MEMBERS) {
-      toast.error(`Maximum ${MAX_GROUP_MEMBERS} members allowed in a group`);
+      toast.error(`You have exceed the contact limit.`);
       return;
     }
     setShowCreateGroupPopup(true);
@@ -104,6 +104,7 @@ const Contacts = () => {
             <div className="contact-top-btn-nav">
               <div className="con-btn-wrap con-add-btn-wrap">
                 <button
+                  type="button"
                   className="btn"
                   value="Add Contact"
                   onClick={handlePopupInvite}
@@ -165,6 +166,7 @@ const Contacts = () => {
               </div>
               <div className="con-btn-wrap con-add-btn-wrap">
                 <button
+                  type="button"
                   className="btn"
                   value="Create Group"
                   onClick={handleCreateGroup}

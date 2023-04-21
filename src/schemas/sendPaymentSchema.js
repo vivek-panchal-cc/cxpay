@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { otpSchema } from "./commonSchema";
 
 const sendPaymentSchema = yup.object().shape({
   wallet: yup.array().of(
@@ -15,4 +16,8 @@ const sendPaymentSchema = yup.object().shape({
   ),
 });
 
-export { sendPaymentSchema };
+const sendPaymentOtpSchema = yup.object().shape({
+  otp: otpSchema,
+});
+
+export { sendPaymentSchema, sendPaymentOtpSchema };

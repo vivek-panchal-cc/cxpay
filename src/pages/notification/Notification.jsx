@@ -126,7 +126,11 @@ const Notification = () => {
           </li>
         </ul>
         <div className="setting-btn-link">
-          <button className="outline-btn" onClick={() => navigate("/setting")}>
+          <button
+            type="button"
+            className="outline-btn"
+            onClick={() => navigate("/setting")}
+          >
             <LeftArrow style={{ stroke: "#0081C5" }} />
             Settings
           </button>

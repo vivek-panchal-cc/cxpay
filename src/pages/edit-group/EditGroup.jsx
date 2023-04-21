@@ -42,9 +42,7 @@ export default function EditGroup() {
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
       try {
         if (contactList.length > MAX_GROUP_MEMBERS) {
-          toast.error(
-            `Maximum ${MAX_GROUP_MEMBERS} members allowed in a group`
-          );
+          toast.error(`You have exceed the contact limit`);
           return;
         }
         const formData = new FormData();

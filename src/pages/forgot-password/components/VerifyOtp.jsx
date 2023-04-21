@@ -117,6 +117,7 @@ function VerifyOtp(props) {
               )}
               <p>Didn't receive any code?</p>
               <button
+                type="button"
                 className={isTimerOver ? "disabled" : ""}
                 disabled={isTimerOver}
                 onClick={handleResendBtn}
@@ -131,11 +132,11 @@ function VerifyOtp(props) {
                 type="submit"
                 className="btn btn-primary"
                 value="Verify"
-                data-bs-dismiss="modal"
+                disabled={formik.isSubmitting}
               />
             </div>
             <div className="pop-cancel-btn text-center">
-              <button data-bs-dismiss="modal" onClick={() => setShow(false)}>
+              <button type="button" onClick={() => setShow(false)}>
                 Cancel
               </button>
             </div>

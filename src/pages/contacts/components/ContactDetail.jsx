@@ -51,6 +51,7 @@ function ContactDetail(props) {
               </div> */}
               <div className="con-modal-btn-wrap">
                 <button
+                  type="button"
                   onClick={() => handleClose(false)}
                   className="btn btn-primary"
                   data-bs-dismiss="modal"

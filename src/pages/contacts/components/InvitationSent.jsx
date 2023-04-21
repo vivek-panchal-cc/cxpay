@@ -22,6 +22,7 @@ function InvitationSent(props) {
               <h3>Invitation Sent</h3>
               <div className="invite-send-btn">
                 <button
+                  type="button"
                   onClick={() => handleClose(false)}
                   className="btn btn-primary"
                   data-bs-dismiss="modal"

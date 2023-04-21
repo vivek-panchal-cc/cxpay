@@ -3,6 +3,7 @@ import {
   IconNotifyContactInvite,
   IconNotifyMoneyRecieved,
   IconNotifyMoneyRequest,
+  IconNotifyMoneySent,
   IconNotifyMoneySentFailed,
 } from "styles/svgs";
 
@@ -77,15 +78,19 @@ const renameKeys = (keysMap, object) =>
 const notificationType = {
   request: {
     icon: IconNotifyMoneyRequest,
-    redirect: "/contacts",
+    redirect: "/wallet",
   },
   receive: {
     icon: IconNotifyMoneyRecieved,
-    redirect: "/contacts",
+    redirect: "/wallet",
   },
   payment_fail: {
     icon: IconNotifyMoneySentFailed,
-    redirect: "/contacts",
+    redirect: "/wallet",
+  },
+  payment_completed: {
+    icon: IconNotifyMoneySent,
+    redirect: "/wallet",
   },
   contact_register: {
     icon: IconNotifyContactAccept,

@@ -53,6 +53,7 @@ function UploadImage(props) {
               </label>
             </form>
             <button
+              type="button"
               className="cancel-link cursor-pointer border-0 bg-transparent"
               onClick={closeModal}
             >

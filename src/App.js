@@ -96,15 +96,8 @@ function App() {
               path="/wallet/fund-account/:fundtype?"
               element={<FundAccount />}
             />
-            {/* contacts */}
             <Route path="/profile" element={<Profile />} />
-
-            {/* <Route element={<SendPaymentLayout />}>
-              {/* <Route path="/contacts" element={<Contacts />} /> 
-              <Route path="/send" element={<Send />} />
-               <Route path="/send-payment" element={<SendPayment />} /> 
-            </Route> */}
-
+            {/* contacts */}
             <Route element={<ContactsLayout />}>
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/contacts-invited" element={<ContactsInvited />} />
@@ -112,7 +105,6 @@ function App() {
               <Route path="/send" element={<Send />} />
               <Route path="/send-payment" element={<SendPayment />} />
             </Route>
-
             <Route path="/view-notification" element={<ViewNotification />} />
           </Route>
           <Route path="/logout" element={<Logout />} />

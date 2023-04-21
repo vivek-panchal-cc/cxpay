@@ -221,6 +221,7 @@ function SendContact() {
             <LoaderSendContactButtons />
           ) : contactsList.length > 0 ? (
             <Button
+              type="button"
               className="btn btn-next ws--btn ms-0"
               onClick={handleSendContacts}
             >
@@ -229,6 +230,7 @@ function SendContact() {
             </Button>
           ) : (
             <Button
+              type="button"
               className="btn btn-next ms-0"
               onClick={navigateToContactScreen}
             >

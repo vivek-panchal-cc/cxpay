@@ -91,6 +91,7 @@ function CropCard(props) {
                   </span>
                 </button>
                 <button
+                  type="button"
                   className="radio-round ms-3 rounded-4 text-white"
                   onClick={closeModal}
                 >

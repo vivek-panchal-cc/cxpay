@@ -5,11 +5,12 @@ const initialState = {
   initialLoading: true,
   dropNotifications: [],
   allNotifications: [],
+  pendingRead: false,
   pagination: {
     current_page: 1,
-    total: 1,
-    from: 1,
-    to: 1,
+    total: 0,
+    from: 0,
+    to: 0,
     last_page: 1,
   },
 };
@@ -53,16 +54,24 @@ export const fetchMarkAsRead = createAsyncThunk(
   }
 );
 
-export const fetchDeleteNotification = createAsyncThunk(
+export const fetchDeleteNotifications = createAsyncThunk(
   "notify/deleteNotification",
-  async (id, thunkAPI) => {
+  async ({ id = "", delete_all = false }, thunkAPI) => {
     try {
+      const ids = id ? { notification_id: [id] } : {};
+      const { userNotification } = thunkAPI.getState();
+      const { pagination } = userNotification || {};
+      const { current_page, from, to, last_page } = pagination || {};
+      let page = current_page ? current_page : 1;
+      if (current_page && current_page === last_page && from === to)
+        page = current_page - 1;
       const { data } = await apiRequest.deleteNotifications({
-        notification_id: [id],
+        ...ids,
+        delete_all: delete_all.toString(),
       });
       if (!data.success) throw data.message;
       await thunkAPI.dispatch(fetchGetNotifications());
-      await thunkAPI.dispatch(fetchGetAllNotifications(1));
+      await thunkAPI.dispatch(fetchGetAllNotifications(page ? page : 1));
       return data.message;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -77,15 +86,22 @@ const userNotificationslice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchGetNotifications.fulfilled, (state, action) => {
+        if (state.allNotifications.length <= 0)
+          state.allNotifications = action.payload.notifications;
         state.dropNotifications = action.payload.notifications;
+        state.pendingRead = action.payload.unreadNotificationCount;
         state.initialLoading = false;
       })
       .addCase(fetchGetNotifications.rejected, (state, action) => {
+        state.allNotifications = [];
         state.dropNotifications = [];
         state.initialLoading = false;
+        state.pendingRead = false;
+        state.pagination = initialState.pagination;
       })
       .addCase(fetchGetAllNotifications.fulfilled, (state, action) => {
         state.allNotifications = action.payload.notifications;
+        state.pendingRead = action.payload.unreadNotificationCount;
         state.pagination = {
           current_page: action.payload?.pagination?.current_page,
           total: action.payload?.pagination?.total,
@@ -96,13 +112,18 @@ const userNotificationslice = createSlice({
       })
       .addCase(fetchGetAllNotifications.rejected, (state, action) => {
         state.allNotifications = [];
+        state.dropNotifications = [];
+        state.initialLoading = false;
+        state.pendingRead = false;
+        state.pagination = initialState.pagination;
+        return;
       })
       .addCase(fetchMarkAsRead.fulfilled, (state, action) => {})
       .addCase(fetchMarkAsRead.rejected, (state, action) => {
         console.log("ERROR ", action.payload);
       })
-      .addCase(fetchDeleteNotification.fulfilled, (state, action) => {})
-      .addCase(fetchDeleteNotification.rejected, (state, action) => {
+      .addCase(fetchDeleteNotifications.fulfilled, (state, action) => {})
+      .addCase(fetchDeleteNotifications.rejected, (state, action) => {
         console.log("ERROR ", action.payload);
       });
   },

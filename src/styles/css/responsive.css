@@ -3813,8 +3813,12 @@
   .con-modal-rm-wrap a {
     font-size: 18px;
   }
-  .notification-pg-list-wrap .notification-pcw {
+  /* .notification-pg-list-wrap .notification-pcw {
     width: calc(100% - 30px);
+    padding-right: 15px;
+  } */
+  .notification-pg-list-wrap div.w-100 {
+    width: calc(100% - 30px) !important;
     padding-right: 15px;
   }
   .notification-rm-wrap svg {
@@ -3982,6 +3986,9 @@
   }
   .one-time-pay-wrap .amount > span {
     padding-right: 5px;
+  }
+  .notification-top-sec .pr-4 .btn {
+    padding: 12px 20px;
   }
 }
 @media only screen and (max-width: 575px) {
@@ -4217,6 +4224,25 @@
   .resend-otp-wrap {
     margin-bottom: 20px;
   }
+  .notification-list-sec .notification-top-sec {
+    display: block !important;
+  }
+  .notification-top-sec .title-content-wrap {
+    padding-right: 0px;
+    padding-bottom: 15px;
+  }
+  /* .notification-top-sec .pr-4 .btn{
+    min-width: 110px;
+  } */
+  /* CSS on 21-04 */
+  .profile-bottom-info-sec ul > li .pi-title-div {
+    padding-bottom: 10px;
+  }
+  .profile-bottom-info-sec ul > li .pi-title-div,
+  .profile-bottom-info-sec ul li .profile-info-right-desc {
+    width: 100% !important;
+    padding-left: 0px !important;
+  }
 }
 @media only screen and (max-width: 480px) {
   /* .profile-inner-sec.p-4 {
@@ -4261,7 +4287,8 @@
   .notification-dd-wrap {
     min-width: calc(100% - 40px);
     margin: auto;
-    top: 80px;
+    /* top: 80px; */
+    top: 50px;
     left: 10px;
     right: 20px;
     border-top-right-radius: 11px;

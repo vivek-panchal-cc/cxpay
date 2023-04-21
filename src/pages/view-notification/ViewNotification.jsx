@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NotificationListItem from "components/items/NotificationListItem";
 import Pagination from "components/pagination/Pagination";
 import {
-  fetchDeleteNotification,
+  fetchDeleteNotifications,
   fetchGetAllNotifications,
   fetchMarkAsRead,
 } from "features/user/userNotificationSlice";
@@ -11,6 +11,7 @@ import { LoaderContext } from "context/loaderContext";
 import { notificationType } from "constants/all";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Button from "components/ui/Button";
 
 function ViewNotification(props) {
   const dispatch = useDispatch();
@@ -50,7 +51,24 @@ function ViewNotification(props) {
   const handleDelete = async ({ id }) => {
     setIsLoading(true);
     try {
-      const { error, payload } = await dispatch(fetchDeleteNotification(id));
+      const { error, payload } = await dispatch(
+        fetchDeleteNotifications({ id })
+      );
+      if (error) throw payload;
+      toast.success(payload);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteAll = async () => {
+    setIsLoading(true);
+    try {
+      const { error, payload } = await dispatch(
+        fetchDeleteNotifications({ delete_all: true })
+      );
       if (error) throw payload;
       toast.success(payload);
     } catch (error) {
@@ -67,10 +85,17 @@ function ViewNotification(props) {
   return (
     <div>
       <div className="notification-list-sec">
-        <div className="notification-top-sec">
+        <div className="notification-top-sec d-flex justify-content-between align-items-center">
           <div className="title-content-wrap">
             <h3>Notifications</h3>
             <p>Lorem Ipsum Dolor</p>
+          </div>
+          <div className="pr-4">
+            {allNotifications && allNotifications.length > 0 && (
+              <Button type="button" className="btn" onClick={handleDeleteAll}>
+                Clear All
+              </Button>
+            )}
           </div>
         </div>
         <div className="notification-pg-list-wrap">
@@ -87,7 +112,7 @@ function ViewNotification(props) {
             ))}
           </ul>
         </div>
-        {!(current_page <= 1 && total < 10) && (
+        {!(current_page <= 1 && total <= 10) && (
           <Pagination
             {...{
               active: current_page,

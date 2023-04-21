@@ -161,6 +161,12 @@ const countrySchema = yup.string().required("Please select Country");
 
 const citySchema = yup.string().required("Please select City");
 
+const otpSchema = yup
+  .string()
+  .length(4, "OTP length must be 4 digits")
+  .matches(/^[0-9]*$/, "OTP should be number")
+  .required("OTP is required");
+
 export {
   emailSchema,
   passwordSchema,
@@ -180,4 +186,5 @@ export {
   bankNumberSchema,
   countrySchema,
   citySchema,
+  otpSchema,
 };

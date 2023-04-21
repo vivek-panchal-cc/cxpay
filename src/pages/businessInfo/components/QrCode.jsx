@@ -37,7 +37,11 @@ const QrCode = (props) => {
           alt="QR code image"
         />
       </div>
-      <Button onClick={handleGenerateQrCode} className="btn qr-btn">
+      <Button
+        type="button"
+        onClick={handleGenerateQrCode}
+        className="btn qr-btn"
+      >
         Request new QR
       </Button>
     </div>

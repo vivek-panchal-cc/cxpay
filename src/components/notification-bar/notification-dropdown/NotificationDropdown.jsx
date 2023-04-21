@@ -14,7 +14,7 @@ const NotificationDropdown = (props) => {
   const navigate = useNavigate();
   const dropdownref = useRef(null);
   const { setIsLoading } = useContext(LoaderContext);
-  const { dropNotifications, initialLoading } = useSelector(
+  const { dropNotifications, initialLoading, pendingRead } = useSelector(
     (state) => state.userNotification
   );
   const [showDrop, setShowDrop] = useState(false);
@@ -54,9 +54,11 @@ const NotificationDropdown = (props) => {
       >
         <div className="notification-icon">
           <IconNotify />
-          <span className="notification-count">
-            <span></span>
-          </span>
+          {pendingRead && (
+            <span className="notification-count">
+              <span></span>
+            </span>
+          )}
         </div>
       </div>
       {/* <!-- Notification Dropdown Start --> */}
@@ -67,9 +69,7 @@ const NotificationDropdown = (props) => {
       >
         <ul className="notification-list-wrap">
           {initialLoading
-            ? [1, 2, 3, 4, 5].map((item) => (
-                <LoaderNotificationDropdown key={item} />
-              ))
+            ? [1, 2].map((item) => <LoaderNotificationDropdown key={item} />)
             : dropNotifications?.map((item, index) => (
                 <NotificationListItem
                   key={index}
