@@ -4234,6 +4234,15 @@
   /* .notification-top-sec .pr-4 .btn{
     min-width: 110px;
   } */
+  /* CSS on 21-04 */
+  .profile-bottom-info-sec ul > li .pi-title-div {
+    padding-bottom: 10px;
+  }
+  .profile-bottom-info-sec ul > li .pi-title-div,
+  .profile-bottom-info-sec ul li .profile-info-right-desc {
+    width: 100% !important;
+    padding-left: 0px !important;
+  }
 }
 @media only screen and (max-width: 480px) {
   /* .profile-inner-sec.p-4 {
