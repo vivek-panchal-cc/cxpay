@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
 import { LoaderContext } from "context/loaderContext";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ModalAlert from "components/modals/ModalAlert";
 import { CURRENCY_SYMBOL } from "constants/all";
 

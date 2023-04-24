@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { resetPasswordSchema } from "schemas/validationSchema";
 import { IconEyeClose, IconEyeOpen } from "styles/svgs";
 import { LoaderContext } from "context/loaderContext";
+import { CXPAY_LOGO } from "constants/all";
 
 function ResetPassword() {
   const { setIsLoading } = useContext(LoaderContext);
@@ -54,7 +55,7 @@ function ResetPassword() {
                 <h4 className="text-center">Welcome to</h4>
                 <div className="login-logo-image text-center">
                   <a href="/">
-                    <img src="/assets/images/logo-1.png" alt="login logo img" />
+                    <img src={CXPAY_LOGO} alt="login logo img" />
                   </a>
                 </div>
                 <h5 className="text-center">Reset Password</h5>

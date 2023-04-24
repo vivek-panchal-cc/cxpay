@@ -1,7 +1,7 @@
 import Modal from "components/modals/Modal";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useState } from "react";
 import { addCardSchema } from "schemas/walletSchema";
 import CreditCard from "./components/CreditCard";
 import CropCard from "./components/CropCard";

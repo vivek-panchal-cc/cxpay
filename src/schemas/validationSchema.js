@@ -1,4 +1,4 @@
-import { MAX_GROUP_MEMBERS, url_regex } from "constants/all";
+import { MAX_GROUP_MEMBERS } from "constants/all";
 import * as yup from "yup";
 import {
   confirmPasswordSchema,

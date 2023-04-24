@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { SignupContext } from "context/signupContext";
+import { CXPAY_LOGO } from "constants/all";
 
 function SelectaccountType(props) {
   const { setSignUpCreds } = useContext(SignupContext);
@@ -23,7 +24,7 @@ function SelectaccountType(props) {
               <h4 className="text-center">Welcome to</h4>
               <div className="login-logo-image text-center">
                 <a href="/">
-                  <img src="/assets/images/logo-1.png" alt="login logo img" />
+                  <img src={CXPAY_LOGO} alt="login logo img" />
                 </a>
               </div>
               <h5 className="text-center">Signup</h5>

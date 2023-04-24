@@ -27,7 +27,6 @@ import {
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { profile } = useSelector((state) => state.userProfile);
 
   useEffect(() => {
     (async () => {

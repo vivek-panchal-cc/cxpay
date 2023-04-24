@@ -1,7 +1,5 @@
-import { apiRequest } from "helpers/apiRequests";
 import { storageRequest } from "helpers/storageRequests";
-import React, { useContext, useEffect, useState } from "react";
-import { LoaderContext } from "./loaderContext";
+import React, { useEffect, useState } from "react";
 import useCountriesCities from "hooks/useCountriesCities";
 
 const initialValues = {

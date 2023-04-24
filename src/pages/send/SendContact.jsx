@@ -6,7 +6,6 @@ import ContactsSelection from "components/contacts-selection/ContactsSelection";
 import Button from "components/ui/Button";
 import ContactCard from "components/cards/ContactCard";
 import { SendPaymentContext } from "context/sendPaymentContext";
-import LoaderSendContact from "loaders/LoaderSendContact";
 import LoaderSendContactButtons from "loaders/LoaderSendContactButtons";
 import { toast } from "react-toastify";
 

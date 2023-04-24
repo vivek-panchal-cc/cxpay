@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
 import CreateGroup from "./components/CreateGroup";
 import ModalConfirmation from "components/modals/ModalConfirmation";
-import InvitationSent from "./components/InvitationSent";
 import ContactDetail from "./components/ContactDetail";
 import Delete from "styles/svgs/Delete";
 import { Link } from "react-router-dom";
@@ -112,10 +111,6 @@ const Contacts = (props) => {
     }
   };
 
-  useEffect(() => {
-    retrieveContacts();
-  }, []);
-
   const retrieveContacts = async (currentPage = 1, search) => {
     setIsLoading(true);
     try {
@@ -154,6 +149,10 @@ const Contacts = (props) => {
     setSearch("");
     await retrieveContacts();
   };
+
+  useEffect(() => {
+    retrieveContacts();
+  }, []);
 
   return (
     <div className="container-fluid">

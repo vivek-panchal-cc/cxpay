@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from "react";
 import styles from "./modal.module.scss";
-import { Link } from "react-router-dom";
 
 function ModalAlert(props) {
   const {

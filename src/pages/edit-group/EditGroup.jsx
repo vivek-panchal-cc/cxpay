@@ -108,8 +108,7 @@ export default function EditGroup() {
         <div className="edit-group-top-main text-center">
           <div className="eg-profile-wrap">
             <InputFile
-              id="_upPersonal"
-              name="profile_image"
+              name="group_image"
               onChange={(e) => {
                 if (e.currentTarget.files[0] !== undefined) {
                   formik.setFieldValue("group_image", e.currentTarget.files[0]);
@@ -127,8 +126,7 @@ export default function EditGroup() {
                 profileImage ? profileImage : "/assets/images/group-svg-92.svg"
               }
               classNameInput="d-none"
-              classNameBorder={`overflow-visible group-icon-image ${styles.set_group_background_image}`}
-              classNameImage={`${styles.set_group_image}`}
+              classNameBorder={`overflow-visible group-icon-image`}
               isGroup={true}
             />
           </div>

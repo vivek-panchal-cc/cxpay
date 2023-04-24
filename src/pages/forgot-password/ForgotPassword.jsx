@@ -8,6 +8,7 @@ import { forgotPasswordSchema } from "schemas/validationSchema";
 import { toast } from "react-toastify";
 import useCountriesCities from "hooks/useCountriesCities";
 import InputSelect from "components/ui/InputSelect";
+import { CXPAY_LOGO } from "constants/all";
 
 function ForgotPassword() {
   const [showOtpPopup, setShowOtpPopup] = useState(false);
@@ -46,7 +47,7 @@ function ForgotPassword() {
                 <h4 className="text-center">Welcome to</h4>
                 <div className="login-logo-image text-center">
                   <a href="/">
-                    <img src="/assets/images/logo-1.png" alt="login logo img" />
+                    <img src={CXPAY_LOGO} alt="login logo img" />
                   </a>
                 </div>
                 <h5 className="text-center">Forgot Password</h5>

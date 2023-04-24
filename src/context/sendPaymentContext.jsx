@@ -1,6 +1,6 @@
 import { MAX_PAYMENT_CONTACTS, renameKeys } from "constants/all";
 import { apiRequest } from "helpers/apiRequests";
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LoaderContext } from "./loaderContext";

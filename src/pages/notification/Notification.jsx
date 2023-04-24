@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import LeftArrow from "styles/svgs/LeftArrow";
 import { useSelector } from "react-redux";
+
 const Notification = () => {
   const navigate = useNavigate();
   const { is_email_verify } = useSelector((state) => state.userProfile.profile);
