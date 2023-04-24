@@ -35,9 +35,7 @@ const ContactsProvider = ({ children }) => {
 
     try {
       const { data } = await apiRequest.markAsFavourite(reqData);
-
       if (!data.success) throw data.message;
-
       if (type == "contactsItem") {
         contacts?.contacts?.filter((con) => {
           if (con.mobile == mobile && con.country_code == country_code) {
@@ -74,9 +72,7 @@ const ContactsProvider = ({ children }) => {
       setPage(currentPage);
       setContacts(data.data);
     } catch (error) {
-      if (typeof error === "string") {
-        setContacts(null);
-      }
+      if (typeof error === "string") setContacts(null);
       console.log(error);
     } finally {
       setIsLoading(false);

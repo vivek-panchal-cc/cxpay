@@ -1,5 +1,5 @@
 import { apiRequest } from "helpers/apiRequests";
-const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   initialLoading: true,

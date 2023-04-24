@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
@@ -9,6 +9,7 @@ import Modal from "components/modals/Modal";
 import { SignupContext } from "context/signupContext";
 import InputSelect from "components/ui/InputSelect";
 import { toast } from "react-toastify";
+import { CXPAY_LOGO } from "constants/all";
 
 function EnterPhone(props) {
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
@@ -61,7 +62,7 @@ function EnterPhone(props) {
               <h4 className="text-center">Welcome to</h4>
               <div className="login-logo-image text-center">
                 <a href="/">
-                  <img src="/assets/images/logo-1.png" alt="login logo img" />
+                  <img src={CXPAY_LOGO} alt="login logo img" />
                 </a>
               </div>
               <h5 className="text-center">Signup</h5>

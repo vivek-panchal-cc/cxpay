@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
 import InputSelect from "components/ui/InputSelect";
 import useCountriesCities from "hooks/useCountriesCities";
+import { CXPAY_LOGO } from "constants/all";
 
 const LoginWithOtp = (props) => {
   const navigate = useNavigate();
@@ -71,7 +72,7 @@ const LoginWithOtp = (props) => {
                 <h4 className="text-center">Welcome to</h4>
                 <div className="login-logo-image text-center">
                   <a href="/">
-                    <img src="/assets/images/logo-1.png" alt="login logo img" />
+                    <img src={CXPAY_LOGO} alt="login logo img" />
                   </a>
                 </div>
                 <h5 className="text-center">Login with OTP</h5>

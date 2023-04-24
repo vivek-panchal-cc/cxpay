@@ -116,6 +116,7 @@ function SendContact() {
     }
   };
 
+  //handle reach end group
   const handleReachEndGroups = async () => {
     if (groupCurrentPage * 10 < totalGroupData) {
       setGroupCurrentPage((cp) => cp + 1);
@@ -123,12 +124,20 @@ function SendContact() {
     }
   };
 
+  //handle edit group
   const handleEditGroup = () => {
     if (!selectedGroupIds || selectedGroupIds.length <= 0) {
       toast.warning("Please select at least one group");
       return;
     }
     navigate("/edit-group/" + selectedGroupIds[0]);
+  };
+
+  //handle create group
+  const handleCreateGroup = async () => {
+    if (selectedContactsIds.length > MAX_GROUP_MEMBERS)
+      return toast.warning(`You have exceed the contact limit.`);
+    setShowCreateGroupPopup(true);
   };
 
   // handle selected contacts
@@ -159,15 +168,6 @@ function SendContact() {
     handleSelectedGroup && handleSelectedGroup(sgrps);
   };
 
-  //handle create group
-  const handleCreateGroup = async () => {
-    if (selectedContactsIds.length > MAX_GROUP_MEMBERS) {
-      toast.error(`You have exceed the contact limit.`);
-      return;
-    }
-    setShowCreateGroupPopup(true);
-  };
-
   // Debouncing for contacts
   useEffect(() => {
     if (searchContactText === "") {
@@ -193,6 +193,10 @@ function SendContact() {
     }, 1000);
     return () => clearTimeout(timeOut);
   }, [searchGroupText]);
+
+  useEffect(() => {
+    if (!showCreateGroupPopup) getGroupsList(1, searchGroupText);
+  }, [showCreateGroupPopup]);
 
   return (
     <div className="send-bottom-sec">

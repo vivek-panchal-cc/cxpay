@@ -1,3 +1,4 @@
+import { CXPAY_LOGO } from "constants/all";
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
@@ -30,7 +31,7 @@ function LeftSidebar() {
       </span>
       <div className="dashboard-logo-wrap">
         <Link to="/" replace>
-          <img src="/assets/images/dashaboard-logo.png" alt="dashboard logo" />
+          <img src={CXPAY_LOGO} alt="dashboard logo" />
         </Link>
         <Link to="/" className="dashaboard-btn text-capitalize" replace>
           {user_type}

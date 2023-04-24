@@ -32,7 +32,7 @@ const Contacts = () => {
 
   const [invitetitle, setInviteTitle] = useState("Invite");
   const [show, setShow] = useState(false);
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = useState(1);
   const [showCreateGroupPopup, setShowCreateGroupPopup] = useState(false);
   const [showInvitationSentPopup, setInvitationSentPopup] = useState(false);
   const [showConatctDetailPopup, setConatctDetailPopup] = useState(false);
@@ -67,6 +67,10 @@ const Contacts = () => {
     }
     handleSelectedContacts(selectedContacts);
   };
+
+  useEffect(() => {
+    retrieveContacts();
+  }, []);
 
   return (
     <div className="container-fluid">

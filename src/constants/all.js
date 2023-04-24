@@ -1,6 +1,5 @@
 import {
   IconNotifyContactAccept,
-  IconNotifyContactInvite,
   IconNotifyMoneyRecieved,
   IconNotifyMoneyRequest,
   IconNotifyMoneySent,
@@ -56,6 +55,9 @@ const THEME_COLORS = ["light_blue"];
 // const fileUploadLimit = (file, fileSize) => {
 //   return file && validFileSize[file].indexOf(file.split(".").pop()) > -1;
 // };
+
+// CXPAY LOGO
+const CXPAY_LOGO = "/assets/images/cxpay_me_logo.png";
 
 // Fund account flow constants
 const FUND_CARD = "credit-card";
@@ -122,6 +124,7 @@ export {
   FUND_BANK,
   MAX_GROUP_MEMBERS,
   MAX_PAYMENT_CONTACTS,
+  CXPAY_LOGO,
 };
 export {
   regexContainCapitalLetter,

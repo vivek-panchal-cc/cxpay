@@ -10,6 +10,7 @@ import { IconEyeClose, IconEyeOpen } from "styles/svgs";
 import { LoaderContext } from "context/loaderContext";
 import InputSelect from "components/ui/InputSelect";
 import useCountriesCities from "hooks/useCountriesCities";
+import { CXPAY_LOGO } from "constants/all";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const Login = () => {
                 <h4 className="text-center">Welcome to</h4>
                 <div className="login-logo-image text-center">
                   <a href="/">
-                    <img src="/assets/images/logo-1.png" alt="login logo img" />
+                    <img src={CXPAY_LOGO} alt="login logo img" />
                   </a>
                 </div>
                 <h5 className="text-center">Login</h5>

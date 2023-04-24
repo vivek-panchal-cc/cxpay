@@ -1,6 +1,5 @@
 import Button from "components/ui/Button";
 import React from "react";
-import { Link } from "react-router-dom";
 import { IconNotifyDelete } from "styles/svgs";
 
 function NotificationListItem(props) {
