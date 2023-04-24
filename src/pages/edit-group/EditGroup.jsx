@@ -14,6 +14,7 @@ import ModalConfirmation from "components/modals/ModalConfirmation";
 import { LoaderContext } from "context/loaderContext";
 import { MAX_GROUP_MEMBERS } from "constants/all";
 import { ContactsContext } from "context/contactsContext";
+import { addObjToFormData } from "helpers/commonHelpers";
 
 export default function EditGroup() {
   let { id } = useParams();
@@ -46,19 +47,34 @@ export default function EditGroup() {
           return;
         }
         const formData = new FormData();
-        for (let key in values) {
-          if (key === "group_image") continue;
-          if (key === "contact") {
-            if (values[key].length > 0) {
-              values[key].forEach((contact) =>
-                formData.append("contact[]", contact)
-              );
-            }
-          } else {
-            formData.append(key, values[key]);
-          }
+
+        // for (let key in values) {
+        //   if (key === "group_image") continue;
+        //   if (key === "contact") {
+        //     if (values[key].length > 0) {
+        //       values[key].forEach((contact) =>
+        //         formData.append("contact[]", contact)
+        //       );
+        //     }
+        //   } else {
+        //     formData.append(key, values[key]);
+        //   }
+        // }
+        // formData.append("group_image", values.group_image);
+
+        const muValues = { ...values };
+
+        if (values["contact"].length > 0) {
+          const selectedContactArr = [];
+          values["contact"].forEach((contact) =>
+            selectedContactArr.push(contact)
+          );
+          muValues.contact = selectedContactArr;
         }
-        formData.append("group_image", values.group_image);
+
+        for (const key in muValues)
+          addObjToFormData(muValues[key], key, formData);
+
         const { data } = await apiRequest.updateGroup(formData);
         if (!data.success) throw data.message;
         toast.success(data.message);

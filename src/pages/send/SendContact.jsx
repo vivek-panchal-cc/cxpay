@@ -6,9 +6,10 @@ import ContactsSelection from "components/contacts-selection/ContactsSelection";
 import Button from "components/ui/Button";
 import ContactCard from "components/cards/ContactCard";
 import { SendPaymentContext } from "context/sendPaymentContext";
-import LoaderSendContact from "loaders/LoaderSendContact";
 import LoaderSendContactButtons from "loaders/LoaderSendContactButtons";
 import { toast } from "react-toastify";
+import ModalCreateGroup from "components/modals/ModalCreateGroup";
+import { MAX_GROUP_MEMBERS } from "constants/all";
 
 function SendContact() {
   const [contactsList, setContactsList] = useState([]);
@@ -28,6 +29,7 @@ function SendContact() {
   // Loaders
   const [isLoadingContacts, setIsLoadingContacts] = useState(true);
   const [isLoadingGroups, setIsLoadingGroups] = useState(true);
+  const [showCreateGroupPopup, setShowCreateGroupPopup] = useState(false);
 
   const navigate = useNavigate();
   const {
@@ -157,6 +159,15 @@ function SendContact() {
     handleSelectedGroup && handleSelectedGroup(sgrps);
   };
 
+  //handle create group
+  const handleCreateGroup = async () => {
+    if (selectedContactsIds.length > MAX_GROUP_MEMBERS) {
+      toast.error(`You have exceed the contact limit.`);
+      return;
+    }
+    setShowCreateGroupPopup(true);
+  };
+
   // Debouncing for contacts
   useEffect(() => {
     if (searchContactText === "") {
@@ -220,14 +231,26 @@ function SendContact() {
           {isLoadingContacts ? (
             <LoaderSendContactButtons />
           ) : contactsList.length > 0 ? (
-            <Button
-              type="button"
-              className="btn btn-next ws--btn ms-0"
-              onClick={handleSendContacts}
-            >
-              <IconSend style={{ stroke: "#fff" }} />
-              Send
-            </Button>
+            <>
+              {" "}
+              <Button
+                type="button"
+                className="btn btn-next ws--btn ms-0"
+                onClick={handleSendContacts}
+              >
+                <IconSend style={{ stroke: "#fff" }} />
+                Send
+              </Button>
+              <Button
+                type="button"
+                className="btn btn-next ws--btn ms-0"
+                onClick={handleCreateGroup}
+                disabled={selectedContactsIds.length < 2}
+              >
+                <IconPlus style={{ stroke: "#fff" }} />
+                Create Group
+              </Button>
+            </>
           ) : (
             <Button
               type="button"
@@ -298,6 +321,13 @@ function SendContact() {
           )}
         </ContactsSelection.Footer>
       </ContactsSelection>
+      <ModalCreateGroup
+        id="create-group-popup"
+        show={showCreateGroupPopup}
+        setShow={setShowCreateGroupPopup}
+        selectedContacts={selectedContactsIds}
+        setSelectedContactsIds={setSelectedContactsIds}
+      />
     </div>
   );
 }

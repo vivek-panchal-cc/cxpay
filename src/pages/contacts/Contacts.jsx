@@ -218,6 +218,7 @@ const Contacts = () => {
         show={showCreateGroupPopup}
         setShow={setShowCreateGroupPopup}
         selectedContacts={selectedContacts}
+        setSelectedContacts={setSelectedContacts}
       />
       <ModalConfirmation
         heading={"Delete Contact"}

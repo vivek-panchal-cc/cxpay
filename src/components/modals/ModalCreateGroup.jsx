@@ -9,9 +9,10 @@ import { useNavigate } from "react-router-dom";
 import styles from "../../pages/contacts/addGroup.css";
 import { LoaderContext } from "context/loaderContext";
 import stylescss from "./modal.module.scss";
+import { addObjToFormData } from "helpers/commonHelpers";
 
 const ModalCreateGroup = (props) => {
-  const { selectedContacts, show, setShow, id } = props;
+  const { selectedContacts, show, setShow, id, setSelectedContacts } = props;
   const profile_image = null;
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
@@ -31,20 +32,33 @@ const ModalCreateGroup = (props) => {
       setIsLoading(true);
       try {
         const formData = new FormData();
-        for (let key in values) {
-          if (key === "group_image") continue;
-          if (key === "contact") {
-            selectedContacts.forEach((contact) =>
-              formData.append("contact[]", contact)
-            );
-          } else {
-            formData.append(key, values[key]);
-          }
-        }
-        formData.append("group_image", values.group_image);
+
+        // for (let key in values) {
+        //   if (key === "group_image") continue;
+        //   if (key === "contact") {
+        //     selectedContacts.forEach((contact) =>
+        //       formData.append("contact[]", contact)
+        //     );
+        //   } else {
+        //     formData.append(key, values[key]);
+        //   }
+        // }
+        // formData.append("group_image", values.group_image);
+
+        const muValues = { ...values };
+
+        const contactArr = [];
+        selectedContacts.forEach((contact) => contactArr.push(contact));
+        muValues.contact = contactArr;
+
+        for (const key in muValues)
+          addObjToFormData(muValues[key], key, formData);
+
         const { data } = await apiRequest.addGroup(formData);
         if (!data.success) throw data.message;
         toast.success(data.message);
+        setShow && setShow(false);
+        setSelectedContacts([]);
         navigate("/send");
       } catch (error) {
         console.log(error);
