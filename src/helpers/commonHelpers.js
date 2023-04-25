@@ -53,4 +53,15 @@ function addObjToFormData(obj, pkey, formData) {
   }
 }
 
-export { getChargedAmount, addObjToFormData };
+const timeStampToTimeString = (tstamp) => {
+  const stampDate = new Date(tstamp * 1000);
+  const now = new Date();
+  const offset = now.getTimezoneOffset();
+  const diff = now - stampDate;
+  const days = Math.floor(diff / 1000 / 60 / 60 / 24);
+  const hour = Math.floor(diff / 1000 / 60 / 60);
+  const min = Math.floor(diff / 1000 / 60 + offset);
+  return `${hour} hr ${min} min ${offset} offset`;
+};
+
+export { getChargedAmount, addObjToFormData, timeStampToTimeString };

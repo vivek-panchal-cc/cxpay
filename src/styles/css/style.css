@@ -6247,7 +6247,8 @@ div.settings-note-inner-sec.setting-noti-sec-new {
   font-weight: 600;
   word-break: break-word;
 }
-.notification-pcw .notifi-content p:first-child {
+.notification-pcw .notifi-content p:first-child,
+.notification-pcw .notifi-content span + p {
   color: #363853;
   padding-bottom: 2px;
 }
@@ -6842,4 +6843,18 @@ button.notification-rm-wrap {
 }
 .notification-dd-wrap .notification-list-wrap li:hover {
   background-color: rgb(0 129 197 / 12%);
+}
+.notifi-content span.noti-time {
+  display: block;
+  font-weight: 600;
+}
+.notification-dd-wrap span.noti-time {
+  font-size: 10px !important;
+  line-height: 10px;
+  margin-bottom: -5px;
+}
+.notification-pg-list-wrap span.noti-time {
+  font-size: 11px !important;
+  line-height: 11px;
+  margin-top: 5px;
 }

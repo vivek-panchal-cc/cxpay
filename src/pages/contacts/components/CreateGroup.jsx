@@ -23,7 +23,7 @@ export default function CreateGroup(props) {
     validateOnChange: false, // this one
     validateOnBlur: false, // and this one
     validationSchema: createGroupSchema,
-    onSubmit: async (values, { resetForm, setStatus }) => {
+    onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
       setIsLoading(true);
       const formData = new FormData();
       for (let key in values) {
@@ -37,11 +37,19 @@ export default function CreateGroup(props) {
         }
       }
       formData.append("group_image", values.group_image);
-      const { data } = await apiRequest.addGroup(formData);
-      if (!data.success) throw data.message;
-      toast.success(data.message);
-      setIsLoading(false);
-      navigate("/send");
+      try {
+        const { data } = await apiRequest.addGroup(formData);
+        if (!data.success) throw data.message;
+        toast.success(data.message);
+        navigate("/send");
+      } catch (error) {
+        if (typeof error === "string") return console.log(error);
+        setErrors({
+          group_name: error?.group_name?.[0],
+        });
+      } finally {
+        setIsLoading(false);
+      }
     },
   });
   return (

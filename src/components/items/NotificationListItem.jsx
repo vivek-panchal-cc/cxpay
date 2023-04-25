@@ -1,4 +1,5 @@
 import Button from "components/ui/Button";
+import { timeStampToTimeString } from "helpers/commonHelpers";
 import React from "react";
 import { IconNotifyDelete } from "styles/svgs";
 
@@ -10,8 +11,9 @@ function NotificationListItem(props) {
     notification,
     className,
     Icon,
+    timeStampDirection = "UP" | "DOWN",
   } = props;
-  const { id, message, status } = notification || {};
+  const { id, message, status, time } = notification || {};
 
   return (
     <li className={status ? "" : "un-read-notification"}>
@@ -24,8 +26,14 @@ function NotificationListItem(props) {
           <div className="notifi-content">
             <p>{message}</p>
             {/* <p className="notifi-tran-idw">
-              <br />
-            </p> */}
+                <br />
+              </p> */}
+            {timeStampDirection === "UP" && (
+              <span class="text-start noti-time">{time}</span>
+            )}
+            {timeStampDirection === "DOWN" && (
+              <span class="text-end noti-time">{time}</span>
+            )}
           </div>
         </div>
       </div>

@@ -51,10 +51,17 @@ export default function EditGroup() {
         }
       }
       formData.append("group_image", values.group_image);
-      const { data } = await apiRequest.updateGroup(formData);
-      if (!data.success) throw data.message;
-      toast.success(data.message);
-      navigate("/send");
+      try {
+        const { data } = await apiRequest.updateGroup(formData);
+        if (!data.success) throw data.message;
+        toast.success(data.message);
+        navigate("/send");
+      } catch (error) {
+        if (typeof error === "string") return console.log(error);
+        setErrors({
+          group_name: error?.group_name?.[0],
+        });
+      }
     },
   });
 
