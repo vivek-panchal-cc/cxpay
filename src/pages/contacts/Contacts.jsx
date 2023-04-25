@@ -11,6 +11,8 @@ import ModalAddContact from "components/modals/ModalAddContact";
 import { ContactsContext } from "context/contactsContext";
 import ContactsItem from "components/items/ContactsItem";
 import { IconCross, IconSearch } from "styles/svgs";
+import { LoaderContext } from "context/loaderContext";
+import LoaderContact from "loaders/LoaderContact";
 
 const Contacts = () => {
   const {
@@ -24,15 +26,17 @@ const Contacts = () => {
     handleSelectedContacts,
     retrieveContacts,
     contacts,
+    pagination,
+    isLoadingContacts,
     isDisabled,
     handleChangeFilter,
     handleResetFilter,
     search,
   } = useContext(ContactsContext);
+  const { setIsLoading } = useContext(LoaderContext);
 
   const [invitetitle, setInviteTitle] = useState("Invite");
   const [show, setShow] = useState(false);
-  const [page, setPage] = useState(1);
   const [showCreateGroupPopup, setShowCreateGroupPopup] = useState(false);
   const [showInvitationSentPopup, setInvitationSentPopup] = useState(false);
   const [showConatctDetailPopup, setConatctDetailPopup] = useState(false);
@@ -54,7 +58,7 @@ const Contacts = () => {
 
   useEffect(() => {
     (async () => {
-      retrieveContacts(page, "");
+      await retrieveContacts(1, "");
     })();
   }, []);
 
@@ -67,10 +71,6 @@ const Contacts = () => {
     }
     handleSelectedContacts(selectedContacts);
   };
-
-  useEffect(() => {
-    retrieveContacts();
-  }, []);
 
   return (
     <div className="container-fluid">
@@ -136,7 +136,7 @@ const Contacts = () => {
                   setShow={setShow}
                   getConatcts={retrieveContacts}
                   getInvitedConatcts={[]}
-                  page={page}
+                  page={pagination?.current_page}
                   search={search}
                   contactData={contactData}
                   setConatctData={setConatctData}
@@ -184,8 +184,20 @@ const Contacts = () => {
           </div>
           <div className="con-listing-container">
             <ul className="contact-listing-wrap">
-              {contacts?.contacts && contacts?.contacts?.length > 0 ? (
-                contacts?.contacts?.map((contact, index) => (
+              {isLoadingContacts ? (
+                <div className="d-flex flex-column gap-3 mt-4">
+                  {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+                    <LoaderContact
+                      key={item}
+                      style={{
+                        background: item % 2 === 0 ? "#f6f6f670" : "#fafafa70",
+                        fill: "#000000",
+                      }}
+                    />
+                  ))}
+                </div>
+              ) : contacts && contacts?.length > 0 ? (
+                contacts.map((contact, index) => (
                   <ContactsItem
                     key={index}
                     contact={contact}
@@ -198,16 +210,14 @@ const Contacts = () => {
               )}
             </ul>
           </div>
-          {contacts &&
-            contacts.pagination &&
-            contacts.pagination.total > 10 && (
-              <Pagination
-                active={page}
-                size={contacts?.pagination?.last_page}
-                siblingCount={1}
-                onClickHandler={retrieveContacts}
-              ></Pagination>
-            )}
+          {pagination && pagination.total > 10 && (
+            <Pagination
+              siblingCount={1}
+              active={pagination?.current_page}
+              size={pagination?.last_page}
+              onClickHandler={retrieveContacts}
+            ></Pagination>
+          )}
         </div>
       </div>
       <ModalConfirmation

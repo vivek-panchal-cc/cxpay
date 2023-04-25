@@ -50,9 +50,10 @@ const Invited = () => {
 
   useEffect(() => {
     (async () => {
-      handleInvitedContacts();
+      await handleInvitedContacts();
     })();
   }, []);
+
   return (
     <div className="container-fluid">
       <div className="row">

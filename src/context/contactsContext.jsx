@@ -11,8 +11,11 @@ const ContactsProvider = ({ children }) => {
   const { setIsLoading } = useContext(LoaderContext);
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [favIconShow, setfavIconShow] = useState(false);
-  const [page, setPage] = useState(1);
+  // Added Contacts and it's pagination
   const [contacts, setContacts] = useState([]);
+  const [pagination, setPagination] = useState({});
+  const [isLoadingContacts, setIsLoadingContacts] = useState(false);
+  // Invited Contacts
   const [contactsInvited, setContactsInvited] = useState([]);
   const [search, setSearch] = useState("");
   const [contactsType, setContactsType] = useState([]);
@@ -61,21 +64,19 @@ const ContactsProvider = ({ children }) => {
   };
 
   // For getting contacts list
-  const retrieveContacts = async (currentPage = 1, search) => {
-    setIsLoading(true);
+  const retrieveContacts = async (page = 1, search = "") => {
+    setIsLoadingContacts(true);
     try {
-      const { data } = await apiRequest.contactsList({
-        page: currentPage,
-        search: search,
-      });
+      const { data } = await apiRequest.contactsList({ page, search });
       if (!data.success) throw data.message;
-      setPage(currentPage);
-      setContacts(data.data);
+      const { contacts = [], pagination } = data.data || {};
+      setPagination(pagination);
+      setContacts(contacts);
     } catch (error) {
       if (typeof error === "string") setContacts(null);
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setIsLoadingContacts(false);
     }
   };
 
@@ -116,9 +117,9 @@ const ContactsProvider = ({ children }) => {
       if (!data.success) throw data.message;
 
       if (contactsType == "contactsItem") {
-        retrieveContacts(page);
+        retrieveContacts(pagination?.current_page);
       } else {
-        handleInvitedContacts(page);
+        handleInvitedContacts(pagination?.current_page);
       }
       setSelectedContacts([]);
       toast.success(data.message);
@@ -148,7 +149,7 @@ const ContactsProvider = ({ children }) => {
       });
       if (!data.success) throw data.message;
       setContactsOrInvited("invited");
-      setPage(currentPage);
+      // setPagination(currentPage);
       setContactsInvited(data.data);
     } catch (error) {
       console.log(error);
@@ -172,9 +173,9 @@ const ContactsProvider = ({ children }) => {
     const val = e.target.value;
     setSearch(val);
     if (type == "contactsItem") {
-      retrieveContacts(page, val);
+      retrieveContacts(pagination?.current_page, val);
     } else {
-      handleInvitedContacts(page, val);
+      handleInvitedContacts(pagination?.currentPage, val);
     }
   };
 
@@ -216,7 +217,10 @@ const ContactsProvider = ({ children }) => {
         setRemoveConfirmShow,
         removeConfirmShow,
         favIconShow,
+        // contacts
         contacts,
+        pagination,
+        isLoadingContacts,
         retrieveContacts,
         handleSelectedContacts,
         contactsType,
