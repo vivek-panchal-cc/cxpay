@@ -134,6 +134,7 @@ function InviteContact(props) {
                   <div className="col-8 px-0">
                     <Input
                       type="text"
+                      inputMode="tel"
                       className="form-control"
                       placeholder="Mobile Number"
                       name="mobile"

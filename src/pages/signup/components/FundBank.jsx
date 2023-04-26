@@ -64,6 +64,7 @@ function FundBank() {
         <div className="col-12 col p-0">
           <Input
             type="text"
+            inputMode="numeric"
             className="form-control"
             placeholder={
               formik.values.account_type === "savings"
@@ -84,6 +85,7 @@ function FundBank() {
         <div className="col-12 col p-0">
           <Input
             type="text"
+            inputMode="numeric"
             className="form-control"
             placeholder="Account Number"
             name="bank_account_number"
@@ -199,6 +201,7 @@ function FundBank() {
           <span>{CURRENCY_SYMBOL}</span>
           <Input
             type="text"
+            inputMode="decimal"
             id="transactionAmount"
             className="form-control"
             placeholder="Amount"

@@ -130,6 +130,7 @@ const LinkBank = (props) => {
               <div className="col-12 col p-0">
                 <Input
                   type="text"
+                  inputMode="numeric"
                   className="form-control"
                   placeholder={
                     formik.values.account_type === "savings"
@@ -151,6 +152,7 @@ const LinkBank = (props) => {
               <div className="col-12 col p-0">
                 <Input
                   type="text"
+                  inputMode="numeric"
                   className="form-control"
                   placeholder="Account Number"
                   name="bank_number"

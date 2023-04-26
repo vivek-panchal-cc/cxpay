@@ -68,11 +68,14 @@ const Profile = () => {
         <div className="profile-bottom-info-sec">
           <ProfileInfo profile={profile} />
         </div>
-        <div
-          class="profile-del-acc-btn mt-4 mt-lg-5"
-          onClick={handleInitiateDeleteAccount}
-        >
-          <button class="btn">Delete Account</button>
+        <div class="profile-del-acc-btn mt-4 mt-lg-5">
+          <button
+            type="button"
+            class="btn"
+            onClick={handleInitiateDeleteAccount}
+          >
+            Delete Account
+          </button>
         </div>
       </div>
       <div className="profile-right-content col-lg-5 col-12">

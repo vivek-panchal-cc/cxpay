@@ -37,11 +37,11 @@ const responseInterceptor = async (response) => {
   const expireTm = exp * 1000; // actual expire time
   const expireSlot = new Date(expireTm - 60000 * 5).getTime(); // reduce 5 min from the actual expire time
   const currentTm = new Date().getTime(); // time now
-  console.log(
-    new Date(currentTm).toLocaleTimeString(),
-    new Date(expireSlot).toLocaleTimeString(),
-    new Date(expireTm).toLocaleTimeString()
-  );
+  // console.log(
+  //   new Date(currentTm).toLocaleTimeString(),
+  //   new Date(expireSlot).toLocaleTimeString(),
+  //   new Date(expireTm).toLocaleTimeString()
+  // );
   if (
     !originalRequest.url.includes(API_LOGIN_REFRESH_TOKEN) &&
     currentTm > expireSlot &&

@@ -122,6 +122,7 @@ const EditBank = (props) => {
               <div className="col-12 col p-0">
                 <Input
                   type="text"
+                  inputMode="numeric"
                   className="form-control opacity-75"
                   placeholder="Routing Number"
                   name="routing_number"
@@ -134,6 +135,7 @@ const EditBank = (props) => {
               <div className="col-12 col p-0">
                 <Input
                   type="text"
+                  inputMode="numeric"
                   className="form-control opacity-75"
                   placeholder="Account Number"
                   name="bank_number"
