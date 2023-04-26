@@ -78,6 +78,7 @@ const NotificationDropdown = (props) => {
                   notification={item}
                   showDeleteButton={false}
                   handleRead={handleMarkAsRead}
+                  timeStampDirection="DOWN"
                 />
               ))}
         </ul>

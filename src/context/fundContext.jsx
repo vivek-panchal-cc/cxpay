@@ -146,7 +146,18 @@ const FundProvider = ({ children }) => {
 
   const handleSelectNewCard = () => {
     setDisableCardField(false);
-    const values = Object.assign({ ...cardCreds }, { ...initialValues });
+    const muValues = Object.assign(
+      { ...initialValues },
+      {
+        country,
+        city,
+        email,
+        card_holder_first_name: first_name,
+        card_holder_last_name: last_name,
+        billing_address: address,
+      }
+    );
+    const values = Object.assign({ ...cardCreds }, { ...muValues });
     formik.setValues(values);
   };
 
@@ -191,7 +202,18 @@ const FundProvider = ({ children }) => {
 
   const handleSelectNewBank = () => {
     setDisableBankField(false);
-    const values = Object.assign({ ...bankCreds }, { ...initialValues });
+    const muValues = Object.assign(
+      { ...initialValues },
+      {
+        country,
+        city,
+        email,
+        bank_holder_first_name: first_name,
+        bank_holder_last_name: last_name,
+        address: address,
+      }
+    );
+    const values = Object.assign({ ...bankCreds }, { ...muValues });
     formik.setValues(values);
   };
 

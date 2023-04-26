@@ -102,12 +102,13 @@ function ViewNotification(props) {
           <ul>
             {allNotifications?.map((item, index) => (
               <NotificationListItem
+                key={index}
                 Icon={notificationType[item?.type]?.icon}
                 handleDelete={handleDelete}
                 handleRead={handleMarkAsRead}
                 notification={item}
                 showDeleteButton={true}
-                key={index}
+                timeStampDirection={"UP"}
               />
             ))}
           </ul>

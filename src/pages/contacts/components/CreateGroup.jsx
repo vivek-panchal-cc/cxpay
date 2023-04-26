@@ -23,7 +23,7 @@ export default function CreateGroup(props) {
     validateOnChange: false, // this one
     validateOnBlur: false, // and this one
     validationSchema: createGroupSchema,
-    onSubmit: async (values, { resetForm, setStatus }) => {
+    onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
       setIsLoading(true);
       try {
         const formData = new FormData();
@@ -43,7 +43,10 @@ export default function CreateGroup(props) {
         toast.success(data.message);
         navigate("/send");
       } catch (error) {
-        console.log(error);
+        if (typeof error === "string") return console.log(error);
+        setErrors({
+          group_name: error?.group_name?.[0],
+        });
       } finally {
         setIsLoading(false);
       }

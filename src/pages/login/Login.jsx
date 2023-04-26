@@ -87,6 +87,7 @@ const Login = () => {
                     <div className="col-8 px-0">
                       <Input
                         type="mobile"
+                        inputMode="tel" 
                         className="form-control"
                         placeholder="Mobile Number"
                         name="user_name"

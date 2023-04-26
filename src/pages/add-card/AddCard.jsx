@@ -162,6 +162,7 @@ function AddCard() {
                 <div className="col-lg-6 col-12 col-left col p-0">
                   <Input
                     type="text"
+                    inputMode="numeric"
                     className="form-control"
                     placeholder="Credit Card Number"
                     name="card_number"

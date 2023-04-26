@@ -59,6 +59,7 @@ function FundCreditCard(props) {
               <div className="col-12 col p-0">
                 <Input
                   type="text"
+                  inputMode="numeric"
                   className="form-control"
                   placeholder="Credit Card Number"
                   name="card_number"
@@ -109,6 +110,7 @@ function FundCreditCard(props) {
                 <div className="position-relative">
                   <Input
                     type={showCvv ? "text" : "password"}
+                    inputMode="numeric"
                     className="form-control"
                     placeholder="CVV"
                     name="security_code"

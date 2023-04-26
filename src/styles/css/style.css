@@ -754,6 +754,7 @@ form .form-field {
 .btn-primary:hover,
 .btn:hover {
   background-color: #0080c4;
+  color: #fff;
 }
 .login-btn {
   margin-bottom: 17px;
@@ -1042,13 +1043,12 @@ form .form-field select.form-control {
   align-items: center;
   cursor: pointer;
 }
-.dashboard-logo-wrap {
+/* .dashboard-logo-wrap {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 21px;
   overflow: hidden;
-}
+} */
 .dashboard-logo-wrap > a {
   max-width: max-content;
   margin: 0 auto;
@@ -1349,7 +1349,7 @@ form .form-field select.form-control {
   color: #f3f3f3;
 }
 .qr-btn:hover {
-  background: #333;
+  background: #363853;
   color: #fff !important;
 }
 .profile-info-right-desc .edit-button:hover {
@@ -5303,7 +5303,7 @@ img.img-size {
 }
 .profile-info-right-desc {
   width: calc(100% - 180px);
-  padding-left: 70px;
+  padding-left: 50px;
 }
 /* Profile Update BY VR  End */
 /* Dashboard View Bank Acccounts Start  */
@@ -5904,6 +5904,9 @@ ul.dashboard-main-links {
   padding-left: 20px;
 }
 .dashboard-logo-wrap {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   /* padding: 40px 5px 0px; */
   padding: 15px 5px 0px;
   /* height: 125px; */
@@ -6842,4 +6845,30 @@ button.notification-rm-wrap {
 }
 .notification-dd-wrap .notification-list-wrap li:hover {
   background-color: rgb(0 129 197 / 12%);
+}
+.notifi-content span.noti-time {
+  display: block;
+  font-weight: 600;
+}
+.notification-dd-wrap span.noti-time {
+  font-size: 10px !important;
+  line-height: 10px;
+  margin-bottom: -5px;
+}
+.notification-pg-list-wrap span.noti-time {
+  font-size: 11px !important;
+  line-height: 11px;
+  margin-bottom: 8px;
+}
+/* CSS for Delete Account butotn */
+.profile-del-acc-btn button.btn {
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 500;
+  padding: 16px 32px;
+  min-width: auto;
+  background-color: #0081c5;
+}
+.profile-del-acc-btn button.btn:hover {
+  background-color: #363853;
 }

@@ -53,4 +53,22 @@ function addObjToFormData(obj, pkey, formData) {
   }
 }
 
-export { getChargedAmount, addObjToFormData };
+const timeStampToTimeString = (tstamp) => {
+  const stampDate = new Date(tstamp * 1000);
+  const now = new Date();
+  const diff = now - stampDate;
+  const days = Math.floor(diff / 1000 / 60 / 60 / 24);
+  const hour = Math.floor(diff / 1000 / 60 / 60);
+  const min = Math.floor(diff / 1000 / 60);
+  if (days > 0)
+    return `${stampDate.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    })} at ${stampDate.toLocaleTimeString("en-GB", { timeStyle: "short" })}`;
+  else if (hour < 24 && hour > 0) return `${hour} hour ago`;
+  else if (min < 60 && min > 0) return `${min} min ago`;
+  return `Just now`;
+};
+
+export { getChargedAmount, addObjToFormData, timeStampToTimeString };

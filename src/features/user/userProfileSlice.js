@@ -26,7 +26,7 @@ const fetchLoginOtpVerify = createAsyncThunk(
   async (creds, thunkAPI) => {
     try {
       const { data } = await apiRequest.loginOtpVerify(creds);
-      if (!data.success) throw data.message;
+      if (!data.success) throw data;
       storageRequest.setAuth(data.data.token);
       return data.message;
     } catch (error) {
@@ -52,6 +52,19 @@ const fetchUserProfile = createAsyncThunk(
       const { data } = await apiRequest.getUserProfile();
       if (!data.success) throw data.message;
       return data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+const fetchDeactivateAccount = createAsyncThunk(
+  "user/deactivateAccount",
+  async (creds, thunkAPI) => {
+    try {
+      const { data } = await apiRequest.deactivateAccount(creds);
+      if (!data.success) throw data.message;
+      return data.message;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -101,11 +114,25 @@ const userProfileSlice = createSlice({
         storageRequest.removeAuth();
         console.log("Error getting user data", action.payload);
         document.location.href = "/login";
+      })
+      .addCase(fetchDeactivateAccount.fulfilled, (state, action) => {
+        storageRequest.removeAuth();
+        toast.success(action.payload);
+        document.location.href = "/login";
+      })
+      .addCase(fetchDeactivateAccount.rejected, (state, action) => {
+        toast.error(action.payload);
       });
   },
 });
 
-export { fetchLogin, fetchLogout, fetchUserProfile, fetchLoginOtpVerify };
+export {
+  fetchLogin,
+  fetchLogout,
+  fetchUserProfile,
+  fetchLoginOtpVerify,
+  fetchDeactivateAccount,
+};
 export const { setUserProfile, setEditCard, setEditBank } =
   userProfileSlice.actions;
 export default userProfileSlice.reducer;

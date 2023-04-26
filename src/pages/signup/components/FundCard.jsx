@@ -27,6 +27,7 @@ function FundCard() {
         <div className="col-12 col p-0">
           <Input
             type="text"
+            inputMode="numeric"
             className="form-control"
             placeholder="Credit Card Number"
             name="card_number"
@@ -68,6 +69,7 @@ function FundCard() {
           <div className="position-relative">
             <Input
               type={showCvv ? "text" : "password"}
+              inputMode="numeric"
               className="form-control"
               placeholder="CVV"
               name="security_code"
@@ -196,6 +198,7 @@ function FundCard() {
           <span>{CURRENCY_SYMBOL}</span>
           <Input
             type="text"
+            inputMode="decimal"
             id="transactionAmount"
             className="form-control"
             placeholder="Amount"

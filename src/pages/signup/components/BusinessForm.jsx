@@ -103,6 +103,7 @@ function Businessform(props) {
               />
               <Input
                 type="text"
+                inputMode="tel"
                 className="form-control"
                 placeholder="Mobile Number"
                 name="mobile_number"

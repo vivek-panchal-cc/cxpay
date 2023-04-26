@@ -7,9 +7,12 @@ import { useDispatch } from "react-redux";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { otpCounterTime } from "constants/all";
+import { useNavigate } from "react-router-dom";
 
 function VerifyLoginOtp(props) {
   const { mobileNumber, countryCode, setShow } = props;
+
+  const navigate = useNavigate();
 
   const [counter, setCounter] = useState(otpCounterTime);
   const [isTimerOver, setIsTimerOver] = useState(true);
@@ -52,8 +55,13 @@ function VerifyLoginOtp(props) {
         const { error, payload } = await dispatch(fetchLoginOtpVerify(values));
         if (error) throw payload;
       } catch (error) {
+        const { message = "", data } = error || {};
+        if (data && data.suspend_account) {
+          toast.error(message);
+          navigate("/login", { replace: true });
+        }
         resetForm();
-        setStatus(error);
+        if (typeof message === "string") setStatus(message);
       }
     },
   });

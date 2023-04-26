@@ -83,6 +83,7 @@ function ForgotPassword() {
                     <div className="col-8 px-0">
                       <Input
                         type="mobile"
+                        inputMode="tel"
                         className="form-control w-100"
                         placeholder="Mobile Number"
                         name="mobile_number"

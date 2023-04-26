@@ -7,11 +7,15 @@ import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import LeftArrow from "styles/svgs/LeftArrow";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserProfile } from "features/user/userProfileSlice";
 
 const Notification = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { is_email_verify } = useSelector((state) => state.userProfile.profile);
+  const { is_email_verify = true } = useSelector(
+    (state) => state.userProfile.profile
+  );
   const { setIsLoading } = useContext(LoaderContext);
   const [changeName, setChangeName] = useState("");
 
@@ -51,6 +55,7 @@ const Notification = () => {
     (async () => {
       setIsLoading(true);
       try {
+        await dispatch(fetchUserProfile());
         const { data } = await apiRequest.getCustomerNotification();
         if (!data.success) throw data.message;
         const notification = data.data?.customerNotificationData;

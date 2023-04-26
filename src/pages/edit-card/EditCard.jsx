@@ -168,6 +168,7 @@ function EditCard() {
                 <div className="col-lg-6 col-12 col-left col p-0">
                   <Input
                     type="text"
+                    inputMode="numeric"
                     className="form-control opacity-75"
                     placeholder="Credit Card Number"
                     name="card_number"

@@ -47,23 +47,7 @@ export default function EditGroup() {
           return;
         }
         const formData = new FormData();
-
-        // for (let key in values) {
-        //   if (key === "group_image") continue;
-        //   if (key === "contact") {
-        //     if (values[key].length > 0) {
-        //       values[key].forEach((contact) =>
-        //         formData.append("contact[]", contact)
-        //       );
-        //     }
-        //   } else {
-        //     formData.append(key, values[key]);
-        //   }
-        // }
-        // formData.append("group_image", values.group_image);
-
         const muValues = { ...values };
-
         if (values["contact"].length > 0) {
           const selectedContactArr = [];
           values["contact"].forEach((contact) =>
@@ -71,16 +55,17 @@ export default function EditGroup() {
           );
           muValues.contact = selectedContactArr;
         }
-
         for (const key in muValues)
           addObjToFormData(muValues[key], key, formData);
-
         const { data } = await apiRequest.updateGroup(formData);
         if (!data.success) throw data.message;
         toast.success(data.message);
         navigate("/send");
       } catch (error) {
-        console.log(error);
+        if (typeof error === "string") return console.log(error);
+        setErrors({
+          group_name: error?.group_name?.[0],
+        });
       }
     },
   });
