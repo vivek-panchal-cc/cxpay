@@ -32,7 +32,10 @@ function NotificationListItem(props) {
               <span class="text-start noti-time">{time}</span>
             )}
             {timeStampDirection === "DOWN" && (
-              <span class="text-end noti-time">{time}</span>
+              <span class="text-end noti-time">
+                {/* {timeStampToTimeString(1682490919)} */}
+                {time}
+              </span>
             )}
           </div>
         </div>

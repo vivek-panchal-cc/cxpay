@@ -90,7 +90,7 @@ function App() {
             <Route path="/wallet/view-card" element={<ViewCard />} />
             <Route path="/wallet/view-card/edit-card" element={<EditCard />} />
             <Route path="/wallet/bank-list" element={<BankList />} />
-            <Route path="/wallet/bank-list/edit-bank" element={<EditBank />} />
+            {/* <Route path="/wallet/bank-list/edit-bank" element={<EditBank />} /> */}
             <Route
               path="/wallet/fund-account/:fundtype?"
               element={<FundAccount />}

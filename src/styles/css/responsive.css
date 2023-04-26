@@ -698,7 +698,7 @@
     padding-right: 10px;
   }
   .profile-info-right-desc {
-    padding-left: 40px;
+    padding-left: 15px;
   }
   .profile-qr-inner img {
     max-width: 125px;
@@ -1272,6 +1272,18 @@
   .amt-with-currency span {
     top: 11.5px;
   }
+  /* CSS new updated logo left sidebar */
+  .dashboard-logo-wrap {
+    padding-top: 10px;
+    height: 155px;
+  }
+  .dashboard-link-wrap {
+    height: calc(100vh - 155px);
+    padding-bottom: 15px;
+  }
+  .profile-info-right-desc {
+    padding-left: 30px;
+  }
 }
 @media only screen and (max-width: 1199px) and (min-width: 992px) {
   .business-info-right .profile-qr {
@@ -1299,6 +1311,12 @@
   }
   .one-time-pay-wrap .amount > span {
     padding-right: 15px;
+  }
+  .pi-title-div {
+    width: 125px;
+  }
+  .profile-info-right-desc {
+    width: calc(100% - 125px);
   }
 }
 @media only screen and (max-width: 1100px) and (min-width: 992px) {
@@ -1359,12 +1377,6 @@
   .wallet-page .dashboard-notification-sec {
     flex: 0 0 auto;
     width: 29.66666667%;
-  }
-  .pi-title-div {
-    width: 125px;
-  }
-  .profile-info-right-desc {
-    width: calc(100% - 125px);
   }
   .wallet-card-add-btns a img,
   .wallet-title-btns a img {
@@ -1702,6 +1714,12 @@
   }
   .contact-top-btn-nav .con-btn-wrap .btn img {
     max-width: 23px;
+  }
+  .pi-title-div {
+    width: 120px;
+  }
+  .profile-info-right-desc {
+    width: calc(100% - 120px);
   }
 }
 @media only screen and (max-width: 1024px) {

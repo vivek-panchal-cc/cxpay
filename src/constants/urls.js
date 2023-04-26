@@ -59,6 +59,7 @@ export const API_ONBOARD_MARK_AS_READ = "/mark-as-read";
 export const API_ONBOARD_DELETE_NOTIFICATIONS = "/delete-notifications";
 export const API_ONBOARD_GET_COUNTRY_BANKS = "/get-country-banks";
 export const API_ONBOARD_RESEND_VERIFY_EMAIL = "/resend-verify-email";
+export const API_ONBOARD_DEACTIVATE_ACCOUNT = "/deactivate-account";
 
 // customer-transaction Urls
 export const API_TRANSACTION_ADD_FUND = "/add-fund";

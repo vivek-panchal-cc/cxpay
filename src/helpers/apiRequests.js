@@ -64,6 +64,7 @@ const API_getRemainingGroupContact =
   apiUrl.API_ONBOARD_GET_REMAINING_GROUP_CONTACT;
 const API_getCountryBanks = apiUrl.API_ONBOARD_GET_COUNTRY_BANKS;
 const API_resendVerifyEmail = apiUrl.API_ONBOARD_RESEND_VERIFY_EMAIL;
+const API_deactivateAccount = apiUrl.API_ONBOARD_DEACTIVATE_ACCOUNT;
 
 // TRANSACTION SERVICES
 const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
@@ -393,6 +394,12 @@ export const invitedConatcts = (params) => {
   return axiosOnboardInstance.post(`${API_invitedContactList}`, params);
 };
 
+// POST @deactivate-account
+// @params auth_token
+export const deactivateAccount = (params) => {
+  return axiosOnboardInstance.post(`${API_deactivateAccount}`, params);
+};
+
 // GET @get-charges
 // @params
 export const getCharges = (params) => {
@@ -495,4 +502,5 @@ export const apiRequest = {
   walletPersonalOtpVerify,
   resendWalletTransferOtp,
   resendVerifyEmail,
+  deactivateAccount,
 };

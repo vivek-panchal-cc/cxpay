@@ -145,13 +145,13 @@ const BankList = () => {
                     {getCapitalized(elm?.account_type) + " Account"}
                   </div>
                   {/* <div className="bank-bal-wrap">Balance : <span>0</span></div> */}
-                  <button
+                  {/* <button
                     type="button"
                     className="bank-del-wrap border-0"
                     onClick={() => handleEditBank(elm)}
                   >
                     <IconEdit style={{ stroke: "#9b9b9b" }} />
-                  </button>
+                  </button> */}
                   <div
                     className="bank-del-wrap"
                     onClick={() => handleOpenConfirmModal(elm.id)}
