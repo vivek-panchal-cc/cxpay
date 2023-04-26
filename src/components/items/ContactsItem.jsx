@@ -5,20 +5,16 @@ import { IconDelete } from "styles/svgs";
 
 const ContactsItem = (props) => {
   const { contact, selectedContacts, handleCallback } = props;
-  const {
-    handleFavContact,
-    handleOpenConfirmModal,
-    favIconShow,
-  } = useContext(ContactsContext);
+  const { handleFavContact, handleOpenConfirmModal, favIconShow } =
+    useContext(ContactsContext);
 
-  const {
-    handleSendContacts,
-  } = useContext(SendPaymentContext);
+  const { handleSendContacts } = useContext(SendPaymentContext);
 
   return (
     <li>
-      <div
+      <label
         className={`${contact?.name ? "con-listing-info" : "invited-con-info"}`}
+        htmlFor={contact?.account_number}
       >
         <div className="con-listing-check">
           <input
@@ -46,7 +42,7 @@ const ContactsItem = (props) => {
         ) : (
           contact?.mobile
         )}
-      </div>
+      </label>
       <div className="con-listing-phone">
         <p>{contact?.mobile}</p>
       </div>
@@ -63,7 +59,12 @@ const ContactsItem = (props) => {
               <img
                 src="assets/images/Star.svg"
                 onClick={() =>
-                  handleFavContact(contact?.mobile,contact?.country_code, 1, "contactsItem")
+                  handleFavContact(
+                    contact?.mobile,
+                    contact?.country_code,
+                    1,
+                    "contactsItem"
+                  )
                 }
                 className="star_border"
                 alt=""
@@ -73,7 +74,12 @@ const ContactsItem = (props) => {
                 src="assets/images/star_fill.svg"
                 className="star_fill"
                 onClick={() =>
-                  handleFavContact(contact?.mobile,contact?.country_code, 0, "contactsItem")
+                  handleFavContact(
+                    contact?.mobile,
+                    contact?.country_code,
+                    0,
+                    "contactsItem"
+                  )
                 }
                 alt=""
               />

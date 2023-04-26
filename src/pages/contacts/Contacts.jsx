@@ -130,22 +130,6 @@ const Contacts = () => {
                 </button>
               </div>
               <div className="con-btn-wrap con-invite-btn-wrap">
-                <ModalAddContact
-                  id="add_contact"
-                  show={show}
-                  setShow={setShow}
-                  getConatcts={retrieveContacts}
-                  getInvitedConatcts={[]}
-                  page={pagination?.current_page}
-                  search={search}
-                  contactData={contactData}
-                  setConatctData={setConatctData}
-                  showInvitationSentPopup={showInvitationSentPopup}
-                  setInvitationSentPopup={setInvitationSentPopup}
-                  showConatctDetailPopup={showConatctDetailPopup}
-                  setConatctDetailPopup={setConatctDetailPopup}
-                  {...{ invitetitle }}
-                />
                 <ContactDetail
                   id="contact_detail"
                   data={contactData}
@@ -220,6 +204,22 @@ const Contacts = () => {
           )}
         </div>
       </div>
+      <ModalAddContact
+        id="add_contact"
+        show={show}
+        setShow={setShow}
+        getConatcts={retrieveContacts}
+        getInvitedConatcts={[]}
+        page={pagination?.current_page}
+        search={search}
+        contactData={contactData}
+        setConatctData={setConatctData}
+        showInvitationSentPopup={showInvitationSentPopup}
+        setInvitationSentPopup={setInvitationSentPopup}
+        showConatctDetailPopup={showConatctDetailPopup}
+        setConatctDetailPopup={setConatctDetailPopup}
+        {...{ invitetitle }}
+      />
       <ModalConfirmation
         heading={"Delete Contact"}
         subHeading={`Are you sure to remove ${contactName} ?`}
