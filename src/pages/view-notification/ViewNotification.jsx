@@ -88,7 +88,7 @@ function ViewNotification(props) {
         <div className="notification-top-sec d-flex justify-content-between align-items-center">
           <div className="title-content-wrap">
             <h3>Notifications</h3>
-            <p>Lorem Ipsum Dolor</p>
+            <p> </p>
           </div>
           <div className="pr-4">
             {allNotifications && allNotifications.length > 0 && (

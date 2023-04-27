@@ -1,6 +1,6 @@
 import { ContactsContext } from "context/contactsContext";
 import React, { useContext } from "react";
-import { IconDelete } from "styles/svgs";
+import { IconBackgroundStar, IconDelete } from "styles/svgs";
 
 const InviteContactItem = (props) => {
   const { contact, selectedContacts, handleCallback } = props;
@@ -52,25 +52,11 @@ const InviteContactItem = (props) => {
       <div className="cont-listing-last-wrap">
         <div className="con-listing-edit-wrap">
           <a className="conlist-edit-a con-list-edit-star">
-            {!favIconShow && contact?.is_favourite === false ? (
-              <img
-                src="../assets/images/Star.svg"
-                onClick={() =>
-                  handleFavContact(contact?.mobile,contact?.country_code, 1, "inviteContactsItem")
-                }
-                className="star_border"
-                alt=""
-              />
-            ) : (
-              <img
-                src="../assets/images/star_fill.svg"
-                className="star_fill"
-                onClick={() =>
-                  handleFavContact(contact?.mobile,contact?.country_code, 0, "inviteContactsItem")
-                }
-                alt=""
-              />
-            )}
+            <IconBackgroundStar
+              fillBack={contact?.is_favourite ? "#F9DB3E" : "#F3F3F3"}
+              fillStar={contact?.is_favourite ? "#fff" : ""}
+              onClick={() => handleFavContact(contact, "inviteContactsItem")}
+            />
           </a>
           <button
             onClick={() =>

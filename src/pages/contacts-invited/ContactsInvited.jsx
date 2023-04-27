@@ -9,13 +9,13 @@ import ModalAddContact from "components/modals/ModalAddContact";
 import InviteContactItem from "components/items/InviteContactItem";
 import { ContactsContext } from "context/contactsContext";
 import { IconCross, IconSearch } from "styles/svgs";
+import LoaderContact from "loaders/LoaderContact";
 
 const Invited = () => {
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [invitetitle, setInviteTitle] = useState("Invite");
   const [show, setShow] = useState(false);
   const [page, setPage] = React.useState(1);
-  const [removeConfirmShow, setRemoveConfirmShow] = useState(false);
   const [showInvitationSentPopup, setInvitationSentPopup] = useState(false);
   const [showConatctDetailPopup, setConatctDetailPopup] = useState(false);
   const [contactData, setConatctData] = useState([]);
@@ -28,10 +28,15 @@ const Invited = () => {
     contactName,
     handleInvitedContacts,
     contactsInvited,
+    paginationInConts,
+    isLoadingInConts,
     isDisabled,
     handleChangeFilter,
     handleResetFilter,
     search,
+    removeConfirmShow,
+    setRemoveConfirmShow,
+    handleSelectedContacts,
   } = useContext(ContactsContext);
 
   const handleChange = async (e) => {
@@ -41,6 +46,7 @@ const Invited = () => {
     } else {
       setSelectedContacts(selectedContacts.filter((elm) => elm !== value));
     }
+    handleSelectedContacts(selectedContacts);
   };
 
   const handlePopupInvite = (e) => {
@@ -101,11 +107,16 @@ const Invited = () => {
             </div>
             <div className="con-btn-wrap con-remove-btn-wrap">
               <button
-                disabled={isDisabled()}
+                disabled={isDisabled && isDisabled()}
                 className="btn"
                 type="button"
                 value="Remove Contact"
-                onClick={() => handleRemoveConfirmModal(selectedContacts)}
+                onClick={() =>
+                  handleRemoveConfirmModal(
+                    selectedContacts,
+                    "inviteContactsItem"
+                  )
+                }
               >
                 <img src="../assets/images/Remove_icon.svg" alt="" />
                 <span>Remove Contact</span>
@@ -153,9 +164,20 @@ const Invited = () => {
         </div>
         <div className="con-listing-container">
           <ul className="contact-listing-wrap">
-            {contactsInvited?.contacts &&
-            contactsInvited.contacts.length > 0 ? (
-              contactsInvited.contacts.map((contact, index) => (
+            {isLoadingInConts ? (
+              <div className="d-flex flex-column gap-3 mt-4">
+                {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+                  <LoaderContact
+                    key={item}
+                    style={{
+                      background: item % 2 === 0 ? "#f6f6f670" : "#fafafa70",
+                      fill: "#000000",
+                    }}
+                  />
+                ))}
+              </div>
+            ) : contactsInvited && contactsInvited.length > 0 ? (
+              contactsInvited.map((contact, index) => (
                 <InviteContactItem
                   key={index}
                   contact={contact}
@@ -168,13 +190,13 @@ const Invited = () => {
             )}
           </ul>
         </div>
-        {contactsInvited &&
-          contactsInvited.pagination &&
-          contactsInvited.pagination.total > 10 && (
+        {!isLoadingInConts &&
+          paginationInConts &&
+          paginationInConts.total > 10 && (
             <Pagination
-              active={page}
-              size={contactsInvited?.pagination?.last_page}
               siblingCount={1}
+              active={paginationInConts?.current_page}
+              size={paginationInConts?.last_page}
               onClickHandler={handleInvitedContacts}
             ></Pagination>
           )}

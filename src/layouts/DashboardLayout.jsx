@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from "react";
 import LeftSidebar from "components/sidebar/LeftSidebar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { LoaderContext } from "context/loaderContext";
@@ -9,22 +9,26 @@ import { fetchGetNotifications } from "features/user/userNotificationSlice";
 
 function DashboardLayout() {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { setIsLoading } = useContext(LoaderContext);
   const notificationIntervalId = useRef();
 
   // Interval clling notification every 5 sec
   useEffect(() => {
-    // clear old interval
-    if (notificationIntervalId.current) {
-      clearInterval(notificationIntervalId.current);
-      notificationIntervalId.current = undefined;
-    }
-    // set new Interval
-    notificationIntervalId.current = setInterval(async () => {
+    // // clear old interval
+    // if (notificationIntervalId.current) {
+    //   clearInterval(notificationIntervalId.current);
+    //   notificationIntervalId.current = undefined;
+    // }
+    // // set new Interval
+    // notificationIntervalId.current = setInterval(async () => {
+    //   await dispatch(fetchGetNotifications(1));
+    // }, 5000);
+    // return () => clearInterval(notificationIntervalId.current);
+    (async () => {
       await dispatch(fetchGetNotifications(1));
-    }, 5000);
-    return () => clearInterval(notificationIntervalId.current);
-  }, []);
+    })();
+  }, [location.pathname]);
 
   useEffect(() => {
     (async () => {

@@ -136,6 +136,7 @@ const addBusinessUrlSchema = yup.object().shape({
 });
 
 const inviteContactSchema = yup.object().shape({
+  country_code: yup.string().required(""),
   email: yup.string().email("Please enter a valid email"),
   mobile: yup
     .string()

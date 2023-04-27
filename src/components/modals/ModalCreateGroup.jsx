@@ -28,7 +28,7 @@ const ModalCreateGroup = (props) => {
     validateOnChange: false, // this one
     validateOnBlur: false, // and this one
     validationSchema: createGroupSchema,
-    onSubmit: async (values, { resetForm, setStatus }) => {
+    onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
       setIsLoading(true);
       try {
         const formData = new FormData();
@@ -38,6 +38,7 @@ const ModalCreateGroup = (props) => {
         muValues.contact = contactArr;
         for (const key in muValues)
           addObjToFormData(muValues[key], key, formData);
+        formData.append("group_image", values.group_image);
         const { data } = await apiRequest.addGroup(formData);
         if (!data.success) throw data.message;
         toast.success(data.message);
@@ -45,7 +46,10 @@ const ModalCreateGroup = (props) => {
         setSelectedContacts([]);
         navigate("/send");
       } catch (error) {
-        console.log(error);
+        if (typeof error === "string") return toast.error(error);
+        setErrors({
+          group_name: error?.group_name?.[0],
+        });
       } finally {
         setIsLoading(false);
       }

@@ -33,6 +33,7 @@ function ModalAddContact(props) {
   const modalRef = useRef(null);
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       mobile: "",
       email: "",
@@ -40,7 +41,6 @@ function ModalAddContact(props) {
     },
     validationSchema: inviteContactSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
-      console.log(values);
       try {
         const { data } = await apiRequest.addContact(values);
         if (!data.success) throw data.message;

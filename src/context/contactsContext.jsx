@@ -1,82 +1,112 @@
 import { apiRequest } from "helpers/apiRequests";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import { LoaderContext } from "./loaderContext";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const ContactsContext = React.createContext({});
 
 const ContactsProvider = ({ children }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { setIsLoading } = useContext(LoaderContext);
   const [selectedContacts, setSelectedContacts] = useState([]);
-  const [favIconShow, setfavIconShow] = useState(false);
-  // Added Contacts and it's pagination
+  // Contacts and it's pagination
   const [contacts, setContacts] = useState([]);
-  const [pagination, setPagination] = useState({});
-  const [isLoadingContacts, setIsLoadingContacts] = useState(false);
-  // Invited Contacts
+  const [paginationConts, setPaginationConts] = useState({});
+  const [isLoadingConts, setIsLoadingConts] = useState(false);
+  // Invited Contacts and it's pagination
   const [contactsInvited, setContactsInvited] = useState([]);
+  const [paginationInConts, setPaginationInConts] = useState({});
+  const [isLoadingInConts, setIsLoadingInConts] = useState(false);
+  //
   const [search, setSearch] = useState("");
   const [contactsType, setContactsType] = useState([]);
   const [contactName, setContactName] = useState("");
   const [deleteContactArr, setDeleteContactArr] = useState([]);
   const [confirmShow, setConfirmShow] = useState(false);
-  const [contactsOrInvited, setContactsOrInvited] = useState("");
   const [removeConfirmShow, setRemoveConfirmShow] = useState(false);
   const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
 
+  // For changing fav contact in list
+  const bindFavouriteContact = (favCon = {}, type = "") => {
+    switch (type) {
+      case "contactsItem":
+        const muContacts = [...contacts]?.map((con) => {
+          if (
+            con.mobile === favCon.mobile &&
+            con.country_code === favCon.country_code
+          )
+            con.is_favourite = !con.is_favourite;
+          return con;
+        });
+        setContacts(muContacts);
+        return;
+      case "inviteContactsItem":
+        const muInvitedContacts = [...contactsInvited]?.map((con) => {
+          if (
+            con.mobile === favCon.mobile &&
+            con.country_code === favCon.country_code
+          )
+            con.is_favourite = !con.is_favourite;
+          return con;
+        });
+        setContactsInvited(muInvitedContacts);
+        return;
+      default:
+        return;
+    }
+  };
+
   //For add contacts to favourite list
-  const handleFavContact = async (mobile, country_code, remove_flg, type) => {
-    setIsLoading(true);
-
-    let reqData = {
-      country_code: country_code,
-      mobile: mobile,
-      mark_as_fav: remove_flg,
+  const handleFavContact = async (contact, type) => {
+    const reqData = {
+      country_code: contact.country_code,
+      mobile: contact.mobile,
+      mark_as_fav: contact.is_favourite ? 0 : 1,
     };
-
+    bindFavouriteContact(contact, type);
     try {
       const { data } = await apiRequest.markAsFavourite(reqData);
       if (!data.success) throw data.message;
-      if (type == "contactsItem") {
-        contacts?.contacts?.filter((con) => {
-          if (con.mobile == mobile && con.country_code == country_code) {
-            return (con.is_favourite = con.is_favourite ? false : true);
-          }
-        });
-        setContacts(contacts);
-      } else {
-        contactsInvited?.contacts?.filter((con) => {
-          if (con.mobile == mobile && con.country_code == country_code) {
-            return (con.is_favourite = con.is_favourite ? false : true);
-          }
-        });
-        setContactsInvited(contactsInvited);
-      }
-      setfavIconShow(favIconShow);
       toast.success(data.message);
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoading(false);
+      bindFavouriteContact(contact, type);
     }
   };
 
   // For getting contacts list
   const retrieveContacts = async (page = 1, search = "") => {
-    setIsLoadingContacts(true);
+    setIsLoadingConts(true);
     try {
       const { data } = await apiRequest.contactsList({ page, search });
       if (!data.success) throw data.message;
       const { contacts = [], pagination } = data.data || {};
-      setPagination(pagination);
+      setPaginationConts(pagination);
       setContacts(contacts);
     } catch (error) {
-      if (typeof error === "string") setContacts(null);
+      if (typeof error === "string") setContacts([]);
       console.log(error);
     } finally {
-      setIsLoadingContacts(false);
+      setIsLoadingConts(false);
+    }
+  };
+
+  // For getting invited contacts list
+  const handleInvitedContacts = async (page = 1, search) => {
+    setIsLoadingInConts(true);
+    try {
+      const { data } = await apiRequest.invitedContactsList({ page, search });
+      if (!data.success) throw data.message;
+      const { contacts = [], pagination } = data.data || {};
+      setContactsInvited(contacts);
+      setPaginationInConts(pagination);
+    } catch (error) {
+      console.log(error);
+      if (typeof error === "string") setContactsInvited([]);
+    } finally {
+      setIsLoadingInConts(false);
     }
   };
 
@@ -89,9 +119,10 @@ const ContactsProvider = ({ children }) => {
   };
 
   // For remove confirm popup
-  const handleRemoveConfirmModal = (idArr) => {
+  const handleRemoveConfirmModal = (idArr, type) => {
     setDeleteContactArr(idArr);
     setRemoveConfirmShow(true);
+    setContactsType(type);
   };
 
   // For delete contacts from the list
@@ -101,11 +132,11 @@ const ContactsProvider = ({ children }) => {
       let selectedConts = [];
       const accountNos = deleteContactArr;
       if (contactsType == "contactsItem") {
-        selectedConts = contacts?.contacts?.filter((con) =>
+        selectedConts = contacts?.filter((con) =>
           accountNos.includes(con.account_number)
         );
       } else {
-        selectedConts = contactsInvited?.contacts?.filter((con) =>
+        selectedConts = contactsInvited?.filter((con) =>
           accountNos.includes(con.mobile)
         );
       }
@@ -117,9 +148,9 @@ const ContactsProvider = ({ children }) => {
       if (!data.success) throw data.message;
 
       if (contactsType == "contactsItem") {
-        retrieveContacts(pagination?.current_page);
+        retrieveContacts(paginationConts?.current_page);
       } else {
-        handleInvitedContacts(pagination?.current_page);
+        handleInvitedContacts(paginationInConts?.current_page);
       }
       setSelectedContacts([]);
       toast.success(data.message);
@@ -139,32 +170,9 @@ const ContactsProvider = ({ children }) => {
     setSelectedContacts(contacts);
   };
 
-  // For getting invited contacts list
-  const handleInvitedContacts = async (currentPage = 1, search) => {
-    setIsLoading(true);
-    try {
-      const { data } = await apiRequest.invitedContactsList({
-        page: currentPage,
-        search: search,
-      });
-      if (!data.success) throw data.message;
-      setContactsOrInvited("invited");
-      // setPagination(currentPage);
-      setContactsInvited(data.data);
-    } catch (error) {
-      console.log(error);
-      if (typeof error === "string") {
-        setContactsOrInvited("invited");
-        setContactsInvited(null);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   // For disable remove contact button
   const isDisabled = () => {
-    const len = selectedContacts.filter((conatct) => conatct).length;
+    const len = selectedContacts.length;
     return len === 0;
   };
 
@@ -173,9 +181,9 @@ const ContactsProvider = ({ children }) => {
     const val = e.target.value;
     setSearch(val);
     if (type == "contactsItem") {
-      retrieveContacts(pagination?.current_page, val);
+      retrieveContacts(paginationConts?.current_page, val);
     } else {
-      handleInvitedContacts(pagination?.currentPage, val);
+      handleInvitedContacts(paginationInConts?.currentPage, val);
     }
   };
 
@@ -204,6 +212,10 @@ const ContactsProvider = ({ children }) => {
     } catch (error) {}
   };
 
+  useEffect(() => {
+    setSelectedContacts([]);
+  }, [location.pathname]);
+
   return (
     <ContactsContext.Provider
       value={{
@@ -216,16 +228,19 @@ const ContactsProvider = ({ children }) => {
         setConfirmShow,
         setRemoveConfirmShow,
         removeConfirmShow,
-        favIconShow,
         // contacts
         contacts,
-        pagination,
-        isLoadingContacts,
+        paginationConts,
+        isLoadingConts,
+        // invited contacts
+        contactsInvited,
+        paginationInConts,
+        isLoadingInConts,
+        //
         retrieveContacts,
         handleSelectedContacts,
         contactsType,
         handleInvitedContacts,
-        contactsInvited,
         isDisabled,
         handleChangeFilter,
         handleResetFilter,

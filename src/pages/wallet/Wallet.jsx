@@ -77,7 +77,7 @@ function Wallet() {
             <div className="wallet-title-wrap w-100">
               <div className="wallet-title-container">
                 <h2>Wallet</h2>
-                <p>Lorem Ipsum Dolor Sit Amet</p>
+                <p> </p>
               </div>
               <div className="wallet-title-btns">
                 <Link

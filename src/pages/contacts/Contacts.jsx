@@ -26,8 +26,8 @@ const Contacts = () => {
     handleSelectedContacts,
     retrieveContacts,
     contacts,
-    pagination,
-    isLoadingContacts,
+    paginationConts,
+    isLoadingConts,
     isDisabled,
     handleChangeFilter,
     handleResetFilter,
@@ -119,11 +119,13 @@ const Contacts = () => {
               </div>
               <div className="con-btn-wrap con-remove-btn-wrap">
                 <button
-                  disabled={isDisabled()}
+                  disabled={isDisabled && isDisabled()}
                   className="btn"
                   type="button"
                   value="Remove Contact"
-                  onClick={() => handleRemoveConfirmModal(selectedContacts)}
+                  onClick={() =>
+                    handleRemoveConfirmModal(selectedContacts, "contactsItem")
+                  }
                 >
                   <img src="assets/images/Remove_icon.svg" alt="" />
                   <span>Remove Contact</span>
@@ -168,7 +170,7 @@ const Contacts = () => {
           </div>
           <div className="con-listing-container">
             <ul className="contact-listing-wrap">
-              {isLoadingContacts ? (
+              {isLoadingConts ? (
                 <div className="d-flex flex-column gap-3 mt-4">
                   {[1, 2, 3, 4, 5, 6, 7].map((item) => (
                     <LoaderContact
@@ -194,11 +196,11 @@ const Contacts = () => {
               )}
             </ul>
           </div>
-          {pagination && pagination.total > 10 && (
+          {!isLoadingConts && paginationConts && paginationConts.total > 10 && (
             <Pagination
               siblingCount={1}
-              active={pagination?.current_page}
-              size={pagination?.last_page}
+              active={paginationConts?.current_page}
+              size={paginationConts?.last_page}
               onClickHandler={retrieveContacts}
             ></Pagination>
           )}
@@ -210,7 +212,7 @@ const Contacts = () => {
         setShow={setShow}
         getConatcts={retrieveContacts}
         getInvitedConatcts={[]}
-        page={pagination?.current_page}
+        page={paginationConts?.current_page}
         search={search}
         contactData={contactData}
         setConatctData={setConatctData}

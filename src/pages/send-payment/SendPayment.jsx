@@ -32,6 +32,7 @@ function SendPayment(props) {
   const [showOtpPoup, setShowOtpPopup] = useState(false);
   const [showSentPopup, setShowSentPopup] = useState(false);
   const [moneySentMsg, setMoneySentMsg] = useState("");
+  const [moneySentPopupUrl, setMoneySentPopupUrl] = useState("");
   const [paymentDetails, setPaymentDetails] = useState({
     allCharges: [],
     grandTotal: 0.0,
@@ -91,6 +92,7 @@ function SendPayment(props) {
       if (!data.success) throw data;
       toast.success(data.message);
       setMoneySentMsg(data.message);
+      setMoneySentPopupUrl("/assets/images/sent-payment-pop.svg");
       setShowSentPopup(true);
       return true;
     } catch (error) {
@@ -98,9 +100,14 @@ function SendPayment(props) {
       const { wrong_otp_attempts } = data || {};
       if (wrong_otp_attempts && wrong_otp_attempts >= 3) {
         handleCancelPayment([]);
+        toast.error(message);
         navigate("/send", { replace: true });
       }
-      if (typeof message === "string") toast.error(message);
+      if (typeof message === "string" && !wrong_otp_attempts) {
+        setMoneySentMsg(message);
+        setMoneySentPopupUrl("/assets/images/sent-payment-failed-pop.svg");
+        setShowSentPopup(true);
+      }
       return false;
     } finally {
       setIsLoading(false);
@@ -168,7 +175,7 @@ function SendPayment(props) {
         allowClickOutSide={true}
         setShow={setShowOtpPopup}
         heading="OTP Verification"
-        headingImg="/assets/images/send-payment-pop.svg"
+        headingImg={moneySentPopupUrl}
         subHeading="We have sent you verification code to initiate payment. Enter OTP below"
         validationSchema={sendPaymentOtpSchema}
         handleSubmitOtp={handleSubmitOtp}

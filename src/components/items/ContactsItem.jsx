@@ -1,11 +1,11 @@
 import { ContactsContext } from "context/contactsContext";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import React, { useContext } from "react";
-import { IconDelete } from "styles/svgs";
+import { IconBackgroundStar, IconDelete } from "styles/svgs";
 
 const ContactsItem = (props) => {
   const { contact, selectedContacts, handleCallback } = props;
-  const { handleFavContact, handleOpenConfirmModal, favIconShow } =
+  const { handleFavContact, handleOpenConfirmModal } =
     useContext(ContactsContext);
 
   const { handleSendContacts } = useContext(SendPaymentContext);
@@ -55,35 +55,11 @@ const ContactsItem = (props) => {
       <div className="cont-listing-last-wrap">
         <div className="con-listing-edit-wrap">
           <a className="conlist-edit-a con-list-edit-star">
-            {!favIconShow && contact?.is_favourite === false ? (
-              <img
-                src="assets/images/Star.svg"
-                onClick={() =>
-                  handleFavContact(
-                    contact?.mobile,
-                    contact?.country_code,
-                    1,
-                    "contactsItem"
-                  )
-                }
-                className="star_border"
-                alt=""
-              />
-            ) : (
-              <img
-                src="assets/images/star_fill.svg"
-                className="star_fill"
-                onClick={() =>
-                  handleFavContact(
-                    contact?.mobile,
-                    contact?.country_code,
-                    0,
-                    "contactsItem"
-                  )
-                }
-                alt=""
-              />
-            )}
+            <IconBackgroundStar
+              fillBack={contact?.is_favourite ? "#F9DB3E" : "#F3F3F3"}
+              fillStar={contact?.is_favourite ? "#fff" : ""}
+              onClick={() => handleFavContact(contact, "contactsItem")}
+            />
           </a>
           <button
             onClick={() =>

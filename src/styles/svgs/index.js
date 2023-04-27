@@ -46,3 +46,4 @@ export { default as IconNotifyMoneySent } from "./NotifyMoneySent";
 export { default as IconNotifyMoneyRequest } from "./NotifyMoneyRequest";
 export { default as IconNotifyMoneyRecieved } from "./NotifyMoneyRecieved";
 export { default as IconNotifyMoneySentFailed } from "./NotifyMoneySentFailed";
+export { default as IconBackgroundStar } from "./BackgroundStar";

@@ -301,7 +301,7 @@ function SendContact() {
           }}
         />
         <ContactsSelection.Footer>
-          {isLoadingContacts ? (
+          {isLoadingGroups ? (
             <LoaderSendContactButtons />
           ) : (
             <>
