@@ -11,7 +11,6 @@ import ModalAddContact from "components/modals/ModalAddContact";
 import { ContactsContext } from "context/contactsContext";
 import ContactsItem from "components/items/ContactsItem";
 import { IconCross, IconSearch } from "styles/svgs";
-import { LoaderContext } from "context/loaderContext";
 import LoaderContact from "loaders/LoaderContact";
 
 const Contacts = () => {
@@ -33,8 +32,6 @@ const Contacts = () => {
     handleResetFilter,
     search,
   } = useContext(ContactsContext);
-  const { setIsLoading } = useContext(LoaderContext);
-
   const [invitetitle, setInviteTitle] = useState("Invite");
   const [show, setShow] = useState(false);
   const [showCreateGroupPopup, setShowCreateGroupPopup] = useState(false);
@@ -83,10 +80,11 @@ const Contacts = () => {
           </div>
           <div className="contact-top-search-sec d-flex align-items-center">
             <div className="contact-serch-main">
-              <form>
+              <form onSubmit={(e) => e.preventDefault()}>
                 <div className="form-field search-field">
                   <div
-                    className="js-clearSearchBox clearsearchbox"
+                    className="clearsearchbox"
+                    style={{ opacity: search ? 1 : 0 }}
                     onClick={() => handleResetFilter("contactsItem")}
                   >
                     <IconCross />
@@ -212,9 +210,6 @@ const Contacts = () => {
         setShow={setShow}
         getConatcts={retrieveContacts}
         getInvitedConatcts={[]}
-        page={paginationConts?.current_page}
-        search={search}
-        contactData={contactData}
         setConatctData={setConatctData}
         showInvitationSentPopup={showInvitationSentPopup}
         setInvitationSentPopup={setInvitationSentPopup}

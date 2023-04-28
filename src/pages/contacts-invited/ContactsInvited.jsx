@@ -15,7 +15,6 @@ const Invited = () => {
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [invitetitle, setInviteTitle] = useState("Invite");
   const [show, setShow] = useState(false);
-  const [page, setPage] = React.useState(1);
   const [showInvitationSentPopup, setInvitationSentPopup] = useState(false);
   const [showConatctDetailPopup, setConatctDetailPopup] = useState(false);
   const [contactData, setConatctData] = useState([]);
@@ -72,10 +71,11 @@ const Invited = () => {
         </div>
         <div className="contact-top-search-sec d-flex align-items-center">
           <div className="contact-serch-main">
-            <form>
+            <form onSubmit={(e) => e.preventDefault()}>
               <div className="form-field search-field">
                 <div
                   className="js-clearSearchBox clearsearchbox"
+                  style={{ opacity: search ? 1 : 0 }}
                   onClick={() => handleResetFilter("inviteContactsItem")}
                 >
                   <IconCross />
@@ -129,9 +129,6 @@ const Invited = () => {
                 setShow={setShow}
                 getConatcts={[]}
                 getInvitedConatcts={handleInvitedContacts}
-                page={page}
-                search={search}
-                contactData={contactData}
                 setConatctData={setConatctData}
                 showInvitationSentPopup={showInvitationSentPopup}
                 setInvitationSentPopup={setInvitationSentPopup}

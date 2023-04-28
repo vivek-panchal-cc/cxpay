@@ -15,14 +15,11 @@ function ModalAddContact(props) {
     show,
     setShow,
     invitetitle,
-    contactData,
     setConatctData,
     setInvitationSentPopup,
     setConatctDetailPopup,
     getConatcts,
     getInvitedConatcts,
-    page,
-    search,
     isInvitedFlag = false,
   } = props;
   const navigate = useNavigate();

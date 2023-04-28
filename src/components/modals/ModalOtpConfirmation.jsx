@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
 import InputOtp from "components/ui/InputOtp";
 import { otpCounterTime } from "constants/all";
 import { useFormik } from "formik";
@@ -19,21 +25,20 @@ function ModalOtpConfirmation(props) {
     validationSchema,
     allowClickOutSide,
   } = props;
+
   const modalRef = useRef(null);
 
   const [counter, setCounter] = useState(otpCounterTime);
   const [isActive, setIsActive] = useState(true);
 
-  const resendOtp = async () => {
+  const resendOtp = useCallback(async () => {
     try {
       setIsActive(false);
       await handleResendOtp();
       setCounter(otpCounterTime);
       setIsActive(true);
-    } catch (error) {
-    } finally {
-    }
-  };
+    } catch (error) {}
+  }, [handleResendOtp, otpCounterTime]);
 
   // For set counter for given time
   useEffect(() => {
@@ -73,14 +78,15 @@ function ModalOtpConfirmation(props) {
       otp: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values, { resetForm, setValues }) => {
+    onSubmit: async (values, { resetForm, setValues, setErrors }) => {
       try {
         const result = await handleSubmitOtp(values.otp);
-        if (!result) return setValues({ otp: "" });
+        if (!result) throw result;
         setIsActive(false);
         setShow(false);
         resetForm();
       } catch (error) {
+        resetForm();
         console.log(error);
       }
     },
@@ -96,14 +102,19 @@ function ModalOtpConfirmation(props) {
     setIsActive(true);
   }, [show]);
 
-  let formattedNumber = (counter % 60).toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  });
-  let counterTime =
-    Math.floor(counter / 60) + ":" + (formattedNumber ? formattedNumber : "00");
+  const counterTime = useMemo(() => {
+    const formattedNumber = (counter % 60).toLocaleString("en-US", {
+      minimumIntegerDigits: 2,
+      useGrouping: false,
+    });
+    const counterTime =
+      Math.floor(counter / 60) +
+      ":" +
+      (formattedNumber ? formattedNumber : "00");
+    return counterTime;
+  }, [counter]);
 
-  if (!show) return;
+  if (!show) return null;
   return (
     <div
       className={`test modal fade show ${styles.modal} ${className}`}

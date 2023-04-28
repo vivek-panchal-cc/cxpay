@@ -23,7 +23,7 @@ ContactsSelection.Header = (props) => {
         <h3>{heading}</h3>
         <p>{subHeading}</p>
       </div>
-      <form>
+      <form onSubmit={(e) => e.preventDefault()}>
         <div className="form-field search-field">
           <div
             className="clearsearchbox"

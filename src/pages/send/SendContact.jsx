@@ -48,13 +48,11 @@ function SendContact() {
   const handleResetContactData = () => {
     setSearchContactText("");
     setCurrentPage(1);
-    getInviteContactList(1, "");
   };
 
   const handleResetGroupData = () => {
     setSearchGroupText("");
     setGroupCurrentPage(1);
-    getGroupsList(1, "");
   };
 
   const getInviteContactList = async (page, search) => {
@@ -179,7 +177,7 @@ function SendContact() {
       getInviteContactList(1, searchContactText);
     }, 1000);
     return () => clearTimeout(timeOut);
-  }, [searchContactText]);
+  }, [searchContactText.toString().trim()]);
 
   // Debouncing for groups
   useEffect(() => {
@@ -192,7 +190,7 @@ function SendContact() {
       getGroupsList(1, searchGroupText);
     }, 1000);
     return () => clearTimeout(timeOut);
-  }, [searchGroupText]);
+  }, [searchGroupText.toString().trim()]);
 
   useEffect(() => {
     if (!showCreateGroupPopup) getGroupsList(1, searchGroupText);

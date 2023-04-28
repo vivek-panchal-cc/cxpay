@@ -180,21 +180,13 @@ const ContactsProvider = ({ children }) => {
   const handleChangeFilter = (e, type) => {
     const val = e.target.value;
     setSearch(val);
-    if (type == "contactsItem") {
-      retrieveContacts(paginationConts?.current_page, val);
-    } else {
-      handleInvitedContacts(paginationInConts?.currentPage, val);
-    }
+    setContactsType(type);
   };
 
   // For handle reset filter of bith contacts or invite contacts
   const handleResetFilter = (type) => {
     setSearch("");
-    if (type == "contactsItem") {
-      retrieveContacts();
-    } else {
-      handleInvitedContacts();
-    }
+    setContactsType(type);
   };
 
   const deleteGroupData = () => {
@@ -211,6 +203,21 @@ const ContactsProvider = ({ children }) => {
       navigate("/send");
     } catch (error) {}
   };
+
+  useEffect(() => {
+    if (search === "") {
+      if (contactsType == "contactsItem")
+        retrieveContacts(paginationConts?.current_page, search);
+      else handleInvitedContacts(paginationInConts?.currentPage, search);
+      return;
+    }
+    const timeOut = setTimeout(() => {
+      if (contactsType == "contactsItem")
+        retrieveContacts(paginationConts?.current_page, search);
+      else handleInvitedContacts(paginationInConts?.currentPage, search);
+    }, 1000);
+    return () => clearTimeout(timeOut);
+  }, [search.trim()]);
 
   useEffect(() => {
     setSelectedContacts([]);

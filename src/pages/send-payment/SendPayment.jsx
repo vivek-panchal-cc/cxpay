@@ -102,12 +102,12 @@ function SendPayment(props) {
         handleCancelPayment([]);
         toast.error(message);
         navigate("/send", { replace: true });
-      }
-      if (typeof message === "string" && !wrong_otp_attempts) {
+      } else if (typeof message === "string" && !wrong_otp_attempts) {
         setMoneySentMsg(message);
         setMoneySentPopupUrl("/assets/images/sent-payment-failed-pop.svg");
         setShowSentPopup(true);
-      }
+        return false;
+      } else if (typeof message === "string") toast.error(message);
       return false;
     } finally {
       setIsLoading(false);
@@ -175,20 +175,20 @@ function SendPayment(props) {
         allowClickOutSide={true}
         setShow={setShowOtpPopup}
         heading="OTP Verification"
-        headingImg={moneySentPopupUrl}
+        headingImg="/assets/images/sent-payment-otp-pop.svg"
         subHeading="We have sent you verification code to initiate payment. Enter OTP below"
         validationSchema={sendPaymentOtpSchema}
         handleSubmitOtp={handleSubmitOtp}
         handleResendOtp={handleResendOtp}
       />
-      {/* Moadal For Money Sent successfully */}
+      {/* Modal For Money Sent successfully */}
       <ModalAlert
         id="money_sent_modal"
         className="money-sent-modal"
         show={showSentPopup}
         heading="Money Sent"
         subHeading={moneySentMsg}
-        headingImg="/assets/images/sent-payment-pop.svg"
+        headingImg={moneySentPopupUrl}
         btnText="Done"
         handleBtnClick={handleCancelPayment}
       />
