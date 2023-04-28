@@ -9,23 +9,8 @@ import {
   IconSetting,
   IconWallet,
 } from "styles/svgs";
-// import "../../assets/css/bootstrap.min.css";
-// import "../../assets/css/style.css";
-// import "../../assets/css/responsive.css";
 
 const Sidebar = () => {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [error, setError] = useState("");
-  // const [loading, setLoading] = useState(false);
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   console.log("Username:", email);
-  //   console.log("Password:", password);
-  //   setError("");
-  //   setLoading(true);
-
   //   if (!email || !password) {
   //     setError("email and password are required");
   //     setLoading(false);

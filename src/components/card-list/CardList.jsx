@@ -52,7 +52,7 @@ const CardList = (props) => {
       >
         <div className="swiper-wrapper">
           {cardsList?.map((elm, i) => (
-            <SwiperSlide key={"swiper" + i}>
+            <SwiperSlide key={`swiper${elm.card_number}`}>
               <Card
                 customClass={customClass}
                 cardBgImg={elm.image}

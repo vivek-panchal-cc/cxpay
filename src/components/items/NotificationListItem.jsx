@@ -13,7 +13,7 @@ function NotificationListItem(props) {
     Icon,
     timeStampDirection = "UP" | "DOWN",
   } = props;
-  const { id, message, status, time } = notification || {};
+  const { message, status, time } = notification || {};
 
   return (
     <li className={status ? "" : "un-read-notification"}>
@@ -29,13 +29,10 @@ function NotificationListItem(props) {
                 <br />
               </p> */}
             {timeStampDirection === "UP" && (
-              <span class="text-start noti-time">{time}</span>
+              <span className="text-start noti-time">{time}</span>
             )}
             {timeStampDirection === "DOWN" && (
-              <span class="text-end noti-time">
-                {/* {timeStampToTimeString(1682490919)} */}
-                {time}
-              </span>
+              <span className="text-end noti-time">{time}</span>
             )}
           </div>
         </div>

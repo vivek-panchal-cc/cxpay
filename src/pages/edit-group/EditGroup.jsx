@@ -3,18 +3,17 @@ import InputFile from "components/ui/InputImage";
 import { useFormik } from "formik";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import styles from "../contacts/addGroup.css";
-import "./editGroup.css";
 import EditGroupList from "components/lists/EditGroupList";
 import { createGroupSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { LoaderContext } from "context/loaderContext";
 import { MAX_GROUP_MEMBERS } from "constants/all";
 import { ContactsContext } from "context/contactsContext";
 import { addObjToFormData } from "helpers/commonHelpers";
+import "./editGroup.css";
 
 export default function EditGroup() {
   let { id } = useParams();

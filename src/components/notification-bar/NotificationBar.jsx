@@ -3,7 +3,6 @@ import NotificationDropdown from "./notification-dropdown/NotificationDropdown";
 import ProfileDropdown from "./profile-dropdown/ProfileDropdown";
 
 const NotificationBar = (props) => {
-  const { issearchbarvisible = false } = props;
   const navbarRef = useRef(null);
 
   useEffect(() => {

@@ -73,8 +73,11 @@ function ForgotPassword() {
                         }
                       >
                         <option value={""}>Country</option>
-                        {countryList?.map((country, index) => (
-                          <option value={country.phonecode} key={index}>
+                        {countryList?.map((country) => (
+                          <option
+                            value={country.phonecode}
+                            key={country.phonecode}
+                          >
                             {country.phonecode} &nbsp; {country.country_name}
                           </option>
                         ))}

@@ -1,6 +1,5 @@
+import React, { useContext, useEffect, useState } from "react";
 import { LoaderContext } from "context/loaderContext";
-import React, { useCallback, useContext, useEffect } from "react";
-import { useState } from "react";
 
 function InputImage(props) {
   const {
@@ -44,15 +43,6 @@ function InputImage(props) {
     setPreview(previewSrc || fallbackSrc);
   };
 
-  const handleFocusBack = useCallback(() => {
-    handleChange({ currentTarget: { files: [] } });
-    window.removeEventListener("focus", handleFocusBack);
-  }, [onChange]);
-
-  const clickedFileInput = useCallback(() => {
-    window.addEventListener("focus", handleFocusBack);
-  }, [handleFocusBack]);
-
   return (
     <div className={`upload-profile-image text-center ${className}`}>
       <label
@@ -62,18 +52,14 @@ function InputImage(props) {
         {showPreview && (
           <span
             className={`${
-              showPreview != null
-                ? typeof showPreview === "string" &&
-                  showPreview.includes("group-icon-image.png")
-                  ? ""
-                  : "profile-wrap"
-                : ""
+              typeof showPreview === "string" &&
+              showPreview.includes("group-icon-image.png")
+                ? ""
+                : "profile-wrap"
             }  overflow-hidden mx-auto ${classNameBorder} ${
-              isGroup
-                ? preview.includes("group-icon-image.png")
-                  ? ""
-                  : "profile-wrap profile-user-up-img"
-                : ""
+              !isGroup || preview.includes("group-icon-image.png")
+                ? ""
+                : "profile-wrap profile-user-up-img"
             }`}
           >
             <img

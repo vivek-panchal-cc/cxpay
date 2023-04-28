@@ -3,7 +3,7 @@ import React from "react";
 
 function InvitationSent(props) {
   const { id, show, setShow, handleClose } = props;
-  // if (!show) return;
+
   return (
     <Modal id={id} show={show} setShow={setShow}>
       <div

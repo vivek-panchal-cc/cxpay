@@ -40,7 +40,7 @@ function SelectCard() {
             {cardsList && cardsList.length > 0 ? (
               cardsList.map((item, index) => (
                 <CreditCard
-                  key={`${item.card_number}${index}`}
+                  key={`${item.card_number}`}
                   index={`${item.card_number}${index}`}
                   item={item}
                   defaultText={"Selected"}

@@ -40,7 +40,7 @@ function Breadcrumb(props) {
     <div {...props}>
       <ul className="breadcrumb">
         {crumbs.map((item, index) => (
-          <li key={`${item.url}-${index}`} className="text-capitalize">
+          <li key={`${item.url}`} className="text-capitalize">
             {index < crumbs.length - 1 ? (
               <Link to={item.url} replace>
                 {item.title}

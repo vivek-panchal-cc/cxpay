@@ -24,7 +24,7 @@ function FundAccount(props) {
       case FUND_BANK:
         return <FundBankTransfer />;
       default:
-        <></>;
+        return <></>;
     }
   };
 

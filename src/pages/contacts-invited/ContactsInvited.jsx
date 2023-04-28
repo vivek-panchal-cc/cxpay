@@ -10,6 +10,7 @@ import InviteContactItem from "components/items/InviteContactItem";
 import { ContactsContext } from "context/contactsContext";
 import { IconCross, IconSearch } from "styles/svgs";
 import LoaderContact from "loaders/LoaderContact";
+import { uniqueId } from "helpers/commonHelpers";
 
 const Invited = () => {
   const [selectedContacts, setSelectedContacts] = useState([]);
@@ -26,7 +27,7 @@ const Invited = () => {
     setConfirmShow,
     contactName,
     handleInvitedContacts,
-    contactsInvited,
+    contactsInvited = [],
     paginationInConts,
     isLoadingInConts,
     isDisabled,
@@ -173,16 +174,17 @@ const Invited = () => {
                   />
                 ))}
               </div>
-            ) : contactsInvited && contactsInvited.length > 0 ? (
-              contactsInvited.map((contact, index) => (
+            ) : (
+              contactsInvited?.map((contact) => (
                 <InviteContactItem
-                  key={index}
+                  key={uniqueId()}
                   contact={contact}
                   handleCallback={handleChange}
                   selectedContacts={selectedContacts}
                 />
               ))
-            ) : (
+            )}
+            {contactsInvited.length <= 0 && (
               <p className="text-center">Contacts Not Found.</p>
             )}
           </ul>

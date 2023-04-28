@@ -1,10 +1,8 @@
 import Modal from "components/modals/Modal";
 import React from "react";
-// import { IconRequest, IconSend } from "styles/svgs";
 
 function ContactDetail(props) {
   const { id, show, setShow, data, handleClose } = props;
-  // if (!show) return;
   return (
     <Modal id={id} show={show} setShow={setShow}>
       <div className="con-details-modal" id="con-details-popup" role="dialog">

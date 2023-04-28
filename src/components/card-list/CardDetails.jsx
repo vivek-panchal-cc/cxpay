@@ -2,19 +2,12 @@ import React from "react";
 
 function CardDetails(props) {
   const {
-    billing_address,
     card_holder_first_name,
     card_holder_last_name,
     card_number,
-    city,
-    color,
-    country,
-    email,
     expiry_date,
-    id,
-    image,
-    mark_as_default,
   } = props.card;
+
   return (
     <div className="wc-details-wrap">
       <div className="card-detail js-card-section d-block" id="cardId_0">

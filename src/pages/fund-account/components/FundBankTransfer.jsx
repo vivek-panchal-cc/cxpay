@@ -108,8 +108,8 @@ function FundBankTransfer(props) {
                     error={formik.touched.bank_name && formik.errors.bank_name}
                   >
                     <option value={""}>Select Bank</option>
-                    {banksList?.map((bank, index) => (
-                      <option key={index} value={bank.id}>
+                    {banksList?.map((bank) => (
+                      <option key={bank.id} value={bank.id}>
                         {bank.bank_name}
                       </option>
                     ))}
@@ -123,11 +123,7 @@ function FundBankTransfer(props) {
                   type="text"
                   inputMode="numeric"
                   className="form-control"
-                  placeholder={
-                    formik.values.account_type === "savings"
-                      ? "Routing Number"
-                      : "Routing Number"
-                  }
+                  placeholder={"Routing Number"}
                   name="routing_number"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -231,8 +227,8 @@ function FundBankTransfer(props) {
                   error={formik.touched.country && formik.errors.country}
                 >
                   <option value={""}>Select Country</option>
-                  {countryList?.map((country, index) => (
-                    <option key={index} value={country.iso}>
+                  {countryList?.map((country) => (
+                    <option key={country.iso} value={country.iso}>
                       {country.country_name}
                     </option>
                   ))}
@@ -248,8 +244,8 @@ function FundBankTransfer(props) {
                   error={formik.touched.city && formik.errors.city}
                 >
                   <option value={""}>Select City</option>
-                  {cityList[formik.values.country]?.map((city, index) => (
-                    <option key={index} value={city.city_name}>
+                  {cityList[formik.values.country]?.map((city) => (
+                    <option key={city.city_name} value={city.city_name}>
                       {city.city_name}
                     </option>
                   ))}

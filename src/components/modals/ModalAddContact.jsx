@@ -46,7 +46,6 @@ function ModalAddContact(props) {
           data.data.alreadyInvited === false
         ) {
           setIsShowContactPopup(false);
-          //getConatcts(page, search);
           if (data.data.contactDetails) {
             setConatctData(data.data.contactDetails);
             setConatctDetailPopup(true);
@@ -60,7 +59,6 @@ function ModalAddContact(props) {
             setConatctData("");
             setInvitationSentPopup(true);
             setShow(false);
-            //getInvitedConatcts(1,'')
             if (isInvitedFlag) {
               getInvitedConatcts(1, "");
             } else {
@@ -132,8 +130,11 @@ function ModalAddContact(props) {
                         disabled={true}
                       >
                         <option value={""}>Country</option>
-                        {countryList?.map((country, index) => (
-                          <option value={country.phonecode} key={index}>
+                        {countryList?.map((country) => (
+                          <option
+                            value={country.phonecode}
+                            key={country.phonecode}
+                          >
                             {country.phonecode} &nbsp; {country.country_name}
                           </option>
                         ))}

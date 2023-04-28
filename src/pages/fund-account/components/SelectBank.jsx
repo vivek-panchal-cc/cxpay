@@ -40,7 +40,7 @@ function SelectBank() {
             {banksList && banksList.length > 0 ? (
               banksList.map((item, index) => (
                 <BankCard
-                  key={`${item.id}${index}`}
+                  key={`${item.id}`}
                   index={`${item.id}${index}`}
                   item={item}
                   defaultText={"Selected"}

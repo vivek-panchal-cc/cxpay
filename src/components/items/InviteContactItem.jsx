@@ -4,7 +4,7 @@ import { IconBackgroundStar, IconDelete } from "styles/svgs";
 
 const InviteContactItem = (props) => {
   const { contact, selectedContacts, handleCallback } = props;
-  const { handleFavContact, handleOpenConfirmModal, favIconShow } =
+  const { handleFavContact, handleOpenConfirmModal } =
     useContext(ContactsContext);
 
   return (

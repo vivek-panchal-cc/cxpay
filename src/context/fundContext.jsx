@@ -112,18 +112,12 @@ const FundProvider = ({ children }) => {
 
   const integrateCardDetails = (card) => {
     if (!card || Object.keys(card).length <= 0) return;
-    // const LocationCreds = getCountryCityCreds(
-    //   countryList,
-    //   card.country,
-    //   card.city
-    // );
     const date = new Date();
     const moyr = card?.expiry_date?.split("/").map((item) => parseInt(item));
     date.setFullYear(moyr[1], moyr[0] - 1);
     const muValues = Object.assign(
       { ...formik.values },
       {
-        // ...LocationCreds,
         country: card.country,
         city: card.city,
         email: card.email,
@@ -170,15 +164,9 @@ const FundProvider = ({ children }) => {
 
   const integrateBankDetails = (bank) => {
     if (!bank || Object.keys(bank).length <= 0) return;
-    // const LocationCreds = getCountryCityCreds(
-    //   countryList,
-    //   bank.country,
-    //   bank.city
-    // );
     const muValues = Object.assign(
       { ...formik.values },
       {
-        // ...LocationCreds,
         country: bank.country,
         city: bank.city,
         email: bank.email,
@@ -241,7 +229,6 @@ const FundProvider = ({ children }) => {
       !params.fundtype
     )
       return;
-    // const LocationCreds = getCountryCityCreds(countryList, country, city);
     const muValues = Object.assign(
       { ...initialValues },
       { country, city, email }
@@ -357,21 +344,10 @@ const FundProvider = ({ children }) => {
       >
         <AccountFundedPopup {...fundedDetails} />
       </Modal>
-      {params.fundtype === FUND_CARD ? (
-        selectExistingCard ? (
-          <SelectCard />
-        ) : (
-          children
-        )
-      ) : params.fundtype === FUND_BANK ? (
-        selectExistingBank ? (
-          <SelectBank />
-        ) : (
-          children
-        )
-      ) : (
-        children
-      )}
+      {params.fundtype === FUND_CARD &&
+        (selectExistingCard ? <SelectCard /> : children)}
+      {params.fundtype === FUND_BANK &&
+        (selectExistingBank ? <SelectBank /> : children)}
     </FundContext.Provider>
   );
 };

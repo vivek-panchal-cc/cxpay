@@ -17,9 +17,9 @@ function CustomizePalette(props) {
     <div className="add-card-color-wrap">
       <p>Customize</p>
       <ul className="radio-group-wrap">
-        {colorsPallette?.map((colorPal, index) => (
+        {colorsPallette?.map((colorPal) => (
           <li
-            key={index}
+            key={colorPal}
             className={`radio-group-inner ${
               color === colorPal ? "selected" : ""
             }`}

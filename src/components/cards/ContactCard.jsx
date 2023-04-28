@@ -13,7 +13,7 @@ const ContactCard = (props) => {
     fallbackImgUrl,
     className = "",
   } = props;
-  const { id, title, imgUrl, bgColor } = renameKeys(alias, item);
+  const { id, title, imgUrl } = renameKeys(alias, item);
   const isChecked = selectedList.includes(id.toString());
   return (
     <div className={className}>

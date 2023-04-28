@@ -11,15 +11,12 @@ import useCountriesCities from "hooks/useCountriesCities";
 function InviteContact(props) {
   const {
     invitetitle,
-    contactData,
     setConatctData,
     setInvitationSentPopup,
     setConatctDetailPopup,
     setShow,
     getConatcts,
     getInvitedConatcts,
-    page,
-    search,
     isInvitedFlag = false,
   } = props;
   const navigate = useNavigate();
@@ -44,7 +41,6 @@ function InviteContact(props) {
           data.data.alreadyInvited === false
         ) {
           setIsShowContactPopup(false);
-          //getConatcts(page, search);
           if (data.data.contactDetails) {
             setConatctData(data.data.contactDetails);
             setConatctDetailPopup(true);
@@ -77,20 +73,6 @@ function InviteContact(props) {
 
   return (
     <>
-      {/* <InvitationSent
-        id="invitation_sent"
-        show={showInvitationSentPopup}
-        setShow={setInvitationSentPopup}
-        handleClose={setShow}
-      />
-      <ContactDetail
-        id="contact_detail"
-        data={contactAddedData}
-        show={showConatctDetailPopup}
-        setShow={setConatctDetailPopup}
-        handleClose={setShow}
-      /> */}
-
       <div
         className="invite-contact-modal contact-pg-popup"
         style={{ visibility: isShowContactPopup ? "visible" : "hidden" }}
@@ -124,8 +106,11 @@ function InviteContact(props) {
                       disabled={true}
                     >
                       <option value={""}>Country</option>
-                      {countryList?.map((country, index) => (
-                        <option value={country.phonecode} key={index}>
+                      {countryList?.map((country) => (
+                        <option
+                          value={country.phonecode}
+                          key={country.phonecode}
+                        >
                           {country.phonecode} &nbsp; {country.country_name}
                         </option>
                       ))}

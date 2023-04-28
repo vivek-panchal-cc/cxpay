@@ -2,7 +2,6 @@ import React from "react";
 import { usePopperTooltip } from "react-popper-tooltip";
 
 function Tooltip({ tooltipText, isVisible }) {
-  //   const [isVisible, setIsVisible] = useState(true);
   const {
     getArrowProps,
     getTooltipProps,

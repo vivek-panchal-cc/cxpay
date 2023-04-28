@@ -17,10 +17,10 @@ function InputOtp(props) {
   const [otpInputs, setOtpInputs] = useState({});
 
   useEffect(() => {
-    const otps = inputArr.reduce(
-      (acc, curr) => ((acc[`otp${curr}`] = value.charAt(curr)), acc),
-      {}
-    );
+    const otps = inputArr.reduce((acc, curr) => {
+      acc[`otp${curr}`] = value.charAt(curr);
+      return acc;
+    }, {});
     setOtpInputs(otps);
   }, [value, inputArr]);
 
@@ -59,9 +59,9 @@ function InputOtp(props) {
         </label>
       )}
       <div className="d-flex">
-        {inputArr?.map((item, index) => (
+        {inputArr?.map((item) => (
           <input
-            key={index}
+            key={item}
             type="text"
             min={0}
             max={9}

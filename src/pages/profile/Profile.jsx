@@ -5,8 +5,6 @@ import ProfileInfo from "./components/ProfileInfo";
 import QrCode from "./components/QrCode";
 import "./profile.css";
 import ModalConfirmation from "components/modals/ModalConfirmation";
-import { apiRequest } from "helpers/apiRequests";
-import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
 import { fetchDeactivateAccount } from "features/user/userProfileSlice";
 
@@ -68,10 +66,10 @@ const Profile = () => {
         <div className="profile-bottom-info-sec">
           <ProfileInfo profile={profile} />
         </div>
-        <div class="profile-del-acc-btn mt-4 mt-lg-5">
+        <div className="profile-del-acc-btn mt-4 mt-lg-5">
           <button
             type="button"
-            class="btn"
+            className="btn"
             onClick={handleInitiateDeleteAccount}
           >
             Delete Account

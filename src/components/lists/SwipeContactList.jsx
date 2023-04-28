@@ -1,3 +1,4 @@
+import { uniqueId } from "helpers/commonHelpers";
 import LoaderSendContact from "loaders/LoaderSendContact";
 import React, { useEffect, useState } from "react";
 import { A11y, Navigation, Scrollbar } from "swiper";
@@ -111,8 +112,8 @@ const SwipeContactList = (props) => {
         onSwiper={(swiper) => setSwiperRef(swiper)}
       >
         <div className={`swiper-wrapper ${className}`}>
-          {swiperList?.map((item, index) => (
-            <SwiperSlide key={index}>
+          {swiperList?.map((item) => (
+            <SwiperSlide key={uniqueId()}>
               <ListItemComponent
                 item={item}
                 selectedList={selectedList}

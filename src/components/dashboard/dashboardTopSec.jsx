@@ -7,7 +7,6 @@ import {
   IconSearch,
   IconSetting,
 } from "styles/svgs";
-// import { deleteCookie } from "shared/cookies";
 
 const dashboardTopSec = () => {
   return (

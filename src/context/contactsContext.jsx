@@ -84,7 +84,7 @@ const ContactsProvider = ({ children }) => {
       if (!data.success) throw data.message;
       const { contacts = [], pagination } = data.data || {};
       setPaginationConts(pagination);
-      setContacts(contacts);
+      setContacts(contacts || []);
     } catch (error) {
       if (typeof error === "string") setContacts([]);
       console.log(error);
@@ -94,13 +94,13 @@ const ContactsProvider = ({ children }) => {
   };
 
   // For getting invited contacts list
-  const handleInvitedContacts = async (page = 1, search) => {
+  const handleInvitedContacts = async (page = 1, search = "") => {
     setIsLoadingInConts(true);
     try {
       const { data } = await apiRequest.invitedContactsList({ page, search });
       if (!data.success) throw data.message;
       const { contacts = [], pagination } = data.data || {};
-      setContactsInvited(contacts);
+      setContactsInvited(contacts || []);
       setPaginationInConts(pagination);
     } catch (error) {
       console.log(error);
@@ -195,7 +195,7 @@ const ContactsProvider = ({ children }) => {
 
   const deleteGroup = async (id) => {
     try {
-      var param = { group_id: id };
+      const param = { group_id: id };
       const { data } = await apiRequest.deleteGroup(param);
       if (!data.success) throw data.message;
       setShowDeleteGroupPopup(false);

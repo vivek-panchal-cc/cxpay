@@ -10,8 +10,8 @@ import {
 const exp0ContainWhitespace = /^\S*$/;
 const exp0ContainWordPassword = /^((?!password).)*$/gim;
 const expContainCapitalLetter = /^(?=.*[A-Z])/;
-const expContainNumber = /^(?=.*[0-9])/;
-const expContainSpecialChar = /^(?=.*[!@#\$%\^&\*])/;
+const expContainNumber = /^(?=.*\d)/;
+const expContainSpecialChar = /^(?=.*[!@#$%^&*])/;
 const validFileExtensions = {
   image: ["jpg", "png", "jpeg", "svg", "heif", "hevc"],
 };

@@ -4,6 +4,7 @@ import { IconCardBackground } from "styles/svgs";
 function CreditCard(props) {
   const { card_number, expiry_date, card_holder_name, color, bg_img } =
     props.details || {};
+  const holderName = card_holder_name || "XXXXXX";
 
   return (
     <div
@@ -26,11 +27,9 @@ function CreditCard(props) {
         className="card-holder-nm overflow-hidden"
         style={{ maxHeight: "40%", textOverflow: "ellipsis" }}
       >
-        {card_holder_name
-          ? card_holder_name.length > 25
-            ? card_holder_name.slice(0, 25).toUpperCase() + "..."
-            : card_holder_name.toUpperCase()
-          : "XXXXXX"}
+        {holderName.length > 25
+          ? holderName.slice(0, 25).toUpperCase() + "..."
+          : holderName.toUpperCase()}
       </p>
       <div className="card-num-date">
         <p className="">

@@ -1,7 +1,7 @@
 const nAgt = navigator.userAgent;
-var browserName = navigator.appName;
-var fullVersion = "" + parseFloat(navigator.appVersion);
-var nameOffset, verOffset, ix;
+let browserName = navigator.appName;
+let fullVersion = "" + parseFloat(navigator.appVersion);
+let nameOffset, verOffset, ix;
 
 // In Opera, the true version is after "OPR" or after "Version"
 if ((verOffset = nAgt.indexOf("OPR")) !== -1) {

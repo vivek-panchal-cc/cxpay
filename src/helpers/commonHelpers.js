@@ -71,4 +71,9 @@ const timeStampToTimeString = (tstamp) => {
   return `Just now`;
 };
 
-export { getChargedAmount, addObjToFormData, timeStampToTimeString };
+const uniqueId = () => {
+  const randomStr = Math.random().toString().replace(".", "");
+  return randomStr.slice(0, 8);
+};
+
+export { getChargedAmount, addObjToFormData, timeStampToTimeString, uniqueId };

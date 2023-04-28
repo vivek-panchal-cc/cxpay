@@ -1,4 +1,3 @@
-import Image from "components/ui/Image";
 import React from "react";
 import { IconCardBackground } from "styles/svgs";
 

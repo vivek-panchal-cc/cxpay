@@ -205,8 +205,8 @@ function PersonalForm(props) {
                   error={formik.touched.country && formik.errors.country}
                 >
                   <option value={""}>Select Country</option>
-                  {countryList?.map((country, index) => (
-                    <option key={index} value={country.iso}>
+                  {countryList?.map((country) => (
+                    <option key={country.iso} value={country.iso}>
                       {country.country_name}
                     </option>
                   ))}
@@ -222,8 +222,8 @@ function PersonalForm(props) {
                   error={formik.touched.city && formik.errors.city}
                 >
                   <option value={""}>Select City</option>
-                  {cityList[formik.values.country]?.map((city, index) => (
-                    <option key={index} value={city.city_name}>
+                  {cityList[formik.values.country]?.map((city) => (
+                    <option key={city.city_name} value={city.city_name}>
                       {city.city_name}
                     </option>
                   ))}

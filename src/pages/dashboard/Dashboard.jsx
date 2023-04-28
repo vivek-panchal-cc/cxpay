@@ -3,12 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "components/dashboard/sidebar.jsx";
 import RecentActivity from "components/dashboard/recentActivity";
 import RecentContactSlider from "components/dashboard/recentContactSlider";
-// import "/assets/images/card-5.png" from "/assets/images/card-5.png";
-// import "/assets/images/card-6.png" from "/assets/images/card-6.png";
-// import "/assets/images/user-image-logged-in.png" from "/assets/images/user-image-logged-in.png";
-// import "/assets/images/dashaboard-button-toggle.png" from "/assets/images/dashaboard-button-toggle.png";
-// import "/assets/images/dashaboard-logo.png" from "/assets/images/dashaboard-logo.png";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteCookie } from "shared/cookies";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import {

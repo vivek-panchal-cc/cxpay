@@ -1,5 +1,5 @@
 import Input from "components/ui/Input";
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { IconSearch } from "styles/svgs";
 import styles from "./modal.module.scss";
 import "./contactList.css";
@@ -17,27 +17,30 @@ function ContactListingModal(props) {
     handleCallback,
     groupId,
     selectedItem,
-    getItem,
     selectedFullItem,
     alldata,
   } = props;
   const modalRef = useRef(null);
+  const { setIsLoading } = useContext(LoaderContext);
   const [remainingContactListing, setRemainingContactListing] = useState([]);
   const [selectedRemainingContact, setSelectedRemainingContact] = useState([]);
   const [selectedFullContactArray, setSelectedFullContactArray] = useState([]);
   const [searchContactName, setSearchContactName] = useState("");
   const [currentListPage, setCurrentListPage] = useState(1);
   const [listingTotalData, setListingTotalData] = useState(0);
-  var getCurrentData = alldata.filter((item) =>
-    selectedRemainingContact.includes(item.account_number)
-  );
-  getCurrentData = getCurrentData.map((item) => item.member_mobile_number);
+
+  const getCurrentData = useMemo(() => {
+    const tmp = alldata.filter((item) =>
+      selectedRemainingContact.includes(item.account_number)
+    );
+    return tmp.map((item) => item.member_mobile_number);
+  }, [alldata, selectedRemainingContact]);
+
   const searchContactData = (e) => {
     setSearchContactName(e.target.value);
     retriveRemainingContact(1, e.target.value);
     setCurrentListPage(1);
   };
-  const { setIsLoading } = useContext(LoaderContext);
 
   const handleResetContactData = () => {
     setSearchContactName("");
@@ -65,14 +68,14 @@ function ContactListingModal(props) {
 
   const handleChange = async (e) => {
     const checked = e.target.checked;
-    var value = e.target.value;
+    const value = e.target.value;
     let selectedArray = [];
     if (checked) {
       selectedArray = [...selectedRemainingContact, value];
     } else {
       selectedArray = selectedRemainingContact.filter((elm) => elm !== value);
     }
-    var fullArray = remainingContactListing.filter((item) =>
+    const fullArray = remainingContactListing.filter((item) =>
       selectedArray.includes(item.account_number)
     );
     setSelectedRemainingContact(selectedArray);
@@ -88,6 +91,7 @@ function ContactListingModal(props) {
       }
     }
   };
+
   const retriveRemainingContact = async (page, searchText) => {
     try {
       setIsLoading(true);
@@ -100,7 +104,7 @@ function ContactListingModal(props) {
       setListingTotalData(data.data.pagination.total);
       let filterData = [];
       data.data.remain_contacts.forEach((item) => {
-        var findElement = 0;
+        let findElement = 0;
         alldata.forEach((elm) => {
           if (item.member_email == elm.member_email) {
             findElement = 1;
@@ -113,7 +117,7 @@ function ContactListingModal(props) {
       if (page == 1) {
         setRemainingContactListing(filterData);
       } else {
-        var allData2 = remainingContactListing.concat(filterData);
+        const allData2 = remainingContactListing.concat(filterData);
         setRemainingContactListing(allData2);
       }
     } catch (error) {

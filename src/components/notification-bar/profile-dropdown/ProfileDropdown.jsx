@@ -57,10 +57,10 @@ const ProfileDropdown = () => {
           </span>
         </div>
         <ul ref={dropdownref} style={{ display: showDrop ? "block" : "none" }}>
-          {profileDropItems.map((elm, index) => (
+          {profileDropItems.map((elm) => (
             <ProfileDropItem
+              key={elm.path}
               path={elm.path}
-              key={index}
               onClick={() => setShowDrop(false)}
             >
               {elm.icon}

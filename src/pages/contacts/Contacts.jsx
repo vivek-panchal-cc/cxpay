@@ -12,6 +12,7 @@ import { ContactsContext } from "context/contactsContext";
 import ContactsItem from "components/items/ContactsItem";
 import { IconCross, IconSearch } from "styles/svgs";
 import LoaderContact from "loaders/LoaderContact";
+import { uniqueId } from "helpers/commonHelpers";
 
 const Contacts = () => {
   const {
@@ -24,7 +25,7 @@ const Contacts = () => {
     removeConfirmShow,
     handleSelectedContacts,
     retrieveContacts,
-    contacts,
+    contacts = [],
     paginationConts,
     isLoadingConts,
     isDisabled,
@@ -180,16 +181,17 @@ const Contacts = () => {
                     />
                   ))}
                 </div>
-              ) : contacts && contacts?.length > 0 ? (
-                contacts.map((contact, index) => (
+              ) : (
+                contacts?.map((contact) => (
                   <ContactsItem
-                    key={index}
+                    key={uniqueId()}
                     contact={contact}
                     handleCallback={handleChange}
                     selectedContacts={selectedContacts}
                   />
                 ))
-              ) : (
+              )}
+              {contacts.length <= 0 && (
                 <p className="text-center">Contacts Not Found.</p>
               )}
             </ul>

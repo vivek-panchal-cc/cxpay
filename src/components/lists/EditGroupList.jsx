@@ -99,7 +99,6 @@ const EditGroupList = (props) => {
       setShowDeleteGroupPopup(true);
     } else {
       setShowDeletePopup(true);
-      // deleteMember(memberAccountNumber, memberMobileNumber);
     }
   };
   const deleteCurrentGroup = async (id) => {
@@ -123,11 +122,10 @@ const EditGroupList = (props) => {
         member_account_number: [memberAccountNumber],
       });
       if (!data.success) throw data.message;
-      var contactData = contactsList.filter(
+      const contactData = contactsList.filter(
         (obj) => obj.member_account_number !== memberAccountNumber
       );
       setData(contactData);
-      //selectedItems(contactData);
       deleteCurrentGroup(groupId);
     } catch (error) {
       setShowDeleteGroupPopup(false);
@@ -144,7 +142,7 @@ const EditGroupList = (props) => {
           member_account_number: [memberAccountNumber],
         });
         if (!data.success) throw data.message;
-        var contactData = contactsList.filter(
+        const contactData = contactsList.filter(
           (obj) => obj.member_account_number !== memberAccountNumber
         );
         setData(contactData);
@@ -154,13 +152,13 @@ const EditGroupList = (props) => {
         setShowDeletePopup(false);
       }
     } else {
-      var contactData = contactsList.filter(
+      const contactData = contactsList.filter(
         (obj) => obj.member_mobile_number !== memberMobileNumber
       );
       setData(contactData);
       setShowDeletePopup(false);
     }
-    var index = getItem.indexOf(memberMobileNumber);
+    const index = getItem.indexOf(memberMobileNumber);
     if (index > -1) {
       // only splice array when item is found
       getItem.splice(index, 1); // 2nd parameter means remove one item only
@@ -183,7 +181,7 @@ const EditGroupList = (props) => {
       >
         <div className="swiper-wrapper">
           {contactsList?.map((elm, i) => (
-            <SwiperSlide key={"swiper" + i}>
+            <SwiperSlide key={elm.member_account_number}>
               <div className="eg-wrap-main">
                 <a
                   className="eg-close-btn"
