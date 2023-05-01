@@ -64,6 +64,7 @@ const FUND_CARD = "credit-card";
 const FUND_CASH = "cash-credit";
 const FUND_BANK = "bank-transfer";
 const MAX_PAYMENT_CONTACTS = 30;
+const MAX_REQUEST_CONTACTS = 30;
 const MAX_GROUP_MEMBERS = 30;
 
 // Rename Keys with provided alias
@@ -124,6 +125,7 @@ export {
   FUND_BANK,
   MAX_GROUP_MEMBERS,
   MAX_PAYMENT_CONTACTS,
+  MAX_REQUEST_CONTACTS,
   CXPAY_LOGO,
 };
 export {

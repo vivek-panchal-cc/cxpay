@@ -52,7 +52,7 @@ function LeftSidebar() {
             </Link>
           </li>
           <li className={`${thisRoute === "request" ? "active" : ""}`}>
-            <Link to="/" replace>
+            <Link to="/request" replace>
               <IconRequest />
               <span>Request</span>
             </Link>

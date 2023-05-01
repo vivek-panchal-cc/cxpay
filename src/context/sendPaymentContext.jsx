@@ -1,4 +1,8 @@
-import { MAX_PAYMENT_CONTACTS, renameKeys } from "constants/all";
+import {
+  MAX_PAYMENT_CONTACTS,
+  MAX_REQUEST_CONTACTS,
+  renameKeys,
+} from "constants/all";
 import { apiRequest } from "helpers/apiRequests";
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -11,9 +15,11 @@ const SendPaymentProvider = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { setIsLoading } = useContext(LoaderContext);
+  const { state } = location;
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState([]);
   const [sendCreds, setSendCreds] = useState({ wallet: [] });
+  const [requestCreds, setRequestCreds] = useState({});
   const [charges, setCharges] = useState([]);
 
   // For Send contacts button click
@@ -64,6 +70,26 @@ const SendPaymentProvider = ({ children }) => {
     navigate("/send-payment");
   };
 
+  // For Send Request to contacts, request button click
+  const handleSendRequest = (contacts = null) => {
+    const sendRequestList =
+      contacts && contacts.length > 0 ? contacts : selectedContacts;
+    if (!sendRequestList || sendRequestList.length <= 0)
+      return toast.warning("Please select at least one contact");
+    if (sendRequestList.length > MAX_REQUEST_CONTACTS)
+      return toast.warning(`You have exceed the contact limit.`);
+    const alias = {
+      account_number: "receiver_account_number",
+    };
+    const listAlias = sendRequestList.map((item) => ({
+      ...renameKeys(alias, item),
+      personal_amount: "",
+      amount: "",
+    }));
+    setRequestCreds({ wallet: listAlias });
+    navigate("/send-request");
+  };
+
   // For making change (like remove) in the selected contacts
   const handleSendCreds = (credsContacts) => {
     setSendCreds((cs) => ({ ...cs, wallet: credsContacts }));
@@ -112,11 +138,26 @@ const SendPaymentProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (!sendCreds || sendCreds.length <= 0) return;
+    if (!sendCreds || !sendCreds.wallet || sendCreds.wallet.length <= 0) return;
     (async () => {
       await getPaymentCharges();
     })();
   }, [sendCreds]);
+
+  useEffect(() => {
+    if (!state) return;
+    const { contacts = [] } = state;
+    if (!contacts || !contacts.length) return;
+    const alias = {
+      account_number: "receiver_account_number",
+    };
+    const listAlias = contacts.map((item) => ({
+      ...renameKeys(alias, item),
+      personal_amount: "",
+      specifications: "",
+    }));
+    setRequestCreds(listAlias);
+  }, [state]);
 
   useEffect(() => {
     if (location.pathname && location.pathname.includes("/contacts"))
@@ -128,12 +169,14 @@ const SendPaymentProvider = ({ children }) => {
       value={{
         handleSelectedContacts,
         handleSelectedGroup,
+        handleCancelPayment,
         handleSendContacts,
+        handleSendRequest,
         handleSendGroup,
         handleSendCreds,
-        handleCancelPayment,
         selectedContacts,
         selectedGroup,
+        requestCreds,
         sendCreds,
         charges,
       }}

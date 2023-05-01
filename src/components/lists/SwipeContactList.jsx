@@ -113,7 +113,7 @@ const SwipeContactList = (props) => {
       >
         <div className={`swiper-wrapper ${className}`}>
           {swiperList?.map((item) => (
-            <SwiperSlide key={uniqueId()}>
+            <SwiperSlide key={() => uniqueId()}>
               <ListItemComponent
                 item={item}
                 selectedList={selectedList}

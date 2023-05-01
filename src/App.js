@@ -28,14 +28,15 @@ import BankList from "pages/bank-list/BankList";
 import { storageRequest } from "helpers/storageRequests";
 import EditCard from "pages/edit-card/EditCard";
 import EditBank from "pages/edit-bank/EditBank";
-import Send from "pages/send/SendContact";
+import SendContact from "pages/send/SendContact";
 import EditGroup from "pages/edit-group/EditGroup";
 import FundAccount from "pages/fund-account/FundAccount";
 import SignupFundAccount from "pages/signup/components/SignupFundAccount";
 import ViewNotification from "pages/view-notification/ViewNotification";
-import SendPaymentLayout from "layouts/SendPaymentLayout";
 import SendPayment from "pages/send-payment/SendPayment";
+import RequestContact from "pages/request/RequestContact";
 import ContactsLayout from "layouts/ContactsLayout";
+import SendRequest from "pages/send-request/SendRequest";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -102,8 +103,10 @@ function App() {
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/contacts-invited" element={<ContactsInvited />} />
               <Route path="/edit-group/:id" element={<EditGroup />} />
-              <Route path="/send" element={<Send />} />
+              <Route path="/send" element={<SendContact />} />
+              <Route path="/request" element={<RequestContact />} />
               <Route path="/send-payment" element={<SendPayment />} />
+              <Route path="/send-request" element={<SendRequest />} />
             </Route>
             <Route path="/view-notification" element={<ViewNotification />} />
           </Route>

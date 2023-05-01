@@ -1,9 +1,11 @@
 import { ContactsContext } from "context/contactsContext";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { IconBackgroundStar, IconDelete } from "styles/svgs";
 
 const ContactsItem = (props) => {
+  const navigate = useNavigate();
   const { contact, selectedContacts, handleCallback } = props;
   const { handleFavContact, handleOpenConfirmModal } =
     useContext(ContactsContext);
@@ -81,9 +83,18 @@ const ContactsItem = (props) => {
           >
             Send
           </button>
-          <a href="/" className="btn btn-primary con-req-btn">
+          <button
+            className="btn btn-primary con-req-btn"
+            onClick={() => {
+              navigate("/request", {
+                state: {
+                  contacts: ["HELLO", "WORLD"],
+                },
+              });
+            }}
+          >
             Request
-          </a>
+          </button>
         </div>
       </div>
     </li>

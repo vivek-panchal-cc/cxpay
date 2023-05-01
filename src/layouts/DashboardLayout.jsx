@@ -12,7 +12,10 @@ function DashboardLayout() {
   const location = useLocation();
   const { setIsLoading } = useContext(LoaderContext);
   const notificationIntervalId = useRef();
-
+  const classNamePage = {
+    "/send": "send-page-wrapper",
+    "/request": "send-page-wrapper",
+  };
   // Interval clling notification every 5 sec
   useEffect(() => {
     // // clear old interval
@@ -47,7 +50,7 @@ function DashboardLayout() {
           </div>
           <div
             className={`col-xs-12 col-lg-9 dashboard-right-sec min-vh-100 ${
-              window.location.pathname == "/send" ? "send-page-wrapper" : ""
+              classNamePage[location.pathname]
             }`}
           >
             <div className="mobile-toggle">
