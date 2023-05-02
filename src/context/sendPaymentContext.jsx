@@ -160,7 +160,12 @@ const SendPaymentProvider = ({ children }) => {
   }, [state]);
 
   useEffect(() => {
-    if (location.pathname && location.pathname.includes("/contacts"))
+    if (
+      location.pathname &&
+      (location.pathname.includes("/contacts") ||
+        location.pathname.includes("/send") ||
+        location.pathname.includes("/request"))
+    )
       handleCancelPayment();
   }, [location.pathname]);
 
