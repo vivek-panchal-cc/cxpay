@@ -31,8 +31,11 @@ function SendPayment(props) {
 
   const [showOtpPoup, setShowOtpPopup] = useState(false);
   const [showSentPopup, setShowSentPopup] = useState(false);
-  const [moneySentMsg, setMoneySentMsg] = useState("");
-  const [moneySentPopupUrl, setMoneySentPopupUrl] = useState("");
+  const [sentDetail, setSentDetail] = useState({
+    heading: "",
+    message: "",
+    url: "",
+  });
   const [paymentDetails, setPaymentDetails] = useState({
     allCharges: [],
     grandTotal: 0.0,
@@ -91,20 +94,27 @@ function SendPayment(props) {
       });
       if (!data.success) throw data;
       toast.success(data.message);
-      setMoneySentMsg(data.message);
-      setMoneySentPopupUrl("/assets/images/sent-payment-pop.svg");
+      setSentDetail({
+        heading: "Money Sent",
+        message: data.message,
+        url: "/assets/images/sent-payment-pop.svg",
+      });
       setShowSentPopup(true);
       return true;
     } catch (error) {
       const { message, data } = error || {};
       const { wrong_otp_attempts } = data || {};
       if (wrong_otp_attempts && wrong_otp_attempts >= 3) {
-        handleCancelPayment([]);
+        handleCancelPayment();
         toast.error(message);
         navigate("/send", { replace: true });
       } else if (typeof message === "string" && !wrong_otp_attempts) {
-        setMoneySentMsg(message);
-        setMoneySentPopupUrl("/assets/images/sent-payment-failed-pop.svg");
+        setShowOtpPopup(false);
+        setSentDetail({
+          heading: message,
+          message: "",
+          url: "/assets/images/sent-payment-failed-pop.svg",
+        });
         setShowSentPopup(true);
         return false;
       } else if (typeof message === "string") toast.error(message);
@@ -186,9 +196,9 @@ function SendPayment(props) {
         id="money_sent_modal"
         className="money-sent-modal"
         show={showSentPopup}
-        heading="Money Sent"
-        subHeading={moneySentMsg}
-        headingImg={moneySentPopupUrl}
+        heading={sentDetail.heading}
+        subHeading={sentDetail.message}
+        headingImg={sentDetail.url}
         btnText="Done"
         handleBtnClick={handleCancelPayment}
       />
@@ -243,22 +253,33 @@ function SendPayment(props) {
                 {/* <!-- payment blocks footer section starts --> */}
                 <div className="payment-footer-block">
                   <ul>
+                    <li>
+                      <div className="payment-footer-col-label">Amount</div>
+                      <div className="amount-currency-wrap">
+                        <h4 className="amount">
+                          <span>{CURRENCY_SYMBOL}</span>
+                          {paymentDetails?.total?.toFixed(2)}
+                        </h4>
+                      </div>
+                    </li>
                     {paymentDetails?.allCharges?.map((item, index) => (
                       <li key={index}>
                         <div className="payment-footer-col-label">
                           {item?.desc}
                         </div>
                         <h4 className="amount">
-                          <span>{CURRENCY_SYMBOL}</span>{" "}
+                          <span>{CURRENCY_SYMBOL}</span>
                           {item?.amount?.toFixed(2)}
                         </h4>
                       </li>
                     ))}
                     <li>
-                      <div className="payment-footer-col-label">Total</div>
+                      <div className="payment-footer-col-label">
+                        Net Payable
+                      </div>
                       <div className="amount-currency-wrap">
                         <h4 className="amount">
-                          <span>{CURRENCY_SYMBOL}</span>{" "}
+                          <span>{CURRENCY_SYMBOL}</span>
                           {paymentDetails?.grandTotal?.toFixed(2)}
                         </h4>
                       </div>

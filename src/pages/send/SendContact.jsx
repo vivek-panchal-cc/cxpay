@@ -63,8 +63,6 @@ function SendContact() {
       if (!data.success) throw data.message;
       const appContacts = data?.data?.app_contacts || [];
       const cList = page === 1 ? appContacts : contactsList.concat(appContacts);
-      const selecteds = selectedContacts?.map((item) => item?.account_number);
-      setSelectedContactsIds(selecteds);
       setTotalInvitedData(data.data?.pagination?.total);
       setContactsList(cList);
     } catch (error) {
@@ -165,6 +163,12 @@ function SendContact() {
       : [];
     handleSelectedGroup && handleSelectedGroup(sgrps);
   };
+
+  // Pre-selecting contacts
+  useEffect(() => {
+    const selecteds = selectedContacts?.map((item) => item?.account_number);
+    setSelectedContactsIds(selecteds);
+  }, [contactsList, selectedContacts]);
 
   // Debouncing for contacts
   useEffect(() => {

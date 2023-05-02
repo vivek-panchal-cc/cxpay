@@ -70,3 +70,4 @@ export const API_TRANSACTION_WALLET_PERSONAL_OTP_VERIFY =
 export const API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP =
   "/resend-wallet-transfer-otp";
 export const API_TRANSACTION_GET_CHARGES = "/get-charges";
+export const API_TRANSACTION_SEND_PAYMENT_REQUEST = "/send-payment-request";

@@ -83,16 +83,30 @@ const SendPaymentProvider = ({ children }) => {
     };
     const listAlias = sendRequestList.map((item) => ({
       ...renameKeys(alias, item),
-      personal_amount: "",
       amount: "",
+      specifications: "",
     }));
     setRequestCreds({ wallet: listAlias });
-    navigate("/send-request");
+    navigate("/request-payment");
   };
 
   // For making change (like remove) in the selected contacts
   const handleSendCreds = (credsContacts) => {
     setSendCreds((cs) => ({ ...cs, wallet: credsContacts }));
+    if (selectedContacts && selectedContacts.length > 0) {
+      const accountsNo = credsContacts?.map(
+        (item) => item.receiver_account_number
+      );
+      const filter = selectedContacts.filter((con) =>
+        accountsNo.includes(con.account_number)
+      );
+      setSelectedContacts(filter);
+    }
+  };
+
+  // For making change (like remove) in the selected contacts
+  const handleRequestCreds = (credsContacts) => {
+    setRequestCreds((cs) => ({ ...cs, wallet: credsContacts }));
     if (selectedContacts && selectedContacts.length > 0) {
       const accountsNo = credsContacts?.map(
         (item) => item.receiver_account_number
@@ -117,10 +131,11 @@ const SendPaymentProvider = ({ children }) => {
   };
 
   // For cancel the transaction
-  const handleCancelPayment = () => {
+  const handleCancelPayment = async () => {
     setSelectedContacts([]);
     setSelectedGroup([]);
     setSendCreds([]);
+    setRequestCreds([]);
   };
 
   // For getting the charges of payment from API
@@ -163,8 +178,8 @@ const SendPaymentProvider = ({ children }) => {
     if (
       location.pathname &&
       (location.pathname.includes("/contacts") ||
-        location.pathname.includes("/send") ||
-        location.pathname.includes("/request"))
+        location.pathname === "/send" ||
+        location.pathname === "/request")
     )
       handleCancelPayment();
   }, [location.pathname]);
@@ -178,6 +193,7 @@ const SendPaymentProvider = ({ children }) => {
         handleSendContacts,
         handleSendRequest,
         handleSendGroup,
+        handleRequestCreds,
         handleSendCreds,
         selectedContacts,
         selectedGroup,

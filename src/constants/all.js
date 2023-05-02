@@ -58,6 +58,7 @@ const THEME_COLORS = ["light_blue"];
 
 // CXPAY LOGO
 const CXPAY_LOGO = "/assets/images/cxpay_me_logo.png";
+const CXPAY_SHADOW_LOGO = "/assets/images/cxpay_me_shadow_logo.png";
 
 // Fund account flow constants
 const FUND_CARD = "credit-card";
@@ -127,6 +128,7 @@ export {
   MAX_PAYMENT_CONTACTS,
   MAX_REQUEST_CONTACTS,
   CXPAY_LOGO,
+  CXPAY_SHADOW_LOGO
 };
 export {
   regexContainCapitalLetter,

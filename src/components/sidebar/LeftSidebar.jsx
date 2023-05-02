@@ -1,4 +1,4 @@
-import { CXPAY_LOGO } from "constants/all";
+import { CXPAY_LOGO, CXPAY_SHADOW_LOGO } from "constants/all";
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
@@ -31,7 +31,7 @@ function LeftSidebar() {
       </span>
       <div className="dashboard-logo-wrap">
         <Link to="/" replace>
-          <img src={CXPAY_LOGO} alt="dashboard logo" />
+          <img src={CXPAY_SHADOW_LOGO} alt="dashboard logo" />
         </Link>
         <Link to="/" className="dashaboard-btn text-capitalize" replace>
           {user_type}
@@ -52,7 +52,7 @@ function LeftSidebar() {
             </Link>
           </li>
           <li className={`${thisRoute === "request" ? "active" : ""}`}>
-            <Link to="/request" replace>
+            <Link to="/view-request" replace>
               <IconRequest />
               <span>Request</span>
             </Link>

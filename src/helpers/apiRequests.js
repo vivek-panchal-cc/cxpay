@@ -75,6 +75,7 @@ const API_walletPersonalOtpVerify =
 const API_resendWalletTransferOtp =
   apiUrl.API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP;
 const API_getCharges = apiUrl.API_TRANSACTION_GET_CHARGES;
+const API_sendPaymentRequest = apiUrl.API_TRANSACTION_SEND_PAYMENT_REQUEST;
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 //  ------------------------------------------------------------------------------------------------------------------------------------------------>
 
@@ -443,6 +444,12 @@ export const resendWalletTransferOtp = (params) => {
   );
 };
 
+// POST @send-payment-request
+// @params request_payment_arr, total_amount
+export const sendPaymentRequest = (params) => {
+  return axiosTransactionInstance.post(`${API_sendPaymentRequest}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -503,4 +510,5 @@ export const apiRequest = {
   resendWalletTransferOtp,
   resendVerifyEmail,
   deactivateAccount,
+  sendPaymentRequest,
 };

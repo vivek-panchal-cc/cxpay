@@ -112,17 +112,20 @@ const SwipeContactList = (props) => {
         onSwiper={(swiper) => setSwiperRef(swiper)}
       >
         <div className={`swiper-wrapper ${className}`}>
-          {swiperList?.map((item) => (
-            <SwiperSlide key={() => uniqueId()}>
-              <ListItemComponent
-                item={item}
-                selectedList={selectedList}
-                alias={ListItemComponentAlias}
-                handleSelect={handleSelectedItems}
-                {...ListItemComponentProps}
-              />
-            </SwiperSlide>
-          ))}
+          {swiperList?.map((item, index) => {
+            const ukey = item.account_number || index;
+            return (
+              <SwiperSlide key={ukey}>
+                <ListItemComponent
+                  item={item}
+                  selectedList={selectedList}
+                  alias={ListItemComponentAlias}
+                  handleSelect={handleSelectedItems}
+                  {...ListItemComponentProps}
+                />
+              </SwiperSlide>
+            );
+          })}
         </div>
       </Swiper>
     </div>

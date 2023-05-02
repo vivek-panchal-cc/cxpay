@@ -29,8 +29,6 @@ const RequestContact = (props) => {
       if (!data.success) throw data.message;
       const appContacts = data?.data?.app_contacts || [];
       const cList = page === 1 ? appContacts : contactsList.concat(appContacts);
-      const selecteds = selectedContacts?.map((item) => item?.account_number);
-      setSelectedContactsIds(selecteds);
       setTotalInvitedData(data.data?.pagination?.total);
       setContactsList(cList);
     } catch (error) {
@@ -39,6 +37,16 @@ const RequestContact = (props) => {
     } finally {
       setIsLoadingContacts(false);
     }
+  };
+
+  const handleResetContactData = () => {
+    setSearchContactText("");
+    setCurrentPage(1);
+  };
+
+  // For searching the contacts with name given in search bar
+  const handleSearchContact = (e) => {
+    setSearchContactText(e.target.value);
   };
 
   const handleReachEndContacts = async () => {
@@ -63,6 +71,12 @@ const RequestContact = (props) => {
     handleSelectedContacts && handleSelectedContacts(sconts);
   };
 
+  // Pre-selecting contacts
+  useEffect(() => {
+    const selecteds = selectedContacts?.map((item) => item?.account_number);
+    setSelectedContactsIds(selecteds);
+  }, [contactsList, selectedContacts]);
+
   // Debouncing for contacts
   useEffect(() => {
     if (searchContactText === "") {
@@ -83,9 +97,9 @@ const RequestContact = (props) => {
           className=""
           heading="For whom to send?"
           subHeading="Please select contacts to whom you want to send money"
-          searchValue={() => {}}
-          handleSearch={() => {}}
-          clearSearch={() => {}}
+          searchValue={searchContactText}
+          handleSearch={handleSearchContact}
+          clearSearch={handleResetContactData}
         />
         <ContactsSelection.Body
           isLoading={isLoadingContacts}
@@ -112,25 +126,14 @@ const RequestContact = (props) => {
           {isLoadingContacts ? (
             <LoaderSendContactButtons />
           ) : contactsList.length > 0 ? (
-            <>
-              <Button
-                type="button"
-                className="btn btn-next ws--btn ms-0"
-                onClick={handleSendRequest}
-              >
-                <IconSend style={{ stroke: "#fff" }} />
-                Request
-              </Button>
-              <Button
-                type="button"
-                className="btn btn-next ws--btn ms-0"
-                onClick={() => {}}
-                disabled={true}
-              >
-                <IconPlus style={{ stroke: "#fff" }} />
-                Create Group
-              </Button>
-            </>
+            <Button
+              type="button"
+              className="btn btn-next ws--btn ms-0"
+              onClick={handleSendRequest}
+            >
+              <IconSend style={{ stroke: "#fff" }} />
+              Request
+            </Button>
           ) : (
             <Button
               type="button"

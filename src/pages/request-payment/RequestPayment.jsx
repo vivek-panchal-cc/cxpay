@@ -1,31 +1,30 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import ModalAlert from "components/modals/ModalAlert";
-import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { LoaderContext } from "context/loaderContext";
-import {
-  sendPaymentOtpSchema,
-  sendRequestSchema,
-} from "schemas/sendPaymentSchema";
+import { sendRequestSchema } from "schemas/sendPaymentSchema";
 import ContactPaymentItem from "components/items/ContactPaymentItem";
 import { toast } from "react-toastify";
 import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
 import { apiRequest } from "helpers/apiRequests";
 import { CURRENCY_SYMBOL } from "constants/all";
 
-const SendRequest = () => {
+const RequestPayment = () => {
   const navigate = useNavigate();
   const inputAmountRefs = useRef([]);
-  const { handleSendCreds, requestCreds } = useContext(SendPaymentContext);
+  const { handleRequestCreds, requestCreds, handleCancelPayment } =
+    useContext(SendPaymentContext);
   const { setIsLoading } = useContext(LoaderContext);
   const { wallet } = requestCreds || [];
 
-  const [showOtpPoup, setShowOtpPopup] = useState(false);
-  const [showSentPopup, setShowSentPopup] = useState(false);
-  const [moneySentMsg, setMoneySentMsg] = useState("");
-  const [moneySentPopupUrl, setMoneySentPopupUrl] = useState("");
+  const [showRequestedPopup, setShowRequestedPopup] = useState(false);
+  const [requestedDetail, setRequestedDetail] = useState({
+    heading: "",
+    message: "",
+    url: "",
+  });
   const [paymentDetails, setPaymentDetails] = useState({
     allCharges: [],
     grandTotal: 0.0,
@@ -38,33 +37,52 @@ const SendRequest = () => {
     validationSchema: sendRequestSchema,
     onSubmit: async (values, { setValues, setErrors }) => {
       try {
-        if (showOtpPoup || showSentPopup) return;
+        if (showRequestedPopup) return;
         setIsLoading(true);
         const formData = new FormData();
         const muValues = { ...values };
         muValues.wallet = muValues?.wallet?.map(
-          ({ mobile, specifications, amount, receiver_account_number }) => ({
-            mobile,
+          ({ specifications, amount, receiver_account_number }) => ({
             specifications,
             amount,
             receiver_account_number,
           })
         );
         muValues.total_amount = paymentDetails.grandTotal;
+        // muValues["request_payment_arr"] = muValues["wallet"];
+        delete muValues["wallet"];
         for (const key in muValues)
           addObjToFormData(muValues[key], key, formData);
-        const { data } = await apiRequest.walletTransferOtp(formData);
+        const { data } = await apiRequest.sendPaymentRequest(formData);
         if (!data.success) throw data.message;
-        toast.success(`${data?.data?.otp}`);
-        toast.success(`${data.message}`);
-        setShowOtpPopup(true);
+        setRequestedDetail({
+          heading: "Send Request",
+          message: data.message,
+          url: "/assets/images/send-request-pop-icon.svg",
+        });
+        setShowRequestedPopup(true);
       } catch (error) {
-        if (typeof error === "string") toast.error(error);
+        if (typeof error === "string") {
+          setRequestedDetail({
+            heading: error,
+            message: "",
+            url: "/assets/images/send-request-pop-icon.svg",
+          });
+          setShowRequestedPopup(true);
+        }
       } finally {
         setIsLoading(false);
       }
     },
   });
+
+  // For deleting the contacts from payment list
+  const handleDeleteContact = (ditem) => {
+    const filteredContacts = wallet?.filter(
+      (item) => item.email !== ditem.email && item.mobile !== ditem.mobile
+    );
+    handleRequestCreds(filteredContacts);
+  };
 
   // For validation of inputs with scroll
   useEffect(() => {
@@ -92,35 +110,21 @@ const SendRequest = () => {
 
   return (
     <>
-      {/* Modal For OTP confirmation */}
-      <ModalOtpConfirmation
-        id="group_pay_otp_modal"
-        className="otp-verification-modal group_pay_otp_modal"
-        show={showOtpPoup}
-        allowClickOutSide={true}
-        setShow={setShowOtpPopup}
-        heading="OTP Verification"
-        headingImg="/assets/images/sent-payment-otp-pop.svg"
-        subHeading="We have sent you verification code to initiate payment. Enter OTP below"
-        validationSchema={sendPaymentOtpSchema}
-        handleSubmitOtp={() => {}}
-        handleResendOtp={() => {}}
-      />
       {/* Modal For Money Sent successfully */}
       <ModalAlert
         id="money_sent_modal"
         className="money-sent-modal"
-        show={showSentPopup}
-        heading="Money Sent"
-        subHeading={moneySentMsg}
-        headingImg={moneySentPopupUrl}
+        show={showRequestedPopup}
+        heading={requestedDetail.heading}
+        subHeading={requestedDetail.message}
+        headingImg={requestedDetail.url}
         btnText="Done"
-        handleBtnClick={() => {}}
+        handleBtnClick={handleCancelPayment}
       />
       <div className="col-12 send-payment-ttile-wrap">
         <div className="title-content-wrap send-pay-title-sec">
           <h3> Request </h3>
-          <p>Please insert amount of money you want to send</p>
+          <p>Please insert amount of money you want to request</p>
         </div>
       </div>
       {/* <!-- payment block form starts -->  */}
@@ -159,7 +163,7 @@ const SendRequest = () => {
                         fieldOnChange={formik.handleChange}
                         fieldOnBlur={formik.handleBlur}
                         showDelete={wallet.length > 1 ? true : false}
-                        handleDelete={() => {}}
+                        handleDelete={handleDeleteContact}
                         ref={(el) => (inputAmountRefs[index] = el)}
                       />
                     );
@@ -184,7 +188,7 @@ const SendRequest = () => {
             <div className="pay-btn-wrap">
               <button
                 type="button"
-                onClick={() => {}}
+                onClick={handleCancelPayment}
                 className="btn btn-cancel-payment"
               >
                 Cancel
@@ -194,7 +198,7 @@ const SendRequest = () => {
                 className="btn btn-send-payment"
                 disabled={formik.isSubmitting}
               >
-                Send
+                Request
               </button>
             </div>
           </div>
@@ -204,4 +208,4 @@ const SendRequest = () => {
   );
 };
 
-export default SendRequest;
+export default RequestPayment;
