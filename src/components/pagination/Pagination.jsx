@@ -60,7 +60,7 @@ const Pagination = (props) => {
               )}
               {[...Array(showingNumbers)].map((elm, i) => (
                 <li
-                  key={"page" + elm}
+                  key={i}
                   className="page-item"
                   {...(contentNumber === needStartDots
                     ? startArrayNumber
@@ -100,7 +100,7 @@ const Pagination = (props) => {
             ((startArrayNumber = 1),
             [...Array(size)].map((elm, i) => (
               <li
-                key={"page" + elm}
+                key={i}
                 className="page-item"
                 onClick={(e) =>
                   onClickHandler(parseInt(e.currentTarget.textContent))

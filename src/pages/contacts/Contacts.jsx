@@ -213,9 +213,7 @@ const Contacts = () => {
         getConatcts={retrieveContacts}
         getInvitedConatcts={[]}
         setConatctData={setConatctData}
-        showInvitationSentPopup={showInvitationSentPopup}
         setInvitationSentPopup={setInvitationSentPopup}
-        showConatctDetailPopup={showConatctDetailPopup}
         setConatctDetailPopup={setConatctDetailPopup}
         {...{ invitetitle }}
       />

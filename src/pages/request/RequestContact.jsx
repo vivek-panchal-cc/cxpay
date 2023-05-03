@@ -6,6 +6,7 @@ import LoaderSendContactButtons from "loaders/LoaderSendContactButtons";
 import Button from "components/ui/Button";
 import { apiRequest } from "helpers/apiRequests";
 import { SendPaymentContext } from "context/sendPaymentContext";
+import ModalAddContact from "components/modals/ModalAddContact";
 
 const RequestContact = (props) => {
   const {} = props;
@@ -20,6 +21,8 @@ const RequestContact = (props) => {
   const [searchContactText, setSearchContactText] = useState("");
   // For current page counts
   const [currentPage, setCurrentPage] = useState(1);
+  // For Add new contacts
+  const [showNewContPop, setShowNewContPop] = useState(false);
 
   const getInviteContactList = async (page, search) => {
     setIsLoadingContacts(true);
@@ -90,17 +93,30 @@ const RequestContact = (props) => {
     return () => clearTimeout(timeOut);
   }, [searchContactText.toString().trim()]);
 
+  useEffect(() => {
+    if (!showNewContPop) getInviteContactList(1, "");
+  }, [showNewContPop]);
+
   return (
     <div className="send-bottom-sec">
       <ContactsSelection className="col-12">
         <ContactsSelection.Header
           className=""
-          heading="For whom to send?"
-          subHeading="Please select contacts to whom you want to send money"
+          heading="For whom to request?"
+          subHeading="Please select contacts to whom you want to request money"
           searchValue={searchContactText}
           handleSearch={handleSearchContact}
           clearSearch={handleResetContactData}
-        />
+        >
+          <div class="add-contact-btn-wrap">
+            <button
+              class="btn add-contact-btn"
+              onClick={() => setShowNewContPop(true)}
+            >
+              Add New Contact
+            </button>
+          </div>
+        </ContactsSelection.Header>
         <ContactsSelection.Body
           isLoading={isLoadingContacts}
           classNameContainer="send-group-slider"
@@ -146,6 +162,17 @@ const RequestContact = (props) => {
           )}
         </ContactsSelection.Footer>
       </ContactsSelection>
+      <ModalAddContact
+        id="add_contact"
+        show={showNewContPop}
+        setShow={setShowNewContPop}
+        getConatcts={getInviteContactList}
+        getInvitedConatcts={() => {}}
+        setConatctData={() => {}}
+        setInvitationSentPopup={() => {}}
+        setConatctDetailPopup={() => {}}
+        isNavigate={false}
+      />
     </div>
   );
 };

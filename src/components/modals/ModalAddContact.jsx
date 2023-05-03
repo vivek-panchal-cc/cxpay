@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import InputSelect from "components/ui/InputSelect";
 import useCountriesCities from "hooks/useCountriesCities";
 import stylescss from "./modal.module.scss";
+import { toast } from "react-toastify";
 
 function ModalAddContact(props) {
   const {
@@ -21,11 +22,11 @@ function ModalAddContact(props) {
     getConatcts,
     getInvitedConatcts,
     isInvitedFlag = false,
+    isNavigate = true,
   } = props;
   const navigate = useNavigate();
   const { profile } = useSelector((state) => state.userProfile);
   const [countryList] = useCountriesCities();
-  const [isShowContactPopup, setIsShowContactPopup] = useState(true);
   const { country_code } = profile || {};
   const modalRef = useRef(null);
 
@@ -45,24 +46,25 @@ function ModalAddContact(props) {
           data.data.alreadyAdded === false ||
           data.data.alreadyInvited === false
         ) {
-          setIsShowContactPopup(false);
           if (data.data.contactDetails) {
+            toast.success(data.message);
             setConatctData(data.data.contactDetails);
             setConatctDetailPopup(true);
             setShow(false);
             if (isInvitedFlag) {
-              navigate("/contacts");
+              isNavigate && navigate("/contacts");
             } else {
               getConatcts(1, "");
             }
           } else {
+            toast.success(data.message);
             setConatctData("");
             setInvitationSentPopup(true);
             setShow(false);
             if (isInvitedFlag) {
               getInvitedConatcts(1, "");
             } else {
-              navigate("/contacts-invited");
+              isNavigate && navigate("/contacts-invited");
             }
           }
         } else {
@@ -94,13 +96,9 @@ function ModalAddContact(props) {
     <div
       className={`modal fade show ${stylescss.modal} del-modal-main`}
       id={id}
-      role="dialog"
     >
       <div ref={modalRef}>
-        <div
-          className="invite-contact-modal contact-pg-popup"
-          style={{ visibility: isShowContactPopup ? "visible" : "hidden" }}
-        >
+        <div className="invite-contact-modal contact-pg-popup">
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-body text-center">

@@ -10,7 +10,8 @@ const ContactsItem = (props) => {
   const { handleFavContact, handleOpenConfirmModal } =
     useContext(ContactsContext);
 
-  const { handleSendContacts } = useContext(SendPaymentContext);
+  const { handleSendContacts, handleSendRequest } =
+    useContext(SendPaymentContext);
 
   return (
     <li>
@@ -85,13 +86,7 @@ const ContactsItem = (props) => {
           </button>
           <button
             className="btn btn-primary con-req-btn"
-            onClick={() => {
-              navigate("/request", {
-                state: {
-                  contacts: ["HELLO", "WORLD"],
-                },
-              });
-            }}
+            onClick={() => handleSendRequest([contact])}
           >
             Request
           </button>

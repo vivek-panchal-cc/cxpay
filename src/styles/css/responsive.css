@@ -916,10 +916,10 @@
   /* .send-top-sec .title-content-wrap {
     width: 43%;
   } */
-  .send-top-right-sec {
+  /* .send-top-right-sec {
     width: 57%;
     padding-left: 12px;
-  }
+  } */
   .send-whom-slider .contact-name {
     font-size: 15px;
     padding: 0 2px;
@@ -1791,13 +1791,24 @@
     padding-left: 26px;
     padding-right: 26px;
   }
-  .send-page-wrapper .send-top-sec .title-content-wrap {
+  /* .send-page-wrapper .send-top-sec .title-content-wrap {
     width: 60%;
     padding-right: 20px;
+  } */
+  .send-page-wrapper .send-top-sec .title-content-wrap {
+    width: 50%;
+    padding-right: 20px;
+  } 
+  .send-top-right-sec {
+    width: 50%;
+    padding-left: 12px;
   }
   .send-page-wrapper .send-top-sec form {
+    /* max-width: 327px;
+    width: 40%; */
     max-width: 327px;
-    width: 40%;
+    width: 100%;
+    padding-right: 10px;
   }
   .sidebar-open .dashboard-logo-wrap a:first-child img {
     padding-left: 5px;
@@ -3124,6 +3135,9 @@
   .wallet-ac-inner p.card-holder-nm {
     font-size: 20px;
     line-height: 24px;
+  }
+  .send-top-sec .main-search-wrap {
+    margin-right: 10px;
   }
 }
 

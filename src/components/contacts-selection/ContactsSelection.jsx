@@ -23,29 +23,33 @@ ContactsSelection.Header = (props) => {
         <h3>{heading}</h3>
         <p>{subHeading}</p>
       </div>
-      <form onSubmit={(e) => e.preventDefault()}>
-        <div className="form-field search-field">
-          <div
-            className="clearsearchbox"
-            style={{ opacity: searchValue ? 1 : 0 }}
-            onClick={clearSearch}
-          >
-            <IconCross />
-          </div>
-          <Input
-            type="search"
-            className="form-control js-searchBox-input"
-            name="search_field"
-            placeholder="Search..."
-            value={searchValue}
-            onChange={handleSearch}
-          />
-          <div className="search-btn">
-            <IconSearch style={{ stroke: "#0081c5" }} />
-          </div>
+      <div className="send-top-right-sec">
+        <div className="main-search-wrap">
+          <form onSubmit={(e) => e.preventDefault()}>
+            <div className="form-field search-field">
+              <div
+                className="clearsearchbox"
+                style={{ opacity: searchValue ? 1 : 0 }}
+                onClick={clearSearch}
+              >
+                <IconCross />
+              </div>
+              <Input
+                type="search"
+                className="form-control js-searchBox-input"
+                name="search_field"
+                placeholder="Search..."
+                value={searchValue}
+                onChange={handleSearch}
+              />
+              <div className="search-btn">
+                <IconSearch style={{ stroke: "#0081c5" }} />
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
-      {props.children}
+        {props.children}
+      </div>
     </div>
   );
 };

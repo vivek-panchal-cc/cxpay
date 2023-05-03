@@ -74,7 +74,7 @@ const SwipeContactList = (props) => {
   const [swiperList, setSwiperList] = useState(list || []);
 
   useEffect(() => {
-    if (list && swiperList && list.length !== swiperList.length) {
+    if (list && swiperList) {
       setSwiperList([...list]);
       swiperRef && swiperRef?.update();
     }

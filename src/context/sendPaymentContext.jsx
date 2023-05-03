@@ -1,21 +1,22 @@
+import React, { useState, useEffect, useContext } from "react";
 import {
   MAX_PAYMENT_CONTACTS,
   MAX_REQUEST_CONTACTS,
   renameKeys,
 } from "constants/all";
 import { apiRequest } from "helpers/apiRequests";
-import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LoaderContext } from "./loaderContext";
 
 export const SendPaymentContext = React.createContext({});
 
-const SendPaymentProvider = ({ children }) => {
+const SendPaymentProvider = (props) => {
+  const { children } = props;
   const navigate = useNavigate();
   const location = useLocation();
   const { setIsLoading } = useContext(LoaderContext);
-  const { state } = location;
+  const [prevPath, setPrevPath] = useState();
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState([]);
   const [sendCreds, setSendCreds] = useState({ wallet: [] });
@@ -39,7 +40,7 @@ const SendPaymentProvider = ({ children }) => {
       specifications: "",
     }));
     setSendCreds({ wallet: listAlias });
-    navigate("/send-payment");
+    navigate("/send/payment");
   };
 
   // For Send group button click
@@ -67,7 +68,7 @@ const SendPaymentProvider = ({ children }) => {
       specifications: "",
     }));
     setSendCreds({ group_id, wallet: [...listAlias] });
-    navigate("/send-payment");
+    navigate("/send/payment");
   };
 
   // For Send Request to contacts, request button click
@@ -84,10 +85,10 @@ const SendPaymentProvider = ({ children }) => {
     const listAlias = sendRequestList.map((item) => ({
       ...renameKeys(alias, item),
       amount: "",
-      specifications: "",
+      specification: "",
     }));
     setRequestCreds({ wallet: listAlias });
-    navigate("/request-payment");
+    navigate("/request/payment");
   };
 
   // For making change (like remove) in the selected contacts
@@ -160,28 +161,13 @@ const SendPaymentProvider = ({ children }) => {
   }, [sendCreds]);
 
   useEffect(() => {
-    if (!state) return;
-    const { contacts = [] } = state;
-    if (!contacts || !contacts.length) return;
-    const alias = {
-      account_number: "receiver_account_number",
-    };
-    const listAlias = contacts.map((item) => ({
-      ...renameKeys(alias, item),
-      personal_amount: "",
-      specifications: "",
-    }));
-    setRequestCreds(listAlias);
-  }, [state]);
-
-  useEffect(() => {
-    if (
-      location.pathname &&
-      (location.pathname.includes("/contacts") ||
-        location.pathname === "/send" ||
-        location.pathname === "/request")
-    )
-      handleCancelPayment();
+    const path = location.pathname;
+    const flag =
+      (prevPath?.includes("/send") && path === "/request") ||
+      (prevPath?.includes("/request") && path === "/send") ||
+      path?.includes("/contacts");
+    if (flag) handleCancelPayment();
+    setPrevPath(path);
   }, [location.pathname]);
 
   return (

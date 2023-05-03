@@ -105,9 +105,9 @@ function App() {
               <Route path="/contacts-invited" element={<ContactsInvited />} />
               <Route path="/edit-group/:id" element={<EditGroup />} />
               <Route path="/send" element={<SendContact />} />
-              <Route path="/send-payment" element={<SendPayment />} />
+              <Route path="/send/payment" element={<SendPayment />} />
               <Route path="/request" element={<RequestContact />} />
-              <Route path="/request-payment" element={<RequestPayment />} />
+              <Route path="/request/payment" element={<RequestPayment />} />
               <Route path="/view-request" element={<ViewRequest />} />
             </Route>
             <Route path="/view-notification" element={<ViewNotification />} />

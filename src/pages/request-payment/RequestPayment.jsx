@@ -42,14 +42,14 @@ const RequestPayment = () => {
         const formData = new FormData();
         const muValues = { ...values };
         muValues.wallet = muValues?.wallet?.map(
-          ({ specifications, amount, receiver_account_number }) => ({
-            specifications,
+          ({ specification, amount, receiver_account_number }) => ({
+            specification,
             amount,
             receiver_account_number,
           })
         );
         muValues.total_amount = paymentDetails.grandTotal;
-        // muValues["request_payment_arr"] = muValues["wallet"];
+        muValues["request_payment_arr"] = muValues["wallet"];
         delete muValues["wallet"];
         for (const key in muValues)
           addObjToFormData(muValues[key], key, formData);
@@ -58,7 +58,7 @@ const RequestPayment = () => {
         setRequestedDetail({
           heading: "Send Request",
           message: data.message,
-          url: "/assets/images/send-request-pop-icon.svg",
+          url: "/assets/images/sent-request-pop.svg",
         });
         setShowRequestedPopup(true);
       } catch (error) {
@@ -66,7 +66,7 @@ const RequestPayment = () => {
           setRequestedDetail({
             heading: error,
             message: "",
-            url: "/assets/images/send-request-pop-icon.svg",
+            url: "/assets/images/sent-request-failed-pop.svg",
           });
           setShowRequestedPopup(true);
         }
@@ -152,13 +152,13 @@ const RequestPayment = () => {
                           formik.touched?.wallet?.[index]?.amount &&
                           formik.errors?.wallet?.[index]?.amount
                         }
-                        fieldNameSpecifications={`wallet[${index}].specifications`}
+                        fieldNameSpecifications={`wallet[${index}].specification`}
                         fieldValueSpecifications={
-                          formik.values?.wallet?.[index]?.specifications
+                          formik.values?.wallet?.[index]?.specification
                         }
                         fieldErrorSpecifications={
-                          formik.touched?.wallet?.[index]?.specifications &&
-                          formik.errors?.wallet?.[index]?.specifications
+                          formik.touched?.wallet?.[index]?.specification &&
+                          formik.errors?.wallet?.[index]?.specification
                         }
                         fieldOnChange={formik.handleChange}
                         fieldOnBlur={formik.handleBlur}

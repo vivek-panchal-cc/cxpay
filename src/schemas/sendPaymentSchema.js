@@ -22,7 +22,7 @@ const sendPaymentSchema = yup.object().shape({
 const sendRequestSchema = yup.object().shape({
   wallet: yup.array().of(
     yup.object().shape({
-      specifications: yup
+      specification: yup
         .string()
         .max(50, "Maximum limit is 50 characters.")
         .required("Please enter specifications"),

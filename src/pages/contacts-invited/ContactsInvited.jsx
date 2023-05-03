@@ -131,9 +131,7 @@ const Invited = () => {
                 getConatcts={[]}
                 getInvitedConatcts={handleInvitedContacts}
                 setConatctData={setConatctData}
-                showInvitationSentPopup={showInvitationSentPopup}
                 setInvitationSentPopup={setInvitationSentPopup}
-                showConatctDetailPopup={showConatctDetailPopup}
                 setConatctDetailPopup={setConatctDetailPopup}
                 isInvitedFlag={true}
                 {...{ invitetitle }}

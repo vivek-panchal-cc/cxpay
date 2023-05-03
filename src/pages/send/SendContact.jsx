@@ -197,7 +197,7 @@ function SendContact() {
   }, [searchGroupText.toString().trim()]);
 
   useEffect(() => {
-    if (!showCreateGroupPopup) getGroupsList(1, searchGroupText);
+    if (!showCreateGroupPopup) getGroupsList(1, "");  
   }, [showCreateGroupPopup]);
 
   return (
