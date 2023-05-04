@@ -108,9 +108,9 @@ const RequestContact = (props) => {
           handleSearch={handleSearchContact}
           clearSearch={handleResetContactData}
         >
-          <div class="add-contact-btn-wrap">
+          <div className="add-contact-btn-wrap">
             <button
-              class="btn add-contact-btn"
+              className="btn add-contact-btn"
               onClick={() => setShowNewContPop(true)}
             >
               Add New Contact

@@ -142,7 +142,7 @@ const RequestPayment = () => {
                         key={index}
                         item={item}
                         fallbackImgUrl={
-                          "assets/images/single_contact_profile.png"
+                          "/assets/images/single_contact_profile.png"
                         }
                         fieldNameAmount={`wallet[${index}].amount`}
                         fieldValueAmount={

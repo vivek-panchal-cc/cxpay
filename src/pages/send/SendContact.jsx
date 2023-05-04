@@ -10,6 +10,7 @@ import LoaderSendContactButtons from "loaders/LoaderSendContactButtons";
 import { toast } from "react-toastify";
 import ModalCreateGroup from "components/modals/ModalCreateGroup";
 import { MAX_GROUP_MEMBERS } from "constants/all";
+import ModalAddContact from "components/modals/ModalAddContact";
 
 function SendContact() {
   const [contactsList, setContactsList] = useState([]);
@@ -30,6 +31,8 @@ function SendContact() {
   const [isLoadingContacts, setIsLoadingContacts] = useState(true);
   const [isLoadingGroups, setIsLoadingGroups] = useState(true);
   const [showCreateGroupPopup, setShowCreateGroupPopup] = useState(false);
+  // For adding new Contact
+  const [showNewContPop, setShowNewContPop] = useState(false);
 
   const navigate = useNavigate();
   const {
@@ -197,8 +200,12 @@ function SendContact() {
   }, [searchGroupText.toString().trim()]);
 
   useEffect(() => {
-    if (!showCreateGroupPopup) getGroupsList(1, "");  
+    if (!showCreateGroupPopup) getGroupsList(1, "");
   }, [showCreateGroupPopup]);
+
+  useEffect(() => {
+    if (!showNewContPop) getInviteContactList(1, "");
+  }, [showNewContPop]);
 
   return (
     <div className="send-bottom-sec">
@@ -211,7 +218,16 @@ function SendContact() {
           searchValue={searchContactText}
           handleSearch={handleSearchContact}
           clearSearch={handleResetContactData}
-        />
+        >
+          <div className="add-contact-btn-wrap">
+            <button
+              className="btn add-contact-btn"
+              onClick={() => setShowNewContPop(true)}
+            >
+              Add New Contact
+            </button>
+          </div>
+        </ContactsSelection.Header>
         <ContactsSelection.Body
           isLoading={isLoadingContacts}
           classNameContainer="send-group-slider"
@@ -333,6 +349,17 @@ function SendContact() {
         setShow={setShowCreateGroupPopup}
         selectedContacts={selectedContactsIds}
         setSelectedContactsIds={setSelectedContactsIds}
+      />
+      <ModalAddContact
+        id="add_contact"
+        show={showNewContPop}
+        setShow={setShowNewContPop}
+        getConatcts={getInviteContactList}
+        getInvitedConatcts={() => {}}
+        setConatctData={() => {}}
+        setInvitationSentPopup={() => {}}
+        setConatctDetailPopup={() => {}}
+        isNavigate={false}
       />
     </div>
   );

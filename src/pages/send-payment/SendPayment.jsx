@@ -223,7 +223,7 @@ function SendPayment(props) {
                         key={index}
                         item={item}
                         fallbackImgUrl={
-                          "assets/images/single_contact_profile.png"
+                          "/assets/images/single_contact_profile.png"
                         }
                         fieldNameAmount={`wallet[${index}].personal_amount`}
                         fieldValueAmount={

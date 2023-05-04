@@ -21,7 +21,6 @@ const ProfileInfo = (props) => {
     business_url,
     country_code,
     mobile_number,
-    country,
     is_email_verify,
   } = profile || {};
 
@@ -163,7 +162,14 @@ const ProfileInfo = (props) => {
       <li>
         <div className="pi-title-div">Country</div>
         <div className="profile-info-right-desc">
-          <p>{countryList?.find(({ iso }) => iso === country)?.country_name}</p>
+          <p>
+            {
+              countryList?.find(
+                ({ phonecode }) =>
+                  phonecode.toString() === country_code.toString()
+              )?.country_name
+            }
+          </p>
         </div>
       </li>
     </ul>
