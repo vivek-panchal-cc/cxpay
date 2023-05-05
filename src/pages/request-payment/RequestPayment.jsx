@@ -56,7 +56,7 @@ const RequestPayment = () => {
         const { data } = await apiRequest.sendPaymentRequest(formData);
         if (!data.success) throw data.message;
         setRequestedDetail({
-          heading: "Send Request",
+          heading: "Request Sent",
           message: data.message,
           url: "/assets/images/sent-request-pop.svg",
         });

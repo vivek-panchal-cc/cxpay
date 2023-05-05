@@ -38,6 +38,7 @@ import RequestContact from "pages/request/RequestContact";
 import ContactsLayout from "layouts/ContactsLayout";
 import RequestPayment from "pages/request-payment/RequestPayment";
 import ViewRequest from "pages/view-request/ViewRequest";
+import ViewSchedulePayment from "pages/view-schedule-payment/ViewSchedulePayment";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -93,7 +94,6 @@ function App() {
             <Route path="/wallet/view-card" element={<ViewCard />} />
             <Route path="/wallet/view-card/edit-card" element={<EditCard />} />
             <Route path="/wallet/bank-list" element={<BankList />} />
-            {/* <Route path="/wallet/bank-list/edit-bank" element={<EditBank />} /> */}
             <Route
               path="/wallet/fund-account/:fundtype?"
               element={<FundAccount />}
@@ -111,6 +111,10 @@ function App() {
               <Route path="/view-request" element={<ViewRequest />} />
             </Route>
             <Route path="/view-notification" element={<ViewNotification />} />
+            <Route
+              path="/view-schedule-payment"
+              element={<ViewSchedulePayment />}
+            />
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Route>

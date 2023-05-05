@@ -179,7 +179,6 @@ function ModalAddContact(props) {
                       }`}
                       value={invitetitle === "Add Contact" ? "Add" : "Invite"}
                       disabled={formik.isSubmitting}
-                      data-bs-dismiss="modal"
                     />
                   </div>
                   <div className="pop-cancel-btn text-center">

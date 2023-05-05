@@ -1,6 +1,18 @@
 import * as yup from "yup";
 import { otpSchema } from "./commonSchema";
 
+const getYesterDay = () => {
+  const today = new Date();
+  today.setDate(today.getDate() - 1);
+  return today;
+};
+
+const compareDateTime = (tmSel, dtSel) => {
+  const tmNow = new Date().getTime();
+  const tmSch = new Date(`${dtSel.toDateString()} ${tmSel}`).getTime();
+  return tmSch <= tmNow ? false : true;
+};
+
 const sendPaymentSchema = yup.object().shape({
   wallet: yup.array().of(
     yup.object().shape({
@@ -37,8 +49,29 @@ const sendRequestSchema = yup.object().shape({
   ),
 });
 
+const schedulePaymentSchema = yup.object().shape({
+  date: yup
+    .date()
+    .min(getYesterDay(), "Date cannot be in the past")
+    .required("Date is required"),
+  time: yup
+    .string()
+    .test("time_test", "Time cannot be in the past", (value, context) =>
+      compareDateTime(value, context.parent.date)
+    ),
+  specification: yup
+    .string()
+    .max(50, "Maximum limit is 50 characters.")
+    .required("Please enter specifications"),
+});
+
 const sendPaymentOtpSchema = yup.object().shape({
   otp: otpSchema,
 });
 
-export { sendPaymentSchema, sendPaymentOtpSchema, sendRequestSchema };
+export {
+  sendPaymentSchema,
+  sendPaymentOtpSchema,
+  sendRequestSchema,
+  schedulePaymentSchema,
+};

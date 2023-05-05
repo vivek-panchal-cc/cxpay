@@ -141,29 +141,23 @@ const RequestContact = (props) => {
         <ContactsSelection.Footer>
           {isLoadingContacts ? (
             <LoaderSendContactButtons />
-          ) : contactsList.length > 0 ? (
-            <Button
-              type="button"
-              className="btn btn-next ws--btn ms-0"
-              onClick={handleSendRequest}
-            >
-              <IconSend style={{ stroke: "#fff" }} />
-              Request
-            </Button>
           ) : (
-            <Button
-              type="button"
-              className="btn btn-next ms-0"
-              onClick={() => {}}
-            >
-              <IconPlus style={{ stroke: "#fff" }} />
-              Add Contact
-            </Button>
+            contactsList.length > 0 && (
+              <Button
+                type="button"
+                className="btn btn-next ws--btn ms-0"
+                onClick={handleSendRequest}
+              >
+                <IconSend style={{ stroke: "#fff" }} />
+                Request
+              </Button>
+            )
           )}
         </ContactsSelection.Footer>
       </ContactsSelection>
       <ModalAddContact
         id="add_contact"
+        invitetitle="Add Contact"
         show={showNewContPop}
         setShow={setShowNewContPop}
         getConatcts={getInviteContactList}

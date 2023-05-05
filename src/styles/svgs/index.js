@@ -38,6 +38,7 @@ export { default as IconDelete } from "./Delete";
 export { default as IconCard } from "./Card";
 export { default as IconAddBackground } from "./AddBackground";
 export { default as IconPlus } from "./Plus";
+export { default as IconClock } from "./Clock";
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";
 export { default as IconNotifyContactInvite } from "./NotifyContactInvite";

@@ -76,6 +76,8 @@ const API_resendWalletTransferOtp =
   apiUrl.API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP;
 const API_getCharges = apiUrl.API_TRANSACTION_GET_CHARGES;
 const API_sendPaymentRequest = apiUrl.API_TRANSACTION_SEND_PAYMENT_REQUEST;
+const API_createSchedulePayment =
+  apiUrl.API_TRANSACTION_CREATE_SCHEDULE_PAYMENT;
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 //  ------------------------------------------------------------------------------------------------------------------------------------------------>
 
@@ -450,6 +452,12 @@ export const sendPaymentRequest = (params) => {
   return axiosTransactionInstance.post(`${API_sendPaymentRequest}`, params);
 };
 
+// POST @create-schedule-payment
+// @params schedule_payment , total_amount, schedule_date, overall_specification, group_id
+export const createSchedulePayment = (params) => {
+  return axiosTransactionInstance.post(`${API_createSchedulePayment}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -511,4 +519,5 @@ export const apiRequest = {
   resendVerifyEmail,
   deactivateAccount,
   sendPaymentRequest,
+  createSchedulePayment,
 };

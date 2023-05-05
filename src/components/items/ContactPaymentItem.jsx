@@ -65,6 +65,7 @@ const ContactPaymentItem = forwardRef((props, ref) => {
           onBlur={fieldOnBlur}
           className={`form-control ${fieldErrorAmount ? "error-field" : ""}`}
           placeholder="0.00"
+          maxLength="10"
           ref={ref}
         />
         <Tooltip isVisible={fieldErrorAmount} tooltipText={fieldErrorAmount} />

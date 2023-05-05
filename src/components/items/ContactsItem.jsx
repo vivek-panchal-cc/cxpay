@@ -34,7 +34,7 @@ const ContactsItem = (props) => {
             src={
               contact?.profile_image
                 ? contact?.profile_image
-                : "assets/images/single_contact_profile.png"
+                : "/assets/images/single_contact_profile.png"
             }
             className="blue-bg"
             alt=""

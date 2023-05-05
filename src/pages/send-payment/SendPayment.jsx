@@ -15,6 +15,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ModalAlert from "components/modals/ModalAlert";
 import { CURRENCY_SYMBOL } from "constants/all";
+import { IconClock } from "styles/svgs";
+import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
 
 function SendPayment(props) {
   const {} = props;
@@ -31,6 +33,7 @@ function SendPayment(props) {
 
   const [showOtpPoup, setShowOtpPopup] = useState(false);
   const [showSentPopup, setShowSentPopup] = useState(false);
+  const [showSchedulePopup, setShowSchedulePopup] = useState(false);
   const [sentDetail, setSentDetail] = useState({
     heading: "",
     message: "",
@@ -150,6 +153,50 @@ function SendPayment(props) {
     handleSendCreds(filteredContacts);
   };
 
+  // For getting credentials for scheduling payment
+  const handleSchedulePayment = async () => {
+    const validateObj = await formik.validateForm(formik.values);
+    if (Object.keys(validateObj).length > 0) {
+      formik.setTouched(validateObj);
+      formik.setErrors(validateObj);
+      return;
+    }
+    setShowSchedulePopup(true);
+  };
+
+  // For post the schedule payment
+  const handleScheduleSubmit = async (scheduleCreds) => {
+    const validateObj = await formik.validateForm(formik.values);
+    if (Object.keys(validateObj).length > 0) {
+      formik.setTouched(validateObj);
+      formik.setErrors(validateObj);
+      setShowSchedulePopup(false);
+      return;
+    }
+    try {
+      const formData = new FormData();
+      const muValues = { ...formik.values, ...scheduleCreds };
+      muValues.wallet = muValues?.wallet?.map(
+        ({ specifications, personal_amount, receiver_account_number }) => ({
+          specifications,
+          personal_amount,
+          receiver_account_number,
+        })
+      );
+      muValues.fees = charges;
+      muValues.total_amount = paymentDetails.grandTotal;
+      for (const key in muValues)
+        addObjToFormData(muValues[key], key, formData);
+      const { data } = await apiRequest.createSchedulePayment(formData);
+      if (!data.success) throw data.message;
+      toast.success(`${data.message}`);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // For validation of inputs with scroll
   useEffect(() => {
     if ((!formik.isSubmitting && !formik.errors) || !formik.errors.wallet)
@@ -201,6 +248,11 @@ function SendPayment(props) {
         headingImg={sentDetail.url}
         btnText="Done"
         handleBtnClick={handleCancelPayment}
+      />
+      <ModalPaymentScheduler
+        show={showSchedulePopup}
+        setShow={setShowSchedulePopup}
+        handleSubmit={handleScheduleSubmit}
       />
       <div className="col-12 send-payment-ttile-wrap">
         <div className="title-content-wrap send-pay-title-sec">
@@ -302,6 +354,14 @@ function SendPayment(props) {
                 disabled={formik.isSubmitting}
               >
                 Send
+              </button>
+              <button
+                type="button"
+                className="schedule-pay-btn"
+                onClick={handleSchedulePayment}
+              >
+                <IconClock style={{ stroke: "#363853" }} />
+                Schedule Payment
               </button>
             </div>
           </div>
