@@ -1,4 +1,5 @@
 import React from "react";
+import { IconBin, IconEdit } from "styles/svgs";
 
 const ViewSchedulePayment = () => {
   return (
@@ -10,9 +11,82 @@ const ViewSchedulePayment = () => {
             <p>Please select payment date</p>
           </div>
         </div>
-        <nav>
-          <div className="nav nav-tabs" id="nav-tab" role="tablist"></div>
-        </nav>
+        <div class="schedule-pay-sd-wrap">
+          <button class="shedule-date-filter">
+            {" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="17"
+              height="16"
+              viewBox="0 0 17 16"
+              fill="none"
+            >
+              <path
+                d="M11.8167 4.16667C12.6912 4.16667 13.4001 3.45778 13.4001 2.58333C13.4001 1.70888 12.6912 1 11.8167 1C10.9423 1 10.2334 1.70888 10.2334 2.58333C10.2334 3.45778 10.9423 4.16667 11.8167 4.16667Z"
+                stroke="white"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+              <path
+                d="M13.3916 2.58301H16.0333"
+                stroke="white"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+              <path
+                d="M1.16699 2.58301H10.2337"
+                stroke="white"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+              <path
+                d="M5.58333 9.46647C6.45778 9.46647 7.16667 8.75759 7.16667 7.88314C7.16667 7.00869 6.45778 6.2998 5.58333 6.2998C4.70888 6.2998 4 7.00869 4 7.88314C4 8.75759 4.70888 9.46647 5.58333 9.46647Z"
+                stroke="white"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+              <path
+                d="M7.16699 7.88379H16.0337"
+                stroke="white"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+              <path
+                d="M1.16699 7.88379H4.00866"
+                stroke="white"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+              <path
+                d="M11.8167 14.7663C12.6912 14.7663 13.4001 14.0574 13.4001 13.1829C13.4001 12.3085 12.6912 11.5996 11.8167 11.5996C10.9423 11.5996 10.2334 12.3085 10.2334 13.1829C10.2334 14.0574 10.9423 14.7663 11.8167 14.7663Z"
+                stroke="white"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+              <path
+                d="M13.3916 13.1836H16.0333"
+                stroke="white"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+              <path
+                d="M1.16699 13.1836H10.2337"
+                stroke="white"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+          </button>
+        </div>
         <div class="activity-user-list-wrap">
           <div class="activity-month">September 2022</div>
           <ul className="act-user-content-wrap">
@@ -55,46 +129,7 @@ const ViewSchedulePayment = () => {
                   </svg>
                 </button>
                 <button className="act-del-wrap">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="33"
-                    height="32"
-                    viewBox="0 0 33 32"
-                    fill="none"
-                  >
-                    <path
-                      d="M0 8C0 3.58172 3.58172 0 8 0H25C29.4183 0 33 3.58172 33 8V24C33 28.4183 29.4183 32 25 32H8C3.58172 32 0 28.4183 0 24V8Z"
-                      fill="#FF3333"
-                    />
-                    <path
-                      d="M8 10.5996H9.8H24.2"
-                      stroke="#F3F3F3"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                    <path
-                      d="M22.3998 10.6V23.2C22.3998 23.6774 22.2102 24.1352 21.8726 24.4728C21.535 24.8104 21.0772 25 20.5998 25H11.5998C11.1224 25 10.6646 24.8104 10.327 24.4728C9.98945 24.1352 9.7998 23.6774 9.7998 23.2V10.6M12.4998 10.6V8.8C12.4998 8.32261 12.6894 7.86477 13.027 7.52721C13.3646 7.18964 13.8224 7 14.2998 7H17.8998C18.3772 7 18.835 7.18964 19.1726 7.52721C19.5102 7.86477 19.6998 8.32261 19.6998 8.8V10.6"
-                      stroke="#F3F3F3"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                    <path
-                      d="M14.2998 15.0996V20.4996"
-                      stroke="#F3F3F3"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                    <path
-                      d="M17.8999 15.0996V20.4996"
-                      stroke="#F3F3F3"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
+                  <IconBin style={{ fill: "#FF3333", stroke: "#F3F3F3" }} />
                 </button>
               </div>
             </li>

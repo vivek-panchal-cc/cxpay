@@ -58,7 +58,7 @@ function LeftSidebar() {
             </Link>
           </li>
           <li className={`${thisRoute === "activities" ? "active" : ""}`}>
-            <Link to="/" replace>
+            <Link to="/activities" replace>
               <IconActivity />
               <span>Activities</span>
             </Link>

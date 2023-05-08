@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "Comfortaa", sans-serif;
+  font-family: "Comfortaa";
   src: url("../fonts/Comfortaa-Bold.eot");
   src: url("../fonts/Comfortaa-Bold.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Comfortaa-Bold.woff2") format("woff2"),
@@ -11,7 +11,7 @@
   font-display: swap;
 }
 @font-face {
-  font-family: "Comfortaa", sans-serif;
+  font-family: "Comfortaa";
   src: url("../fonts/Comfortaa-Medium.eot");
   src: url("../fonts/Comfortaa-Medium.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Comfortaa-Medium.woff2") format("woff2"),
@@ -24,7 +24,7 @@
 }
 
 @font-face {
-  font-family: "Comfortaa", sans-serif;
+  font-family: "Comfortaa";
   src: url("../fonts/Comfortaa-SemiBold.eot");
   src: url("../fonts/Comfortaa-SemiBold.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Comfortaa-SemiBold.woff2") format("woff2"),
@@ -37,7 +37,7 @@
 }
 
 @font-face {
-  font-family: "Comfortaa", sans-serif;
+  font-family: "Comfortaa";
   src: url("../fonts/Comfortaa-Light.eot");
   src: url("../fonts/Comfortaa-Light.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Comfortaa-Light.woff2") format("woff2"),
@@ -50,7 +50,7 @@
 }
 
 @font-face {
-  font-family: "Comfortaa", sans-serif;
+  font-family: "Comfortaa";
   src: url("../fonts/Comfortaa-Regular.eot");
   src: url("../fonts/Comfortaa-Regular.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Comfortaa-Regular.woff2") format("woff2"),
@@ -63,7 +63,7 @@
 }
 
 @font-face {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   src: url("../fonts/Inter-Black.eot");
   src: url("../fonts/Inter-Black.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Inter-Black.woff2") format("woff2"),
@@ -76,7 +76,7 @@
 }
 
 @font-face {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   src: url("../fonts/Inter-Bold.eot");
   src: url("../fonts/Inter-Bold.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Inter-Bold.woff2") format("woff2"),
@@ -89,7 +89,7 @@
 }
 
 @font-face {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   src: url("../fonts/Inter-ExtraBold.eot");
   src: url("../fonts/Inter-ExtraBold.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Inter-ExtraBold.woff2") format("woff2"),
@@ -102,7 +102,7 @@
 }
 
 @font-face {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   src: url("../fonts/Inter-ExtraLight.eot");
   src: url("../fonts/Inter-ExtraLight.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Inter-ExtraLight.woff2") format("woff2"),
@@ -115,7 +115,7 @@
 }
 
 @font-face {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   src: url("../fonts/Inter-Light.eot");
   src: url("../fonts/Inter-Light.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Inter-Light.woff2") format("woff2"),
@@ -128,7 +128,7 @@
 }
 
 @font-face {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   src: url("../fonts/Inter-Medium.eot");
   src: url("../fonts/Inter-Medium.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Inter-Medium.woff2") format("woff2"),
@@ -141,7 +141,7 @@
 }
 
 @font-face {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   src: url("../fonts/Inter-Regular.eot");
   src: url("../fonts/Inter-Regular.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Inter-Regular.woff2") format("woff2"),
@@ -154,7 +154,7 @@
 }
 
 @font-face {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   src: url("../fonts/Inter-SemiBold.eot");
   src: url("../fonts/Inter-SemiBold.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Inter-SemiBold.woff2") format("woff2"),
@@ -167,7 +167,7 @@
 }
 
 @font-face {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   src: url("../fonts/Inter-Thin.eot");
   src: url("../fonts/Inter-Thin.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Inter-Thin.woff2") format("woff2"),
@@ -180,7 +180,7 @@
 }
 
 @font-face {
-  font-family: "Quicksand", sans-serif;
+  font-family: "Quicksand";
   src: url("../fonts/Quicksand-Medium.eot");
   src: url("../fonts/Quicksand-Medium.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Quicksand-Medium.woff2") format("woff2"),
@@ -193,7 +193,7 @@
 }
 
 @font-face {
-  font-family: "Quicksand", sans-serif;
+  font-family: "Quicksand";
   src: url("../fonts/Quicksand-Bold.eot");
   src: url("../fonts/Quicksand-Bold.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Quicksand-Bold.woff2") format("woff2"),
@@ -206,7 +206,7 @@
 }
 
 @font-face {
-  font-family: "Quicksand", sans-serif;
+  font-family: "Quicksand";
   src: url("../fonts/Quicksand-Light.eot");
   src: url("../fonts/Quicksand-Light.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Quicksand-Light.woff2") format("woff2"),
@@ -219,7 +219,7 @@
 }
 
 @font-face {
-  font-family: "Quicksand", sans-serif;
+  font-family: "Quicksand";
   src: url("../fonts/Quicksand-SemiBold.eot");
   src: url("../fonts/Quicksand-SemiBold.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Quicksand-SemiBold.woff2") format("woff2"),
@@ -232,7 +232,7 @@
 }
 
 @font-face {
-  font-family: "Quicksand", sans-serif;
+  font-family: "Quicksand";
   src: url("../fonts/Quicksand-Regular.eot");
   src: url("../fonts/Quicksand-Regular.eot?#iefix") format("embedded-opentype"),
     url("../fonts/Quicksand-Regular.woff2") format("woff2"),
@@ -245,7 +245,7 @@
 }
 
 @font-face {
-  font-family: "Visby Round CF", sans-serif;
+  font-family: "Visby Round CF";
   src: url("../fonts/VisbyRoundCF-Bold.eot");
   src: url("../fonts/VisbyRoundCF-Bold.eot?#iefix") format("embedded-opentype"),
     url("../fonts/VisbyRoundCF-Bold.woff2") format("woff2"),
@@ -257,7 +257,7 @@
   font-display: swap;
 }
 @font-face {
-  font-family: "Visby Round CF Demi", sans-serif;
+  font-family: "Visby Round CF Demi";
   src: url("../fonts/VisbyRoundCF-DemiBold.eot");
   src: url("../fonts/VisbyRoundCF-DemiBold.eot?#iefix")
       format("embedded-opentype"),
@@ -272,7 +272,7 @@
 }
 
 @font-face {
-  font-family: "Visby Round CF", sans-serif;
+  font-family: "Visby Round CF";
   src: url("../fonts/VisbyRoundCF-Medium.eot");
   src: url("../fonts/VisbyRoundCF-Medium.eot?#iefix")
       format("embedded-opentype"),
@@ -913,9 +913,9 @@ form .form-field select.form-control {
 }
 .dashboard-link-wrap ul li a {
   color: #fff;
-  font-family: "Visby Round CF Demi", sans-serif;
+  font-family: "Visby Round CF", sans-serif;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   display: flex;
   align-items: center;
   /*flex-wrap: wrap;*/
@@ -3409,6 +3409,7 @@ span.date-cal {
   color: #969696;
   margin-left: 20px;
   margin-right: 20px;
+  cursor: pointer;
 }
 .act-user-content-wrap li:hover {
   background-color: #fff;
@@ -6616,7 +6617,7 @@ a.eg-close-btn {
 .resend-otp-wrap {
   text-align: center;
   width: 100%;
-  font-family: "Quicksand", sans-serif;
+  font-family: "Quicksand", sans-serif !important;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -6977,6 +6978,10 @@ ul.activity-lw-main > li > div {
 .act-status-wrap .btn:hover svg path {
   stroke: #fff;
 }
+button.btn.btn-gray {
+  background: #c8cfd470;
+  color: #2c2f31;
+}
 button.btn.btn-green {
   background: rgba(85, 190, 21, 0.1);
   color: #56be15;
@@ -7082,4 +7087,85 @@ ul.recent-act-lw-main .act-info-wrap-left {
 /* Schedule Send */
 .send-page-wrapper .send-top-sec .send-top-right-sec .add-contact-btn-wrap {
   margin-left: 15px;
+}
+/* Added on 08-05 */
+button.schedule-pay-btn{
+  border: 0px;
+  background-color: transparent;
+  padding: 0px;
+}
+.schedule-time-modal .modal-body form{
+  width: 100%;
+  max-width: 350px;
+}
+.schedule-time-modal .react-datepicker {
+  width: 100%;
+  border: 0px;
+  border-radius: 0px;
+  color: var(--dark_blue);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  margin-bottom: 15px;
+}
+.schedule-time-modal .react-datepicker__month-container {
+  width: 100%;
+}
+.schedule-time-modal .react-datepicker__current-month {
+  padding-bottom: 10px;
+  font-family: "Visby Round CF", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 17px;
+}
+.schedule-time-modal .react-datepicker__day-name,
+.schedule-time-modal .react-datepicker__day,
+.schedule-time-modal .react-datepicker__time-name {
+  color: #000;
+  display: inline-block;
+  width: 14%;
+  line-height: 1.7rem;
+  text-align: center;
+  margin: 0px !important;
+  padding: 5px;
+}
+.schedule-time-modal .react-datepicker__day--selected{
+  background-color: var(--blue);
+  color: #fff !important;
+}
+.schedule-time-modal .react-datepicker__header{
+  background-color: transparent;
+  border-bottom: 1px solid var(--dark_blue);
+}
+.schedule-time-modal .react-time-picker__wrapper {
+  border: none;
+}
+.right-activity-div>button:not(:last-child) {
+  margin-right: 10px;
+}
+.right-activity-div button.act-edit-wrap,
+.right-activity-div button.act-del-wrap {
+  border: 0px;
+  background-color: transparent;
+  padding: 0px;
+}
+.schedule-pay-sd-wrap {
+  padding-bottom: 15px;
+  border-bottom: 2.5px solid #F2F2F2;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: end;
+  padding-top: 10px;
+}
+button.shedule-date-filter {
+  border: 0px;
+  padding: 0px;
+  background-color: var(--blue);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+}
+button.shedule-date-filter:hover{
+  background-color: var(--dark_blue);
 }

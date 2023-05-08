@@ -78,6 +78,9 @@ const API_getCharges = apiUrl.API_TRANSACTION_GET_CHARGES;
 const API_sendPaymentRequest = apiUrl.API_TRANSACTION_SEND_PAYMENT_REQUEST;
 const API_createSchedulePayment =
   apiUrl.API_TRANSACTION_CREATE_SCHEDULE_PAYMENT;
+const API_activityList = apiUrl.API_TRANSACTION_ACTIVITY_LIST;
+const API_getActivityDetails = apiUrl.API_TRANSACTION_GET_ACTIVITY_DETAILS;
+
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 //  ------------------------------------------------------------------------------------------------------------------------------------------------>
 
@@ -458,6 +461,18 @@ export const createSchedulePayment = (params) => {
   return axiosTransactionInstance.post(`${API_createSchedulePayment}`, params);
 };
 
+// POST @activity-list
+// @params auth_token
+export const activityList = () => {
+  return axiosTransactionInstance.post(`${API_activityList}`);
+};
+
+// POST @get-activity-details
+// @params auth_token, request_payment_id
+export const getActivityDetails = (params) => {
+  return axiosTransactionInstance.post(`${API_getActivityDetails}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -520,4 +535,6 @@ export const apiRequest = {
   deactivateAccount,
   sendPaymentRequest,
   createSchedulePayment,
+  activityList,
+  getActivityDetails,
 };

@@ -1,4 +1,8 @@
 import {
+  IconActReqCancel,
+  IconActReqDecline,
+  IconActReqReceive,
+  IconActReqSent,
   IconNotifyContactAccept,
   IconNotifyMoneyRecieved,
   IconNotifyMoneyRequest,
@@ -106,6 +110,69 @@ const notificationType = {
   },
 };
 
+const activityType = {
+  send: {
+    PENDING: {
+      iconStatus: <IconActReqSent />,
+      iconAmount: "",
+      classStatus: "btn-blue",
+      classAmount: "",
+      textStatus: "Request Sent",
+    },
+    DECLINED: {
+      iconStatus: <IconActReqDecline />,
+      iconAmount: "",
+      classStatus: "btn-red",
+      classAmount: "red-text",
+      textStatus: "Declined",
+    },
+    CANCELED: {
+      iconStatus: <IconActReqCancel />,
+      iconAmount: "",
+      classStatus: "btn-red",
+      classAmount: "red-text",
+      textStatus: "Cancelled",
+    },
+    PAID: {
+      iconStatus: <IconActReqReceive />,
+      iconAmount: "+",
+      classStatus: "btn-green",
+      classAmount: "green-text",
+      textStatus: "Received",
+    },
+  },
+  receive: {
+    PENDING: {
+      iconStatus: <IconActReqReceive />,
+      iconAmount: "",
+      classStatus: "",
+      classAmount: "",
+      textStatus: "Request received",
+    },
+    DECLINED: {
+      iconStatus: <IconActReqDecline />,
+      iconAmount: "",
+      classStatus: "btn-red",
+      classAmount: "red-text",
+      textStatus: "Declined",
+    },
+    CANCELED: {
+      iconStatus: <IconActReqCancel />,
+      iconAmount: "",
+      classStatus: "btn-red",
+      classAmount: "red-text",
+      textStatus: "Cancelled",
+    },
+    PAID: {
+      iconStatus: <IconActReqReceive />,
+      iconAmount: "-",
+      classStatus: "btn-gray",
+      classAmount: "",
+      textStatus: "Sent",
+    },
+  },
+};
+
 // Currency Symbol
 const CURRENCY_SYMBOL = "ANG";
 
@@ -119,6 +186,7 @@ export {
   otpCounterTime,
   url_regex,
   notificationType,
+  activityType,
   THEME_COLORS,
   CURRENCY_SYMBOL,
   FUND_CARD,
@@ -128,7 +196,7 @@ export {
   MAX_PAYMENT_CONTACTS,
   MAX_REQUEST_CONTACTS,
   CXPAY_LOGO,
-  CXPAY_SHADOW_LOGO
+  CXPAY_SHADOW_LOGO,
 };
 export {
   regexContainCapitalLetter,

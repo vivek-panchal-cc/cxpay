@@ -25,9 +25,6 @@ function NotificationListItem(props) {
           <div className="notifi-ic-wrap">{Icon && <Icon />}</div>
           <div className="notifi-content">
             <p>{message}</p>
-            {/* <p className="notifi-tran-idw">
-                <br />
-              </p> */}
             {timeStampDirection === "UP" && (
               <span className="text-start noti-time">{time}</span>
             )}

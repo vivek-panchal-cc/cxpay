@@ -75,7 +75,7 @@ const ModalPaymentScheduler = (props) => {
                     inline
                   />
                   {formik.touched.date && formik.errors.date && (
-                    <p className="text-danger">{formik.errors.date}</p>
+                    <p className="text-danger pb-0">{formik.errors.date}</p>
                   )}
                 </div>
                 <div className="row">
@@ -89,7 +89,7 @@ const ModalPaymentScheduler = (props) => {
                         disableClock
                       />
                       {formik.touched.time && formik.errors.time && (
-                        <p className="text-danger">{formik.errors.time}</p>
+                        <p className="text-danger pb-0">{formik.errors.time}</p>
                       )}
                     </div>
                   </div>

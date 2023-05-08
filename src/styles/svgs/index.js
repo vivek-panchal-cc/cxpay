@@ -39,6 +39,7 @@ export { default as IconCard } from "./Card";
 export { default as IconAddBackground } from "./AddBackground";
 export { default as IconPlus } from "./Plus";
 export { default as IconClock } from "./Clock";
+export { default as IconBin } from "./Bin";
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";
 export { default as IconNotifyContactInvite } from "./NotifyContactInvite";
@@ -48,3 +49,8 @@ export { default as IconNotifyMoneyRequest } from "./NotifyMoneyRequest";
 export { default as IconNotifyMoneyRecieved } from "./NotifyMoneyRecieved";
 export { default as IconNotifyMoneySentFailed } from "./NotifyMoneySentFailed";
 export { default as IconBackgroundStar } from "./BackgroundStar";
+// Activities related icons
+export { default as IconActReqCancel } from "./ActReqCancel";
+export { default as IconActReqDecline } from "./ActReqDecline";
+export { default as IconActReqReceive } from "./ActReqReceive";
+export { default as IconActReqSent } from "./ActReqSent";

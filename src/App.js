@@ -37,8 +37,8 @@ import SendPayment from "pages/send-payment/SendPayment";
 import RequestContact from "pages/request/RequestContact";
 import ContactsLayout from "layouts/ContactsLayout";
 import RequestPayment from "pages/request-payment/RequestPayment";
-import ViewRequest from "pages/view-request/ViewRequest";
 import ViewSchedulePayment from "pages/view-schedule-payment/ViewSchedulePayment";
+import Activities from "pages/activities/Activities";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -79,6 +79,7 @@ function App() {
           <Route path="/signup/:fundtype" element={<SignupFundAccount />} />
           <Route path="/" element={<DashboardLayout />}>
             {/* settings */}
+            <Route path="/activities" element={<Activities />} />
             <Route path="/setting" element={<Setting />} />
             <Route path="/setting/edit-profile" element={<EditProfile />} />
             <Route path="/setting/notification" element={<Notification />} />
@@ -108,7 +109,6 @@ function App() {
               <Route path="/send/payment" element={<SendPayment />} />
               <Route path="/request" element={<RequestContact />} />
               <Route path="/request/payment" element={<RequestPayment />} />
-              <Route path="/view-request" element={<ViewRequest />} />
             </Route>
             <Route path="/view-notification" element={<ViewNotification />} />
             <Route

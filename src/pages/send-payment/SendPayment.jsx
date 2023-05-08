@@ -250,6 +250,7 @@ function SendPayment(props) {
         handleBtnClick={handleCancelPayment}
       />
       <ModalPaymentScheduler
+        classNameChild="schedule-time-modal"
         show={showSchedulePopup}
         setShow={setShowSchedulePopup}
         handleSubmit={handleScheduleSubmit}
