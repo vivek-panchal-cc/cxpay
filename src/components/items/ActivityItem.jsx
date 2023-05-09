@@ -16,41 +16,41 @@ const ActivityItem = (props) => {
   } = props || {};
 
   const profileUrl = profileImg || "/assets/images/single_contact_profile.png";
+  const classStatus = activityType?.[type]?.[status]?.classStatus || "";
+  const classText = activityType?.[type]?.[status]?.classText || "";
+  const textStatus = activityType?.[type]?.[status]?.textStatus || "";
+  const iconStatus = activityType?.[type]?.[status]?.iconStatus || "";
+  const iconAmount = activityType?.[type]?.[status]?.iconAmount || "";
 
   return (
     <li onClick={() => handleClick(id)}>
-      <div class="act-info-wrap-left">
-        <div class="act-user-info-wrap d-flex">
-          <div class="act-user-thumb">
+      <div className="act-info-wrap-left">
+        <div className="act-user-info-wrap d-flex">
+          <div className="act-user-thumb">
             <img src={profileUrl} alt="" />
           </div>
-          <div class="act-user-in">
+          <div className="act-user-in">
             <h2>{name}</h2>
             <p>{date}</p>
           </div>
         </div>
-        <div class="act-specification-text">
+        <div className="act-specification-text">
           <p>{specification}</p>
         </div>
-        <div class="act-amt-status-wrap d-flex">
-          <div class="act-status-wrap">
-            <button
-              class={`btn ${activityType?.[type]?.[status]?.classStatus}`}
-            >
-              {activityType?.[type]?.[status]?.textStatus}
-              {activityType?.[type]?.[status]?.iconStatus}
+        <div className="act-amt-status-wrap d-flex">
+          <div className="act-status-wrap">
+            <button className={`btn ${classStatus}`}>
+              {textStatus}
+              {iconStatus}
             </button>
           </div>
-          <div
-            class={`act-amt-wrap ${activityType?.[type]?.[status]?.classAmount}`}
-          >
-            {activityType?.[type]?.[status]?.iconAmount} {amount}{" "}
-            {CURRENCY_SYMBOL}
+          <div className={`act-amt-wrap text-end ${classText}`}>
+            {iconAmount} {amount} {CURRENCY_SYMBOL}
           </div>
         </div>
       </div>
-      <div class="act-mv-wrap">
-        <div class="act-edit-btn">
+      <div className="act-mv-wrap">
+        <div className="act-edit-btn">
           <button>
             <IconEyeOpen />
           </button>

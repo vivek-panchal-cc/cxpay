@@ -1,20 +1,39 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./modal.module.scss";
-import { CURRENCY_SYMBOL } from "constants/all";
+import { CURRENCY_SYMBOL, activityType } from "constants/all";
 
 const ModalActivityDetail = (props) => {
-  const { children, className, classNameChild, id, show, setShow } = props;
   const {
+    className,
+    classNameChild,
+    id,
+    show,
+    setShow,
+    handleCancel,
+    handleSubmit,
+    details,
+  } = props;
+
+  const {
+    name,
     amount,
     date,
     image,
     mobile_number,
-    paid_from,
+    request_from,
     paid_to,
     specification,
     status,
-  } = props.details || {};
+    request_type,
+  } = details || {};
+
   const modalRef = useRef(null);
+  const profileUrl = image || "/assets/images/single_contact_profile.png";
+  const classBg = activityType?.[request_type]?.[status]?.classBg || "";
+  const classText = activityType?.[request_type]?.[status]?.classText || "";
+  const textStatus = activityType?.[request_type]?.[status]?.textStatus || "";
+  const iconStatus = activityType?.[request_type]?.[status]?.iconStatus || "";
+  const iconAmount = activityType?.[request_type]?.[status]?.iconAmount || "";
 
   useEffect(() => {
     function handleclickOutside(event) {
@@ -29,6 +48,40 @@ const ModalActivityDetail = (props) => {
     };
   }, [modalRef, setShow]);
 
+  const getActivityActions = () => {
+    switch (`${request_type}_${status}`) {
+      case "send_PENDING":
+        return (
+          <button
+            type="button"
+            className="outline-btn w-50 d-block"
+            onClick={() => handleCancel(details)}
+          >
+            Cancel Request
+          </button>
+        );
+      case "receive_PENDING":
+        return (
+          <>
+            <button
+              type="button"
+              className="outline-btn w-50 d-block"
+              onClick={() => handleCancel(details)}
+            >
+              Decline
+            </button>
+            <button
+              type="button"
+              className="btn print-details-btn w-50"
+              onClick={() => handleSubmit(details)}
+            >
+              Pay
+            </button>
+          </>
+        );
+    }
+  };
+
   if (!show) return;
   return (
     <div
@@ -37,18 +90,19 @@ const ModalActivityDetail = (props) => {
       role="dialog"
     >
       <div ref={modalRef} className={classNameChild}>
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <div class="user-profile-div">
-                <img src={image} alt="User Profile" />
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <div className="user-profile-div bg-white">
+                <img src={profileUrl} alt="User Profile" />
               </div>
             </div>
-            <div class="modal-body">
-              <h3>Belasti ngd ienst</h3>
-              <div class="loan-amount">
+            <div className="modal-body">
+              <h3>{name}</h3>
+              <div className={`loan-amount ${classBg}`}>
                 <p>
-                  {amount} <span>{CURRENCY_SYMBOL}</span>
+                  <span className={`${classText}`}>{amount}</span>
+                  <span className={`ms-1 ${classText}`}>{CURRENCY_SYMBOL}</span>
                 </p>
                 <p>{specification}</p>
               </div>
@@ -59,21 +113,19 @@ const ModalActivityDetail = (props) => {
                 </tr>
                 <tr>
                   <td>Status</td>
-                  <td class="highlight">{status}</td>
+                  <td>{status}</td>
                 </tr>
                 <tr>
-                  <td>Paid From</td>
-                  <td>{paid_from}</td>
+                  <td>Request From</td>
+                  <td>{request_from}</td>
                 </tr>
                 <tr>
                   <td>Paid To</td>
                   <td>{paid_to}</td>
                 </tr>
               </table>
-              <div class="text-center">
-                <a class="btn print-details-btn" data-bs-dismiss="modal">
-                  Print Details
-                </a>
+              <div className="d-flex gap-3 justify-content-center">
+                {getActivityActions()}
               </div>
             </div>
           </div>

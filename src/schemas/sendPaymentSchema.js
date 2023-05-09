@@ -58,7 +58,8 @@ const schedulePaymentSchema = yup.object().shape({
     .string()
     .test("time_test", "Time cannot be in the past", (value, context) =>
       compareDateTime(value, context.parent.date)
-    ),
+    )
+    .required("Time is required"),
   specification: yup
     .string()
     .max(50, "Maximum limit is 50 characters.")

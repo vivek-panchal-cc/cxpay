@@ -79,7 +79,6 @@ function App() {
           <Route path="/signup/:fundtype" element={<SignupFundAccount />} />
           <Route path="/" element={<DashboardLayout />}>
             {/* settings */}
-            <Route path="/activities" element={<Activities />} />
             <Route path="/setting" element={<Setting />} />
             <Route path="/setting/edit-profile" element={<EditProfile />} />
             <Route path="/setting/notification" element={<Notification />} />
@@ -102,6 +101,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             {/* contacts */}
             <Route element={<ContactsLayout />}>
+              <Route path="/activities" element={<Activities />} />
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/contacts-invited" element={<ContactsInvited />} />
               <Route path="/edit-group/:id" element={<EditGroup />} />

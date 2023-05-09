@@ -23,13 +23,18 @@ function SendPayment(props) {
   const navigate = useNavigate();
   const inputAmountRefs = useRef([]);
   const { setIsLoading } = useContext(LoaderContext);
-  const { sendCreds, charges, handleSendCreds, handleCancelPayment } =
-    useContext(SendPaymentContext);
+  const {
+    sendCreds,
+    charges,
+    disableEdit,
+    handleSendCreds,
+    handleCancelPayment,
+  } = useContext(SendPaymentContext);
 
   const { mobile_number, country_code } = useSelector(
     (state) => state?.userProfile?.profile
   );
-  const { wallet } = sendCreds || [];
+  const { wallet, request_id } = sendCreds || [];
 
   const [showOtpPoup, setShowOtpPopup] = useState(false);
   const [showSentPopup, setShowSentPopup] = useState(false);
@@ -298,6 +303,8 @@ function SendPayment(props) {
                         fieldOnBlur={formik.handleBlur}
                         showDelete={wallet.length > 1 ? true : false}
                         handleDelete={handleDeleteContact}
+                        disableSpecification={disableEdit}
+                        disableAmount={disableEdit}
                         ref={(el) => (inputAmountRefs[index] = el)}
                       />
                     );
@@ -356,14 +363,16 @@ function SendPayment(props) {
               >
                 Send
               </button>
-              <button
-                type="button"
-                className="schedule-pay-btn"
-                onClick={handleSchedulePayment}
-              >
-                <IconClock style={{ stroke: "#363853" }} />
-                Schedule Payment
-              </button>
+              {!disableEdit && !request_id && (
+                <button
+                  type="button"
+                  className="schedule-pay-btn"
+                  onClick={handleSchedulePayment}
+                >
+                  <IconClock style={{ stroke: "#363853" }} />
+                  Schedule Payment
+                </button>
+              )}
             </div>
           </div>
         </div>

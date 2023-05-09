@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { apiRequest } from "helpers/apiRequests";
 import {
   IconActReqCancel,
@@ -13,8 +13,10 @@ import Modal from "components/modals/Modal";
 import ReactDatePicker from "react-datepicker";
 import ModalActivityDetail from "components/modals/ModalActivityDetail";
 import { toast } from "react-toastify";
+import { SendPaymentContext } from "context/sendPaymentContext";
 
 const Activities = () => {
+  const { handleSendContacts } = useContext(SendPaymentContext);
   const [activitiesList, setActivitiesList] = useState([]);
   const [actPagination, setActPagination] = useState({});
   const [filters, setFilters] = useState({
@@ -55,6 +57,42 @@ const Activities = () => {
       setShowDetails(true);
     } catch (error) {
       if (typeof error === "string") toast.error(error);
+    }
+  };
+
+  const handleActivityDiscard = (actDetails) => {
+    const { request_type, status } = actDetails || {};
+    switch (`${request_type}_${status}`) {
+      case "send_PENDING":
+        return <></>;
+      case "send_PENDING":
+        return <></>;
+    }
+  };
+
+  const handleActivityRespond = (actDetails) => {
+    const { request_type, status } = actDetails || {};
+    switch (`${request_type}_${status}`) {
+      case "receive_PENDING":
+        handleSendContacts(
+          [
+            {
+              account_number: "020000000019",
+              country_code: "5999",
+              mobile: "8181812",
+              email: "ervwervwe23r@cerv.vom",
+              status: 1,
+              is_favourite: true,
+              name: "John Wick",
+              profile_image: "",
+              personal_amount: 120.11,
+              specifications: "la li la lo",
+            },
+          ],
+          [],
+          94
+        );
+        return <></>;
     }
   };
 
@@ -346,6 +384,8 @@ const Activities = () => {
         show={showDetails}
         setShow={setShowDetails}
         details={activityDetails}
+        handleCancel={handleActivityDiscard}
+        handleSubmit={handleActivityRespond}
       />
     </div>
   );

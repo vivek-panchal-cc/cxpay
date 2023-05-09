@@ -22,9 +22,15 @@ const SendPaymentProvider = (props) => {
   const [sendCreds, setSendCreds] = useState({ wallet: [] });
   const [requestCreds, setRequestCreds] = useState({});
   const [charges, setCharges] = useState([]);
+  const [isCharged, setIsCharged] = useState(false);
+  const [disableEdit, setDisableEdit] = useState(false);
 
   // For Send contacts button click
-  const handleSendContacts = (contacts = null) => {
+  const handleSendContacts = (
+    contacts = null,
+    charges = [],
+    request_id = ""
+  ) => {
     const sendContactsList =
       contacts && contacts.length > 0 ? contacts : selectedContacts;
     if (!sendContactsList || sendContactsList.length <= 0)
@@ -36,10 +42,18 @@ const SendPaymentProvider = (props) => {
     };
     const listAlias = sendContactsList.map((item) => ({
       ...renameKeys(alias, item),
-      personal_amount: "",
-      specifications: "",
+      personal_amount: item.personal_amount || "",
+      specifications: item.specifications || "",
     }));
-    setSendCreds({ wallet: listAlias });
+    if (charges && charges.length > 0) {
+      setCharges(charges);
+      setIsCharged(true);
+    }
+    const tmpCreds = request_id
+      ? { wallet: listAlias, request_id }
+      : { wallet: listAlias };
+    setDisableEdit(request_id ? true : false);
+    setSendCreds(tmpCreds);
     navigate("/send/payment");
   };
 
@@ -154,7 +168,13 @@ const SendPaymentProvider = (props) => {
   };
 
   useEffect(() => {
-    if (!sendCreds || !sendCreds.wallet || sendCreds.wallet.length <= 0) return;
+    if (
+      isCharged ||
+      !sendCreds ||
+      !sendCreds.wallet ||
+      sendCreds.wallet.length <= 0
+    )
+      return;
     (async () => {
       await getPaymentCharges();
     })();
@@ -165,7 +185,8 @@ const SendPaymentProvider = (props) => {
     const flag =
       (prevPath?.includes("/send") && path === "/request") ||
       (prevPath?.includes("/request") && path === "/send") ||
-      path?.includes("/contacts");
+      path?.includes("/contacts") ||
+      path?.includes("/activities");
     if (flag) handleCancelPayment();
     setPrevPath(path);
   }, [location.pathname]);
@@ -184,6 +205,7 @@ const SendPaymentProvider = (props) => {
         selectedContacts,
         selectedGroup,
         requestCreds,
+        disableEdit,
         sendCreds,
         charges,
       }}

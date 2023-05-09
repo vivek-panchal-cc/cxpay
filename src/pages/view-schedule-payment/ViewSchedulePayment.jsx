@@ -13,7 +13,6 @@ const ViewSchedulePayment = () => {
         </div>
         <div class="schedule-pay-sd-wrap">
           <button class="shedule-date-filter">
-            {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="17"

@@ -9,7 +9,7 @@ import { schedulePaymentSchema } from "schemas/sendPaymentSchema";
 const ModalPaymentScheduler = (props) => {
   const { id, show, setShow, className, classNameChild, handleSubmit } = props;
   const modalRef = useRef(null);
-  const [selectedTime, setSelectedTime] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState("");
 
   // For closing the modal on click of outside the modal area
   useEffect(() => {
@@ -86,6 +86,7 @@ const ModalPaymentScheduler = (props) => {
                         value={selectedTime}
                         onChange={handleTimeChange}
                         clearIcon={null}
+                        format="hh:mm:ss a"
                         disableClock
                       />
                       {formik.touched.time && formik.errors.time && (

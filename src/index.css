@@ -105,3 +105,30 @@ code {
 .wallet-acc-fund-btns .btn-wrap input.btn:hover {
   border: 1px solid #0080c4;
 }
+
+/* background color classes */
+.cx-bg-blue {
+  background: rgba(0, 129, 197, 0.1);
+}
+.cx-bg-green {
+  background: rgba(85, 190, 21, 0.1);
+}
+.cx-bg-red {
+  background: rgba(255, 51, 51, 0.1);
+}
+.cx-bg-gray {
+  background: rgba(157, 162, 165, 0.1);
+}
+
+.cx-color-blue {
+  color: #0081c5;
+}
+.cx-color-green {
+  color: #56be15;
+}
+.cx-color-red {
+  color: #ff3333;
+}
+.cx-color-gray {
+  color: #2c2f31;
+}

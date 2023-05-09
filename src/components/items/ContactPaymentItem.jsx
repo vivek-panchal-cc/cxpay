@@ -19,6 +19,8 @@ const ContactPaymentItem = forwardRef((props, ref) => {
     fieldErrorAmount,
     fieldErrorSpecifications,
     fallbackImgUrl,
+    disableSpecification,
+    disableAmount,
   } = props;
   const { name, profile_image: imgUrl } = item;
 
@@ -49,6 +51,7 @@ const ContactPaymentItem = forwardRef((props, ref) => {
             fieldErrorSpecifications ? "error-field" : ""
           }`}
           placeholder="Type your specification Here"
+          disabled={disableSpecification}
         />
         <Tooltip
           isVisible={fieldErrorSpecifications}
@@ -63,6 +66,7 @@ const ContactPaymentItem = forwardRef((props, ref) => {
           value={fieldValueAmount}
           onChange={fieldOnChange}
           onBlur={fieldOnBlur}
+          disabled={disableAmount}
           className={`form-control ${fieldErrorAmount ? "error-field" : ""}`}
           placeholder="0.00"
           maxLength="10"
