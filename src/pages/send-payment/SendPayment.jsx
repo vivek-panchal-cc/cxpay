@@ -61,13 +61,7 @@ function SendPayment(props) {
         const formData = new FormData();
         const muValues = { ...values };
         muValues.wallet = muValues?.wallet?.map(
-          ({
-            mobile,
-            specifications,
-            personal_amount,
-            receiver_account_number,
-          }) => ({
-            mobile,
+          ({ specifications, personal_amount, receiver_account_number }) => ({
             specifications,
             personal_amount,
             receiver_account_number,

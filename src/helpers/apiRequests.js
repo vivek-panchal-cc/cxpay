@@ -80,9 +80,9 @@ const API_createSchedulePayment =
   apiUrl.API_TRANSACTION_CREATE_SCHEDULE_PAYMENT;
 const API_activityList = apiUrl.API_TRANSACTION_ACTIVITY_LIST;
 const API_getActivityDetails = apiUrl.API_TRANSACTION_GET_ACTIVITY_DETAILS;
+const API_changeRequestStatus = apiUrl.API_TRANSACTION_CHANGE_REQUEST_STATUS;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
-//  ------------------------------------------------------------------------------------------------------------------------------------------------>
 
 // POST @login API
 // @params country_code, user_name, password
@@ -151,7 +151,6 @@ export const refreshToken = (token) => {
 };
 
 //  -------------------------------------------- ON BOARD ------------------------------------------------------------------------------------------>
-//  ------------------------------------------------------------------------------------------------------------------------------------------------>
 
 // POST @register-mobile API
 // @params mobile_number, country_code
@@ -463,14 +462,20 @@ export const createSchedulePayment = (params) => {
 
 // POST @activity-list
 // @params auth_token
-export const activityList = () => {
-  return axiosTransactionInstance.post(`${API_activityList}`);
+export const activityList = (params) => {
+  return axiosTransactionInstance.post(`${API_activityList}`, params);
 };
 
 // POST @get-activity-details
 // @params auth_token, request_payment_id
 export const getActivityDetails = (params) => {
   return axiosTransactionInstance.post(`${API_getActivityDetails}`, params);
+};
+
+// POST @change-request-status
+// @params auth_token, request_id, status (DECLINED,CANCELED)
+export const changeRequestStatus = (params) => {
+  return axiosTransactionInstance.post(`${API_changeRequestStatus}`, params);
 };
 
 export const apiRequest = {
@@ -537,4 +542,5 @@ export const apiRequest = {
   createSchedulePayment,
   activityList,
   getActivityDetails,
+  changeRequestStatus,
 };

@@ -110,74 +110,73 @@ const notificationType = {
   },
 };
 
-const activityType = {
-  send: {
-    PENDING: {
-      iconStatus: <IconActReqSent />,
-      iconAmount: "",
-      classStatus: "btn-blue",
-      classBg: "cx-bg-blue",
-      classText: "",
-      textStatus: "Request Sent",
+const ACT_TYPE_REQUEST = "request";
+const ACT_TYPE_TRANSACTION = "transaction";
+const ACT_REQUEST_SEND = "send";
+const ACT_REQUEST_RECEIVE = "receive";
+const ACT_STATUS_PENDING = "PENDING";
+const ACT_STATUS_DECLINED = "DECLINED";
+const ACT_STATUS_CANCELLED = "CANCELLED";
+
+const activityConsts = {
+  [ACT_TYPE_REQUEST]: {
+    [ACT_REQUEST_SEND]: {
+      [ACT_STATUS_PENDING]: {
+        iconStatus: <IconActReqSent />,
+        iconAmount: "",
+        classStatus: "btn-blue",
+        classBg: "cx-bg-blue",
+        classText: "",
+        textStatus: "Request Sent",
+      },
+      [ACT_STATUS_DECLINED]: {
+        iconStatus: <IconActReqDecline />,
+        iconAmount: "",
+        classStatus: "btn-red",
+        classBg: "cx-bg-red",
+        classText: "cx-color-red",
+        textStatus: "Declined",
+      },
+      [ACT_STATUS_CANCELLED]: {
+        iconStatus: <IconActReqCancel />,
+        iconAmount: "",
+        classStatus: "btn-red",
+        classBg: "cx-bg-red",
+        classText: "cx-color-red",
+        textStatus: "Cancelled",
+      },
     },
-    DECLINED: {
-      iconStatus: <IconActReqDecline />,
-      iconAmount: "",
-      classStatus: "btn-red",
-      classBg: "cx-bg-red",
-      classText: "cx-color-red",
-      textStatus: "Declined",
-    },
-    CANCELED: {
-      iconStatus: <IconActReqCancel />,
-      iconAmount: "",
-      classStatus: "btn-red",
-      classBg: "cx-bg-red",
-      classText: "cx-color-red",
-      textStatus: "Cancelled",
-    },
-    PAID: {
-      iconStatus: <IconActReqReceive />,
-      iconAmount: "+",
-      classStatus: "btn-green",
-      classBg: "cx-bg-green",
-      classText: "cx-color-green",
-      textStatus: "Received",
+    [ACT_REQUEST_RECEIVE]: {
+      [ACT_STATUS_PENDING]: {
+        iconStatus: <IconActReqReceive />,
+        iconAmount: "",
+        classStatus: "btn-green",
+        classBg: "cx-bg-green",
+        classText: "",
+        textStatus: "Request received",
+      },
+      [ACT_STATUS_DECLINED]: {
+        iconStatus: <IconActReqDecline />,
+        iconAmount: "",
+        classStatus: "btn-red",
+        classBg: "cx-bg-red",
+        classText: "cx-color-red",
+        textStatus: "Declined",
+      },
+      [ACT_STATUS_CANCELLED]: {
+        iconStatus: <IconActReqCancel />,
+        iconAmount: "",
+        classStatus: "btn-red",
+        classBg: "cx-bg-red",
+        classText: "cx-color-red",
+        textStatus: "Cancelled",
+      },
     },
   },
-  receive: {
-    PENDING: {
-      iconStatus: <IconActReqReceive />,
-      iconAmount: "",
-      classStatus: "btn-green",
-      classBg: "cx-bg-green",
-      classText: "",
-      textStatus: "Request received",
-    },
-    DECLINED: {
-      iconStatus: <IconActReqDecline />,
-      iconAmount: "",
-      classStatus: "btn-red",
-      classBg: "cx-bg-red",
-      classText: "cx-color-red",
-      textStatus: "Declined",
-    },
-    CANCELED: {
-      iconStatus: <IconActReqCancel />,
-      iconAmount: "",
-      classStatus: "btn-red",
-      classBg: "cx-bg-red",
-      classText: "cx-color-red",
-      textStatus: "Cancelled",
-    },
-    PAID: {
-      iconStatus: <IconActReqReceive />,
-      iconAmount: "-",
-      classStatus: "btn-gray",
-      classBg: "cx-bg-gray",
-      classText: "",
-      textStatus: "Sent",
-    },
+  [ACT_TYPE_TRANSACTION]: {
+    [ACT_STATUS_PENDING]: {},
+    [ACT_STATUS_DECLINED]: {},
+    [ACT_STATUS_CANCELLED]: {},
   },
 };
 
@@ -194,7 +193,7 @@ export {
   otpCounterTime,
   url_regex,
   notificationType,
-  activityType,
+  activityConsts,
   THEME_COLORS,
   CURRENCY_SYMBOL,
   FUND_CARD,
@@ -205,6 +204,13 @@ export {
   MAX_REQUEST_CONTACTS,
   CXPAY_LOGO,
   CXPAY_SHADOW_LOGO,
+  ACT_TYPE_REQUEST,
+  ACT_TYPE_TRANSACTION,
+  ACT_REQUEST_SEND,
+  ACT_REQUEST_RECEIVE,
+  ACT_STATUS_PENDING,
+  ACT_STATUS_DECLINED,
+  ACT_STATUS_CANCELLED,
 };
 export {
   regexContainCapitalLetter,

@@ -76,22 +76,22 @@ const ContactsProvider = ({ children }) => {
     }
   };
 
-  // For getting contacts list
-  const retrieveContacts = async (page = 1, search = "") => {
-    setIsLoadingConts(true);
-    try {
-      const { data } = await apiRequest.contactsList({ page, search });
-      if (!data.success) throw data.message;
-      const { contacts = [], pagination } = data.data || {};
-      setPaginationConts(pagination);
-      setContacts(contacts || []);
-    } catch (error) {
-      if (typeof error === "string") setContacts([]);
-      console.log(error);
-    } finally {
-      setIsLoadingConts(false);
-    }
-  };
+  // // For getting contacts list
+  // const retrieveContacts = async (page = 1, search = "") => {
+  //   setIsLoadingConts(true);
+  //   try {
+  //     const { data } = await apiRequest.contactsList({ page, search });
+  //     if (!data.success) throw data.message;
+  //     const { contacts = [], pagination } = data.data || {};
+  //     setPaginationConts(pagination);
+  //     setContacts(contacts || []);
+  //   } catch (error) {
+  //     if (typeof error === "string") setContacts([]);
+  //     console.log(error);
+  //   } finally {
+  //     setIsLoadingConts(false);
+  //   }
+  // };
 
   // For getting invited contacts list
   const handleInvitedContacts = async (page = 1, search = "") => {
@@ -146,9 +146,8 @@ const ContactsProvider = ({ children }) => {
       }));
       const { data } = await apiRequest.deleteContact({ contacts: ids });
       if (!data.success) throw data.message;
-
       if (contactsType == "contactsItem") {
-        retrieveContacts(paginationConts?.current_page);
+        // retrieveContacts(paginationConts?.current_page);
       } else {
         handleInvitedContacts(paginationInConts?.current_page);
       }
@@ -204,20 +203,20 @@ const ContactsProvider = ({ children }) => {
     } catch (error) {}
   };
 
-  useEffect(() => {
-    if (search === "") {
-      if (contactsType == "contactsItem")
-        retrieveContacts(paginationConts?.current_page, search);
-      else handleInvitedContacts(paginationInConts?.currentPage, search);
-      return;
-    }
-    const timeOut = setTimeout(() => {
-      if (contactsType == "contactsItem")
-        retrieveContacts(paginationConts?.current_page, search);
-      else handleInvitedContacts(paginationInConts?.currentPage, search);
-    }, 1000);
-    return () => clearTimeout(timeOut);
-  }, [search.trim()]);
+  // useEffect(() => {
+  //   if (search === "") {
+  //     if (contactsType == "contactsItem")
+  //       retrieveContacts(paginationConts?.current_page, search);
+  //     else handleInvitedContacts(paginationInConts?.currentPage, search);
+  //     return;
+  //   }
+  //   const timeOut = setTimeout(() => {
+  //     if (contactsType == "contactsItem")
+  //       retrieveContacts(paginationConts?.current_page, search);
+  //     else handleInvitedContacts(paginationInConts?.currentPage, search);
+  //   }, 1000);
+  //   return () => clearTimeout(timeOut);
+  // }, [search.trim()]);
 
   useEffect(() => {
     setSelectedContacts([]);
@@ -244,7 +243,7 @@ const ContactsProvider = ({ children }) => {
         paginationInConts,
         isLoadingInConts,
         //
-        retrieveContacts,
+        // retrieveContacts,
         handleSelectedContacts,
         contactsType,
         handleInvitedContacts,

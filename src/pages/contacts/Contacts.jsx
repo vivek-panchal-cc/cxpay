@@ -13,6 +13,7 @@ import ContactsItem from "components/items/ContactsItem";
 import { IconCross, IconSearch } from "styles/svgs";
 import LoaderContact from "loaders/LoaderContact";
 import { uniqueId } from "helpers/commonHelpers";
+import { apiRequest } from "helpers/apiRequests";
 
 const Contacts = () => {
   const {
@@ -24,14 +25,14 @@ const Contacts = () => {
     setRemoveConfirmShow,
     removeConfirmShow,
     handleSelectedContacts,
-    retrieveContacts,
-    contacts = [],
-    paginationConts,
-    isLoadingConts,
+    // retrieveContacts,
+    // contacts = [],
+    // paginationConts,
+    // isLoadingConts,
     isDisabled,
     handleChangeFilter,
     handleResetFilter,
-    search,
+    // search,
   } = useContext(ContactsContext);
   const [invitetitle, setInviteTitle] = useState("Invite");
   const [show, setShow] = useState(false);
@@ -40,6 +41,28 @@ const Contacts = () => {
   const [showConatctDetailPopup, setConatctDetailPopup] = useState(false);
   const [contactData, setConatctData] = useState([]);
   const [selectedContacts, setSelectedContacts] = useState([]);
+  // Contacts and it's pagination
+  const [search, setSearch] = useState("");
+  const [contacts, setContacts] = useState([]);
+  const [paginationConts, setPaginationConts] = useState({});
+  const [isLoadingConts, setIsLoadingConts] = useState(false);
+
+  // For getting contacts list
+  const retrieveContacts = async (page = 1, search = "") => {
+    setIsLoadingConts(true);
+    try {
+      const { data } = await apiRequest.contactsList({ page, search });
+      if (!data.success) throw data.message;
+      const { contacts = [], pagination } = data.data || {};
+      setPaginationConts(pagination);
+      setContacts(contacts || []);
+    } catch (error) {
+      if (typeof error === "string") setContacts([]);
+      console.log(error);
+    } finally {
+      setIsLoadingConts(false);
+    }
+  };
 
   const handlePopupInvite = (e) => {
     setShow(true);
@@ -54,12 +77,6 @@ const Contacts = () => {
     setShowCreateGroupPopup(true);
   };
 
-  useEffect(() => {
-    (async () => {
-      await retrieveContacts(1, "");
-    })();
-  }, []);
-
   const handleChange = async (e) => {
     const { checked, value } = e.target;
     if (checked) {
@@ -69,6 +86,18 @@ const Contacts = () => {
     }
     handleSelectedContacts(selectedContacts);
   };
+
+  // Debouncing for retrieve contacts List
+  useEffect(() => {
+    if (search === "") {
+      retrieveContacts(paginationConts?.current_page, search);
+      return;
+    }
+    const timeOut = setTimeout(() => {
+      retrieveContacts(paginationConts?.current_page, search);
+    }, 1000);
+    return () => clearTimeout(timeOut);
+  }, [search.trim()]);
 
   return (
     <div className="container-fluid">
@@ -86,7 +115,7 @@ const Contacts = () => {
                   <div
                     className="clearsearchbox"
                     style={{ opacity: search ? 1 : 0 }}
-                    onClick={() => handleResetFilter("contactsItem")}
+                    onClick={() => setSearch("")}
                   >
                     <IconCross />
                   </div>
@@ -95,7 +124,7 @@ const Contacts = () => {
                     className="form-control js-searchBox-input"
                     name="search-field"
                     value={search}
-                    onChange={(e) => handleChangeFilter(e, "contactsItem")}
+                    onChange={(e) => setSearch(e?.currentTarget?.value)}
                     placeholder="Search..."
                   />
                   <div className="search-btn">

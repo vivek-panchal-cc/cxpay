@@ -22,15 +22,11 @@ const SendPaymentProvider = (props) => {
   const [sendCreds, setSendCreds] = useState({ wallet: [] });
   const [requestCreds, setRequestCreds] = useState({});
   const [charges, setCharges] = useState([]);
-  const [isCharged, setIsCharged] = useState(false);
   const [disableEdit, setDisableEdit] = useState(false);
+  // const [isCharged, setIsCharged] = useState(false);
 
   // For Send contacts button click
-  const handleSendContacts = (
-    contacts = null,
-    charges = [],
-    request_id = ""
-  ) => {
+  const handleSendContacts = (contacts = null, request_id = "") => {
     const sendContactsList =
       contacts && contacts.length > 0 ? contacts : selectedContacts;
     if (!sendContactsList || sendContactsList.length <= 0)
@@ -45,10 +41,6 @@ const SendPaymentProvider = (props) => {
       personal_amount: item.personal_amount || "",
       specifications: item.specifications || "",
     }));
-    if (charges && charges.length > 0) {
-      setCharges(charges);
-      setIsCharged(true);
-    }
     const tmpCreds = request_id
       ? { wallet: listAlias, request_id }
       : { wallet: listAlias };
@@ -168,13 +160,7 @@ const SendPaymentProvider = (props) => {
   };
 
   useEffect(() => {
-    if (
-      isCharged ||
-      !sendCreds ||
-      !sendCreds.wallet ||
-      sendCreds.wallet.length <= 0
-    )
-      return;
+    if (!sendCreds || !sendCreds.wallet || sendCreds.wallet.length <= 0) return;
     (async () => {
       await getPaymentCharges();
     })();
@@ -187,7 +173,12 @@ const SendPaymentProvider = (props) => {
       (prevPath?.includes("/request") && path === "/send") ||
       path?.includes("/contacts") ||
       path?.includes("/activities");
-    if (flag) handleCancelPayment();
+    if (flag) {
+      handleCancelPayment();
+      // setPrevPath("");
+      // navigate(prevPath, { replace: true });
+      // return;
+    }
     setPrevPath(path);
   }, [location.pathname]);
 

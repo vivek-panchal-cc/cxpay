@@ -1,29 +1,53 @@
-import React from "react";
-import { CURRENCY_SYMBOL, activityType } from "constants/all";
+import React, { useMemo } from "react";
+import {
+  ACT_TYPE_REQUEST,
+  ACT_TYPE_TRANSACTION,
+  CURRENCY_SYMBOL,
+  activityConsts,
+} from "constants/all";
 import { IconEyeOpen } from "styles/svgs";
 
 const ActivityItem = (props) => {
+  const { activityDetails, handleClick } = props || {};
   const {
     id,
-    name,
-    date,
+    account_number,
     specification,
-    type,
-    profileImg,
     amount,
     status,
-    handleClick,
-  } = props || {};
+    name,
+    request_type,
+    user_type,
+    activity_type,
+    reference_id,
+    date,
+    profile_image,
+  } = activityDetails || {};
 
-  const profileUrl = profileImg || "/assets/images/single_contact_profile.png";
-  const classStatus = activityType?.[type]?.[status]?.classStatus || "";
-  const classText = activityType?.[type]?.[status]?.classText || "";
-  const textStatus = activityType?.[type]?.[status]?.textStatus || "";
-  const iconStatus = activityType?.[type]?.[status]?.iconStatus || "";
-  const iconAmount = activityType?.[type]?.[status]?.iconAmount || "";
+  const profileUrl =
+    profile_image || "/assets/images/single_contact_profile.png";
+
+  const {
+    iconStatus = "",
+    iconAmount = "",
+    classStatus = "",
+    classBg = "",
+    classText = "",
+    textStatus = "",
+  } = useMemo(() => {
+    if (!activity_type) return {};
+    switch (activity_type) {
+      case ACT_TYPE_REQUEST:
+        return activityConsts[activity_type]?.[request_type]?.[status] || {};
+      case ACT_TYPE_TRANSACTION:
+        return activityConsts[activity_type]?.[status] || {};
+      default:
+        return {};
+    }
+  }, [activity_type]);
 
   return (
-    <li onClick={() => handleClick(id)}>
+    <li onClick={() => handleClick({ id, activity_type, reference_id })}>
       <div className="act-info-wrap-left">
         <div className="act-user-info-wrap d-flex">
           <div className="act-user-thumb">

@@ -1,6 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import styles from "./modal.module.scss";
-import { CURRENCY_SYMBOL, activityType } from "constants/all";
+import {
+  ACT_REQUEST_RECEIVE,
+  ACT_REQUEST_SEND,
+  ACT_STATUS_PENDING,
+  ACT_TYPE_REQUEST,
+  ACT_TYPE_TRANSACTION,
+  CURRENCY_SYMBOL,
+  activityConsts,
+} from "constants/all";
 
 const ModalActivityDetail = (props) => {
   const {
@@ -12,6 +20,7 @@ const ModalActivityDetail = (props) => {
     handleCancel,
     handleSubmit,
     details,
+    loading,
   } = props;
 
   const {
@@ -24,16 +33,31 @@ const ModalActivityDetail = (props) => {
     paid_to,
     specification,
     status,
+    activity_type,
     request_type,
   } = details || {};
 
   const modalRef = useRef(null);
   const profileUrl = image || "/assets/images/single_contact_profile.png";
-  const classBg = activityType?.[request_type]?.[status]?.classBg || "";
-  const classText = activityType?.[request_type]?.[status]?.classText || "";
-  const textStatus = activityType?.[request_type]?.[status]?.textStatus || "";
-  const iconStatus = activityType?.[request_type]?.[status]?.iconStatus || "";
-  const iconAmount = activityType?.[request_type]?.[status]?.iconAmount || "";
+
+  const {
+    iconStatus,
+    iconAmount,
+    classStatus,
+    classBg,
+    classText,
+    textStatus,
+  } = useMemo(() => {
+    if (!activity_type) return {};
+    switch (activity_type) {
+      case ACT_TYPE_REQUEST:
+        return activityConsts[activity_type]?.[request_type]?.[status] || {};
+      case ACT_TYPE_TRANSACTION:
+        return activityConsts[activity_type]?.[status] || {};
+      default:
+        return {};
+    }
+  }, [activity_type, request_type, status]);
 
   useEffect(() => {
     function handleclickOutside(event) {
@@ -49,8 +73,8 @@ const ModalActivityDetail = (props) => {
   }, [modalRef, setShow]);
 
   const getActivityActions = () => {
-    switch (`${request_type}_${status}`) {
-      case "send_PENDING":
+    switch (`${activity_type}_${request_type}_${status}`) {
+      case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_SEND}_${ACT_STATUS_PENDING}`:
         return (
           <button
             type="button"
@@ -60,7 +84,7 @@ const ModalActivityDetail = (props) => {
             Cancel Request
           </button>
         );
-      case "receive_PENDING":
+      case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_RECEIVE}_${ACT_STATUS_PENDING}`:
         return (
           <>
             <button
@@ -83,6 +107,8 @@ const ModalActivityDetail = (props) => {
   };
 
   if (!show) return;
+  if (loading) return <>Loading...</>;
+
   return (
     <div
       className={`modal fade show ${styles.modal} ${className}`}
@@ -115,14 +141,22 @@ const ModalActivityDetail = (props) => {
                   <td>Status</td>
                   <td>{status}</td>
                 </tr>
-                <tr>
-                  <td>Request From</td>
-                  <td>{request_from}</td>
-                </tr>
-                <tr>
-                  <td>Paid To</td>
-                  <td>{paid_to}</td>
-                </tr>
+                {request_from && (
+                  <tr>
+                    <td>Request From</td>
+                    <td>{request_from}</td>
+                  </tr>
+                )}
+                {paid_to && (
+                  <tr>
+                    <td>
+                      {activity_type === ACT_TYPE_REQUEST
+                        ? "Request To"
+                        : "Paid To"}
+                    </td>
+                    <td>{paid_to}</td>
+                  </tr>
+                )}
               </table>
               <div className="d-flex gap-3 justify-content-center">
                 {getActivityActions()}

@@ -75,3 +75,4 @@ export const API_TRANSACTION_CREATE_SCHEDULE_PAYMENT =
   "/create-schedule-payment";
 export const API_TRANSACTION_ACTIVITY_LIST = "/activity-list";
 export const API_TRANSACTION_GET_ACTIVITY_DETAILS = "/get-activity-details";
+export const API_TRANSACTION_CHANGE_REQUEST_STATUS = "/change-request-status";
