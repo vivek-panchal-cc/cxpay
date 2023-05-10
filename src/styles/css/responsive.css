@@ -1939,6 +1939,23 @@
   .dashboard-link-wrap {
     overflow-y: auto;
   }
+  .activity-top-new{
+    display: flex;
+    width: 100%;
+    padding-top: 10px;
+  }
+  .activity-top-new .title-content-wrap,
+  .activity-top-new .activity-date-wrap{
+    width: 50%;
+  }
+  .activity-top-new .activity-date-wrap{
+    padding:0px 0px 0px 20px;
+    display: flex;
+    justify-content: end;
+  }
+  .date-main-div .date-inner-div:last-child{
+    margin-right: 0px;
+  }
 }
 @media only screen and (max-width: 991px) {
   .logo-image img {

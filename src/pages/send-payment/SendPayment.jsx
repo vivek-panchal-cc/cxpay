@@ -217,7 +217,7 @@ function SendPayment(props) {
         : 0
     );
     setPaymentDetails(getChargedAmount(charges, amounts));
-  }, [formik.values?.wallet]);
+  }, [formik.values?.wallet, charges]);
 
   if (!sendCreds || !sendCreds.wallet || sendCreds.wallet.length <= 0)
     navigate("/send", { replace: true });

@@ -36,9 +36,12 @@ const Activities = () => {
   const getActivitiesList = async (page = 1, filters = {}) => {
     setLoadingAct(true);
     try {
-      const { data } = await apiRequest.activityList({ page });
+      const { data } = await apiRequest.activityList({ page, ...filters });
       if (!data.success) throw data.message;
       const { request_payments, pagination } = data.data || {};
+      request_payments?.map((item) => {
+        console.log(item);
+      });
       setActivitiesList(request_payments);
       setActPagination(pagination);
     } catch (error) {
@@ -50,6 +53,7 @@ const Activities = () => {
 
   const changeActivityStatus = async (request_id, status) => {
     if (!request_id) return;
+    setLoadingAct(true);
     try {
       const { data } = await apiRequest.changeRequestStatus({
         request_id,
@@ -60,12 +64,21 @@ const Activities = () => {
       await getActivitiesList();
     } catch (error) {
       if (typeof error === "string") toast.error(error);
+    } finally {
+      setLoadingAct(false);
     }
   };
 
-  const handleChangeDateFilter = (dates) => {
+  const handleChangeDateFilter = async (dates) => {
     const [start, end] = dates;
     setFilters((e) => ({ ...e, startDate: start, endDate: end }));
+    if (start && end) {
+      setShowFilter(false);
+      await getActivitiesList(actPagination.current_page, {
+        start_date: start?.toLocaleDateString(),
+        end_date: end?.toLocaleDateString(),
+      });
+    }
   };
 
   const handleActivityDetail = async ({ id, activity_type, reference_id }) => {
@@ -125,45 +138,45 @@ const Activities = () => {
 
   return (
     <div className="activities-sec">
-      <div className="activities-top-sec">
+      <div className="activities-top-sec activity-top-new">
         <div className="title-content-wrap">
           <h3>Activities</h3>
           <p>Lorem Ipsum Dolor Sit Amet</p>
         </div>
-      </div>
-      <div className="activity-date-wrap date-wrap d-flex align-items-center">
-        <div className="date-main-div d-flex">
-          <div className="date-inner-div">
-            <form>
-              <input
-                id="from-date"
-                type="text"
-                className="form-control"
-                placeholder="From"
-                readOnly
-                value={filters?.startDate?.toLocaleDateString()}
-                onClick={() => setShowFilter(true)}
-              />
-              <span className="date-cal">
-                <IconCalender style={{ stroke: "#0081C5" }} />
-              </span>
-            </form>
-          </div>
-          <div className="date-inner-div">
-            <form>
-              <input
-                id="date-end-range"
-                type="text"
-                className="form-control"
-                placeholder="To"
-                readOnly
-                value={filters?.endDate?.toLocaleDateString()}
-                onClick={() => setShowFilter(true)}
-              />
-              <span className="date-cal">
-                <IconCalender style={{ stroke: "#0081C5" }} />
-              </span>
-            </form>
+        <div className="activity-date-wrap date-wrap d-flex align-items-center">
+          <div className="date-main-div d-flex">
+            <div className="date-inner-div">
+              <form>
+                <input
+                  id="from-date"
+                  type="text"
+                  className="form-control"
+                  placeholder="From"
+                  readOnly
+                  value={filters?.startDate?.toLocaleDateString()}
+                  onClick={() => setShowFilter(true)}
+                />
+                <span className="date-cal">
+                  <IconCalender style={{ stroke: "#0081C5" }} />
+                </span>
+              </form>
+            </div>
+            <div className="date-inner-div">
+              <form>
+                <input
+                  id="date-end-range"
+                  type="text"
+                  className="form-control"
+                  placeholder="To"
+                  readOnly
+                  value={filters?.endDate?.toLocaleDateString()}
+                  onClick={() => setShowFilter(true)}
+                />
+                <span className="date-cal">
+                  <IconCalender style={{ stroke: "#0081C5" }} />
+                </span>
+              </form>
+            </div>
           </div>
         </div>
       </div>

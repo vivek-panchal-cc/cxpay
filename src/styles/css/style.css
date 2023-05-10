@@ -3715,6 +3715,8 @@ form .row {
 .user-details-modal .user-profile-div img {
   border-radius: 50%;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .user-details-modal table {
   width: 100%;
@@ -7129,8 +7131,9 @@ button.schedule-pay-btn {
   margin: 0px !important;
   padding: 5px;
 }
-.schedule-time-modal .react-datepicker__day--selected {
-  background-color: var(--blue);
+.schedule-time-modal .react-datepicker__day--selected ,
+.react-datepicker__day--range-end{
+  background-color: var(--blue) !important;
   color: #fff !important;
 }
 .schedule-time-modal .react-datepicker__header {
@@ -7167,4 +7170,13 @@ button.shedule-date-filter {
 }
 button.shedule-date-filter:hover {
   background-color: var(--dark_blue);
+}
+/* CSS added on 10-05 */
+.react-datepicker__day--in-range,
+.react-datepicker__quarter-text--in-range{
+  background-color: #d1ebff;
+}
+.react-datepicker__day--in-range:hover{
+  color:#fff;
+  background-color: var(--blue);
 }

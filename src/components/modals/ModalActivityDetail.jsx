@@ -9,6 +9,7 @@ import {
   CURRENCY_SYMBOL,
   activityConsts,
 } from "constants/all";
+import LoaderActivityDetail from "loaders/LoaderActivityDetail";
 
 const ModalActivityDetail = (props) => {
   const {
@@ -107,14 +108,8 @@ const ModalActivityDetail = (props) => {
   };
 
   if (!show) return;
-  if (loading) return <>Loading...</>;
-
   return (
-    <div
-      className={`modal fade show ${styles.modal} ${className}`}
-      id={id}
-      role="dialog"
-    >
+    <div className={`modal fade show ${styles.modal} ${className}`} id={id}>
       <div ref={modalRef} className={classNameChild}>
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
@@ -124,43 +119,53 @@ const ModalActivityDetail = (props) => {
               </div>
             </div>
             <div className="modal-body">
-              <h3>{name}</h3>
-              <div className={`loan-amount ${classBg}`}>
-                <p>
-                  <span className={`${classText}`}>{amount}</span>
-                  <span className={`ms-1 ${classText}`}>{CURRENCY_SYMBOL}</span>
-                </p>
-                <p>{specification}</p>
-              </div>
-              <table>
-                <tr>
-                  <td>Date</td>
-                  <td>{date}</td>
-                </tr>
-                <tr>
-                  <td>Status</td>
-                  <td>{status}</td>
-                </tr>
-                {request_from && (
-                  <tr>
-                    <td>Request From</td>
-                    <td>{request_from}</td>
-                  </tr>
-                )}
-                {paid_to && (
-                  <tr>
-                    <td>
-                      {activity_type === ACT_TYPE_REQUEST
-                        ? "Request To"
-                        : "Paid To"}
-                    </td>
-                    <td>{paid_to}</td>
-                  </tr>
-                )}
-              </table>
-              <div className="d-flex gap-3 justify-content-center">
-                {getActivityActions()}
-              </div>
+              {loading ? (
+                <LoaderActivityDetail />
+              ) : (
+                <>
+                  <h3>{name}</h3>
+                  <div className={`loan-amount ${classBg}`}>
+                    <p>
+                      <span className={`${classText}`}>{amount}</span>
+                      <span className={`ms-1 ${classText}`}>
+                        {CURRENCY_SYMBOL}
+                      </span>
+                    </p>
+                    <p>{specification}</p>
+                  </div>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Date</td>
+                        <td>{date}</td>
+                      </tr>
+                      <tr>
+                        <td>Status</td>
+                        <td>{status}</td>
+                      </tr>
+                      {request_from && (
+                        <tr>
+                          <td>Request From</td>
+                          <td>{request_from}</td>
+                        </tr>
+                      )}
+                      {paid_to && (
+                        <tr>
+                          <td>
+                            {activity_type === ACT_TYPE_REQUEST
+                              ? "Request To"
+                              : "Paid To"}
+                          </td>
+                          <td>{paid_to}</td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                  <div className="d-flex gap-3 justify-content-center">
+                    {getActivityActions()}
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
