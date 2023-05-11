@@ -8,12 +8,9 @@ const Bin = (props) => {
       height="32"
       viewBox="0 0 33 32"
       fill="none"
+      stroke={"#000"}
       {...props}
     >
-      <path
-        d="M0 8C0 3.58172 3.58172 0 8 0H25C29.4183 0 33 3.58172 33 8V24C33 28.4183 29.4183 32 25 32H8C3.58172 32 0 28.4183 0 24V8Z"
-        fill="inherit"
-      />
       <path
         d="M8 10.5996H9.8H24.2"
         stroke="inherit"

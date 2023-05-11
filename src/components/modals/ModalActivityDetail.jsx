@@ -10,6 +10,7 @@ import {
   activityConsts,
 } from "constants/all";
 import LoaderActivityDetail from "loaders/LoaderActivityDetail";
+import LoaderActivityProfile from "loaders/LoaderActivityProfile";
 
 const ModalActivityDetail = (props) => {
   const {
@@ -115,7 +116,11 @@ const ModalActivityDetail = (props) => {
           <div className="modal-content">
             <div className="modal-header">
               <div className="user-profile-div bg-white">
-                <img src={profileUrl} alt="User Profile" />
+                {loading ? (
+                  <LoaderActivityProfile />
+                ) : (
+                  <img src={profileUrl} alt="User Profile" />
+                )}
               </div>
             </div>
             <div className="modal-body">
@@ -126,10 +131,8 @@ const ModalActivityDetail = (props) => {
                   <h3>{name}</h3>
                   <div className={`loan-amount ${classBg}`}>
                     <p>
-                      <span className={`${classText}`}>{amount}</span>
-                      <span className={`ms-1 ${classText}`}>
-                        {CURRENCY_SYMBOL}
-                      </span>
+                      <span className={`${classText}`}>{CURRENCY_SYMBOL}</span>
+                      <span className={`ms-1 ${classText}`}>{amount}</span>
                     </p>
                     <p>{specification}</p>
                   </div>

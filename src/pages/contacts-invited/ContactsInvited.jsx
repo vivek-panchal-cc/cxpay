@@ -19,6 +19,7 @@ const Invited = () => {
   const [showInvitationSentPopup, setInvitationSentPopup] = useState(false);
   const [showConatctDetailPopup, setConatctDetailPopup] = useState(false);
   const [contactData, setConatctData] = useState([]);
+  const [search, setSearch] = useState("");
 
   const {
     handleRemoveConfirmModal,
@@ -31,9 +32,6 @@ const Invited = () => {
     paginationInConts,
     isLoadingInConts,
     isDisabled,
-    handleChangeFilter,
-    handleResetFilter,
-    search,
     removeConfirmShow,
     setRemoveConfirmShow,
     handleSelectedContacts,
@@ -55,10 +53,15 @@ const Invited = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      await handleInvitedContacts();
-    })();
-  }, []);
+    if (search === "") {
+      handleInvitedContacts(paginationInConts?.currentPage, search);
+      return;
+    }
+    const timeOut = setTimeout(() => {
+      handleInvitedContacts(paginationInConts?.currentPage, search);
+    }, 1000);
+    return () => clearTimeout(timeOut);
+  }, [search.trim()]);
 
   return (
     <div className="container-fluid">
@@ -77,7 +80,7 @@ const Invited = () => {
                 <div
                   className="js-clearSearchBox clearsearchbox"
                   style={{ opacity: search ? 1 : 0 }}
-                  onClick={() => handleResetFilter("inviteContactsItem")}
+                  onClick={() => setSearch("")}
                 >
                   <IconCross />
                 </div>
@@ -86,7 +89,7 @@ const Invited = () => {
                   className="form-control js-searchBox-input"
                   name="search-field"
                   value={search}
-                  onChange={(e) => handleChangeFilter(e, "inviteContactsItem")}
+                  onChange={(e) => setSearch(e?.currentTarget?.value)}
                   placeholder="Search..."
                 />
                 <div className="search-btn">

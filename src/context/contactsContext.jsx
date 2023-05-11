@@ -28,6 +28,23 @@ const ContactsProvider = ({ children }) => {
   const [removeConfirmShow, setRemoveConfirmShow] = useState(false);
   const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
 
+  // For getting contacts list
+  const retrieveContacts = async (page = 1, search = "") => {
+    setIsLoadingConts(true);
+    try {
+      const { data } = await apiRequest.contactsList({ page, search });
+      if (!data.success) throw data.message;
+      const { contacts = [], pagination } = data.data || {};
+      setPaginationConts(pagination);
+      setContacts(contacts || []);
+    } catch (error) {
+      if (typeof error === "string") setContacts([]);
+      console.log(error);
+    } finally {
+      setIsLoadingConts(false);
+    }
+  };
+
   // For changing fav contact in list
   const bindFavouriteContact = (favCon = {}, type = "") => {
     switch (type) {
@@ -75,23 +92,6 @@ const ContactsProvider = ({ children }) => {
       bindFavouriteContact(contact, type);
     }
   };
-
-  // // For getting contacts list
-  // const retrieveContacts = async (page = 1, search = "") => {
-  //   setIsLoadingConts(true);
-  //   try {
-  //     const { data } = await apiRequest.contactsList({ page, search });
-  //     if (!data.success) throw data.message;
-  //     const { contacts = [], pagination } = data.data || {};
-  //     setPaginationConts(pagination);
-  //     setContacts(contacts || []);
-  //   } catch (error) {
-  //     if (typeof error === "string") setContacts([]);
-  //     console.log(error);
-  //   } finally {
-  //     setIsLoadingConts(false);
-  //   }
-  // };
 
   // For getting invited contacts list
   const handleInvitedContacts = async (page = 1, search = "") => {
@@ -147,7 +147,7 @@ const ContactsProvider = ({ children }) => {
       const { data } = await apiRequest.deleteContact({ contacts: ids });
       if (!data.success) throw data.message;
       if (contactsType == "contactsItem") {
-        // retrieveContacts(paginationConts?.current_page);
+        retrieveContacts(paginationConts?.current_page);
       } else {
         handleInvitedContacts(paginationInConts?.current_page);
       }
@@ -175,19 +175,6 @@ const ContactsProvider = ({ children }) => {
     return len === 0;
   };
 
-  // For handle filter of both contacts or invited contacts
-  const handleChangeFilter = (e, type) => {
-    const val = e.target.value;
-    setSearch(val);
-    setContactsType(type);
-  };
-
-  // For handle reset filter of bith contacts or invite contacts
-  const handleResetFilter = (type) => {
-    setSearch("");
-    setContactsType(type);
-  };
-
   const deleteGroupData = () => {
     setShowDeleteGroupPopup(true);
   };
@@ -202,21 +189,6 @@ const ContactsProvider = ({ children }) => {
       navigate("/send");
     } catch (error) {}
   };
-
-  // useEffect(() => {
-  //   if (search === "") {
-  //     if (contactsType == "contactsItem")
-  //       retrieveContacts(paginationConts?.current_page, search);
-  //     else handleInvitedContacts(paginationInConts?.currentPage, search);
-  //     return;
-  //   }
-  //   const timeOut = setTimeout(() => {
-  //     if (contactsType == "contactsItem")
-  //       retrieveContacts(paginationConts?.current_page, search);
-  //     else handleInvitedContacts(paginationInConts?.currentPage, search);
-  //   }, 1000);
-  //   return () => clearTimeout(timeOut);
-  // }, [search.trim()]);
 
   useEffect(() => {
     setSelectedContacts([]);
@@ -243,13 +215,11 @@ const ContactsProvider = ({ children }) => {
         paginationInConts,
         isLoadingInConts,
         //
-        // retrieveContacts,
+        retrieveContacts,
         handleSelectedContacts,
         contactsType,
         handleInvitedContacts,
         isDisabled,
-        handleChangeFilter,
-        handleResetFilter,
         search,
         deleteGroup,
         deleteGroupData,

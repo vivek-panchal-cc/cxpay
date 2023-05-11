@@ -65,6 +65,8 @@ const API_getRemainingGroupContact =
 const API_getCountryBanks = apiUrl.API_ONBOARD_GET_COUNTRY_BANKS;
 const API_resendVerifyEmail = apiUrl.API_ONBOARD_RESEND_VERIFY_EMAIL;
 const API_deactivateAccount = apiUrl.API_ONBOARD_DEACTIVATE_ACCOUNT;
+const API_createSchedulePayment = apiUrl.API_ONBOARD_CREATE_SCHEDULE_PAYMENT;
+const API_listSchedulePayment = apiUrl.API_ONBOARD_LIST_SCHEDULE_PAYMENT;
 
 // TRANSACTION SERVICES
 const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
@@ -76,12 +78,9 @@ const API_resendWalletTransferOtp =
   apiUrl.API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP;
 const API_getCharges = apiUrl.API_TRANSACTION_GET_CHARGES;
 const API_sendPaymentRequest = apiUrl.API_TRANSACTION_SEND_PAYMENT_REQUEST;
-const API_createSchedulePayment =
-  apiUrl.API_TRANSACTION_CREATE_SCHEDULE_PAYMENT;
 const API_activityList = apiUrl.API_TRANSACTION_ACTIVITY_LIST;
 const API_getActivityDetails = apiUrl.API_TRANSACTION_GET_ACTIVITY_DETAILS;
 const API_changeRequestStatus = apiUrl.API_TRANSACTION_CHANGE_REQUEST_STATUS;
-
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
 // POST @login API
@@ -457,7 +456,13 @@ export const sendPaymentRequest = (params) => {
 // POST @create-schedule-payment
 // @params schedule_payment , total_amount, schedule_date, overall_specification, group_id
 export const createSchedulePayment = (params) => {
-  return axiosTransactionInstance.post(`${API_createSchedulePayment}`, params);
+  return axiosOnboardInstance.post(`${API_createSchedulePayment}`, params);
+};
+
+// POST @list-schedule-payment
+// @params auth_token
+export const listSchedulePayment = () => {
+  return axiosOnboardInstance.post(`${API_listSchedulePayment}`);
 };
 
 // POST @activity-list
@@ -540,6 +545,7 @@ export const apiRequest = {
   deactivateAccount,
   sendPaymentRequest,
   createSchedulePayment,
+  listSchedulePayment,
   activityList,
   getActivityDetails,
   changeRequestStatus,

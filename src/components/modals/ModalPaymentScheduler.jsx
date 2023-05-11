@@ -11,6 +11,32 @@ const ModalPaymentScheduler = (props) => {
   const modalRef = useRef(null);
   const [selectedTime, setSelectedTime] = useState("");
 
+  const formik = useFormik({
+    initialValues: {
+      date: new Date(),
+      time: "",
+      specification: "",
+    },
+    validationSchema: schedulePaymentSchema,
+    onSubmit: async (values, { setErrors, setValues, setStatus }) => {
+      const { date, time, specification } = values;
+      const params = {
+        schedule_date: `${date.toLocaleDateString("en-CA")} ${time}`,
+        overall_specification: specification,
+      };
+      handleSubmit && (await handleSubmit(params));
+    },
+  });
+
+  const handleDateChange = (date) => {
+    formik.setFieldValue("date", date);
+  };
+
+  const handleTimeChange = (time) => {
+    setSelectedTime(time);
+    formik.setFieldValue("time", time);
+  };
+
   // For closing the modal on click of outside the modal area
   useEffect(() => {
     function handleclickOutside(event) {
@@ -25,31 +51,11 @@ const ModalPaymentScheduler = (props) => {
     };
   }, [modalRef, setShow]);
 
-  const formik = useFormik({
-    initialValues: {
-      date: new Date(),
-      time: "",
-      specification: "",
-    },
-    validationSchema: schedulePaymentSchema,
-    onSubmit: async (values, { setErrors, setValues, setStatus }) => {
-      const { date, time, specification } = values;
-      const params = {
-        schedule_date: `${date.toLocaleDateString("en-CA")} ${time}`,
-        overall_specification: specification,
-      };
-      handleSubmit && handleSubmit(params);
-    },
-  });
-
-  const handleDateChange = (date) => {
-    formik.setFieldValue("date", date);
-  };
-
-  const handleTimeChange = (time) => {
-    setSelectedTime(time);
-    formik.setFieldValue("time", time);
-  };
+  useEffect(() => {
+    if (!show) return;
+    setSelectedTime("");
+    formik.resetForm();
+  }, [show]);
 
   if (!show) return null;
   return (
@@ -87,6 +93,7 @@ const ModalPaymentScheduler = (props) => {
                         onChange={handleTimeChange}
                         clearIcon={null}
                         format="hh:mm:ss a"
+                        maxDetail="second"
                         disableClock
                       />
                       {formik.touched.time && formik.errors.time && (

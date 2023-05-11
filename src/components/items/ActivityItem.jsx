@@ -26,6 +26,13 @@ const ActivityItem = (props) => {
 
   const profileUrl =
     profile_image || "/assets/images/single_contact_profile.png";
+  const altAmount = amount ? parseFloat(amount).toFixed(2) : "";
+  const description = useMemo(() => {
+    const { desc } = activityConsts?.[activity_type]?.[request_type]?.[status];
+    if (!desc) return "";
+    const aDesc = desc?.replace(/XXXX/g, altAmount).replace(/YYYY/, name);
+    return aDesc;
+  }, []);
 
   const {
     iconStatus = "",
@@ -40,7 +47,7 @@ const ActivityItem = (props) => {
       case ACT_TYPE_REQUEST:
         return activityConsts[activity_type]?.[request_type]?.[status] || {};
       case ACT_TYPE_TRANSACTION:
-        return activityConsts[activity_type]?.[status] || {};
+        return activityConsts[activity_type]?.[request_type]?.[status] || {};
       default:
         return {};
     }
@@ -59,17 +66,18 @@ const ActivityItem = (props) => {
           </div>
         </div>
         <div className="act-specification-text">
-          <p>{specification}</p>
+          <p>{description}</p>
         </div>
         <div className="act-amt-status-wrap d-flex">
           <div className="act-status-wrap">
-            <button className={`btn ${classStatus}`}>
+            <button type="button" className={`btn ${classStatus}`}>
               {textStatus}
               {iconStatus}
             </button>
           </div>
           <div className={`act-amt-wrap text-end ${classText}`}>
-            {iconAmount} {amount} {CURRENCY_SYMBOL}
+            {CURRENCY_SYMBOL} {iconAmount}
+            {altAmount}
           </div>
         </div>
       </div>

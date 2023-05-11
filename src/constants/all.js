@@ -114,9 +114,12 @@ const ACT_TYPE_REQUEST = "request";
 const ACT_TYPE_TRANSACTION = "transaction";
 const ACT_REQUEST_SEND = "send";
 const ACT_REQUEST_RECEIVE = "receive";
+const ACT_TRANSACT_CREDIT = "credit";
+const ACT_TRANSACT_DEBIT = "debit";
 const ACT_STATUS_PENDING = "PENDING";
 const ACT_STATUS_DECLINED = "DECLINED";
 const ACT_STATUS_CANCELLED = "CANCELLED";
+const ACT_STATUS_PAID = "PAID";
 
 const activityConsts = {
   [ACT_TYPE_REQUEST]: {
@@ -128,6 +131,7 @@ const activityConsts = {
         classBg: "cx-bg-blue",
         classText: "",
         textStatus: "Request Sent",
+        desc: "Requested money from YYYY",
       },
       [ACT_STATUS_DECLINED]: {
         iconStatus: <IconActReqDecline />,
@@ -136,6 +140,7 @@ const activityConsts = {
         classBg: "cx-bg-red",
         classText: "cx-color-red",
         textStatus: "Declined",
+        desc: "Requested money from YYYY",
       },
       [ACT_STATUS_CANCELLED]: {
         iconStatus: <IconActReqCancel />,
@@ -144,6 +149,7 @@ const activityConsts = {
         classBg: "cx-bg-red",
         classText: "cx-color-red",
         textStatus: "Cancelled",
+        desc: "Requested money from YYYY",
       },
     },
     [ACT_REQUEST_RECEIVE]: {
@@ -154,6 +160,7 @@ const activityConsts = {
         classBg: "cx-bg-green",
         classText: "",
         textStatus: "Request received",
+        desc: "YYYY requested money from you",
       },
       [ACT_STATUS_DECLINED]: {
         iconStatus: <IconActReqDecline />,
@@ -162,6 +169,7 @@ const activityConsts = {
         classBg: "cx-bg-red",
         classText: "cx-color-red",
         textStatus: "Declined",
+        desc: "YYYY requested money from you",
       },
       [ACT_STATUS_CANCELLED]: {
         iconStatus: <IconActReqCancel />,
@@ -170,13 +178,33 @@ const activityConsts = {
         classBg: "cx-bg-red",
         classText: "cx-color-red",
         textStatus: "Cancelled",
+        desc: "YYYY requested money from you",
       },
     },
   },
   [ACT_TYPE_TRANSACTION]: {
-    [ACT_STATUS_PENDING]: {},
-    [ACT_STATUS_DECLINED]: {},
-    [ACT_STATUS_CANCELLED]: {},
+    [ACT_TRANSACT_CREDIT]: {
+      [ACT_STATUS_PAID]: {
+        iconStatus: "",
+        iconAmount: "+",
+        classStatus: "btn-green",
+        classBg: "cx-bg-green",
+        classText: "cx-color-green",
+        textStatus: "Receive",
+        desc: "From YYYY",
+      },
+    },
+    [ACT_TRANSACT_DEBIT]: {
+      [ACT_STATUS_PAID]: {
+        iconStatus: "",
+        iconAmount: "-",
+        classStatus: "btn-red",
+        classBg: "cx-bg-red",
+        classText: "",
+        textStatus: "Sent",
+        desc: "To YYYY",
+      },
+    },
   },
 };
 

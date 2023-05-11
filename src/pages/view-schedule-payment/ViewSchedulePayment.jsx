@@ -1,18 +1,35 @@
+import { apiRequest } from "helpers/apiRequests";
 import React from "react";
+import { useEffect } from "react";
 import { IconBin, IconEdit } from "styles/svgs";
 
 const ViewSchedulePayment = () => {
+  const retrieveSchedulePayments = async () => {
+    try {
+      const { data } = await apiRequest.listSchedulePayment();
+      if (!data.success) throw data.message;
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  };
+
+  useEffect(() => {
+    retrieveSchedulePayments();
+  }, []);
+
   return (
     <>
-      <div class="activities-sec">
+      <div className="activities-sec">
         <div className="col-12 send-payment-ttile-wrap">
           <div className="title-content-wrap send-pay-title-sec">
             <h3>My Schedule Payment</h3>
             <p>Please select payment date</p>
           </div>
         </div>
-        <div class="schedule-pay-sd-wrap">
-          <button class="shedule-date-filter">
+        <div className="schedule-pay-sd-wrap">
+          <button className="shedule-date-filter">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="17"
@@ -86,8 +103,8 @@ const ViewSchedulePayment = () => {
             </svg>
           </button>
         </div>
-        <div class="activity-user-list-wrap">
-          <div class="activity-month">September 2022</div>
+        <div className="activity-user-list-wrap">
+          <div className="activity-month">September 2022</div>
           <ul className="act-user-content-wrap">
             <li>
               <div className="left-activity-div">
@@ -102,33 +119,21 @@ const ViewSchedulePayment = () => {
                 <div className="seleted-value green">+123.45 Nafl</div>
               </div>
               <div className="right-activity-div">
-                <button className="act-edit-wrap">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="33"
-                    height="32"
-                    viewBox="0 0 33 32"
-                    fill="none"
-                  >
-                    <rect width="33" height="32" rx="8" fill="#24BEEF" />
-                    <path
-                      d="M16.6191 23.4941H24.2381"
-                      stroke="#F3F3F3"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                    <path
-                      d="M20.4285 9.52598C20.7653 9.1892 21.222 9 21.6983 9C21.9341 9 22.1677 9.04645 22.3855 9.1367C22.6034 9.22695 22.8014 9.35922 22.9681 9.52598C23.1349 9.69274 23.2672 9.89071 23.3574 10.1086C23.4477 10.3265 23.4941 10.56 23.4941 10.7958C23.4941 11.0316 23.4477 11.2652 23.3574 11.483C23.2672 11.7009 23.1349 11.8989 22.9681 12.0656L12.3862 22.6476L9 23.4941L9.84655 20.1079L20.4285 9.52598Z"
-                      stroke="#F3F3F3"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
+                <button
+                  className="act-edit-wrap rounded"
+                  style={{
+                    background: "#0081C5",
+                    width: "33px",
+                    height: "32px",
+                  }}
+                >
+                  <IconEdit style={{ stroke: "#FFF" }} />
                 </button>
-                <button className="act-del-wrap">
-                  <IconBin style={{ fill: "#FF3333", stroke: "#F3F3F3" }} />
+                <button
+                  className="act-del-wrap rounded"
+                  style={{ background: "#FF3333" }}
+                >
+                  <IconBin style={{ stroke: "#F3F3F3" }} />
                 </button>
               </div>
             </li>

@@ -60,6 +60,8 @@ export const API_ONBOARD_DELETE_NOTIFICATIONS = "/delete-notifications";
 export const API_ONBOARD_GET_COUNTRY_BANKS = "/get-country-banks";
 export const API_ONBOARD_RESEND_VERIFY_EMAIL = "/resend-verify-email";
 export const API_ONBOARD_DEACTIVATE_ACCOUNT = "/deactivate-account";
+export const API_ONBOARD_CREATE_SCHEDULE_PAYMENT = "/create-schedule-payment";
+export const API_ONBOARD_LIST_SCHEDULE_PAYMENT = "/list-schedule-payment";
 
 // customer-transaction Urls
 export const API_TRANSACTION_ADD_FUND = "/add-fund";
@@ -71,8 +73,6 @@ export const API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP =
   "/resend-wallet-transfer-otp";
 export const API_TRANSACTION_GET_CHARGES = "/get-charges";
 export const API_TRANSACTION_SEND_PAYMENT_REQUEST = "/send-payment-request";
-export const API_TRANSACTION_CREATE_SCHEDULE_PAYMENT =
-  "/create-schedule-payment";
 export const API_TRANSACTION_ACTIVITY_LIST = "/activity-list";
 export const API_TRANSACTION_GET_ACTIVITY_DETAILS = "/get-activity-details";
 export const API_TRANSACTION_CHANGE_REQUEST_STATUS = "/change-request-status";

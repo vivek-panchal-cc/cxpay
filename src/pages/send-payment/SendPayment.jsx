@@ -183,12 +183,15 @@ function SendPayment(props) {
         })
       );
       muValues.fees = charges;
-      muValues.total_amount = paymentDetails.grandTotal;
+      muValues.amount = paymentDetails.total;
+      muValues.total = paymentDetails.grandTotal;
       for (const key in muValues)
         addObjToFormData(muValues[key], key, formData);
       const { data } = await apiRequest.createSchedulePayment(formData);
       if (!data.success) throw data.message;
+      setShowSchedulePopup(false);
       toast.success(`${data.message}`);
+      navigate("/view-schedule-payment");
     } catch (error) {
       if (typeof error === "string") toast.error(error);
     } finally {

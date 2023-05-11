@@ -25,13 +25,11 @@ const Contacts = () => {
     setRemoveConfirmShow,
     removeConfirmShow,
     handleSelectedContacts,
-    // retrieveContacts,
-    // contacts = [],
-    // paginationConts,
-    // isLoadingConts,
+    retrieveContacts,
+    contacts = [],
+    paginationConts,
+    isLoadingConts,
     isDisabled,
-    handleChangeFilter,
-    handleResetFilter,
     // search,
   } = useContext(ContactsContext);
   const [invitetitle, setInviteTitle] = useState("Invite");
@@ -43,26 +41,9 @@ const Contacts = () => {
   const [selectedContacts, setSelectedContacts] = useState([]);
   // Contacts and it's pagination
   const [search, setSearch] = useState("");
-  const [contacts, setContacts] = useState([]);
-  const [paginationConts, setPaginationConts] = useState({});
-  const [isLoadingConts, setIsLoadingConts] = useState(false);
-
-  // For getting contacts list
-  const retrieveContacts = async (page = 1, search = "") => {
-    setIsLoadingConts(true);
-    try {
-      const { data } = await apiRequest.contactsList({ page, search });
-      if (!data.success) throw data.message;
-      const { contacts = [], pagination } = data.data || {};
-      setPaginationConts(pagination);
-      setContacts(contacts || []);
-    } catch (error) {
-      if (typeof error === "string") setContacts([]);
-      console.log(error);
-    } finally {
-      setIsLoadingConts(false);
-    }
-  };
+  // const [contacts, setContacts] = useState([]);
+  // const [paginationConts, setPaginationConts] = useState({});
+  // const [isLoadingConts, setIsLoadingConts] = useState(false);
 
   const handlePopupInvite = (e) => {
     setShow(true);
