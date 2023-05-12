@@ -1,23 +1,13 @@
 import { apiRequest } from "helpers/apiRequests";
-import React from "react";
+import useSchedulePayments from "hooks/useSchedulePayments";
+import LoaderActivityItem from "loaders/LoaderActivityItem";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { IconBin, IconEdit } from "styles/svgs";
 
 const ViewSchedulePayment = () => {
-  const retrieveSchedulePayments = async () => {
-    try {
-      const { data } = await apiRequest.listSchedulePayment();
-      if (!data.success) throw data.message;
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-    }
-  };
-
-  useEffect(() => {
-    retrieveSchedulePayments();
-  }, []);
+  const [search, setSearch] = useState("");
+  const [loadingPayments, pagination, listPayments] = useSchedulePayments();
 
   return (
     <>
@@ -29,6 +19,12 @@ const ViewSchedulePayment = () => {
           </div>
         </div>
         <div className="schedule-pay-sd-wrap">
+          <input
+            type="text"
+            name=""
+            id=""
+            onChange={(e) => setSearch(e.currentTarget.value)}
+          />
           <button className="shedule-date-filter">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -106,6 +102,7 @@ const ViewSchedulePayment = () => {
         <div className="activity-user-list-wrap">
           <div className="activity-month">September 2022</div>
           <ul className="act-user-content-wrap">
+            {loadingPayments ? <LoaderActivityItem /> : <></>}
             <li>
               <div className="left-activity-div">
                 <div className="user-thumb-name">

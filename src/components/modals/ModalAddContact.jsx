@@ -54,7 +54,7 @@ function ModalAddContact(props) {
             if (isInvitedFlag) {
               isNavigate && navigate("/contacts");
             } else {
-              getConatcts(1, "");
+              getConatcts();
             }
           } else {
             toast.success(data.message);
@@ -62,7 +62,7 @@ function ModalAddContact(props) {
             setInvitationSentPopup(true);
             setShow(false);
             if (isInvitedFlag) {
-              getInvitedConatcts(1, "");
+              getInvitedConatcts();
             } else {
               isNavigate && navigate("/contacts-invited");
             }

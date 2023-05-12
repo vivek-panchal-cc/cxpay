@@ -175,7 +175,7 @@ function SendPayment(props) {
     try {
       const formData = new FormData();
       const muValues = { ...formik.values, ...scheduleCreds };
-      muValues.wallet = muValues?.wallet?.map(
+      muValues.schedule_payment = muValues?.wallet?.map(
         ({ specifications, personal_amount, receiver_account_number }) => ({
           specifications,
           personal_amount,
@@ -185,6 +185,7 @@ function SendPayment(props) {
       muValues.fees = charges;
       muValues.amount = paymentDetails.total;
       muValues.total = paymentDetails.grandTotal;
+      delete muValues.wallet;
       for (const key in muValues)
         addObjToFormData(muValues[key], key, formData);
       const { data } = await apiRequest.createSchedulePayment(formData);

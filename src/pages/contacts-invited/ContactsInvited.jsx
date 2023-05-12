@@ -11,6 +11,7 @@ import { ContactsContext } from "context/contactsContext";
 import { IconCross, IconSearch } from "styles/svgs";
 import LoaderContact from "loaders/LoaderContact";
 import { uniqueId } from "helpers/commonHelpers";
+import useInvitedContacts from "hooks/useInvitedContacts";
 
 const Invited = () => {
   const [selectedContacts, setSelectedContacts] = useState([]);
@@ -19,21 +20,29 @@ const Invited = () => {
   const [showInvitationSentPopup, setInvitationSentPopup] = useState(false);
   const [showConatctDetailPopup, setConatctDetailPopup] = useState(false);
   const [contactData, setConatctData] = useState([]);
+
+  const [showConfirmDelSingle, setShowConfirmDelSingle] = useState(false);
+  const [showConfirmDelSelected, setShowConfirmDelSelected] = useState(false);
+
+  // Invited Contacts and it's pagination
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [
+    isLoadingConts,
+    paginationConts,
+    contactsInvited,
+    setContactsInvited,
+    reloadContacts,
+  ] = useInvitedContacts({
+    page: currentPage,
+    search: search,
+  });
 
   const {
-    handleRemoveConfirmModal,
-    handleDeleteContact,
-    confirmShow,
-    setConfirmShow,
+    deleteContact,
+    changeFavouriteContact,
     contactName,
-    handleInvitedContacts,
-    contactsInvited = [],
-    paginationInConts,
-    isLoadingInConts,
     isDisabled,
-    removeConfirmShow,
-    setRemoveConfirmShow,
     handleSelectedContacts,
   } = useContext(ContactsContext);
 
@@ -52,16 +61,30 @@ const Invited = () => {
     setInviteTitle(e.currentTarget.value);
   };
 
-  useEffect(() => {
-    if (search === "") {
-      handleInvitedContacts(paginationInConts?.currentPage, search);
-      return;
-    }
-    const timeOut = setTimeout(() => {
-      handleInvitedContacts(paginationInConts?.currentPage, search);
-    }, 1000);
-    return () => clearTimeout(timeOut);
-  }, [search.trim()]);
+  const handleFavContact = (contact) => {
+    if (!contact) return;
+    changeFavouriteContact(contact, contactsInvited, setContactsInvited);
+  };
+
+  const handleConfirmDeleteSingle = (contUniqId) => {
+    if (!contUniqId) return;
+    setSelectedContacts([contUniqId]);
+    setShowConfirmDelSingle(true);
+  };
+
+  const handleConfirmDeleteSelected = () => {
+    if (selectedContacts.length <= 0) return;
+    setShowConfirmDelSelected(true);
+    setShowConfirmDelSelected(true);
+  };
+
+  const handleDeleteContact = async () => {
+    await deleteContact(selectedContacts, contactsInvited);
+    setSelectedContacts([]);
+    setShowConfirmDelSingle(false);
+    setShowConfirmDelSelected(false);
+    reloadContacts();
+  };
 
   return (
     <div className="container-fluid">
@@ -115,12 +138,7 @@ const Invited = () => {
                 className="btn"
                 type="button"
                 value="Remove Contact"
-                onClick={() =>
-                  handleRemoveConfirmModal(
-                    selectedContacts,
-                    "inviteContactsItem"
-                  )
-                }
+                onClick={handleConfirmDeleteSelected}
               >
                 <img src="../assets/images/Remove_icon.svg" alt="" />
                 <span>Remove Contact</span>
@@ -132,7 +150,7 @@ const Invited = () => {
                 show={show}
                 setShow={setShow}
                 getConatcts={[]}
-                getInvitedConatcts={handleInvitedContacts}
+                getInvitedConatcts={reloadContacts}
                 setConatctData={setConatctData}
                 setInvitationSentPopup={setInvitationSentPopup}
                 setConatctDetailPopup={setConatctDetailPopup}
@@ -163,7 +181,7 @@ const Invited = () => {
         </div>
         <div className="con-listing-container">
           <ul className="contact-listing-wrap">
-            {isLoadingInConts ? (
+            {isLoadingConts ? (
               <div className="d-flex flex-column gap-3 mt-4">
                 {[1, 2, 3, 4, 5, 6, 7].map((item) => (
                   <LoaderContact
@@ -181,6 +199,8 @@ const Invited = () => {
                   key={uniqueId()}
                   contact={contact}
                   handleCallback={handleChange}
+                  handleFavContact={handleFavContact}
+                  handleDeleteContact={handleConfirmDeleteSingle}
                   selectedContacts={selectedContacts}
                 />
               ))
@@ -190,29 +210,27 @@ const Invited = () => {
             )}
           </ul>
         </div>
-        {!isLoadingInConts &&
-          paginationInConts &&
-          paginationInConts.total > 10 && (
-            <Pagination
-              siblingCount={1}
-              active={paginationInConts?.current_page}
-              size={paginationInConts?.last_page}
-              onClickHandler={handleInvitedContacts}
-            ></Pagination>
-          )}
+        {!isLoadingConts && paginationConts && paginationConts.total > 10 && (
+          <Pagination
+            siblingCount={1}
+            active={paginationConts?.current_page}
+            size={paginationConts?.last_page}
+            onClickHandler={setCurrentPage}
+          ></Pagination>
+        )}
       </div>
       <ModalConfirmation
         heading={"Delete Contact"}
         subHeading={`Are you sure to remove ${contactName} ?`}
-        show={confirmShow}
-        setShow={setConfirmShow}
+        show={showConfirmDelSingle}
+        setShow={setShowConfirmDelSingle}
         handleCallback={handleDeleteContact}
       />
       <ModalConfirmation
         heading={"Delete Contact"}
         subHeading={"Are you sure to remove contacts?"}
-        show={removeConfirmShow}
-        setShow={setRemoveConfirmShow}
+        show={showConfirmDelSelected}
+        setShow={setShowConfirmDelSelected}
         handleCallback={handleDeleteContact}
       />
     </div>

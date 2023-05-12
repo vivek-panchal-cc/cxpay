@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import Input from "components/ui/Input";
 import Pagination from "components/pagination/Pagination";
 import { toast } from "react-toastify";
@@ -13,24 +13,15 @@ import ContactsItem from "components/items/ContactsItem";
 import { IconCross, IconSearch } from "styles/svgs";
 import LoaderContact from "loaders/LoaderContact";
 import { uniqueId } from "helpers/commonHelpers";
-import { apiRequest } from "helpers/apiRequests";
+import useContacts from "hooks/useContacts";
 
 const Contacts = () => {
   const {
-    handleRemoveConfirmModal,
-    handleDeleteContact,
+    deleteContact,
+    changeFavouriteContact,
     contactName,
-    confirmShow,
-    setConfirmShow,
-    setRemoveConfirmShow,
-    removeConfirmShow,
     handleSelectedContacts,
-    retrieveContacts,
-    contacts = [],
-    paginationConts,
-    isLoadingConts,
     isDisabled,
-    // search,
   } = useContext(ContactsContext);
   const [invitetitle, setInviteTitle] = useState("Invite");
   const [show, setShow] = useState(false);
@@ -39,11 +30,23 @@ const Contacts = () => {
   const [showConatctDetailPopup, setConatctDetailPopup] = useState(false);
   const [contactData, setConatctData] = useState([]);
   const [selectedContacts, setSelectedContacts] = useState([]);
+
+  const [showConfirmDelSingle, setShowConfirmDelSingle] = useState(false);
+  const [showConfirmDelSelected, setShowConfirmDelSelected] = useState(false);
+
   // Contacts and it's pagination
   const [search, setSearch] = useState("");
-  // const [contacts, setContacts] = useState([]);
-  // const [paginationConts, setPaginationConts] = useState({});
-  // const [isLoadingConts, setIsLoadingConts] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [
+    isLoadingConts,
+    paginationConts,
+    contacts,
+    setContacts,
+    reloadContacts,
+  ] = useContacts({
+    page: currentPage,
+    search: search,
+  });
 
   const handlePopupInvite = (e) => {
     setShow(true);
@@ -68,17 +71,30 @@ const Contacts = () => {
     handleSelectedContacts(selectedContacts);
   };
 
-  // Debouncing for retrieve contacts List
-  useEffect(() => {
-    if (search === "") {
-      retrieveContacts(paginationConts?.current_page, search);
-      return;
-    }
-    const timeOut = setTimeout(() => {
-      retrieveContacts(paginationConts?.current_page, search);
-    }, 1000);
-    return () => clearTimeout(timeOut);
-  }, [search.trim()]);
+  const handleFavContact = (contact) => {
+    if (!contact) return;
+    changeFavouriteContact(contact, contacts, setContacts);
+  };
+
+  const handleConfirmDeleteSingle = (contUniqId) => {
+    if (!contUniqId) return;
+    setSelectedContacts([contUniqId]);
+    setShowConfirmDelSingle(true);
+  };
+
+  const handleConfirmDeleteSelected = () => {
+    if (selectedContacts.length <= 0) return;
+    setShowConfirmDelSelected(true);
+    setShowConfirmDelSelected(true);
+  };
+
+  const handleDeleteContact = async () => {
+    await deleteContact(selectedContacts, contacts);
+    setSelectedContacts([]);
+    setShowConfirmDelSingle(false);
+    setShowConfirmDelSelected(false);
+    reloadContacts();
+  };
 
   return (
     <div className="container-fluid">
@@ -132,11 +148,9 @@ const Contacts = () => {
                   className="btn"
                   type="button"
                   value="Remove Contact"
-                  onClick={() =>
-                    handleRemoveConfirmModal(selectedContacts, "contactsItem")
-                  }
+                  onClick={handleConfirmDeleteSelected}
                 >
-                  <img src="assets/images/Remove_icon.svg" alt="" />
+                  <img src="/assets/images/Remove_icon.svg" alt="" />
                   <span>Remove Contact</span>
                 </button>
               </div>
@@ -197,6 +211,8 @@ const Contacts = () => {
                     key={uniqueId()}
                     contact={contact}
                     handleCallback={handleChange}
+                    handleFavContact={handleFavContact}
+                    handleDeleteContact={handleConfirmDeleteSingle}
                     selectedContacts={selectedContacts}
                   />
                 ))
@@ -211,7 +227,7 @@ const Contacts = () => {
               siblingCount={1}
               active={paginationConts?.current_page}
               size={paginationConts?.last_page}
-              onClickHandler={retrieveContacts}
+              onClickHandler={setCurrentPage}
             ></Pagination>
           )}
         </div>
@@ -220,19 +236,12 @@ const Contacts = () => {
         id="add_contact"
         show={show}
         setShow={setShow}
-        getConatcts={retrieveContacts}
-        getInvitedConatcts={[]}
+        getConatcts={reloadContacts}
+        getInvitedConatcts={reloadContacts}
         setConatctData={setConatctData}
         setInvitationSentPopup={setInvitationSentPopup}
         setConatctDetailPopup={setConatctDetailPopup}
         {...{ invitetitle }}
-      />
-      <ModalConfirmation
-        heading={"Delete Contact"}
-        subHeading={`Are you sure to remove ${contactName} ?`}
-        show={confirmShow}
-        setShow={setConfirmShow}
-        handleCallback={handleDeleteContact}
       />
       <ModalCreateGroup
         id="create-group-popup"
@@ -243,9 +252,16 @@ const Contacts = () => {
       />
       <ModalConfirmation
         heading={"Delete Contact"}
+        subHeading={`Are you sure to remove ${contactName} ?`}
+        show={showConfirmDelSingle}
+        setShow={setShowConfirmDelSingle}
+        handleCallback={handleDeleteContact}
+      />
+      <ModalConfirmation
+        heading={"Delete Contact"}
         subHeading={"Are you sure to remove contacts?"}
-        show={removeConfirmShow}
-        setShow={setRemoveConfirmShow}
+        show={showConfirmDelSelected}
+        setShow={setShowConfirmDelSelected}
         handleCallback={handleDeleteContact}
       />
     </div>

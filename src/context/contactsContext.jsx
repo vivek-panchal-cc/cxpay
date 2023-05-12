@@ -14,7 +14,6 @@ const ContactsProvider = ({ children }) => {
   // Contacts and it's pagination
   const [contacts, setContacts] = useState([]);
   const [paginationConts, setPaginationConts] = useState({});
-  const [isLoadingConts, setIsLoadingConts] = useState(false);
   // Invited Contacts and it's pagination
   const [contactsInvited, setContactsInvited] = useState([]);
   const [paginationInConts, setPaginationInConts] = useState({});
@@ -28,85 +27,40 @@ const ContactsProvider = ({ children }) => {
   const [removeConfirmShow, setRemoveConfirmShow] = useState(false);
   const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
 
-  // For getting contacts list
-  const retrieveContacts = async (page = 1, search = "") => {
-    setIsLoadingConts(true);
-    try {
-      const { data } = await apiRequest.contactsList({ page, search });
-      if (!data.success) throw data.message;
-      const { contacts = [], pagination } = data.data || {};
-      setPaginationConts(pagination);
-      setContacts(contacts || []);
-    } catch (error) {
-      if (typeof error === "string") setContacts([]);
-      console.log(error);
-    } finally {
-      setIsLoadingConts(false);
-    }
-  };
-
   // For changing fav contact in list
-  const bindFavouriteContact = (favCon = {}, type = "") => {
-    switch (type) {
-      case "contactsItem":
-        const muContacts = [...contacts]?.map((con) => {
-          if (
-            con.mobile === favCon.mobile &&
-            con.country_code === favCon.country_code
-          )
-            con.is_favourite = !con.is_favourite;
-          return con;
-        });
-        setContacts(muContacts);
-        return;
-      case "inviteContactsItem":
-        const muInvitedContacts = [...contactsInvited]?.map((con) => {
-          if (
-            con.mobile === favCon.mobile &&
-            con.country_code === favCon.country_code
-          )
-            con.is_favourite = !con.is_favourite;
-          return con;
-        });
-        setContactsInvited(muInvitedContacts);
-        return;
-      default:
-        return;
-    }
+  const bindFavouriteContact = (favCon = {}, contacts = []) => {
+    const muContacts = [...contacts]?.map((con) => {
+      if (
+        con.mobile === favCon.mobile &&
+        con.country_code === favCon.country_code
+      )
+        con.is_favourite = !con.is_favourite;
+      return con;
+    });
+    return muContacts;
   };
 
-  //For add contacts to favourite list
-  const handleFavContact = async (contact, type) => {
+  //For changing favourite contact status @return List
+  const changeFavouriteContact = async (
+    contact = {},
+    contacts = [],
+    setContacts = () => {}
+  ) => {
     const reqData = {
-      country_code: contact.country_code,
-      mobile: contact.mobile,
+      country_code: contact?.country_code || "",
+      mobile: contact?.mobile || "",
       mark_as_fav: contact.is_favourite ? 0 : 1,
     };
-    bindFavouriteContact(contact, type);
     try {
+      const chContacts = bindFavouriteContact(contact, contacts);
+      setContacts && setContacts(chContacts);
       const { data } = await apiRequest.markAsFavourite(reqData);
       if (!data.success) throw data.message;
       toast.success(data.message);
     } catch (error) {
       console.log(error);
-      bindFavouriteContact(contact, type);
-    }
-  };
-
-  // For getting invited contacts list
-  const handleInvitedContacts = async (page = 1, search = "") => {
-    setIsLoadingInConts(true);
-    try {
-      const { data } = await apiRequest.invitedContactsList({ page, search });
-      if (!data.success) throw data.message;
-      const { contacts = [], pagination } = data.data || {};
-      setContactsInvited(contacts || []);
-      setPaginationInConts(pagination);
-    } catch (error) {
-      console.log(error);
-      if (typeof error === "string") setContactsInvited([]);
-    } finally {
-      setIsLoadingInConts(false);
+      const chContacts = bindFavouriteContact(contact, contacts);
+      setContacts && setContacts(chContacts);
     }
   };
 
@@ -126,36 +80,24 @@ const ContactsProvider = ({ children }) => {
   };
 
   // For delete contacts from the list
-  const handleDeleteContact = async () => {
+  const deleteContact = async (delContactUniqIds = [], contacts = []) => {
     setIsLoading(true);
     try {
-      let selectedConts = [];
-      const accountNos = deleteContactArr;
-      if (contactsType == "contactsItem") {
-        selectedConts = contacts?.filter((con) =>
-          accountNos.includes(con.account_number)
-        );
-      } else {
-        selectedConts = contactsInvited?.filter((con) =>
-          accountNos.includes(con.mobile)
-        );
-      }
-      const ids = selectedConts.map(({ country_code, mobile }) => ({
-        country_code,
-        mobile,
-      }));
-      const { data } = await apiRequest.deleteContact({ contacts: ids });
+      const delContacts = [];
+      contacts &&
+        contacts?.map((con) => {
+          const { account_number, country_code, mobile } = con;
+          if (
+            delContactUniqIds.includes(account_number) ||
+            delContactUniqIds.includes(mobile)
+          )
+            delContacts.push({ country_code, mobile });
+        });
+      const { data } = await apiRequest.deleteContact({
+        contacts: delContacts,
+      });
       if (!data.success) throw data.message;
-      if (contactsType == "contactsItem") {
-        retrieveContacts(paginationConts?.current_page);
-      } else {
-        handleInvitedContacts(paginationInConts?.current_page);
-      }
-      setSelectedContacts([]);
       toast.success(data.message);
-      setConfirmShow(false);
-      setRemoveConfirmShow(false);
-      setDeleteContactArr("");
     } catch (error) {
       console.log(error);
     } finally {
@@ -197,28 +139,25 @@ const ContactsProvider = ({ children }) => {
   return (
     <ContactsContext.Provider
       value={{
-        handleFavContact,
+        deleteContact,
+        changeFavouriteContact,
+        //
         handleOpenConfirmModal,
         handleRemoveConfirmModal,
-        handleDeleteContact,
+        // handleDeleteContact,
         contactName,
         confirmShow,
         setConfirmShow,
         setRemoveConfirmShow,
         removeConfirmShow,
-        // contacts
-        contacts,
-        paginationConts,
-        isLoadingConts,
         // invited contacts
-        contactsInvited,
-        paginationInConts,
-        isLoadingInConts,
+        // contactsInvited,
+        // paginationInConts,
+        // isLoadingInConts,
         //
-        retrieveContacts,
         handleSelectedContacts,
         contactsType,
-        handleInvitedContacts,
+        // handleInvitedContacts,
         isDisabled,
         search,
         deleteGroup,

@@ -4,9 +4,13 @@ import React, { useContext } from "react";
 import { IconBackgroundStar, IconDelete } from "styles/svgs";
 
 const ContactsItem = (props) => {
-  const { contact, selectedContacts, handleCallback } = props;
-  const { handleFavContact, handleOpenConfirmModal } =
-    useContext(ContactsContext);
+  const {
+    contact,
+    selectedContacts,
+    handleCallback,
+    handleFavContact,
+    handleDeleteContact,
+  } = props;
 
   const { handleSendContacts, handleSendRequest } =
     useContext(SendPaymentContext);
@@ -47,7 +51,6 @@ const ContactsItem = (props) => {
       <div className="con-listing-phone">
         <p>{contact?.mobile}</p>
       </div>
-
       <div
         className={`${contact?.name ? "con-listing-mail" : "invited-con-mail"}`}
       >
@@ -59,17 +62,11 @@ const ContactsItem = (props) => {
             <IconBackgroundStar
               fillBack={contact?.is_favourite ? "#F9DB3E" : "#F3F3F3"}
               fillStar={contact?.is_favourite ? "#fff" : ""}
-              onClick={() => handleFavContact(contact, "contactsItem")}
+              onClick={() => handleFavContact(contact)}
             />
           </a>
           <button
-            onClick={() =>
-              handleOpenConfirmModal(
-                [contact?.account_number],
-                contact?.name ? contact?.name : "this contact",
-                "contactsItem"
-              )
-            }
+            onClick={() => handleDeleteContact(contact?.account_number)}
             className="conlist-del-a con-list-up"
           >
             <IconDelete />
