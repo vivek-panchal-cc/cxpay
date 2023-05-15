@@ -62,6 +62,9 @@ export const API_ONBOARD_RESEND_VERIFY_EMAIL = "/resend-verify-email";
 export const API_ONBOARD_DEACTIVATE_ACCOUNT = "/deactivate-account";
 export const API_ONBOARD_CREATE_SCHEDULE_PAYMENT = "/create-schedule-payment";
 export const API_ONBOARD_LIST_SCHEDULE_PAYMENT = "/list-schedule-payment";
+export const API_ONBOARD_DELETE_SCHEDULE_PAYMENT = "/delete-schedule-payment";
+export const API_ONBOARD_UPDATE_SCHEDULE_PAYMENT = "/update-schedule-payment";
+export const API_ONBOARD_VIEW_SCHEDULE_PAYMENT = "/view-schedule-payment";
 
 // customer-transaction Urls
 export const API_TRANSACTION_ADD_FUND = "/add-fund";

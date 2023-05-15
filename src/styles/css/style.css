@@ -7131,8 +7131,8 @@ button.schedule-pay-btn {
   margin: 0px !important;
   padding: 5px;
 }
-.schedule-time-modal .react-datepicker__day--selected ,
-.react-datepicker__day--range-end{
+.schedule-time-modal .react-datepicker__day--selected,
+.react-datepicker__day--range-end {
   background-color: var(--blue) !important;
   color: #fff !important;
 }
@@ -7173,10 +7173,127 @@ button.shedule-date-filter:hover {
 }
 /* CSS added on 10-05 */
 .react-datepicker__day--in-range,
-.react-datepicker__quarter-text--in-range{
+.react-datepicker__quarter-text--in-range {
   background-color: #d1ebff;
 }
-.react-datepicker__day--in-range:hover{
-  color:#fff;
+.react-datepicker__day--in-range:hover {
+  color: #fff;
   background-color: var(--blue);
 }
+/* Schedule Payment Page Start */
+.title-content-wrap.common-title-wrap h3 {
+  font-size: 32px;
+  line-height: 38px;
+  margin-bottom: 5px;
+}
+.title-content-wrap.common-title-wrap p {
+  font-size: 18px;
+  line-height: 20px;
+}
+.sp-top-sec {
+  margin-bottom: 8px;
+}
+.sp-details-inner-wrap ul li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.sp-details-inner-wrap .sp-user-wrap {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 120px);
+}
+.sp-total-wrap {
+  display: flex;
+  background: #f3f3f3;
+  border-radius: 18px;
+  padding: 25px 22px;
+  margin-top: 20px;
+}
+.sp-total-wrap > div {
+  width: 50%;
+}
+.sp-total-amt,
+.sp-total-text {
+  font-family: "Visby Round CF", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 24px;
+  color: var(--dark_blue);
+}
+.sp-total-amt span {
+  color: #0081c5;
+  margin-right: 15px;
+}
+.sp-details-inner-wrap .sp-amt {
+  padding-left: 10px;
+  width: 120px;
+  text-align: right;
+}
+.sp-details-main-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.sp-details-inner-wrap {
+  width: calc(100% + 15px);
+  margin-left: -15px;
+}
+.sp-details-inner-wrap ul {
+  max-height: 500px;
+  overflow-y: auto;
+  padding: 15px;
+}
+.sp-details-inner-wrap li {
+  padding: 15px;
+  cursor: pointer;
+  border-radius: 15px;
+  transition: all 0.5s ease-in-out;
+}
+.sp-details-inner-wrap li:hover {
+  background-color: #fff;
+  /* box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08);
+}
+.sp-user-wrap {
+  display: flex;
+  align-items: center;
+}
+.sp-user-wrap .sp-user-nm {
+  width: calc(100% - 60px);
+  padding-left: 15px;
+  font-family: "Visby Round CF", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--dark_blue);
+}
+.sp-user-wrap-thumb {
+  width: 60px;
+  height: 60px;
+  border-radius: 55px;
+}
+.sp-user-wrap-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 55px;
+}
+.sp-btn-inner-wrap {
+  margin-top: 25px;
+}
+.outline-solid-wrap button.btn {
+  min-width: 165px;
+  border: 1px solid !important;
+  padding: 12px !important;
+  justify-content: center;
+  font-size: 18px !important;
+  line-height: 22px !important;
+  font-family: "Visby Round CF", sans-serif;
+  font-weight: 500;
+}
+.outline-solid-wrap button.btn:not(:last-child) {
+  margin-right: 10px;
+}
+/* Schedule Payment Page End*/

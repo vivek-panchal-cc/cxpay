@@ -28,7 +28,8 @@ const ActivityItem = (props) => {
     profile_image || "/assets/images/single_contact_profile.png";
   const altAmount = amount ? parseFloat(amount).toFixed(2) : "";
   const description = useMemo(() => {
-    const { desc } = activityConsts?.[activity_type]?.[request_type]?.[status];
+    const { desc } =
+      activityConsts?.[activity_type]?.[request_type]?.[status] || {};
     if (!desc) return "";
     const aDesc = desc?.replace(/XXXX/g, altAmount).replace(/YYYY/, name);
     return aDesc;

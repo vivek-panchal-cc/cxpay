@@ -67,6 +67,9 @@ const API_resendVerifyEmail = apiUrl.API_ONBOARD_RESEND_VERIFY_EMAIL;
 const API_deactivateAccount = apiUrl.API_ONBOARD_DEACTIVATE_ACCOUNT;
 const API_createSchedulePayment = apiUrl.API_ONBOARD_CREATE_SCHEDULE_PAYMENT;
 const API_listSchedulePayment = apiUrl.API_ONBOARD_LIST_SCHEDULE_PAYMENT;
+const API_deleteSchedulePayment = apiUrl.API_ONBOARD_DELETE_SCHEDULE_PAYMENT;
+const API_updateSchedulePayment = apiUrl.API_ONBOARD_UPDATE_SCHEDULE_PAYMENT;
+const API_viewSchedulePayment = apiUrl.API_ONBOARD_VIEW_SCHEDULE_PAYMENT;
 
 // TRANSACTION SERVICES
 const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
@@ -465,6 +468,24 @@ export const listSchedulePayment = () => {
   return axiosOnboardInstance.post(`${API_listSchedulePayment}`);
 };
 
+// POST @delete-schedule-payment
+// @params auth_token, schedule_payment_id
+export const deleteSchedulePayment = (params) => {
+  return axiosOnboardInstance.post(`${API_deleteSchedulePayment}`, params);
+};
+
+// POST @update-schedule-payment
+// @params auth_token, schedule_payment_id, schedule_date, overall_specification
+export const updateSchedulePayment = (params) => {
+  return axiosOnboardInstance.post(`${API_updateSchedulePayment}`, params);
+};
+
+// POST @view-schedule-payment
+// @params auth_token, schedule_payment_id
+export const viewSchedulePayment = (params) => {
+  return axiosOnboardInstance.post(`${API_viewSchedulePayment}`, params);
+};
+
 // POST @activity-list
 // @params auth_token
 export const activityList = (params) => {
@@ -546,6 +567,9 @@ export const apiRequest = {
   sendPaymentRequest,
   createSchedulePayment,
   listSchedulePayment,
+  deleteSchedulePayment,
+  updateSchedulePayment,
+  viewSchedulePayment,
   activityList,
   getActivityDetails,
   changeRequestStatus,

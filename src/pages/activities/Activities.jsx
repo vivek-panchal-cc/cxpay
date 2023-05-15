@@ -18,6 +18,7 @@ import {
   ACT_TYPE_REQUEST,
 } from "constants/all";
 import ModalConfirmation from "components/modals/ModalConfirmation";
+import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
 
 const Activities = () => {
   const { handleSendContacts } = useContext(SendPaymentContext);
@@ -47,9 +48,9 @@ const Activities = () => {
     try {
       const { data } = await apiRequest.activityList({ page, ...filters });
       if (!data.success) throw data.message;
-      const { request_payments, pagination } = data.data || {};
+      const { transactions, pagination } = data.data || {};
       const activityDateList = {};
-      request_payments?.map((item) => {
+      transactions?.map((item) => {
         const [dd, mm, yr] = item?.date?.split("/");
         const dt = new Date(`${yr}-${mm}-${dd}`);
         const month = dt.toLocaleDateString("default", { month: "long" });
@@ -57,7 +58,7 @@ const Activities = () => {
         activityDateList[`${month} ${yr}`] = [...dtList, item];
       });
       setActivitiesDateBind(activityDateList);
-      setActivitiesList(request_payments);
+      setActivitiesList(transactions);
       setActPagination(pagination);
     } catch (error) {
       console.log(error);
@@ -257,27 +258,15 @@ const Activities = () => {
           onClickHandler={getActivitiesList}
         />
       )}
-      <Modal
+      <ModalDateRangePicker
         show={showFilter}
         setShow={setShowFilter}
         classNameChild={"schedule-time-modal"}
-      >
-        <div className="modal-dialog modal-dialog-centered w-50">
-          <div className="modal-content p-4">
-            <div className="modal-header flex-column pb-3">
-              <h3 className="text-center">Data Filter</h3>
-            </div>
-            <ReactDatePicker
-              selected={filters.startDate}
-              startDate={filters.startDate}
-              endDate={filters.endDate}
-              onChange={handleChangeDateFilter}
-              selectsRange
-              inline
-            />
-          </div>
-        </div>
-      </Modal>
+        heading="Data Filter"
+        startDate={filters.startDate}
+        endDate={filters.endDate}
+        handleChangeDateRange={handleChangeDateFilter}
+      />
       <ModalActivityDetail
         id="user-details-popup"
         className="user-details-modal"

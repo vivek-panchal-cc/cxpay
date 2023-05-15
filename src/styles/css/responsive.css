@@ -386,8 +386,7 @@
     font-size: 15px;
     line-height: 20px;
   }
-  .send-top-sec h3,
-  .send-pay-title-sec h3 {
+  .send-top-sec h3, .send-pay-title-sec h3, .title-content-wrap.common-title-wrap h3 {
     font-size: 28px;
     line-height: 35px;
     margin-bottom: 10px;
@@ -970,8 +969,7 @@
     font-size: 14px;
     line-height: 19px;
   }
-  .send-top-sec h3,
-  .send-pay-title-sec h3 {
+  .send-top-sec h3, .send-pay-title-sec h3, .title-content-wrap.common-title-wrap h3 {
     font-size: 24px;
     line-height: 32px;
     margin-bottom: 9px;
@@ -1955,6 +1953,15 @@
   }
   .date-main-div .date-inner-div:last-child{
     margin-right: 0px;
+  }
+  .sp-details-main-wrap>div:first-child {
+    width: 60%;
+  }
+  .sp-details-main-wrap>div:last-child {
+    width: 40%;
+  }
+  .sp-details-main-wrap>div:last-child{
+    padding-left: 60px;
   }
 }
 @media only screen and (max-width: 991px) {
@@ -3307,6 +3314,25 @@
   .send-page-wrapper .send-top-sec form {
     width: 100% !important;
   }
+  /* sp sec 15-05 start */
+  .sp-details-main-wrap>div{
+    width: 100%;
+}
+.sp-btn-inner-wrap {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+.sp-details-inner-wrap ul{
+  max-height: 300px;
+}
+.sp-details-inner-wrap li{
+  padding: 10px 15px;
+}
+.sp-top-sec .title-content-wrap p {
+  font-size: 15px;
+  line-height: 20px;
+}
+/* sp sec 15-05 end */
 }
 
 @media only screen and (max-width: 767px) {
@@ -4268,6 +4294,10 @@
     margin-bottom: 15px;
   }
   /* New Activity list page end */
+  .title-content-wrap.common-title-wrap h3 {
+    font-size: 22px;
+    line-height: 26px;
+  }
 }
 @media only screen and (max-width: 575px) {
   .logo-content-wrap h4 {
@@ -4525,6 +4555,38 @@
   .send-page-wrapper .send-top-sec .send-top-right-sec .add-contact-btn-wrap {
     margin-left: 10px;
   }
+   /* sp sec 15-05 start */
+   .outline-solid-wrap button.btn{
+    margin-right: 10px;
+    min-width:110;
+    padding:10px !important;
+    font-size: 15px !important;
+    line-height: 18px !important;
+  }
+  .sp-user-wrap .sp-user-nm{
+    font-size: 14px;
+    padding-left: 10px;
+  }
+  .sp-details-inner-wrap .sp-amt{}
+
+  /* .sp-details-inner-wrap .sp-user-wrap{
+    width: 100%;
+  }
+  .sp-details-inner-wrap .sp-amt{
+      width: 100%;
+      padding-left: 75px;
+  } */
+  .sp-details-inner-wrap li{padding: 10px;}
+  .sp-details-inner-wrap ul{
+    padding-right: 10px;
+  }
+  .sp-total-amt span{
+    margin-right: 10px;
+  }
+  .sp-total-amt, .sp-total-text{
+    font-size: 20px;
+  }
+  /* sp sec 15-05 end */
 }
 @media only screen and (max-width: 480px) {
   /* .profile-inner-sec.p-4 {

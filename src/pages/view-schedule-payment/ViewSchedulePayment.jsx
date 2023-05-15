@@ -1,13 +1,62 @@
-import { apiRequest } from "helpers/apiRequests";
-import useSchedulePayments from "hooks/useSchedulePayments";
+import SchedulePaymentItem from "components/items/SchedulePaymentItem";
+import ModalConfirmation from "components/modals/ModalConfirmation";
+import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
+import { ScheduledPaymentContext } from "context/scheduledPaymentContext";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { IconBin, IconEdit } from "styles/svgs";
+import React, { useContext, useMemo, useState } from "react";
+import { IconCalender } from "styles/svgs";
 
 const ViewSchedulePayment = () => {
-  const [search, setSearch] = useState("");
-  const [loadingPayments, pagination, listPayments] = useSchedulePayments();
+  const [showFilter, setShowFilter] = useState(false);
+  const {
+    loadingPayments,
+    pagination,
+    listPayments,
+    deleteScheduledPayment,
+    handleSelectPaymentEntry,
+  } = useContext(ScheduledPaymentContext);
+
+  const [deletPaymentId, setDeletPaymentId] = useState(null);
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [filters, setFilters] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+    search: "",
+  });
+
+  const { strFilStartDt, strFilEndDt } = useMemo(() => {
+    if (!filters.startDate || !filters.endDate)
+      return { strFilEndDt: "", strFilStartDt: "" };
+    const strFilStartDt = filters.startDate
+      .toLocaleDateString("en-IN", {
+        dateStyle: "medium",
+      })
+      .replace(/-/g, " ");
+    const strFilEndDt = filters.endDate
+      .toLocaleDateString("en-IN", {
+        dateStyle: "medium",
+      })
+      .replace(/-/g, " ");
+    return { strFilStartDt, strFilEndDt };
+  }, [filters.startDate, filters.endDate]);
+
+  const handleChangeDateFilter = async (dates) => {
+    const [start, end] = dates;
+    setFilters((e) => ({ ...e, startDate: start, endDate: end }));
+    if (start && end) setShowFilter(false);
+  };
+
+  const handleDeletePayment = async (spid) => {
+    if (!spid) return;
+    setDeletPaymentId(spid);
+    setShowConfirmPopup(true);
+  };
+
+  const confirmDeletePayment = async () => {
+    setShowConfirmPopup(false);
+    await deleteScheduledPayment(deletPaymentId);
+    setDeletPaymentId(null);
+  };
 
   return (
     <>
@@ -19,12 +68,19 @@ const ViewSchedulePayment = () => {
           </div>
         </div>
         <div className="schedule-pay-sd-wrap">
-          <input
-            type="text"
-            name=""
-            id=""
-            onChange={(e) => setSearch(e.currentTarget.value)}
-          />
+          <form>
+            <IconCalender style={{ stroke: "#0081C5" }} />
+            <span className="date-cal"></span>
+            <input
+              id="from-date"
+              type="text"
+              className="form-control"
+              placeholder="From"
+              value={`${strFilStartDt} - ${strFilEndDt}`}
+              onClick={() => setShowFilter(true)}
+              readOnly
+            />
+          </form>
           <button className="shedule-date-filter">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -102,41 +158,53 @@ const ViewSchedulePayment = () => {
         <div className="activity-user-list-wrap">
           <div className="activity-month">September 2022</div>
           <ul className="act-user-content-wrap">
-            {loadingPayments ? <LoaderActivityItem /> : <></>}
-            <li>
-              <div className="left-activity-div">
-                <div className="user-thumb-name">
-                  <img src="/assets/images/single_contact_profile.png" alt="" />
-                  <span>Contact Name </span>
-                </div>
-                <div className="activity-date">01 Sep 2022, at 18:00 PM</div>
-                <div className="act-spec-add">
-                  Description will be written here
-                </div>
-                <div className="seleted-value green">+123.45 Nafl</div>
-              </div>
-              <div className="right-activity-div">
-                <button
-                  className="act-edit-wrap rounded"
-                  style={{
-                    background: "#0081C5",
-                    width: "33px",
-                    height: "32px",
-                  }}
-                >
-                  <IconEdit style={{ stroke: "#FFF" }} />
-                </button>
-                <button
-                  className="act-del-wrap rounded"
-                  style={{ background: "#FF3333" }}
-                >
-                  <IconBin style={{ stroke: "#F3F3F3" }} />
-                </button>
-              </div>
-            </li>
+            {loadingPayments ? (
+              <LoaderActivityItem />
+            ) : (
+              listPayments?.map((item) => {
+                const isGroup =
+                  typeof item.isGroup === "string" && item.isGroup
+                    ? parseInt(item.isGroup)
+                    : item.isGroup;
+                const profileURL = isGroup
+                  ? "/assets/images/group_contact_profile.png"
+                  : item.image || "/assets/images/single_contact_profile.png";
+                return (
+                  <SchedulePaymentItem
+                    details={{
+                      id: item.id,
+                      name: item.name,
+                      dateTime: item?.payment_schedule_date,
+                      description: item?.overall_specification,
+                      amount: item?.total,
+                      profileImg: profileURL,
+                    }}
+                    handleEdit={handleSelectPaymentEntry}
+                    handleDelete={handleDeletePayment}
+                  />
+                );
+              })
+            )}
           </ul>
         </div>
       </div>
+      <ModalDateRangePicker
+        show={showFilter}
+        setShow={setShowFilter}
+        classNameChild={"schedule-time-modal"}
+        heading="Data Filter"
+        startDate={filters.startDate}
+        endDate={filters.endDate}
+        handleChangeDateRange={handleChangeDateFilter}
+      />
+      <ModalConfirmation
+        id="delete-group-member-popup"
+        show={showConfirmPopup}
+        setShow={setShowConfirmPopup}
+        heading={""}
+        subHeading={""}
+        handleCallback={confirmDeletePayment}
+      />
     </>
   );
 };

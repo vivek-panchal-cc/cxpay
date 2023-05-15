@@ -39,6 +39,8 @@ import ContactsLayout from "layouts/ContactsLayout";
 import RequestPayment from "pages/request-payment/RequestPayment";
 import ViewSchedulePayment from "pages/view-schedule-payment/ViewSchedulePayment";
 import Activities from "pages/activities/Activities";
+import ScheduledPaymentLayout from "layouts/ScheduledPaymentLayout";
+import EditScheduledPayment from "pages/edit-scheduled-payment/EditScheduledPayment";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -110,11 +112,17 @@ function App() {
               <Route path="/request" element={<RequestContact />} />
               <Route path="/request/payment" element={<RequestPayment />} />
             </Route>
+            <Route element={<ScheduledPaymentLayout />}>
+              <Route
+                path="/view-schedule-payment"
+                element={<ViewSchedulePayment />}
+              />
+              <Route
+                path="/view-schedule-payment/update"
+                element={<EditScheduledPayment />}
+              />
+            </Route>
             <Route path="/view-notification" element={<ViewNotification />} />
-            <Route
-              path="/view-schedule-payment"
-              element={<ViewSchedulePayment />}
-            />
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Route>
