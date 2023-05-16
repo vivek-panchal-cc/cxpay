@@ -58,28 +58,31 @@ const Pagination = (props) => {
                   <span className="page-link skip">.....</span>
                 </li>
               )}
-              {[...Array(showingNumbers)].map((elm, i) => (
-                <li
-                  key={i}
-                  className="page-item"
-                  {...(contentNumber === needStartDots
+              {[...Array(showingNumbers + 1)].map((elm, i) => {
+                contentNumber =
+                  contentNumber === needStartDots
                     ? startArrayNumber
-                    : startNumber)}
-                  {...startNumber++}
-                  {...startArrayNumber++}
-                  onClick={(e) =>
-                    onClickHandler(parseInt(e.currentTarget.textContent))
-                  }
-                >
-                  <span
-                    className={`page-link ${
-                      active === contentNumber && "current"
-                    }`}
+                    : startNumber;
+                startNumber++;
+                startArrayNumber++;
+                return (
+                  <li
+                    key={i}
+                    className="page-item"
+                    onClick={(e) =>
+                      onClickHandler(parseInt(e.currentTarget.textContent))
+                    }
                   >
-                    {contentNumber}
-                  </span>
-                </li>
-              ))}
+                    <span
+                      className={`page-link ${
+                        active === contentNumber && "current"
+                      }`}
+                    >
+                      {contentNumber}
+                    </span>
+                  </li>
+                );
+              })}
               {needEndDots && (
                 <li className="page-item">
                   <span className="page-link skip">.....</span>

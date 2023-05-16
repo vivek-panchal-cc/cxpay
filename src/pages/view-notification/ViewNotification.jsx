@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NotificationListItem from "components/items/NotificationListItem";
 import Pagination from "components/pagination/Pagination";
@@ -8,19 +8,36 @@ import {
   fetchMarkAsRead,
 } from "features/user/userNotificationSlice";
 import { LoaderContext } from "context/loaderContext";
-import { notificationType } from "constants/all";
+import {
+  ACT_STATUS_DECLINED,
+  NOTIFY_CON_REGISTER,
+  NOTIFY_PAY_COMPLETE,
+  NOTIFY_PAY_FAIL,
+  NOTIFY_RECEIVE,
+  NOTIFY_REQUEST,
+  notificationType,
+} from "constants/all";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Button from "components/ui/Button";
+import { apiRequest } from "helpers/apiRequests";
+import ModalActivityDetail from "components/modals/ModalActivityDetail";
+import { SendPaymentContext } from "context/sendPaymentContext";
+import ModalConfirmation from "components/modals/ModalConfirmation";
 
 function ViewNotification(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { handleSendContacts } = useContext(SendPaymentContext);
+  const [activityDetails, setActivityDetails] = useState({});
+  const [showRequestPopup, setShowRequestPopup] = useState(false);
+  const [loadingPopupDetails, setLoadingPopupDetails] = useState(false);
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const { setIsLoading } = useContext(LoaderContext);
   const { allNotifications, pagination } = useSelector(
     (state) => state.userNotification
   );
-  const { current_page, total, from, to, last_page } = pagination || {};
+  const { current_page, total, last_page } = pagination || {};
 
   const handleNotificationPageChange = async (page) => {
     setIsLoading(true);
@@ -33,14 +50,21 @@ function ViewNotification(props) {
     }
   };
 
-  const handleMarkAsRead = async ({ id, status, type }) => {
-    if (status) return navigate(notificationType[type]?.redirect);
+  const handleMarkAsRead = async ({ id, status, type, payload }) => {
+    switch (type) {
+      case NOTIFY_REQUEST:
+        openRequestNotification(type, payload);
+        break;
+      default:
+        navigate(notificationType[type].redirect);
+        break;
+    }
+    if (status) return;
     setIsLoading(true);
     try {
-      const { error, payload } = await dispatch(fetchMarkAsRead(id));
-      if (error) throw payload;
-      toast.success(payload);
-      navigate(notificationType[type]?.redirect);
+      const { error, payload: msg } = await dispatch(fetchMarkAsRead(id));
+      if (error) throw msg;
+      toast.success(msg);
     } catch (error) {
       console.log(error);
     } finally {
@@ -73,6 +97,67 @@ function ViewNotification(props) {
       toast.success(payload);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // handle Request notification
+  const openRequestNotification = async (type, payloadStr) => {
+    if (!payloadStr) return;
+    const { request_id } = JSON.parse(payloadStr);
+    setShowRequestPopup(true);
+    setLoadingPopupDetails(true);
+    try {
+      const { data } = await apiRequest.getActivityDetails({
+        type,
+        request_payment_id: request_id,
+      });
+      if (!data.success) throw data.message;
+      setActivityDetails(data?.data);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+      setShowRequestPopup(false);
+    } finally {
+      setLoadingPopupDetails(false);
+    }
+  };
+
+  //
+  const handleAcceptRequest = async (actDetails) => {
+    const { activity_type, request_type, status, request_id } =
+      actDetails || {};
+    setShowRequestPopup(false);
+    const contact = {
+      name: actDetails?.name,
+      profile_image: actDetails?.image,
+      specifications: actDetails?.specification,
+      personal_amount: parseFloat(actDetails?.amount || "0").toFixed(2),
+      receiver_account_number: actDetails?.account_number,
+    };
+    handleSendContacts([contact], request_id);
+  };
+
+  const handleDeclineRequest = async () => {
+    setShowRequestPopup(false);
+    setShowConfirmPopup(true);
+  };
+
+  const handleConfirmDeclineRequest = async () => {
+    const { request_id } = activityDetails;
+    if (!request_id) return;
+    setShowConfirmPopup(false);
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.changeRequestStatus({
+        request_id,
+        status: ACT_STATUS_DECLINED,
+      });
+      if (!data.success) throw data.message;
+      if (typeof data.message === "string") toast.success(data.message);
+      handleNotificationPageChange(1);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -113,7 +198,7 @@ function ViewNotification(props) {
             ))}
           </ul>
         </div>
-        {!(current_page <= 1 && total <= 10) && (
+        {pagination && !(current_page <= 1 && total <= 10) && (
           <Pagination
             {...{
               active: current_page,
@@ -124,6 +209,24 @@ function ViewNotification(props) {
           />
         )}
       </div>
+      <ModalActivityDetail
+        id="user-details-popup"
+        className="user-details-modal"
+        show={showRequestPopup}
+        setShow={setShowRequestPopup}
+        loading={loadingPopupDetails}
+        details={activityDetails}
+        handleCancel={handleDeclineRequest}
+        handleSubmit={handleAcceptRequest}
+      />
+      <ModalConfirmation
+        id="delete-group-member-popup"
+        show={showConfirmPopup}
+        setShow={setShowConfirmPopup}
+        heading={"Decline Request"}
+        subHeading={"Are you sure to decline the requested payment?"}
+        handleCallback={handleConfirmDeclineRequest}
+      />
     </div>
   );
 }

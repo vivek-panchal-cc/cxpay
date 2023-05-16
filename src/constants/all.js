@@ -82,25 +82,32 @@ const renameKeys = (keysMap, object) =>
     {}
   );
 
+// Notification types constants
+const NOTIFY_REQUEST = "request";
+const NOTIFY_RECEIVE = "receive";
+const NOTIFY_PAY_FAIL = "payment_fail";
+const NOTIFY_PAY_COMPLETE = "payment_completed";
+const NOTIFY_CON_REGISTER = "contact_register";
+
 // Notifications Type Constants
 const notificationType = {
-  request: {
+  [NOTIFY_REQUEST]: {
     icon: IconNotifyMoneyRequest,
-    redirect: "/wallet",
+    redirect: "/activities",
   },
-  receive: {
+  [NOTIFY_RECEIVE]: {
     icon: IconNotifyMoneyRecieved,
-    redirect: "/wallet",
+    redirect: "/activities",
   },
-  payment_fail: {
+  [NOTIFY_PAY_FAIL]: {
     icon: IconNotifyMoneySentFailed,
-    redirect: "/wallet",
+    redirect: "/activities",
   },
-  payment_completed: {
+  [NOTIFY_PAY_COMPLETE]: {
     icon: IconNotifyMoneySent,
-    redirect: "/wallet",
+    redirect: "/activities",
   },
-  contact_register: {
+  [NOTIFY_CON_REGISTER]: {
     icon: IconNotifyContactAccept,
     redirect: "/contacts",
   },
@@ -236,9 +243,17 @@ export {
   ACT_TYPE_TRANSACTION,
   ACT_REQUEST_SEND,
   ACT_REQUEST_RECEIVE,
+  ACT_TRANSACT_CREDIT,
+  ACT_TRANSACT_DEBIT,
   ACT_STATUS_PENDING,
   ACT_STATUS_DECLINED,
   ACT_STATUS_CANCELLED,
+  ACT_STATUS_PAID,
+  NOTIFY_REQUEST,
+  NOTIFY_RECEIVE,
+  NOTIFY_PAY_FAIL,
+  NOTIFY_PAY_COMPLETE,
+  NOTIFY_CON_REGISTER,
 };
 export {
   regexContainCapitalLetter,

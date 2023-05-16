@@ -111,6 +111,7 @@ function App() {
               <Route path="/send/payment" element={<SendPayment />} />
               <Route path="/request" element={<RequestContact />} />
               <Route path="/request/payment" element={<RequestPayment />} />
+              <Route path="/view-notification" element={<ViewNotification />} />
             </Route>
             <Route element={<ScheduledPaymentLayout />}>
               <Route
@@ -122,7 +123,6 @@ function App() {
                 element={<EditScheduledPayment />}
               />
             </Route>
-            <Route path="/view-notification" element={<ViewNotification />} />
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Route>

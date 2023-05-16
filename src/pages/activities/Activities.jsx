@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { apiRequest } from "helpers/apiRequests";
-import { IconCalender } from "styles/svgs";
+import { IconCalender, IconRefresh } from "styles/svgs";
 import ActivityItem from "components/items/ActivityItem";
-import Modal from "components/modals/Modal";
-import ReactDatePicker from "react-datepicker";
 import ModalActivityDetail from "components/modals/ModalActivityDetail";
 import { toast } from "react-toastify";
 import { SendPaymentContext } from "context/sendPaymentContext";
@@ -16,6 +14,7 @@ import {
   ACT_STATUS_DECLINED,
   ACT_STATUS_PENDING,
   ACT_TYPE_REQUEST,
+  ACT_TYPE_TRANSACTION,
 } from "constants/all";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
@@ -26,7 +25,7 @@ const Activities = () => {
   const [loadingActDetails, setLoadingActDetails] = useState(false);
   const [activitiesList, setActivitiesList] = useState([]);
   const [activitiesDateBind, setActivitiesDateBind] = useState({});
-  const [actPagination, setActPagination] = useState({});
+  const [actPagination, setActPagination] = useState(null);
   const [filters, setFilters] = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -98,14 +97,17 @@ const Activities = () => {
   };
 
   const handleActivityDetail = async ({ id, activity_type, reference_id }) => {
-    if (!id || !activity_type) return;
+    if ((!id && !reference_id) || !activity_type) return;
     setShowDetails(true);
     setLoadingActDetails(true);
+    const idDetails =
+      activity_type === ACT_TYPE_TRANSACTION
+        ? { activity_id: reference_id }
+        : { request_payment_id: id };
     try {
       const { data } = await apiRequest.getActivityDetails({
-        request_payment_id: id,
         type: activity_type,
-        reference_id,
+        ...{ ...idDetails },
       });
       if (!data.success) throw data.message;
       setActivityDetails(data?.data);
@@ -168,6 +170,14 @@ const Activities = () => {
     }
   };
 
+  const handleResetFilter = async () => {
+    setFilters({
+      startDate: new Date(),
+      endDate: new Date(),
+    });
+    await getActivitiesList(actPagination.current_page);
+  };
+
   useEffect(() => {
     getActivitiesList();
   }, []);
@@ -182,59 +192,62 @@ const Activities = () => {
         <div className="activity-date-wrap date-wrap d-flex align-items-center">
           <div className="date-main-div d-flex">
             <div className="date-inner-div">
-              <form>
-                <input
-                  id="from-date"
-                  type="text"
-                  className="form-control"
-                  placeholder="From"
-                  value={filters?.startDate?.toLocaleDateString()}
-                  onClick={() => setShowFilter(true)}
-                  readOnly
-                />
-                <span className="date-cal">
-                  <IconCalender style={{ stroke: "#0081C5" }} />
-                </span>
-              </form>
+              <input
+                id="from-date"
+                type="text"
+                className="form-control"
+                placeholder="From"
+                value={filters?.startDate?.toLocaleDateString()}
+                onClick={() => setShowFilter(true)}
+                readOnly
+              />
+              <span className="date-cal">
+                <IconCalender style={{ stroke: "#0081C5" }} />
+              </span>
             </div>
             <div className="date-inner-div">
-              <form>
-                <input
-                  id="date-end-range"
-                  type="text"
-                  className="form-control"
-                  placeholder="To"
-                  value={filters?.endDate?.toLocaleDateString()}
-                  onClick={() => setShowFilter(true)}
-                  readOnly
-                />
-                <span className="date-cal">
-                  <IconCalender style={{ stroke: "#0081C5" }} />
-                </span>
-              </form>
+              <input
+                id="date-end-range"
+                type="text"
+                className="form-control"
+                placeholder="To"
+                value={filters?.endDate?.toLocaleDateString()}
+                onClick={() => setShowFilter(true)}
+                readOnly
+              />
+              <span className="date-cal">
+                <IconCalender style={{ stroke: "#0081C5" }} />
+              </span>
             </div>
+            <button className="shedule-date-filter" onClick={handleResetFilter}>
+              <IconRefresh />
+            </button>
           </div>
         </div>
       </div>
       <div className="activity-user-list-wrap">
-        {loadingAct
-          ? [1, 2, 3, 4, 5, 6, 7].map((item) => (
+        {loadingAct ? (
+          <div className="pt-4">
+            {[1, 2, 3, 4, 5, 6, 7].map((item) => (
               <LoaderActivityItem key={item} />
-            ))
-          : Object.keys(activitiesDateBind)?.map((key) => (
-              <div key={key}>
-                <div className="activity-month">{key}</div>
-                <ul className="activity-lw-main">
-                  {activitiesDateBind[key]?.map((activity) => (
-                    <ActivityItem
-                      key={activity?.id}
-                      activityDetails={activity}
-                      handleClick={handleActivityDetail}
-                    />
-                  ))}
-                </ul>
-              </div>
             ))}
+          </div>
+        ) : (
+          Object.keys(activitiesDateBind)?.map((key) => (
+            <div key={key}>
+              <div className="activity-month">{key}</div>
+              <ul className="activity-lw-main">
+                {activitiesDateBind[key]?.map((activity) => (
+                  <ActivityItem
+                    key={activity?.id}
+                    activityDetails={activity}
+                    handleClick={handleActivityDetail}
+                  />
+                ))}
+              </ul>
+            </div>
+          ))
+        )}
         {/* <div className="activity-month">September 2022</div>
         <ul className="activity-lw-main">
           {loadingAct
@@ -250,10 +263,10 @@ const Activities = () => {
               ))}
         </ul> */}
       </div>
-      {!loadingAct && actPagination && actPagination.current_page && (
+      {actPagination && (
         <Pagination
           active={actPagination?.current_page}
-          size={actPagination?.last_page}
+          size={8}
           siblingCount={2}
           onClickHandler={getActivitiesList}
         />

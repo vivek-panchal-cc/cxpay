@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import Input from "components/ui/Input";
 import Pagination from "components/pagination/Pagination";
 import ModalConfirmation from "components/modals/ModalConfirmation";

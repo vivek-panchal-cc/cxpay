@@ -172,7 +172,8 @@ const SendPaymentProvider = (props) => {
       (prevPath?.includes("/send") && path === "/request") ||
       (prevPath?.includes("/request") && path === "/send") ||
       path?.includes("/contacts") ||
-      path?.includes("/activities");
+      path?.includes("/activities") ||
+      path?.includes("/view-notification");
     if (flag) handleCancelPayment();
     setPrevPath(path);
   }, [location.pathname]);

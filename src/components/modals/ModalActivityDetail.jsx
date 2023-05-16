@@ -3,7 +3,9 @@ import styles from "./modal.module.scss";
 import {
   ACT_REQUEST_RECEIVE,
   ACT_REQUEST_SEND,
+  ACT_STATUS_PAID,
   ACT_STATUS_PENDING,
+  ACT_TRANSACT_CREDIT,
   ACT_TYPE_REQUEST,
   ACT_TYPE_TRANSACTION,
   CURRENCY_SYMBOL,
@@ -55,7 +57,7 @@ const ModalActivityDetail = (props) => {
       case ACT_TYPE_REQUEST:
         return activityConsts[activity_type]?.[request_type]?.[status] || {};
       case ACT_TYPE_TRANSACTION:
-        return activityConsts[activity_type]?.[status] || {};
+        return activityConsts[activity_type]?.[request_type]?.[status] || {};
       default:
         return {};
     }
@@ -101,9 +103,19 @@ const ModalActivityDetail = (props) => {
               className="btn print-details-btn w-50"
               onClick={() => handleSubmit(details)}
             >
-              Pay
+              Accept
             </button>
           </>
+        );
+      case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_CREDIT}_${ACT_STATUS_PAID}`:
+        return (
+          <button
+            type="button"
+            className="btn print-details-btn w-50"
+            onClick={() => {}}
+          >
+            Print Details
+          </button>
         );
     }
   };
@@ -132,7 +144,10 @@ const ModalActivityDetail = (props) => {
                   <div className={`loan-amount ${classBg}`}>
                     <p>
                       <span className={`${classText}`}>{CURRENCY_SYMBOL}</span>
-                      <span className={`ms-1 ${classText}`}>{amount}</span>
+                      <span className={`ms-1 ${classText}`}>
+                        {iconAmount}
+                        {amount}
+                      </span>
                     </p>
                     <p>{specification}</p>
                   </div>
@@ -142,10 +157,12 @@ const ModalActivityDetail = (props) => {
                         <td>Date</td>
                         <td>{date}</td>
                       </tr>
-                      <tr>
-                        <td>Status</td>
-                        <td>{status}</td>
-                      </tr>
+                      {activity_type === ACT_TYPE_REQUEST && (
+                        <tr>
+                          <td>Status</td>
+                          <td>{status}</td>
+                        </tr>
+                      )}
                       {request_from && (
                         <tr>
                           <td>Request From</td>

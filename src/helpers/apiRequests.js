@@ -463,9 +463,9 @@ export const createSchedulePayment = (params) => {
 };
 
 // POST @list-schedule-payment
-// @params auth_token
-export const listSchedulePayment = () => {
-  return axiosOnboardInstance.post(`${API_listSchedulePayment}`);
+// @params auth_token, start_date, end_date, page
+export const listSchedulePayment = (params) => {
+  return axiosOnboardInstance.post(`${API_listSchedulePayment}`, params);
 };
 
 // POST @delete-schedule-payment
@@ -487,7 +487,7 @@ export const viewSchedulePayment = (params) => {
 };
 
 // POST @activity-list
-// @params auth_token
+// @params auth_token, start_date, end_date, page
 export const activityList = (params) => {
   return axiosTransactionInstance.post(`${API_activityList}`, params);
 };

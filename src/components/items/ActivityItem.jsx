@@ -31,7 +31,9 @@ const ActivityItem = (props) => {
     const { desc } =
       activityConsts?.[activity_type]?.[request_type]?.[status] || {};
     if (!desc) return "";
-    const aDesc = desc?.replace(/XXXX/g, altAmount).replace(/YYYY/, name);
+    const aDesc = name
+      ? desc?.replace(/XXXX/g, altAmount).replace(/YYYY/, name)
+      : specification;
     return aDesc;
   }, []);
 
@@ -62,7 +64,7 @@ const ActivityItem = (props) => {
             <img src={profileUrl} alt="" />
           </div>
           <div className="act-user-in">
-            <h2>{name}</h2>
+            <h2>{name || specification}</h2>
             <p>{date}</p>
           </div>
         </div>

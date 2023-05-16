@@ -14,7 +14,10 @@ function Wallet() {
   const [cardsList, setCardsList] = useState([]);
   const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
   const [slideCard, setSlideCard] = useState({});
-  const [balance, setBalance] = useState(null);
+  const [balance, setBalance] = useState({
+    available_balance: "",
+    lock_amount: "",
+  });
 
   const getCardsList = async () => {
     setIsLoading(true);
@@ -35,7 +38,7 @@ function Wallet() {
     try {
       const { data } = await apiRequest.getBalance();
       if (!data.success) throw data.message;
-      setBalance(data.data?.available_balance);
+      setBalance(data.data);
     } catch (error) {
       setBalance(null);
     } finally {
@@ -97,19 +100,30 @@ function Wallet() {
           <div className="wallet-chart-container chart-container-common">
             {/* <!--<div id="chartContainer" style="height: 370px; width: 100%;"></div> --> */}
             <div className="wallet-chart-wrap common-chart-wrap position-relative">
-              <img
+              {/* <img
                 className="img-size"
                 src="/assets/images/chart-duumy.png"
                 alt=""
-              />
-              {balance && (
-                <div className="position-absolute top-0 p-4">
+              /> */}
+              {balance && balance.available_balance && (
+                <div className="value-1 wallet-value-cm">
                   <h6 className="h6" style={{ color: "#0081c5" }}>
                     Available Balance
                   </h6>
                   <h2 className="h3 text-black fw-bolder">
                     {" "}
-                    {CURRENCY_SYMBOL} {balance}{" "}
+                    {CURRENCY_SYMBOL} {balance?.available_balance}{" "}
+                  </h2>
+                </div>
+              )}
+              {balance && balance.lock_amount && (
+                <div className="value-2 wallet-value-cm">
+                  <h6 className="h6" style={{ color: "#0081c5" }}>
+                    Block Amount
+                  </h6>
+                  <h2 className="h3 text-black fw-bolder">
+                    {" "}
+                    {CURRENCY_SYMBOL} {balance?.lock_amount}{" "}
                   </h2>
                 </div>
               )}

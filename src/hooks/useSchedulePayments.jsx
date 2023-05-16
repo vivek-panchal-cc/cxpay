@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { apiRequest } from "helpers/apiRequests";
 
-const useSchedulePayments = () => {
+const useSchedulePayments = ({ page = 1, start_date = "", end_date = "" }) => {
   const [loading, setLoading] = useState(false);
   const [listPayments, setListPayments] = useState([]);
   const [pagination, setPagination] = useState({});
@@ -11,10 +11,18 @@ const useSchedulePayments = () => {
     setReloadFlag((cs) => !cs);
   };
 
-  const retrieveSchedulePayments = async () => {
+  const retrieveSchedulePayments = async (
+    page = 1,
+    start_date = "",
+    end_date = ""
+  ) => {
     setLoading(true);
     try {
-      const { data } = await apiRequest.listSchedulePayment();
+      const { data } = await apiRequest.listSchedulePayment({
+        page,
+        start_date,
+        end_date,
+      });
       if (!data.success) throw data.message;
       const { schedule_payments, pagination } = data.data || {};
       setListPayments(schedule_payments);
@@ -27,8 +35,8 @@ const useSchedulePayments = () => {
   };
 
   useEffect(() => {
-    retrieveSchedulePayments();
-  }, [reloadFlag]);
+    retrieveSchedulePayments(page, start_date, end_date);
+  }, [page, start_date, end_date, reloadFlag]);
 
   return [loading, pagination, listPayments, reload];
 };

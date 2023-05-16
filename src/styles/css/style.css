@@ -3372,10 +3372,13 @@ span.date-cal {
   font-size: 14px !important;
   line-height: 16px;
 }
-.activities-sec form .form-control,
-.activities-sec form .search-field input[type="search"] {
+.activities-sec .form-control,
+.activities-sec .search-field input[type="search"] {
   border: 1px solid #bdbdbd !important;
   border-radius: 12px;
+}
+.activities-sec .form-control:focus{
+  box-shadow: none;
 }
 .activities-serch-main {
   max-width: 330px;
@@ -7099,7 +7102,7 @@ button.schedule-pay-btn {
   width: 100%;
   max-width: 350px;
 }
-.schedule-time-modal .react-datepicker {
+.react-datepicker {
   width: 100%;
   border: 0px;
   border-radius: 0px;
@@ -7109,10 +7112,10 @@ button.schedule-pay-btn {
   line-height: 20px;
   margin-bottom: 15px;
 }
-.schedule-time-modal .react-datepicker__month-container {
+.react-datepicker__month-container {
   width: 100%;
 }
-.schedule-time-modal .react-datepicker__current-month {
+.react-datepicker__current-month {
   padding-bottom: 10px;
   font-family: "Visby Round CF", sans-serif;
   font-style: normal;
@@ -7120,9 +7123,9 @@ button.schedule-pay-btn {
   font-size: 17px;
   line-height: 17px;
 }
-.schedule-time-modal .react-datepicker__day-name,
-.schedule-time-modal .react-datepicker__day,
-.schedule-time-modal .react-datepicker__time-name {
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
   color: #000;
   display: inline-block;
   width: 14%;
@@ -7131,16 +7134,16 @@ button.schedule-pay-btn {
   margin: 0px !important;
   padding: 5px;
 }
-.schedule-time-modal .react-datepicker__day--selected,
+.react-datepicker__day--selected,
 .react-datepicker__day--range-end {
   background-color: var(--blue) !important;
   color: #fff !important;
 }
-.schedule-time-modal .react-datepicker__header {
+.react-datepicker__header {
   background-color: transparent;
   border-bottom: 1px solid var(--dark_blue);
 }
-.schedule-time-modal .react-time-picker__wrapper {
+.react-time-picker__wrapper {
   border: none;
 }
 .right-activity-div > button:not(:last-child) {
@@ -7153,12 +7156,12 @@ button.schedule-pay-btn {
   padding: 0px;
 }
 .schedule-pay-sd-wrap {
-  padding-bottom: 15px;
-  border-bottom: 2.5px solid #f2f2f2;
-  margin-bottom: 15px;
+  /* padding-bottom: 15px; */
+  /* border-bottom: 2.5px solid #f2f2f2; */
+  /* margin-bottom: 15px; */
   display: flex;
   justify-content: end;
-  padding-top: 10px;
+  /* padding-top: 10px; */
 }
 button.shedule-date-filter {
   border: 0px;
@@ -7297,3 +7300,42 @@ button.shedule-date-filter:hover {
   margin-right: 10px;
 }
 /* Schedule Payment Page End*/
+/* CSS for cal*/
+.sp-cal-wrap form {
+  width: 100%;
+  box-shadow: 4px 4px 15px 0px rgb(0 0 0 / 8%);
+  border-radius: 15px;
+  padding: 20px;
+  max-width: 450px;
+}
+.react-datepicker__day--disabled,
+.react-datepicker__month-text--disabled,
+.react-datepicker__quarter-text--disabled,
+.react-datepicker__year-text--disabled {
+  color: #ccc !important;
+}
+/* .schedule-pay-sd-wrap .span.date-cal{
+  top: 8px;
+  transform: translateY(0%);
+} */
+
+.schedule-pay-sd-wrap .date-main-div,
+.activity-date-wrap .date-main-div{
+  align-items: center;
+}
+.wallet-chart-container .value-1 {
+  padding-right: 20px;
+  border-right: 1px solid var(--blue);
+  margin-right: 20px;
+}
+.wallet-chart-wrap {
+  background: #FFF100;
+  border-radius: 24px;
+  padding: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 250px;
+}
+.wallet-value-cm{
+  height: fit-content;
+}

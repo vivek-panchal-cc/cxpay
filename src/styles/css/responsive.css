@@ -824,6 +824,19 @@
     font-size: 12px !important;
     line-height: 16px !important;
   }
+  /* CSS on 16-05 */
+  .wallet-chart-wrap h2{
+    font-size: 22px;
+    line-height: 24px;
+  }
+  .wallet-chart-wrap h6{
+    font-size: 15px;
+    line-height: 18px;
+  }
+  .value-1{
+    padding-right: 12px;
+    margin-right: 12px;
+  }
 }
 @media only screen and (max-width: 1199px) {
   .profile-right-sec {
@@ -1963,6 +1976,14 @@
   .sp-details-main-wrap>div:last-child{
     padding-left: 60px;
   }
+  .sdp-main-new-1 .title-content-wrap,
+.sdp-main-new-1 .schedule-pay-sd-wrap{
+  width: 50%;
+}
+.sdp-main-new-1{
+  display: flex;
+  align-items: self-start;
+}
 }
 @media only screen and (max-width: 991px) {
   .logo-image img {
@@ -3333,6 +3354,18 @@
   line-height: 20px;
 }
 /* sp sec 15-05 end */
+  .schedule-pay-sd-wrap{
+    justify-content: start;
+    padding-top: 15px;
+    margin-bottom: 15px;
+  }
+  .schedule-pay-sd-wrap .date-inner-div{
+    margin-right: 15px;
+  }
+  .activity-date-wrap .date-inner-div {
+    max-width: 170px;
+    margin-right: 15px;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -3895,10 +3928,7 @@
     margin-left: 0;
     margin-right: auto;
   }
-  .activity-date-wrap .date-inner-div {
-    max-width: 170px;
-    margin-right: 20px;
-  }
+  
   /* .activity-date-wrap .date-inner-div {
     margin-right: 20px;
   } */
@@ -4166,10 +4196,10 @@
   .amt-with-currency span {
     top: 11px;
   }
-  .wallet-chart-wrap h2 {
+  /* .wallet-chart-wrap h2 {
     font-size: 25px;
     line-height: 30px;
-  }
+  } */
   .wallet-chart-wrap h6 {
     font-size: 17px;
     line-height: 22px;
@@ -4656,6 +4686,16 @@
   .send-page-wrapper .send-top-sec .send-top-right-sec .add-contact-btn-wrap {
     margin-left: 0px;
     margin-top: 15px;
+  }
+  .wallet-chart-wrap{
+    align-items: self-start;
+    justify-content: start;
+  }
+  .wallet-chart-container .value-1{
+    padding-right: 0px;
+    margin-right: 0px;
+    border-right: 0px;
+    width: 100%;
   }
 }
 @media only screen and (max-width: 400px) {

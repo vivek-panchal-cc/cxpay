@@ -10,10 +10,23 @@ export const ScheduledPaymentContext = React.createContext({});
 const ScheduledPaymentProvider = ({ children }) => {
   const navigate = useNavigate();
   const { isLoading, setIsLoading } = useContext(LoaderContext);
+  const [upPaymentEntry, setUpPaymentEntry] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const [loadingPayments, pagination, listPayments, reloadSchedulePayments] =
-    useSchedulePayments();
-  const [upPaymentEntry, setUpPaymentEntry] = useState(null);
+    useSchedulePayments({
+      page: currentPage,
+      start_date: startDate,
+      end_date: endDate,
+    });
+
+  const handleDateFilter = (stDate, edDate) => {
+    if (!stDate || !edDate) return;
+    setStartDate(stDate);
+    setEndDate(edDate);
+  };
 
   const deleteScheduledPayment = async (spid) => {
     setIsLoading(true);
@@ -40,7 +53,6 @@ const ScheduledPaymentProvider = ({ children }) => {
         schedule_payment_id: paymentEntryId,
       });
       if (!data.success) throw data.message;
-      console.log(data);
       setUpPaymentEntry(data.data);
       navigate("/view-schedule-payment/update");
     } catch (error) {
@@ -51,16 +63,14 @@ const ScheduledPaymentProvider = ({ children }) => {
     }
   };
 
-  const updateScheduledPayment = async () => {
+  const updateScheduledPayment = async (params) => {
     setIsLoading(true);
     try {
-      const { data } = apiRequest.updateSchedulePayment({
-        schedule_payment_id: upPaymentEntry.id,
-        schedule_date: "",
-        overall_specification: "",
-      });
+      const { data } = await apiRequest.updateSchedulePayment(params);
       if (!data.success) throw data.message;
       toast.success(data.message);
+      await reloadSchedulePayments();
+      navigate("/view-schedule-payment", { replace: true });
     } catch (error) {
       if (typeof error === "string") toast.error(error);
       console.log(error);
@@ -69,16 +79,33 @@ const ScheduledPaymentProvider = ({ children }) => {
     }
   };
 
+  const cancelUpdatePayment = () => {
+    setUpPaymentEntry(null);
+    setCurrentPage(1);
+    setStartDate("");
+    setEndDate("");
+    navigate("/view-schedule-payment", { replace: true });
+  };
+
+  const resetDateFilter = () => {
+    setStartDate("");
+    setEndDate("");
+  };
+
   return (
     <ScheduledPaymentContext.Provider
       value={{
-        loadingPayments,
         pagination,
         listPayments,
         upPaymentEntry,
+        loadingPayments,
+        resetDateFilter,
+        handleDateFilter,
+        setCurrentPage,
         deleteScheduledPayment,
         handleSelectPaymentEntry,
         updateScheduledPayment,
+        cancelUpdatePayment,
       }}
     >
       {children}

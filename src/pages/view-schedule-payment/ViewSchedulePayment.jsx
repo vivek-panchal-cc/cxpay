@@ -1,27 +1,31 @@
 import SchedulePaymentItem from "components/items/SchedulePaymentItem";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
+import Pagination from "components/pagination/Pagination";
 import { ScheduledPaymentContext } from "context/scheduledPaymentContext";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
-import React, { useContext, useMemo, useState } from "react";
-import { IconCalender } from "styles/svgs";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import { IconCalender, IconRefresh } from "styles/svgs";
 
 const ViewSchedulePayment = () => {
   const [showFilter, setShowFilter] = useState(false);
   const {
-    loadingPayments,
     pagination,
     listPayments,
+    loadingPayments,
+    resetDateFilter,
+    handleDateFilter,
+    setCurrentPage,
     deleteScheduledPayment,
     handleSelectPaymentEntry,
   } = useContext(ScheduledPaymentContext);
 
   const [deletPaymentId, setDeletPaymentId] = useState(null);
+  const [paymentsDateBind, setPaymentsDateBind] = useState({});
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [filters, setFilters] = useState({
     startDate: new Date(),
     endDate: new Date(),
-    search: "",
   });
 
   const { strFilStartDt, strFilEndDt } = useMemo(() => {
@@ -42,8 +46,11 @@ const ViewSchedulePayment = () => {
 
   const handleChangeDateFilter = async (dates) => {
     const [start, end] = dates;
-    setFilters((e) => ({ ...e, startDate: start, endDate: end }));
-    if (start && end) setShowFilter(false);
+    setFilters((e) => ({ startDate: start, endDate: end }));
+    if (start && end) {
+      setShowFilter(false);
+      handleDateFilter(start, end);
+    }
   };
 
   const handleDeletePayment = async (spid) => {
@@ -58,135 +65,118 @@ const ViewSchedulePayment = () => {
     setDeletPaymentId(null);
   };
 
+  const handleResetFilter = async () => {
+    setFilters({
+      startDate: new Date(),
+      endDate: new Date(),
+    });
+    resetDateFilter();
+  };
+
+  useEffect(() => {
+    if (!listPayments || listPayments.length <= 0) return;
+    const paymentDateList = {};
+    listPayments?.map((item) => {
+      const dt = new Date(item?.payment_schedule_date);
+      const month = dt.toLocaleDateString("default", { month: "long" });
+      const dtList = paymentDateList[`${month} ${dt.getFullYear()}`] || [];
+      paymentDateList[`${month} ${dt.getFullYear()}`] = [...dtList, item];
+    });
+    setPaymentsDateBind(paymentDateList);
+  }, [listPayments]);
+
   return (
     <>
       <div className="activities-sec">
-        <div className="col-12 send-payment-ttile-wrap">
+        <div className="col-12 send-payment-ttile-wrap sdp-main-new-1">
           <div className="title-content-wrap send-pay-title-sec">
             <h3>My Schedule Payment</h3>
-            <p>Please select payment date</p>
+          </div>
+          <div className="schedule-pay-sd-wrap">
+            <div className="date-main-div d-flex">
+              <div className="date-inner-div">
+                <input
+                  id="from-date"
+                  type="text"
+                  className="form-control"
+                  placeholder="From"
+                  value={filters?.startDate?.toLocaleDateString()}
+                  onClick={() => setShowFilter(true)}
+                  readOnly
+                />
+                <span className="date-cal">
+                  <IconCalender style={{ stroke: "#0081C5" }} />
+                </span>
+              </div>
+              <div className="date-inner-div">
+                <input
+                  id="date-end-range"
+                  type="text"
+                  className="form-control"
+                  placeholder="To"
+                  value={filters?.endDate?.toLocaleDateString()}
+                  onClick={() => setShowFilter(true)}
+                  readOnly
+                />
+                <span className="date-cal">
+                  <IconCalender style={{ stroke: "#0081C5" }} />
+                </span>
+              </div>
+              <button
+                className="shedule-date-filter"
+                onClick={handleResetFilter}
+              >
+                <IconRefresh />
+              </button>
+            </div>
           </div>
         </div>
-        <div className="schedule-pay-sd-wrap">
-          <form>
-            <IconCalender style={{ stroke: "#0081C5" }} />
-            <span className="date-cal"></span>
-            <input
-              id="from-date"
-              type="text"
-              className="form-control"
-              placeholder="From"
-              value={`${strFilStartDt} - ${strFilEndDt}`}
-              onClick={() => setShowFilter(true)}
-              readOnly
-            />
-          </form>
-          <button className="shedule-date-filter">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="17"
-              height="16"
-              viewBox="0 0 17 16"
-              fill="none"
-            >
-              <path
-                d="M11.8167 4.16667C12.6912 4.16667 13.4001 3.45778 13.4001 2.58333C13.4001 1.70888 12.6912 1 11.8167 1C10.9423 1 10.2334 1.70888 10.2334 2.58333C10.2334 3.45778 10.9423 4.16667 11.8167 4.16667Z"
-                stroke="white"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M13.3916 2.58301H16.0333"
-                stroke="white"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M1.16699 2.58301H10.2337"
-                stroke="white"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M5.58333 9.46647C6.45778 9.46647 7.16667 8.75759 7.16667 7.88314C7.16667 7.00869 6.45778 6.2998 5.58333 6.2998C4.70888 6.2998 4 7.00869 4 7.88314C4 8.75759 4.70888 9.46647 5.58333 9.46647Z"
-                stroke="white"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M7.16699 7.88379H16.0337"
-                stroke="white"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M1.16699 7.88379H4.00866"
-                stroke="white"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M11.8167 14.7663C12.6912 14.7663 13.4001 14.0574 13.4001 13.1829C13.4001 12.3085 12.6912 11.5996 11.8167 11.5996C10.9423 11.5996 10.2334 12.3085 10.2334 13.1829C10.2334 14.0574 10.9423 14.7663 11.8167 14.7663Z"
-                stroke="white"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M13.3916 13.1836H16.0333"
-                stroke="white"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M1.16699 13.1836H10.2337"
-                stroke="white"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-          </button>
-        </div>
+
         <div className="activity-user-list-wrap">
-          <div className="activity-month">September 2022</div>
-          <ul className="act-user-content-wrap">
-            {loadingPayments ? (
-              <LoaderActivityItem />
-            ) : (
-              listPayments?.map((item) => {
-                const isGroup =
-                  typeof item.isGroup === "string" && item.isGroup
-                    ? parseInt(item.isGroup)
-                    : item.isGroup;
-                const profileURL = isGroup
-                  ? "/assets/images/group_contact_profile.png"
-                  : item.image || "/assets/images/single_contact_profile.png";
-                return (
-                  <SchedulePaymentItem
-                    details={{
-                      id: item.id,
-                      name: item.name,
-                      dateTime: item?.payment_schedule_date,
-                      description: item?.overall_specification,
-                      amount: item?.total,
-                      profileImg: profileURL,
-                    }}
-                    handleEdit={handleSelectPaymentEntry}
-                    handleDelete={handleDeletePayment}
-                  />
-                );
-              })
-            )}
-          </ul>
+          {loadingPayments ? (
+            <LoaderActivityItem />
+          ) : (
+            Object.keys(paymentsDateBind)?.map((key) => (
+              <div key={key}>
+                <div className="activity-month">{key}</div>
+                <ul className="act-user-content-wrap">
+                  {paymentsDateBind[key]?.map((item) => {
+                    const isGroup =
+                      typeof item.isGroup === "string" && item.isGroup
+                        ? parseInt(item.isGroup)
+                        : item.isGroup;
+                    const profileURL = isGroup
+                      ? "/assets/images/group_contact_profile.png"
+                      : item.image ||
+                        "/assets/images/single_contact_profile.png";
+                    return (
+                      <SchedulePaymentItem
+                        details={{
+                          id: item.id,
+                          name: item.name,
+                          dateTime: item?.payment_schedule_date,
+                          description: item?.overall_specification,
+                          amount: item?.total,
+                          profileImg: profileURL,
+                        }}
+                        handleEdit={handleSelectPaymentEntry}
+                        handleDelete={handleDeletePayment}
+                      />
+                    );
+                  })}
+                </ul>
+              </div>
+            ))
+          )}
         </div>
+        {!loadingPayments && pagination && pagination.total > 10 && (
+          <Pagination
+            active={pagination?.current_page}
+            size={pagination?.last_page}
+            siblingCount={2}
+            onClickHandler={setCurrentPage}
+          />
+        )}
       </div>
       <ModalDateRangePicker
         show={showFilter}
@@ -201,8 +191,8 @@ const ViewSchedulePayment = () => {
         id="delete-group-member-popup"
         show={showConfirmPopup}
         setShow={setShowConfirmPopup}
-        heading={""}
-        subHeading={""}
+        heading={"Delete Transaction"}
+        subHeading={"Are you sure you want to delete this transaction?"}
         handleCallback={confirmDeletePayment}
       />
     </>

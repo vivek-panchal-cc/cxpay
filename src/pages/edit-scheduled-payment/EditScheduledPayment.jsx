@@ -8,17 +8,19 @@ import ReactDatePicker from "react-datepicker";
 import { schedulePaymentSchema } from "schemas/sendPaymentSchema";
 import TimePicker from "react-time-picker";
 import Input from "components/ui/Input";
+import { apiRequest } from "helpers/apiRequests";
 
 const EditScheduledPayment = () => {
   const navigate = useNavigate();
-  const { upPaymentEntry, updateScheduledPayment } = useContext(
-    ScheduledPaymentContext
-  );
+  const { upPaymentEntry, updateScheduledPayment, cancelUpdatePayment } =
+    useContext(ScheduledPaymentContext);
   const {
+    id,
     is_group,
     name,
     amount,
     image,
+    payload,
     fees_total,
     payment_schedule_date,
     overall_specification,
@@ -28,16 +30,29 @@ const EditScheduledPayment = () => {
     contacts = [],
     sch_dt,
     sch_tm,
+    sch_amount,
+    sch_fees,
+    sch_total,
   } = useMemo(() => {
     if (!payment_schedule_date) return {};
     const sch_dt = new Date(payment_schedule_date);
-    const sch_tm = sch_dt.toLocaleTimeString();
-    const singleCont = { name, amount, image };
-    const contacts = is_group === "1" || is_group ? [singleCont] : [];
-    return { sch_dt, sch_tm, contacts };
-  }, [payment_schedule_date]);
+    const sch_tm = sch_dt
+      .toLocaleTimeString(undefined, { hourCycle: "h23" })
+      .replace(" AM", "")
+      .replace(" PM", "");
+    const singleCont = [
+      { member_name: name, member_image: image, member_amount: amount },
+    ];
+    const contacts =
+      is_group === "1" && payload && payload.length > 0 ? payload : singleCont;
+    const sch_amount = amount ? parseFloat(amount) : 0;
+    const sch_fees = fees_total ? parseFloat(fees_total) : 0;
+    const sch_total = sch_amount + sch_fees;
+    return { sch_dt, sch_tm, contacts, sch_amount, sch_fees, sch_total };
+  }, [payment_schedule_date, is_group, payload, amount, fees_total]);
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       date: sch_dt || new Date(),
       time: sch_tm || "",
@@ -47,9 +62,15 @@ const EditScheduledPayment = () => {
     onSubmit: async (values, { setErrors, setValues, setStatus }) => {
       const { date, time, specification } = values;
       const params = {
+        schedule_payment_id: id,
         schedule_date: `${date.toLocaleDateString("en-CA")} ${time}`,
         overall_specification: specification,
       };
+      try {
+        await updateScheduledPayment(params);
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
@@ -67,32 +88,48 @@ const EditScheduledPayment = () => {
           <div class="sp-details-left-wrap">
             <div class="sp-details-inner-wrap ">
               <ul>
-                {contacts.map((item) => (
-                  <PaymentUserItem
-                    name={item.name}
-                    profileImg={item.image}
-                    amount={item.amount}
-                  />
-                ))}
+                {contacts?.map((item) => {
+                  const profileURL = item.member_image
+                    ? item.member_image
+                    : "/assets/images/single_contact_profile.png";
+                  return (
+                    <PaymentUserItem
+                      name={item.member_name}
+                      profileImg={profileURL}
+                      amount={item.member_amount}
+                    />
+                  );
+                })}
               </ul>
             </div>
             <div class="sp-total-wrap d-flex flex-column gap-2">
               <div className="d-flex justify-content-between w-100">
+                <div class="sp-total-text">Amount</div>
+                <div class="sp-total-amt">
+                  <span>{CURRENCY_SYMBOL}</span>
+                  {sch_amount?.toFixed(2)}
+                </div>
+              </div>
+              <div className="d-flex justify-content-between w-100">
                 <div class="sp-total-text">Fees</div>
                 <div class="sp-total-amt">
-                  <span>{CURRENCY_SYMBOL}</span>0.00
+                  <span>{CURRENCY_SYMBOL}</span>
+                  {sch_fees?.toFixed(2)}
                 </div>
               </div>
               <div className="d-flex justify-content-between w-100">
                 <div class="sp-total-text">Amount</div>
                 <div class="sp-total-amt">
-                  <span>{CURRENCY_SYMBOL}</span>0.00
+                  <span>{CURRENCY_SYMBOL}</span>
+                  {sch_total?.toFixed(2)}
                 </div>
               </div>
             </div>
             <div class="sp-btn-inner-wrap outline-solid-wrap">
-              <button class="btn outline-btn">Cancel</button>
-              <button class="btn" onClick={() => formik.submitForm()}>
+              <button class="btn outline-btn" onClick={cancelUpdatePayment}>
+                Cancel
+              </button>
+              <button type="button" class="btn" onClick={formik.handleSubmit}>
                 Update
               </button>
             </div>
