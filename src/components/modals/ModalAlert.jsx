@@ -34,7 +34,6 @@ function ModalAlert(props) {
     <div
       className={`test modal fade show ${styles.modal} ${className}`}
       id={id}
-      role="dialog"
     >
       <div ref={modalRef} className={classNameChild}>
         <div className="modal-dialog modal-dialog-centered">

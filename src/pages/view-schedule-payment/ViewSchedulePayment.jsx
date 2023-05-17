@@ -142,9 +142,9 @@ const ViewSchedulePayment = () => {
                 <ul className="act-user-content-wrap">
                   {paymentsDateBind[key]?.map((item) => {
                     const isGroup =
-                      typeof item.isGroup === "string" && item.isGroup
-                        ? parseInt(item.isGroup)
-                        : item.isGroup;
+                      typeof item.is_group === "string" && item.is_group
+                        ? parseInt(item.is_group)
+                        : item.is_group;
                     const profileURL = isGroup
                       ? "/assets/images/group_contact_profile.png"
                       : item.image ||

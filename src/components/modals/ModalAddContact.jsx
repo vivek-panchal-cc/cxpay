@@ -90,6 +90,10 @@ function ModalAddContact(props) {
     };
   }, [modalRef, setShow]);
 
+  useEffect(() => {
+    formik.resetForm();
+  }, [show]);
+
   if (!show) return null;
 
   return (
@@ -97,100 +101,98 @@ function ModalAddContact(props) {
       className={`modal fade show ${stylescss.modal} del-modal-main`}
       id={id}
     >
-      <div ref={modalRef}>
-        <div className="invite-contact-modal contact-pg-popup">
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-body text-center">
-                <img
-                  src={`${
-                    isInvitedFlag
-                      ? "../assets/images/invite-con-img.svg"
-                      : "assets/images/invite-con-img.svg"
-                  }`}
-                  alt=""
-                  className="invite-logo"
-                />
-                <h3>{invitetitle}</h3>
-                <form onSubmit={formik.handleSubmit}>
-                  <div className="row form-field">
-                    <div className="col-4 ps-0">
-                      <InputSelect
-                        className="form-select form-control"
-                        name="country_code"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.country_code}
-                        error={
-                          formik.touched.country_code &&
-                          formik.errors.country_code
-                        }
-                        disabled={true}
-                      >
-                        <option value={""}>Country</option>
-                        {countryList?.map((country) => (
-                          <option
-                            value={country.phonecode}
-                            key={country.phonecode}
-                          >
-                            {country.phonecode} &nbsp; {country.country_name}
-                          </option>
-                        ))}
-                      </InputSelect>
-                    </div>
-                    <div className="col-8 px-0">
+      <div ref={modalRef} className="invite-contact-modal contact-pg-popup">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-body text-center">
+              <img
+                src={`${
+                  isInvitedFlag
+                    ? "../assets/images/invite-con-img.svg"
+                    : "assets/images/invite-con-img.svg"
+                }`}
+                alt=""
+                className="invite-logo"
+              />
+              <h3>{invitetitle}</h3>
+              <form onSubmit={formik.handleSubmit}>
+                <div className="row form-field">
+                  <div className="col-4 ps-0">
+                    <InputSelect
+                      className="form-select form-control"
+                      name="country_code"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.country_code}
+                      error={
+                        formik.touched.country_code &&
+                        formik.errors.country_code
+                      }
+                      disabled={true}
+                    >
+                      <option value={""}>Country</option>
+                      {countryList?.map((country) => (
+                        <option
+                          value={country.phonecode}
+                          key={country.phonecode}
+                        >
+                          {country.phonecode} &nbsp; {country.country_name}
+                        </option>
+                      ))}
+                    </InputSelect>
+                  </div>
+                  <div className="col-8 px-0">
+                    <Input
+                      type="text"
+                      className="form-control"
+                      placeholder="Mobile Number"
+                      name="mobile"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.mobile}
+                      error={formik.touched.mobile && formik.errors.mobile}
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12 col p-0">
+                    <div className="form-field">
                       <Input
                         type="text"
                         className="form-control"
-                        placeholder="Mobile Number"
-                        name="mobile"
+                        placeholder="Email"
+                        name="email"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.mobile}
-                        error={formik.touched.mobile && formik.errors.mobile}
+                        value={formik.values.email}
+                        error={formik.touched.email && formik.errors.email}
+                        autoComplete={"new-email"}
                       />
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-12 col p-0">
-                      <div className="form-field">
-                        <Input
-                          type="text"
-                          className="form-control"
-                          placeholder="Email"
-                          name="email"
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.email}
-                          error={formik.touched.email && formik.errors.email}
-                          autoComplete={"new-email"}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="popup-btn-wrap">
-                    {formik.status && (
-                      <p className="text-danger">{formik.status}</p>
-                    )}
-                    <input
-                      type="submit"
-                      className={`btn btn-primary ${
-                        formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
-                      }`}
-                      value={invitetitle === "Add Contact" ? "Add" : "Invite"}
-                      disabled={formik.isSubmitting}
-                    />
-                  </div>
-                  <div className="pop-cancel-btn text-center">
-                    <button
-                      data-bs-dismiss="modal"
-                      onClick={() => setShow(false)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </form>
-              </div>
+                </div>
+                <div className="popup-btn-wrap">
+                  {formik.status && (
+                    <p className="text-danger">{formik.status}</p>
+                  )}
+                  <input
+                    type="submit"
+                    className={`btn btn-primary ${
+                      formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                    }`}
+                    value={invitetitle === "Add Contact" ? "Add" : "Invite"}
+                    disabled={formik.isSubmitting}
+                  />
+                </div>
+                <div className="pop-cancel-btn text-center">
+                  <button
+                    data-bs-dismiss="modal"
+                    onClick={() => setShow(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

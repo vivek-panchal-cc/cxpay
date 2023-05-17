@@ -10,7 +10,8 @@ const getYesterDay = () => {
 const compareDateTime = (tmSel, dtSel) => {
   const tmNow = new Date().getTime();
   const tmSch = new Date(`${dtSel.toDateString()} ${tmSel}`).getTime();
-  return tmSch <= tmNow ? false : true;
+  const tmBuffer = tmNow + 1000 * 60 * 30;
+  return tmSch <= tmBuffer ? false : true;
 };
 
 const sendPaymentSchema = yup.object().shape({

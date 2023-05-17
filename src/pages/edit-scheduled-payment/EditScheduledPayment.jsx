@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useMemo } from "react";
 import PaymentUserItem from "./components/PaymentUserItem";
 import { ScheduledPaymentContext } from "context/scheduledPaymentContext";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,6 @@ import ReactDatePicker from "react-datepicker";
 import { schedulePaymentSchema } from "schemas/sendPaymentSchema";
 import TimePicker from "react-time-picker";
 import Input from "components/ui/Input";
-import { apiRequest } from "helpers/apiRequests";
 
 const EditScheduledPayment = () => {
   const navigate = useNavigate();
@@ -118,7 +117,7 @@ const EditScheduledPayment = () => {
                 </div>
               </div>
               <div className="d-flex justify-content-between w-100">
-                <div class="sp-total-text">Amount</div>
+                <div class="sp-total-text">Total</div>
                 <div class="sp-total-amt">
                   <span>{CURRENCY_SYMBOL}</span>
                   {sch_total?.toFixed(2)}

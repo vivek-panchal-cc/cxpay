@@ -33,23 +33,23 @@ const fullwidthPoints = {
 
 const otherWidthPoints = {
   1199: {
-    slidesPerView: 9.5,
+    slidesPerView: 5,
     spaceBetween: 10,
   },
   992: {
-    slidesPerView: 6.5,
+    slidesPerView: 4,
     spaceBetween: 10,
   },
   650: {
-    slidesPerView: 5.5,
+    slidesPerView: 6,
     spaceBetween: 10,
   },
   575: {
-    slidesPerView: 4.5,
+    slidesPerView: 4,
     spaceBetween: 10,
   },
   0: {
-    slidesPerView: 3.5,
+    slidesPerView: 4,
     spaceBetween: 10,
   },
 };

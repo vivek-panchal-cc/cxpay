@@ -6,18 +6,31 @@ import { LoaderContext } from "context/loaderContext";
 import { apiRequest } from "helpers/apiRequests";
 import { Link } from "react-router-dom";
 import CardDetails from "components/card-list/CardDetails";
-import { CURRENCY_SYMBOL } from "constants/all";
-import RecentActivity from "components/dashboard/recentActivity";
+import useBalance from "hooks/useBalance";
+import useChartData from "hooks/useChartData";
+import BalanceGraph from "components/graph/BalanceGraph";
+import RecentActivities from "components/activity/RecentActivities";
 
 function Wallet() {
   const { setIsLoading } = useContext(LoaderContext);
   const [cardsList, setCardsList] = useState([]);
   const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
   const [slideCard, setSlideCard] = useState({});
-  const [balance, setBalance] = useState({
-    available_balance: "",
-    lock_amount: "",
-  });
+  const [activitiesList, setActivitiesList] = useState([]);
+  const [loadingBalance, balance] = useBalance();
+  const [loadingChart, chartData] = useChartData();
+
+  const getActivitiesList = async (page = 1, filters = {}) => {
+    try {
+      const { data } = await apiRequest.activityList({ page, ...filters });
+      if (!data.success) throw data.message;
+      const { transactions } = data.data || {};
+      const topFineTransact = transactions ? transactions.splice(0, 5) : [];
+      setActivitiesList(topFineTransact);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getCardsList = async () => {
     setIsLoading(true);
@@ -33,19 +46,6 @@ function Wallet() {
     }
   };
 
-  const getBalance = async () => {
-    setIsLoading(true);
-    try {
-      const { data } = await apiRequest.getBalance();
-      if (!data.success) throw data.message;
-      setBalance(data.data);
-    } catch (error) {
-      setBalance(null);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleFundAccountPopup = () => {
     setShowFundAccountPopup(true);
   };
@@ -56,8 +56,8 @@ function Wallet() {
   };
 
   useEffect(() => {
+    getActivitiesList();
     getCardsList();
-    getBalance();
   }, []);
 
   return (
@@ -98,38 +98,14 @@ function Wallet() {
             </div>
           </div>
           <div className="wallet-chart-container chart-container-common">
-            {/* <!--<div id="chartContainer" style="height: 370px; width: 100%;"></div> --> */}
-            <div className="wallet-chart-wrap common-chart-wrap position-relative">
-              {/* <img
-                className="img-size"
-                src="/assets/images/chart-duumy.png"
-                alt=""
-              /> */}
-              {balance && balance.available_balance && (
-                <div className="value-1 wallet-value-cm">
-                  <h6 className="h6" style={{ color: "#0081c5" }}>
-                    Available Balance
-                  </h6>
-                  <h2 className="h3 text-black fw-bolder">
-                    {" "}
-                    {CURRENCY_SYMBOL} {balance?.available_balance}{" "}
-                  </h2>
-                </div>
-              )}
-              {balance && balance.lock_amount && (
-                <div className="value-2 wallet-value-cm">
-                  <h6 className="h6" style={{ color: "#0081c5" }}>
-                    Block Amount
-                  </h6>
-                  <h2 className="h3 text-black fw-bolder">
-                    {" "}
-                    {CURRENCY_SYMBOL} {balance?.lock_amount}{" "}
-                  </h2>
-                </div>
-              )}
-            </div>
+            <BalanceGraph
+              graphBackgroundImage={"/assets/images/chart-duumy.png"}
+              balanceDataArr={chartData.balanceArr}
+              balance={balance}
+              monthDataArr={chartData.monthArr}
+            />
           </div>
-          <RecentActivity />
+          <RecentActivities activitiesList={activitiesList} />
         </div>
         {/* <!-- Dashboard card section starts --> */}
         <div className="wallet-main-right">

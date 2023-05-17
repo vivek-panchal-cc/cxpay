@@ -40,7 +40,7 @@ function LeftSidebar() {
       <div className="dashboard-link-wrap">
         <ul className="dashboard-main-links">
           <li className={`${thisRoute === "dashboard" ? "active" : ""}`}>
-            <Link to="/view-schedule-payment" replace>
+            <Link to="/" replace>
               <IconHome />
               <span>Dashboard</span>
             </Link>

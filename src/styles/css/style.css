@@ -2112,7 +2112,7 @@ form .search-field -o::placeholder {
   padding-bottom: 45px;
 }
 .recent-contact-slider .swiper-scrollbar-drag {
-  left: -55px;
+  /* left: -55px; */
 }
 .extra-links-wrap ul li a {
   /*background-color: #fff;
@@ -2328,7 +2328,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
 .activity-tab-wrap {
   position: relative;
 }
-.view-history-btn > a {
+.view-history-btn > button {
   background: #ffffff;
   box-shadow: 0px 23px 63px rgba(0, 0, 0, 0.12);
   border-radius: 12px;
@@ -2340,7 +2340,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   line-height: 17px;
   color: var(--blue);
 }
-.view-history-btn > a:hover {
+.view-history-btn > button:hover {
   background-color: var(--blue);
   color: #fff;
 }
@@ -2412,7 +2412,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   padding-bottom: 40px;
 }
 .dashboard-graph-wrap {
-  padding-top: 18px;
+  margin-top: 18px;
 }
 /*.card-slider .swiper-slide {
   border-radius: 25px;
@@ -3377,7 +3377,7 @@ span.date-cal {
   border: 1px solid #bdbdbd !important;
   border-radius: 12px;
 }
-.activities-sec .form-control:focus{
+.activities-sec .form-control:focus {
   box-shadow: none;
 }
 .activities-serch-main {
@@ -7088,6 +7088,9 @@ ul.recent-act-lw-main .act-user-in {
 ul.recent-act-lw-main .act-info-wrap-left {
   padding-right: 15px;
 }
+ul.recent-act-lw-main .act-mv-wrap {
+  display: none;
+}
 /* Schedule Send */
 .send-page-wrapper .send-top-sec .send-top-right-sec .add-contact-btn-wrap {
   margin-left: 15px;
@@ -7320,7 +7323,7 @@ button.shedule-date-filter:hover {
 } */
 
 .schedule-pay-sd-wrap .date-main-div,
-.activity-date-wrap .date-main-div{
+.activity-date-wrap .date-main-div {
   align-items: center;
 }
 .wallet-chart-container .value-1 {
@@ -7329,13 +7332,19 @@ button.shedule-date-filter:hover {
   margin-right: 20px;
 }
 .wallet-chart-wrap {
-  background: #FFF100;
+  background: #fff100;
   border-radius: 24px;
   padding: 30px;
   display: flex;
   flex-wrap: wrap;
   min-height: 250px;
 }
-.wallet-value-cm{
+.wallet-value-cm {
   height: fit-content;
+}
+.dashboard-card-sec .card-slider .slider-card-common svg {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
 }

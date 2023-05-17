@@ -41,6 +41,7 @@ import ViewSchedulePayment from "pages/view-schedule-payment/ViewSchedulePayment
 import Activities from "pages/activities/Activities";
 import ScheduledPaymentLayout from "layouts/ScheduledPaymentLayout";
 import EditScheduledPayment from "pages/edit-scheduled-payment/EditScheduledPayment";
+import Dashboard from "pages/dashboard/Dashboard";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -79,7 +80,8 @@ function App() {
         {/* List of Private Routes */}
         <Route element={<PrivateLayout />}>
           <Route path="/signup/:fundtype" element={<SignupFundAccount />} />
-          <Route path="/" element={<DashboardLayout />}>
+          <Route element={<DashboardLayout />}>
+            <Route path="/" element={<Dashboard />} />
             {/* settings */}
             <Route path="/setting" element={<Setting />} />
             <Route path="/setting/edit-profile" element={<EditProfile />} />

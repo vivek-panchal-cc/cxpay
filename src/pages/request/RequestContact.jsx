@@ -93,10 +93,6 @@ const RequestContact = (props) => {
     return () => clearTimeout(timeOut);
   }, [searchContactText.toString().trim()]);
 
-  useEffect(() => {
-    if (!showNewContPop) getInviteContactList(1, "");
-  }, [showNewContPop]);
-
   return (
     <div className="send-bottom-sec">
       <ContactsSelection className="col-12">

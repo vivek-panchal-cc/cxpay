@@ -35,7 +35,7 @@ const SchedulePaymentItem = (props) => {
         </div>
         <div className="activity-date">{dtString}</div>
         <div className="act-spec-add">{description}</div>
-        <div className="seleted-value green">
+        <div className="seleted-value">
           {CURRENCY_SYMBOL} -{amount.toFixed(2)}
         </div>
       </div>

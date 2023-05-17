@@ -84,6 +84,7 @@ const API_sendPaymentRequest = apiUrl.API_TRANSACTION_SEND_PAYMENT_REQUEST;
 const API_activityList = apiUrl.API_TRANSACTION_ACTIVITY_LIST;
 const API_getActivityDetails = apiUrl.API_TRANSACTION_GET_ACTIVITY_DETAILS;
 const API_changeRequestStatus = apiUrl.API_TRANSACTION_CHANGE_REQUEST_STATUS;
+const API_getChartData = apiUrl.API_TRANSACTION_GET_CHART_DATA;
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
 // POST @login API
@@ -504,6 +505,12 @@ export const changeRequestStatus = (params) => {
   return axiosTransactionInstance.post(`${API_changeRequestStatus}`, params);
 };
 
+// GET @get-chart-data
+// @params
+export const getChartData = () => {
+  return axiosTransactionInstance.post(`${API_getChartData}`);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -573,4 +580,5 @@ export const apiRequest = {
   activityList,
   getActivityDetails,
   changeRequestStatus,
+  getChartData,
 };

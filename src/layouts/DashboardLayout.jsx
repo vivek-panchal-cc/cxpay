@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect } from "react";
 import LeftSidebar from "components/sidebar/LeftSidebar";
 import { Outlet, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -11,23 +11,12 @@ function DashboardLayout() {
   const dispatch = useDispatch();
   const location = useLocation();
   const { setIsLoading } = useContext(LoaderContext);
-  const notificationIntervalId = useRef();
   const classNamePage = {
     "/send": "send-page-wrapper",
     "/request": "send-page-wrapper",
   };
-  // Interval clling notification every 5 sec
+
   useEffect(() => {
-    // // clear old interval
-    // if (notificationIntervalId.current) {
-    //   clearInterval(notificationIntervalId.current);
-    //   notificationIntervalId.current = undefined;
-    // }
-    // // set new Interval
-    // notificationIntervalId.current = setInterval(async () => {
-    //   await dispatch(fetchGetNotifications(1));
-    // }, 5000);
-    // return () => clearInterval(notificationIntervalId.current);
     (async () => {
       await dispatch(fetchGetNotifications(1));
     })();
@@ -39,7 +28,7 @@ function DashboardLayout() {
       await dispatch(fetchUserProfile());
       setIsLoading(false);
     })();
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="dashboard-page wallet-page">

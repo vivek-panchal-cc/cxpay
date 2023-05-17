@@ -203,10 +203,6 @@ function SendContact() {
     if (!showCreateGroupPopup) getGroupsList(1, "");
   }, [showCreateGroupPopup]);
 
-  useEffect(() => {
-    if (!showNewContPop) getInviteContactList(1, "");
-  }, [showNewContPop]);
-
   return (
     <div className="send-bottom-sec">
       {/* Contacts Selection Component  ----- For Personal Contacts Selection */}
