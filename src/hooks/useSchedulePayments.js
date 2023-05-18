@@ -29,6 +29,8 @@ const useSchedulePayments = ({ page = 1, start_date = "", end_date = "" }) => {
       setPagination(pagination);
     } catch (error) {
       console.log(error);
+      setListPayments([]);
+      setPagination({});
     } finally {
       setLoading(false);
     }

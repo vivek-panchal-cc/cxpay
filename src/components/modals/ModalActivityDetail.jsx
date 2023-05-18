@@ -6,6 +6,7 @@ import {
   ACT_STATUS_PAID,
   ACT_STATUS_PENDING,
   ACT_TRANSACT_CREDIT,
+  ACT_TRANSACT_DEBIT,
   ACT_TYPE_REQUEST,
   ACT_TYPE_TRANSACTION,
   CURRENCY_SYMBOL,
@@ -112,7 +113,17 @@ const ModalActivityDetail = (props) => {
           <button
             type="button"
             className="btn print-details-btn w-50"
-            onClick={() => {}}
+            onClick={() => handleSubmit(details)}
+          >
+            Print Details
+          </button>
+        );
+      case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_DEBIT}_${ACT_STATUS_PAID}`:
+        return (
+          <button
+            type="button"
+            className="btn print-details-btn w-50"
+            onClick={() => handleSubmit(details)}
           >
             Print Details
           </button>

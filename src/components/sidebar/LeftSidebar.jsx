@@ -39,7 +39,7 @@ function LeftSidebar() {
       </div>
       <div className="dashboard-link-wrap">
         <ul className="dashboard-main-links">
-          <li className={`${thisRoute === "dashboard" ? "active" : ""}`}>
+          <li className={`${thisRoute === "" ? "active" : ""}`}>
             <Link to="/" replace>
               <IconHome />
               <span>Dashboard</span>
@@ -69,7 +69,13 @@ function LeftSidebar() {
               <span>Wallet</span>
             </Link>
           </li>
-          <li className={`${thisRoute === "contacts" ? "active" : ""}`}>
+          <li
+            className={`${
+              thisRoute === "contacts" || thisRoute === "contacts-invited"
+                ? "active"
+                : ""
+            }`}
+          >
             <Link to="/contacts" replace>
               <IconContact style={{ stroke: "#F3F3F3" }} />
               <span>Contacts</span>

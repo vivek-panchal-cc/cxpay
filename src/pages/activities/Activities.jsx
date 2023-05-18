@@ -12,14 +12,19 @@ import {
   ACT_REQUEST_SEND,
   ACT_STATUS_CANCELLED,
   ACT_STATUS_DECLINED,
+  ACT_STATUS_PAID,
   ACT_STATUS_PENDING,
+  ACT_TRANSACT_CREDIT,
+  ACT_TRANSACT_DEBIT,
   ACT_TYPE_REQUEST,
   ACT_TYPE_TRANSACTION,
 } from "constants/all";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
+import { LoaderContext } from "context/loaderContext";
 
 const Activities = () => {
+  const { setIsLoading } = useContext(LoaderContext);
   const { handleSendContacts } = useContext(SendPaymentContext);
   const [loadingAct, setLoadingAct] = useState(false);
   const [loadingActDetails, setLoadingActDetails] = useState(false);
@@ -61,6 +66,9 @@ const Activities = () => {
       setActPagination(pagination);
     } catch (error) {
       console.log(error);
+      setActPagination(null);
+      setActivitiesList([]);
+      setActivitiesDateBind({});
     } finally {
       setLoadingAct(false);
     }
@@ -84,12 +92,47 @@ const Activities = () => {
     }
   };
 
+  const printActivityDetails = async ({
+    request_id,
+    activity_type,
+    ref_id,
+  }) => {
+    setIsLoading(true);
+    const idDetails =
+      activity_type === ACT_TYPE_TRANSACTION
+        ? { activity_id: ref_id }
+        : { request_payment_id: request_id };
+    try {
+      const { data } = await apiRequest.getPrintDetails({
+        type: activity_type,
+        ...{ ...idDetails },
+      });
+      if (!data.success) throw data.message;
+      if (typeof data.message === "string") toast.success(data.message);
+      const base64pdf = data.data;
+      const transactId =
+        activity_type === ACT_TYPE_TRANSACTION ? ref_id : request_id;
+      const dtnow = new Date().toISOString();
+      const linkSource = `data:application/pdf;base64,${base64pdf}`;
+      const downloadLink = document.createElement("a");
+      const fileName = `${transactId}_${dtnow}.pdf`;
+      downloadLink.href = linkSource;
+      downloadLink.download = fileName;
+      downloadLink.click();
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleChangeDateFilter = async (dates) => {
     const [start, end] = dates;
     setFilters((e) => ({ ...e, startDate: start, endDate: end }));
     if (start && end) {
       setShowFilter(false);
-      await getActivitiesList(actPagination.current_page, {
+      const page = actPagination ? actPagination.current_page : 1;
+      await getActivitiesList(page, {
         start_date: start?.toLocaleDateString(),
         end_date: end?.toLocaleDateString(),
       });
@@ -166,6 +209,12 @@ const Activities = () => {
           receiver_account_number: actDetails?.account_number,
         };
         handleSendContacts([contact], request_id);
+        return;
+      case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_CREDIT}_${ACT_STATUS_PAID}`:
+        printActivityDetails(actDetails);
+        return;
+      case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_DEBIT}_${ACT_STATUS_PAID}`:
+        printActivityDetails(actDetails);
         return;
     }
   };
@@ -248,25 +297,11 @@ const Activities = () => {
             </div>
           ))
         )}
-        {/* <div className="activity-month">September 2022</div>
-        <ul className="activity-lw-main">
-          {loadingAct
-            ? [1, 2, 3, 4, 5, 6, 7].map((item) => (
-                <LoaderActivityItem key={item} />
-              ))
-            : activitiesList?.map((item) => (
-                <ActivityItem
-                  key={item?.id}
-                  activityDetails={item}
-                  handleClick={handleActivityDetail}
-                />
-              ))}
-        </ul> */}
       </div>
       {actPagination && (
         <Pagination
           active={actPagination?.current_page}
-          size={8}
+          size={actPagination?.last_page}
           siblingCount={2}
           onClickHandler={getActivitiesList}
         />

@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const RecentActivities = (props) => {
-  const { activitiesList = [] } = props;
+  const { loading, activitiesList = [] } = props;
   const navigate = useNavigate();
 
   const handleViewAllActivity = () => {
@@ -27,6 +27,7 @@ const RecentActivities = (props) => {
             <div className="tab-pane fade show active" id="nav-home">
               <ActivityList
                 classNameList="recent-act-lw-main"
+                loading={loading}
                 activitiesList={activitiesList}
               />
               {activitiesList && activitiesList.length > 0 && (

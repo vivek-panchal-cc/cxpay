@@ -1,4 +1,5 @@
 import { uniqueId } from "helpers/commonHelpers";
+import LoaderRecentContact from "loaders/LoaderRecentContact";
 import LoaderSendContact from "loaders/LoaderSendContact";
 import React, { useEffect, useState } from "react";
 import { A11y, Navigation, Scrollbar } from "swiper";
@@ -85,17 +86,27 @@ const SwipeContactList = (props) => {
       className={`position-relative ${
         fullWidth ? "send-whom-slider" : "recent-contact-slider"
       } ${containerClassName}`}
-      style={isLoading ? { minHeight: "220px" } : {}}
+      style={isLoading && fullWidth ? { minHeight: "220px" } : {}}
     >
       {isLoading && (
         <div
-          className="position-absolute bg-white z-2 ps-4 h-100 w-100"
+          className={`position-absolute bg-white z-2 h-100 w-100 ${
+            fullWidth ? "ps-4" : ""
+          }`}
           style={{ top: "10px", left: "0px" }}
         >
-          <div className="d-inline-flex column-gap-2">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-              <LoaderSendContact key={item} />
-            ))}
+          <div
+            className={`d-inline-flex ${
+              fullWidth ? "column-gap-2" : "column-gap-2"
+            }`}
+          >
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) =>
+              fullWidth ? (
+                <LoaderSendContact key={item} />
+              ) : (
+                <LoaderRecentContact />
+              )
+            )}
           </div>
         </div>
       )}

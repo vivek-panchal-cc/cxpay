@@ -74,7 +74,7 @@ const ViewSchedulePayment = () => {
   };
 
   useEffect(() => {
-    if (!listPayments || listPayments.length <= 0) return;
+    if (!listPayments) return;
     const paymentDateList = {};
     listPayments?.map((item) => {
       const dt = new Date(item?.payment_schedule_date);
@@ -90,7 +90,7 @@ const ViewSchedulePayment = () => {
       <div className="activities-sec">
         <div className="col-12 send-payment-ttile-wrap sdp-main-new-1">
           <div className="title-content-wrap send-pay-title-sec">
-            <h3>My Schedule Payment</h3>
+            <h3>My Scheduled Payment</h3>
           </div>
           <div className="schedule-pay-sd-wrap">
             <div className="date-main-div d-flex">
@@ -134,7 +134,11 @@ const ViewSchedulePayment = () => {
 
         <div className="activity-user-list-wrap">
           {loadingPayments ? (
-            <LoaderActivityItem />
+            <div className="pt-4">
+              {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+                <LoaderActivityItem key={item} />
+              ))}
+            </div>
           ) : (
             Object.keys(paymentsDateBind)?.map((key) => (
               <div key={key}>

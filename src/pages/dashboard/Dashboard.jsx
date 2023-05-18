@@ -72,11 +72,13 @@ const Dashboard = () => {
   const [cardsList, setCardsList] = useState([]);
   const [slideCard, setSlideCard] = useState({});
 
+  const [loadingAct, setLoadingAct] = useState(false);
   const [activitiesList, setActivitiesList] = useState([]);
   const [loadingBalance, balance] = useBalance();
   const [loadingChart, chartData] = useChartData();
 
   const getActivitiesList = async (page = 1, filters = {}) => {
+    setLoadingAct(true);
     try {
       const { data } = await apiRequest.activityList({ page, ...filters });
       if (!data.success) throw data.message;
@@ -85,6 +87,8 @@ const Dashboard = () => {
       setActivitiesList(topFineTransact);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoadingAct(false);
     }
   };
 
@@ -208,13 +212,16 @@ const Dashboard = () => {
             {/* End Graph Section */}
 
             {/* Recent Activity */}
-            <RecentActivities activitiesList={activitiesList} />
+            <RecentActivities
+              loading={loadingAct}
+              activitiesList={activitiesList}
+            />
           </div>
           {/*   <!-- Dashboard card section starts --> */}
           <div className="dashboard-card-links-sec">
             <div className="dashboard-card-sec mb-0">
               <div className="title-content-wrap">
-                <h3>Hi, Digicel</h3>
+                <h3>My Cards</h3>
                 <p>
                   {cardsList.length} Cards
                   <Link to="/wallet/add-card">

@@ -2029,13 +2029,13 @@ form .search-field -o::placeholder {
   color: #323232;
   margin: 0;
 }
-.recent-contact-sec .search-btn {
+/* .recent-contact-sec .search-btn {
   border: none;
   background-color: transparent;
   padding: 0;
   position: static;
   transform: translateY(0px) !important;
-}
+} */
 .recent-contact-sec .search-btn svg {
   width: 15px;
 }
@@ -2047,7 +2047,7 @@ form .search-field -o::placeholder {
   position: relative;
   overflow: hidden;
 }
-.recent-contact-sec form .search-field .form-control {
+/* .recent-contact-sec form .search-field .form-control {
   width: 0 !important;
   visibility: hidden;
   position: absolute;
@@ -2059,10 +2059,18 @@ form .search-field -o::placeholder {
   padding: 12px 15px !important;
   z-index: 9;
   font-size: 14px;
-}
+} */
 .recent-contact-sec .search-field.active .form-control {
   width: 100% !important;
   visibility: visible;
+}
+.recent-contact-sec .send-top-right-sec {
+  width: 50%;
+  justify-content: start;
+  align-items: center;
+}
+.recent-contact-sec .send-top-sec .main-search-wrap {
+  width: fit-content !important;
 }
 .swiper-slide img {
   width: inherit;
@@ -2111,9 +2119,9 @@ form .search-field -o::placeholder {
 .recent-contact-slider .swiper-wrapper {
   padding-bottom: 45px;
 }
-.recent-contact-slider .swiper-scrollbar-drag {
-  /* left: -55px; */
-}
+/* .recent-contact-slider .swiper-scrollbar-drag {
+  left: -55px;
+} */
 .extra-links-wrap ul li a {
   /*background-color: #fff;
 box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
@@ -7321,7 +7329,6 @@ button.shedule-date-filter:hover {
   top: 8px;
   transform: translateY(0%);
 } */
-
 .schedule-pay-sd-wrap .date-main-div,
 .activity-date-wrap .date-main-div {
   align-items: center;

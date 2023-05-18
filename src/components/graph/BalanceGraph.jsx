@@ -128,7 +128,7 @@ const BalanceGraph = (props) => {
       <div className="w-100">
         <div className="d-flex">
           {balance && balance.available && (
-            <div className="p-4 pb-0">
+            <div className="p-4">
               <h6 className="h6" style={{ color: "#0081c5" }}>
                 Available Balance
               </h6>

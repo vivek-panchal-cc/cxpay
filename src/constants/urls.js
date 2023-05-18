@@ -80,3 +80,4 @@ export const API_TRANSACTION_ACTIVITY_LIST = "/activity-list";
 export const API_TRANSACTION_GET_ACTIVITY_DETAILS = "/get-activity-details";
 export const API_TRANSACTION_CHANGE_REQUEST_STATUS = "/change-request-status";
 export const API_TRANSACTION_GET_CHART_DATA = "/get-chart-data";
+export const API_TRANSACTION_GET_PRINT_DETAILS = "/get-print-details";
