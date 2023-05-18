@@ -22,6 +22,7 @@ import {
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
 import { LoaderContext } from "context/loaderContext";
+import { uniqueId } from "helpers/commonHelpers";
 
 const Activities = () => {
   const { setIsLoading } = useContext(LoaderContext);
@@ -224,7 +225,8 @@ const Activities = () => {
       startDate: new Date(),
       endDate: new Date(),
     });
-    await getActivitiesList(actPagination.current_page);
+    const page = actPagination ? actPagination.current_page : 1;
+    await getActivitiesList(page);
   };
 
   useEffect(() => {
@@ -286,18 +288,26 @@ const Activities = () => {
             <div key={key}>
               <div className="activity-month">{key}</div>
               <ul className="activity-lw-main">
-                {activitiesDateBind[key]?.map((activity) => (
-                  <ActivityItem
-                    key={activity?.id}
-                    activityDetails={activity}
-                    handleClick={handleActivityDetail}
-                  />
-                ))}
+                {activitiesDateBind[key]?.map((activity) => {
+                  const uid = uniqueId();
+                  return (
+                    <ActivityItem
+                      key={uid}
+                      activityDetails={activity}
+                      handleClick={handleActivityDetail}
+                    />
+                  );
+                })}
               </ul>
             </div>
           ))
         )}
       </div>
+      {Object.keys(activitiesDateBind || {}).length <= 0 && (
+        <div className="text-center py-4">
+          <p className="fs-5">No activities found</p>
+        </div>
+      )}
       {actPagination && (
         <Pagination
           active={actPagination?.current_page}
@@ -310,7 +320,7 @@ const Activities = () => {
         show={showFilter}
         setShow={setShowFilter}
         classNameChild={"schedule-time-modal"}
-        heading="Data Filter"
+        heading="Date Filter"
         startDate={filters.startDate}
         endDate={filters.endDate}
         handleChangeDateRange={handleChangeDateFilter}

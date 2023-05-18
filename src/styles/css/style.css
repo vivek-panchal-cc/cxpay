@@ -6106,7 +6106,7 @@ div.settings-note-inner-sec.setting-noti-sec-new {
 }
 .notification-pg-list-wrap ul li.un-read-notification,
 .notification-dd-wrap ul li.un-read-notification {
-  background: var(--blue) 0d;
+  background: #0081c50d;
 }
 .notification-rm-wrap svg {
   cursor: pointer;

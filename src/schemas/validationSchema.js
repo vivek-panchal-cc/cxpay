@@ -137,7 +137,7 @@ const addBusinessUrlSchema = yup.object().shape({
 
 const inviteContactSchema = yup.object().shape({
   country_code: yup.string().required(""),
-  email: yup.string().email("Please enter a valid email"),
+  email: emailSchema,
   mobile: yup
     .string()
     .min(6, "The mobile number must be between 6 and 7 digits")

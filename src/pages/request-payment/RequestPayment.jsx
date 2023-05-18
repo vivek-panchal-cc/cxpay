@@ -6,7 +6,6 @@ import { useFormik } from "formik";
 import { LoaderContext } from "context/loaderContext";
 import { sendRequestSchema } from "schemas/sendPaymentSchema";
 import ContactPaymentItem from "components/items/ContactPaymentItem";
-import { toast } from "react-toastify";
 import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
 import { apiRequest } from "helpers/apiRequests";
 import { CURRENCY_SYMBOL } from "constants/all";

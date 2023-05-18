@@ -17,6 +17,7 @@ import ModalAlert from "components/modals/ModalAlert";
 import { CURRENCY_SYMBOL } from "constants/all";
 import { IconClock } from "styles/svgs";
 import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
+import ModalConfirmation from "components/modals/ModalConfirmation";
 
 function SendPayment(props) {
   const {} = props;
@@ -39,6 +40,9 @@ function SendPayment(props) {
   const [showOtpPoup, setShowOtpPopup] = useState(false);
   const [showSentPopup, setShowSentPopup] = useState(false);
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
+  const [showScheduleConfirmPopup, setShowScheduleConfirmPopup] =
+    useState(false);
+  const [scheduleCreds, setScheduleCreds] = useState(null);
   const [sentDetail, setSentDetail] = useState({
     heading: "",
     message: "",
@@ -163,8 +167,16 @@ function SendPayment(props) {
     setShowSchedulePopup(true);
   };
 
+  const handleScheduleSubmit = async (scheduleDetails) => {
+    if (!scheduleDetails) return;
+    setShowSchedulePopup(false);
+    setScheduleCreds(scheduleDetails);
+    setShowScheduleConfirmPopup(true);
+  };
+
   // For post the schedule payment
-  const handleScheduleSubmit = async (scheduleCreds) => {
+  const handleConfirmScheduleSubmit = async () => {
+    if (!scheduleCreds) return;
     const validateObj = await formik.validateForm(formik.values);
     if (Object.keys(validateObj).length > 0) {
       formik.setTouched(validateObj);
@@ -172,6 +184,8 @@ function SendPayment(props) {
       setShowSchedulePopup(false);
       return;
     }
+    setIsLoading(true);
+    setShowScheduleConfirmPopup(false);
     try {
       const formData = new FormData();
       const muValues = { ...formik.values, ...scheduleCreds };
@@ -196,6 +210,7 @@ function SendPayment(props) {
     } catch (error) {
       if (typeof error === "string") toast.error(error);
     } finally {
+      setScheduleCreds(null);
       setIsLoading(false);
     }
   };
@@ -257,6 +272,16 @@ function SendPayment(props) {
         show={showSchedulePopup}
         setShow={setShowSchedulePopup}
         handleSubmit={handleScheduleSubmit}
+      />
+      <ModalConfirmation
+        id="delete-group-member-popup"
+        show={showScheduleConfirmPopup}
+        setShow={setShowScheduleConfirmPopup}
+        heading={"Are you sure want to schedule this payment?"}
+        subHeading={
+          "Once It's done, your scheduled amount will be blocked until payment."
+        }
+        handleCallback={handleConfirmScheduleSubmit}
       />
       <div className="col-12 send-payment-ttile-wrap">
         <div className="title-content-wrap send-pay-title-sec">

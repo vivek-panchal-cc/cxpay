@@ -1,6 +1,5 @@
-import { ContactsContext } from "context/contactsContext";
-import { SendPaymentContext } from "context/sendPaymentContext";
 import React, { useContext } from "react";
+import { SendPaymentContext } from "context/sendPaymentContext";
 import { IconBackgroundStar, IconDelete } from "styles/svgs";
 
 const ContactsItem = (props) => {

@@ -26,8 +26,7 @@ const Pagination = (props) => {
     }
   }
 
-  let contentNumber;
-
+  if (active === 1 && size === 1) return null;
   return (
     <div>
       <div className="pagination-wrap contact-pagination">
@@ -59,7 +58,7 @@ const Pagination = (props) => {
                 </li>
               )}
               {[...Array(showingNumbers + 1)].map((elm, i) => {
-                contentNumber =
+                const contentNumber =
                   contentNumber === needStartDots
                     ? startArrayNumber
                     : startNumber;

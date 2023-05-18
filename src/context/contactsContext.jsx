@@ -11,14 +11,6 @@ const ContactsProvider = ({ children }) => {
   const location = useLocation();
   const { setIsLoading } = useContext(LoaderContext);
   const [selectedContacts, setSelectedContacts] = useState([]);
-  // Contacts and it's pagination
-  const [contacts, setContacts] = useState([]);
-  const [paginationConts, setPaginationConts] = useState({});
-  // Invited Contacts and it's pagination
-  const [contactsInvited, setContactsInvited] = useState([]);
-  const [paginationInConts, setPaginationInConts] = useState({});
-  const [isLoadingInConts, setIsLoadingInConts] = useState(false);
-  //
   const [search, setSearch] = useState("");
   const [contactsType, setContactsType] = useState([]);
   const [contactName, setContactName] = useState("");
@@ -141,23 +133,15 @@ const ContactsProvider = ({ children }) => {
       value={{
         deleteContact,
         changeFavouriteContact,
-        //
         handleOpenConfirmModal,
         handleRemoveConfirmModal,
-        // handleDeleteContact,
         contactName,
         confirmShow,
         setConfirmShow,
         setRemoveConfirmShow,
         removeConfirmShow,
-        // invited contacts
-        // contactsInvited,
-        // paginationInConts,
-        // isLoadingInConts,
-        //
         handleSelectedContacts,
         contactsType,
-        // handleInvitedContacts,
         isDisabled,
         search,
         deleteGroup,

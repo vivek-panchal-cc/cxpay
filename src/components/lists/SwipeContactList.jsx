@@ -1,7 +1,6 @@
-import { uniqueId } from "helpers/commonHelpers";
+import React, { useEffect, useState } from "react";
 import LoaderRecentContact from "loaders/LoaderRecentContact";
 import LoaderSendContact from "loaders/LoaderSendContact";
-import React, { useEffect, useState } from "react";
 import { A11y, Navigation, Scrollbar } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -104,7 +103,7 @@ const SwipeContactList = (props) => {
               fullWidth ? (
                 <LoaderSendContact key={item} />
               ) : (
-                <LoaderRecentContact />
+                <LoaderRecentContact key={item} />
               )
             )}
           </div>
@@ -124,7 +123,7 @@ const SwipeContactList = (props) => {
       >
         <div className={`swiper-wrapper ${className}`}>
           {swiperList?.map((item, index) => {
-            const ukey = item.account_number || index;
+            const ukey = item.group_id || item.account_number || index;
             return (
               <SwiperSlide key={ukey}>
                 <ListItemComponent

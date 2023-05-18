@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { IconBank, IconCross, IconEdit } from "styles/svgs";
+import { IconBank, IconCross } from "styles/svgs";
 
 const BankList = () => {
   const { setIsLoading } = useContext(LoaderContext);

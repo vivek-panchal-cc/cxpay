@@ -27,7 +27,6 @@ import BusinessInfo from "pages/businessInfo/BusinessInfo";
 import BankList from "pages/bank-list/BankList";
 import { storageRequest } from "helpers/storageRequests";
 import EditCard from "pages/edit-card/EditCard";
-import EditBank from "pages/edit-bank/EditBank";
 import SendContact from "pages/send/SendContact";
 import EditGroup from "pages/edit-group/EditGroup";
 import FundAccount from "pages/fund-account/FundAccount";

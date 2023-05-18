@@ -4,7 +4,7 @@ import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
 import Pagination from "components/pagination/Pagination";
 import { ScheduledPaymentContext } from "context/scheduledPaymentContext";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IconCalender, IconRefresh } from "styles/svgs";
 
 const ViewSchedulePayment = () => {
@@ -28,25 +28,9 @@ const ViewSchedulePayment = () => {
     endDate: new Date(),
   });
 
-  const { strFilStartDt, strFilEndDt } = useMemo(() => {
-    if (!filters.startDate || !filters.endDate)
-      return { strFilEndDt: "", strFilStartDt: "" };
-    const strFilStartDt = filters.startDate
-      .toLocaleDateString("en-IN", {
-        dateStyle: "medium",
-      })
-      .replace(/-/g, " ");
-    const strFilEndDt = filters.endDate
-      .toLocaleDateString("en-IN", {
-        dateStyle: "medium",
-      })
-      .replace(/-/g, " ");
-    return { strFilStartDt, strFilEndDt };
-  }, [filters.startDate, filters.endDate]);
-
   const handleChangeDateFilter = async (dates) => {
     const [start, end] = dates;
-    setFilters((e) => ({ startDate: start, endDate: end }));
+    setFilters({ startDate: start, endDate: end });
     if (start && end) {
       setShowFilter(false);
       handleDateFilter(start, end);
@@ -173,6 +157,11 @@ const ViewSchedulePayment = () => {
             ))
           )}
         </div>
+        {Object.keys(paymentsDateBind || {}).length <= 0 && (
+          <div className="text-center py-4">
+            <p className="fs-5">No schedules found</p>
+          </div>
+        )}
         {!loadingPayments && pagination && pagination.total > 10 && (
           <Pagination
             active={pagination?.current_page}
@@ -186,7 +175,7 @@ const ViewSchedulePayment = () => {
         show={showFilter}
         setShow={setShowFilter}
         classNameChild={"schedule-time-modal"}
-        heading="Data Filter"
+        heading="Date Filter"
         startDate={filters.startDate}
         endDate={filters.endDate}
         handleChangeDateRange={handleChangeDateFilter}

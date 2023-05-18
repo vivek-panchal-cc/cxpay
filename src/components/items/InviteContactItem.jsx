@@ -1,5 +1,4 @@
-import { ContactsContext } from "context/contactsContext";
-import React, { useContext } from "react";
+import React from "react";
 import { IconBackgroundStar, IconDelete } from "styles/svgs";
 
 const InviteContactItem = (props) => {

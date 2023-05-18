@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ActivityItem from "../items/ActivityItem";
-import LoaderActivityItem from "loaders/LoaderActivityItem";
 import LoaderRecentActivityItem from "loaders/LoaderRecentActivityItem";
+import { uniqueId } from "helpers/commonHelpers";
 
 const ActivityList = (props) => {
   const { classNameList = "", loading, activitiesList } = props;
@@ -32,16 +32,18 @@ const ActivityList = (props) => {
       ) : (
         Object.keys(activitiesDateBind)?.map((key) => (
           <div className="tab-content-block-part" key={key}>
-            {/* <div className="activity-month">{key}</div> */}
             <p>{key}</p>
             <ul className={`activity-lw-main ${classNameList}`}>
-              {activitiesDateBind[key]?.map((activity) => (
-                <ActivityItem
-                  key={activity?.id}
-                  activityDetails={activity}
-                  handleClick={() => {}}
-                />
-              ))}
+              {activitiesDateBind[key]?.map((activity) => {
+                const uid = uniqueId();
+                return (
+                  <ActivityItem
+                    key={uid}
+                    activityDetails={activity}
+                    handleClick={() => {}}
+                  />
+                );
+              })}
             </ul>
           </div>
         ))

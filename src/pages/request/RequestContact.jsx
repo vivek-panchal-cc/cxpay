@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import ContactsSelection from "components/contacts-selection/ContactsSelection";
 import ContactCard from "components/cards/ContactCard";
-import { IconPlus, IconSend } from "styles/svgs";
+import { IconSend } from "styles/svgs";
 import LoaderSendContactButtons from "loaders/LoaderSendContactButtons";
 import Button from "components/ui/Button";
 import { apiRequest } from "helpers/apiRequests";
