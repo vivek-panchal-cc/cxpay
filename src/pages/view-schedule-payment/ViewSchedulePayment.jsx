@@ -84,7 +84,7 @@ const ViewSchedulePayment = () => {
                   type="text"
                   className="form-control"
                   placeholder="From"
-                  value={filters?.startDate?.toLocaleDateString()}
+                  value={filters?.startDate?.toLocaleDateString("en-UK")}
                   onClick={() => setShowFilter(true)}
                   readOnly
                 />
@@ -98,7 +98,7 @@ const ViewSchedulePayment = () => {
                   type="text"
                   className="form-control"
                   placeholder="To"
-                  value={filters?.endDate?.toLocaleDateString()}
+                  value={filters?.endDate?.toLocaleDateString("en-UK")}
                   onClick={() => setShowFilter(true)}
                   readOnly
                 />

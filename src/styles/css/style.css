@@ -7179,8 +7179,10 @@ button.shedule-date-filter {
   padding: 0px;
   background-color: var(--blue);
   border-radius: 8px;
-  width: 32px;
-  height: 32px;
+  padding: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 button.shedule-date-filter:hover {
   background-color: var(--dark_blue);

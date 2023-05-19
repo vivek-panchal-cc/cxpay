@@ -1,0 +1,31 @@
+.cx_tpicker {
+  :global {
+    text-align: center;
+    .cx_time_container {
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      position: absolute;
+      z-index: 1;
+      left: 5px;
+      background: #fff;
+      display: flex;
+    }
+    .cx_time_ul {
+      margin-top: 10px;
+      padding: 0 5px;
+      height: 150px;
+      overflow: scroll !important;
+    }
+    .cx_time_li_active {
+      color: #fff;
+      background: var(--blue);
+    }
+    .cx_time_li {
+      cursor: pointer;
+      padding: 5px 20px;
+      &:hover {
+        color: #fff;
+        background: #0081c5aa;
+      }
+    }
+  }
+}

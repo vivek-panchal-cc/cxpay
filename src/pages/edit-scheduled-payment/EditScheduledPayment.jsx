@@ -6,8 +6,8 @@ import { CURRENCY_SYMBOL } from "constants/all";
 import { useFormik } from "formik";
 import ReactDatePicker from "react-datepicker";
 import { schedulePaymentSchema } from "schemas/sendPaymentSchema";
-import TimePicker from "react-time-picker";
 import Input from "components/ui/Input";
+import TimePicker from "components/time-picker/TimePicker";
 
 const EditScheduledPayment = () => {
   const navigate = useNavigate();
@@ -35,10 +35,11 @@ const EditScheduledPayment = () => {
   } = useMemo(() => {
     if (!payment_schedule_date) return {};
     const sch_dt = new Date(payment_schedule_date);
-    const sch_tm = sch_dt
-      .toLocaleTimeString(undefined, { hourCycle: "h23" })
-      .replace(" AM", "")
-      .replace(" PM", "");
+    const sch_tm = sch_dt.toLocaleTimeString(undefined, {
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h12",
+    });
     const singleCont = [
       { member_name: name, member_image: image, member_amount: amount },
     ];
@@ -60,9 +61,12 @@ const EditScheduledPayment = () => {
     validationSchema: schedulePaymentSchema,
     onSubmit: async (values, { setErrors, setValues, setStatus }) => {
       const { date, time, specification } = values;
+      const dt = new Date(`${date.toDateString()} ${time}`);
+      const dts = dt.toLocaleDateString("en-CA");
+      const tms = dt.toLocaleTimeString(undefined, { hourCycle: "h24" });
       const params = {
         schedule_payment_id: id,
-        schedule_date: `${date.toLocaleDateString("en-CA")} ${time}`,
+        schedule_date: `${dts} ${tms}`,
         overall_specification: specification,
       };
       try {
@@ -76,7 +80,7 @@ const EditScheduledPayment = () => {
   if (!upPaymentEntry) navigate("/view-schedule-payment");
   return (
     <>
-      <div class="schedulepayment-sec">
+      <div class="schedulepayment-sec" style={{ marginBottom: "200px" }}>
         <div class="sp-top-sec">
           <div class="title-content-wrap common-title-wrap">
             <h3>Update Schedule Payment</h3>
@@ -158,6 +162,11 @@ const EditScheduledPayment = () => {
                 <div className="col-12 col p-0">
                   <div className="form-field">
                     <TimePicker
+                      value={formik.values.time}
+                      onChange={(time) => formik.setFieldValue("time", time)}
+                      classNameInput="w-full form-control"
+                    />
+                    {/* <TimePicker
                       className="w-full form-control"
                       value={formik.values.time}
                       onChange={(time) => formik.setFieldValue("time", time)}
@@ -165,7 +174,7 @@ const EditScheduledPayment = () => {
                       format="hh:mm:ss a"
                       maxDetail="second"
                       disableClock
-                    />
+                    /> */}
                     {formik.touched.time && formik.errors.time && (
                       <p className="text-danger pb-0">{formik.errors.time}</p>
                     )}

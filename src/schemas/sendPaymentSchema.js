@@ -57,7 +57,7 @@ const schedulePaymentSchema = yup.object().shape({
     .required("Date is required"),
   time: yup
     .string()
-    .test("time_test", "Time cannot be in the past", (value, context) =>
+    .test("time_test", "You can schedule your payment 15 minutes from now", (value, context) =>
       compareDateTime(value, context.parent.date)
     )
     .required("Time is required"),

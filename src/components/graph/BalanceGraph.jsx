@@ -11,7 +11,7 @@ const chartOption = {
   options: {
     chart: {
       height: 200,
-      width: 500,
+      width: 1000,
       type: "area",
       toolbar: {
         show: false,
@@ -95,25 +95,35 @@ const chartOption = {
           colors: "#a2a2a2",
         },
       },
-      categories: [],
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
     },
   },
 };
 
 const BalanceGraph = (props) => {
   const { graphBackgroundImage, balanceDataArr, balance, monthDataArr } = props;
-  const [options, setOptions] = useState(chartOption);
+  const [options, setOptions] = useState({ ...chartOption });
 
   useEffect(() => {
     if (!balanceDataArr && !monthDataArr) return;
     const tmpObj = { ...options };
     tmpObj.series[0].data = balanceDataArr;
-    tmpObj.options.xaxis.categories = monthDataArr;
+    // tmpObj.options.xaxis.categories = monthDataArr;
     setOptions(tmpObj);
-  }, [JSON.stringify(balanceDataArr), JSON.stringify(monthDataArr)]);
-
-  // chartOption.series[0].data = balanceDataArr; //.map((val) => val);
-  // chartOption.options.xaxis.categories = props.monthDataArr; //.map((val) => val.volume);
+  }, [balanceDataArr, monthDataArr]);
 
   return (
     <div
@@ -150,10 +160,9 @@ const BalanceGraph = (props) => {
         </div>
         <div className="px-2 z-1">
           <div id="chart">
-            {balanceDataArr &&
-              monthDataArr &&
-              balanceDataArr.length > 0 &&
-              monthDataArr.length > 0 && (
+            {options.options &&
+              (options.options.xaxis.categories.length > 0 ||
+                balanceDataArr.length > 0) && (
                 <ReactApexChart
                   options={options.options}
                   series={options.series}

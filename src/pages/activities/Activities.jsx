@@ -35,7 +35,6 @@ const Activities = () => {
   const [filters, setFilters] = useState({
     startDate: new Date(),
     endDate: new Date(),
-    search: "",
   });
   const [discardActDetail, setDiscardActDetail] = useState({
     heading: "",
@@ -129,7 +128,7 @@ const Activities = () => {
 
   const handleChangeDateFilter = async (dates) => {
     const [start, end] = dates;
-    setFilters((e) => ({ ...e, startDate: start, endDate: end }));
+    setFilters({ startDate: start, endDate: end });
     if (start && end) {
       setShowFilter(false);
       const page = actPagination ? actPagination.current_page : 1;
@@ -235,12 +234,12 @@ const Activities = () => {
 
   return (
     <div className="activities-sec">
-      <div className="activities-top-sec activity-top-new">
-        <div className="title-content-wrap">
+      <div className="col-12 send-payment-ttile-wrap sdp-main-new-1">
+        <div className="title-content-wrap send-pay-title-sec">
           <h3>Activities</h3>
           <p></p>
         </div>
-        <div className="activity-date-wrap date-wrap d-flex align-items-center">
+        <div className="schedule-pay-sd-wrap">
           <div className="date-main-div d-flex">
             <div className="date-inner-div">
               <input
@@ -248,7 +247,7 @@ const Activities = () => {
                 type="text"
                 className="form-control"
                 placeholder="From"
-                value={filters?.startDate?.toLocaleDateString()}
+                value={filters?.startDate?.toLocaleDateString("en-UK")}
                 onClick={() => setShowFilter(true)}
                 readOnly
               />
@@ -262,7 +261,7 @@ const Activities = () => {
                 type="text"
                 className="form-control"
                 placeholder="To"
-                value={filters?.endDate?.toLocaleDateString()}
+                value={filters?.endDate?.toLocaleDateString("en-UK")}
                 onClick={() => setShowFilter(true)}
                 readOnly
               />
