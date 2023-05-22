@@ -24,8 +24,8 @@ const ViewSchedulePayment = () => {
   const [paymentsDateBind, setPaymentsDateBind] = useState({});
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [filters, setFilters] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: "",
+    endDate: "",
   });
 
   const handleChangeDateFilter = async (dates) => {
@@ -51,8 +51,8 @@ const ViewSchedulePayment = () => {
 
   const handleResetFilter = async () => {
     setFilters({
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: "",
+      endDate: "",
     });
     resetDateFilter();
   };
@@ -84,7 +84,11 @@ const ViewSchedulePayment = () => {
                   type="text"
                   className="form-control"
                   placeholder="From"
-                  value={filters?.startDate?.toLocaleDateString("en-UK")}
+                  value={
+                    filters.startDate
+                      ? filters.startDate?.toLocaleDateString("en-UK")
+                      : "From"
+                  }
                   onClick={() => setShowFilter(true)}
                   readOnly
                 />
@@ -98,7 +102,11 @@ const ViewSchedulePayment = () => {
                   type="text"
                   className="form-control"
                   placeholder="To"
-                  value={filters?.endDate?.toLocaleDateString("en-UK")}
+                  value={
+                    filters?.endDate
+                      ? filters.endDate?.toLocaleDateString("en-UK")
+                      : "To"
+                  }
                   onClick={() => setShowFilter(true)}
                   readOnly
                 />
@@ -159,7 +167,7 @@ const ViewSchedulePayment = () => {
         </div>
         {Object.keys(paymentsDateBind || {}).length <= 0 && (
           <div className="text-center py-4">
-            <p className="fs-5">No schedules found</p>
+            <p className="fs-5">Schedule payments not found.</p>
           </div>
         )}
         {!loadingPayments && pagination && pagination.total > 10 && (

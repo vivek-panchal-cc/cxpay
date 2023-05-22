@@ -1013,7 +1013,7 @@ form .form-field select.form-control {
 }
 .dashboard-home-container .dashboard-bottom-sec {
   flex-wrap: nowrap;
-  padding-top: 20px;
+  /* padding-top: 20px; */
 }
 .dashboard-home-container .dashboard-graph-sec {
   width: calc(100% - 450px);
@@ -1959,7 +1959,7 @@ form .search-field -o::placeholder {
   line-height: 16px;
 }
 .dashboard-card-sec .title-content-wrap {
-  padding-top: 24px;
+  /* padding-top: 24px; */
   padding-bottom: 26px;
 }
 /* card swiper css starts*/
@@ -2102,6 +2102,7 @@ form .search-field -o::placeholder {
   text-align: center;
   color: #969696;
   margin: 8px 0 0;
+  max-width: 100%;
 }
 .swiper-wrapper {
   height: auto;
@@ -2149,6 +2150,9 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+}
+.extra-links-wrap ul li a svg path{
+  stroke:var(--dark_blue);
 }
 .extra-links-wrap ul li a:hover svg path,
 .extra-links-wrap ul li a:hover svg,
@@ -5887,14 +5891,6 @@ ul.dashboard-main-links {
 #crop_image_model .modal-dialog {
   max-width: 100% !important;
 }*/
-
-@media only screen and (max-width: 640px) {
-  .crop_container {
-    width: 100%;
-    margin-top: 20px;
-    justify-content: center !important;
-  }
-}
 /* New CSS After 15-03  */
 .settings-vc-sec {
   height: calc(100% - 50px);
@@ -7356,4 +7352,38 @@ button.shedule-date-filter:hover {
   inset: 0;
   height: 100%;
   width: 100%;
+}
+/* CSS on 22-05 */
+.dashboard-graph-sec .title-content-wrap  a.wallet-top-1-btn,
+.dashboard-card-sec .title-content-wrap p>a{
+  font-weight: 500;
+}
+ul.recent-act-lw-main .act-info-wrap-left{
+  width: 100%;
+  padding-right: 0px !important;
+}
+ul.recent-act-lw-main .act-amt-status-wrap{
+
+}
+.dashboard-graph-sec ul.recent-act-lw-main .act-amt-status-wrap > div{
+  text-align: end;
+}
+.dashboard-recent-contact-sec .recent-contact-sec form .form-field{
+  margin-bottom: 0px;
+}
+.dashboard-recent-contact-sec .recent-contact-sec .title-content-wrap{
+  padding-bottom: 0px;
+}
+.dashboard-recent-contact-sec .recent-contact-sec .search-field input[type="search"]{
+  padding-left: 35px !important;
+}
+.dashboard-recent-contact-sec .recent-contact-sec .search-field .search-btn{
+  left: 13px !important;
+}
+.dashboard-recent-contact-sec .recent-contact-sec .title-content-wrap{
+  width:50%;
+  padding-right: 10px;
+}
+.dashboard-recent-contact-sec .recent-contact-sec .send-top-right-sec{
+  justify-content: end;
 }

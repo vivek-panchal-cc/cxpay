@@ -33,8 +33,8 @@ const Activities = () => {
   const [activitiesDateBind, setActivitiesDateBind] = useState({});
   const [actPagination, setActPagination] = useState(null);
   const [filters, setFilters] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: "",
+    endDate: "",
   });
   const [discardActDetail, setDiscardActDetail] = useState({
     heading: "",
@@ -221,8 +221,8 @@ const Activities = () => {
 
   const handleResetFilter = async () => {
     setFilters({
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: "",
+      endDate: "",
     });
     const page = actPagination ? actPagination.current_page : 1;
     await getActivitiesList(page);
@@ -247,7 +247,11 @@ const Activities = () => {
                 type="text"
                 className="form-control"
                 placeholder="From"
-                value={filters?.startDate?.toLocaleDateString("en-UK")}
+                value={
+                  filters.startDate
+                    ? filters.startDate?.toLocaleDateString("en-UK")
+                    : "From"
+                }
                 onClick={() => setShowFilter(true)}
                 readOnly
               />
@@ -261,7 +265,11 @@ const Activities = () => {
                 type="text"
                 className="form-control"
                 placeholder="To"
-                value={filters?.endDate?.toLocaleDateString("en-UK")}
+                value={
+                  filters?.endDate
+                    ? filters.endDate?.toLocaleDateString("en-UK")
+                    : "To"
+                }
                 onClick={() => setShowFilter(true)}
                 readOnly
               />
@@ -304,7 +312,7 @@ const Activities = () => {
       </div>
       {Object.keys(activitiesDateBind || {}).length <= 0 && (
         <div className="text-center py-4">
-          <p className="fs-5">No activities found</p>
+          <p className="fs-5">Activities not found.</p>
         </div>
       )}
       {actPagination && (

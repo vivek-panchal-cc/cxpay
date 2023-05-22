@@ -586,7 +586,7 @@
     font-size: 18px;
   }
   .dashboard-card-sec .title-content-wrap {
-    padding-top: 10px;
+    /* padding-top: 10px; */
     padding-bottom: 20px;
   }
   p.bank-name-wrap {
@@ -904,9 +904,9 @@
   .extra-links-wrap ul > li:not(:last-child) {
     margin-bottom: 11px;
   }
-  .dashboard-card-links-sec {
+  /* .dashboard-card-links-sec {
     padding-top: 20px;
-  }
+  } */
   .dashaboard-main-sec .dashboard-search-wrap {
     width: 70%;
   }
@@ -940,7 +940,7 @@
     padding-left: 14px;
   }
   .dashboard-card-sec .title-content-wrap {
-    padding-top: 19px;
+    /* padding-top: 19px; */
     padding-bottom: 20px;
   }
   .extra-links-wrap {
@@ -1042,6 +1042,9 @@
   .send-top-sec {
     padding-bottom: 0px;
     padding-right: 0px;
+  }
+  .dashboard-recent-contact-sec .recent-contact-sec .send-top-sec {
+    padding-bottom: 20px;
   }
   .one-time-pay-main-sec {
     padding: 40px 30px 40px 45px;
@@ -1363,16 +1366,14 @@
   .profile-info-right-desc {
     padding-left: 30px;
   }
-  ul.recent-act-lw-main .act-amt-status-wrap {
-    flex-wrap: wrap;
-    flex-direction: column-reverse;
-    text-align: end;
-  }
   .act-amt-status-wrap > div {
     width: 100%;
   }
   ul.recent-act-lw-main .act-amt-wrap {
     margin-bottom: 10px;
+  }
+  ul.recent-act-lw-main .act-amt-status-wrap > div {
+    width: 50%;
   }
 }
 @media only screen and (max-width: 1199px) and (min-width: 992px) {
@@ -3370,6 +3371,9 @@
     max-width: 170px;
     margin-right: 15px;
   }
+  .dashboard-home-container .dashboard-card-links-sec {
+    padding-top: 25px;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -4306,10 +4310,6 @@
   .act-specification-text {
     display: none;
   }
-  .act-amt-status-wrap {
-    flex-direction: column-reverse;
-    text-align: end;
-  }
   .act-amt-wrap {
     margin-bottom: 5px;
     padding-left: 0px;
@@ -4321,9 +4321,6 @@
   .act-amt-status-wrap {
     width: 40%;
   }
-  .act-amt-status-wrap > div {
-    width: 100%;
-  }
   ul.activity-lw-main li {
     margin-bottom: 15px;
   }
@@ -4331,6 +4328,21 @@
   .title-content-wrap.common-title-wrap h3 {
     font-size: 22px;
     line-height: 26px;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .crop_container {
+    width: 100%;
+    margin-top: 20px;
+    justify-content: center !important;
+  }
+  .act-status-wrap button.btn {
+    padding: 7px 5px;
+    font-size: 9px;
+    line-height: 12px;
+  }
+  .act-status-wrap button.btn svg {
+    max-width: 8px;
   }
 }
 @media only screen and (max-width: 575px) {
@@ -4602,9 +4614,6 @@
     font-size: 14px;
     padding-left: 10px;
   }
-  .sp-details-inner-wrap .sp-amt {
-  }
-
   /* .sp-details-inner-wrap .sp-user-wrap{
     width: 100%;
   }
@@ -4626,6 +4635,25 @@
     font-size: 20px;
   }
   /* sp sec 15-05 end */
+  /* .act-amt-status-wrap > div {
+    width: 100%;
+  }
+  .act-amt-status-wrap {
+    flex-direction: column-reverse;
+    text-align: end;
+  } */
+  ul.recent-act-lw-main .act-user-info-wrap,
+  ul.recent-act-lw-main .act-amt-status-wrap {
+    width: 50%;
+  }
+  /* .act-status-wrap button.btn{
+    padding: 7px 5px;
+    font-size: 9px;
+    line-height: 12px;
+  }
+  .act-status-wrap button.btn svg{
+    max-width: 8px;
+  } */
 }
 @media only screen and (max-width: 480px) {
   /* .profile-inner-sec.p-4 {
@@ -4705,6 +4733,9 @@
     margin-right: 0px;
     border-right: 0px;
     width: 100%;
+  }
+  .dashboard-graph-sec ul.recent-act-lw-main .act-amt-status-wrap > div {
+    text-align: left;
   }
 }
 @media only screen and (max-width: 400px) {

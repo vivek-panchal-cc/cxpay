@@ -1,4 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 import styles from "./TimePicker.module.scss";
 import { IconClock } from "styles/svgs";
 
@@ -86,14 +92,16 @@ const PERIOD = ["AM", "PM"];
 
 const TimePicker = ({
   classNameInput = "",
-  classNameSelect = "",
-  classNameOption = "",
   minutesSelection = "all",
+  fromDate,
+  selecteDate,
   value,
   onChange,
 }) => {
   const toggleRef = useRef(null);
-  const [initChange, setInitChange] = useState(false);
+  const hourListRef = useRef(null);
+  const minListRef = useRef(null);
+  const perListRef = useRef(null);
   const [togglePicker, setTogglePicker] = useState(false);
   const [timePicked, setTimePicked] = useState({
     hour: "",
@@ -101,44 +109,64 @@ const TimePicker = ({
     period: "",
   });
 
+  const { fromDtm, selDt } = useMemo(() => {
+    if (!fromDate || !selecteDate)
+      return {
+        fromDtm: new Date().getTime(),
+        selDt: new Date(),
+      };
+    const fromDtm = fromDate?.getTime();
+    const selDt = selecteDate;
+    return { fromDtm, selDt };
+  }, [fromDate, selecteDate]);
+
   const handleTogglePicker = () => {
     setTogglePicker((e) => !e);
   };
 
-  const handleChange = (element, tParameter, value) => {
-    if (!element) return;
-    element.currentTarget.parentNode.scrollTop =
-      element.currentTarget.offsetTop - 10;
-    let { hour, minutes, period } = timePicked;
-    switch (tParameter) {
-      case "hour":
-        hour = value;
-        break;
-      case "minute":
-        minutes = value;
-        break;
-      case "period":
-        period = value;
-        break;
-    }
-    const timeStr = `${hour}:${minutes} ${period}`;
-    setTimePicked({ hour, minutes, period });
-    onChange && onChange(timeStr);
-  };
+  const handleChange = useCallback(
+    (date) => {
+      if (!hourListRef.current || !minListRef.current || !perListRef.current)
+        return;
+      const timeSelect = date?.toLocaleTimeString(undefined, {
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h12",
+      });
+      const [hr, min_pr] = timeSelect.split(":");
+      const [min, pr] = min_pr.split(" ");
+      const hrIndex = HOURS.indexOf(hr);
+      const minIndex = MINUTES[minutesSelection].indexOf(min);
+      const perIndex = PERIOD.indexOf(pr?.trim());
+
+      const hrElement = hourListRef.current.children[hrIndex];
+      hourListRef.current.scrollTop = hrElement?.offsetTop - 10;
+      const minElement = minListRef.current.children[minIndex];
+      minListRef.current.scrollTop = minElement?.offsetTop - 10;
+      const perElement = perListRef.current.children[perIndex];
+      perListRef.current.scrollTop = perElement?.offsetTop - 10;
+      const timeStr = `${hr}:${min} ${pr?.trim()}`;
+      setTimePicked({ hour: hr, minutes: min, period: pr?.trim() });
+      onChange && onChange(timeStr);
+    },
+    [hourListRef, minListRef, perListRef]
+  );
 
   useEffect(() => {
     const tmSel = value
       ? value
-      : new Date().toLocaleTimeString(undefined, {
+      : new Date(fromDtm).toLocaleTimeString(undefined, {
           hour: "2-digit",
           minute: "2-digit",
           hourCycle: "h12",
         });
     const [hr, min_pr] = tmSel.split(":");
     const [min, pr] = min_pr.split(" ");
+    // const mins = MINUTES[minutesSelection].find((item) => item >= mins);
     const timeStr = `${hr}:${min} ${pr?.trim()}`;
+    const dts = new Date(fromDtm);
+    const dt = new Date(`${dts.toDateString()} ${tmSel}`);
     setTimePicked({ hour: hr, minutes: min, period: pr?.trim() });
-    onChange && onChange(timeStr);
   }, [value]);
 
   useEffect(() => {
@@ -154,8 +182,21 @@ const TimePicker = ({
     };
   }, [toggleRef]);
 
+  useEffect(() => {
+    if (!togglePicker) return;
+    toggleRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "center",
+    });
+    const dts = new Date(fromDtm);
+    const tstr = `${timePicked.hour}:${timePicked.minutes} ${timePicked.period}`;
+    const dt = new Date(`${dts.toDateString()} ${tstr}`);
+    handleChange(dt);
+  }, [togglePicker, value]);
+
   return (
-    <div className={` ${styles.cx_tpicker}`}>
+    <div className={`${styles.cx_tpicker}`}>
       <div className="position-relative">
         <input
           type="text"
@@ -176,45 +217,75 @@ const TimePicker = ({
         {/* Time Selection */}
         {togglePicker && (
           <div className="cx_time_container" ref={toggleRef}>
-            <ul className="cx_time_ul">
-              {HOURS.map((item) => (
-                <li
-                  className={`cx_time_li ${
-                    timePicked.hour === item ? "cx_time_li_active" : ""
-                  }`}
-                  key={item}
-                  onClick={(el) => handleChange(el, "hour", item)}
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <ul className="cx_time_ul">
-              {MINUTES[minutesSelection].map((item) => (
-                <li
-                  className={`cx_time_li ${
-                    timePicked.minutes === item ? "cx_time_li_active" : ""
-                  }`}
-                  key={item}
-                  onClick={(el) => handleChange(el, "minute", item)}
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <ul className="cx_time_ul">
-              {PERIOD.map((item) => (
-                <li
-                  className={`cx_time_li ${
-                    timePicked.period === item ? "cx_time_li_active" : ""
-                  }`}
-                  key={item}
-                  onClick={(el) => handleChange(el, "period", item)}
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <div className="cx_time_lists">
+              <ul className="cx_time_ul" ref={hourListRef}>
+                {HOURS.map((item) => {
+                  const lhr = parseInt(item);
+                  const dt = new Date(selDt.getTime());
+                  dt.getHours() > 12
+                    ? dt.setHours(lhr + 12, 0)
+                    : dt.setHours(lhr, 0);
+                  const flagDisable = dt.getTime() < fromDtm;
+                  return (
+                    <li
+                      className={`cx_time_li ${
+                        timePicked.hour === item ? "cx_time_li_active" : ""
+                      } ${flagDisable ? "non_selectable" : ""}`}
+                      key={item}
+                      onClick={(el) => !flagDisable && handleChange(dt)}
+                    >
+                      {item}
+                    </li>
+                  );
+                })}
+              </ul>
+              <ul className="cx_time_ul" ref={minListRef}>
+                {MINUTES[minutesSelection].map((item) => {
+                  const lhr = parseInt(timePicked.hour);
+                  const lmin = parseInt(item);
+                  const dt = new Date(selDt.getTime());
+                  dt.getHours() > 12
+                    ? dt.setHours(lhr + 12, lmin)
+                    : dt.setHours(lhr, lmin);
+                  const flagDisable = dt.getTime() < fromDtm;
+                  return (
+                    <li
+                      className={`cx_time_li ${
+                        timePicked.minutes === item ? "cx_time_li_active" : ""
+                      } ${flagDisable ? "non_selectable" : ""}`}
+                      key={item}
+                      onClick={(el) => !flagDisable && handleChange(dt)}
+                    >
+                      {item}
+                    </li>
+                  );
+                })}
+              </ul>
+              <ul className="cx_time_ul" ref={perListRef}>
+                {PERIOD.map((item) => {
+                  const hr = timePicked.hour;
+                  const min = timePicked.minutes;
+                  const per = item;
+                  const dt = new Date(
+                    `${selDt.toDateString()} ${hr}:${min} ${per}`
+                  );
+                  return (
+                    <li
+                      className={`cx_time_li ${
+                        timePicked.period === item ? "cx_time_li_active" : ""
+                      }`}
+                      key={item}
+                      onClick={(el) => handleChange(dt)}
+                    >
+                      {item}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            {/* <div className="cx_time_confirm">
+              <button onClick={handleTogglePicker}> Ok </button>
+            </div> */}
           </div>
         )}
       </div>

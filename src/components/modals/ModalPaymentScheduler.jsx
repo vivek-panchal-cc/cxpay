@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import styles from "./modal.module.scss";
 import ReactDatePicker from "react-datepicker";
 // import TimePicker from "react-time-picker";
@@ -10,6 +10,11 @@ import TimePicker from "components/time-picker/TimePicker";
 const ModalPaymentScheduler = (props) => {
   const { id, show, setShow, className, classNameChild, handleSubmit } = props;
   const modalRef = useRef(null);
+
+  const dtTimeBuffer = useMemo(() => {
+    const dtm15 = new Date().getTime() + 1000 * 60 * 15;
+    return new Date(dtm15);
+  }, [show]);
 
   const formik = useFormik({
     initialValues: {
@@ -71,7 +76,7 @@ const ModalPaymentScheduler = (props) => {
             <div className="modal-header flex-column pb-3">
               <h3 className="text-center">Schedule Your Payment</h3>
             </div>
-            <div className="modal-body d-flex justify-content-center">
+            <div className="modal-body d-flex justify-content-center pb-5">
               <form onSubmit={formik.handleSubmit}>
                 <div className="">
                   <ReactDatePicker
@@ -89,7 +94,10 @@ const ModalPaymentScheduler = (props) => {
                   <div className="col-12 col p-0">
                     <div className="form-field">
                       <TimePicker
+                        minutesSelection="quater"
                         value={formik.values.time}
+                        selecteDate={formik.values.date}
+                        fromDate={dtTimeBuffer}
                         onChange={handleTimeChange}
                         classNameInput="w-full form-control"
                       />
