@@ -6,6 +6,7 @@ const chartOption = {
   series: [
     {
       name: "series1",
+      data: [],
     },
   ],
   options: {
@@ -95,20 +96,7 @@ const chartOption = {
           colors: "#a2a2a2",
         },
       },
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+      categories: [],
     },
   },
 };
@@ -121,7 +109,7 @@ const BalanceGraph = (props) => {
     if (!balanceDataArr && !monthDataArr) return;
     const tmpObj = { ...options };
     tmpObj.series[0].data = balanceDataArr;
-    // tmpObj.options.xaxis.categories = monthDataArr;
+    tmpObj.options.xaxis.categories = monthDataArr;
     setOptions(tmpObj);
   }, [balanceDataArr, monthDataArr]);
 
@@ -160,17 +148,15 @@ const BalanceGraph = (props) => {
         </div>
         <div className="px-2 z-1">
           <div id="chart">
-            {options.options &&
-              (options.options.xaxis.categories.length > 0 ||
-                balanceDataArr.length > 0) && (
-                <ReactApexChart
-                  options={options.options}
-                  series={options.series}
-                  type="area"
-                  height={150}
-                  width={"100%"}
-                />
-              )}
+            {options.series[0].data.length > 0 && (
+              <ReactApexChart
+                options={options.options}
+                series={options.series}
+                type="area"
+                height={150}
+                width={"100%"}
+              />
+            )}
           </div>
         </div>
       </div>

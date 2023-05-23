@@ -147,6 +147,7 @@ const ViewSchedulePayment = () => {
                         "/assets/images/single_contact_profile.png";
                     return (
                       <SchedulePaymentItem
+                        key={item.id}
                         details={{
                           id: item.id,
                           name: item.name,

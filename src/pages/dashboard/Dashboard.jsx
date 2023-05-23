@@ -22,6 +22,7 @@ import ContactCard from "components/cards/ContactCard";
 import RecentActivities from "../../components/activity/RecentActivities";
 import useBalance from "hooks/useBalance";
 import useChartData from "hooks/useChartData";
+import ModalAddContact from "components/modals/ModalAddContact";
 
 // const balanceDataArr = [31, 50, 91, 80, 102, 79, 150];
 
@@ -73,6 +74,9 @@ const Dashboard = () => {
   const [activitiesList, setActivitiesList] = useState([]);
   const [loadingBalance, balance] = useBalance();
   const [loadingChart, chartData] = useChartData();
+
+  // For adding new Contact
+  const [showNewContPop, setShowNewContPop] = useState(false);
 
   const getActivitiesList = async (page = 1, filters = {}) => {
     setLoadingAct(true);
@@ -171,16 +175,6 @@ const Dashboard = () => {
 
   return (
     <>
-      {/* Start Fund Account Popup */}
-      <Modal
-        id="fund_acc_modal"
-        show={showPopupFundAccount}
-        setShow={setShowFundAccountPopup}
-        className="fund-acc-modal"
-        classNameChild="modal-dialog w-100"
-      >
-        <FundYourAccountPopup />
-      </Modal>
       {/* Close Fund Account Popup */}
       <div className="dashboard-home-container">
         <div className="dashboard-bottom-sec">
@@ -312,7 +306,7 @@ const Dashboard = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/contacts">
+                  <a className="cursor-pointer" onClick={() => setShowNewContPop(true)}>
                     <span className="icon-link-text">
                       <IconAdd />
                       Add a Contact
@@ -320,7 +314,7 @@ const Dashboard = () => {
                     <span className="arrow-wrap">
                       <IconRightArrowBig />
                     </span>
-                  </Link>
+                  </a>
                 </li>
                 <li>
                   <Link to="/send">
@@ -338,6 +332,29 @@ const Dashboard = () => {
             {/* <!-- Dashboard extra links section close -->  */}
           </div>
         </div>
+        {/* Fund Account Popup */}
+        <Modal
+          id="fund_acc_modal"
+          show={showPopupFundAccount}
+          setShow={setShowFundAccountPopup}
+          className="fund-acc-modal"
+          classNameChild="modal-dialog w-100"
+        >
+          <FundYourAccountPopup />
+        </Modal>
+        {/* Add Contact Popup */}
+        <ModalAddContact
+          id="add_contact"
+          invitetitle="Add Contact"
+          show={showNewContPop}
+          setShow={setShowNewContPop}
+          getConatcts={() => navigate("/contacts")}
+          getInvitedConatcts={() => navigate("/contacts-invited")}
+          setConatctData={() => {}}
+          setInvitationSentPopup={() => {}}
+          setConatctDetailPopup={() => {}}
+          isNavigate={true}
+        />
       </div>
     </>
   );

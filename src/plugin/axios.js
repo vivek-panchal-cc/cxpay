@@ -3,7 +3,7 @@ import { storageRequest } from "helpers/storageRequests";
 import { apiRequest } from "helpers/apiRequests";
 import { API_LOGIN_REFRESH_TOKEN } from "constants/urls";
 import { toast } from "react-toastify";
-import { browserName, fullVersion } from "../helpers/headerRequests";
+import { browserName, fullVersion, timeZone } from "../helpers/headerRequests";
 
 // define API_URL in env file
 const axiosLoginInstance = axios.create({
@@ -25,6 +25,7 @@ const requestInterceptor = (config) => {
   const token = storageRequest.getAuth();
   config.headers["Os-Version"] = `${browserName}/${fullVersion}`;
   config.headers["Device-Type"] = "web";
+  config.headers["User-Timezone"] = timeZone;
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 };

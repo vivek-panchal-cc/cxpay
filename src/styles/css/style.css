@@ -2132,7 +2132,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   font-weight: 600;
   font-size: 16px;
   line-height: 19px;
-  color: var(--dark_blue);
+  color: var(--dark_blue) !important;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -2151,8 +2151,8 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   flex-wrap: wrap;
   align-items: center;
 }
-.extra-links-wrap ul li a svg path{
-  stroke:var(--dark_blue);
+.extra-links-wrap ul li a svg path {
+  stroke: var(--dark_blue);
 }
 .extra-links-wrap ul li a:hover svg path,
 .extra-links-wrap ul li a:hover svg,
@@ -7354,36 +7354,54 @@ button.shedule-date-filter:hover {
   width: 100%;
 }
 /* CSS on 22-05 */
-.dashboard-graph-sec .title-content-wrap  a.wallet-top-1-btn,
-.dashboard-card-sec .title-content-wrap p>a{
+.dashboard-graph-sec .title-content-wrap a.wallet-top-1-btn,
+.dashboard-card-sec .title-content-wrap p > a {
   font-weight: 500;
 }
-ul.recent-act-lw-main .act-info-wrap-left{
+ul.recent-act-lw-main .act-info-wrap-left {
   width: 100%;
   padding-right: 0px !important;
 }
-ul.recent-act-lw-main .act-amt-status-wrap{
-
+ul.recent-act-lw-main .act-amt-status-wrap {
 }
-.dashboard-graph-sec ul.recent-act-lw-main .act-amt-status-wrap > div{
+.dashboard-graph-sec ul.recent-act-lw-main .act-amt-status-wrap > div {
   text-align: end;
 }
-.dashboard-recent-contact-sec .recent-contact-sec form .form-field{
+.dashboard-recent-contact-sec .recent-contact-sec form .form-field {
   margin-bottom: 0px;
 }
-.dashboard-recent-contact-sec .recent-contact-sec .title-content-wrap{
+.dashboard-recent-contact-sec .recent-contact-sec .title-content-wrap {
   padding-bottom: 0px;
 }
-.dashboard-recent-contact-sec .recent-contact-sec .search-field input[type="search"]{
+.dashboard-recent-contact-sec
+  .recent-contact-sec
+  .search-field
+  input[type="search"] {
   padding-left: 35px !important;
 }
-.dashboard-recent-contact-sec .recent-contact-sec .search-field .search-btn{
+.dashboard-recent-contact-sec .recent-contact-sec .search-field .search-btn {
   left: 13px !important;
 }
-.dashboard-recent-contact-sec .recent-contact-sec .title-content-wrap{
-  width:50%;
+.dashboard-recent-contact-sec .recent-contact-sec .title-content-wrap {
+  width: 50%;
   padding-right: 10px;
 }
-.dashboard-recent-contact-sec .recent-contact-sec .send-top-right-sec{
+.dashboard-recent-contact-sec .recent-contact-sec .send-top-right-sec {
   justify-content: end;
+}
+.dashboard-graph-sec .dashboard-recent-activity-sec ul.activity-lw-main li {
+  cursor: default;
+}
+.dashboard-graph-sec
+  .dashboard-recent-activity-sec
+  ul.activity-lw-main
+  li:hover {
+  box-shadow: none;
+}
+.dashboard-graph-sec
+  .dashboard-recent-activity-sec
+  ul.activity-lw-main
+  li
+  button {
+  pointer-events: none;
 }

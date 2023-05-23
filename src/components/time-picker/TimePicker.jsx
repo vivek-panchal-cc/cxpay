@@ -126,8 +126,7 @@ const TimePicker = ({
 
   const handleChange = useCallback(
     (date) => {
-      if (!hourListRef.current || !minListRef.current || !perListRef.current)
-        return;
+      if (!date) return;
       const timeSelect = date?.toLocaleTimeString(undefined, {
         hour: "2-digit",
         minute: "2-digit",
@@ -135,16 +134,17 @@ const TimePicker = ({
       });
       const [hr, min_pr] = timeSelect.split(":");
       const [min, pr] = min_pr.split(" ");
-      const hrIndex = HOURS.indexOf(hr);
-      const minIndex = MINUTES[minutesSelection].indexOf(min);
-      const perIndex = PERIOD.indexOf(pr?.trim());
-
-      const hrElement = hourListRef.current.children[hrIndex];
-      hourListRef.current.scrollTop = hrElement?.offsetTop - 10;
-      const minElement = minListRef.current.children[minIndex];
-      minListRef.current.scrollTop = minElement?.offsetTop - 10;
-      const perElement = perListRef.current.children[perIndex];
-      perListRef.current.scrollTop = perElement?.offsetTop - 10;
+      if (hourListRef.current && minListRef.current && perListRef.current) {
+        const hrIndex = HOURS.indexOf(hr);
+        const minIndex = MINUTES[minutesSelection].indexOf(min);
+        const perIndex = PERIOD.indexOf(pr?.trim());
+        const hrElement = hourListRef.current.children[hrIndex];
+        const minElement = minListRef.current.children[minIndex];
+        const perElement = perListRef.current.children[perIndex];
+        hourListRef.current.scrollTop = hrElement?.offsetTop - 10;
+        minListRef.current.scrollTop = minElement?.offsetTop - 10;
+        perListRef.current.scrollTop = perElement?.offsetTop - 10;
+      }
       const timeStr = `${hr}:${min} ${pr?.trim()}`;
       setTimePicked({ hour: hr, minutes: min, period: pr?.trim() });
       onChange && onChange(timeStr);
@@ -153,21 +153,45 @@ const TimePicker = ({
   );
 
   useEffect(() => {
-    const tmSel = value
-      ? value
-      : new Date(fromDtm).toLocaleTimeString(undefined, {
-          hour: "2-digit",
-          minute: "2-digit",
-          hourCycle: "h12",
-        });
-    const [hr, min_pr] = tmSel.split(":");
-    const [min, pr] = min_pr.split(" ");
-    // const mins = MINUTES[minutesSelection].find((item) => item >= mins);
-    const timeStr = `${hr}:${min} ${pr?.trim()}`;
-    const dts = new Date(fromDtm);
-    const dt = new Date(`${dts.toDateString()} ${tmSel}`);
-    setTimePicked({ hour: hr, minutes: min, period: pr?.trim() });
-  }, [value]);
+    if (value && typeof value === "string" && !value.includes("Invalid Date")) {
+      const valDate = new Date(`${selDt.toDateString()} ${value}`);
+      if (valDate.getTime() > fromDtm) {
+        handleChange(valDate);
+        return;
+      }
+    }
+    let slotDate;
+    const selDate = new Date(selDt.getTime());
+    selDate.setHours(new Date().getHours());
+    const modMins =
+      minutesSelection === "quater"
+        ? selDate.getMinutes() % 15
+        : selDate.getMinutes() % 1;
+    selDate.setMinutes(selDate.getMinutes() - modMins);
+    for (const min of MINUTES[minutesSelection]) {
+      const appMin =
+        minutesSelection === "quater" ? parseInt(min) + 15 : parseInt(min) + 1;
+      const appTime = selDate.getTime() + 1000 * 60 * appMin;
+      if (appTime > fromDtm) {
+        slotDate = new Date(appTime);
+        break;
+      }
+    }
+    handleChange(slotDate);
+  }, [value, selDt, fromDtm]);
+
+  useEffect(() => {
+    if (!togglePicker) return;
+    toggleRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "center",
+    });
+    const dts = new Date(selDt);
+    const tstr = `${timePicked.hour}:${timePicked.minutes} ${timePicked.period}`;
+    const dt = new Date(`${dts.toDateString()} ${tstr}`);
+    handleChange(dt);
+  }, [togglePicker]);
 
   useEffect(() => {
     function handleclickOutside(event) {
@@ -181,19 +205,6 @@ const TimePicker = ({
       document.removeEventListener("mousedown", handleclickOutside);
     };
   }, [toggleRef]);
-
-  useEffect(() => {
-    if (!togglePicker) return;
-    toggleRef.current.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-      inline: "center",
-    });
-    const dts = new Date(fromDtm);
-    const tstr = `${timePicked.hour}:${timePicked.minutes} ${timePicked.period}`;
-    const dt = new Date(`${dts.toDateString()} ${tstr}`);
-    handleChange(dt);
-  }, [togglePicker, value]);
 
   return (
     <div className={`${styles.cx_tpicker}`}>
@@ -221,16 +232,22 @@ const TimePicker = ({
               <ul className="cx_time_ul" ref={hourListRef}>
                 {HOURS.map((item) => {
                   const lhr = parseInt(item);
-                  const dt = new Date(selDt.getTime());
-                  dt.getHours() > 12
-                    ? dt.setHours(lhr + 12, 0)
-                    : dt.setHours(lhr, 0);
+                  const lmin = timePicked.minutes;
+                  const lper = timePicked.period;
+                  const dt = new Date(
+                    `${selDt.toDateString()} ${lhr}:${lmin} ${lper}`
+                  );
                   const flagDisable = dt.getTime() < fromDtm;
+                  const classActive =
+                    timePicked.hour === item && !flagDisable
+                      ? "cx_time_li_active"
+                      : "";
+                  const classNonSelectable = flagDisable
+                    ? "non_selectable"
+                    : "";
                   return (
                     <li
-                      className={`cx_time_li ${
-                        timePicked.hour === item ? "cx_time_li_active" : ""
-                      } ${flagDisable ? "non_selectable" : ""}`}
+                      className={`cx_time_li ${classActive} ${classNonSelectable}`}
                       key={item}
                       onClick={(el) => !flagDisable && handleChange(dt)}
                     >
@@ -243,16 +260,21 @@ const TimePicker = ({
                 {MINUTES[minutesSelection].map((item) => {
                   const lhr = parseInt(timePicked.hour);
                   const lmin = parseInt(item);
-                  const dt = new Date(selDt.getTime());
-                  dt.getHours() > 12
-                    ? dt.setHours(lhr + 12, lmin)
-                    : dt.setHours(lhr, lmin);
+                  const lper = timePicked.period;
+                  const dt = new Date(
+                    `${selDt.toDateString()} ${lhr}:${lmin} ${lper}`
+                  );
                   const flagDisable = dt.getTime() < fromDtm;
+                  const classActive =
+                    timePicked.minutes === item && !flagDisable
+                      ? "cx_time_li_active"
+                      : "";
+                  const classNonSelectable = flagDisable
+                    ? "non_selectable"
+                    : "";
                   return (
                     <li
-                      className={`cx_time_li ${
-                        timePicked.minutes === item ? "cx_time_li_active" : ""
-                      } ${flagDisable ? "non_selectable" : ""}`}
+                      className={`cx_time_li ${classActive} ${classNonSelectable}`}
                       key={item}
                       onClick={(el) => !flagDisable && handleChange(dt)}
                     >
@@ -269,11 +291,11 @@ const TimePicker = ({
                   const dt = new Date(
                     `${selDt.toDateString()} ${hr}:${min} ${per}`
                   );
+                  const classActive =
+                    timePicked.period === item ? "cx_time_li_active" : "";
                   return (
                     <li
-                      className={`cx_time_li ${
-                        timePicked.period === item ? "cx_time_li_active" : ""
-                      }`}
+                      className={`cx_time_li ${classActive}`}
                       key={item}
                       onClick={(el) => handleChange(dt)}
                     >

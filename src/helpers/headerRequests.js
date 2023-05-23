@@ -53,4 +53,7 @@ if ((ix = fullVersion.indexOf(";")) !== -1)
 if ((ix = fullVersion.indexOf(" ")) !== -1)
   fullVersion = fullVersion.substring(0, ix);
 
-export { browserName, fullVersion };
+// Timezone
+const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+export { browserName, fullVersion, timeZone };

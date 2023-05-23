@@ -8,6 +8,7 @@ import ReactDatePicker from "react-datepicker";
 import { schedulePaymentSchema } from "schemas/sendPaymentSchema";
 import Input from "components/ui/Input";
 import TimePicker from "components/time-picker/TimePicker";
+import { uniqueId } from "helpers/commonHelpers";
 
 const EditScheduledPayment = () => {
   const navigate = useNavigate();
@@ -24,6 +25,11 @@ const EditScheduledPayment = () => {
     payment_schedule_date,
     overall_specification,
   } = upPaymentEntry || {};
+
+  const dtTimeBuffer = useMemo(() => {
+    const dtm15 = new Date().getTime() + 1000 * 60 * 15;
+    return new Date(dtm15);
+  }, []);
 
   const {
     contacts = [],
@@ -80,23 +86,25 @@ const EditScheduledPayment = () => {
   if (!upPaymentEntry) navigate("/view-schedule-payment");
   return (
     <>
-      <div class="schedulepayment-sec" style={{ marginBottom: "200px" }}>
-        <div class="sp-top-sec">
-          <div class="title-content-wrap common-title-wrap">
+      <div className="schedulepayment-sec" style={{ marginBottom: "200px" }}>
+        <div className="sp-top-sec">
+          <div className="title-content-wrap common-title-wrap">
             <h3>Update Schedule Payment</h3>
             <p>Please select Payment date</p>
           </div>
         </div>
-        <div class="sp-details-main-wrap">
-          <div class="sp-details-left-wrap">
-            <div class="sp-details-inner-wrap ">
+        <div className="sp-details-main-wrap">
+          <div className="sp-details-left-wrap">
+            <div className="sp-details-inner-wrap ">
               <ul>
                 {contacts?.map((item) => {
+                  const uid = uniqueId();
                   const profileURL = item.member_image
                     ? item.member_image
                     : "/assets/images/single_contact_profile.png";
                   return (
                     <PaymentUserItem
+                      key={uid}
                       name={item.member_name}
                       profileImg={profileURL}
                       amount={item.member_amount}
@@ -105,39 +113,43 @@ const EditScheduledPayment = () => {
                 })}
               </ul>
             </div>
-            <div class="sp-total-wrap d-flex flex-column gap-2">
+            <div className="sp-total-wrap d-flex flex-column gap-2">
               <div className="d-flex justify-content-between w-100">
-                <div class="sp-total-text">Amount</div>
-                <div class="sp-total-amt">
+                <div className="sp-total-text">Amount</div>
+                <div className="sp-total-amt">
                   <span>{CURRENCY_SYMBOL}</span>
                   {sch_amount?.toFixed(2)}
                 </div>
               </div>
               <div className="d-flex justify-content-between w-100">
-                <div class="sp-total-text">Fees</div>
-                <div class="sp-total-amt">
+                <div className="sp-total-text">Fees</div>
+                <div className="sp-total-amt">
                   <span>{CURRENCY_SYMBOL}</span>
                   {sch_fees?.toFixed(2)}
                 </div>
               </div>
               <div className="d-flex justify-content-between w-100">
-                <div class="sp-total-text">Total</div>
-                <div class="sp-total-amt">
+                <div className="sp-total-text">Total</div>
+                <div className="sp-total-amt">
                   <span>{CURRENCY_SYMBOL}</span>
                   {sch_total?.toFixed(2)}
                 </div>
               </div>
             </div>
-            <div class="sp-btn-inner-wrap outline-solid-wrap">
-              <button class="btn outline-btn" onClick={cancelUpdatePayment}>
+            <div className="sp-btn-inner-wrap outline-solid-wrap">
+              <button className="btn outline-btn" onClick={cancelUpdatePayment}>
                 Cancel
               </button>
-              <button type="button" class="btn" onClick={formik.handleSubmit}>
+              <button
+                type="button"
+                className="btn"
+                onClick={formik.handleSubmit}
+              >
                 Update
               </button>
             </div>
           </div>
-          <div class="sp-cal-wrap d-flex justify-content-center">
+          <div className="sp-cal-wrap d-flex justify-content-center">
             <form onSubmit={formik.handleSubmit}>
               <div className="">
                 <ReactDatePicker
@@ -162,19 +174,13 @@ const EditScheduledPayment = () => {
                 <div className="col-12 col p-0">
                   <div className="form-field">
                     <TimePicker
+                      minutesSelection="quater"
                       value={formik.values.time}
+                      selecteDate={formik.values.date}
+                      fromDate={dtTimeBuffer}
                       onChange={(time) => formik.setFieldValue("time", time)}
                       classNameInput="w-full form-control"
                     />
-                    {/* <TimePicker
-                      className="w-full form-control"
-                      value={formik.values.time}
-                      onChange={(time) => formik.setFieldValue("time", time)}
-                      clearIcon={null}
-                      format="hh:mm:ss a"
-                      maxDetail="second"
-                      disableClock
-                    /> */}
                     {formik.touched.time && formik.errors.time && (
                       <p className="text-danger pb-0">{formik.errors.time}</p>
                     )}
