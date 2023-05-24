@@ -51,13 +51,16 @@ const SendPaymentProvider = (props) => {
   };
 
   // For Send group button click
-  const handleSendGroup = () => {
+  const handleSendGroup = async () => {
     if (!selectedGroup || selectedGroup.length <= 0)
       return toast.warning("Please select at least one group");
-    const { group_details, group_id } = selectedGroup[0];
-    if (!group_details || group_details.length <= 0)
+    const { group_id } = selectedGroup[0];
+    const groupDetails = await getGroupDetail(group_id);
+    if (!groupDetails) return;
+    const { group_member_details } = groupDetails;
+    if (!group_member_details || group_member_details.length <= 0)
       return toast.warning(`Group contains no contacts`);
-    if (group_details.length > MAX_PAYMENT_CONTACTS)
+    if (group_member_details.length > MAX_PAYMENT_CONTACTS)
       return toast.warning(
         `Group contains more than ${MAX_PAYMENT_CONTACTS} contacts`
       );
@@ -69,7 +72,7 @@ const SendPaymentProvider = (props) => {
       member_email: "email",
       member_name: "name",
     };
-    const listAlias = group_details.map((item) => ({
+    const listAlias = group_member_details.map((item) => ({
       ...renameKeys(alias, item),
       personal_amount: "",
       specifications: "",
@@ -144,6 +147,23 @@ const SendPaymentProvider = (props) => {
     setSelectedGroup([]);
     setSendCreds([]);
     setRequestCreds([]);
+  };
+
+  // For getting the group details
+  const getGroupDetail = async (id) => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.getGroupDetail({ group_id: id });
+      if (!data.success) throw data.message;
+      const { group_details } = data.data || {};
+      return group_details;
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+    return null;
   };
 
   // For getting the charges of payment from API
