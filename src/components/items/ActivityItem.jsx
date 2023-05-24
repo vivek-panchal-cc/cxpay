@@ -27,6 +27,7 @@ const ActivityItem = (props) => {
   const profileUrl =
     profile_image || "/assets/images/single_contact_profile.png";
   const altAmount = amount ? parseFloat(amount).toFixed(2) : "";
+
   const description = useMemo(() => {
     const { desc } =
       activityConsts?.[activity_type]?.[request_type]?.[status] || {};
@@ -35,13 +36,12 @@ const ActivityItem = (props) => {
       ? desc?.replace(/XXXX/g, altAmount).replace(/YYYY/, name)
       : specification;
     return aDesc;
-  }, []);
+  }, [activity_type, altAmount, name, request_type, specification, status]);
 
   const {
     iconStatus = "",
     iconAmount = "",
     classStatus = "",
-    classBg = "",
     classText = "",
     textStatus = "",
   } = useMemo(() => {
@@ -54,7 +54,7 @@ const ActivityItem = (props) => {
       default:
         return {};
     }
-  }, [activity_type]);
+  }, [activity_type, request_type, status]);
 
   return (
     <li onClick={() => handleClick({ id, activity_type, reference_id })}>

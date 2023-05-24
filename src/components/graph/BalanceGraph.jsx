@@ -34,9 +34,6 @@ const chartOption = {
         },
       },
     },
-    dataLabels: {
-      enabled: false,
-    },
     fill: {
       type: "gradient",
       gradient: {
@@ -107,7 +104,7 @@ const BalanceGraph = (props) => {
 
   useEffect(() => {
     if (!balanceDataArr && !monthDataArr) return;
-    const tmpObj = { ...options };
+    const tmpObj = { ...chartOption };
     tmpObj.series[0].data = balanceDataArr;
     tmpObj.options.xaxis.categories = monthDataArr;
     setOptions(tmpObj);

@@ -6,7 +6,7 @@ import { FundContext } from "context/fundContext";
 import { CURRENCY_SYMBOL } from "constants/all";
 
 function FundBank() {
-  const { formik, countryList, cityList, chargesDetails, banksList } =
+  const { formik, countryList, cityList, paymentDetails, banksList } =
     useContext(FundContext);
 
   return (
@@ -235,16 +235,18 @@ function FundBank() {
         <div className="col-12 p-0">
           <table>
             <tbody>
+              {paymentDetails?.allCharges?.map((item, index) => (
+                <tr key={index}>
+                  <td>{item?.desc}</td>
+                  <td className="amount">
+                    {CURRENCY_SYMBOL} {item?.amount?.toFixed(2)}
+                  </td>
+                </tr>
+              ))}
               <tr>
-                <td>Fees</td>
+                <td>Net Payable</td>
                 <td>
-                  {CURRENCY_SYMBOL} {chargesDetails?.fees}
-                </td>
-              </tr>
-              <tr>
-                <td>Amount</td>
-                <td>
-                  {CURRENCY_SYMBOL} {formik.values.chargedAmount}
+                  {CURRENCY_SYMBOL} {paymentDetails?.grandTotal?.toFixed(2)}
                 </td>
               </tr>
             </tbody>

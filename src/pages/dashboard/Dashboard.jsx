@@ -142,7 +142,7 @@ const Dashboard = () => {
   };
 
   // get invite contact list
-  const getInviteContactList = async (page, search) => {
+  const getInviteContactList = async (page = 1, search = "") => {
     setIsLoadingContacts(true);
     try {
       let param = { page: page, search: search };
@@ -306,7 +306,10 @@ const Dashboard = () => {
                   </Link>
                 </li>
                 <li>
-                  <a className="cursor-pointer" onClick={() => setShowNewContPop(true)}>
+                  <a
+                    className="cursor-pointer"
+                    onClick={() => setShowNewContPop(true)}
+                  >
                     <span className="icon-link-text">
                       <IconAdd />
                       Add a Contact

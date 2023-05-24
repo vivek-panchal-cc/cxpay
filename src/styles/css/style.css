@@ -2066,7 +2066,7 @@ form .search-field -o::placeholder {
 }
 .recent-contact-sec .send-top-right-sec {
   width: 50%;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
 }
 .recent-contact-sec .send-top-sec .main-search-wrap {
@@ -4691,7 +4691,7 @@ ul::-webkit-scrollbar-thumb:hover {
 }
 .wallet-title-wrap {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
 }
 .wallet-title-wrap .wallet-title-container {
   width: calc(100% - 365px);
@@ -6803,7 +6803,7 @@ button.notification-rm-wrap {
 }
 .reqest-list-wrap .req-last-clmn {
   width: 26%;
-  justify-content: end;
+  justify-content: flex-end;
 }
 .req-user-profile {
   width: 58px;
@@ -7046,6 +7046,7 @@ button.btn.btn-blue:hover {
   font-weight: 600;
   text-transform: uppercase;
   padding-left: 7px;
+  color: var(--dark_blue);
 }
 .act-amt-wrap.green-text {
   color: #56be15;
@@ -7167,7 +7168,7 @@ button.schedule-pay-btn {
   /* border-bottom: 2.5px solid #f2f2f2; */
   /* margin-bottom: 15px; */
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   /* padding-top: 10px; */
 }
 button.shedule-date-filter {
@@ -7387,7 +7388,7 @@ ul.recent-act-lw-main .act-amt-status-wrap {
   padding-right: 10px;
 }
 .dashboard-recent-contact-sec .recent-contact-sec .send-top-right-sec {
-  justify-content: end;
+  justify-content: flex-end;
 }
 .dashboard-graph-sec .dashboard-recent-activity-sec ul.activity-lw-main li {
   cursor: default;

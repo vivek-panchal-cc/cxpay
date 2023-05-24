@@ -496,7 +496,7 @@ export const activityList = (params) => {
 };
 
 // POST @get-activity-details
-// @params auth_token, request_payment_id
+// @params auth_token, id
 export const getActivityDetails = (params) => {
   return axiosTransactionInstance.post(`${API_getActivityDetails}`, params);
 };

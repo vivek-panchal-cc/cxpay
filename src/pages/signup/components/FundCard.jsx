@@ -8,7 +8,7 @@ import { IconCalender, IconEyeClose, IconEyeOpen } from "styles/svgs";
 import { CURRENCY_SYMBOL } from "constants/all";
 
 function FundCard() {
-  const { formik, countryList, cityList, chargesDetails } =
+  const { formik, countryList, cityList, paymentDetails } =
     useContext(FundContext);
   const [showCvv, setShowCvv] = useState(false);
 
@@ -232,16 +232,18 @@ function FundCard() {
         <div className="col-12 p-0">
           <table>
             <tbody>
+              {paymentDetails?.allCharges?.map((item, index) => (
+                <tr key={index}>
+                  <td>{item?.desc}</td>
+                  <td className="amount">
+                    {CURRENCY_SYMBOL} {item?.amount?.toFixed(2)}
+                  </td>
+                </tr>
+              ))}
               <tr>
-                <td>Fees</td>
+                <td>Net Payable</td>
                 <td>
-                  {CURRENCY_SYMBOL} {chargesDetails?.fees}
-                </td>
-              </tr>
-              <tr>
-                <td>Amount</td>
-                <td>
-                  {CURRENCY_SYMBOL} {formik.values.chargedAmount}
+                  {CURRENCY_SYMBOL} {paymentDetails?.grandTotal?.toFixed(2)}
                 </td>
               </tr>
             </tbody>

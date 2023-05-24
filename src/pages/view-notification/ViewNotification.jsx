@@ -53,7 +53,7 @@ function ViewNotification(props) {
   const handleMarkAsRead = async ({ id, status, type, payload }) => {
     switch (type) {
       case NOTIFY_REQUEST:
-        openRequestNotification(type, payload);
+        openRequestNotification(payload);
         break;
       default:
         navigate(notificationType[type].redirect);
@@ -62,9 +62,9 @@ function ViewNotification(props) {
     if (status) return;
     setIsLoading(true);
     try {
-      const { error, payload: msg } = await dispatch(fetchMarkAsRead(id));
-      if (error) throw msg;
-      toast.success(msg);
+      const { error, payload } = await dispatch(fetchMarkAsRead(id));
+      if (error) throw payload;
+      toast.success(payload.message);
     } catch (error) {
       console.log(error);
     } finally {
@@ -103,15 +103,14 @@ function ViewNotification(props) {
   };
 
   // handle Request notification
-  const openRequestNotification = async (type, payloadStr) => {
+  const openRequestNotification = async (payloadStr) => {
     if (!payloadStr) return;
     const { request_id } = JSON.parse(payloadStr);
     setShowRequestPopup(true);
     setLoadingPopupDetails(true);
     try {
       const { data } = await apiRequest.getActivityDetails({
-        type,
-        request_payment_id: request_id,
+        id: request_id,
       });
       if (!data.success) throw data.message;
       setActivityDetails(data?.data);

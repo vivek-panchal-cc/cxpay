@@ -16,6 +16,7 @@ const ActivityList = (props) => {
       const month = dt.toLocaleDateString("default", { month: "long" });
       const dtList = activityDateList[`${month} ${yr}`] || [];
       activityDateList[`${month} ${yr}`] = [...dtList, item];
+      return item;
     });
     setActivitiesDateBind(activityDateList);
   }, [activitiesList]);

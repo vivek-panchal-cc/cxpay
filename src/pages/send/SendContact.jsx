@@ -58,7 +58,7 @@ function SendContact() {
     setGroupCurrentPage(1);
   };
 
-  const getInviteContactList = async (page, search) => {
+  const getInviteContactList = async (page = 1, search = "") => {
     setIsLoadingContacts(true);
     try {
       let param = { page: page, search: search };
@@ -76,7 +76,7 @@ function SendContact() {
     }
   };
 
-  const getGroupsList = async (page, searchText) => {
+  const getGroupsList = async (page = 1, searchText = "") => {
     setIsLoadingGroups(true);
     try {
       var param = { page: page, search: searchText };

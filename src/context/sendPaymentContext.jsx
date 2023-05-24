@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
+  CHARGES_TYPE_WW,
   MAX_PAYMENT_CONTACTS,
   MAX_REQUEST_CONTACTS,
   renameKeys,
@@ -149,7 +150,7 @@ const SendPaymentProvider = (props) => {
   const getPaymentCharges = async () => {
     setIsLoading(true);
     try {
-      const { data } = await apiRequest.getCharges("pay_type=WW");
+      const { data } = await apiRequest.getCharges(CHARGES_TYPE_WW);
       if (!data.success) throw data.message;
       setCharges(data.data);
     } catch (error) {

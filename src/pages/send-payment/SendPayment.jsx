@@ -231,7 +231,9 @@ function SendPayment(props) {
   useEffect(() => {
     if (!formik.values.wallet) return;
     const amounts = formik.values.wallet?.map((item) =>
-      item.personal_amount && !isNaN(item.personal_amount)
+      item.personal_amount &&
+      item.personal_amount.trim() &&
+      !isNaN(item.personal_amount.trim())
         ? parseFloat(item.personal_amount)
         : 0
     );

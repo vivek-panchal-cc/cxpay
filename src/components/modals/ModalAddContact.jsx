@@ -91,7 +91,7 @@ function ModalAddContact(props) {
   }, [modalRef, setShow]);
 
   useEffect(() => {
-    formik.resetForm();
+    formik && formik.resetForm();
   }, [show]);
 
   if (!show) return null;

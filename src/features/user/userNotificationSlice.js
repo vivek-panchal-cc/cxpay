@@ -47,7 +47,7 @@ export const fetchMarkAsRead = createAsyncThunk(
     try {
       const { data } = await apiRequest.markAsRead({ id });
       if (!data.success) throw data.message;
-      return data.message;
+      return { id: id, message: data.message };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -118,7 +118,13 @@ const userNotificationslice = createSlice({
         state.pagination = initialState.pagination;
         return;
       })
-      .addCase(fetchMarkAsRead.fulfilled, (state, action) => {})
+      .addCase(fetchMarkAsRead.fulfilled, (state, action) => {
+        const { id } = action.payload;
+        state.allNotifications.map((item) => {
+          if (item.id === id) item.status = 1;
+          return item;
+        });
+      })
       .addCase(fetchMarkAsRead.rejected, (state, action) => {
         console.log("ERROR ", action.payload);
       })

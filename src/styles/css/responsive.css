@@ -1721,7 +1721,7 @@
   }
   .reqest-list-wrap .req-last-clmn {
     width: 100%;
-    justify-content: start;
+    justify-content: flex-start;
     margin-top: 10px;
   }
   .act-amt-wrap {
@@ -1967,7 +1967,7 @@
   .activity-top-new .activity-date-wrap {
     padding: 0px 0px 0px 20px;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
   }
   .date-main-div .date-inner-div:last-child {
     margin-right: 0px;
@@ -3360,7 +3360,7 @@
   }
   /* sp sec 15-05 end */
   .schedule-pay-sd-wrap {
-    justify-content: start;
+    justify-content: flex-start;
     padding-top: 15px;
     margin-bottom: 15px;
   }
@@ -4239,11 +4239,11 @@
   }
   .payment-footer-block ul li > div {
     width: 50%;
-    justify-content: start;
+    justify-content: flex-start;
   }
   .payment-footer-block ul li > div:last-child {
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
   }
   /* .payment-footer-block li>div:last-child .amount{
     font-size: 20px;
@@ -4298,7 +4298,7 @@
   }
   .reqest-list-wrap .req-last-clmn {
     width: 100%;
-    justify-content: start;
+    justify-content: flex-start;
   }
   /* New Request list page end */
   /* New Activity list page start */
@@ -4726,7 +4726,7 @@
   }
   .wallet-chart-wrap {
     align-items: self-start;
-    justify-content: start;
+    justify-content: flex-start;
   }
   .wallet-chart-container .value-1 {
     padding-right: 0px;

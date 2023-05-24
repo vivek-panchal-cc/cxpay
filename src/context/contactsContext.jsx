@@ -11,10 +11,7 @@ const ContactsProvider = ({ children }) => {
   const location = useLocation();
   const { setIsLoading } = useContext(LoaderContext);
   const [selectedContacts, setSelectedContacts] = useState([]);
-  const [search, setSearch] = useState("");
-  const [contactsType, setContactsType] = useState([]);
   const [contactName, setContactName] = useState("");
-  const [deleteContactArr, setDeleteContactArr] = useState([]);
   const [confirmShow, setConfirmShow] = useState(false);
   const [removeConfirmShow, setRemoveConfirmShow] = useState(false);
   const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
@@ -56,21 +53,6 @@ const ContactsProvider = ({ children }) => {
     }
   };
 
-  // For open confirm popup
-  const handleOpenConfirmModal = (idArr, name, type) => {
-    setContactName(name);
-    setDeleteContactArr(idArr);
-    setConfirmShow(true);
-    setContactsType(type);
-  };
-
-  // For remove confirm popup
-  const handleRemoveConfirmModal = (idArr, type) => {
-    setDeleteContactArr(idArr);
-    setRemoveConfirmShow(true);
-    setContactsType(type);
-  };
-
   // For delete contacts from the list
   const deleteContact = async (delContactUniqIds = [], contacts = []) => {
     setIsLoading(true);
@@ -84,6 +66,7 @@ const ContactsProvider = ({ children }) => {
             delContactUniqIds.includes(mobile)
           )
             delContacts.push({ country_code, mobile });
+          return con;
         });
       const { data } = await apiRequest.deleteContact({
         contacts: delContacts,
@@ -133,17 +116,13 @@ const ContactsProvider = ({ children }) => {
       value={{
         deleteContact,
         changeFavouriteContact,
-        handleOpenConfirmModal,
-        handleRemoveConfirmModal,
         contactName,
         confirmShow,
         setConfirmShow,
         setRemoveConfirmShow,
         removeConfirmShow,
         handleSelectedContacts,
-        contactsType,
         isDisabled,
-        search,
         deleteGroup,
         deleteGroupData,
         showDeleteGroupPopup,

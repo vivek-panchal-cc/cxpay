@@ -56,7 +56,7 @@ function ContactListingModal(props) {
       let selectedFullArrayDifference = selectedFullContactArray.filter(
         (item) => difference.includes(item.account_number)
       );
-      if (difference.length == 0) {
+      if (difference.length === 0) {
         toast.warning("Please select atleast one contact");
         return false;
       }
@@ -106,15 +106,15 @@ function ContactListingModal(props) {
       data.data.remain_contacts.forEach((item) => {
         let findElement = 0;
         alldata.forEach((elm) => {
-          if (item.member_email == elm.member_email) {
+          if (item.member_email === elm.member_email) {
             findElement = 1;
           }
         });
-        if (findElement == 0) {
+        if (findElement === 0) {
           filterData.push(item);
         }
       });
-      if (page == 1) {
+      if (page === 1) {
         setRemainingContactListing(filterData);
       } else {
         const allData2 = remainingContactListing.concat(filterData);

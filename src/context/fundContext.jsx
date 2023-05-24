@@ -1,6 +1,11 @@
 import Modal from "components/modals/Modal";
 import AccountFundedPopup from "components/popups/AccountFundedPopup";
-import { FUND_BANK, FUND_CARD, FUND_CASH } from "constants/all";
+import {
+  CHARGES_TYPE_PL,
+  FUND_BANK,
+  FUND_CARD,
+  FUND_CASH,
+} from "constants/all";
 import { fetchBanksList, fetchCardsList } from "features/user/userWalletSlice";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
@@ -15,6 +20,7 @@ import { toast } from "react-toastify";
 import { fundSchema } from "schemas/fundSchema";
 import { LoaderContext } from "./loaderContext";
 import useCountryBanks from "hooks/useCountryBanks";
+import { getChargedAmount } from "helpers/commonHelpers";
 
 const initialValues = {
   email: "",
@@ -67,7 +73,13 @@ const FundProvider = ({ children }) => {
   const [selectExistingBank, setSelectExistingBank] = useState(false);
   const [visiblePopupFunded, setVisiblePopupFunded] = useState(false);
   const [fundedDetails, setFundedDetails] = useState({ fund: "", balance: "" });
-  const [chargesDetails, setChargesDetails] = useState({ fees: "0.00" });
+  // const [charges, setChargesDetails] = useState({ fees: "0.00" });
+  const [charges, setCharges] = useState([]);
+  const [paymentDetails, setPaymentDetails] = useState({
+    allCharges: [],
+    grandTotal: 0.0,
+    total: 0.0,
+  });
 
   const { first_name, last_name, email, city, country, address } =
     userProfile.profile || {};
@@ -205,19 +217,24 @@ const FundProvider = ({ children }) => {
     formik.setValues(values);
   };
 
+  // For getting the charges of payment from API
+  const getPaymentCharges = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.getCharges(CHARGES_TYPE_PL);
+      if (!data.success) throw data.message;
+      setCharges(data.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   //   ---------------------------------------------------------------------------------------------------------------
   useEffect(() => {
     (async () => {
-      setIsLoading(true);
-      try {
-        const { data } = await apiRequest.getCharges();
-        if (!data.success) throw data.message;
-        setChargesDetails({ ...data.data, fees: "0.00" });
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
+      await getPaymentCharges();
     })();
   }, []);
 
@@ -275,21 +292,32 @@ const FundProvider = ({ children }) => {
     userWallet.defaultBank && integrateBankDetails(userWallet.defaultBank);
   }, [userWallet.defaultBank]);
 
+  // useEffect(() => {
+  //   const amount = formik.values.transactionAmount
+  //     ? parseFloat(formik.values.transactionAmount)
+  //     : "";
+  //   if (!formik.values.transactionAmount || !chargesDetails || isNaN(amount)) {
+  //     setChargesDetails((cs) => ({ ...cs, fees: "0.00" }));
+  //     formik.setFieldValue("chargedAmount", "0.00");
+  //     return;
+  //   }
+  //   const percentage = parseFloat(chargesDetails.percentage);
+  //   const fees = amount * (percentage / 100);
+  //   const actualAmount = amount - fees;
+  //   setChargesDetails((cs) => ({ ...cs, fees: fees.toFixed(2).toString() }));
+  //   formik.setFieldValue("chargedAmount", actualAmount.toFixed(2).toString());
+  // }, [formik.values.transactionAmount]);
+
+  // For calculating charges when amount changes for any contact
   useEffect(() => {
-    const amount = formik.values.transactionAmount
-      ? parseFloat(formik.values.transactionAmount)
-      : "";
-    if (!formik.values.transactionAmount || !chargesDetails || isNaN(amount)) {
-      setChargesDetails((cs) => ({ ...cs, fees: "0.00" }));
-      formik.setFieldValue("chargedAmount", "0.00");
-      return;
-    }
-    const percentage = parseFloat(chargesDetails.percentage);
-    const fees = amount * (percentage / 100);
-    const actualAmount = amount - fees;
-    setChargesDetails((cs) => ({ ...cs, fees: fees.toFixed(2).toString() }));
-    formik.setFieldValue("chargedAmount", actualAmount.toFixed(2).toString());
-  }, [formik.values.transactionAmount]);
+    const amount =
+      formik.values.transactionAmount &&
+      formik.values.transactionAmount.trim() &&
+      !isNaN(formik.values.transactionAmount)
+        ? parseFloat(formik.values.transactionAmount)
+        : 0;
+    setPaymentDetails(getChargedAmount(charges, [amount]));
+  }, [formik.values?.transactionAmount, charges]);
 
   useEffect(() => {
     if (!formik.values || !formik.values.account_type) return;
@@ -328,7 +356,7 @@ const FundProvider = ({ children }) => {
         banksList,
         disbleCardField,
         disbleBankField,
-        chargesDetails,
+        paymentDetails,
         integrateCardDetails,
         integrateBankDetails,
         handleSelectNewCard,

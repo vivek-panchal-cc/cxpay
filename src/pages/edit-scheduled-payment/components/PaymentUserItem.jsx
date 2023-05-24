@@ -5,13 +5,13 @@ const PaymentUserItem = (props) => {
   const { name, profileImg, amount } = props;
   return (
     <li>
-      <div class="sp-user-wrap">
-        <div class="sp-user-wrap-thumb">
+      <div className="sp-user-wrap">
+        <div className="sp-user-wrap-thumb">
           <img src={profileImg} alt="" />
         </div>
-        <div class="sp-user-nm">{name}</div>
+        <div className="sp-user-nm">{name}</div>
       </div>
-      <div class="sp-amt">
+      <div className="sp-amt">
         {CURRENCY_SYMBOL} {amount}
       </div>
     </li>

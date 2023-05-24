@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from "react";
 import PaymentUserItem from "./components/PaymentUserItem";
 import { ScheduledPaymentContext } from "context/scheduledPaymentContext";
 import { useNavigate } from "react-router-dom";
-import { CURRENCY_SYMBOL } from "constants/all";
+import { CURRENCY_SYMBOL, SCHEDULE_BUFFER } from "constants/all";
 import { useFormik } from "formik";
 import ReactDatePicker from "react-datepicker";
 import { schedulePaymentSchema } from "schemas/sendPaymentSchema";
@@ -27,7 +27,7 @@ const EditScheduledPayment = () => {
   } = upPaymentEntry || {};
 
   const dtTimeBuffer = useMemo(() => {
-    const dtm15 = new Date().getTime() + 1000 * 60 * 15;
+    const dtm15 = new Date().getTime() + 1000 * 60 * SCHEDULE_BUFFER;
     return new Date(dtm15);
   }, []);
 

@@ -139,19 +139,12 @@ const Activities = () => {
     }
   };
 
-  const handleActivityDetail = async ({ id, activity_type, reference_id }) => {
-    if ((!id && !reference_id) || !activity_type) return;
+  const handleActivityDetail = async ({ id }) => {
+    if (!id) return;
     setShowDetails(true);
     setLoadingActDetails(true);
-    const idDetails =
-      activity_type === ACT_TYPE_TRANSACTION
-        ? { activity_id: reference_id }
-        : { request_payment_id: id };
     try {
-      const { data } = await apiRequest.getActivityDetails({
-        type: activity_type,
-        ...{ ...idDetails },
-      });
+      const { data } = await apiRequest.getActivityDetails({ id });
       if (!data.success) throw data.message;
       setActivityDetails(data?.data);
     } catch (error) {

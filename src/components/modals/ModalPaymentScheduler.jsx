@@ -6,13 +6,14 @@ import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { schedulePaymentSchema } from "schemas/sendPaymentSchema";
 import TimePicker from "components/time-picker/TimePicker";
+import { SCHEDULE_BUFFER } from "constants/all";
 
 const ModalPaymentScheduler = (props) => {
   const { id, show, setShow, className, classNameChild, handleSubmit } = props;
   const modalRef = useRef(null);
 
   const dtTimeBuffer = useMemo(() => {
-    const dtm15 = new Date().getTime() + 1000 * 60 * 15;
+    const dtm15 = new Date().getTime() + 1000 * 60 * SCHEDULE_BUFFER;
     return new Date(dtm15);
   }, [show]);
 
@@ -60,7 +61,7 @@ const ModalPaymentScheduler = (props) => {
 
   useEffect(() => {
     if (!show) return;
-    formik.resetForm();
+    formik && formik.resetForm();
   }, [show]);
 
   if (!show) return null;

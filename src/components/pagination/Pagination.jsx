@@ -12,17 +12,13 @@ const Pagination = (props) => {
 
   if (active > siblingCount) {
     startArrayNumber = active - siblingCount;
-
     needStartDots = active > siblingCount + startNumber ? true : false;
   }
 
   if (size > showingNumbers) {
-    {
-      needEndDots = size > active + siblingCount + 1 ? true : false;
-
-      if (size < active + siblingCount + 1) {
-        startArrayNumber = size - showingNumbers;
-      }
+    needEndDots = size > active + siblingCount + 1 ? true : false;
+    if (size < active + siblingCount + 1) {
+      startArrayNumber = size - showingNumbers;
     }
   }
 
@@ -58,10 +54,9 @@ const Pagination = (props) => {
                 </li>
               )}
               {[...Array(showingNumbers + 1)].map((elm, i) => {
-                const contentNumber =
-                  contentNumber === needStartDots
-                    ? startArrayNumber
-                    : startNumber;
+                const contentNumber = needStartDots
+                  ? startArrayNumber
+                  : startNumber;
                 startNumber++;
                 startArrayNumber++;
                 return (

@@ -24,7 +24,7 @@ const RequestContact = (props) => {
   // For Add new contacts
   const [showNewContPop, setShowNewContPop] = useState(false);
 
-  const getInviteContactList = async (page, search) => {
+  const getInviteContactList = async (page = 1, search = "") => {
     setIsLoadingContacts(true);
     try {
       let param = { page: page, search: search };

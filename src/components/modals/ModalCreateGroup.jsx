@@ -16,7 +16,7 @@ const ModalCreateGroup = (props) => {
   const profile_image = null;
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
-  const [isProfileImage, setIsProfileImage] = useState(0);
+  const [isProfileImage, setIsProfileImage] = useState(false);
   const modalRef = useRef(null);
 
   const formik = useFormik({
@@ -86,7 +86,7 @@ const ModalCreateGroup = (props) => {
                 name="profile_image"
                 onChange={(e) => {
                   formik.setFieldValue("group_image", e.currentTarget.files[0]);
-                  setIsProfileImage(1);
+                  setIsProfileImage(true);
                 }}
                 error={formik.errors.group_image}
                 showPreview={
@@ -119,9 +119,7 @@ const ModalCreateGroup = (props) => {
                   className="cursor-pointer"
                   style={{ color: "#0081c5" }}
                 >
-                  {isProfileImage == "1"
-                    ? "Change Group Image"
-                    : "Select Group Image"}
+                  {isProfileImage ? "Change Group Image" : "Select Group Image"}
                 </label>
               </p>
               <form onSubmit={formik.handleSubmit} className="save-group-form">

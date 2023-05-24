@@ -38,7 +38,7 @@ function ModalOtpConfirmation(props) {
       setCounter(otpCounterTime);
       setIsActive(true);
     } catch (error) {}
-  }, [handleResendOtp, otpCounterTime]);
+  }, [handleResendOtp]);
 
   // For set counter for given time
   useEffect(() => {
@@ -70,7 +70,7 @@ function ModalOtpConfirmation(props) {
     return () => {
       document.removeEventListener("mousedown", handleclickOutside);
     };
-  }, [modalRef, setShow]);
+  }, [modalRef, setShow, allowClickOutSide]);
 
   // OTP input form
   const formik = useFormik({
@@ -96,7 +96,7 @@ function ModalOtpConfirmation(props) {
     if (!show) {
       setIsActive(false);
       setCounter(otpCounterTime);
-      formik.resetForm();
+      formik && formik.resetForm();
       return;
     }
     setIsActive(true);

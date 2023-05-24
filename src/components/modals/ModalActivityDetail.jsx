@@ -128,6 +128,8 @@ const ModalActivityDetail = (props) => {
             Print Details
           </button>
         );
+      default:
+        return null;
     }
   };
 

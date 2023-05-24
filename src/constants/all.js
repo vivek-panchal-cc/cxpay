@@ -218,6 +218,13 @@ const activityConsts = {
 // Currency Symbol
 const CURRENCY_SYMBOL = "ANG";
 
+// Buffer Time for schedule
+const SCHEDULE_BUFFER = 5;
+
+// Charges Types
+const CHARGES_TYPE_WW = "pay_type=WW";
+const CHARGES_TYPE_PL = "pay_type=PL";
+
 export {
   exp0ContainWhitespace,
   exp0ContainWordPassword,
@@ -231,6 +238,7 @@ export {
   activityConsts,
   THEME_COLORS,
   CURRENCY_SYMBOL,
+  SCHEDULE_BUFFER,
   FUND_CARD,
   FUND_CASH,
   FUND_BANK,
@@ -254,6 +262,8 @@ export {
   NOTIFY_PAY_FAIL,
   NOTIFY_PAY_COMPLETE,
   NOTIFY_CON_REGISTER,
+  CHARGES_TYPE_WW,
+  CHARGES_TYPE_PL,
 };
 export {
   regexContainCapitalLetter,

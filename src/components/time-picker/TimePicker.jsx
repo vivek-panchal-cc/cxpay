@@ -149,7 +149,7 @@ const TimePicker = ({
       setTimePicked({ hour: hr, minutes: min, period: pr?.trim() });
       onChange && onChange(timeStr);
     },
-    [hourListRef, minListRef, perListRef]
+    [hourListRef, minListRef, perListRef, minutesSelection]
   );
 
   useEffect(() => {
@@ -178,7 +178,7 @@ const TimePicker = ({
       }
     }
     handleChange(slotDate);
-  }, [value, selDt, fromDtm]);
+  }, [value, selDt, fromDtm, minutesSelection]);
 
   useEffect(() => {
     if (!togglePicker) return;
