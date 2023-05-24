@@ -90,16 +90,18 @@ const FundProvider = ({ children }) => {
     validationSchema: fundSchema,
     onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
       setIsLoading(true);
+      const muValues = { ...values };
+      muValues.transactionAmount = paymentDetails.grandTotal.toString();
       try {
         const [{ data: dataFund }, { data: dataBalance }] = await Promise.all([
-          await apiRequest.addFund(values),
+          await apiRequest.addFund(muValues),
           await apiRequest.getBalance(),
         ]);
         if (!dataFund.success || !dataBalance.success)
           throw dataFund.success ? dataBalance.message : dataFund.message;
         toast.success(dataFund.message);
         setFundedDetails({
-          fund: values.chargedAmount,
+          fund: paymentDetails.total,
           balance: dataBalance?.data?.available_balance,
         });
         setVisiblePopupFunded(true);
@@ -316,7 +318,8 @@ const FundProvider = ({ children }) => {
       !isNaN(formik.values.transactionAmount)
         ? parseFloat(formik.values.transactionAmount)
         : 0;
-    setPaymentDetails(getChargedAmount(charges, [amount]));
+    const chargesDetails = getChargedAmount(charges, [amount]);
+    setPaymentDetails(chargesDetails);
   }, [formik.values?.transactionAmount, charges]);
 
   useEffect(() => {

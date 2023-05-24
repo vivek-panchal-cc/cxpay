@@ -10,6 +10,13 @@ import {
 import { LoaderContext } from "context/loaderContext";
 import {
   ACT_STATUS_DECLINED,
+  ACT_TYPE_TRANSACTION,
+  ACT_TYPE_REQUEST,
+  ACT_REQUEST_RECEIVE,
+  ACT_TRANSACT_CREDIT,
+  ACT_TRANSACT_DEBIT,
+  ACT_STATUS_PENDING,
+  ACT_STATUS_PAID,
   NOTIFY_CON_REGISTER,
   NOTIFY_PAY_COMPLETE,
   NOTIFY_PAY_FAIL,
@@ -30,7 +37,7 @@ function ViewNotification(props) {
   const navigate = useNavigate();
   const { handleSendContacts } = useContext(SendPaymentContext);
   const [activityDetails, setActivityDetails] = useState({});
-  const [showRequestPopup, setShowRequestPopup] = useState(false);
+  const [showActivityPopup, setShowActivityPopup] = useState(false);
   const [loadingPopupDetails, setLoadingPopupDetails] = useState(false);
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const { setIsLoading } = useContext(LoaderContext);
@@ -54,6 +61,15 @@ function ViewNotification(props) {
     switch (type) {
       case NOTIFY_REQUEST:
         openRequestNotification(payload);
+        break;
+      case NOTIFY_RECEIVE:
+        openRequestNotification(payload || '{"request_id":"55"}');
+        break;
+      case NOTIFY_PAY_FAIL:
+        openRequestNotification(payload || '{"request_id":"55"}');
+        break;
+      case NOTIFY_PAY_COMPLETE:
+        openRequestNotification(payload || '{"request_id":"57"}');
         break;
       default:
         navigate(notificationType[type].redirect);
@@ -106,39 +122,92 @@ function ViewNotification(props) {
   const openRequestNotification = async (payloadStr) => {
     if (!payloadStr) return;
     const { request_id } = JSON.parse(payloadStr);
-    setShowRequestPopup(true);
+    setShowActivityPopup(true);
     setLoadingPopupDetails(true);
     try {
       const { data } = await apiRequest.getActivityDetails({
         id: request_id,
       });
       if (!data.success) throw data.message;
-      setActivityDetails(data?.data);
+      const details = data.data;
+      if (!details) return setShowActivityPopup(false);
+      setActivityDetails(details);
     } catch (error) {
       if (typeof error === "string") toast.error(error);
-      setShowRequestPopup(false);
+      setShowActivityPopup(false);
     } finally {
       setLoadingPopupDetails(false);
     }
   };
 
   //
-  const handleAcceptRequest = async (actDetails) => {
+  // const handleAcceptRequest = async (actDetails) => {
+  //   const { activity_type, request_type, status, request_id } =
+  //     actDetails || {};
+  //   setShowActivityPopup(false);
+  //   const contact = {
+  //     name: actDetails?.name,
+  //     profile_image: actDetails?.image,
+  //     specifications: actDetails?.specification,
+  //     personal_amount: parseFloat(actDetails?.amount || "0").toFixed(2),
+  //     receiver_account_number: actDetails?.account_number,
+  //   };
+  //   handleSendContacts([contact], request_id);
+  // };
+
+  const printActivityDetails = async ({
+    request_id,
+    activity_type,
+    ref_id,
+  }) => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.getPrintDetails({ id: request_id });
+      if (!data.success) throw data.message;
+      if (typeof data.message === "string") toast.success(data.message);
+      const base64pdf = data.data;
+      const transactId =
+        activity_type === ACT_TYPE_TRANSACTION ? ref_id : request_id;
+      const dtnow = new Date().toISOString();
+      const linkSource = `data:application/pdf;base64,${base64pdf}`;
+      const downloadLink = document.createElement("a");
+      const fileName = `${transactId}_${dtnow}.pdf`;
+      downloadLink.href = linkSource;
+      downloadLink.download = fileName;
+      downloadLink.click();
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleActivityRespond = (actDetails) => {
     const { activity_type, request_type, status, request_id } =
       actDetails || {};
-    setShowRequestPopup(false);
-    const contact = {
-      name: actDetails?.name,
-      profile_image: actDetails?.image,
-      specifications: actDetails?.specification,
-      personal_amount: parseFloat(actDetails?.amount || "0").toFixed(2),
-      receiver_account_number: actDetails?.account_number,
-    };
-    handleSendContacts([contact], request_id);
+    setShowActivityPopup(false);
+    switch (`${activity_type}_${request_type}_${status}`) {
+      case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_RECEIVE}_${ACT_STATUS_PENDING}`:
+        const contact = {
+          name: actDetails?.name,
+          profile_image: actDetails?.image,
+          specifications: actDetails?.specification,
+          personal_amount: parseFloat(actDetails?.amount || "0").toFixed(2),
+          receiver_account_number: actDetails?.account_number,
+        };
+        handleSendContacts([contact], request_id);
+        return;
+      case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_CREDIT}_${ACT_STATUS_PAID}`:
+        printActivityDetails(actDetails);
+        return;
+      case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_DEBIT}_${ACT_STATUS_PAID}`:
+        printActivityDetails(actDetails);
+        return;
+    }
   };
 
   const handleDeclineRequest = async () => {
-    setShowRequestPopup(false);
+    setShowActivityPopup(false);
     setShowConfirmPopup(true);
   };
 
@@ -211,12 +280,12 @@ function ViewNotification(props) {
       <ModalActivityDetail
         id="user-details-popup"
         className="user-details-modal"
-        show={showRequestPopup}
-        setShow={setShowRequestPopup}
+        show={showActivityPopup}
+        setShow={setShowActivityPopup}
         loading={loadingPopupDetails}
         details={activityDetails}
         handleCancel={handleDeclineRequest}
-        handleSubmit={handleAcceptRequest}
+        handleSubmit={handleActivityRespond}
       />
       <ModalConfirmation
         id="delete-group-member-popup"

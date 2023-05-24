@@ -28,7 +28,7 @@ import LoaderProvider from "context/loaderContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <LoaderProvider>
         <BrowserRouter>
@@ -36,5 +36,5 @@ root.render(
         </BrowserRouter>
       </LoaderProvider>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

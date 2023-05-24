@@ -10,7 +10,7 @@ const getYesterDay = () => {
 const compareDateTime = (tmSel, dtSel) => {
   const tmNow = new Date().getTime();
   const tmSch = new Date(`${dtSel.toDateString()} ${tmSel}`).getTime();
-  const tmBuffer = tmNow + 1000 * 60 * 15;
+  const tmBuffer = tmNow + 1000 * 60 * 5;
   return tmSch <= tmBuffer ? false : true;
 };
 
@@ -57,8 +57,10 @@ const schedulePaymentSchema = yup.object().shape({
     .required("Date is required"),
   time: yup
     .string()
-    .test("time_test", "You can schedule your payment 15 minutes from now", (value, context) =>
-      compareDateTime(value, context.parent.date)
+    .test(
+      "time_test",
+      "You can schedule your payment 5 minutes from now",
+      (value, context) => compareDateTime(value, context.parent.date)
     )
     .required("Time is required"),
   specification: yup

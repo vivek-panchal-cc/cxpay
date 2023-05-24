@@ -37,12 +37,17 @@ const ModalPaymentScheduler = (props) => {
     },
   });
 
-  const handleDateChange = (date) => {
-    formik.setFieldValue("date", date);
+  const handleDateChange = async (date) => {
+    await formik.setFieldValue("date", date);
   };
 
-  const handleTimeChange = (time) => {
-    formik.setFieldValue("time", time);
+  const handleTimeChange = async (time) => {
+    if (!formik.values.time) {
+      setTimeout(() => {
+        return formik.setFieldValue("time", time);
+      }, 500);
+    }
+    await formik.setFieldValue("time", time);
   };
 
   // For closing the modal on click of outside the modal area

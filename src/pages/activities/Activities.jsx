@@ -98,15 +98,8 @@ const Activities = () => {
     ref_id,
   }) => {
     setIsLoading(true);
-    const idDetails =
-      activity_type === ACT_TYPE_TRANSACTION
-        ? { activity_id: ref_id }
-        : { request_payment_id: request_id };
     try {
-      const { data } = await apiRequest.getPrintDetails({
-        type: activity_type,
-        ...{ ...idDetails },
-      });
+      const { data } = await apiRequest.getPrintDetails({ id: request_id });
       if (!data.success) throw data.message;
       if (typeof data.message === "string") toast.success(data.message);
       const base64pdf = data.data;
@@ -146,7 +139,9 @@ const Activities = () => {
     try {
       const { data } = await apiRequest.getActivityDetails({ id });
       if (!data.success) throw data.message;
-      setActivityDetails(data?.data);
+      const details = data.data;
+      if (!details) return setShowDetails(false);
+      setActivityDetails(details);
     } catch (error) {
       if (typeof error === "string") toast.error(error);
       setShowDetails(false);

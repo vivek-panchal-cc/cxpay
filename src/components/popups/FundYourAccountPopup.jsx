@@ -29,12 +29,12 @@ function FundYourAccountPopup() {
                 <p>Cash Credit</p>
               </div>
             </Link> */}
-            <Link to={`/wallet/fund-account/${FUND_BANK}`}>
+            {/* <Link to={`/wallet/fund-account/${FUND_BANK}`}>
               <div className="fund-payment-option">
                 <img src="/assets/images/fund_bt.svg" alt="" />
                 <p>Bank Transfer</p>
               </div>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

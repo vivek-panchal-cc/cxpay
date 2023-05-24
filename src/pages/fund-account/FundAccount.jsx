@@ -19,10 +19,10 @@ function FundAccount(props) {
     switch (params.fundtype) {
       case FUND_CARD:
         return <FundCreditCard />;
-      case FUND_CASH:
-        return <FundCashCredit />;
-      case FUND_BANK:
-        return <FundBankTransfer />;
+      // case FUND_CASH:
+      //   return <FundCashCredit />;
+      // case FUND_BANK:
+      //   return <FundBankTransfer />;
       default:
         return <></>;
     }
