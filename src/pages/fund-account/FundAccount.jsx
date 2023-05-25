@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { FUND_BANK, FUND_CARD, FUND_CASH } from "constants/all";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { FUND_CARD } from "constants/all";
 import FundProvider from "context/fundContext";
-import FundBankTransfer from "./components/FundBankTransfer";
-import FundCashCredit from "./components/FundCashCredit";
 import FundCreditCard from "./components/FundCreditCard";
 
 function FundAccount(props) {
@@ -24,7 +22,7 @@ function FundAccount(props) {
       // case FUND_BANK:
       //   return <FundBankTransfer />;
       default:
-        return <></>;
+        return <Navigate to="/wallet" replace={true} />;
     }
   };
 

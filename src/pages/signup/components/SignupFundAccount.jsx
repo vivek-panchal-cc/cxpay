@@ -1,13 +1,11 @@
-import InputSelect from "components/ui/InputSelect";
-import { CXPAY_LOGO, FUND_BANK, FUND_CARD, FUND_CASH } from "constants/all";
+import React, { useContext, useEffect, useState } from "react";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { CXPAY_LOGO, FUND_CARD } from "constants/all";
 import FundProvider from "context/fundContext";
 import { LoaderContext } from "context/loaderContext";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { storageRequest } from "helpers/storageRequests";
-import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import FundBank from "./FundBank";
 import FundCard from "./FundCard";
 
 function SignupFundAccount() {
@@ -44,12 +42,10 @@ function SignupFundAccount() {
     switch (type) {
       case FUND_CARD:
         return <FundCard />;
-      case FUND_BANK:
-        return <FundBank />;
-      case FUND_CASH:
-        return <>CASH</>;
+      // case FUND_BANK:
+      //   return <FundBank />;
       default:
-        return <></>;
+        return <Navigate to={"/"} replace={true} />;
     }
   };
 
@@ -74,7 +70,7 @@ function SignupFundAccount() {
               </div>
               <h5 className="text-center">Signup</h5>
               <h4 className="blue-text text-center">fund your Account</h4>
-              <form action="">
+              {/* <form action="">
                 <InputSelect
                   className="form-select form-control text-capitalize"
                   name="fund_type"
@@ -88,7 +84,7 @@ function SignupFundAccount() {
                     {FUND_BANK.replace(/-/g, " ")}{" "}
                   </option>
                 </InputSelect>
-              </form>
+              </form> */}
               {/* </div> */}
               <FundProvider>{getFundForm()}</FundProvider>
             </div>

@@ -190,11 +190,8 @@ const SendPaymentProvider = (props) => {
   useEffect(() => {
     const path = location.pathname;
     const flag =
-      (prevPath?.includes("/send") && path === "/request") ||
-      (prevPath?.includes("/request") && path === "/send") ||
-      path?.includes("/contacts") ||
-      path?.includes("/activities") ||
-      path?.includes("/view-notification");
+      (prevPath?.includes("/send") && !path.includes("/send")) ||
+      (prevPath?.includes("/request") && !path.includes("/request"));
     if (flag) handleCancelPayment();
     setPrevPath(path);
   }, [location.pathname]);

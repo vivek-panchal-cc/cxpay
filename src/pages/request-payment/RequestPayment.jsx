@@ -13,9 +13,9 @@ import { CURRENCY_SYMBOL } from "constants/all";
 const RequestPayment = () => {
   const navigate = useNavigate();
   const inputAmountRefs = useRef([]);
+  const { setIsLoading } = useContext(LoaderContext);
   const { handleRequestCreds, requestCreds, handleCancelPayment } =
     useContext(SendPaymentContext);
-  const { setIsLoading } = useContext(LoaderContext);
   const { wallet } = requestCreds || [];
 
   const [showRequestedPopup, setShowRequestedPopup] = useState(false);

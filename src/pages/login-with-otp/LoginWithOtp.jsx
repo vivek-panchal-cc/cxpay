@@ -106,7 +106,7 @@ const LoginWithOtp = (props) => {
                         type="mobile"
                         inputMode="tel"
                         className="form-control"
-                        placeholder="Mobile Number"
+                        placeholder="Registered Mobile Number"
                         name="mobile_number"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}

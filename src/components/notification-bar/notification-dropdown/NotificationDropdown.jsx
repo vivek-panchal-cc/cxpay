@@ -1,5 +1,6 @@
 import NotificationListItem from "components/items/NotificationListItem";
 import { notificationType } from "constants/all";
+import { ActivityContext } from "context/activityContext";
 import { LoaderContext } from "context/loaderContext";
 import { fetchMarkAsRead } from "features/user/userNotificationSlice";
 import { uniqueId } from "helpers/commonHelpers";
@@ -15,6 +16,7 @@ const NotificationDropdown = (props) => {
   const navigate = useNavigate();
   const dropdownref = useRef(null);
   const { setIsLoading } = useContext(LoaderContext);
+  const { handleActivityDetail } = useContext(ActivityContext);
   const { dropNotifications, initialLoading, pendingRead } = useSelector(
     (state) => state.userNotification
   );
@@ -32,14 +34,19 @@ const NotificationDropdown = (props) => {
     };
   }, [dropdownref]);
 
-  const handleMarkAsRead = async ({ id, status, type }) => {
-    if (status) return navigate(notificationType[type]?.redirect);
+  const handleMarkAsRead = async ({ id, status, type, payload }) => {
+    const { request_id } =
+      typeof payload === "string" && payload.length > 0
+        ? JSON.parse(payload)
+        : "";
+    if (request_id) handleActivityDetail({ id: request_id });
+    else navigate(notificationType[type].redirect);
+    if (status) return;
     setIsLoading(true);
     try {
       const { error, payload } = await dispatch(fetchMarkAsRead(id));
       if (error) throw payload;
-      toast.success(payload);
-      navigate(notificationType[type]?.redirect);
+      toast.success(payload.message);
     } catch (error) {
       console.log(error);
     } finally {
@@ -95,7 +102,7 @@ const NotificationDropdown = (props) => {
           </div>
         ) : (
           <div className="see-all-notifi">
-            <p>No Notifications Yet</p>
+            <p>Notifications not found</p>
           </div>
         )}
       </div>

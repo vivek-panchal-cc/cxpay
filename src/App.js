@@ -41,6 +41,7 @@ import Activities from "pages/activities/Activities";
 import ScheduledPaymentLayout from "layouts/ScheduledPaymentLayout";
 import EditScheduledPayment from "pages/edit-scheduled-payment/EditScheduledPayment";
 import Dashboard from "pages/dashboard/Dashboard";
+import ActivityLayout from "layouts/ActivityLayout";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -79,50 +80,65 @@ function App() {
         {/* List of Private Routes */}
         <Route element={<PrivateLayout />}>
           <Route path="/signup/:fundtype" element={<SignupFundAccount />} />
-          <Route element={<DashboardLayout />}>
-            <Route path="/" element={<Dashboard />} />
-            {/* settings */}
-            <Route path="/setting" element={<Setting />} />
-            <Route path="/setting/edit-profile" element={<EditProfile />} />
-            <Route path="/setting/notification" element={<Notification />} />
-            <Route
-              path="/setting/change-password"
-              element={<ChangePassword />}
-            />
-            <Route path="/setting/business-info" element={<BusinessInfo />} />
-            {/* wallet */}
-            <Route path="/wallet" element={<Wallet />} />
-            <Route path="/wallet/add-card" element={<AddCard />} />
-            <Route path="/wallet/link-bank" element={<LinkBank />} />
-            <Route path="/wallet/view-card" element={<ViewCard />} />
-            <Route path="/wallet/view-card/edit-card" element={<EditCard />} />
-            <Route path="/wallet/bank-list" element={<BankList />} />
-            <Route
-              path="/wallet/fund-account/:fundtype?"
-              element={<FundAccount />}
-            />
-            <Route path="/profile" element={<Profile />} />
-            {/* contacts */}
-            <Route element={<ContactsLayout />}>
-              <Route path="/activities" element={<Activities />} />
-              <Route path="/contacts" element={<Contacts />} />
-              <Route path="/contacts-invited" element={<ContactsInvited />} />
-              <Route path="/edit-group/:id" element={<EditGroup />} />
-              <Route path="/send" element={<SendContact />} />
-              <Route path="/send/payment" element={<SendPayment />} />
-              <Route path="/request" element={<RequestContact />} />
-              <Route path="/request/payment" element={<RequestPayment />} />
-              <Route path="/view-notification" element={<ViewNotification />} />
-            </Route>
-            <Route element={<ScheduledPaymentLayout />}>
-              <Route
-                path="/view-schedule-payment"
-                element={<ViewSchedulePayment />}
-              />
-              <Route
-                path="/view-schedule-payment/update"
-                element={<EditScheduledPayment />}
-              />
+          <Route element={<ContactsLayout />}>
+            <Route element={<ActivityLayout />}>
+              <Route element={<DashboardLayout />}>
+                {/* settings */}
+                <Route path="/setting" element={<Setting />} />
+                <Route path="/setting/edit-profile" element={<EditProfile />} />
+                <Route
+                  path="/setting/notification"
+                  element={<Notification />}
+                />
+                <Route
+                  path="/setting/change-password"
+                  element={<ChangePassword />}
+                />
+                <Route
+                  path="/setting/business-info"
+                  element={<BusinessInfo />}
+                />
+                {/* wallet */}
+                <Route path="/wallet" element={<Wallet />} />
+                <Route path="/wallet/add-card" element={<AddCard />} />
+                <Route path="/wallet/link-bank" element={<LinkBank />} />
+                <Route path="/wallet/view-card" element={<ViewCard />} />
+                <Route
+                  path="/wallet/view-card/edit-card"
+                  element={<EditCard />}
+                />
+                <Route path="/wallet/bank-list" element={<BankList />} />
+                <Route
+                  path="/wallet/fund-account/:fundtype?"
+                  element={<FundAccount />}
+                />
+                <Route path="/profile" element={<Profile />} />
+                {/* contacts */}
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/activities" element={<Activities />} />
+                <Route
+                  path="/view-notification"
+                  element={<ViewNotification />}
+                />
+                <Route path="/contacts" element={<Contacts />} />
+                <Route path="/contacts-invited" element={<ContactsInvited />} />
+                <Route path="/edit-group/:id" element={<EditGroup />} />
+                <Route path="/send" element={<SendContact />} />
+                <Route path="/send/payment" element={<SendPayment />} />
+                <Route path="/request" element={<RequestContact />} />
+                <Route path="/request/payment" element={<RequestPayment />} />
+
+                <Route element={<ScheduledPaymentLayout />}>
+                  <Route
+                    path="/view-schedule-payment"
+                    element={<ViewSchedulePayment />}
+                  />
+                  <Route
+                    path="/view-schedule-payment/update"
+                    element={<EditScheduledPayment />}
+                  />
+                </Route>
+              </Route>
             </Route>
           </Route>
           <Route path="/logout" element={<Logout />} />

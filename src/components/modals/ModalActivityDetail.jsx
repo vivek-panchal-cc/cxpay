@@ -108,6 +108,26 @@ const ModalActivityDetail = (props) => {
             </button>
           </>
         );
+      case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_SEND}_${ACT_STATUS_PAID}`:
+        return (
+          <button
+            type="button"
+            className="btn print-details-btn w-50"
+            onClick={() => handleSubmit(details)}
+          >
+            Print Details
+          </button>
+        );
+      case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_RECEIVE}_${ACT_STATUS_PAID}`:
+        return (
+          <button
+            type="button"
+            className="btn print-details-btn w-50"
+            onClick={() => handleSubmit(details)}
+          >
+            Print Details
+          </button>
+        );
       case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_CREDIT}_${ACT_STATUS_PAID}`:
         return (
           <button
@@ -178,7 +198,15 @@ const ModalActivityDetail = (props) => {
                       )}
                       {request_from && (
                         <tr>
-                          <td>Request From</td>
+                          <td>
+                            {(activity_type === ACT_TYPE_REQUEST &&
+                              status === ACT_STATUS_PAID) ||
+                            (activity_type === ACT_TYPE_TRANSACTION &&
+                              request_type === ACT_TRANSACT_CREDIT &&
+                              status === ACT_STATUS_PAID)
+                              ? "Receive from"
+                              : "Request From"}
+                          </td>
                           <td>{request_from}</td>
                         </tr>
                       )}

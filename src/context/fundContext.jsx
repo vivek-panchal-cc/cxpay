@@ -90,11 +90,9 @@ const FundProvider = ({ children }) => {
     validationSchema: fundSchema,
     onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
       setIsLoading(true);
-      const muValues = { ...values };
-      muValues.transactionAmount = paymentDetails.grandTotal.toString();
       try {
         const [{ data: dataFund }, { data: dataBalance }] = await Promise.all([
-          await apiRequest.addFund(muValues),
+          await apiRequest.addFund(values),
           await apiRequest.getBalance(),
         ]);
         if (!dataFund.success || !dataBalance.success)
@@ -379,6 +377,7 @@ const FundProvider = ({ children }) => {
         (selectExistingCard ? <SelectCard /> : children)}
       {params.fundtype === FUND_BANK &&
         (selectExistingBank ? <SelectBank /> : children)}
+      {params.fundtype !== FUND_CARD && children}
     </FundContext.Provider>
   );
 };
