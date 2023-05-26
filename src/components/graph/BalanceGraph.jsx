@@ -104,7 +104,9 @@ const BalanceGraph = (props) => {
 
   const { availableBalance, lockBalance } = useMemo(() => {
     const { available, lock } = balance || {};
-    const availableBalance = available ? parseFloat(available) : "";
+    const availableBalance = available
+      ? parseFloat(available.replace(/,/g, ""))
+      : "";
     const lockBalance = lock ? parseFloat(lock) : "";
     return { availableBalance, lockBalance };
   }, [balance]);

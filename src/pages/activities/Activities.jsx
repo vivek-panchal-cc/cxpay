@@ -7,78 +7,62 @@ import LoaderActivityItem from "loaders/LoaderActivityItem";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
 import { uniqueId } from "helpers/commonHelpers";
 import { ActivityContext } from "context/activityContext";
+import useActivities from "hooks/useActivities";
 
 const Activities = () => {
   const { handleActivityDetail, reloadList } = useContext(ActivityContext);
-
-  const [loadingAct, setLoadingAct] = useState(false);
-  const [activitiesList, setActivitiesList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [serachText, setSearchText] = useState("");
   const [activitiesDateBind, setActivitiesDateBind] = useState({});
-  const [actPagination, setActPagination] = useState(null);
   const [showFilter, setShowFilter] = useState(false);
   const [filters, setFilters] = useState({
     startDate: "",
     endDate: "",
   });
+  const [loadingAct, actPagination, activitiesList, reload] = useActivities({
+    page: currentPage,
+    search: serachText,
+    start_date: filters.startDate ? filters.startDate.toLocaleDateString() : "",
+    end_date: filters.endDate ? filters.endDate.toLocaleDateString() : "",
+  });
 
-  const getActivitiesList = async (page = 1, filters = {}) => {
-    setLoadingAct(true);
-    try {
-      const { data } = await apiRequest.activityList({ page, ...filters });
-      if (!data.success) throw data.message;
-      const { transactions, pagination } = data.data || {};
-      const activityDateList = {};
-      transactions?.map((item) => {
-        const [dd, mm, yr] = item?.date?.split("/");
-        const dt = new Date(`${yr}-${mm}-${dd}`);
-        const month = dt.toLocaleDateString("default", { month: "long" });
-        const dtList = activityDateList[`${month} ${yr}`] || [];
-        activityDateList[`${month} ${yr}`] = [...dtList, item];
-      });
-      setActivitiesDateBind(activityDateList);
-      setActivitiesList(transactions);
-      setActPagination(pagination);
-    } catch (error) {
-      console.log(error);
-      setActPagination(null);
-      setActivitiesList([]);
-      setActivitiesDateBind({});
-    } finally {
-      setLoadingAct(false);
-    }
-  };
+  useEffect(() => {
+    if (!activitiesList) return;
+    const activityDateList = {};
+    activitiesList?.map((item) => {
+      const [dd, mm, yr] = item?.date?.split("/");
+      const dt = new Date(`${yr}-${mm}-${dd}`);
+      const month = dt.toLocaleDateString("default", { month: "long" });
+      const dtList = activityDateList[`${month} ${yr}`] || [];
+      activityDateList[`${month} ${yr}`] = [...dtList, item];
+    });
+    setActivitiesDateBind(activityDateList);
+  }, [activitiesList]);
 
   const handleChangeDateFilter = async ({ startDate, endDate }) => {
     if (!startDate || !endDate) return;
-    setFilters({ startDate, endDate });
-    setShowFilter(false);
-    await getActivitiesList(1, {
-      start_date: startDate.toLocaleDateString(),
-      end_date: endDate.toLocaleDateString(),
+    setFilters({
+      startDate: startDate,
+      endDate: endDate,
     });
+    setCurrentPage(1);
+    setShowFilter(false);
   };
 
   const handleResetFilter = async () => {
+    setCurrentPage(1);
     setFilters({
       startDate: "",
       endDate: "",
     });
-    await getActivitiesList();
   };
 
   const handlePageChange = (page) => {
-    const start_date = filters.startDate
-      ? filters.startDate.toLocaleDateString()
-      : "";
-    const end_date = filters.endDate
-      ? filters.endDate.toLocaleDateString()
-      : "";
-    getActivitiesList(page, { start_date, end_date });
+    setCurrentPage(page);
   };
 
   useEffect(() => {
     const page = actPagination ? actPagination.current_page : 1;
-    getActivitiesList(page);
   }, [reloadList]);
 
   return (

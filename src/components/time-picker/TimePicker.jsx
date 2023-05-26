@@ -161,8 +161,12 @@ const TimePicker = ({
       }
     }
     let slotDate;
-    const selDate = new Date(selDt.getTime());
-    selDate.setHours(new Date().getHours());
+    const currTm = new Date().toLocaleTimeString(undefined, {
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h12",
+    });
+    const selDate = new Date(`${selDt.toDateString()} ${currTm}`);
     const modMins =
       minutesSelection === "quater"
         ? selDate.getMinutes() % 15
@@ -172,6 +176,7 @@ const TimePicker = ({
       const appMin =
         minutesSelection === "quater" ? parseInt(min) + 15 : parseInt(min) + 1;
       const appTime = selDate.getTime() + 1000 * 60 * appMin;
+      console.log(selDate, new Date(appTime));
       if (appTime > fromDtm) {
         slotDate = new Date(appTime);
         break;

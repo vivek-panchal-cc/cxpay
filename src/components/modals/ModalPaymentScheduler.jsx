@@ -14,7 +14,8 @@ const ModalPaymentScheduler = (props) => {
 
   const dtTimeBuffer = useMemo(() => {
     const dtm15 = new Date().getTime() + 1000 * 60 * SCHEDULE_BUFFER;
-    return new Date(dtm15);
+    const dtm5 = new Date(`${new Date().toDateString()} 06:55 PM`);
+    return new Date(dtm5);
   }, [show]);
 
   const formik = useFormik({
