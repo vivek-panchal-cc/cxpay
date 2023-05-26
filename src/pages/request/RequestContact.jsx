@@ -121,7 +121,7 @@ const RequestContact = (props) => {
           handleSelectedItems={handleSelectContact}
           handleReachEnd={handleReachEndContacts}
           fullWidth={true}
-          emptyListMsg="Contact not found"
+          emptyListMsg="Contacts not found"
           ListItemComponent={ContactCard}
           ListItemComponentProps={{
             fullWidth: true,

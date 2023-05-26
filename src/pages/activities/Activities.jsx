@@ -48,17 +48,14 @@ const Activities = () => {
     }
   };
 
-  const handleChangeDateFilter = async (dates) => {
-    const [start, end] = dates;
-    setFilters({ startDate: start, endDate: end });
-    if (start && end) {
-      setShowFilter(false);
-      const page = actPagination ? actPagination.current_page : 1;
-      await getActivitiesList(page, {
-        start_date: start?.toLocaleDateString(),
-        end_date: end?.toLocaleDateString(),
-      });
-    }
+  const handleChangeDateFilter = async ({ startDate, endDate }) => {
+    if (!startDate || !endDate) return;
+    setFilters({ startDate, endDate });
+    setShowFilter(false);
+    await getActivitiesList(1, {
+      start_date: startDate.toLocaleDateString(),
+      end_date: endDate.toLocaleDateString(),
+    });
   };
 
   const handleResetFilter = async () => {
@@ -66,12 +63,22 @@ const Activities = () => {
       startDate: "",
       endDate: "",
     });
-    const page = actPagination ? actPagination.current_page : 1;
-    await getActivitiesList(page);
+    await getActivitiesList();
+  };
+
+  const handlePageChange = (page) => {
+    const start_date = filters.startDate
+      ? filters.startDate.toLocaleDateString()
+      : "";
+    const end_date = filters.endDate
+      ? filters.endDate.toLocaleDateString()
+      : "";
+    getActivitiesList(page, { start_date, end_date });
   };
 
   useEffect(() => {
-    getActivitiesList();
+    const page = actPagination ? actPagination.current_page : 1;
+    getActivitiesList(page);
   }, [reloadList]);
 
   return (
@@ -91,7 +98,7 @@ const Activities = () => {
                 placeholder="From"
                 value={
                   filters.startDate
-                    ? filters.startDate?.toLocaleDateString("en-UK")
+                    ? filters.startDate.toLocaleDateString("en-UK")
                     : "From"
                 }
                 onClick={() => setShowFilter(true)}
@@ -109,7 +116,7 @@ const Activities = () => {
                 placeholder="To"
                 value={
                   filters?.endDate
-                    ? filters.endDate?.toLocaleDateString("en-UK")
+                    ? filters.endDate.toLocaleDateString("en-UK")
                     : "To"
                 }
                 onClick={() => setShowFilter(true)}
@@ -152,17 +159,17 @@ const Activities = () => {
           ))
         )}
       </div>
-      {Object.keys(activitiesDateBind || {}).length <= 0 && (
+      {!loadingAct && Object.keys(activitiesDateBind || {}).length <= 0 && (
         <div className="text-center py-4">
           <p className="fs-5">Activities not found.</p>
         </div>
       )}
-      {actPagination && (
+      {!loadingAct && actPagination && actPagination.total > 10 && (
         <Pagination
           active={actPagination?.current_page}
           size={actPagination?.last_page}
           siblingCount={2}
-          onClickHandler={getActivitiesList}
+          onClickHandler={handlePageChange}
         />
       )}
       <ModalDateRangePicker

@@ -17,6 +17,7 @@ const SendPaymentProvider = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { setIsLoading } = useContext(LoaderContext);
+  const [prevPathRedirect, setPrevPathRedirect] = useState(null);
   const [prevPath, setPrevPath] = useState();
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState([]);
@@ -42,10 +43,14 @@ const SendPaymentProvider = (props) => {
       personal_amount: item.personal_amount || "",
       specifications: item.specifications || "",
     }));
-    const tmpCreds = request_id
-      ? { wallet: listAlias, request_id }
-      : { wallet: listAlias };
+    const tmpCreds = { wallet: listAlias };
     setDisableEdit(request_id ? true : false);
+    if (request_id && request_id.length > 0) {
+      tmpCreds.request_id = request_id;
+      setSelectedContacts([]);
+      setSelectedGroup([]);
+      setRequestCreds([]);
+    }
     setSendCreds(tmpCreds);
     navigate("/send/payment");
   };
@@ -147,6 +152,7 @@ const SendPaymentProvider = (props) => {
     setSelectedGroup([]);
     setSendCreds([]);
     setRequestCreds([]);
+    setDisableEdit(false);
   };
 
   // For getting the group details
@@ -189,9 +195,12 @@ const SendPaymentProvider = (props) => {
 
   useEffect(() => {
     const path = location.pathname;
+    setPrevPathRedirect(prevPath);
     const flag =
       (prevPath?.includes("/send") && !path.includes("/send")) ||
-      (prevPath?.includes("/request") && !path.includes("/request"));
+      (prevPath?.includes("/request") &&
+        !disableEdit &&
+        !path.includes("/request"));
     if (flag) handleCancelPayment();
     setPrevPath(path);
   }, [location.pathname]);
@@ -213,6 +222,7 @@ const SendPaymentProvider = (props) => {
         disableEdit,
         sendCreds,
         charges,
+        prevPathRedirect,
       }}
     >
       {children}

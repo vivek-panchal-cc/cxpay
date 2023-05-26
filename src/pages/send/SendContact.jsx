@@ -232,7 +232,7 @@ function SendContact() {
           handleSelectedItems={handleSelectContact}
           handleReachEnd={handleReachEndContacts}
           fullWidth={true}
-          emptyListMsg="Contact not found"
+          emptyListMsg="Contacts not found"
           ListItemComponent={ContactCard}
           ListItemComponentProps={{
             fullWidth: true,
@@ -311,24 +311,26 @@ function SendContact() {
           {isLoadingGroups ? (
             <LoaderSendContactButtons />
           ) : (
-            <>
-              <Button
-                type="button"
-                className="btn btn-cancel-payment"
-                onClick={handleEditGroup}
-              >
-                <IconEdit style={{ stroke: "#0081c5" }} />
-                Edit
-              </Button>
-              <Button
-                type="button"
-                className="btn btn-next ws--btn"
-                onClick={handleSendGroup}
-              >
-                <IconSend style={{ stroke: "#fff" }} />
-                Send
-              </Button>
-            </>
+            groupList.length > 0 && (
+              <>
+                <Button
+                  type="button"
+                  className="btn btn-cancel-payment"
+                  onClick={handleEditGroup}
+                >
+                  <IconEdit style={{ stroke: "#0081c5" }} />
+                  Edit
+                </Button>
+                <Button
+                  type="button"
+                  className="btn btn-next ws--btn"
+                  onClick={handleSendGroup}
+                >
+                  <IconSend style={{ stroke: "#fff" }} />
+                  Send
+                </Button>
+              </>
+            )
           )}
         </ContactsSelection.Footer>
       </ContactsSelection>

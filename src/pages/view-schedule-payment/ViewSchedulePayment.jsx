@@ -28,13 +28,14 @@ const ViewSchedulePayment = () => {
     endDate: "",
   });
 
-  const handleChangeDateFilter = async (dates) => {
-    const [start, end] = dates;
-    setFilters({ startDate: start, endDate: end });
-    if (start && end) {
-      setShowFilter(false);
-      handleDateFilter(start, end);
-    }
+  const handleChangeDateFilter = async ({ startDate, endDate }) => {
+    if (!startDate || !endDate) return;
+    setFilters({ startDate: startDate, endDate: endDate });
+    setShowFilter(false);
+    handleDateFilter(
+      startDate.toLocaleDateString(),
+      endDate.toLocaleDateString()
+    );
   };
 
   const handleDeletePayment = async (spid) => {
@@ -166,11 +167,12 @@ const ViewSchedulePayment = () => {
             ))
           )}
         </div>
-        {Object.keys(paymentsDateBind || {}).length <= 0 && (
-          <div className="text-center py-4">
-            <p className="fs-5">Schedule payments not found.</p>
-          </div>
-        )}
+        {!loadingPayments &&
+          Object.keys(paymentsDateBind || {}).length <= 0 && (
+            <div className="text-center py-4">
+              <p className="fs-5">Schedule payments not found.</p>
+            </div>
+          )}
         {!loadingPayments && pagination && pagination.total > 10 && (
           <Pagination
             active={pagination?.current_page}

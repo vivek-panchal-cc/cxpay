@@ -1,5 +1,5 @@
 import { CURRENCY_SYMBOL } from "constants/all";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 const chartOption = {
@@ -102,6 +102,13 @@ const BalanceGraph = (props) => {
   const { graphBackgroundImage, balanceDataArr, balance, monthDataArr } = props;
   const [options, setOptions] = useState({ ...chartOption });
 
+  const { availableBalance, lockBalance } = useMemo(() => {
+    const { available, lock } = balance || {};
+    const availableBalance = available ? parseFloat(available) : "";
+    const lockBalance = lock ? parseFloat(lock) : "";
+    return { availableBalance, lockBalance };
+  }, [balance]);
+
   useEffect(() => {
     if (!balanceDataArr && !monthDataArr) return;
     const tmpObj = { ...chartOption };
@@ -122,23 +129,23 @@ const BalanceGraph = (props) => {
     >
       <div className="w-100">
         <div className="d-flex">
-          {balance && balance.available && (
-            <div className="p-4">
-              <h6 className="h6" style={{ color: "#0081c5" }}>
-                Available Balance
-              </h6>
-              <h2 className="h3 text-black fw-bolder">
-                {CURRENCY_SYMBOL} {balance.available}
-              </h2>
-            </div>
-          )}
-          {balance && balance.lock && (
+          <div className="p-4">
+            <h6 className="h6" style={{ color: "#0081c5" }}>
+              Available Balance
+            </h6>
+            <h2 className="h3 text-black fw-bolder">
+              {availableBalance !== ""
+                ? `${CURRENCY_SYMBOL} ${availableBalance.toFixed(2)}`
+                : ""}
+            </h2>
+          </div>
+          {lockBalance !== "" && lockBalance > 0 && (
             <div className="p-4 pb-0">
               <h6 className="h6" style={{ color: "#0081c5" }}>
                 Block Amount
               </h6>
               <h2 className="h3 text-black fw-bolder">
-                {CURRENCY_SYMBOL} {balance.lock}
+                {CURRENCY_SYMBOL} {lockBalance.toFixed(2)}
               </h2>
             </div>
           )}

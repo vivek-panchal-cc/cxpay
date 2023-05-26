@@ -141,7 +141,15 @@ const ModalPaymentScheduler = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="popup-btn-wrap">
+                <div className="popup-btn-wrap d-flex align-items-center justify-content-between gap-4">
+                  <button
+                    type="button"
+                    className="outline-btn px-4"
+                    style={{ minWidth: "initial" }}
+                    onClick={() => setShow(false)}
+                  >
+                    Cancel
+                  </button>
                   <input
                     type="submit"
                     className={`btn btn-primary ${

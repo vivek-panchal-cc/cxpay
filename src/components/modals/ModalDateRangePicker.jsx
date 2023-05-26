@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./modal.module.scss";
 import ReactDatePicker from "react-datepicker";
 
@@ -14,7 +14,10 @@ function ModalDateRangePicker(props) {
     endDate,
     handleChangeDateRange,
   } = props;
+
   const modalRef = useRef(null);
+  const [selectRange, setSelectedRange] = useState({ startDate, endDate });
+  const [disableConfirm, setDisableConfirm] = useState(true);
 
   useEffect(() => {
     function handleclickOutside(event) {
@@ -28,6 +31,22 @@ function ModalDateRangePicker(props) {
       document.removeEventListener("mousedown", handleclickOutside);
     };
   }, [modalRef, setShow]);
+
+  const handleRangeChange = async (dates) => {
+    const [start, end] = dates;
+    setSelectedRange({ startDate: start, endDate: end });
+  };
+
+  useEffect(() => {
+    const { startDate, endDate } = selectRange;
+    if (startDate && endDate) setDisableConfirm(false);
+    else setDisableConfirm(true);
+  }, [selectRange]);
+
+  useEffect(() => {
+    if (startDate === "" && endDate === "")
+      setSelectedRange({ startDate: "", endDate: "" });
+  }, [startDate, endDate]);
 
   if (!show) return;
   return (
@@ -43,13 +62,32 @@ function ModalDateRangePicker(props) {
               <h3 className="text-center">{heading}</h3>
             </div>
             <ReactDatePicker
-              selected={startDate}
-              startDate={startDate}
-              endDate={endDate}
-              onChange={handleChangeDateRange}
+              selected={selectRange.startDate}
+              startDate={selectRange.startDate}
+              endDate={selectRange.endDate}
+              onChange={handleRangeChange}
               selectsRange
               inline
             />
+            <div className="popup-btn-wrap d-flex align-items-center justify-content-center gap-4">
+              <button
+                type="button"
+                className="outline-btn px-4"
+                style={{ minWidth: "initial" }}
+                onClick={() => setShow(false)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary px-4 py-3"
+                style={{ minWidth: "initial" }}
+                onClick={() => handleChangeDateRange(selectRange)}
+                disabled={disableConfirm}
+              >
+                Okay
+              </button>
+            </div>
           </div>
         </div>
       </div>

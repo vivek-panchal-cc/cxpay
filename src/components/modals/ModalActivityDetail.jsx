@@ -32,6 +32,7 @@ const ModalActivityDetail = (props) => {
     name,
     amount,
     date,
+    paid_date,
     image,
     mobile_number,
     request_from,
@@ -190,6 +191,13 @@ const ModalActivityDetail = (props) => {
                         <td>Date</td>
                         <td>{date}</td>
                       </tr>
+                      {request_type === ACT_REQUEST_SEND &&
+                        status === ACT_STATUS_PAID && (
+                          <tr>
+                            <td>Paid date</td>
+                            <td>{paid_date}</td>
+                          </tr>
+                        )}
                       {activity_type === ACT_TYPE_REQUEST && (
                         <tr>
                           <td>Status</td>
@@ -199,10 +207,9 @@ const ModalActivityDetail = (props) => {
                       {request_from && (
                         <tr>
                           <td>
-                            {(activity_type === ACT_TYPE_REQUEST &&
+                            {(request_type === ACT_REQUEST_SEND &&
                               status === ACT_STATUS_PAID) ||
-                            (activity_type === ACT_TYPE_TRANSACTION &&
-                              request_type === ACT_TRANSACT_CREDIT &&
+                            (request_type === ACT_TRANSACT_CREDIT &&
                               status === ACT_STATUS_PAID)
                               ? "Receive from"
                               : "Request From"}

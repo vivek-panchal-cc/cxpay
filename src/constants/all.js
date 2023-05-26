@@ -160,10 +160,10 @@ const activityConsts = {
       },
       [ACT_STATUS_PAID]: {
         iconStatus: <IconActReqSent />,
-        iconAmount: "",
+        iconAmount: "+",
         classStatus: "btn-blue",
         classBg: "cx-bg-blue",
-        classText: "",
+        classText: "cx-color-green",
         textStatus: "Request Sent",
         desc: "Requested money from YYYY",
       },
@@ -198,7 +198,7 @@ const activityConsts = {
       },
       [ACT_STATUS_PAID]: {
         iconStatus: <IconActReqReceive />,
-        iconAmount: "",
+        iconAmount: "-",
         classStatus: "btn-green",
         classBg: "cx-bg-green",
         classText: "",

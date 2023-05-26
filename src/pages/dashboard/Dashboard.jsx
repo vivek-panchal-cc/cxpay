@@ -248,7 +248,7 @@ const Dashboard = () => {
                     handleSelectedItems={() => {}}
                     handleReachEnd={handleReachEndContacts}
                     fullWidth={false}
-                    emptyListMsg="Contact not found"
+                    emptyListMsg="Contacts not found"
                     ListItemComponent={ContactCard}
                     ListItemComponentProps={{
                       fullWidth: false,

@@ -30,6 +30,7 @@ function SendPayment(props) {
     disableEdit,
     handleSendCreds,
     handleCancelPayment,
+    prevPathRedirect,
   } = useContext(SendPaymentContext);
 
   const { mobile_number, country_code } = useSelector(
@@ -241,7 +242,7 @@ function SendPayment(props) {
   }, [formik.values?.wallet, charges]);
 
   if (!sendCreds || !sendCreds.wallet || sendCreds.wallet.length <= 0)
-    navigate("/send", { replace: true });
+    navigate(prevPathRedirect || "/send", { replace: true });
   return (
     <>
       {/* Modal For OTP confirmation */}
