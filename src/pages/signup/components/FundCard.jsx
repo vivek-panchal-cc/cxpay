@@ -228,27 +228,25 @@ function FundCard() {
           </div>
         </div>
       </div>
-      <div className="row wallet-fund-row-amt wallet-fund-row-amt-final">
-        <div className="col-12 p-0">
-          <table>
-            <tbody>
-              {paymentDetails?.allCharges?.map((item, index) => (
-                <tr key={index}>
-                  <td>{item?.desc}</td>
-                  <td className="amount">
-                    {CURRENCY_SYMBOL} {item?.amount?.toFixed(2)}
-                  </td>
-                </tr>
-              ))}
-              <tr>
-                <td>Net Payable</td>
-                <td>
-                  {CURRENCY_SYMBOL} {paymentDetails?.grandTotal?.toFixed(2)}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div className="payment-footer-block p-4">
+        <ul>
+          {paymentDetails?.allCharges?.map((item, index) => (
+            <li key={index}>
+              <div className="payment-footer-col-label">{item?.desc}</div>
+              <h4 className="amount d-flex justify-content-between">
+                <span>{CURRENCY_SYMBOL}</span>
+                {item?.amount?.toFixed(2)}
+              </h4>
+            </li>
+          ))}
+          <li>
+            <div className="payment-footer-col-label">Net Payable</div>
+            <h4 className="amount d-flex justify-content-between">
+              <span>{CURRENCY_SYMBOL}</span>
+              {paymentDetails?.grandTotal?.toFixed(2)}
+            </h4>
+          </li>
+        </ul>
       </div>
       <div className="row">
         <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">

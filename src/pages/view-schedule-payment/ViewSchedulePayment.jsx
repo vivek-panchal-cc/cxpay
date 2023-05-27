@@ -79,7 +79,10 @@ const ViewSchedulePayment = () => {
           </div>
           <div className="schedule-pay-sd-wrap">
             <div className="date-main-div d-flex">
-              <div className="date-inner-div">
+              <div
+                className="date-inner-div"
+                onClick={() => setShowFilter(true)}
+              >
                 <input
                   id="from-date"
                   type="text"
@@ -90,14 +93,16 @@ const ViewSchedulePayment = () => {
                       ? filters.startDate?.toLocaleDateString("en-UK")
                       : "From"
                   }
-                  onClick={() => setShowFilter(true)}
                   readOnly
                 />
                 <span className="date-cal">
                   <IconCalender style={{ stroke: "#0081C5" }} />
                 </span>
               </div>
-              <div className="date-inner-div">
+              <div
+                className="date-inner-div"
+                onClick={() => setShowFilter(true)}
+              >
                 <input
                   id="date-end-range"
                   type="text"
@@ -108,7 +113,6 @@ const ViewSchedulePayment = () => {
                       ? filters.endDate?.toLocaleDateString("en-UK")
                       : "To"
                   }
-                  onClick={() => setShowFilter(true)}
                   readOnly
                 />
                 <span className="date-cal">

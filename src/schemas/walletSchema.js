@@ -13,6 +13,7 @@ import {
   firstNameSchema,
   lastNameSchema,
   routingNumberSchema,
+  swiftCodeSchema,
 } from "./commonSchema";
 
 const addCardSchema = yup.object().shape({
@@ -31,7 +32,7 @@ const addCardSchema = yup.object().shape({
 const linkBankSchema = yup.object().shape({
   account_type: yup.string(),
   bank_name: bankNameSchema,
-  routing_number: routingNumberSchema,
+  swift_code: swiftCodeSchema,
   bank_number: bankNumberSchema,
   bank_holder_first_name: firstNameSchema.required("Please enter First name"),
   bank_holder_last_name: lastNameSchema.required("Please enter Last name"),

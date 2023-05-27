@@ -174,12 +174,12 @@ const EditScheduledPayment = () => {
                 <div className="col-12 col p-0">
                   <div className="form-field">
                     <TimePicker
-                      minutesSelection="quater"
-                      value={formik.values.time}
-                      selecteDate={formik.values.date}
-                      fromDate={dtTimeBuffer}
-                      onChange={(time) => formik.setFieldValue("time", time)}
                       classNameInput="w-full form-control"
+                      minutesSelection="quater"
+                      bufferTime={SCHEDULE_BUFFER}
+                      selecteDate={formik.values.date}
+                      selectedTime={sch_tm}
+                      onChange={(time) => formik.setFieldValue("time", time)}
                     />
                     {formik.touched.time && formik.errors.time && (
                       <p className="text-danger pb-0">{formik.errors.time}</p>

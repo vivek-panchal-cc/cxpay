@@ -2,11 +2,12 @@ import React, {
   useState,
   useRef,
   useEffect,
-  useMemo,
   useCallback,
+  useMemo,
 } from "react";
 import styles from "./TimePicker.module.scss";
 import { IconClock } from "styles/svgs";
+import useCurrentDate from "hooks/useCurrentDate";
 
 const HOURS = [
   "01",
@@ -93,15 +94,16 @@ const PERIOD = ["AM", "PM"];
 const TimePicker = ({
   classNameInput = "",
   minutesSelection = "all",
-  fromDate,
-  selecteDate,
-  value,
+  selecteDate = new Date(),
+  selectedTime = "",
+  bufferTime = 0,
   onChange,
 }) => {
   const toggleRef = useRef(null);
   const hourListRef = useRef(null);
   const minListRef = useRef(null);
   const perListRef = useRef(null);
+  const [liveDate, liveTime] = useCurrentDate();
   const [togglePicker, setTogglePicker] = useState(false);
   const [timePicked, setTimePicked] = useState({
     hour: "",
@@ -109,81 +111,75 @@ const TimePicker = ({
     period: "",
   });
 
-  const { fromDtm, selDt } = useMemo(() => {
-    if (!fromDate || !selecteDate)
-      return {
-        fromDtm: new Date().getTime(),
-        selDt: new Date(),
-      };
-    const fromDtm = fromDate?.getTime();
-    const selDt = selecteDate;
-    return { fromDtm, selDt };
-  }, [fromDate, selecteDate]);
+  const { selectedDateStr, selectedTMS, currentBuffTMS } = useMemo(() => {
+    const selectedDateStr = selecteDate
+      ? selecteDate.toLocaleDateString()
+      : new Date().toLocaleDateString();
+    const selectedTMS = new Date(
+      `${selectedDateStr} ${selectedTime}`
+    ).getTime();
+    const currentBuffTMS =
+      new Date(`${liveDate} ${liveTime}`).getTime() + 1000 * 60 * bufferTime;
+    return { selectedDateStr, selectedTMS, currentBuffTMS };
+  }, [selectedTime, selecteDate, liveDate, liveTime, bufferTime]);
 
   const handleTogglePicker = () => {
     setTogglePicker((e) => !e);
   };
 
+  const alignTimePickedToTop = useCallback(
+    (hr, min, pr, minSelect) => {
+      if (!hourListRef.current || !minListRef.current || !perListRef.current)
+        return;
+      if (!hr || !min || !pr) return;
+      const hrIndex = HOURS.indexOf(hr);
+      const minIndex = MINUTES[minSelect].indexOf(min);
+      const perIndex = PERIOD.indexOf(pr);
+      const hrElement = hourListRef.current.children[hrIndex];
+      const minElement = minListRef.current.children[minIndex];
+      const perElement = perListRef.current.children[perIndex];
+      hourListRef.current.scrollTop = hrElement?.offsetTop - 10;
+      minListRef.current.scrollTop = minElement?.offsetTop - 10;
+      perListRef.current.scrollTop = perElement?.offsetTop - 10;
+    },
+    [hourListRef, minListRef, perListRef]
+  );
+
   const handleChange = useCallback(
     (date) => {
       if (!date) return;
-      const timeSelect = date?.toLocaleTimeString(undefined, {
+      const timeSelect = date?.toLocaleTimeString("en", {
         hour: "2-digit",
         minute: "2-digit",
         hourCycle: "h12",
       });
       const [hr, min_pr] = timeSelect.split(":");
       const [min, pr] = min_pr.split(" ");
-      if (hourListRef.current && minListRef.current && perListRef.current) {
-        const hrIndex = HOURS.indexOf(hr);
-        const minIndex = MINUTES[minutesSelection].indexOf(min);
-        const perIndex = PERIOD.indexOf(pr?.trim());
-        const hrElement = hourListRef.current.children[hrIndex];
-        const minElement = minListRef.current.children[minIndex];
-        const perElement = perListRef.current.children[perIndex];
-        hourListRef.current.scrollTop = hrElement?.offsetTop - 10;
-        minListRef.current.scrollTop = minElement?.offsetTop - 10;
-        perListRef.current.scrollTop = perElement?.offsetTop - 10;
-      }
       const timeStr = `${hr}:${min} ${pr?.trim()}`;
       setTimePicked({ hour: hr, minutes: min, period: pr?.trim() });
+      alignTimePickedToTop(hr, min, pr.trim(), minutesSelection);
       onChange && onChange(timeStr);
     },
-    [hourListRef, minListRef, perListRef, minutesSelection, onChange]
+    [alignTimePickedToTop, minutesSelection, onChange]
   );
 
   useEffect(() => {
-    if (value && typeof value === "string" && !value.includes("Invalid Date")) {
-      const valDate = new Date(`${selDt.toDateString()} ${value}`);
-      if (valDate.getTime() > fromDtm) {
-        handleChange(valDate);
-        return;
-      }
+    if (!selectedDateStr || !selectedTMS || !currentBuffTMS) return;
+    const confirmTMS =
+      selectedTMS > currentBuffTMS ? selectedTMS : currentBuffTMS;
+    const confirmDT = new Date(confirmTMS);
+    if (selectedTMS > currentBuffTMS) {
+      handleChange && handleChange(confirmDT);
+      return;
     }
-    let slotDate;
-    const currTm = new Date().toLocaleTimeString(undefined, {
-      hour: "2-digit",
-      minute: "2-digit",
-      hourCycle: "h12",
-    });
-    const selDate = new Date(`${selDt.toDateString()} ${currTm}`);
-    const modMins =
-      minutesSelection === "quater"
-        ? selDate.getMinutes() % 15
-        : selDate.getMinutes() % 1;
-    selDate.setMinutes(selDate.getMinutes() - modMins);
+    const slotDT = confirmDT;
+    const slotOffset = minutesSelection === "quater" ? 15 : 1;
     for (const min of MINUTES[minutesSelection]) {
-      const appMin =
-        minutesSelection === "quater" ? parseInt(min) + 15 : parseInt(min) + 1;
-      const appTime = selDate.getTime() + 1000 * 60 * appMin;
-      console.log(selDate, new Date(appTime));
-      if (appTime > fromDtm) {
-        slotDate = new Date(appTime);
-        break;
-      }
+      slotDT.setMinutes(slotOffset + parseInt(min), 0);
+      if (slotDT.getTime() > confirmTMS) break;
     }
-    handleChange(slotDate);
-  }, [value, selDt, fromDtm, minutesSelection]);
+    handleChange && handleChange(slotDT);
+  }, [minutesSelection, selectedDateStr, selectedTMS, currentBuffTMS]);
 
   useEffect(() => {
     if (!togglePicker) return;
@@ -192,11 +188,9 @@ const TimePicker = ({
       block: "center",
       inline: "center",
     });
-    const dts = new Date(selDt);
-    const tstr = `${timePicked.hour}:${timePicked.minutes} ${timePicked.period}`;
-    const dt = new Date(`${dts.toDateString()} ${tstr}`);
-    handleChange(dt);
-  }, [togglePicker]);
+    const { hour, minutes, period } = timePicked;
+    alignTimePickedToTop(hour, minutes, period, minutesSelection);
+  }, [togglePicker, minutesSelection, alignTimePickedToTop]);
 
   useEffect(() => {
     function handleclickOutside(event) {
@@ -218,8 +212,8 @@ const TimePicker = ({
           type="text"
           name=""
           id=""
-          value={`${timePicked.hour}:${timePicked.minutes} ${timePicked.period}`}
           className={`${classNameInput}`}
+          value={`${timePicked.hour}:${timePicked.minutes} ${timePicked.period}`}
           onClick={handleTogglePicker}
           readOnly
         />
@@ -236,13 +230,11 @@ const TimePicker = ({
             <div className="cx_time_lists">
               <ul className="cx_time_ul" ref={hourListRef}>
                 {HOURS.map((item) => {
-                  const lhr = parseInt(item);
-                  const lmin = timePicked.minutes;
-                  const lper = timePicked.period;
-                  const dt = new Date(
-                    `${selDt.toDateString()} ${lhr}:${lmin} ${lper}`
-                  );
-                  const flagDisable = dt.getTime() < fromDtm;
+                  const hr = parseInt(item);
+                  const min = timePicked.minutes;
+                  const per = timePicked.period;
+                  const dt = new Date(`${selectedDateStr} ${hr}:${min} ${per}`);
+                  const flagDisable = dt.getTime() < currentBuffTMS;
                   const classActive =
                     timePicked.hour === item && !flagDisable
                       ? "cx_time_li_active"
@@ -263,13 +255,11 @@ const TimePicker = ({
               </ul>
               <ul className="cx_time_ul" ref={minListRef}>
                 {MINUTES[minutesSelection].map((item) => {
-                  const lhr = parseInt(timePicked.hour);
-                  const lmin = parseInt(item);
-                  const lper = timePicked.period;
-                  const dt = new Date(
-                    `${selDt.toDateString()} ${lhr}:${lmin} ${lper}`
-                  );
-                  const flagDisable = dt.getTime() < fromDtm;
+                  const hr = parseInt(timePicked.hour);
+                  const min = parseInt(item);
+                  const per = timePicked.period;
+                  const dt = new Date(`${selectedDateStr} ${hr}:${min} ${per}`);
+                  const flagDisable = dt.getTime() <= currentBuffTMS;
                   const classActive =
                     timePicked.minutes === item && !flagDisable
                       ? "cx_time_li_active"
@@ -293,9 +283,7 @@ const TimePicker = ({
                   const hr = timePicked.hour;
                   const min = timePicked.minutes;
                   const per = item;
-                  const dt = new Date(
-                    `${selDt.toDateString()} ${hr}:${min} ${per}`
-                  );
+                  const dt = new Date(`${selectedDateStr} ${hr}:${min} ${per}`);
                   const classActive =
                     timePicked.period === item ? "cx_time_li_active" : "";
                   return (

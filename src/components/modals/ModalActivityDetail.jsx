@@ -52,7 +52,9 @@ const ModalActivityDetail = (props) => {
     classStatus,
     classBg,
     classText,
+    classDetailStatus,
     textStatus,
+    textDetailStatus,
   } = useMemo(() => {
     if (!activity_type) return {};
     switch (activity_type) {
@@ -198,12 +200,14 @@ const ModalActivityDetail = (props) => {
                             <td>{paid_date}</td>
                           </tr>
                         )}
-                      {activity_type === ACT_TYPE_REQUEST && (
-                        <tr>
-                          <td>Status</td>
-                          <td>{status}</td>
-                        </tr>
-                      )}
+                      <tr>
+                        <td>Status</td>
+                        <td>
+                          <span className={classDetailStatus}>
+                            {textDetailStatus || status}
+                          </span>
+                        </td>
+                      </tr>
                       {request_from && (
                         <tr>
                           <td>
@@ -211,7 +215,7 @@ const ModalActivityDetail = (props) => {
                               status === ACT_STATUS_PAID) ||
                             (request_type === ACT_TRANSACT_CREDIT &&
                               status === ACT_STATUS_PAID)
-                              ? "Receive from"
+                              ? "Receive From"
                               : "Request From"}
                           </td>
                           <td>{request_from}</td>
@@ -222,7 +226,7 @@ const ModalActivityDetail = (props) => {
                           <td>
                             {activity_type === ACT_TYPE_REQUEST
                               ? "Request To"
-                              : "Paid To"}
+                              : "Sent To"}
                           </td>
                           <td>{paid_to}</td>
                         </tr>

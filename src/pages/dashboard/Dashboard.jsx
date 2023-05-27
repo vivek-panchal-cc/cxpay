@@ -23,6 +23,7 @@ import RecentActivities from "../../components/activity/RecentActivities";
 import useBalance from "hooks/useBalance";
 import useChartData from "hooks/useChartData";
 import ModalAddContact from "components/modals/ModalAddContact";
+import { SendPaymentContext } from "context/sendPaymentContext";
 
 // const balanceDataArr = [31, 50, 91, 80, 102, 79, 150];
 
@@ -56,6 +57,7 @@ const Dashboard = () => {
   // const [toDate, setToDate] = useState(new Date());
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
+  const { handleSendContacts } = useContext(SendPaymentContext);
   const { first_name, company_name } = useSelector(
     (state) => state.userProfile.profile
   );
@@ -65,7 +67,6 @@ const Dashboard = () => {
   const [totalInvitedData, setTotalInvitedData] = useState(0);
   const [searchContactText, setSearchContactText] = useState("");
   const [isLoadingContacts, setIsLoadingContacts] = useState(true);
-  const [selectedContactsIds, setSelectedContactsIds] = useState([]);
 
   const [cardsList, setCardsList] = useState([]);
   const [slideCard, setSlideCard] = useState({});
@@ -91,6 +92,17 @@ const Dashboard = () => {
     } finally {
       setLoadingAct(false);
     }
+  };
+
+  // handle selected contacts
+  const handleSelectContact = (e) => {
+    const value = e?.currentTarget?.value;
+    const checked = e?.currentTarget?.checked;
+    if (!value) return;
+    const contact = inviteContactList.find(
+      (con) => con.account_number === value
+    );
+    if (contact) handleSendContacts([contact]);
   };
 
   // Debouncing for contacts
@@ -244,15 +256,15 @@ const Dashboard = () => {
                     isLoading={isLoadingContacts}
                     classNameContainer="send-group-slider"
                     contacts={inviteContactList}
-                    selectedContacts={selectedContactsIds}
-                    handleSelectedItems={() => {}}
+                    selectedContacts={[]}
+                    handleSelectedItems={handleSelectContact}
                     handleReachEnd={handleReachEndContacts}
                     fullWidth={false}
                     emptyListMsg="Contacts not found"
                     ListItemComponent={ContactCard}
                     ListItemComponentProps={{
                       fullWidth: false,
-                      isSelectable: false,
+                      isSelectable: true,
                       fallbackImgUrl:
                         "assets/images/single_contact_profile.png",
                     }}

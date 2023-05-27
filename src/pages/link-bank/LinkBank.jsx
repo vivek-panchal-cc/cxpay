@@ -25,7 +25,7 @@ const LinkBank = (props) => {
     initialValues: {
       account_type: "current",
       bank_name: "",
-      routing_number: "",
+      swift_code: "",
       bank_number: "",
       bank_holder_first_name: first_name || "",
       bank_holder_last_name: last_name || "",
@@ -45,7 +45,7 @@ const LinkBank = (props) => {
         if (typeof error === "string") return toast.error(error);
         setErrors({
           bank_name: error.bank_name?.[0],
-          routing_number: error.routing_number?.[0],
+          swift_code: error.swift_code?.[0],
           bank_number: error.bank_number?.[0],
           bank_holder_first_name: error.bank_holder_first_name?.[0],
           bank_holder_last_name: error.bank_holder_last_name?.[0],
@@ -134,17 +134,14 @@ const LinkBank = (props) => {
                   className="form-control"
                   placeholder={
                     formik.values.account_type === "savings"
-                      ? "Routing Number"
-                      : "Routing Number"
+                      ? "Swift Code"
+                      : "Swift Code"
                   }
-                  name="routing_number"
+                  name="swift_code"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.routing_number}
-                  error={
-                    formik.touched.routing_number &&
-                    formik.errors.routing_number
-                  }
+                  value={formik.values.swift_code}
+                  error={formik.touched.swift_code && formik.errors.swift_code}
                 />
               </div>
             </div>

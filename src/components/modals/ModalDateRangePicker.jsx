@@ -19,6 +19,18 @@ function ModalDateRangePicker(props) {
   const [selectRange, setSelectedRange] = useState({ startDate, endDate });
   const [disableConfirm, setDisableConfirm] = useState(true);
 
+  const handleRangeChange = async (dates) => {
+    const [start, end] = dates;
+    setSelectedRange({ startDate: start, endDate: end });
+  };
+
+  const handleSubmit = () => {
+    const { startDate, endDate } = selectRange;
+    if (!startDate) return;
+    if (!endDate) setSelectedRange({ startDate, endDate: startDate });
+    handleChangeDateRange({ startDate, endDate: endDate || startDate });
+  };
+
   useEffect(() => {
     function handleclickOutside(event) {
       if (!modalRef.current) return;
@@ -32,14 +44,9 @@ function ModalDateRangePicker(props) {
     };
   }, [modalRef, setShow]);
 
-  const handleRangeChange = async (dates) => {
-    const [start, end] = dates;
-    setSelectedRange({ startDate: start, endDate: end });
-  };
-
   useEffect(() => {
-    const { startDate, endDate } = selectRange;
-    if (startDate && endDate) setDisableConfirm(false);
+    const { startDate } = selectRange;
+    if (startDate) setDisableConfirm(false);
     else setDisableConfirm(true);
   }, [selectRange]);
 
@@ -82,7 +89,7 @@ function ModalDateRangePicker(props) {
                 type="button"
                 className="btn btn-primary px-4 py-3"
                 style={{ minWidth: "initial" }}
-                onClick={() => handleChangeDateRange(selectRange)}
+                onClick={handleSubmit}
                 disabled={disableConfirm}
               >
                 Okay

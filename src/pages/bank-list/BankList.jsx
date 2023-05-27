@@ -103,7 +103,7 @@ const BankList = () => {
               <div className="bank-logo-name-wrap">Bank Name</div>
               <div className="bank-account-type-wrap">Primary Account</div>
               <div className="bank-account-num-wrap">Account Number</div>
-              <div className="bank-account-routing-num">Routing Number</div>
+              <div className="bank-account-routing-num">Swift Code</div>
               <div className="bank-account-type-wrap-1">Account Type</div>
               <div className="bank-del-wrap"> </div>
               <div className="bank-del-wrap"> </div>
@@ -139,7 +139,7 @@ const BankList = () => {
                     <span>{elm?.bank_number}</span>
                   </div>
                   <div className=" bank-account-routing-num">
-                    <span>{elm?.routing_number}</span>
+                    <span>{elm?.swift_code}</span>
                   </div>
                   <div className="bank-account-type-wrap-1">
                     {getCapitalized(elm?.account_type) + " Account"}

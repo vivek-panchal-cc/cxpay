@@ -15,24 +15,27 @@ const ContactCard = (props) => {
   } = props;
   const { id, title, imgUrl } = renameKeys(alias, item);
   const isChecked = selectedList.includes(id.toString());
+
   return (
     <div className={className}>
       <div className="cb-div">
         {isSelectable && (
           <input
+            id={`check${id}`}
             type={"checkbox"}
             value={id}
             onChange={handleSelect}
             checked={isChecked}
           />
         )}
-        <div
-          className={`${fullWidth ? "img-wrap" : "recent-con-img-wrap"} ${
+        <label
+          htmlFor={`check${id}`}
+          className={`cursor-pointer ${fullWidth ? "img-wrap" : "recent-con-img-wrap"} ${
             imgUrl ? "grp-user-up-img" : ""
           }`}
         >
           <Image src={imgUrl} fallbacksrc={fallbackImgUrl} alt="contact img" />
-        </div>
+        </label>
       </div>
       <div className="contact-name">{title}</div>
     </div>

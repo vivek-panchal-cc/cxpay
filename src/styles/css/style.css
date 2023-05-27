@@ -7396,6 +7396,17 @@ ul.recent-act-lw-main .act-amt-status-wrap {
 .dashboard-recent-contact-sec .swiper-wrapper .recent-con-img-wrap {
   box-shadow: 0px 20.434px 40.868px rgba(0, 0, 0, 0.08);
 }
+.dashboard-recent-contact-sec
+  .swiper-wrapper
+  .swiper-slide
+  .cb-div
+  input[type="checkbox"] {
+  visibility: hidden;
+  appearance: none;
+  width: auto;
+  inset: 0;
+}
+
 .dashboard-graph-sec .dashboard-recent-activity-sec ul.activity-lw-main li {
   cursor: default;
 }

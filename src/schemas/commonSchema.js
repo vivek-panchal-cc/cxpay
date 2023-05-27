@@ -151,6 +151,13 @@ const routingNumberSchema = yup
   .required("Please enter Routing number")
   .matches(/^[0-9]*$/, "Invalid routing number");
 
+const swiftCodeSchema = yup
+  .string()
+  .min(8, "Minimum limit is 8 characters")
+  .max(11, "Maximum limit is 11 characters")
+  .required("Please enter swift code")
+  .matches(/^[A-Z0-9]*$/, "Please enter a valid swift code");
+
 const bankNumberSchema = yup
   .string()
   .max(18, "Maximum limit is 18 digits")
@@ -183,6 +190,7 @@ export {
   addressSchema,
   bankNameSchema,
   routingNumberSchema,
+  swiftCodeSchema,
   bankNumberSchema,
   countrySchema,
   citySchema,

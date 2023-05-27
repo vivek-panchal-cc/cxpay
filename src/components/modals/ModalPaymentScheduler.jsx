@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from "react";
+import React, { useRef, useEffect } from "react";
 import styles from "./modal.module.scss";
 import ReactDatePicker from "react-datepicker";
 // import TimePicker from "react-time-picker";
@@ -11,12 +11,6 @@ import { SCHEDULE_BUFFER } from "constants/all";
 const ModalPaymentScheduler = (props) => {
   const { id, show, setShow, className, classNameChild, handleSubmit } = props;
   const modalRef = useRef(null);
-
-  const dtTimeBuffer = useMemo(() => {
-    const dtm15 = new Date().getTime() + 1000 * 60 * SCHEDULE_BUFFER;
-    const dtm5 = new Date(`${new Date().toDateString()} 06:55 PM`);
-    return new Date(dtm5);
-  }, [show]);
 
   const formik = useFormik({
     initialValues: {
@@ -43,12 +37,10 @@ const ModalPaymentScheduler = (props) => {
   };
 
   const handleTimeChange = async (time) => {
-    if (!formik.values.time) {
-      setTimeout(() => {
-        return formik.setFieldValue("time", time);
-      }, 500);
-    }
-    await formik.setFieldValue("time", time);
+    setTimeout(async () => {
+      await formik.setFieldValue("time", time);
+      return;
+    }, 100);
   };
 
   // For closing the modal on click of outside the modal area
@@ -101,22 +93,13 @@ const ModalPaymentScheduler = (props) => {
                   <div className="col-12 col p-0">
                     <div className="form-field">
                       <TimePicker
-                        minutesSelection="quater"
-                        value={formik.values.time}
-                        selecteDate={formik.values.date}
-                        fromDate={dtTimeBuffer}
-                        onChange={handleTimeChange}
                         classNameInput="w-full form-control"
-                      />
-                      {/* <TimePicker
-                        className="w-full form-control"
-                        value={selectedTime}
+                        minutesSelection="quater"
+                        bufferTime={SCHEDULE_BUFFER}
+                        selecteDate={formik.values.date}
+                        selectedTime={""}
                         onChange={handleTimeChange}
-                        clearIcon={null}
-                        format="hh:mm:ss a"
-                        maxDetail="second"
-                        disableClock
-                      /> */}
+                      />
                       {formik.touched.time && formik.errors.time && (
                         <p className="text-danger pb-0">{formik.errors.time}</p>
                       )}
