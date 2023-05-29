@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { apiRequest } from "helpers/apiRequests";
-import { IconCalender, IconRefresh } from "styles/svgs";
+import { IconCalender, IconCross, IconRefresh, IconSearch } from "styles/svgs";
 import ActivityItem from "components/items/ActivityItem";
 import Pagination from "components/pagination/Pagination";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
@@ -8,6 +8,7 @@ import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
 import { uniqueId } from "helpers/commonHelpers";
 import { ActivityContext } from "context/activityContext";
 import useActivities from "hooks/useActivities";
+import Input from "components/ui/Input";
 
 const Activities = () => {
   const { handleActivityDetail, reloadList } = useContext(ActivityContext);
@@ -63,6 +64,7 @@ const Activities = () => {
 
   useEffect(() => {
     const page = actPagination ? actPagination.current_page : 1;
+    reload();
   }, [reloadList]);
 
   return (
@@ -74,7 +76,30 @@ const Activities = () => {
         </div>
         <div className="schedule-pay-sd-wrap">
           <div className="date-main-div d-flex">
-            <div className="date-inner-div" onClick={() => setShowFilter(true)}>
+            {/* <div className="form-field search-field">
+              <div
+                className="clearsearchbox"
+                style={{ opacity: false ? 1 : 0 }}
+                onClick={() => {}}
+              >
+                <IconCross />
+              </div>
+              <Input
+                type="search"
+                className="form-control js-searchBox-input"
+                name="search_field"
+                placeholder="Search..."
+                value={""}
+                onChange={() => {}}
+              />
+              <div className="search-btn">
+                <IconSearch style={{ stroke: "#0081c5" }} />
+              </div>
+            </div> */}
+            <div
+              className="date-inner-div mr-0"
+              onClick={() => setShowFilter(true)}
+            >
               <input
                 id="from-date"
                 type="text"

@@ -127,7 +127,6 @@ function App() {
                 <Route path="/send/payment" element={<SendPayment />} />
                 <Route path="/request" element={<RequestContact />} />
                 <Route path="/request/payment" element={<RequestPayment />} />
-
                 <Route element={<ScheduledPaymentLayout />}>
                   <Route
                     path="/view-schedule-payment"

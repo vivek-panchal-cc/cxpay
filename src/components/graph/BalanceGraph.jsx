@@ -98,6 +98,23 @@ const chartOption = {
   },
 };
 
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+const spendings = Array.from({ length: 12 }, () => 0);
+
 const BalanceGraph = (props) => {
   const { graphBackgroundImage, balanceDataArr, balance, monthDataArr } = props;
   const [options, setOptions] = useState({ ...chartOption });
@@ -114,6 +131,12 @@ const BalanceGraph = (props) => {
   useEffect(() => {
     if (!balanceDataArr && !monthDataArr) return;
     const tmpObj = { ...chartOption };
+    // const spends = [...spendings];
+    // if (monthDataArr[0]) {
+    //   const index = months.indexOf(monthDataArr?.[0]);
+    //   spends[index] = balanceDataArr[0];
+    //   tmpObj.series[0].data = spends;
+    // }
     tmpObj.series[0].data = balanceDataArr;
     tmpObj.options.xaxis.categories = monthDataArr;
     setOptions(tmpObj);
