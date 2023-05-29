@@ -146,7 +146,7 @@ const activityConsts = {
         classStatus: "btn-red",
         classBg: "cx-bg-red",
         classText: "cx-color-red",
-        textStatus: "Declined",
+        textStatus: "Request Declined",
         desc: "Requested money from YYYY",
       },
       [ACT_STATUS_CANCELLED]: {
@@ -155,7 +155,7 @@ const activityConsts = {
         classStatus: "btn-red",
         classBg: "cx-bg-red",
         classText: "cx-color-red",
-        textStatus: "Cancelled",
+        textStatus: "Request Cancelled",
         desc: "Requested money from YYYY",
       },
       [ACT_STATUS_PAID]: {
@@ -184,7 +184,7 @@ const activityConsts = {
         classStatus: "btn-red",
         classBg: "cx-bg-red",
         classText: "cx-color-red",
-        textStatus: "Declined",
+        textStatus: "Request Declined",
         desc: "YYYY requested money from you",
       },
       [ACT_STATUS_CANCELLED]: {
@@ -193,7 +193,7 @@ const activityConsts = {
         classStatus: "btn-red",
         classBg: "cx-bg-red",
         classText: "cx-color-red",
-        textStatus: "Cancelled",
+        textStatus: "Request Cancelled",
         desc: "YYYY requested money from you",
       },
       [ACT_STATUS_PAID]: {

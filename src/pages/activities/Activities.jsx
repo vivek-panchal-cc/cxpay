@@ -82,25 +82,10 @@ const Activities = () => {
                 placeholder="From"
                 value={
                   filters.startDate
-                    ? filters.startDate.toLocaleDateString("en-UK")
-                    : "From"
-                }
-                readOnly
-              />
-              <span className="date-cal">
-                <IconCalender style={{ stroke: "#0081C5" }} />
-              </span>
-            </div>
-            <div className="date-inner-div" onClick={() => setShowFilter(true)}>
-              <input
-                id="date-end-range"
-                type="text"
-                className="form-control"
-                placeholder="To"
-                value={
-                  filters?.endDate
-                    ? filters.endDate.toLocaleDateString("en-UK")
-                    : "To"
+                    ? `${filters.startDate.toLocaleDateString(
+                        "en-UK"
+                      )} - ${filters.endDate.toLocaleDateString("en-UK")}`
+                    : "From - To"
                 }
                 readOnly
               />

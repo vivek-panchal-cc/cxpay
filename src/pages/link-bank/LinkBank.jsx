@@ -129,14 +129,10 @@ const LinkBank = (props) => {
             <div className="row">
               <div className="col-12 col p-0">
                 <Input
-                  type="text"
-                  inputMode="numeric"
+                  type="text-uppercase"
+                  inputMode="text"
                   className="form-control"
-                  placeholder={
-                    formik.values.account_type === "savings"
-                      ? "Swift Code"
-                      : "Swift Code"
-                  }
+                  placeholder={"Swift Code"}
                   name="swift_code"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}

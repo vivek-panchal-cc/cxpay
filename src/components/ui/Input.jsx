@@ -10,6 +10,8 @@ const Input = forwardRef((props, ref) => {
         return "text";
       case "name":
         return "text";
+      case "text-uppercase":
+        return "text";
       default:
         return type;
     }
@@ -22,6 +24,9 @@ const Input = forwardRef((props, ref) => {
         return element;
       case "name":
         element.currentTarget.value = element.currentTarget.value.trimStart();
+        return element;
+      case "text-uppercase":
+        element.currentTarget.value = element.currentTarget.value.toUpperCase();
         return element;
       default:
         return element;

@@ -3353,7 +3353,7 @@ html:not([dir="rtl"]) .form-check {
 }
 .date-inner-div {
   position: relative;
-  max-width: 140px;
+  /* max-width: 140px; */
   width: 100%;
   margin-right: 30px;
 }
@@ -7422,4 +7422,29 @@ ul.recent-act-lw-main .act-amt-status-wrap {
   li
   button {
   pointer-events: none;
+}
+.fund-account-form > form {
+  max-width: 420px;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.fund-account-form .payment-footer-block h4.amount > span {
+  white-space: nowrap;
+  padding-right: 1px;
+  width: fit-content;
+}
+.fund-account-form .payment-footer-block .amount {
+  word-break: break-all;
+  white-space: normal;
+}
+.fund-account-form .payment-footer-block .amount {
+  font-size: 18px;
+  line-height: 18px;
+}
+.fund-account-form .payment-footer-block ul li > div {
+  width: 47% !important;
+}
+.fund-account-form .payment-footer-block ul li > h4 {
+  width: 53% !important;
 }

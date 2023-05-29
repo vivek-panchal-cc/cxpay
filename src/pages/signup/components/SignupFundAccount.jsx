@@ -60,7 +60,7 @@ function SignupFundAccount() {
       <div className="container login-signup-01 login-signup-02">
         <div className="row">
           <div className="col-xs-12">
-            <div className="login-signup-content-wrap login-signup01-content-wrap">
+            <div className="login-signup-content-wrap login-signup01-content-wrap fund-account-form">
               {/* <div className="login-signup-inner"> */}
               <h4 className="text-center">Welcome to</h4>
               <div className="login-logo-image text-center">

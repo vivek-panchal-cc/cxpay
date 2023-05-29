@@ -4765,3 +4765,17 @@
     height: 190px;
   }
 }
+@media only screen and (max-width: 1366px) and (min-width: 768px) {
+  .fund-account-form .payment-footer-block .amount {
+    font-size: 17px !important;
+    line-height: 18px !important;
+  }
+  .fund-account-form .payment-footer-block.p-4 {
+    padding: 23px 17px;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .payment-footer-block.p-4 {
+    padding: 25px 20px !important;
+  }
+}

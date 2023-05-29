@@ -246,6 +246,7 @@ function FundCreditCard(props) {
                   className="form-control"
                   placeholder="Amount"
                   name="transactionAmount"
+                  maxLength="10"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.transactionAmount}

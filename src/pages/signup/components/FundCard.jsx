@@ -202,6 +202,7 @@ function FundCard() {
             id="transactionAmount"
             className="form-control"
             placeholder="Amount"
+            maxLength="10"
             name="transactionAmount"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}

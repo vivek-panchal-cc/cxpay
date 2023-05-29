@@ -35,8 +35,9 @@ function ModalDateRangePicker(props) {
     function handleclickOutside(event) {
       if (!modalRef.current) return;
       const childDialog = modalRef.current?.children[0];
-      if (childDialog && !childDialog.contains(event.target))
+      if (childDialog && !childDialog.contains(event.target)) {
         setShow && setShow(false);
+      }
     }
     document.addEventListener("mousedown", handleclickOutside);
     return () => {

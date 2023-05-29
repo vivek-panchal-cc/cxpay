@@ -106,7 +106,7 @@ const ActivityProvider = ({ children }) => {
       case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_RECEIVE}_${ACT_STATUS_PENDING}`:
         setDiscardActDetail({
           heading: "Decline Request",
-          subHeading: "Are you sure to decline the requested payment ?",
+          subHeading: "Are you sure to decline the requested payment?",
           request_id,
           status: ACT_STATUS_DECLINED,
         });
@@ -115,7 +115,7 @@ const ActivityProvider = ({ children }) => {
       case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_SEND}_${ACT_STATUS_PENDING}`:
         setDiscardActDetail({
           heading: "Cancel Request",
-          subHeading: "Are you sure to cancel the request ?",
+          subHeading: "Are you sure to cancel the request?",
           request_id,
           status: ACT_STATUS_CANCELLED,
         });
