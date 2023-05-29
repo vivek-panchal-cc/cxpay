@@ -120,7 +120,11 @@ const userNotificationslice = createSlice({
       })
       .addCase(fetchMarkAsRead.fulfilled, (state, action) => {
         const { id } = action.payload;
-        state.allNotifications.map((item) => {
+        state.allNotifications?.map((item) => {
+          if (item.id === id) item.status = 1;
+          return item;
+        });
+        state.dropNotifications?.map((item) => {
           if (item.id === id) item.status = 1;
           return item;
         });

@@ -4,6 +4,7 @@ import { apiRequest } from "helpers/apiRequests";
 import { API_LOGIN_REFRESH_TOKEN } from "constants/urls";
 import { toast } from "react-toastify";
 import { browserName, fullVersion, timeZone } from "../helpers/headerRequests";
+import { Router } from "react-router-dom";
 
 // define API_URL in env file
 const axiosLoginInstance = axios.create({
@@ -63,11 +64,14 @@ const responseInterceptor = async (response) => {
 const responseErrorInterceptor = (error) => {
   const errResponse = error.response;
   if (errResponse && errResponse.status === 401 && errResponse.data) {
+    const token = storageRequest.getAuth();
+    if (token) {
+      toast.success(
+        "Your session has expired. Please login again to continue working"
+      );
+    }
     storageRequest.removeAuth();
-    window.location = "/login";
-    toast.success(
-      "Your session has expired. Please login again to continue working"
-    );
+    window.location.href = "/login";
     return Promise.reject(error);
   }
   return Promise.reject(error);
