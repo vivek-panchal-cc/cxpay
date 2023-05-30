@@ -36,16 +36,25 @@ const useActivities = ({
       setPagination(pagination);
     } catch (error) {
       console.log(error);
-      setListActivities([]);
-      setPagination({});
+      if (typeof error === "string") {
+        setListActivities([]);
+        setPagination({});
+      }
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    retrieveListActivities(page, search, start_date, end_date);
-  }, [page, search, start_date, end_date, reloadFlag]);
+    if (search === "") {
+      retrieveListActivities(page, search, start_date, end_date);
+      return;
+    }
+    const timeOut = setTimeout(() => {
+      retrieveListActivities(page, search, start_date, end_date);
+    }, 1000);
+    return () => clearTimeout(timeOut);
+  }, [page, search.trim(), start_date, end_date, reloadFlag]);
 
   return [loading, pagination, listActivities, reload];
 };

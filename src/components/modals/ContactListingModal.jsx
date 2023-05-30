@@ -1,6 +1,6 @@
 import Input from "components/ui/Input";
 import React, { useContext, useState, useEffect, useRef, useMemo } from "react";
-import { IconSearch } from "styles/svgs";
+import { IconCross, IconSearch } from "styles/svgs";
 import styles from "./modal.module.scss";
 import "./contactList.css";
 import { apiRequest } from "helpers/apiRequests";
@@ -154,47 +154,24 @@ function ContactListingModal(props) {
             <div className="modal-body">
               <h1 className="text-center mb-4">Add Contacts</h1>
               <div className="con-md-search-wrap">
-                <form name="sdsa">
-                  <div className="form-field search-field">
-                    <div
-                      className="js-clearSearchBox clearsearchbox"
-                      onClick={handleResetContactData}
-                    >
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 14 14"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M13 1L0.999999 13"
-                          stroke="#9B9B9B"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        ></path>
-                        <path
-                          d="M1 1L13 13"
-                          stroke="#9B9B9B"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        ></path>
-                      </svg>
-                    </div>
-                    <Input
-                      type="search"
-                      className="form-control js-searchBox-input"
-                      name="search-field"
-                      placeholder="Search..."
-                      onChange={searchContactData}
-                    />
-                    <div className="search-btn">
-                      <IconSearch />
-                    </div>
+                <div className="form-field search-field">
+                  <div
+                    className="clearsearchbox"
+                    onClick={handleResetContactData}
+                  >
+                    <IconCross />
                   </div>
-                </form>
+                  <Input
+                    type="search"
+                    className="form-control js-searchBox-input"
+                    name="search-field"
+                    placeholder="Search..."
+                    onChange={searchContactData}
+                  />
+                  <div className="search-btn">
+                    <IconSearch />
+                  </div>
+                </div>
                 <div className="con-md-del-wrap">
                   <a
                     className="btn btn-primary con-md-delbtn"

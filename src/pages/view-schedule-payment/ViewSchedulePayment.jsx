@@ -77,37 +77,32 @@ const ViewSchedulePayment = () => {
           <div className="title-content-wrap send-pay-title-sec">
             <h3>My Scheduled Payment</h3>
           </div>
-          <div className="schedule-pay-sd-wrap">
-            <div className="date-main-div d-flex">
-              <div
-                className="date-inner-div"
-                onClick={() => setShowFilter(true)}
-              >
-                <input
-                  id="from-date"
-                  type="text"
-                  className="form-control"
-                  placeholder="From"
-                  value={
-                    filters.startDate
-                      ? `${filters.startDate.toLocaleDateString(
-                          "en-UK"
-                        )} - ${filters.endDate.toLocaleDateString("en-UK")}`
-                      : "From - To"
-                  }
-                  readOnly
-                />
-                <span className="date-cal">
-                  <IconCalender style={{ stroke: "#0081C5" }} />
-                </span>
-              </div>
-              <button
-                className="shedule-date-filter"
-                onClick={handleResetFilter}
-              >
-                <IconRefresh />
-              </button>
+          <div className="schedule-pay-sd-wrap gap-4">
+            <div
+              className="date-filter-calendar"
+              onClick={() => setShowFilter(true)}
+            >
+              <input
+                id="from-date"
+                type="text"
+                className="form-control"
+                placeholder="From"
+                value={
+                  filters.startDate
+                    ? `${filters.startDate.toLocaleDateString(
+                        "en-UK"
+                      )} - ${filters.endDate.toLocaleDateString("en-UK")}`
+                    : "From - To"
+                }
+                readOnly
+              />
+              <span className="date-cal">
+                <IconCalender style={{ stroke: "#c4c4c4" }} />
+              </span>
             </div>
+            <button className="shedule-date-filter" onClick={handleResetFilter}>
+              <IconRefresh />
+            </button>
           </div>
         </div>
 

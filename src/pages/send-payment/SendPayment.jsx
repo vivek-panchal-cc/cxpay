@@ -38,6 +38,7 @@ function SendPayment(props) {
   );
   const { wallet, request_id } = sendCreds || [];
 
+  const [scrollTop, setScrollTop] = useState(false);
   const [showOtpPoup, setShowOtpPopup] = useState(false);
   const [showSentPopup, setShowSentPopup] = useState(false);
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
@@ -163,6 +164,7 @@ function SendPayment(props) {
     if (Object.keys(validateObj).length > 0) {
       formik.setTouched(validateObj);
       formik.setErrors(validateObj);
+      setScrollTop((cs) => !cs);
       return;
     }
     setShowSchedulePopup(true);
@@ -226,7 +228,7 @@ function SendPayment(props) {
       block: "center",
       inline: "nearest",
     });
-  }, [formik.isSubmitting]);
+  }, [formik.isSubmitting, scrollTop]);
 
   // For calculating charges when amount changes for any contact
   useEffect(() => {

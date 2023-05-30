@@ -1,90 +1,91 @@
 .con-md-search-wrap {
-    flex-wrap: nowrap;
-    display: flex;
-    width: 100%;
+  flex-wrap: nowrap;
+  display: flex;
+  width: 100%;
 }
 .con-list-pop .modal-dialog {
-    max-width: 700px !important;
+  max-width: 700px !important;
 }
-.con-md-search-wrap form {
-    width: 100%;
-    margin-right: 20px;
+.con-md-search-wrap {
+  width: 100%;
+  margin-right: 20px;
 }
 .con-md-delbtn {
-    padding: 14px 20px;
-    font-size: 15px;
-    min-width: 0;
-    line-height: 20px;
+  padding: 14px 20px;
+  font-size: 15px;
+  min-width: 0;
+  line-height: 20px;
 }
-.con-md-search-wrap form .search-field {
-	max-width: 100%;
-	position: relative;
+.con-md-search-wrap .search-field {
+  max-width: 100%;
+  position: relative;
 }
 .cm-listing-check input {
-    visibility: hidden;
-    width: 0px;
-    height: 0px;
+  visibility: hidden;
+  width: 0px;
+  height: 0px;
 }
 .cm-listing-check label:before {
-    width: 18px;
-    height: 18px;
-    border: 1px solid #363853;
-    display: block;
-    content: '';
-    background-color: transparent;
-	border-radius: 50%;
-	position: absolute;
-	right: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #363853;
+  display: block;
+  content: "";
+  background-color: transparent;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
 }
 .cm-listing-check label:after {
-    content: '';
-    width: 5px;
-    height: 8px;
-    border: solid #fff;
-    border-width: 0 2px 2px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-    display: block;
-    position: absolute;
-    top: 4px;
-    opacity: 0;
-    visibility: hidden;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    right: 7px;
-    left: auto;
+  content: "";
+  width: 5px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  top: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  right: 7px;
+  left: auto;
 }
 .cm-listing-check label {
-    position: relative;
-    margin: 0px;
-    padding: 0px;
-    cursor: pointer;
-    width: 100%;
-    padding-right: 32px;
-    color: #363853;
-    font-size: 15px;
-    line-height: 22px;
-    font-weight: 500;
-    font-family: 'Quicksand';
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+  cursor: pointer;
+  width: 100%;
+  padding-right: 32px;
+  color: #363853;
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 500;
+  font-family: "Quicksand";
 }
 .cm-listing-check input:checked ~ label:after {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 .cm-listing-check input:checked ~ label:before {
-    border-color: #0081c5;
-    background-color: #0081c5;
+  border-color: #0081c5;
+  background-color: #0081c5;
 }
 .cml-container {
-    padding-top: 30px;
+  padding-top: 30px;
 }
 .cml-container ul li {
-    margin-bottom: 18px;
+  margin-bottom: 18px;
 }
-.cml-container ul li:last-child{
-    margin-bottom: 0px;
+.cml-container ul li:last-child {
+  margin-bottom: 0px;
 }
 #list_con_popup .modal-content {
-	padding: 40px !important;
-	margin: 20px 15px;
+  padding: 40px !important;
+  margin: 20px 15px;
 }

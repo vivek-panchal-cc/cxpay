@@ -21,7 +21,10 @@ const useInvitedContacts = ({ page = 1, search = "" }) => {
       setPagination(pagination);
     } catch (error) {
       console.log(error);
-      if (typeof error === "string") setListInvitedContacts([]);
+      if (typeof error === "string") {
+        setListInvitedContacts([]);
+        setPagination({});
+      }
     } finally {
       setLoading(false);
     }

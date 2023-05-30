@@ -184,7 +184,7 @@
   width: 90%;
   margin: auto;
 }
-.con-md-search-wrap form .search-field input[type="search"] {
+.con-md-search-wrap .search-field input[type="search"] {
   padding-top: 15px !important;
   padding-bottom: 15px !important;
 }

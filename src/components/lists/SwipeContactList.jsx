@@ -92,13 +92,9 @@ const SwipeContactList = (props) => {
           className={`position-absolute bg-white z-2 h-100 w-100 ${
             fullWidth ? "ps-4" : ""
           }`}
-          style={{ top: "10px", left: "0px" }}
+          style={{ inset: "0" }}
         >
-          <div
-            className={`d-inline-flex ${
-              fullWidth ? "column-gap-2" : "column-gap-2"
-            }`}
-          >
+          <div className={`d-inline-flex column-gap-2 pt-2`}>
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) =>
               fullWidth ? (
                 <LoaderSendContact key={item} />

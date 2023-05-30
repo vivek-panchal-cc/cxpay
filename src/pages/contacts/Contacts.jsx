@@ -48,6 +48,11 @@ const Contacts = () => {
     search: search,
   });
 
+  const handleSearchContact = (elm) => {
+    setCurrentPage(1);
+    setSearch(elm.target.value);
+  };
+
   const handlePopupInvite = (e) => {
     setShow(true);
     setInviteTitle(e.currentTarget.value);
@@ -107,7 +112,6 @@ const Contacts = () => {
           </div>
           <div className="contact-top-search-sec d-flex align-items-center">
             <div className="contact-serch-main">
-              <form onSubmit={(e) => e.preventDefault()}>
                 <div className="form-field search-field">
                   <div
                     className="clearsearchbox"
@@ -121,14 +125,13 @@ const Contacts = () => {
                     className="form-control js-searchBox-input"
                     name="search-field"
                     value={search}
-                    onChange={(e) => setSearch(e?.currentTarget?.value)}
+                    onChange={handleSearchContact}
                     placeholder="Search..."
                   />
                   <div className="search-btn">
                     <IconSearch />
                   </div>
                 </div>
-              </form>
             </div>
             <div className="contact-top-btn-nav">
               <div className="con-btn-wrap con-add-btn-wrap">

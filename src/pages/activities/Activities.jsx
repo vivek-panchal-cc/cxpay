@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { apiRequest } from "helpers/apiRequests";
 import { IconCalender, IconCross, IconRefresh, IconSearch } from "styles/svgs";
 import ActivityItem from "components/items/ActivityItem";
 import Pagination from "components/pagination/Pagination";
@@ -62,6 +61,11 @@ const Activities = () => {
     setCurrentPage(page);
   };
 
+  const handleSearchActivity = (elm) => {
+    setCurrentPage(1);
+    setSearchText(elm.target.value);
+  };
+
   useEffect(() => {
     const page = actPagination ? actPagination.current_page : 1;
     reload();
@@ -69,59 +73,57 @@ const Activities = () => {
 
   return (
     <div className="activities-sec">
-      <div className="col-12 send-payment-ttile-wrap sdp-main-new-1">
-        <div className="title-content-wrap send-pay-title-sec">
+      <div className="col-12 send-payment-ttile-wrap sdp-main-new-1 justify-content-between">
+        <div className="title-content-wrap send-pay-title-sec w-auto">
           <h3>Activities</h3>
           <p></p>
         </div>
-        <div className="schedule-pay-sd-wrap">
-          <div className="date-main-div d-flex">
-            {/* <div className="form-field search-field">
-              <div
-                className="clearsearchbox"
-                style={{ opacity: false ? 1 : 0 }}
-                onClick={() => {}}
-              >
-                <IconCross />
-              </div>
-              <Input
-                type="search"
-                className="form-control js-searchBox-input"
-                name="search_field"
-                placeholder="Search..."
-                value={""}
-                onChange={() => {}}
-              />
-              <div className="search-btn">
-                <IconSearch style={{ stroke: "#0081c5" }} />
-              </div>
-            </div> */}
+        <div className="schedule-pay-sd-wrap gap-4 flex-wrap w-auto">
+          <div className="form-field search-field">
             <div
-              className="date-inner-div mr-0"
-              onClick={() => setShowFilter(true)}
+              className="clearsearchbox"
+              style={{ opacity: serachText ? 1 : 0 }}
+              onClick={() => setSearchText("")}
             >
-              <input
-                id="from-date"
-                type="text"
-                className="form-control"
-                placeholder="From"
-                value={
-                  filters.startDate
-                    ? `${filters.startDate.toLocaleDateString(
-                        "en-UK"
-                      )} - ${filters.endDate.toLocaleDateString("en-UK")}`
-                    : "From - To"
-                }
-                readOnly
-              />
-              <span className="date-cal">
-                <IconCalender style={{ stroke: "#0081C5" }} />
-              </span>
+              <IconCross />
             </div>
-            <button className="shedule-date-filter" onClick={handleResetFilter}>
-              <IconRefresh />
-            </button>
+            <Input
+              type="search"
+              className="form-control js-searchBox-input"
+              name="search_field"
+              placeholder="Search..."
+              value={serachText}
+              onChange={handleSearchActivity}
+            />
+            <div className="search-btn">
+              <IconSearch style={{ stroke: "#0081c5" }} />
+            </div>
           </div>
+          <div
+            className="date-filter-calendar"
+            onClick={() => setShowFilter(true)}
+          >
+            <input
+              id="from-date"
+              type="text"
+              className="form-control"
+              placeholder="From"
+              value={
+                filters.startDate
+                  ? `${filters.startDate.toLocaleDateString(
+                      "en-UK"
+                    )} - ${filters.endDate.toLocaleDateString("en-UK")}`
+                  : "From - To"
+              }
+              readOnly
+            />
+            <span className="date-cal">
+              <IconCalender style={{ stroke: "#c4c4c4" }} />
+            </span>
+          </div>
+          <button className="shedule-date-filter" onClick={handleResetFilter}>
+            <IconRefresh />
+          </button>
         </div>
       </div>
       <div className="activity-user-list-wrap">

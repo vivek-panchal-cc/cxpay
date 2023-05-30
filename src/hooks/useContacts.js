@@ -22,7 +22,10 @@ const useContacts = ({ page = 1, search = "" }) => {
       setListContacts(contacts || []);
     } catch (error) {
       console.log(error);
-      if (typeof error === "string") setListContacts([]);
+      if (typeof error === "string") {
+        setListContacts([]);
+        setPagination({});
+      }
     } finally {
       setLoading(false);
     }

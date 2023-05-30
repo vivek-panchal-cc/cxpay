@@ -81,6 +81,8 @@ const chartOption = {
       },
     },
     xaxis: {
+      min: 4,
+      max: 8,
       axisBorder: {
         show: true,
         color: "#000",
@@ -113,8 +115,6 @@ const months = [
   "Dec",
 ];
 
-const spendings = Array.from({ length: 12 }, () => 0);
-
 const BalanceGraph = (props) => {
   const { graphBackgroundImage, balanceDataArr, balance, monthDataArr } = props;
   const [options, setOptions] = useState({ ...chartOption });
@@ -131,15 +131,27 @@ const BalanceGraph = (props) => {
   useEffect(() => {
     if (!balanceDataArr && !monthDataArr) return;
     const tmpObj = { ...chartOption };
-    // const spends = [...spendings];
-    // if (monthDataArr[0]) {
-    //   const index = months.indexOf(monthDataArr?.[0]);
-    //   spends[index] = balanceDataArr[0];
-    //   tmpObj.series[0].data = spends;
-    // }
-    tmpObj.series[0].data = balanceDataArr;
-    tmpObj.options.xaxis.categories = monthDataArr;
-    setOptions(tmpObj);
+    const spends = months.map(() => 0);
+    if (monthDataArr && monthDataArr.length > 0) {
+      months.map((mon, index) => {
+        const ind = monthDataArr.indexOf(mon);
+        if (ind > -1) {
+          const amount = balanceDataArr[ind];
+          spends[index] = amount;
+        }
+        return mon;
+      });
+      const dtnow = new Date();
+      dtnow.setMonth(dtnow.getMonth() - 2);
+      const minx = dtnow.getMonth() + 1;
+      dtnow.setMonth(dtnow.getMonth() + 5);
+      const maxx = dtnow.getMonth() + 1;
+      tmpObj.series[0].data = spends;
+      tmpObj.options.xaxis.categories = months;
+      tmpObj.options.xaxis.min = minx;
+      tmpObj.options.xaxis.max = maxx;
+      setOptions(tmpObj);
+    }
   }, [balanceDataArr, monthDataArr]);
 
   return (

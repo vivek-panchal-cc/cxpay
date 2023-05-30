@@ -97,7 +97,7 @@ function FundCreditCard(props) {
                   <label
                     htmlFor="datepickeradd-card"
                     className="position-absolute"
-                    style={{ top: "14px", right: "20px" }}
+                    style={{ top: "12px", right: "20px" }}
                   >
                     <IconCalender stroke="#0081c5" />
                   </label>

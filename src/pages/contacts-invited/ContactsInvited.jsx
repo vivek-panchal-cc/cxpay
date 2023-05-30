@@ -46,6 +46,11 @@ const Invited = () => {
     handleSelectedContacts,
   } = useContext(ContactsContext);
 
+  const handleSearchContact = (elm) => {
+    setCurrentPage(1);
+    setSearch(elm.target.value);
+  };
+
   const handleChange = async (e) => {
     const { checked, value } = e.target;
     if (checked) {
@@ -98,28 +103,26 @@ const Invited = () => {
         </div>
         <div className="contact-top-search-sec d-flex align-items-center">
           <div className="contact-serch-main">
-            <form onSubmit={(e) => e.preventDefault()}>
-              <div className="form-field search-field">
-                <div
-                  className="js-clearSearchBox clearsearchbox"
-                  style={{ opacity: search ? 1 : 0 }}
-                  onClick={() => setSearch("")}
-                >
-                  <IconCross />
-                </div>
-                <Input
-                  type="search"
-                  className="form-control js-searchBox-input"
-                  name="search-field"
-                  value={search}
-                  onChange={(e) => setSearch(e?.currentTarget?.value)}
-                  placeholder="Search..."
-                />
-                <div className="search-btn">
-                  <IconSearch />
-                </div>
+            <div className="form-field search-field">
+              <div
+                className="clearsearchbox"
+                style={{ opacity: search ? 1 : 0 }}
+                onClick={() => setSearch("")}
+              >
+                <IconCross />
               </div>
-            </form>
+              <Input
+                type="search"
+                className="form-control js-searchBox-input"
+                name="search-field"
+                value={search}
+                onChange={handleSearchContact}
+                placeholder="Search..."
+              />
+              <div className="search-btn">
+                <IconSearch />
+              </div>
+            </div>
           </div>
           <div className="contact-top-btn-nav">
             <div className="con-btn-wrap con-add-btn-wrap">

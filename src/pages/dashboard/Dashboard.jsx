@@ -24,6 +24,7 @@ import useBalance from "hooks/useBalance";
 import useChartData from "hooks/useChartData";
 import ModalAddContact from "components/modals/ModalAddContact";
 import { SendPaymentContext } from "context/sendPaymentContext";
+import useActivities from "hooks/useActivities";
 
 // const balanceDataArr = [31, 50, 91, 80, 102, 79, 150];
 
@@ -71,28 +72,12 @@ const Dashboard = () => {
   const [cardsList, setCardsList] = useState([]);
   const [slideCard, setSlideCard] = useState({});
 
-  const [loadingAct, setLoadingAct] = useState(false);
-  const [activitiesList, setActivitiesList] = useState([]);
   const [loadingBalance, balance] = useBalance();
   const [loadingChart, chartData] = useChartData();
+  const [loadingAct, actPagination, activitiesList, reload] = useActivities({});
 
   // For adding new Contact
   const [showNewContPop, setShowNewContPop] = useState(false);
-
-  const getActivitiesList = async (page = 1, filters = {}) => {
-    setLoadingAct(true);
-    try {
-      const { data } = await apiRequest.activityList({ page, ...filters });
-      if (!data.success) throw data.message;
-      const { transactions } = data.data || {};
-      const topFineTransact = transactions ? transactions.splice(0, 5) : [];
-      setActivitiesList(topFineTransact);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoadingAct(false);
-    }
-  };
 
   // handle selected contacts
   const handleSelectContact = (e) => {
@@ -178,7 +163,6 @@ const Dashboard = () => {
   useEffect(() => {
     getInviteContactList(currentPage, "");
     getCardsList();
-    getActivitiesList();
   }, []);
 
   const handleFundAccountPopup = () => {
@@ -212,12 +196,10 @@ const Dashboard = () => {
                 monthDataArr={chartData.monthArr}
               />
             </div>
-            {/* End Graph Section */}
-
             {/* Recent Activity */}
             <RecentActivities
               loading={loadingAct}
-              activitiesList={activitiesList}
+              activitiesList={activitiesList ? activitiesList.slice(0, 5) : []}
             />
           </div>
           {/*   <!-- Dashboard card section starts --> */}
@@ -277,7 +259,6 @@ const Dashboard = () => {
                 </ContactsSelection>
               </div>
             </div>
-            {/* <!-- Dashboard recent contacts section close --> */}
             {/* <!-- Dashboard extra links section starts -->	  */}
             <div className="extra-links-wrap">
               <ul>

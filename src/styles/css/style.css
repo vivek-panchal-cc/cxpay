@@ -2007,7 +2007,7 @@ form.verification-code-form .form-field .form-control {
   margin: auto;
 }
 
-form .search-field input[type="search"] {
+.search-field input[type="search"] {
   border-color: #f2f2f2 !important;
   border-radius: 12px !important;
   padding: 15px 25px 15px 50px !important;
@@ -2018,30 +2018,36 @@ form .search-field input[type="search"] {
   color: var(--dark_blue);
 }
 
-form .search-field {
+.search-field {
   max-width: 327px;
   margin-left: auto;
   margin-right: 0;
   margin-bottom: 0;
+  position: relative;
+  box-shadow: none;
 }
 
-form .search-field ::placeholder {
+.search-field .form-control:focus {
+  box-shadow: none !important;
+}
+
+.search-field ::placeholder {
   font-size: 14px;
 }
 
-form .search-field -webkit::placeholder {
+.search-field -webkit::placeholder {
   font-size: 14px;
 }
 
-form .search-field -moz::placeholder {
+.search-field -moz::placeholder {
   font-size: 14px;
 }
 
-form .search-field -ms::placeholder {
+.search-field -ms::placeholder {
   font-size: 14px;
 }
 
-form .search-field -o::placeholder {
+.search-field -o::placeholder {
   font-size: 14px;
 }
 
@@ -2319,19 +2325,6 @@ form .search-field -o::placeholder {
   overflow: hidden;
 }
 
-/* .recent-contact-sec form .search-field .form-control {
-  width: 0 !important;
-  visibility: hidden;
-  position: absolute;
-  margin: auto;
-  left: auto;
-  right: 0;
-  top: calc(100% + 10px);
-  min-width: 190px;
-  padding: 12px 15px !important;
-  z-index: 9;
-  font-size: 14px;
-} */
 .recent-contact-sec .search-field.active .form-control {
   width: 100% !important;
   visibility: visible;
@@ -2697,7 +2690,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
 }
 
 .calendar-sec {
-  position: absolute;
+  /* position: absolute; */
   left: auto;
   right: 0;
   top: 13px;
@@ -2732,6 +2725,25 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
 
 .calendar-sec > div .fa-calendar {
   padding-right: 7px;
+}
+/* Date filter styles */
+.date-filter-calendar {
+  position: relative;
+}
+.date-filter-calendar > input {
+  width: max-content !important;
+  background: #f7f7f9 !important;
+  border-radius: 8px;
+  padding: 12px 15px 12px 40px !important;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: -0.005em;
+  color: #c4c4c4;
+}
+.date-filter-calendar .date-cal {
+  left: 15px !important;
 }
 
 .daterangepicker .ranges li {
@@ -3648,8 +3660,8 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
 /* send one time payment page css close*/
 
 /* send group css starts */
-.send-main-sec form .search-field input[type="search"],
-.send-group-main-sec form .search-field input[type="search"] {
+.send-main-sec .search-field input[type="search"],
+.send-group-main-sec .search-field input[type="search"] {
   border-radius: 20px !important;
   border-color: #5b5b5b !important;
 }
@@ -3820,7 +3832,7 @@ html:not([dir="rtl"]) .form-check {
   position: relative;
   /* max-width: 140px; */
   width: 100%;
-  margin-right: 30px;
+  /* margin-right: 30px; */
 }
 
 span.date-cal {
@@ -4945,7 +4957,7 @@ margin-bottom:0px;
   width: 40%;
 }
 
-.contact-serch-main form .search-field {
+.contact-serch-main .search-field {
   max-width: 100%;
 }
 
@@ -7689,7 +7701,7 @@ a.eg-close-btn {
   margin-bottom: 0px;
 }
 
-.send-page-wrapper .send-top-sec form .search-field input[type="search"] {
+.send-page-wrapper .send-top-sec .search-field input[type="search"] {
   padding-top: 15px !important;
   padding-bottom: 15px !important;
 }
@@ -8266,6 +8278,7 @@ button.schedule-pay-btn {
   /* margin-bottom: 15px; */
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   /* padding-top: 10px; */
 }
 

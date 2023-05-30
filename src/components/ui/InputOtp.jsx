@@ -18,7 +18,8 @@ function InputOtp(props) {
 
   useEffect(() => {
     const otps = inputArr.reduce((acc, curr) => {
-      acc[`otp${curr}`] = value.charAt(curr);
+      const otpVal = value.charAt(curr).trim() ? value.charAt(curr) : "";
+      acc[`otp${curr}`] = otpVal;
       return acc;
     }, {});
     setOtpInputs(otps);
@@ -26,7 +27,7 @@ function InputOtp(props) {
 
   useEffect(() => {
     const value = inputArr
-      .map((item) => otpInputs[`otp${item}`])
+      .map((item) => otpInputs[`otp${item}`] || " ")
       .toString()
       .replace(/,/g, "");
     onChange({ target: { name: name, value: value } });
@@ -34,20 +35,35 @@ function InputOtp(props) {
 
   const handleChange = (e) => {
     const tval = parseInt(e.target.value.charAt(0));
+    const isNext = !isNaN(tval);
     setOtpInputs((cs) => ({
       ...cs,
-      [e.target.name]: tval >= 0 && tval <= 9 ? tval.toString() : "",
+      [e.target.name]: isNext ? tval.toString() : "",
     }));
-    tval >= 0 && tval <= 9
-      ? e.target?.nextSibling?.focus()
-      : e.target?.previousSibling?.focus();
+    e.target?.select();
+    isNext && e.target?.nextSibling?.focus();
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && e.target.name === `otp${inputArr.length - 1}`) {
-      e.preventDefault();
-      e.stopPropagation();
-      handleSubmit && handleSubmit();
+    switch (e.key) {
+      case "Backspace":
+        e.preventDefault();
+        e.stopPropagation();
+        const tval = otpInputs[e.target.name];
+        const isPrev = tval.trim() ? false : true;
+        setOtpInputs((cs) => ({
+          ...cs,
+          [e.target.name]: "",
+        }));
+        isPrev && e.target?.previousSibling?.focus();
+        return;
+      case "Enter":
+        e.preventDefault();
+        e.stopPropagation();
+        handleSubmit && handleSubmit();
+        return;
+      default:
+        return;
     }
   };
 
@@ -65,12 +81,13 @@ function InputOtp(props) {
             type="text"
             min={0}
             max={9}
-            maxLength={1}
+            // maxLength={1}
             name={`otp${item}`}
             value={otpInputs?.[`otp${item}`] || ""}
             className={`${className}`}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
+            onFocus={(e) => e.target.select()}
             inputMode="numeric"
           />
         ))}
