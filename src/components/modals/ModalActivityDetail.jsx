@@ -72,7 +72,7 @@ const ModalActivityDetail = (props) => {
       if (!modalRef.current) return;
       const childDialog = modalRef.current?.children[0];
       if (childDialog && !childDialog.contains(event.target))
-        setShow && setShow(false);
+        if (setShow) setShow(false);
     }
     document.addEventListener("mousedown", handleclickOutside);
     return () => {
@@ -112,35 +112,8 @@ const ModalActivityDetail = (props) => {
           </>
         );
       case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_SEND}_${ACT_STATUS_PAID}`:
-        return (
-          <button
-            type="button"
-            className="btn print-details-btn w-50"
-            onClick={() => handleSubmit(details)}
-          >
-            Print Details
-          </button>
-        );
       case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_RECEIVE}_${ACT_STATUS_PAID}`:
-        return (
-          <button
-            type="button"
-            className="btn print-details-btn w-50"
-            onClick={() => handleSubmit(details)}
-          >
-            Print Details
-          </button>
-        );
       case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_CREDIT}_${ACT_STATUS_PAID}`:
-        return (
-          <button
-            type="button"
-            className="btn print-details-btn w-50"
-            onClick={() => handleSubmit(details)}
-          >
-            Print Details
-          </button>
-        );
       case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_DEBIT}_${ACT_STATUS_PAID}`:
         return (
           <button

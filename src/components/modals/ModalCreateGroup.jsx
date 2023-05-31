@@ -42,7 +42,7 @@ const ModalCreateGroup = (props) => {
         const { data } = await apiRequest.addGroup(formData);
         if (!data.success) throw data.message;
         toast.success(data.message);
-        setShow && setShow(false);
+        if (setShow) setShow(false);
         setSelectedContacts([]);
         navigate("/send");
       } catch (error) {
@@ -61,7 +61,7 @@ const ModalCreateGroup = (props) => {
       if (!modalRef.current) return;
       const childDialog = modalRef.current?.children[0];
       if (childDialog && !childDialog.contains(event.target))
-        setShow && setShow(false);
+        if (setShow) setShow(false);
     }
     document.addEventListener("mousedown", handleclickOutside);
     return () => {

@@ -44,7 +44,7 @@ const ProfileDropdown = () => {
         <div className="user-image-wrap" onClick={() => setShowDrop(true)}>
           <span className="h-100 w-100">
             <Image
-              src={profile?.profile_image}
+              src={profile?.profile_image || ""}
               alt="profile avtars"
               fallbacksrc={
                 profile?.user_type === "business"

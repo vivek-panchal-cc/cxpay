@@ -38,7 +38,6 @@ const regexContainSpecialCharacter = (testStr) =>
 
 // regex
 const url_regex =
-  ///^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm;
   /^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/;
 
 // To check file type
@@ -49,13 +48,13 @@ const isValidFileType = (fileName, fileType) => {
   );
 };
 
-// const validFileSize = "5MB";
 const otpCounterTime = 180;
 
 // theme colors
 const THEME_COLORS = ["light_blue"];
 
 // To check file size
+// const validFileSize = "5MB";
 // const fileUploadLimit = (file, fileSize) => {
 //   return file && validFileSize[file].indexOf(file.split(".").pop()) > -1;
 // };

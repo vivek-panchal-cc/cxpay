@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import styles from "./modal.module.scss";
 import ReactDatePicker from "react-datepicker";
-// import TimePicker from "react-time-picker";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { schedulePaymentSchema } from "schemas/sendPaymentSchema";
@@ -39,7 +38,6 @@ const ModalPaymentScheduler = (props) => {
   const handleTimeChange = async (time) => {
     setTimeout(async () => {
       await formik.setFieldValue("time", time);
-      return;
     }, 100);
   };
 
@@ -49,7 +47,7 @@ const ModalPaymentScheduler = (props) => {
       if (!modalRef.current) return;
       const childDialog = modalRef.current?.children[0];
       if (childDialog && !childDialog.contains(event.target))
-        setShow && setShow(false);
+        if (setShow) setShow(false);
     }
     document.addEventListener("mousedown", handleclickOutside);
     return () => {
@@ -59,7 +57,7 @@ const ModalPaymentScheduler = (props) => {
 
   useEffect(() => {
     if (!show) return;
-    formik && formik.resetForm();
+    formik?.resetForm();
   }, [show]);
 
   if (!show) return null;
@@ -85,9 +83,9 @@ const ModalPaymentScheduler = (props) => {
                     minDate={new Date()}
                     inline
                   />
-                  {formik.touched.date && formik.errors.date && (
+                  {formik.touched.date && formik.errors.date ? (
                     <p className="text-danger pb-0">{formik.errors.date}</p>
-                  )}
+                  ) : null}
                 </div>
                 <div className="row">
                   <div className="col-12 col p-0">

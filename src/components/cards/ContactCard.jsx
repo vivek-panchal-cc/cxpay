@@ -19,7 +19,7 @@ const ContactCard = (props) => {
   return (
     <div className={className}>
       <div className="cb-div">
-        {isSelectable && (
+        {isSelectable ? (
           <input
             id={`check${id}`}
             type={"checkbox"}
@@ -27,12 +27,12 @@ const ContactCard = (props) => {
             onChange={handleSelect}
             checked={isChecked}
           />
-        )}
+        ) : null}
         <label
           htmlFor={`check${id}`}
-          className={`cursor-pointer ${fullWidth ? "img-wrap" : "recent-con-img-wrap"} ${
-            imgUrl ? "grp-user-up-img" : ""
-          }`}
+          className={`cursor-pointer ${
+            fullWidth ? "img-wrap" : "recent-con-img-wrap"
+          } ${imgUrl ? "grp-user-up-img" : ""}`}
         >
           <Image src={imgUrl} fallbacksrc={fallbackImgUrl} alt="contact img" />
         </label>

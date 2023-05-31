@@ -23,6 +23,7 @@ const ContactPaymentItem = forwardRef((props, ref) => {
     disableAmount,
   } = props;
   const { name, profile_image: imgUrl } = item;
+  const isDisable = disableSpecification && disableAmount;
 
   return (
     <li>
@@ -76,13 +77,13 @@ const ContactPaymentItem = forwardRef((props, ref) => {
         <p className="ip_currancy">{CURRENCY_SYMBOL}</p>
       </div>
       <div className="remove-btn">
-        {showDelete && (
+        {showDelete && !isDisable ? (
           <Button
             type="button"
             className="close-icons"
             onClick={() => handleDelete(item)}
           ></Button>
-        )}
+        ) : null}
       </div>
     </li>
   );

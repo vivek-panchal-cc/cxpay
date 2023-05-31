@@ -113,7 +113,7 @@ const Login = () => {
                       onCopy={(e) => e.preventDefault()}
                       onPaste={(e) => e.preventDefault()}
                     />
-                    <span className="eye-icon" style={{ top: "24px" }}>
+                    <span className="eye-icon" style={{ top: "12px" }}>
                       {showPassword ? (
                         <IconEyeOpen
                           onClick={() => setShowPassword((e) => !e)}

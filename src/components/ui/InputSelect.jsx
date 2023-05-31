@@ -4,11 +4,11 @@ function InputSelect(props) {
   const { labelname, error, disabled } = props;
   return (
     <div className={`d-flex flex-column form-field`}>
-      {labelname && (
+      {labelname ? (
         <label htmlFor="" className="mb-2">
           {labelname}
         </label>
-      )}
+      ) : null}
       <select
         {...props}
         className={`${props.className} ${disabled ? "cursor-not-allowed" : ""}`}

@@ -18,7 +18,7 @@ function Tooltip({ tooltipText, isVisible }) {
   return (
     <>
       <div className="w-100" ref={setTriggerRef}></div>
-      {visible && (
+      {visible ? (
         <div
           ref={setTooltipRef}
           {...getTooltipProps({
@@ -28,7 +28,7 @@ function Tooltip({ tooltipText, isVisible }) {
           <div {...getArrowProps({ className: "tooltip-arrow" })} />
           {tooltipText}
         </div>
-      )}
+      ) : null}
     </>
   );
 }

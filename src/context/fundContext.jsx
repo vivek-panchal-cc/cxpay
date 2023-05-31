@@ -73,7 +73,6 @@ const FundProvider = ({ children }) => {
   const [selectExistingBank, setSelectExistingBank] = useState(false);
   const [visiblePopupFunded, setVisiblePopupFunded] = useState(false);
   const [fundedDetails, setFundedDetails] = useState({ fund: "", balance: "" });
-  // const [charges, setChargesDetails] = useState({ fees: "0.00" });
   const [charges, setCharges] = useState([]);
   const [paymentDetails, setPaymentDetails] = useState({
     allCharges: [],
@@ -310,18 +309,18 @@ const FundProvider = ({ children }) => {
 
   // For calculating charges when amount changes for any contact
   useEffect(() => {
+    const { transactionAmount } = formik.values || {};
     const amount =
-      formik.values.transactionAmount &&
-      formik.values.transactionAmount.trim() &&
-      !isNaN(formik.values.transactionAmount)
-        ? parseFloat(formik.values.transactionAmount)
+      transactionAmount?.trim() && !isNaN(transactionAmount)
+        ? parseFloat(transactionAmount)
         : 0;
     const chargesDetails = getChargedAmount(charges, [amount]);
     setPaymentDetails(chargesDetails);
   }, [formik.values?.transactionAmount, charges]);
 
   useEffect(() => {
-    if (!formik.values || !formik.values.account_type) return;
+    const { account_type } = formik?.values || {};
+    if (!account_type) return;
     if (formik.values.bank_id) return;
     (async () => {
       const values = Object.assign(

@@ -12,7 +12,7 @@ const LoaderProvider = ({ children }) => {
 
   return (
     <LoaderContext.Provider value={{ setIsLoading, isLoading }}>
-      {isLoading && <DefaultLoader />}
+      {isLoading ? <DefaultLoader /> : null}
       {children}
     </LoaderContext.Provider>
   );

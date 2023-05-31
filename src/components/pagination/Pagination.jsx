@@ -53,7 +53,7 @@ const Pagination = (props) => {
                   <span className="page-link skip">.....</span>
                 </li>
               )}
-              {[...Array(showingNumbers + 1)].map((elm, i) => {
+              {[...Array(showingNumbers + 1).keys()].map((elm, i) => {
                 const contentNumber = needStartDots
                   ? startArrayNumber
                   : startNumber;
@@ -61,7 +61,7 @@ const Pagination = (props) => {
                 startArrayNumber++;
                 return (
                   <li
-                    key={i}
+                    key={elm}
                     className="page-item"
                     onClick={(e) =>
                       onClickHandler(parseInt(e.currentTarget.textContent))
@@ -95,9 +95,9 @@ const Pagination = (props) => {
             </>
           ) : (
             ((startArrayNumber = 1),
-            [...Array(size)].map((elm, i) => (
+            [...Array(size).keys()].map((elm, i) => (
               <li
-                key={i}
+                key={elm}
                 className="page-item"
                 onClick={(e) =>
                   onClickHandler(parseInt(e.currentTarget.textContent))

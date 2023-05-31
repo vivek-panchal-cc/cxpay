@@ -62,11 +62,11 @@ const NotificationDropdown = (props) => {
       >
         <div className="notification-icon">
           <IconNotify />
-          {pendingRead && (
+          {pendingRead ? (
             <span className="notification-count">
               <span></span>
             </span>
-          )}
+          ) : null}
         </div>
       </div>
       {/* <!-- Notification Dropdown Start --> */}

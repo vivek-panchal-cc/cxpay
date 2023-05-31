@@ -1,4 +1,4 @@
-import { FUND_BANK, FUND_CARD } from "constants/all";
+import { FUND_CARD } from "constants/all";
 import React from "react";
 import { Link } from "react-router-dom";
 

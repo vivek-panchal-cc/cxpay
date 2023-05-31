@@ -42,34 +42,24 @@ function ModalAddContact(props) {
       try {
         const { data } = await apiRequest.addContact(values);
         if (!data.success) throw data.message;
-        if (
-          data.data.alreadyAdded === false ||
-          data.data.alreadyInvited === false
-        ) {
-          if (data.data.contactDetails) {
-            toast.success(data.message);
-            setConatctData(data.data.contactDetails);
-            setConatctDetailPopup(true);
-            setShow(false);
-            if (isInvitedFlag) {
-              isNavigate && navigate("/contacts");
-            } else {
-              getConatcts();
-            }
-          } else {
-            toast.success(data.message);
-            setConatctData("");
-            setInvitationSentPopup(true);
-            setShow(false);
-            if (isInvitedFlag) {
-              getInvitedConatcts();
-            } else {
-              isNavigate && navigate("/contacts-invited");
-            }
-          }
-        } else {
+        const { alreadyAdded, alreadyInvited, contactDetails } =
+          data?.data || {};
+        if (alreadyAdded || alreadyInvited) {
           setStatus(data.message);
+          return;
         }
+        toast.success(data.message);
+        setConatctData(contactDetails || "");
+        setShow(false);
+        if (!contactDetails) {
+          setInvitationSentPopup(true);
+          if (isInvitedFlag) getInvitedConatcts();
+          else isNavigate && navigate("/contacts-invited");
+          return;
+        }
+        setConatctDetailPopup(true);
+        if (isInvitedFlag) isNavigate && navigate("/contacts");
+        else getConatcts();
       } catch (error) {
         resetForm();
         setStatus(error);
@@ -82,7 +72,7 @@ function ModalAddContact(props) {
       if (!modalRef.current) return;
       const childDialog = modalRef.current?.children[0];
       if (childDialog && !childDialog.contains(event.target))
-        setShow && setShow(false);
+        if (setShow) setShow(false);
     }
     document.addEventListener("mousedown", handleclickOutside);
     return () => {
@@ -91,7 +81,7 @@ function ModalAddContact(props) {
   }, [modalRef, setShow]);
 
   useEffect(() => {
-    formik && formik.resetForm();
+    formik?.resetForm();
   }, [show]);
 
   if (!show) return null;
@@ -172,9 +162,9 @@ function ModalAddContact(props) {
                   </div>
                 </div>
                 <div className="popup-btn-wrap">
-                  {formik.status && (
+                  {formik.status ? (
                     <p className="text-danger">{formik.status}</p>
-                  )}
+                  ) : null}
                   <input
                     type="submit"
                     className={`btn btn-primary ${

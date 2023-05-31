@@ -27,7 +27,7 @@ function EnterPhone(props) {
       try {
         const { data } = await apiRequest.verifyMobileNumber(values);
         if (!data.success) throw data.message;
-        if (data.data.isAlreadyRegster === "1") {
+        if (data.data.isAlreadyRegster) {
           return setShowregisteredPopup(true);
         }
         setSignUpCreds((cs) => ({

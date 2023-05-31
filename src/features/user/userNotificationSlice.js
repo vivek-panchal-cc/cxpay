@@ -116,7 +116,6 @@ const userNotificationslice = createSlice({
         state.initialLoading = false;
         state.pendingRead = false;
         state.pagination = initialState.pagination;
-        return;
       })
       .addCase(fetchMarkAsRead.fulfilled, (state, action) => {
         const { id } = action.payload;

@@ -30,7 +30,7 @@ const RecentActivities = (props) => {
                 loading={loading}
                 activitiesList={activitiesList}
               />
-              {activitiesList && activitiesList.length > 0 && (
+              {activitiesList && activitiesList.length > 0 ? (
                 <div className="view-history-btn">
                   <button
                     className="btn"
@@ -40,7 +40,7 @@ const RecentActivities = (props) => {
                     View all history
                   </button>
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
         </div>

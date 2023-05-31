@@ -76,7 +76,7 @@ const SwipeContactList = (props) => {
   useEffect(() => {
     if (list && swiperList) {
       setSwiperList([...list]);
-      swiperRef && swiperRef?.update();
+      swiperRef?.update();
     }
   }, [list]);
 
@@ -87,7 +87,7 @@ const SwipeContactList = (props) => {
       } ${containerClassName}`}
       style={isLoading && fullWidth ? { minHeight: "220px" } : {}}
     >
-      {isLoading && (
+      {isLoading ? (
         <div
           className={`position-absolute bg-white z-2 h-100 w-100 ${
             fullWidth ? "ps-4" : ""
@@ -104,7 +104,7 @@ const SwipeContactList = (props) => {
             )}
           </div>
         </div>
-      )}
+      ) : null}
       <Swiper
         navigation
         modules={[Navigation, Scrollbar, A11y]}

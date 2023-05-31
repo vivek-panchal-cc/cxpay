@@ -96,7 +96,7 @@ function ModalOtpConfirmation(props) {
     if (!show) {
       setIsActive(false);
       setCounter(otpCounterTime);
-      formik && formik.resetForm();
+      formik?.resetForm();
       return;
     }
     setIsActive(true);
@@ -149,12 +149,12 @@ function ModalOtpConfirmation(props) {
                   />
                 </div>
                 <div className="resend-otp-wrap">
-                  {isActive && (
+                  {isActive ? (
                     <div>
                       <span>{counterTime}</span>
                       <br />
                     </div>
-                  )}
+                  ) : null}
                   <p>Didn't receive any code?</p>
                   <button
                     type="button"

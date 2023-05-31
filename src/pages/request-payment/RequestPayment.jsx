@@ -75,8 +75,10 @@ const RequestPayment = () => {
     },
   });
 
-  // For deleting the contacts from payment list
+  // For deleting the contacts from request payment list
   const handleDeleteContact = (ditem) => {
+    if (!formik.values) return;
+    const { wallet } = formik.values;
     const filteredContacts = wallet?.filter(
       (item) => item.email !== ditem.email && item.mobile !== ditem.mobile
     );

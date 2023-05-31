@@ -34,7 +34,7 @@ function NotificationListItem(props) {
           </div>
         </div>
       </div>
-      {showDeleteButton && (
+      {showDeleteButton ? (
         <Button
           type="button"
           className="notification-rm-wrap"
@@ -42,7 +42,7 @@ function NotificationListItem(props) {
         >
           <IconNotifyDelete />
         </Button>
-      )}
+      ) : null}
     </li>
   );
 }

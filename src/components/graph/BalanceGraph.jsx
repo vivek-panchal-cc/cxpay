@@ -72,12 +72,8 @@ const chartOption = {
         offsetY: 0,
       },
       custom: function ({ series, seriesIndex, dataPointIndex, w }) {
-        var data = w.globals.initialSeries[seriesIndex].data[dataPointIndex];
-        return (
-          '<p class="p-2" style="color:#00BAEC;font-weight:bold">' +
-          data +
-          "</p>"
-        );
+        const data = w.globals.initialSeries[seriesIndex].data[dataPointIndex];
+        return `<p class="p-2" style="color:#00BAEC;font-weight:bold">${data}</p>`;
       },
     },
     xaxis: {
@@ -176,7 +172,7 @@ const BalanceGraph = (props) => {
                 : ""}
             </h2>
           </div>
-          {lockBalance !== "" && lockBalance > 0 && (
+          {lockBalance !== "" && lockBalance > 0 ? (
             <div className="p-4 pb-0">
               <h6 className="h6" style={{ color: "#0081c5" }}>
                 Block Amount
@@ -185,11 +181,11 @@ const BalanceGraph = (props) => {
                 {CURRENCY_SYMBOL} {lockBalance.toFixed(2)}
               </h2>
             </div>
-          )}
+          ) : null}
         </div>
         <div className="px-2 z-1">
           <div id="chart">
-            {options.series[0].data.length > 0 && (
+            {options.series[0].data.length > 0 ? (
               <ReactApexChart
                 options={options.options}
                 series={options.series}
@@ -197,7 +193,7 @@ const BalanceGraph = (props) => {
                 height={150}
                 width={"100%"}
               />
-            )}
+            ) : null}
           </div>
         </div>
       </div>

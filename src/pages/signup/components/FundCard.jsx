@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Input from "components/ui/Input";
 import InputSelect from "components/ui/InputSelect";
 import { Link } from "react-router-dom";
@@ -20,6 +20,16 @@ function FundCard() {
     formik.setFieldValue("expiry_full", dt);
     formik.setFieldValue("expiry_date", mmyy);
   };
+
+  // For making input scroll into view on validation error
+  useEffect(() => {
+    const { errors } = formik;
+    if (!errors || Object.keys(errors).length <= 0) return;
+    const inputName = Object.keys(errors)[0];
+    const inputField = document.querySelector(`input[name='${inputName}']`);
+    if (!inputField) return;
+    inputField.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [formik.isSubmitting]);
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -56,7 +66,7 @@ function FundCard() {
             <label
               htmlFor="datepickeradd-card"
               className="position-absolute"
-              style={{ top: "14px", right: "20px" }}
+              style={{ top: "12px", right: "20px" }}
             >
               <IconCalender stroke="#0081c5" />
             </label>
@@ -83,7 +93,7 @@ function FundCard() {
             />
             <span
               className="eye-icon position-absolute"
-              style={{ top: "14px", right: "20px" }}
+              style={{ top: "12px", right: "20px" }}
             >
               {showCvv ? (
                 <IconEyeOpen onClick={() => setShowCvv((e) => !e)} />

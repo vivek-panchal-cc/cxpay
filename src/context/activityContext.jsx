@@ -147,14 +147,8 @@ const ActivityProvider = ({ children }) => {
         handleSendContacts([contact], request_id);
         return;
       case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_SEND}_${ACT_STATUS_PAID}`:
-        printActivityDetails(actDetails);
-        return;
       case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_RECEIVE}_${ACT_STATUS_PAID}`:
-        printActivityDetails(actDetails);
-        return;
       case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_CREDIT}_${ACT_STATUS_PAID}`:
-        printActivityDetails(actDetails);
-        return;
       case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_DEBIT}_${ACT_STATUS_PAID}`:
         printActivityDetails(actDetails);
         return;
@@ -162,12 +156,7 @@ const ActivityProvider = ({ children }) => {
   };
 
   return (
-    <ActivityContext.Provider
-      value={{
-        reloadList,
-        handleActivityDetail,
-      }}
-    >
+    <ActivityContext.Provider value={{ reloadList, handleActivityDetail }}>
       {children}
       <ModalActivityDetail
         id="user-details-popup"

@@ -21,7 +21,7 @@ function ModalConfirmation(props) {
       if (!modalRef.current) return;
       const childDialog = modalRef.current?.children[0];
       if (childDialog && !childDialog.contains(event.target))
-        setShow && setShow(false);
+        if (setShow) setShow(false);
     }
     document.addEventListener("mousedown", handleclickOutside);
     return () => {
@@ -42,7 +42,9 @@ function ModalConfirmation(props) {
             <div className="modal-header flex-column">
               <h3 className="text-center">{heading}</h3>
               <p>{subHeading}</p>
-              {error && <p className="text-danger text-center">{error}</p>}
+              {error ? (
+                <p className="text-danger text-center">{error}</p>
+              ) : null}
             </div>
             <div className="modal-body">
               <div>{children}</div>
@@ -55,7 +57,7 @@ function ModalConfirmation(props) {
                 >
                   Cancel
                 </button>
-                {!error && (
+                {!error ? (
                   <button
                     type="button"
                     className="btn btn-primary px-4 py-3"
@@ -64,7 +66,7 @@ function ModalConfirmation(props) {
                   >
                     confirm
                   </button>
-                )}
+                ) : null}
               </div>
             </div>
           </div>

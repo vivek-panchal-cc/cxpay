@@ -60,7 +60,7 @@ function InputOtp(props) {
       case "Enter":
         e.preventDefault();
         e.stopPropagation();
-        handleSubmit && handleSubmit();
+        if (handleSubmit) handleSubmit();
         return;
       default:
         return;
@@ -69,11 +69,11 @@ function InputOtp(props) {
 
   return (
     <div className={`d-flex flex-column ${styles.otp_input}`}>
-      {labelname && (
+      {labelname ? (
         <label htmlFor="" className="mb-2">
           {labelname}
         </label>
-      )}
+      ) : null}
       <div className="d-flex">
         {inputArr?.map((item) => (
           <input
@@ -81,7 +81,6 @@ function InputOtp(props) {
             type="text"
             min={0}
             max={9}
-            // maxLength={1}
             name={`otp${item}`}
             value={otpInputs?.[`otp${item}`] || ""}
             className={`${className}`}
@@ -89,10 +88,11 @@ function InputOtp(props) {
             onKeyDown={handleKeyDown}
             onFocus={(e) => e.target.select()}
             inputMode="numeric"
+            autoFocus={item === 0 ? true : false}
           />
         ))}
       </div>
-      {error && <p className="text-danger ps-2">{error}</p>}
+      {error ? <p className="text-danger ps-2">{error}</p> : null}
     </div>
   );
 }

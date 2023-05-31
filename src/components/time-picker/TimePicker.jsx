@@ -158,7 +158,7 @@ const TimePicker = ({
       const timeStr = `${hr}:${min} ${pr?.trim()}`;
       setTimePicked({ hour: hr, minutes: min, period: pr?.trim() });
       alignTimePickedToTop(hr, min, pr.trim(), minutesSelection);
-      onChange && onChange(timeStr);
+      if (onChange) onChange(timeStr);
     },
     [alignTimePickedToTop, minutesSelection, onChange]
   );
@@ -169,7 +169,7 @@ const TimePicker = ({
       selectedTMS > currentBuffTMS ? selectedTMS : currentBuffTMS;
     const confirmDT = new Date(confirmTMS);
     if (selectedTMS > currentBuffTMS) {
-      handleChange && handleChange(confirmDT);
+      if (handleChange) handleChange(confirmDT);
       return;
     }
     const slotDT = confirmDT;
@@ -178,7 +178,7 @@ const TimePicker = ({
       slotDT.setMinutes(slotOffset + parseInt(min), 0);
       if (slotDT.getTime() > confirmTMS) break;
     }
-    handleChange && handleChange(slotDT);
+    if (handleChange) handleChange(slotDT);
   }, [minutesSelection, selectedDateStr, selectedTMS, currentBuffTMS]);
 
   useEffect(() => {
@@ -225,7 +225,7 @@ const TimePicker = ({
           <IconClock style={{ stroke: "var(--blue)" }} />
         </div>
         {/* Time Selection */}
-        {togglePicker && (
+        {togglePicker ? (
           <div className="cx_time_container" ref={toggleRef}>
             <div className="cx_time_lists">
               <ul className="cx_time_ul" ref={hourListRef}>
@@ -298,11 +298,8 @@ const TimePicker = ({
                 })}
               </ul>
             </div>
-            {/* <div className="cx_time_confirm">
-              <button onClick={handleTogglePicker}> Ok </button>
-            </div> */}
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );

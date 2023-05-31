@@ -49,7 +49,7 @@ function InputImage(props) {
         htmlFor={`fileInput${id}`}
         className={`cursor-pointer ${classNameLabel}`}
       >
-        {showPreview && (
+        {showPreview ? (
           <span
             className={`${
               typeof showPreview === "string" &&
@@ -63,7 +63,7 @@ function InputImage(props) {
             }`}
           >
             <img
-              src={preview}
+              src={preview || ""}
               alt="profile img"
               className={`h-100 w-100 object-fit-cover ${classNameImage}`}
               style={{ objectPosition: "center" }}
@@ -78,8 +78,8 @@ function InputImage(props) {
               onLoad={() => (showLoader ? setIsLoading(false) : null)}
             />
           </span>
-        )}
-        {showLabel && labelText}
+        ) : null}
+        {showLabel ? labelText : null}
       </label>
       <input
         id={`fileInput${id}`}
@@ -90,11 +90,11 @@ function InputImage(props) {
         // onClick={clickedFileInput}
         accept={accept}
       />
-      {error && (
+      {error ? (
         <p className="text-danger ps-2" style={{ width: "inherit" }}>
           {error}
         </p>
-      )}
+      ) : null}
     </div>
   );
 }

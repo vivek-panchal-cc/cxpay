@@ -42,14 +42,14 @@ const ContactsProvider = ({ children }) => {
     };
     try {
       const chContacts = bindFavouriteContact(contact, contacts);
-      setContacts && setContacts(chContacts);
+      if (setContacts) setContacts(chContacts);
       const { data } = await apiRequest.markAsFavourite(reqData);
       if (!data.success) throw data.message;
       toast.success(data.message);
     } catch (error) {
       console.log(error);
       const chContacts = bindFavouriteContact(contact, contacts);
-      setContacts && setContacts(chContacts);
+      if (setContacts) setContacts(chContacts);
     }
   };
 
@@ -58,16 +58,15 @@ const ContactsProvider = ({ children }) => {
     setIsLoading(true);
     try {
       const delContacts = [];
-      contacts &&
-        contacts?.map((con) => {
-          const { account_number, country_code, mobile } = con;
-          if (
-            delContactUniqIds.includes(account_number) ||
-            delContactUniqIds.includes(mobile)
-          )
-            delContacts.push({ country_code, mobile });
-          return con;
-        });
+      contacts?.map((con) => {
+        const { account_number, country_code, mobile } = con;
+        if (
+          delContactUniqIds.includes(account_number) ||
+          delContactUniqIds.includes(mobile)
+        )
+          delContacts.push({ country_code, mobile });
+        return con;
+      });
       const { data } = await apiRequest.deleteContact({
         contacts: delContacts,
       });

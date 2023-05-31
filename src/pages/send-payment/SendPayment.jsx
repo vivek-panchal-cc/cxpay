@@ -152,6 +152,8 @@ function SendPayment(props) {
 
   // For deleting the contacts from payment list
   const handleDeleteContact = (ditem) => {
+    if (!formik.values) return;
+    const { wallet } = formik.values;
     const filteredContacts = wallet?.filter(
       (item) => item.email !== ditem.email && item.mobile !== ditem.mobile
     );

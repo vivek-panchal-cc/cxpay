@@ -35,11 +35,11 @@ const Input = forwardRef((props, ref) => {
 
   return (
     <div className={`d-flex flex-column form-field`}>
-      {labelname && (
+      {labelname ? (
         <label htmlFor="" className="mb-2">
           {labelname}
         </label>
-      )}
+      ) : null}
       <input
         {...props}
         type={getType()}
@@ -49,7 +49,7 @@ const Input = forwardRef((props, ref) => {
         }`}
         ref={ref}
       />
-      {error && <p className="text-danger ps-2">{error}</p>}
+      {error ? <p className="text-danger ps-2">{error}</p> : null}
     </div>
   );
 });

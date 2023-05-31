@@ -65,6 +65,16 @@ const LinkBank = (props) => {
     formik.setFieldValue("account_type", type);
   }, [formik.values.account_type]);
 
+  // For making input scroll into view on validation error
+  useEffect(() => {
+    const { errors } = formik;
+    if (!errors || Object.keys(errors).length <= 0) return;
+    const inputName = Object.keys(errors)[0];
+    const inputField = document.querySelector(`input[name='${inputName}']`);
+    if (!inputField) return;
+    inputField.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [formik.isSubmitting]);
+
   return (
     <div>
       <div className="wallet-link-bank-bottom">

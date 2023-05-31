@@ -24,7 +24,7 @@ const Card = (props) => {
           : { backgroundColor: cardBgColor }
       }
     >
-      {!cardBgImg && <IconCardBackground />}
+      {!cardBgImg ? <IconCardBackground /> : null}
       <p className="card-holder-nm">{cardHolderName}</p>
       <div className="card-num-date">
         <p className="">{cardNumber}</p>

@@ -2,8 +2,8 @@ import { axiosInstance } from "plugin/axios.js";
 import { loginUrl, refreshTokenUrl } from "constants/urls.js";
 import { deleteCookie } from "shared/cookies";
 
-var now = new Date();
-var time = now.getTime();
+const now = new Date();
+let time = now.getTime();
 // token will expire after 1 hrs
 time += 1 * 60 * 60 * 1000;
 now.setTime(time);

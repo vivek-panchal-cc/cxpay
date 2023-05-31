@@ -11,7 +11,9 @@ const ActivityList = (props) => {
     if (!activitiesList || activitiesList.length <= 0) return;
     const activityDateList = {};
     activitiesList?.map((item) => {
-      const [dd, mm, yr] = item?.date?.split("/");
+      const { date } = item || {};
+      const [dd, mm, yr] = date?.split("/") || [];
+      if (!dd || !mm || !yr) return;
       const dt = new Date(`${yr}-${mm}-${dd}`);
       const month = dt.toLocaleDateString("default", { month: "long" });
       const dtList = activityDateList[`${month} ${yr}`] || [];

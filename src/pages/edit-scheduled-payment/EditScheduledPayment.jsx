@@ -50,7 +50,7 @@ const EditScheduledPayment = () => {
       { member_name: name, member_image: image, member_amount: amount },
     ];
     const contacts =
-      is_group === "1" && payload && payload.length > 0 ? payload : singleCont;
+      is_group && payload && payload.length > 0 ? payload : singleCont;
     const sch_amount = amount ? parseFloat(amount) : 0;
     const sch_fees = fees_total ? parseFloat(fees_total) : 0;
     const sch_total = sch_amount + sch_fees;

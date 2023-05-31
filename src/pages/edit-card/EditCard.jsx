@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Modal from "components/modals/Modal";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
@@ -106,6 +106,16 @@ function EditCard() {
     if (croppedImg.url) handleRemoveImage();
     formik.setFieldValue("color", color);
   };
+
+  // For making input scroll into view on validation error
+  useEffect(() => {
+    const { errors } = formik;
+    if (!errors || Object.keys(errors).length <= 0) return;
+    const inputName = Object.keys(errors)[0];
+    const inputField = document.querySelector(`input[name='${inputName}']`);
+    if (!inputField) return;
+    inputField.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [formik.isSubmitting]);
 
   if (!card || Object.keys(card).length <= 0)
     return <Navigate to={"/wallet/view-card"} replace />;

@@ -187,7 +187,8 @@ const SendPaymentProvider = (props) => {
   };
 
   useEffect(() => {
-    if (!sendCreds || !sendCreds.wallet || sendCreds.wallet.length <= 0) return;
+    const { wallet } = sendCreds || {};
+    if (!wallet || wallet.length <= 0) return;
     (async () => {
       await getPaymentCharges();
     })();

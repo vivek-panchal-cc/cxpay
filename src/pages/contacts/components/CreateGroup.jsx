@@ -94,7 +94,7 @@ export default function CreateGroup(props) {
               className="cursor-pointer"
               style={{ color: "#0081c5" }}
             >
-              {isProfileImage == "1"
+              {isProfileImage === 1
                 ? "Change Group Image"
                 : "Select Group Image"}
             </label>
