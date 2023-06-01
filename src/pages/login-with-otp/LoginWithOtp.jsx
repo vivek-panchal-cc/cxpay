@@ -95,7 +95,10 @@ const LoginWithOtp = (props) => {
                       >
                         <option value={""}>Country</option>
                         {countryList?.map((country, index) => (
-                          <option value={country.phonecode} key={index}>
+                          <option
+                            value={country.phonecode}
+                            key={country?.phonecode || index}
+                          >
                             {country.phonecode} &nbsp; {country.country_name}
                           </option>
                         ))}
@@ -119,9 +122,9 @@ const LoginWithOtp = (props) => {
                     </div>
                   </div>
                   <div className="text-center send-cd-btn">
-                    {formik.status && (
+                    {formik.status ? (
                       <p className="text-danger">{formik.status}</p>
-                    )}
+                    ) : null}
                     <input
                       type="submit"
                       className="btn btn-primary"

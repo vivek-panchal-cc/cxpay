@@ -142,7 +142,7 @@ const inviteContactSchema = yup.object().shape({
     .string()
     .min(6, "The mobile number must be between 6 and 7 digits")
     .max(7, "The mobile number must be between 6 and 7 digits")
-    .matches(/^[0-9]*$/, "Please enter valid mobile number.")
+    .matches(/^\d*$/, "Please enter valid mobile number.")
     .required("Please enter mobile number"),
 });
 

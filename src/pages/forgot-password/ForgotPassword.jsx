@@ -100,9 +100,9 @@ function ForgotPassword() {
                       />
                     </div>
                   </div>
-                  {formik.status && (
+                  {formik.status ? (
                     <p className="text-danger text-center">{formik.status}</p>
-                  )}
+                  ) : null}
                   <div className="text-center login-btn">
                     <input
                       type="submit"

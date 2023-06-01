@@ -315,7 +315,7 @@ function FundCreditCard(props) {
                 <table>
                   <tbody>
                     {paymentDetails?.allCharges?.map((item, index) => (
-                      <tr key={index}>
+                      <tr key={item?.desc?.trim() || index}>
                         <td>{item?.desc}</td>
                         <td className="amount">
                           {CURRENCY_SYMBOL} {item?.amount?.toFixed(2)}

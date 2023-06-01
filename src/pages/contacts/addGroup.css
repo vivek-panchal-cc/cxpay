@@ -1,30 +1,29 @@
-
-.set_group_background_image{
-    background-color: unset !important;
+.set_group_background_image {
+  background-color: unset !important;
 }
-.set_group_image{
-    max-width: 60px !important;
-    max-height : 40px !important;
+.set_group_image {
+  max-width: 60px !important;
+  max-height: 40px !important;
 }
-.profile-user-up-img img{
-    max-width: 100% !important;
-    max-height: 100% !important;
-    border-radius: 50%;
+.profile-user-up-img img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  border-radius: 50%;
 }
-.profile-user-up-img{
-    border:0px !important;
+.profile-user-up-img {
+  border: 0px !important;
 }
-#create-group-popup .upload-profile-image .profile-wrap{
-    background-color: transparent !important;
+#create-group-popup .upload-profile-image .profile-wrap {
+  background-color: transparent !important;
 }
-#create-group-popup .group-icon-image > img{
-    max-width: 60px;
-    max-height: 40px;
+#create-group-popup .group-icon-image > img {
+  max-width: 60px;
+  max-height: 40px;
 }
-#create-group-popup>div{
-    margin: 20px 15px;
-    width: 100%;
+#create-group-popup > div {
+  margin: 20px 15px;
+  width: 100%;
 }
-#create-group-popup>div .modal-dialog{
-    min-width: auto;
+#create-group-popup > div .modal-dialog {
+  min-width: auto;
 }

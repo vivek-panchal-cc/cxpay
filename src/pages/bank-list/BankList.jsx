@@ -1,20 +1,14 @@
+import React, { useContext, useState, useEffect } from "react";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { THEME_COLORS } from "constants/all";
 import { LoaderContext } from "context/loaderContext";
-import { setEditBank } from "features/user/userProfileSlice";
 import { apiRequest } from "helpers/apiRequests";
-import React, { useContext } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { IconBank, IconCross } from "styles/svgs";
 
 const BankList = () => {
   const { setIsLoading } = useContext(LoaderContext);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [bankList, setBankList] = useState([]);
   const [show, setShow] = useState(false);
@@ -68,10 +62,11 @@ const BankList = () => {
     return text.charAt(0).toUpperCase() + text.slice(1);
   };
 
-  const handleEditBank = async (bank) => {
-    await dispatch(setEditBank(bank));
-    navigate("/wallet/bank-list/edit-bank");
-  };
+  // Edit bank handler
+  // const handleEditBank = async (bank) => {
+  //   await dispatch(setEditBank(bank));
+  //   navigate("/wallet/bank-list/edit-bank");
+  // };
 
   const handleDefaultBank = async (radioe, bankId) => {
     const checked = radioe.currentTarget.checked;

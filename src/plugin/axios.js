@@ -4,7 +4,6 @@ import { apiRequest } from "helpers/apiRequests";
 import { API_LOGIN_REFRESH_TOKEN } from "constants/urls";
 import { toast } from "react-toastify";
 import { browserName, fullVersion, timeZone } from "../helpers/headerRequests";
-import { Router } from "react-router-dom";
 
 // define API_URL in env file
 const axiosLoginInstance = axios.create({
@@ -39,11 +38,6 @@ const responseInterceptor = async (response) => {
   const expireTm = exp * 1000; // actual expire time
   const expireSlot = new Date(expireTm - 60000 * 5).getTime(); // reduce 5 min from the actual expire time
   const currentTm = new Date().getTime(); // time now
-  // console.log(
-  //   new Date(currentTm).toLocaleTimeString(),
-  //   new Date(expireSlot).toLocaleTimeString(),
-  //   new Date(expireTm).toLocaleTimeString()
-  // );
   if (
     !originalRequest.url.includes(API_LOGIN_REFRESH_TOKEN) &&
     currentTm > expireSlot &&

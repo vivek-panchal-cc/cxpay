@@ -74,11 +74,11 @@ const ProfileInfo = (props) => {
 
   return (
     <ul>
-      {user_type !== "personal" && (
+      {user_type !== "personal" ? (
         <li>
           <div className="pi-title-div">Business URL</div>
           <div className="profile-info-right-desc with-edit-ic">
-            {!isEditable && (
+            {!isEditable ? (
               <div className="d-flex align-items-center">
                 <Link
                   to={business_url}
@@ -95,8 +95,7 @@ const ProfileInfo = (props) => {
                   <IconEdit />
                 </button>
               </div>
-            )}
-            {isEditable && (
+            ) : (
               <form
                 onSubmit={formik.handleSubmit}
                 className="w-100 d-flex align-items-start gap-2 justify-content-between profile-edit-form-wrap"
@@ -133,13 +132,13 @@ const ProfileInfo = (props) => {
             )}
           </div>
         </li>
-      )}
+      ) : null}
       <li>
         <div className="pi-title-div">Email</div>
         <div className="profile-info-right-desc">
           <div className="d-flex justify-content-center align-items-center column-gap-3">
             <p className="">{email}</p>
-            {!is_email_verify && (
+            {!is_email_verify ? (
               <button
                 type="button"
                 className="badge rounded-pill text-bg-primary border-0 border-primary"
@@ -147,7 +146,7 @@ const ProfileInfo = (props) => {
               >
                 Verify Email
               </button>
-            )}
+            ) : null}
           </div>
         </div>
       </li>

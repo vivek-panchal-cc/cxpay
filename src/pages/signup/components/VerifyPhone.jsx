@@ -64,7 +64,7 @@ function VerifyPhone(props) {
       toast.success(data.data.otp);
       toast.success(data.message);
     } catch (error) {
-      if (!(typeof error === "string")) return;
+      if (typeof error !== "string") return;
       setIsTimerOver(true);
       formik.setStatus(error);
       setError(true);
@@ -102,12 +102,12 @@ function VerifyPhone(props) {
               />
             </div>
             <div className="resend-otp-wrap">
-              {isTimerOver && !error && (
+              {isTimerOver && !error ? (
                 <div>
                   <span>{counterTime}</span>
                   <br />
                 </div>
-              )}
+              ) : null}
               <p>Didn't receive any code?</p>
               <button
                 type="button"
@@ -115,13 +115,15 @@ function VerifyPhone(props) {
                 disabled={isTimerOver}
                 onClick={handleResendBtn}
                 tabIndex="0"
-                title="Tooltip on top"  
+                title="Tooltip on top"
               >
                 Resend OTP
               </button>
             </div>
             <div className="popup-btn-wrap">
-              {formik.status && <p className="text-danger">{formik.status}</p>}
+              {formik.status ? (
+                <p className="text-danger">{formik.status}</p>
+              ) : null}
               <input
                 type="submit"
                 className="btn btn-primary"

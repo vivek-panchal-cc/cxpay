@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import { apiRequest } from "helpers/apiRequests";
 import { SendPaymentContext } from "./sendPaymentContext";
 import { LoaderContext } from "./loaderContext";
+import ModalActivityDetail from "components/modals/ModalActivityDetail";
+import ModalConfirmation from "components/modals/ModalConfirmation";
 import { toast } from "react-toastify";
 import {
   ACT_REQUEST_RECEIVE,
@@ -15,8 +17,6 @@ import {
   ACT_TYPE_REQUEST,
   ACT_TYPE_TRANSACTION,
 } from "constants/all";
-import ModalActivityDetail from "components/modals/ModalActivityDetail";
-import ModalConfirmation from "components/modals/ModalConfirmation";
 
 export const ActivityContext = React.createContext({});
 
@@ -141,7 +141,10 @@ const ActivityProvider = ({ children }) => {
           name: actDetails?.name,
           profile_image: actDetails?.image,
           specifications: actDetails?.specification,
-          personal_amount: parseFloat(actDetails?.amount || "0").toFixed(2),
+          personal_amount:
+            typeof actDetails?.amount === "number"
+              ? actDetails.amount?.toFixed(2)
+              : "0",
           receiver_account_number: actDetails?.account_number,
         };
         handleSendContacts([contact], request_id);

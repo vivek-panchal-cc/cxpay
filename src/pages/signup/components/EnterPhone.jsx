@@ -85,7 +85,10 @@ function EnterPhone(props) {
                     >
                       <option value={""}>Country</option>
                       {countryList?.map((country, index) => (
-                        <option value={country.phonecode} key={index}>
+                        <option
+                          value={country.phonecode}
+                          key={country?.phonecode || index}
+                        >
                           {country.phonecode} &nbsp; {country.country_name}
                         </option>
                       ))}

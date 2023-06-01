@@ -75,7 +75,7 @@ const ModalPaymentScheduler = (props) => {
             </div>
             <div className="modal-body d-flex justify-content-center pb-5">
               <form onSubmit={formik.handleSubmit}>
-                <div className="">
+                <div className="common-dr-picker">
                   <ReactDatePicker
                     className=""
                     selected={formik.values.date}

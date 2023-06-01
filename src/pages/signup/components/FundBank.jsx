@@ -53,7 +53,7 @@ function FundBank() {
           >
             <option value={""}>Select Bank</option>
             {banksList?.map((bank, index) => (
-              <option key={index} value={bank.id}>
+              <option key={bank?.id || index} value={bank.id}>
                 {bank.bank_name}
               </option>
             ))}
@@ -66,11 +66,7 @@ function FundBank() {
             type="text"
             inputMode="numeric"
             className="form-control"
-            placeholder={
-              formik.values.account_type === "savings"
-                ? "Routing Number"
-                : "Routing Number"
-            }
+            placeholder={"Routing Number"}
             name="routing_number"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -172,7 +168,7 @@ function FundBank() {
           >
             <option value={""}>Select Country</option>
             {countryList?.map((country, index) => (
-              <option key={index} value={country.iso}>
+              <option key={country?.iso || index} value={country.iso}>
                 {country.country_name}
               </option>
             ))}
@@ -189,7 +185,7 @@ function FundBank() {
           >
             <option value={""}>Select City</option>
             {cityList[formik.values.country]?.map((city, index) => (
-              <option key={index} value={city.city_name}>
+              <option key={city?.city_name || index} value={city.city_name}>
                 {city.city_name}
               </option>
             ))}
@@ -236,7 +232,7 @@ function FundBank() {
           <table>
             <tbody>
               {paymentDetails?.allCharges?.map((item, index) => (
-                <tr key={index}>
+                <tr key={item?.desc?.trim() || index}>
                   <td>{item?.desc}</td>
                   <td className="amount">
                     {CURRENCY_SYMBOL} {item?.amount?.toFixed(2)}

@@ -110,7 +110,7 @@ function Wallet() {
         {/* <!-- Dashboard card section starts --> */}
         <div className="wallet-main-right">
           <div className="">
-            {cardsList && cardsList.length > 0 && (
+            {cardsList && cardsList.length > 0 ? (
               <>
                 <div className="wallet-right-title">
                   <h3>My Cards</h3>
@@ -122,7 +122,7 @@ function Wallet() {
                 />
                 <CardDetails card={slideCard} />
               </>
-            )}
+            ) : null}
             <div className="wallet-card-add-btns mb-4">
               <Link
                 to="/wallet/bank-list"

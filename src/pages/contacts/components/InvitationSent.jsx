@@ -15,7 +15,7 @@ function InvitationSent(props) {
           <div className="modal-content">
             <div className="modal-body text-center">
               <img
-                src="../assets/images/invite-sent.svg"
+                src="/assets/images/invite-sent.svg"
                 alt=""
                 className="invite-sent-logo"
               />

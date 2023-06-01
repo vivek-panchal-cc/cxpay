@@ -16,17 +16,6 @@ const emailSchema = yup
   .email("Please enter a valid email")
   .required("Please enter Email");
 
-// const passwordSchema = yup
-//   .string()
-//   .required("Please enter new Password")
-//   .min(8, "Must contain 8 characters")
-//   .max(16, "Maximum limit 16 characters")
-//   .matches(exp0ContainWordPassword, "Should not contain word 'password'")
-//   .matches(exp0ContainWhitespace, "Whitespace is not allowed")
-//   .matches(expContainCapitalLetter, "Must contain one uppercase character")
-//   .matches(expContainNumber, "Must contain one number")
-//   .matches(expContainSpecialChar, "Must contain one special character");
-
 const passwordSchema = yup
   .string()
   .required("Please enter Password")
@@ -74,20 +63,18 @@ const profileImageSchema = yup
   .test({
     message: "File Type is not allowed",
     test: (file) =>
-      file && file.name
-        ? isValidFileType(file && file.name.toLowerCase(), "image")
-        : true,
+      file?.name ? isValidFileType(file.name?.toLowerCase(), "image") : true,
   })
   .test({
     message: "Profile picture must not exceed 5 MB size.",
-    test: (file) => (file && file.size ? file.size <= FILE_SIZE : true),
+    test: (file) => (file?.size ? file.size <= FILE_SIZE : true),
   });
 
 const mobileSchema = yup
   .string()
   .min(6, "The mobile number must be between 6 and 7 digits")
   .max(7, "The mobile number must be between 6 and 7 digits")
-  .matches(/^[0-9]*$/, "Enter a valid mobile number")
+  .matches(/^\d*$/, "Enter a valid mobile number")
   .required("Please enter mobile number");
 
 const firstNameSchema = yup
@@ -102,7 +89,7 @@ const lastNameSchema = yup
 
 const cardNumberSchema = yup
   .string()
-  .matches(/^[0-9]*$/, "Please enter a valid card number")
+  .matches(/^\d*$/, "Please enter a valid card number")
   .min(12, "Card number must between 12 to 16 digits")
   .max(16, "Card number must between 12 to 16 digits")
   .test(
@@ -149,7 +136,7 @@ const routingNumberSchema = yup
   .string()
   .max(9, "Maximum limit is 9 digits")
   .required("Please enter Routing number")
-  .matches(/^[0-9]*$/, "Invalid routing number");
+  .matches(/^\d*$/, "Invalid routing number");
 
 const swiftCodeSchema = yup
   .string()
@@ -162,7 +149,7 @@ const bankNumberSchema = yup
   .string()
   .max(18, "Maximum limit is 18 digits")
   .required("Please enter Account number")
-  .matches(/^[0-9]*$/, "Invalid account number");
+  .matches(/^\d*$/, "Invalid account number");
 
 const countrySchema = yup.string().required("Please select Country");
 
@@ -171,7 +158,7 @@ const citySchema = yup.string().required("Please select City");
 const otpSchema = yup
   .string()
   .length(4, "OTP length must be 4 digits")
-  .matches(/^[0-9]*$/, "OTP should be number")
+  .matches(/^\d*$/, "OTP should be number")
   .required("OTP is required");
 
 export {

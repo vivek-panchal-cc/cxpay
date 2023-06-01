@@ -78,7 +78,10 @@ const Login = () => {
                       >
                         <option value={""}>Country</option>
                         {countryList?.map((country, index) => (
-                          <option value={country.phonecode} key={index}>
+                          <option
+                            value={country.phonecode}
+                            key={country.phonecode || index}
+                          >
                             {country.phonecode} &nbsp; {country.country_name}
                           </option>
                         ))}
@@ -87,7 +90,7 @@ const Login = () => {
                     <div className="col-8 px-0">
                       <Input
                         type="mobile"
-                        inputMode="tel" 
+                        inputMode="tel"
                         className="form-control"
                         placeholder="Mobile Number"
                         name="user_name"
@@ -125,9 +128,9 @@ const Login = () => {
                       )}
                     </span>
                   </div>
-                  {formik.status && (
+                  {formik.status ? (
                     <p className="text-danger text-center">{formik.status}</p>
-                  )}
+                  ) : null}
                   <p className="forgot-password-text text-center">
                     <a href="/forgot-password">Forgot Password?</a>
                   </p>

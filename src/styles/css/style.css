@@ -2035,19 +2035,19 @@ form.verification-code-form .form-field .form-control {
   font-size: 14px;
 }
 
-.search-field -webkit::placeholder {
+.search-field ::-webkit-input-placeholder {
   font-size: 14px;
 }
 
-.search-field -moz::placeholder {
+.search-field ::-moz-placeholder {
   font-size: 14px;
 }
 
-.search-field -ms::placeholder {
+.search-field :-ms-input-placeholder {
   font-size: 14px;
 }
 
-.search-field -o::placeholder {
+.search-field :-moz-placeholder {
   font-size: 14px;
 }
 
@@ -5831,8 +5831,6 @@ img.img-size {
   display: flex;
   align-items: center;
   min-width: 300px;
-  display: flex;
-  align-items: center;
 }
 
 .con-listing-phone {
@@ -6310,8 +6308,6 @@ input[type="search"]::-webkit-search-cancel-button {
   border: 0px;
   padding: 24px;
   z-index: 999999;
-  width: 100%;
-  max-width: 350px;
 }
 
 .daterange_popup_wrapper .drp-buttons .btn {
@@ -7447,7 +7443,7 @@ ul.notification-list-wrap li > div {
 
 .amt-with-currency span {
   position: absolute;
-  z-index: 9;
+  z-index: 1;
   /* top: 14px; */
   top: 18px;
   left: 15px;
@@ -8082,9 +8078,6 @@ button.btn.btn-blue:hover {
 
 .act-specification-text {
   padding-right: 15px;
-}
-
-.act-specification-text {
   width: 30%;
 }
 
@@ -8167,10 +8160,6 @@ ul.recent-act-lw-main .act-user-in {
   padding-left: 20px;
 }
 
-ul.recent-act-lw-main .act-info-wrap-left {
-  padding-right: 15px;
-}
-
 ul.recent-act-lw-main .act-mv-wrap {
   display: none;
 }
@@ -8192,7 +8181,7 @@ button.schedule-pay-btn {
   max-width: 350px;
 }
 
-.react-datepicker {
+.common-dr-picker .react-datepicker {
   width: 100%;
   border: 0px;
   border-radius: 0px;
@@ -8203,11 +8192,11 @@ button.schedule-pay-btn {
   margin-bottom: 15px;
 }
 
-.react-datepicker__month-container {
+.common-dr-picker .react-datepicker__month-container {
   width: 100%;
 }
 
-.react-datepicker__current-month {
+.common-dr-picker .react-datepicker__current-month {
   padding-bottom: 10px;
   font-family: "Visby Round CF", sans-serif;
   font-style: normal;
@@ -8216,9 +8205,9 @@ button.schedule-pay-btn {
   line-height: 17px;
 }
 
-.react-datepicker__day-name,
-.react-datepicker__day,
-.react-datepicker__time-name {
+.common-dr-picker .react-datepicker__day-name,
+.common-dr-picker .react-datepicker__day,
+.common-dr-picker .react-datepicker__time-name {
   color: #000;
   display: inline-block;
   width: 14%;
@@ -8228,32 +8217,32 @@ button.schedule-pay-btn {
   padding: 5px;
 }
 
-.react-datepicker__day--selected,
-.react-datepicker__day--range-end {
+.common-dr-picker .react-datepicker__day--selected,
+.common-dr-picker .react-datepicker__day--range-end {
   background-color: var(--blue) !important;
   color: #fff !important;
 }
 
-.react-datepicker__header {
+.common-dr-picker .react-datepicker__header {
   background-color: transparent;
   border-bottom: 1px solid var(--dark_blue);
 }
 
 /* CSS added on 10-05 */
-.react-datepicker__day--in-range,
-.react-datepicker__quarter-text--in-range {
+.common-dr-picker .react-datepicker__day--in-range,
+.common-dr-picker .react-datepicker__quarter-text--in-range {
   background-color: #d1ebff;
 }
 
-.react-datepicker__day--in-range:hover {
+.common-dr-picker .react-datepicker__day--in-range:hover {
   color: #fff;
   background-color: var(--blue);
 }
 
-.react-datepicker__day--disabled,
-.react-datepicker__month-text--disabled,
-.react-datepicker__quarter-text--disabled,
-.react-datepicker__year-text--disabled {
+.common-dr-picker .react-datepicker__day--disabled,
+.common-dr-picker .react-datepicker__month-text--disabled,
+.common-dr-picker .react-datepicker__quarter-text--disabled,
+.common-dr-picker .react-datepicker__year-text--disabled {
   color: #ccc !important;
 }
 
@@ -8284,7 +8273,6 @@ button.schedule-pay-btn {
 
 button.shedule-date-filter {
   border: 0px;
-  padding: 0px;
   background-color: var(--blue);
   border-radius: 8px;
   padding: 7px;
@@ -8499,10 +8487,6 @@ ul.recent-act-lw-main .act-info-wrap-left {
   margin-bottom: 0px;
 }
 
-.dashboard-recent-contact-sec .recent-contact-sec .title-content-wrap {
-  padding-bottom: 0px;
-}
-
 .dashboard-recent-contact-sec
   .recent-contact-sec
   .search-field
@@ -8516,6 +8500,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
 
 .dashboard-recent-contact-sec .recent-contact-sec .title-content-wrap {
   width: 50%;
+  padding-bottom: 0px;
   padding-right: 10px;
 }
 
@@ -8575,13 +8560,10 @@ ul.recent-act-lw-main .act-info-wrap-left {
 }
 
 .fund-account-form .payment-footer-block .amount {
-  word-break: break-all;
-  white-space: normal;
-}
-
-.fund-account-form .payment-footer-block .amount {
   font-size: 18px;
   line-height: 18px;
+  word-break: break-all;
+  white-space: normal;
 }
 
 .fund-account-form .payment-footer-block ul li > div {

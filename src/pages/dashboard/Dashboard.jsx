@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import {
   IconAdd,
   IconMessage,
@@ -9,7 +8,6 @@ import {
   IconSend,
   IconWallet,
 } from "styles/svgs";
-// import ActivityList from "components/list/ActivityList";
 import Modal from "components/modals/Modal";
 import FundYourAccountPopup from "components/popups/FundYourAccountPopup";
 import { apiRequest } from "helpers/apiRequests";
@@ -25,8 +23,6 @@ import useChartData from "hooks/useChartData";
 import ModalAddContact from "components/modals/ModalAddContact";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import useActivities from "hooks/useActivities";
-
-// const balanceDataArr = [31, 50, 91, 80, 102, 79, 150];
 
 const selectionRangeDate = {
   Today: [moment(), moment()],
@@ -52,10 +48,6 @@ const options = [
 const graphBackgroundImage = "/assets/images/chart-duumy.png";
 
 const Dashboard = () => {
-  // const [selected, setSelected] = useState(options[0].value);
-  // const [selectionRange, setSelectionRange] = useState(selectionRangeDate);
-  // const [fromDate, setFromDate] = useState(new Date());
-  // const [toDate, setToDate] = useState(new Date());
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
   const { handleSendContacts } = useContext(SendPaymentContext);
@@ -82,7 +74,6 @@ const Dashboard = () => {
   // handle selected contacts
   const handleSelectContact = (e) => {
     const value = e?.currentTarget?.value;
-    const checked = e?.currentTarget?.checked;
     if (!value) return;
     const contact = inviteContactList.find(
       (con) => con.account_number === value
@@ -149,7 +140,7 @@ const Dashboard = () => {
       if (page === 1) {
         setInviteContactList(data.data.app_contacts);
       } else {
-        var allData = inviteContactList.concat(data.data.app_contacts);
+        const allData = inviteContactList.concat(data.data.app_contacts);
         setInviteContactList(allData);
       }
       setIsLoadingContacts(false);

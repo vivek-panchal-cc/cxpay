@@ -6,7 +6,11 @@ import { useFormik } from "formik";
 import { LoaderContext } from "context/loaderContext";
 import { sendRequestSchema } from "schemas/sendPaymentSchema";
 import ContactPaymentItem from "components/items/ContactPaymentItem";
-import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
+import {
+  addObjToFormData,
+  getChargedAmount,
+  uniqueId,
+} from "helpers/commonHelpers";
 import { apiRequest } from "helpers/apiRequests";
 import { CURRENCY_SYMBOL } from "constants/all";
 
@@ -106,7 +110,7 @@ const RequestPayment = () => {
     setPaymentDetails(getChargedAmount([], amounts));
   }, [formik.values?.wallet]);
 
-  if (!requestCreds || !requestCreds.wallet || requestCreds.wallet.length <= 0)
+  if (!requestCreds?.wallet || requestCreds.wallet.length <= 0)
     navigate("/request", { replace: true });
 
   return (
@@ -140,7 +144,7 @@ const RequestPayment = () => {
                   {wallet?.map((item, index) => {
                     return (
                       <ContactPaymentItem
-                        key={index}
+                        key={item?.mobile || index}
                         item={item}
                         fallbackImgUrl={
                           "/assets/images/single_contact_profile.png"

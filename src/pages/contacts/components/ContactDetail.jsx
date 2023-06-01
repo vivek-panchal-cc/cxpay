@@ -14,7 +14,7 @@ function ContactDetail(props) {
                   src={
                     data.profile_image
                       ? data.profile_image
-                      : "assets/images/user-avatar.png"
+                      : "/assets/images/user-avatar.png"
                   }
                   alt=""
                 />

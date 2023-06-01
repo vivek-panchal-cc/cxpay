@@ -155,7 +155,7 @@ const ModalActivityDetail = (props) => {
                       <span className={`${classText}`}>{CURRENCY_SYMBOL}</span>
                       <span className={`ms-1 ${classText}`}>
                         {iconAmount}
-                        {amount}
+                        {typeof amount === "number" ? amount.toFixed(2) : ""}
                       </span>
                     </p>
                     <p>{specification}</p>

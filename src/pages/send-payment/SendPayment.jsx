@@ -20,7 +20,6 @@ import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 
 function SendPayment(props) {
-  const {} = props;
   const navigate = useNavigate();
   const inputAmountRefs = useRef([]);
   const { setIsLoading } = useContext(LoaderContext);
@@ -236,16 +235,14 @@ function SendPayment(props) {
   useEffect(() => {
     if (!formik.values.wallet) return;
     const amounts = formik.values.wallet?.map((item) =>
-      item.personal_amount &&
-      item.personal_amount.trim() &&
-      !isNaN(item.personal_amount.trim())
+      item?.personal_amount?.trim() && !isNaN(item.personal_amount.trim())
         ? parseFloat(item.personal_amount)
         : 0
     );
     setPaymentDetails(getChargedAmount(charges, amounts));
   }, [formik.values?.wallet, charges]);
 
-  if (!sendCreds || !sendCreds.wallet || sendCreds.wallet.length <= 0)
+  if (!sendCreds?.wallet || sendCreds.wallet.length <= 0)
     navigate(prevPathRedirect || "/send", { replace: true });
   return (
     <>
@@ -308,7 +305,7 @@ function SendPayment(props) {
                   {wallet?.map((item, index) => {
                     return (
                       <ContactPaymentItem
-                        key={index}
+                        key={item?.mobile || index}
                         item={item}
                         fallbackImgUrl={
                           "/assets/images/single_contact_profile.png"
@@ -353,7 +350,7 @@ function SendPayment(props) {
                       </div>
                     </li>
                     {paymentDetails?.allCharges?.map((item, index) => (
-                      <li key={index}>
+                      <li key={item?.desc || index}>
                         <div className="payment-footer-col-label">
                           {item?.desc}
                         </div>

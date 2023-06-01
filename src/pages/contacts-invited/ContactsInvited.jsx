@@ -137,7 +137,7 @@ const Invited = () => {
             </div>
             <div className="con-btn-wrap con-remove-btn-wrap">
               <button
-                disabled={isDisabled && isDisabled()}
+                disabled={isDisabled ? isDisabled() : false}
                 className="btn"
                 type="button"
                 value="Remove Contact"
@@ -197,9 +197,9 @@ const Invited = () => {
                 ))}
               </div>
             ) : (
-              contactsInvited?.map((contact) => (
+              contactsInvited?.map((contact, index) => (
                 <InviteContactItem
-                  key={uniqueId()}
+                  key={contact?.mobile || index}
                   contact={contact}
                   handleCallback={handleChange}
                   handleFavContact={handleFavContact}
@@ -208,19 +208,19 @@ const Invited = () => {
                 />
               ))
             )}
-            {contactsInvited.length <= 0 && (
+            {contactsInvited.length <= 0 ? (
               <p className="text-center">Contacts Not Found.</p>
-            )}
+            ) : null}
           </ul>
         </div>
-        {!isLoadingConts && paginationConts && paginationConts.total > 10 && (
+        {!isLoadingConts && paginationConts && paginationConts.total > 10 ? (
           <Pagination
             siblingCount={1}
             active={paginationConts?.current_page}
             size={paginationConts?.last_page}
             onClickHandler={setCurrentPage}
           ></Pagination>
-        )}
+        ) : null}
       </div>
       <ModalConfirmation
         heading={"Delete Contact"}

@@ -4,7 +4,6 @@ import ActivityItem from "components/items/ActivityItem";
 import Pagination from "components/pagination/Pagination";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
-import { uniqueId } from "helpers/commonHelpers";
 import { ActivityContext } from "context/activityContext";
 import useActivities from "hooks/useActivities";
 import Input from "components/ui/Input";
@@ -30,7 +29,9 @@ const Activities = () => {
     if (!activitiesList) return;
     const activityDateList = {};
     activitiesList?.map((item) => {
-      const [dd, mm, yr] = item?.date?.split("/");
+      const { date } = item || {};
+      const [dd, mm, yr] = date?.split("/") || [];
+      if (!dd || !mm || !yr) return;
       const dt = new Date(`${yr}-${mm}-${dd}`);
       const month = dt.toLocaleDateString("default", { month: "long" });
       const dtList = activityDateList[`${month} ${yr}`] || [];
@@ -67,7 +68,6 @@ const Activities = () => {
   };
 
   useEffect(() => {
-    const page = actPagination ? actPagination.current_page : 1;
     reload();
   }, [reloadList]);
 
@@ -138,11 +138,10 @@ const Activities = () => {
             <div key={key}>
               <div className="activity-month">{key}</div>
               <ul className="activity-lw-main">
-                {activitiesDateBind[key]?.map((activity) => {
-                  const uid = uniqueId();
+                {activitiesDateBind[key]?.map((activity, index) => {
                   return (
                     <ActivityItem
-                      key={uid}
+                      key={activity?.id || index}
                       activityDetails={activity}
                       handleClick={handleActivityDetail}
                     />
@@ -153,19 +152,21 @@ const Activities = () => {
           ))
         )}
       </div>
-      {!loadingAct && Object.keys(activitiesDateBind || {}).length <= 0 && (
-        <div className="text-center py-4">
-          <p className="fs-5">Activities not found.</p>
-        </div>
-      )}
-      {!loadingAct && actPagination && actPagination.total > 10 && (
+      {!loadingAct
+        ? Object.keys(activitiesDateBind || {}).length <= 0 && (
+            <div className="text-center py-4">
+              <p className="fs-5">Activities not found.</p>
+            </div>
+          )
+        : null}
+      {!loadingAct && actPagination && actPagination.total > 10 ? (
         <Pagination
           active={actPagination?.current_page}
           size={actPagination?.last_page}
           siblingCount={2}
           onClickHandler={handlePageChange}
         />
-      )}
+      ) : null}
       <ModalDateRangePicker
         show={showFilter}
         setShow={setShowFilter}

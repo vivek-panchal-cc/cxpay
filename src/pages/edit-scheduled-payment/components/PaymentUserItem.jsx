@@ -12,7 +12,7 @@ const PaymentUserItem = (props) => {
         <div className="sp-user-nm">{name}</div>
       </div>
       <div className="sp-amt">
-        {CURRENCY_SYMBOL} {amount}
+        {CURRENCY_SYMBOL} {typeof amount === "number" ? amount?.toFixed(2) : ""}
       </div>
     </li>
   );

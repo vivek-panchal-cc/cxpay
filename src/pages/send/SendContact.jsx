@@ -44,10 +44,6 @@ function SendContact() {
     selectedGroup,
   } = useContext(SendPaymentContext);
 
-  const navigateToContactScreen = () => {
-    navigate("/contacts");
-  };
-
   const handleResetContactData = () => {
     setSearchContactText("");
     setCurrentPage(1);
@@ -79,7 +75,7 @@ function SendContact() {
   const getGroupsList = async (page = 1, searchText = "") => {
     setIsLoadingGroups(true);
     try {
-      var param = { page: page, search: searchText };
+      const param = { page: page, search: searchText };
       const { data } = await apiRequest.getGroupsList(param);
       if (!data.success) throw data.message;
       const groups = data?.data?.groups || [];
@@ -151,7 +147,7 @@ function SendContact() {
     const sconts = contactsList.filter((item) =>
       updatedIds.includes(item?.account_number)
     );
-    handleSelectedContacts && handleSelectedContacts(sconts);
+    if (handleSelectedContacts) handleSelectedContacts(sconts);
   };
 
   // handle selected group
@@ -164,7 +160,7 @@ function SendContact() {
     const sgrps = checked
       ? groupList.filter((item) => item.group_id.toString() === value)
       : [];
-    handleSelectedGroup && handleSelectedGroup(sgrps);
+    if (handleSelectedGroup) handleSelectedGroup(sgrps);
   };
 
   // Pre-selecting contacts
@@ -246,32 +242,29 @@ function SendContact() {
           }}
         />
         <ContactsSelection.Footer>
-          {isLoadingContacts ? (
-            <LoaderSendContactButtons />
-          ) : (
-            contactsList.length > 0 && (
-              <>
-                {" "}
-                <Button
-                  type="button"
-                  className="btn btn-next ws--btn ms-0"
-                  onClick={handleSendContacts}
-                >
-                  <IconSend style={{ stroke: "#fff" }} />
-                  Send
-                </Button>
-                <Button
-                  type="button"
-                  className="btn btn-next ws--btn ms-0"
-                  onClick={handleCreateGroup}
-                  disabled={selectedContactsIds.length < 2}
-                >
-                  <IconPlus style={{ stroke: "#fff" }} />
-                  Create Group
-                </Button>
-              </>
-            )
-          )}
+          {isLoadingContacts ? <LoaderSendContactButtons /> : null}
+          {!isLoadingContacts && contactsList.length > 0 ? (
+            <>
+              {" "}
+              <Button
+                type="button"
+                className="btn btn-next ws--btn ms-0"
+                onClick={handleSendContacts}
+              >
+                <IconSend style={{ stroke: "#fff" }} />
+                Send
+              </Button>
+              <Button
+                type="button"
+                className="btn btn-next ws--btn ms-0"
+                onClick={handleCreateGroup}
+                disabled={selectedContactsIds.length < 2}
+              >
+                <IconPlus style={{ stroke: "#fff" }} />
+                Create Group
+              </Button>
+            </>
+          ) : null}
         </ContactsSelection.Footer>
       </ContactsSelection>
 
@@ -308,30 +301,27 @@ function SendContact() {
           }}
         />
         <ContactsSelection.Footer>
-          {isLoadingGroups ? (
-            <LoaderSendContactButtons />
-          ) : (
-            groupList.length > 0 && (
-              <>
-                <Button
-                  type="button"
-                  className="btn btn-cancel-payment"
-                  onClick={handleEditGroup}
-                >
-                  <IconEdit style={{ stroke: "#0081c5" }} />
-                  Edit
-                </Button>
-                <Button
-                  type="button"
-                  className="btn btn-next ws--btn"
-                  onClick={handleSendGroup}
-                >
-                  <IconSend style={{ stroke: "#fff" }} />
-                  Send
-                </Button>
-              </>
-            )
-          )}
+          {isLoadingGroups ? <LoaderSendContactButtons /> : null}
+          {!isLoadingGroups && groupList.length > 0 ? (
+            <>
+              <Button
+                type="button"
+                className="btn btn-cancel-payment"
+                onClick={handleEditGroup}
+              >
+                <IconEdit style={{ stroke: "#0081c5" }} />
+                Edit
+              </Button>
+              <Button
+                type="button"
+                className="btn btn-next ws--btn"
+                onClick={handleSendGroup}
+              >
+                <IconSend style={{ stroke: "#fff" }} />
+                Send
+              </Button>
+            </>
+          ) : null}
         </ContactsSelection.Footer>
       </ContactsSelection>
       <ModalCreateGroup

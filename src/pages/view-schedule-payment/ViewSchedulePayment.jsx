@@ -144,20 +144,19 @@ const ViewSchedulePayment = () => {
             ))
           )}
         </div>
-        {!loadingPayments &&
-          Object.keys(paymentsDateBind || {}).length <= 0 && (
-            <div className="text-center py-4">
-              <p className="fs-5">Schedule payments not found.</p>
-            </div>
-          )}
-        {!loadingPayments && pagination && pagination.total > 10 && (
+        {!loadingPayments && Object.keys(paymentsDateBind || {}).length <= 0 ? (
+          <div className="text-center py-4">
+            <p className="fs-5">Schedule payments not found.</p>
+          </div>
+        ) : null}
+        {!loadingPayments && pagination && pagination.total > 10 ? (
           <Pagination
             active={pagination?.current_page}
             size={pagination?.last_page}
             siblingCount={2}
             onClickHandler={setCurrentPage}
           />
-        )}
+        ) : null}
       </div>
       <ModalDateRangePicker
         show={showFilter}

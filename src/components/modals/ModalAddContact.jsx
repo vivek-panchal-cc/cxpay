@@ -96,11 +96,7 @@ function ModalAddContact(props) {
           <div className="modal-content">
             <div className="modal-body text-center">
               <img
-                src={`${
-                  isInvitedFlag
-                    ? "../assets/images/invite-con-img.svg"
-                    : "assets/images/invite-con-img.svg"
-                }`}
+                src={`/assets/images/invite-con-img.svg`}
                 alt=""
                 className="invite-logo"
               />

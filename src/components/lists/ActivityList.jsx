@@ -37,11 +37,10 @@ const ActivityList = (props) => {
           <div className="tab-content-block-part" key={key}>
             <p>{key}</p>
             <ul className={`activity-lw-main ${classNameList}`}>
-              {activitiesDateBind[key]?.map((activity) => {
-                const uid = uniqueId();
+              {activitiesDateBind[key]?.map((activity, index) => {
                 return (
                   <ActivityItem
-                    key={uid}
+                    key={activity?.id || index}
                     activityDetails={activity}
                     handleClick={() => {}}
                   />

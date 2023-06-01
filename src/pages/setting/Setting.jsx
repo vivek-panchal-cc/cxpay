@@ -62,7 +62,7 @@ const settingsRedirects = [
 
 function Setting() {
   const { profile } = useSelector((state) => state.userProfile);
-  const {user_type = "personal"} = profile || {};
+  const { user_type = "personal" } = profile || {};
 
   return (
     <div className="settings-right-sec settings-vc-sec">
@@ -74,16 +74,17 @@ function Setting() {
           <ul>
             {settingsRedirects?.map((item, index) => (
               <>
-                {item?.title == "Business info" && user_type == "personal" ?
-                   "" :
-                  <li key={index}>
+                {item?.title == "Business info" && user_type == "personal" ? (
+                  ""
+                ) : (
+                  <li key={item.title?.trim() || index}>
                     <div className="icon-wrap">
                       <span className="icon-settings">{item.icon}</span>
                       {item.title}
                     </div>
                     {item.link}
                   </li>
-                }
+                )}
               </>
             ))}
           </ul>

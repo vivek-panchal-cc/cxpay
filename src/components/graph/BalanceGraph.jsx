@@ -117,10 +117,10 @@ const BalanceGraph = (props) => {
 
   const { availableBalance, lockBalance } = useMemo(() => {
     const { available, lock } = balance || {};
-    const availableBalance = available
-      ? parseFloat(available.replace(/,/g, ""))
-      : "";
-    const lockBalance = lock ? parseFloat(lock) : "";
+    const availableBalance =
+      typeof available === "number" ? available.toFixed(2) : "";
+    const lockBalance =
+      typeof lock === "number" && lock > 0 ? lock.toFixed(2) : "";
     return { availableBalance, lockBalance };
   }, [balance]);
 
@@ -167,18 +167,16 @@ const BalanceGraph = (props) => {
               Available Balance
             </h6>
             <h2 className="h3 text-black fw-bolder">
-              {availableBalance !== ""
-                ? `${CURRENCY_SYMBOL} ${availableBalance.toFixed(2)}`
-                : ""}
+              {CURRENCY_SYMBOL} {availableBalance}
             </h2>
           </div>
-          {lockBalance !== "" && lockBalance > 0 ? (
+          {lockBalance ? (
             <div className="p-4 pb-0">
               <h6 className="h6" style={{ color: "#0081c5" }}>
                 Block Amount
               </h6>
               <h2 className="h3 text-black fw-bolder">
-                {CURRENCY_SYMBOL} {lockBalance.toFixed(2)}
+                {CURRENCY_SYMBOL} {lockBalance}
               </h2>
             </div>
           ) : null}

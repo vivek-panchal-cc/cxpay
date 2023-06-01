@@ -110,7 +110,7 @@ function ViewCard(props) {
             {cardsList && cardsList.length > 0 ? (
               cardsList.map((item, index) => (
                 <CardItem
-                  key={`${item.card_number}${index}`}
+                  key={item?.card_number || index}
                   index={`${item.card_number}${index}`}
                   item={item}
                   handleEdit={handleCardEdit}

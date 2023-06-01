@@ -26,11 +26,6 @@ const EditScheduledPayment = () => {
     overall_specification,
   } = upPaymentEntry || {};
 
-  const dtTimeBuffer = useMemo(() => {
-    const dtm15 = new Date().getTime() + 1000 * 60 * SCHEDULE_BUFFER;
-    return new Date(dtm15);
-  }, []);
-
   const {
     contacts = [],
     sch_dt,
@@ -51,8 +46,8 @@ const EditScheduledPayment = () => {
     ];
     const contacts =
       is_group && payload && payload.length > 0 ? payload : singleCont;
-    const sch_amount = amount ? parseFloat(amount) : 0;
-    const sch_fees = fees_total ? parseFloat(fees_total) : 0;
+    const sch_amount = typeof amount === "number" ? amount : 0;
+    const sch_fees = typeof fees_total === "number" ? fees_total : 0;
     const sch_total = sch_amount + sch_fees;
     return { sch_dt, sch_tm, contacts, sch_amount, sch_fees, sch_total };
   }, [payment_schedule_date, is_group, payload, amount, fees_total]);
@@ -97,14 +92,13 @@ const EditScheduledPayment = () => {
           <div className="sp-details-left-wrap">
             <div className="sp-details-inner-wrap ">
               <ul>
-                {contacts?.map((item) => {
-                  const uid = uniqueId();
+                {contacts?.map((item, index) => {
                   const profileURL = item.member_image
                     ? item.member_image
                     : "/assets/images/single_contact_profile.png";
                   return (
                     <PaymentUserItem
-                      key={uid}
+                      key={item?.member_amount || index}
                       name={item.member_name}
                       profileImg={profileURL}
                       amount={item.member_amount}
@@ -151,7 +145,7 @@ const EditScheduledPayment = () => {
           </div>
           <div className="sp-cal-wrap d-flex justify-content-center">
             <form onSubmit={formik.handleSubmit}>
-              <div className="">
+              <div className="common-dr-picker">
                 <ReactDatePicker
                   className=""
                   selected={formik.values.date}
@@ -159,9 +153,9 @@ const EditScheduledPayment = () => {
                   minDate={new Date()}
                   inline
                 />
-                {formik.touched.date && formik.errors.date && (
+                {formik.touched.date && formik.errors.date ? (
                   <p className="text-danger pb-0">{formik.errors.date}</p>
-                )}
+                ) : null}
               </div>
               <h1 className="text-center">
                 {formik.values.date
@@ -181,9 +175,9 @@ const EditScheduledPayment = () => {
                       selectedTime={sch_tm}
                       onChange={(time) => formik.setFieldValue("time", time)}
                     />
-                    {formik.touched.time && formik.errors.time && (
+                    {formik.touched.time && formik.errors.time ? (
                       <p className="text-danger pb-0">{formik.errors.time}</p>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               </div>

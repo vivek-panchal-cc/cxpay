@@ -9,11 +9,11 @@ function FundAccount(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!params || !params.fundtype) navigate("/wallet");
+    if (!params?.fundtype) navigate("/wallet");
   }, [params]);
 
   const getSelectedFund = () => {
-    if (!(params && params.fundtype)) return <></>;
+    if (!params?.fundtype) return <></>;
     switch (params.fundtype) {
       case FUND_CARD:
         return <FundCreditCard />;

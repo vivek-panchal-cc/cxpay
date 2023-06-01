@@ -32,10 +32,11 @@ function SignupFundAccount() {
     }
   };
 
-  const handleFundTypeChange = (e) => {
-    const fundType = e.currentTarget.value;
-    navigate(`/signup/${fundType}`, { replace: true });
-  };
+  // Fund type change handler
+  // const handleFundTypeChange = (e) => {
+  //   const fundType = e.currentTarget.value;
+  //   navigate(`/signup/${fundType}`, { replace: true });
+  // };
 
   const getFundForm = () => {
     const type = params ? params.fundtype : "";

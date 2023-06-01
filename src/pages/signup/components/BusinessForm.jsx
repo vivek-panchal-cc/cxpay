@@ -136,7 +136,7 @@ function Businessform(props) {
               >
                 <option value={""}>Select Country</option>
                 {countryList?.map((country, index) => (
-                  <option key={index} value={country.iso}>
+                  <option key={country?.iso || index} value={country.iso}>
                     {country.country_name}
                   </option>
                 ))}
@@ -151,7 +151,7 @@ function Businessform(props) {
               >
                 <option value={""}>Select City</option>
                 {cityList[formik.values.country]?.map((city, index) => (
-                  <option key={index} value={city.city_name}>
+                  <option key={city?.city_name || index} value={city.city_name}>
                     {city.city_name}
                   </option>
                 ))}
@@ -224,18 +224,18 @@ function Businessform(props) {
                   onPaste={(e) => e.preventDefault()}
                 />
                 {formik.touched.confirm_password &&
-                  !formik.errors.confirm_password && (
-                    <span
-                      className="eye-icon"
-                      style={{ top: "24px", right: "45px" }}
-                    >
-                      <img
-                        className="eye-close"
-                        src="/assets/images/green-tick.svg"
-                        alt="eye close icon"
-                      />
-                    </span>
-                  )}
+                !formik.errors.confirm_password ? (
+                  <span
+                    className="eye-icon"
+                    style={{ top: "24px", right: "45px" }}
+                  >
+                    <img
+                      className="eye-close"
+                      src="/assets/images/green-tick.svg"
+                      alt="eye close icon"
+                    />
+                  </span>
+                ) : null}
                 <span className="eye-icon" style={{ top: "24px" }}>
                   {showPassword.confirm ? (
                     <IconEyeOpen

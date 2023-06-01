@@ -78,9 +78,9 @@ const NotificationDropdown = (props) => {
         <ul className="notification-list-wrap">
           {initialLoading
             ? [1, 2].map((item) => <LoaderNotificationDropdown key={item} />)
-            : dropNotifications?.map((item) => (
+            : dropNotifications?.map((item, index) => (
                 <NotificationListItem
-                  key={uniqueId()}
+                  key={item?.id || index}
                   Icon={notificationType[item?.type]?.icon}
                   className="notification-content-wrap"
                   notification={item}

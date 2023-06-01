@@ -3,7 +3,6 @@ import Input from "components/ui/Input";
 import Pagination from "components/pagination/Pagination";
 import { toast } from "react-toastify";
 import ModalConfirmation from "components/modals/ModalConfirmation";
-import ContactDetail from "./components/ContactDetail";
 import { Link } from "react-router-dom";
 import { MAX_GROUP_MEMBERS } from "constants/all";
 import ModalCreateGroup from "components/modals/ModalCreateGroup";
@@ -14,6 +13,8 @@ import { IconCross, IconSearch } from "styles/svgs";
 import LoaderContact from "loaders/LoaderContact";
 import { uniqueId } from "helpers/commonHelpers";
 import useContacts from "hooks/useContacts";
+import ContactDetail from "./components/ContactDetail";
+import InvitationSent from "./components/InvitationSent";
 
 const Contacts = () => {
   const {
@@ -112,26 +113,26 @@ const Contacts = () => {
           </div>
           <div className="contact-top-search-sec d-flex align-items-center">
             <div className="contact-serch-main">
-                <div className="form-field search-field">
-                  <div
-                    className="clearsearchbox"
-                    style={{ opacity: search ? 1 : 0 }}
-                    onClick={() => setSearch("")}
-                  >
-                    <IconCross />
-                  </div>
-                  <Input
-                    type="search"
-                    className="form-control js-searchBox-input"
-                    name="search-field"
-                    value={search}
-                    onChange={handleSearchContact}
-                    placeholder="Search..."
-                  />
-                  <div className="search-btn">
-                    <IconSearch />
-                  </div>
+              <div className="form-field search-field">
+                <div
+                  className="clearsearchbox"
+                  style={{ opacity: search ? 1 : 0 }}
+                  onClick={() => setSearch("")}
+                >
+                  <IconCross />
                 </div>
+                <Input
+                  type="search"
+                  className="form-control js-searchBox-input"
+                  name="search-field"
+                  value={search}
+                  onChange={handleSearchContact}
+                  placeholder="Search..."
+                />
+                <div className="search-btn">
+                  <IconSearch />
+                </div>
+              </div>
             </div>
             <div className="contact-top-btn-nav">
               <div className="con-btn-wrap con-add-btn-wrap">
@@ -141,13 +142,13 @@ const Contacts = () => {
                   value="Add Contact"
                   onClick={handlePopupInvite}
                 >
-                  <img src="assets/images/Add_icon.svg" alt="" />
+                  <img src="/assets/images/Add_icon.svg" alt="" />
                   <span>Add Contact</span>
                 </button>
               </div>
               <div className="con-btn-wrap con-remove-btn-wrap">
                 <button
-                  disabled={isDisabled && isDisabled()}
+                  disabled={isDisabled ? isDisabled() : false}
                   className="btn"
                   type="button"
                   value="Remove Contact"
@@ -172,7 +173,7 @@ const Contacts = () => {
                 >
                   <Link to="/contacts-invited">
                     <img
-                      src="assets/images/invite_group-ic.svg"
+                      src="/assets/images/invite_group-ic.svg"
                       alt=""
                       className="invited-contacts-img"
                     />
@@ -188,7 +189,7 @@ const Contacts = () => {
                   onClick={handleCreateGroup}
                   disabled={selectedContacts.length < 2}
                 >
-                  <img src="assets/images/Add_icon.svg" alt="" />
+                  <img src="/assets/images/Add_icon.svg" alt="" />
                   <span>Create Group</span>
                 </button>
               </div>
@@ -209,9 +210,9 @@ const Contacts = () => {
                   ))}
                 </div>
               ) : (
-                contacts?.map((contact) => (
+                contacts?.map((contact, index) => (
                   <ContactsItem
-                    key={uniqueId()}
+                    key={contact?.account_number || index}
                     contact={contact}
                     handleCallback={handleChange}
                     handleFavContact={handleFavContact}
@@ -220,19 +221,19 @@ const Contacts = () => {
                   />
                 ))
               )}
-              {contacts.length <= 0 && (
+              {contacts.length <= 0 ? (
                 <p className="text-center">Contacts Not Found.</p>
-              )}
+              ) : null}
             </ul>
           </div>
-          {!isLoadingConts && paginationConts && paginationConts.total > 10 && (
+          {!isLoadingConts && paginationConts && paginationConts.total > 10 ? (
             <Pagination
               siblingCount={1}
               active={paginationConts?.current_page}
               size={paginationConts?.last_page}
               onClickHandler={setCurrentPage}
             ></Pagination>
-          )}
+          ) : null}
         </div>
       </div>
       <ModalAddContact
@@ -244,7 +245,14 @@ const Contacts = () => {
         setConatctData={setConatctData}
         setInvitationSentPopup={setInvitationSentPopup}
         setConatctDetailPopup={setConatctDetailPopup}
+        isInvitedFlag={true}
         {...{ invitetitle }}
+      />
+      <InvitationSent
+        id="invitation_sent"
+        show={showInvitationSentPopup}
+        setShow={setInvitationSentPopup}
+        handleClose={setInvitationSentPopup}
       />
       <ModalCreateGroup
         id="create-group-popup"

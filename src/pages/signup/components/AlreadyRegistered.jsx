@@ -1,7 +1,6 @@
 import React from "react";
 
 function AlreadyRegistered(props) {
-  // const { username } = props;
   return (
     <div className="modal-dialog modal-dialog-centered">
       <div className="modal-content">

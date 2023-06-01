@@ -26,9 +26,7 @@ const ActivityItem = (props) => {
 
   const profileUrl =
     profile_image || "/assets/images/single_contact_profile.png";
-  const altAmount = amount
-    ? parseFloat(amount.replace(/,/g, "")).toFixed(2)
-    : "";
+  const altAmount = typeof amount === "number" ? amount.toFixed(2) : "";
 
   const description = useMemo(() => {
     const { desc } =

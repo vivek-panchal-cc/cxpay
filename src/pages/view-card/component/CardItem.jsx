@@ -30,7 +30,7 @@ function CardItem(props) {
               : { background: color }
           }
         >
-          {!image && <IconCardBackground height="100%" width="100%" />}
+          {!image ? <IconCardBackground height="100%" width="100%" /> : null}
         </div>
         <p className="bank-cardname-wrap">{`${card_holder_first_name} ${card_holder_last_name}`}</p>
       </div>

@@ -9,7 +9,7 @@ const SchedulePaymentItem = (props) => {
     name = "",
     dateTime = "",
     description = "",
-    amount = "",
+    amount,
     profileImg = "",
   } = details || {};
 

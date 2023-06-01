@@ -65,7 +65,7 @@ function ModalDateRangePicker(props) {
     >
       <div ref={modalRef} className={classNameChild}>
         <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content p-4">
+          <div className="modal-content p-4 common-dr-picker">
             <div className="modal-header flex-column pb-3">
               <h3 className="text-center">{heading}</h3>
             </div>

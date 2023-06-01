@@ -22,7 +22,7 @@ function CreditCard(props) {
             }
       }
     >
-      {!bg_img && <IconCardBackground />}
+      {!bg_img ? <IconCardBackground /> : null}
       <p
         className="card-holder-nm overflow-hidden"
         style={{ maxHeight: "40%", textOverflow: "ellipsis" }}

@@ -10,7 +10,7 @@ function SelectBank() {
     useContext(FundContext);
 
   useEffect(() => {
-    if (!formik || !formik.values.bank_id || !banksList) return;
+    if (!formik?.values?.bank_id || !banksList) return;
     const bank = banksList.find((item) => item.id === formik.values.bank_id);
     setSelectedBank(bank);
   }, [formik]);
@@ -23,7 +23,7 @@ function SelectBank() {
   };
 
   const handleProceed = () => {
-    if (!selectedBank || !selectedBank.id) return;
+    if (!selectedBank?.id) return;
     integrateBankDetails(selectedBank);
     handleSelectExistingBank(false);
   };

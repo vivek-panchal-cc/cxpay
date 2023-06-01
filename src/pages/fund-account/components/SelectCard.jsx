@@ -10,7 +10,7 @@ function SelectCard() {
     useContext(FundContext);
 
   useEffect(() => {
-    if (!formik || !formik.values.card_id || !cardsList) return;
+    if (!formik?.values?.card_id || !cardsList) return;
     const card = cardsList.find((item) => item.id === formik.values.card_id);
     setSelectedCard(card);
   }, [formik]);
@@ -23,7 +23,7 @@ function SelectCard() {
   };
 
   const handleProceed = () => {
-    if (!selectedCard || !selectedCard.id) return;
+    if (!selectedCard?.id) return;
     integrateCardDetails(selectedCard);
     handleSelectExistingCard(false);
   };

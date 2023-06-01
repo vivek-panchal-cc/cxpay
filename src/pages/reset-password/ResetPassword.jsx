@@ -107,18 +107,18 @@ function ResetPassword() {
                       onPaste={(e) => e.preventDefault()}
                     />
                     {formik.touched.confirm_password &&
-                      !formik.errors.confirm_password && (
-                        <span
-                          className="eye-icon"
-                          style={{ top: "24px", right: "45px" }}
-                        >
-                          <img
-                            className="eye-close"
-                            src="/assets/images/green-tick.svg"
-                            alt="eye close icon"
-                          />
-                        </span>
-                      )}
+                    !formik.errors.confirm_password ? (
+                      <span
+                        className="eye-icon"
+                        style={{ top: "24px", right: "45px" }}
+                      >
+                        <img
+                          className="eye-close"
+                          src="/assets/images/green-tick.svg"
+                          alt="eye close icon"
+                        />
+                      </span>
+                    ) : null}
                     <span className="eye-icon" style={{ top: "24px" }}>
                       {showPassword.confirm ? (
                         <IconEyeOpen
@@ -141,9 +141,9 @@ function ResetPassword() {
                       )}
                     </span>
                   </div>
-                  {formik.status && (
+                  {formik.status ? (
                     <p className="text-danger">{formik.status}</p>
-                  )}
+                  ) : null}
                   <div className="text-center login-btn">
                     <input
                       type="submit"

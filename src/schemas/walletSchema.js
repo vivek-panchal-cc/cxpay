@@ -46,9 +46,7 @@ const uploadCardImageSchema = yup.object().shape({
   card_image: yup.mixed().test({
     message: "File Type is not allowed",
     test: (file) =>
-      file && file.name
-        ? isValidFileType(file && file.name.toLowerCase(), "image")
-        : false,
+      file?.name ? isValidFileType(file?.name?.toLowerCase(), "image") : false,
   }),
 });
 

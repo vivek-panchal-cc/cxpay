@@ -9,7 +9,6 @@ import { SendPaymentContext } from "context/sendPaymentContext";
 import ModalAddContact from "components/modals/ModalAddContact";
 
 const RequestContact = (props) => {
-  const {} = props;
   const { selectedContacts, handleSelectedContacts, handleSendRequest } =
     useContext(SendPaymentContext);
   const [contactsList, setContactsList] = useState([]);
@@ -71,7 +70,7 @@ const RequestContact = (props) => {
     const sconts = contactsList.filter((item) =>
       updatedIds.includes(item?.account_number)
     );
-    handleSelectedContacts && handleSelectedContacts(sconts);
+    if (handleSelectedContacts) handleSelectedContacts(sconts);
   };
 
   // Pre-selecting contacts
@@ -135,20 +134,17 @@ const RequestContact = (props) => {
           }}
         />
         <ContactsSelection.Footer>
-          {isLoadingContacts ? (
-            <LoaderSendContactButtons />
-          ) : (
-            contactsList.length > 0 && (
-              <Button
-                type="button"
-                className="btn btn-next ws--btn ms-0"
-                onClick={handleSendRequest}
-              >
-                <IconSend style={{ stroke: "#fff" }} />
-                Request
-              </Button>
-            )
-          )}
+          {isLoadingContacts ? <LoaderSendContactButtons /> : null}
+          {!isLoadingContacts && contactsList.length > 0 ? (
+            <Button
+              type="button"
+              className="btn btn-next ws--btn ms-0"
+              onClick={handleSendRequest}
+            >
+              <IconSend style={{ stroke: "#fff" }} />
+              Request
+            </Button>
+          ) : null}
         </ContactsSelection.Footer>
       </ContactsSelection>
       <ModalAddContact

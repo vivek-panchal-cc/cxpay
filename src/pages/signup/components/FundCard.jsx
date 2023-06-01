@@ -179,7 +179,7 @@ function FundCard() {
           >
             <option value={""}>Select Country</option>
             {countryList?.map((country, index) => (
-              <option key={index} value={country.iso}>
+              <option key={country?.iso || index} value={country.iso}>
                 {country.country_name}
               </option>
             ))}
@@ -196,7 +196,7 @@ function FundCard() {
           >
             <option value={""}>Select City</option>
             {cityList[formik.values.country]?.map((city, index) => (
-              <option key={index} value={city.city_name}>
+              <option key={city?.city_name || index} value={city.city_name}>
                 {city.city_name}
               </option>
             ))}
@@ -242,7 +242,7 @@ function FundCard() {
       <div className="payment-footer-block p-4">
         <ul>
           {paymentDetails?.allCharges?.map((item, index) => (
-            <li key={index}>
+            <li key={item?.desc?.trim() || index}>
               <div className="payment-footer-col-label">{item?.desc}</div>
               <h4 className="amount d-flex justify-content-between">
                 <span>{CURRENCY_SYMBOL}</span>

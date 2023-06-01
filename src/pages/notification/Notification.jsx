@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import InputSwitch from "components/ui/InputSwitch";
 import { LoaderContext } from "context/loaderContext";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
-import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import LeftArrow from "styles/svgs/LeftArrow";

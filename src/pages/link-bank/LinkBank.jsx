@@ -129,7 +129,7 @@ const LinkBank = (props) => {
                 >
                   <option value={""}>Select Bank</option>
                   {banksList?.map((bank, index) => (
-                    <option key={index} value={bank.id}>
+                    <option key={bank?.id || index} value={bank.id}>
                       {bank.bank_name}
                     </option>
                   ))}
@@ -241,7 +241,7 @@ const LinkBank = (props) => {
                 >
                   <option value={""}>Select Country</option>
                   {countryList?.map((country, index) => (
-                    <option key={index} value={country.iso}>
+                    <option key={country?.iso || index} value={country.iso}>
                       {country.country_name}
                     </option>
                   ))}
@@ -258,7 +258,10 @@ const LinkBank = (props) => {
                 >
                   <option value={""}>Select City</option>
                   {cityList[formik.values.country]?.map((city, index) => (
-                    <option key={index} value={city.city_name}>
+                    <option
+                      key={city.city_name || index}
+                      value={city.city_name}
+                    >
                       {city.city_name}
                     </option>
                   ))}

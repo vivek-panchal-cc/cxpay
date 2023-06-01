@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NotificationListItem from "components/items/NotificationListItem";
 import Pagination from "components/pagination/Pagination";
@@ -8,17 +8,10 @@ import {
   fetchMarkAsRead,
 } from "features/user/userNotificationSlice";
 import { LoaderContext } from "context/loaderContext";
-import {
-  NOTIFY_PAY_COMPLETE,
-  NOTIFY_PAY_FAIL,
-  NOTIFY_RECEIVE,
-  NOTIFY_REQUEST,
-  notificationType,
-} from "constants/all";
+import { notificationType } from "constants/all";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Button from "components/ui/Button";
-import { apiRequest } from "helpers/apiRequests";
 import { ActivityContext } from "context/activityContext";
 
 function ViewNotification(props) {
@@ -105,18 +98,18 @@ function ViewNotification(props) {
             <p> </p>
           </div>
           <div className="pr-4">
-            {allNotifications && allNotifications.length > 0 && (
+            {allNotifications && allNotifications.length > 0 ? (
               <Button type="button" className="btn" onClick={handleDeleteAll}>
                 Clear all
               </Button>
-            )}
+            ) : null}
           </div>
         </div>
         <div className="notification-pg-list-wrap">
           <ul>
             {allNotifications?.map((item, index) => (
               <NotificationListItem
-                key={index}
+                key={item?.id || index}
                 Icon={notificationType[item?.type]?.icon}
                 handleDelete={handleDelete}
                 handleRead={handleMarkAsRead}
@@ -126,13 +119,13 @@ function ViewNotification(props) {
               />
             ))}
           </ul>
-          {allNotifications.length <= 0 && (
+          {allNotifications.length <= 0 ? (
             <div className="text-center py-4">
               <p className="fs-5">Notifications not found.</p>
             </div>
-          )}
+          ) : null}
         </div>
-        {pagination && !(current_page <= 1 && total <= 10) && (
+        {pagination && !(current_page <= 1 && total <= 10) ? (
           <Pagination
             {...{
               active: current_page,
@@ -141,7 +134,7 @@ function ViewNotification(props) {
               onClickHandler: handleNotificationPageChange,
             }}
           />
-        )}
+        ) : null}
       </div>
     </div>
   );

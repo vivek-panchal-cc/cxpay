@@ -56,7 +56,7 @@ function VerifyLoginOtp(props) {
         if (error) throw payload;
       } catch (error) {
         const { message = "", data } = error || {};
-        if (data && data.suspend_account) {
+        if (data?.suspend_account) {
           toast.error(message);
           navigate("/login", { replace: true });
         }
@@ -112,12 +112,12 @@ function VerifyLoginOtp(props) {
               />
             </div>
             <div className="resend-otp-wrap">
-              {isTimerOver && !error && (
+              {isTimerOver && !error ? (
                 <div>
                   <span>{counterTime}</span>
                   <br />
                 </div>
-              )}
+              ) : null}
               <p>Didn't receive any code?</p>
               <button
                 type="button"
@@ -130,7 +130,9 @@ function VerifyLoginOtp(props) {
             </div>
 
             <div className="popup-btn-wrap">
-              {formik.status && <p className="text-danger">{formik.status}</p>}
+              {formik.status ? (
+                <p className="text-danger">{formik.status}</p>
+              ) : null}
               <input
                 type="submit"
                 className="btn btn-primary"

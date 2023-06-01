@@ -23,10 +23,7 @@ const sendPaymentSchema = yup.object().shape({
         .required("Please enter specifications"),
       personal_amount: yup
         .string()
-        .matches(
-          /^[1-9][0-9]{0,5}(\.[0-9]{1,2})?$/,
-          "Please enter valid amount"
-        )
+        .matches(/^[1-9]\d{0,5}(\.\d{1,2})?$/, "Please enter valid amount")
         .required("Please enter amount"),
     })
   ),
@@ -41,10 +38,7 @@ const sendRequestSchema = yup.object().shape({
         .required("Please enter specifications"),
       amount: yup
         .string()
-        .matches(
-          /^[1-9][0-9]{0,5}(\.[0-9]{1,2})?$/,
-          "Please enter valid amount"
-        )
+        .matches(/^[1-9]\d{0,5}(\.\d{1,2})?$/, "Please enter valid amount")
         .required("Please enter amount"),
     })
   ),
