@@ -41,7 +41,6 @@ const Invited = () => {
   const {
     deleteContact,
     changeFavouriteContact,
-    contactName,
     isDisabled,
     handleSelectedContacts,
   } = useContext(ContactsContext);
@@ -224,7 +223,7 @@ const Invited = () => {
       </div>
       <ModalConfirmation
         heading={"Delete Contact"}
-        subHeading={`Are you sure to remove ${contactName} ?`}
+        subHeading={`Are you sure to remove ${""} ?`}
         show={showConfirmDelSingle}
         setShow={setShowConfirmDelSingle}
         handleCallback={handleDeleteContact}

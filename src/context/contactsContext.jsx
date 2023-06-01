@@ -11,7 +11,6 @@ const ContactsProvider = ({ children }) => {
   const location = useLocation();
   const { setIsLoading } = useContext(LoaderContext);
   const [selectedContacts, setSelectedContacts] = useState([]);
-  const [contactName, setContactName] = useState("");
   const [confirmShow, setConfirmShow] = useState(false);
   const [removeConfirmShow, setRemoveConfirmShow] = useState(false);
   const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
@@ -115,7 +114,6 @@ const ContactsProvider = ({ children }) => {
       value={{
         deleteContact,
         changeFavouriteContact,
-        contactName,
         confirmShow,
         setConfirmShow,
         setRemoveConfirmShow,

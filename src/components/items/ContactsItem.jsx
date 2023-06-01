@@ -65,7 +65,7 @@ const ContactsItem = (props) => {
             />
           </a>
           <button
-            onClick={() => handleDeleteContact(contact?.account_number)}
+            onClick={() => handleDeleteContact(contact)}
             className="conlist-del-a con-list-up"
           >
             <IconDelete />

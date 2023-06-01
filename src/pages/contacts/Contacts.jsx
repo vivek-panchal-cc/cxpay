@@ -20,7 +20,6 @@ const Contacts = () => {
   const {
     deleteContact,
     changeFavouriteContact,
-    contactName,
     handleSelectedContacts,
     isDisabled,
   } = useContext(ContactsContext);
@@ -34,6 +33,8 @@ const Contacts = () => {
 
   const [showConfirmDelSingle, setShowConfirmDelSingle] = useState(false);
   const [showConfirmDelSelected, setShowConfirmDelSelected] = useState(false);
+
+  const [contactName, setContactName] = useState("");
 
   // Contacts and it's pagination
   const [search, setSearch] = useState("");
@@ -82,9 +83,10 @@ const Contacts = () => {
     changeFavouriteContact(contact, contacts, setContacts);
   };
 
-  const handleConfirmDeleteSingle = (contUniqId) => {
-    if (!contUniqId) return;
-    setSelectedContacts([contUniqId]);
+  const handleConfirmDeleteSingle = ({ account_number, name }) => {
+    if (!account_number) return;
+    setSelectedContacts([account_number]);
+    setContactName(name);
     setShowConfirmDelSingle(true);
   };
 
@@ -99,6 +101,7 @@ const Contacts = () => {
     setSelectedContacts([]);
     setShowConfirmDelSingle(false);
     setShowConfirmDelSelected(false);
+    setContactName("");
     reloadContacts();
   };
 
@@ -263,7 +266,12 @@ const Contacts = () => {
       />
       <ModalConfirmation
         heading={"Delete Contact"}
-        subHeading={`Are you sure to remove ${contactName} ?`}
+        subHeading={
+          <>
+            Are you sure to remove{" "}
+            <span className="fs-6 fw-bold">{contactName}</span> ?
+          </>
+        }
         show={showConfirmDelSingle}
         setShow={setShowConfirmDelSingle}
         handleCallback={handleDeleteContact}

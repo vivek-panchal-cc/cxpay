@@ -25,7 +25,6 @@ const SendPaymentProvider = (props) => {
   const [requestCreds, setRequestCreds] = useState({});
   const [charges, setCharges] = useState([]);
   const [disableEdit, setDisableEdit] = useState(false);
-  // const [isCharged, setIsCharged] = useState(false);
 
   // For Send contacts button click
   const handleSendContacts = (contacts = null, request_id = "") => {
