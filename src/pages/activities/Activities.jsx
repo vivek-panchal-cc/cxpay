@@ -31,11 +31,12 @@ const Activities = () => {
     activitiesList?.map((item) => {
       const { date } = item || {};
       const [dd, mm, yr] = date?.split("/") || [];
-      if (!dd || !mm || !yr) return;
+      if (!dd || !mm || !yr) return false;
       const dt = new Date(`${yr}-${mm}-${dd}`);
       const month = dt.toLocaleDateString("default", { month: "long" });
       const dtList = activityDateList[`${month} ${yr}`] || [];
       activityDateList[`${month} ${yr}`] = [...dtList, item];
+      return item;
     });
     setActivitiesDateBind(activityDateList);
   }, [activitiesList]);

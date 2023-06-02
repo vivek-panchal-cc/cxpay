@@ -1,13 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {
-  IconAdd,
-  IconMessage,
-  IconRightArrowBig,
-  IconSend,
-  IconWallet,
-} from "styles/svgs";
 import Modal from "components/modals/Modal";
 import FundYourAccountPopup from "components/popups/FundYourAccountPopup";
 import { apiRequest } from "helpers/apiRequests";
@@ -23,27 +16,13 @@ import useChartData from "hooks/useChartData";
 import ModalAddContact from "components/modals/ModalAddContact";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import useActivities from "hooks/useActivities";
-
-const selectionRangeDate = {
-  Today: [moment(), moment()],
-  Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
-  "Last 7 Days": [moment().subtract(6, "days"), moment()],
-  "Last 30 Days": [moment().subtract(29, "days"), moment()],
-  "This Month": [moment().startOf("month"), moment().endOf("month")],
-  "Last Month": [
-    moment().subtract(1, "month").startOf("month"),
-    moment().subtract(1, "month").endOf("month"),
-  ],
-  "Last Year": [
-    moment().subtract(1, "year").startOf("year"),
-    moment().subtract(1, "year").endOf("year"),
-  ],
-};
-
-const options = [
-  { value: "", text: "Month" },
-  { value: "1", text: "Year" },
-];
+import {
+  IconAdd,
+  IconMessage,
+  IconRightArrowBig,
+  IconSend,
+  IconWallet,
+} from "styles/svgs";
 
 const graphBackgroundImage = "/assets/images/chart-duumy.png";
 

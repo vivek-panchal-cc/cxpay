@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ActivityItem from "../items/ActivityItem";
 import LoaderRecentActivityItem from "loaders/LoaderRecentActivityItem";
-import { uniqueId } from "helpers/commonHelpers";
 
 const ActivityList = (props) => {
   const { classNameList = "", loading, activitiesList } = props;

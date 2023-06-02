@@ -19,7 +19,6 @@ export default function EditGroup() {
   let { id } = useParams();
   const navigate = useNavigate();
   const [contactList, setContactList] = useState([]);
-  const [groupDetail, setGroupDetail] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
   const { setIsLoading } = useContext(LoaderContext);
 
@@ -75,7 +74,6 @@ export default function EditGroup() {
     try {
       const { data } = await apiRequest.getGroupDetail({ group_id: id });
       if (!data.success) throw data.message;
-      setGroupDetail(data.data.group_details);
       formik.setValues({
         group_id: data.data.group_details.group_id,
         group_name: data.data.group_details.group_name,
@@ -87,7 +85,6 @@ export default function EditGroup() {
       setContactList(members);
     } catch (error) {
       if (typeof error === "string") {
-        setGroupDetail(null);
         setContactList(null);
       }
     } finally {

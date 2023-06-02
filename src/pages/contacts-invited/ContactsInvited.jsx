@@ -10,7 +10,6 @@ import InviteContactItem from "components/items/InviteContactItem";
 import { ContactsContext } from "context/contactsContext";
 import { IconCross, IconSearch } from "styles/svgs";
 import LoaderContact from "loaders/LoaderContact";
-import { uniqueId } from "helpers/commonHelpers";
 import useInvitedContacts from "hooks/useInvitedContacts";
 
 const Invited = () => {
@@ -223,7 +222,7 @@ const Invited = () => {
       </div>
       <ModalConfirmation
         heading={"Delete Contact"}
-        subHeading={`Are you sure to remove ${""} ?`}
+        subHeading={`Are you sure to remove?`}
         show={showConfirmDelSingle}
         setShow={setShowConfirmDelSingle}
         handleCallback={handleDeleteContact}

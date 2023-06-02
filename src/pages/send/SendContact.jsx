@@ -180,7 +180,7 @@ function SendContact() {
       getInviteContactList(1, searchContactText);
     }, 1000);
     return () => clearTimeout(timeOut);
-  }, [searchContactText.toString().trim()]);
+  }, [searchContactText?.toString()?.trim()]);
 
   // Debouncing for groups
   useEffect(() => {
@@ -193,7 +193,7 @@ function SendContact() {
       getGroupsList(1, searchGroupText);
     }, 1000);
     return () => clearTimeout(timeOut);
-  }, [searchGroupText.toString().trim()]);
+  }, [searchGroupText?.toString()?.trim()]);
 
   useEffect(() => {
     if (!showCreateGroupPopup) getGroupsList(1, "");

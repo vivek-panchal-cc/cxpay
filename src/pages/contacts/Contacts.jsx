@@ -11,7 +11,6 @@ import { ContactsContext } from "context/contactsContext";
 import ContactsItem from "components/items/ContactsItem";
 import { IconCross, IconSearch } from "styles/svgs";
 import LoaderContact from "loaders/LoaderContact";
-import { uniqueId } from "helpers/commonHelpers";
 import useContacts from "hooks/useContacts";
 import ContactDetail from "./components/ContactDetail";
 import InvitationSent from "./components/InvitationSent";

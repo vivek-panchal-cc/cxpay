@@ -278,6 +278,8 @@ const FundProvider = ({ children }) => {
         formik.setValues(initValBank);
         attachDefaultBank();
         return;
+      default:
+        return;
     }
   }, [userProfile.profile, countryList, params]);
 

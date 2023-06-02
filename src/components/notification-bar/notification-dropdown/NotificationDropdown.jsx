@@ -3,7 +3,6 @@ import { notificationType } from "constants/all";
 import { ActivityContext } from "context/activityContext";
 import { LoaderContext } from "context/loaderContext";
 import { fetchMarkAsRead } from "features/user/userNotificationSlice";
-import { uniqueId } from "helpers/commonHelpers";
 import LoaderNotificationDropdown from "loaders/LoaderNotificationDropdown";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { apiRequest } from "helpers/apiRequests";
 
 const useSchedulePayments = ({ page = 1, start_date = "", end_date = "" }) => {

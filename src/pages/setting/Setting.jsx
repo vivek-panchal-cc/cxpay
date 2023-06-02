@@ -74,7 +74,7 @@ function Setting() {
           <ul>
             {settingsRedirects?.map((item, index) => (
               <>
-                {item?.title == "Business info" && user_type == "personal" ? (
+                {item?.title === "Business info" && user_type === "personal" ? (
                   ""
                 ) : (
                   <li key={item.title?.trim() || index}>

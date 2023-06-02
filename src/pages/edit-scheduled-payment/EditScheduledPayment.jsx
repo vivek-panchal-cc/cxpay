@@ -8,7 +8,6 @@ import ReactDatePicker from "react-datepicker";
 import { schedulePaymentSchema } from "schemas/sendPaymentSchema";
 import Input from "components/ui/Input";
 import TimePicker from "components/time-picker/TimePicker";
-import { uniqueId } from "helpers/commonHelpers";
 
 const EditScheduledPayment = () => {
   const navigate = useNavigate();

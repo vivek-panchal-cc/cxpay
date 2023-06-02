@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { apiRequest } from "helpers/apiRequests";
 
 const useContacts = ({ page = 1, search = "" }) => {

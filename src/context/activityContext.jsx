@@ -121,6 +121,8 @@ const ActivityProvider = ({ children }) => {
         });
         setShowConfirmPopup(true);
         return;
+      default:
+        return;
     }
   };
 
@@ -154,6 +156,8 @@ const ActivityProvider = ({ children }) => {
       case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_CREDIT}_${ACT_STATUS_PAID}`:
       case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_DEBIT}_${ACT_STATUS_PAID}`:
         printActivityDetails(actDetails);
+        return;
+      default:
         return;
     }
   };

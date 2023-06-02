@@ -6,6 +6,7 @@ import { fetchUserProfile } from "features/user/userProfileSlice";
 import { LoaderContext } from "context/loaderContext";
 import NotificationBar from "components/notification-bar/NotificationBar";
 import { fetchGetNotifications } from "features/user/userNotificationSlice";
+import ActivityProvider from "context/activityContext";
 
 function DashboardLayout() {
   const dispatch = useDispatch();
@@ -50,8 +51,10 @@ function DashboardLayout() {
                 />
               </span>
             </div>
-            <NotificationBar />
-            <Outlet />
+            <ActivityProvider>
+              <NotificationBar />
+              <Outlet />
+            </ActivityProvider>
           </div>
         </div>
       </div>

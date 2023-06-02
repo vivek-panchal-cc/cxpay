@@ -66,6 +66,7 @@ const ViewSchedulePayment = () => {
       const month = dt.toLocaleDateString("default", { month: "long" });
       const dtList = paymentDateList[`${month} ${dt.getFullYear()}`] || [];
       paymentDateList[`${month} ${dt.getFullYear()}`] = [...dtList, item];
+      return item;
     });
     setPaymentsDateBind(paymentDateList);
   }, [listPayments]);

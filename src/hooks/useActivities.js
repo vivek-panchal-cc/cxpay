@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { apiRequest } from "helpers/apiRequests";
 
 const useActivities = ({
@@ -54,7 +54,7 @@ const useActivities = ({
       retrieveListActivities(page, search, start_date, end_date);
     }, 1000);
     return () => clearTimeout(timeOut);
-  }, [page, search.trim(), start_date, end_date, reloadFlag]);
+  }, [page, search?.trim(), start_date, end_date, reloadFlag]);
 
   return [loading, pagination, listActivities, reload];
 };

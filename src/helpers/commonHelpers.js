@@ -17,6 +17,8 @@ const getChargedAmount = (charges = [], amounts = []) => {
         thisCharge.amount = deduct;
         thisCharge.desc = text;
         break;
+      default:
+        break;
     }
     grandTotal += thisCharge.amount;
     return thisCharge;
