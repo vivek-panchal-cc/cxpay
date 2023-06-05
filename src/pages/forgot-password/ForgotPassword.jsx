@@ -114,7 +114,7 @@ function ForgotPassword() {
                     />
                   </div>
                   <p className="sign-up-text text-center">
-                    Don't have an account ? <a href="/signup">Signup</a>
+                    Already have an account? <a href="/login">Login</a>
                   </p>
                 </form>
               </div>

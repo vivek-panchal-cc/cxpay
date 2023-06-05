@@ -149,7 +149,7 @@ const SendPaymentProvider = (props) => {
   const handleCancelPayment = async () => {
     setSelectedContacts([]);
     setSelectedGroup([]);
-    setSendCreds([]);
+    setSendCreds({ wallet: [] });
     setRequestCreds([]);
     setDisableEdit(false);
   };

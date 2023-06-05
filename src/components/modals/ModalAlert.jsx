@@ -51,7 +51,6 @@ function ModalAlert(props) {
                   type="button"
                   onClick={handleBtnClick}
                   className="btn money-sent-pop-close"
-                  replace={true}
                 >
                   {btnText}
                 </button>

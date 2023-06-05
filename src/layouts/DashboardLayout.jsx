@@ -6,6 +6,8 @@ import { fetchUserProfile } from "features/user/userProfileSlice";
 import { LoaderContext } from "context/loaderContext";
 import NotificationBar from "components/notification-bar/NotificationBar";
 import { fetchGetNotifications } from "features/user/userNotificationSlice";
+import ContactsProvider from "context/contactsContext";
+import SendPaymentProvider from "context/sendPaymentContext";
 import ActivityProvider from "context/activityContext";
 
 function DashboardLayout() {
@@ -51,10 +53,14 @@ function DashboardLayout() {
                 />
               </span>
             </div>
-            <ActivityProvider>
-              <NotificationBar />
-              <Outlet />
-            </ActivityProvider>
+            <ContactsProvider>
+              <SendPaymentProvider>
+                <ActivityProvider>
+                  <NotificationBar />
+                  <Outlet />
+                </ActivityProvider>
+              </SendPaymentProvider>
+            </ContactsProvider>
           </div>
         </div>
       </div>
