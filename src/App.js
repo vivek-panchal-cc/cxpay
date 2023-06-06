@@ -40,6 +40,11 @@ import Activities from "pages/activities/Activities";
 import ScheduledPaymentLayout from "layouts/ScheduledPaymentLayout";
 import EditScheduledPayment from "pages/edit-scheduled-payment/EditScheduledPayment";
 import Dashboard from "pages/dashboard/Dashboard";
+import WithdrawalsCard from "pages/withdrawals-card/WithdrawalsCard";
+import WithdrawalsBank from "pages/withdrawals-bank/WithdrawalsBank";
+import WithdrawCard from "pages/withdraw-card/WithdrawCard";
+import WithdrawBank from "pages/withdraw-bank/WithdrawBank";
+import WithdrawDetails from "pages/withdraw-details/WithdrawDetails";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -98,6 +103,26 @@ function App() {
             <Route
               path="/wallet/fund-account/:fundtype?"
               element={<FundAccount />}
+            />
+            <Route
+              path="/wallet/withdrawals-card"
+              element={<WithdrawalsCard />}
+            />
+            <Route
+              path="/wallet/withdrawals-bank"
+              element={<WithdrawalsBank />}
+            />
+            <Route
+              path="/wallet/withdraw-card/:tid?"
+              element={<WithdrawCard />}
+            />
+            <Route
+              path="/wallet/withdraw-bank/:tid?"
+              element={<WithdrawBank />}
+            />
+            <Route
+              path="/wallet/withdraw-details/:tid"
+              element={<WithdrawDetails />}
             />
             <Route path="/profile" element={<Profile />} />
             {/* contacts */}

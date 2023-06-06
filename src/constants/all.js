@@ -246,6 +246,12 @@ const SCHEDULE_BUFFER = 5;
 const CHARGES_TYPE_WW = "pay_type=WW";
 const CHARGES_TYPE_PL = "pay_type=PL";
 
+// Withdraw options tabs list
+const WITHDRAW_OPTIONS_TABS_LIST = [
+  { title: "Card", url: "/wallet/withdrawals-card" },
+  { title: "Bank", url: "/wallet/withdrawals-bank" },
+];
+
 export {
   exp0ContainWhitespace,
   exp0ContainWordPassword,
@@ -285,6 +291,7 @@ export {
   NOTIFY_CON_REGISTER,
   CHARGES_TYPE_WW,
   CHARGES_TYPE_PL,
+  WITHDRAW_OPTIONS_TABS_LIST,
 };
 export {
   regexContainCapitalLetter,

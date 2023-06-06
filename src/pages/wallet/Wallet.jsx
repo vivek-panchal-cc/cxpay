@@ -131,13 +131,26 @@ function Wallet() {
                 <img src="/assets/images/Bank_ic_wallet.svg" alt="" />
                 <span className="w-100 mw-100">My Bank Accounts</span>
               </Link>
+              <Link
+                to="/wallet/withdrawals-card"
+                className="w-100 d-flex align-items-center"
+              >
+                <img src="/assets/images/Bank_ic_wallet.svg" alt="" />
+                <span className="w-100 mw-100">Withdraw</span>
+              </Link>
             </div>
             <div className="wallet-card-add-btns">
-              <Link to="/wallet/add-card">
+              <Link
+                to="/wallet/add-card"
+                className="w-100 d-flex align-items-center"
+              >
                 <img src="/assets/images/Add_card_btn.svg" alt="" />
                 <span>Add a Card</span>
               </Link>
-              <Link to="/wallet/view-card">
+              <Link
+                to="/wallet/view-card"
+                className="w-100 d-flex align-items-center"
+              >
                 <img src="/assets/images/View_cards_btn.svg" alt="" />
                 <span>View Cards</span>
               </Link>
