@@ -5,7 +5,6 @@ import Modal from "components/modals/Modal";
 import FundYourAccountPopup from "components/popups/FundYourAccountPopup";
 import { apiRequest } from "helpers/apiRequests";
 import { LoaderContext } from "context/loaderContext";
-import moment from "moment";
 import BalanceGraph from "components/graph/BalanceGraph";
 import CardList from "components/card-list/CardList";
 import ContactsSelection from "components/contacts-selection/ContactsSelection";
