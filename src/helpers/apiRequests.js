@@ -519,6 +519,50 @@ export const getPrintDetails = (params) => {
   return axiosTransactionInstance.post(`${API_getPrintDetails}`, params);
 };
 
+// Withdraw Related APIs
+
+// GET @
+// @params
+export const getAvailableCardBalane = () => {
+  return axiosTransactionInstance.get(`${""}`);
+};
+
+// POST @
+// @params auth_token, start_date, end_date, page, search, status
+export const getCardTransactionsList = (params) => {
+  return axiosTransactionInstance.post(`${""}`, params);
+};
+
+// POST @
+// @params auth_token, start_date, end_date, page, search, status
+export const getBankWithdrawList = (params) => {
+  return axiosTransactionInstance.post(`${""}`, params);
+};
+
+// POST @
+// @params auth_token, withdraw_id
+export const getCardWithdrawDetails = (params) => {
+  return axiosTransactionInstance.post(`${""}`, params);
+};
+
+// POST @
+// @params auth_token, withdraw_id
+export const getBankWithdrawDetails = (params) => {
+  return axiosTransactionInstance.post(`${""}`, params);
+};
+
+// POST @
+// @params auth_token
+export const withdrawRequest = (params) => {
+  return axiosTransactionInstance.post(`${""}`, params);
+};
+
+// POST @
+// @params auth_token, withdraw_id
+export const cancelWithdrawRequest = (params) => {
+  return axiosTransactionInstance.post(`${""}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,

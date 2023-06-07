@@ -2,6 +2,7 @@ import SchedulePaymentItem from "components/items/SchedulePaymentItem";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
 import Pagination from "components/pagination/Pagination";
+import InputDateRange from "components/ui/InputDateRange";
 import { ScheduledPaymentContext } from "context/scheduledPaymentContext";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
 import React, { useContext, useEffect, useState } from "react";
@@ -79,28 +80,12 @@ const ViewSchedulePayment = () => {
             <h3>My Scheduled Payment</h3>
           </div>
           <div className="schedule-pay-sd-wrap gap-4">
-            <div
+            <InputDateRange
               className="date-filter-calendar"
-              onClick={() => setShowFilter(true)}
-            >
-              <input
-                id="from-date"
-                type="text"
-                className="form-control"
-                placeholder="From"
-                value={
-                  filters.startDate
-                    ? `${filters.startDate.toLocaleDateString(
-                        "en-UK"
-                      )} - ${filters.endDate.toLocaleDateString("en-UK")}`
-                    : "From - To"
-                }
-                readOnly
-              />
-              <span className="date-cal">
-                <IconCalender style={{ stroke: "#c4c4c4" }} />
-              </span>
-            </div>
+              handleClick={() => setShowFilter(true)}
+              startDate={filters.startDate}
+              endDate={filters.endDate}
+            />
             <button className="shedule-date-filter" onClick={handleResetFilter}>
               <IconRefresh />
             </button>

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { IconCalender, IconCross, IconRefresh, IconSearch } from "styles/svgs";
+import { IconCross, IconRefresh, IconSearch } from "styles/svgs";
 import ActivityItem from "components/items/ActivityItem";
 import Pagination from "components/pagination/Pagination";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
@@ -7,6 +7,7 @@ import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
 import { ActivityContext } from "context/activityContext";
 import useActivities from "hooks/useActivities";
 import Input from "components/ui/Input";
+import InputDateRange from "components/ui/InputDateRange";
 
 const Activities = () => {
   const { handleActivityDetail, reloadList } = useContext(ActivityContext);
@@ -100,28 +101,12 @@ const Activities = () => {
               <IconSearch style={{ stroke: "#0081c5" }} />
             </div>
           </div>
-          <div
+          <InputDateRange
             className="date-filter-calendar"
-            onClick={() => setShowFilter(true)}
-          >
-            <input
-              id="from-date"
-              type="text"
-              className="form-control"
-              placeholder="From"
-              value={
-                filters.startDate
-                  ? `${filters.startDate.toLocaleDateString(
-                      "en-UK"
-                    )} - ${filters.endDate.toLocaleDateString("en-UK")}`
-                  : "From - To"
-              }
-              readOnly
-            />
-            <span className="date-cal">
-              <IconCalender style={{ stroke: "#c4c4c4" }} />
-            </span>
-          </div>
+            handleClick={() => setShowFilter(true)}
+            startDate={filters.startDate}
+            endDate={filters.endDate}
+          />
           <button className="shedule-date-filter" onClick={handleResetFilter}>
             <IconRefresh />
           </button>
