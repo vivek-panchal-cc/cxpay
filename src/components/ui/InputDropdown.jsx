@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { IconRightArrowBig } from "styles/svgs";
 
 const InputDropdown = (props) => {
-  const { className, handleClick, value } = props;
+  const { id = "", className = "", handleClick, value = "" } = props;
   const randomStr = `${Math.round(Math.random() * 1000)}`;
 
   const dropRef = useRef(null);
@@ -20,36 +19,31 @@ const InputDropdown = (props) => {
   }, [dropRef]);
 
   return (
-    <div className="position-relative">
-      <div
-        className={`form-field position-relative z-1 ${className}`}
-        onClick={handleClick}
-      >
-        <input
-          id={`dropIn${randomStr}`}
-          type="text"
-          className="form-control"
-          value={value}
-          onClick={() => setToggle((e) => !e)}
-          readOnly
-        />
-        <label
-          htmlFor={`dropIn${randomStr}`}
-          className="position-absolute"
-          style={{ top: "6px", right: "15px" }}
-        >
-          <IconRightArrowBig
-            style={{ stroke: "#0081c5", transform: "rotate(90deg)" }}
-          />
-        </label>
-      </div>
+    <div id={id || `drop${randomStr}`} className={`${className}`}>
+      <span className="anchor" onClick={(e) => setToggle((cs) => !cs)}>
+        {value}
+      </span>
       {toggle ? (
-        <div
-          className="position-absolute p-4 bg-white shadow w-100"
-          ref={dropRef}
-        >
-          hello
-        </div>
+        <ul className="status-items" ref={dropRef}>
+          <li>
+            <input id="accepted" type="checkbox" />
+            <label htmlFor="accepted">
+              <span className="checkmark"></span>Accepted
+            </label>
+          </li>
+          <li>
+            <input id="pending" type="checkbox" />
+            <label htmlFor="pending">
+              <span className="checkmark"></span>Pending
+            </label>
+          </li>
+          <li>
+            <input id="ProcCessign" type="checkbox" />
+            <label htmlFor="ProcCessign">
+              <span className="checkmark"></span>Processing
+            </label>
+          </li>
+        </ul>
       ) : null}
     </div>
   );

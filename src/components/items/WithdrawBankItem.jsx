@@ -1,40 +1,38 @@
-import { THEME_COLORS } from "constants/all";
 import React from "react";
-import { Link } from "react-router-dom";
-import { IconActReqReceive, IconBank, IconEyeOpen } from "styles/svgs";
+import Button from "components/ui/Button";
+import { THEME_COLORS } from "constants/all";
+import { IconBank } from "styles/svgs";
 
 const WithdrawBankItem = () => {
   return (
-    <div className="mb-4">
-      <div className="row">
-        <div className="col-2">
-          <div
-            className="bank-logo-wrap"
-            bg-color={THEME_COLORS[0 % THEME_COLORS.length]}
-          >
-            <IconBank />
+    <li>
+      <div className="rcard-img-wrap">
+        <div
+          className="bank-logo-wrap"
+          bg-color={THEME_COLORS[0 % THEME_COLORS.length]}
+        >
+          <IconBank />
+        </div>
+      </div>
+      <div className="rcard-details-wrap">
+        <div className="card-details">
+          <div className="rcard-info">
+            <h3>xxxx xxxx xxxx 1234</h3>
+          </div>
+          <div className="wrb-date-wrap">
+            <p>24/05/2023 | 03:20 PM</p>
           </div>
         </div>
-        <div className="col-4">
-          <div className="d-flex flex-column">
-            <p className="mb-0">Bank Name</p>
-            <p className="mb-0">06 Jun 2023 9:30 AM</p>
+        <div className="rcard-status-wrap">
+          <div className="total-val-wrap">
+            + <span>500</span> ANG
           </div>
-        </div>
-        <div className="col-6">
-          <div className="d-flex justify-content-between">
-            <p className="mb-0">Pending</p>
-            <p className="mb-0">500 ANG</p>
-            <Link to={`/wallet/withdraw-bank/${1}`}>
-              <IconActReqReceive />
-            </Link>
-            <Link to={`/wallet/withdraw-details/${1}`}>
-              <IconEyeOpen />
-            </Link>
+          <div className="status-wrap">
+            <Button className="btn btn-green">Accepted</Button>
           </div>
         </div>
       </div>
-    </div>
+    </li>
   );
 };
 

@@ -3,9 +3,11 @@ import WithdrawBankList from "components/lists/WithdrawBankList";
 import Pagination from "components/pagination/Pagination";
 import TabsWithdrawOptions from "components/tabs/TabsWithdrawOptions";
 import { WITHDRAW_OPTIONS_TABS_LIST } from "constants/all";
-import { IconCalender } from "styles/svgs";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
 import InputDateRange from "components/ui/InputDateRange";
+import Button from "components/ui/Button";
+import InputDropdown from "components/ui/InputDropdown";
+import { IconPlusLarge } from "styles/svgs";
 
 const WithdrawalsBank = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,36 +37,71 @@ const WithdrawalsBank = () => {
     });
   };
 
+  const handleRequestWithdraw = () => {};
+
   return (
-    <div>
-      <div className="">
-        <TabsWithdrawOptions tabsList={WITHDRAW_OPTIONS_TABS_LIST} />
-        <div className="d-flex gap-2">
-          <InputDateRange
-            className="date-filter-calendar"
-            handleClick={() => setShowDateFilter(true)}
-            startDate={filters.startDate}
-            endDate={filters.endDate}
-          />
-          <button onClick={handleResetFilters}>reset</button>
+    <div className="walllet-refund-wrapper wb-refund-wrapper">
+      <div className="wr-title-wrap">
+        <h2>Wallet Transactions</h2>
+      </div>
+      <TabsWithdrawOptions
+        className="wr-page-link-wrap d-flex"
+        tabsList={WITHDRAW_OPTIONS_TABS_LIST}
+      />
+      {/* Refund Filter Element Start */}
+      <div className="refund-filter-wrapper d-flex wr-bank-fillter-wrap">
+        <div className="d-flex rf-details-div">
+          <div className="refund-dr-wrap">
+            <p>Date Range</p>
+            <InputDateRange
+              className="date-filter-calendar"
+              handleClick={() => setShowDateFilter(true)}
+              startDate={filters.startDate}
+              endDate={filters.endDate}
+            />
+          </div>
+          <div className="refund-sf-wrap">
+            <p>Status Filter</p>
+            <InputDropdown
+              id="refund-status-dd"
+              className="dropdown-check-list"
+              value="Status"
+              handleClick={() => {}}
+            />
+          </div>
+          <div className="refund-filter-btn-wrap">
+            <Button className="solid-btn">Apply</Button>
+            <Button className="border-btn" onClick={handleResetFilters}>
+              Clear
+            </Button>
+          </div>
         </div>
-        <WithdrawBankList />
+        <div className="wrb-req-btn ">
+          <Button className="btn" onClick={handleRequestWithdraw}>
+            <IconPlusLarge fill="#fff" />
+            Request Withdraw
+          </Button>
+        </div>
+      </div>
+      {/* Withdraw Card List */}
+      <div className="refund-cards-list-wrap refund-comn-list-wrap">
+        <WithdrawBankList classNameList="refund-comn-ul bank-refund-ul" />
         <Pagination
           active={1}
           size={5}
           siblingCount={2}
           onClickHandler={() => {}}
         />
-        <ModalDateRangePicker
-          show={showDateFilter}
-          setShow={setShowDateFilter}
-          classNameChild={"schedule-time-modal"}
-          heading="Date Filter"
-          startDate={filters.startDate}
-          endDate={filters.endDate}
-          handleChangeDateRange={handleChangeDateFilter}
-        />
       </div>
+      <ModalDateRangePicker
+        show={showDateFilter}
+        setShow={setShowDateFilter}
+        classNameChild={"schedule-time-modal"}
+        heading="Date Filter"
+        startDate={filters.startDate}
+        endDate={filters.endDate}
+        handleChangeDateRange={handleChangeDateFilter}
+      />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 import { IconCalender } from "styles/svgs";
 
 const InputDateRange = (props) => {
-  const { className, handleClick, startDate, endDate } = props;
+  const { className = "", handleClick, startDate, endDate } = props;
   const randomStr = `${Math.round(Math.random() * 1000)}`;
 
   const fromText = startDate ? startDate?.toLocaleDateString("en-UK") : "From";

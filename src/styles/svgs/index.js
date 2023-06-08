@@ -28,6 +28,7 @@ export { default as IconCancel } from "./Cancel";
 export { default as IconEdit } from "./Edit";
 export { default as IconCross } from "./Cross";
 export { default as IconBank } from "./Bank";
+export { default as IconEye } from "./Eye";
 export { default as IconEyeOpen } from "./EyeOpen";
 export { default as IconEyeClose } from "./EyeClose";
 export { default as IconCancleBg } from "./CancelBg";
@@ -38,8 +39,12 @@ export { default as IconDelete } from "./Delete";
 export { default as IconCard } from "./Card";
 export { default as IconAddBackground } from "./AddBackground";
 export { default as IconPlus } from "./Plus";
+export { default as IconPlusLarge } from "./PlusLarge";
 export { default as IconClock } from "./Clock";
 export { default as IconBin } from "./Bin";
+export { default as IconCreditCard } from "./CreditCard";
+export { default as IconArrowReturn } from "./ArrowReturn";
+
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";
 export { default as IconNotifyContactInvite } from "./NotifyContactInvite";

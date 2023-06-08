@@ -1,41 +1,70 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { IconActReqReceive, IconEyeOpen } from "styles/svgs";
+import React, { useMemo } from "react";
+import Button from "components/ui/Button";
+import { useNavigate } from "react-router-dom";
+import {
+  IconArrowReturn,
+  IconCardBackground,
+  IconCreditCard,
+  IconEye,
+} from "styles/svgs";
 
-const WithdrawCardItem = () => {
+const WithdrawCardItem = (props) => {
+  const { className = "" } = props;
+  const image = "";
+  const color = "#0000ff80";
+  const navigate = useNavigate();
+
+  const CardIcon = useMemo(() => {
+    if (image) return <img src={image} alt="" className="rounded" />;
+    else if (color)
+      return (
+        <IconCardBackground
+          className="bank-card-wrap rounded h-100 w-100"
+          style={{ background: color }}
+        />
+      );
+    return <IconCreditCard height="inherit" />;
+  }, []);
+
+  const handleInitiateRefund = () => {
+    navigate(`/wallet/withdraw-card/${"id"}`);
+  };
+
+  const handleViewDetails = () => {
+    navigate(`/wallet/withdraw-details/${"id"}`);
+  };
+
   return (
-    <div className="my-2">
-      <div className="row">
-        <div className="col-2">
-          <img
-            src="/assets/images/card-5.png"
-            alt=""
-            style={{
-              height: "50px",
-            }}
-          />
-        </div>
-        <div className="col-4">
-          <div className="d-flex flex-column">
-            <p className="mb-0">XXXX XXXX XXXX 1111</p>
-            <p className="mb-0">06 Jun 2023</p>
-            <small>Id: ZCWKCWERVO123</small>
+    <li className={`${className}`}>
+      <div className="rcard-img-wrap">{CardIcon}</div>
+      <div className="rcard-details-wrap">
+        <div className="card-details">
+          <div className="rcard-info">
+            <h3>xxxx xxxx xxxx 1234</h3>
+            <p>24/05/2023 | 03:20 PM</p>
+          </div>
+          <div className="eligible-value-wrap">
+            Eligible : <span>200</span> ANG
           </div>
         </div>
-        <div className="col-6">
-          <div className="d-flex justify-content-between">
-            <p className="mb-0">+500 ANG</p>
-            <p className="mb-0">200 ANG</p>
-            <Link to={`/wallet/withdraw-card/${1}`}>
-              <IconActReqReceive />
-            </Link>
-            <Link to={`/wallet/withdraw-details/${1}`}>
-              <IconEyeOpen />
-            </Link>
+        <div className="rcard-status-wrap">
+          <div className="total-val-wrap">
+            + <span>500</span> ANG
           </div>
+          <div className="status-wrap">
+            <Button className="btn btn-green">Status</Button>
+          </div>
+        </div>
+        <div className="btns-wrap">
+          <Button className="refresh-ic" onClick={handleInitiateRefund}>
+            <IconArrowReturn fill="#fff" />
+          </Button>
+          <Button className="view-ic" onClick={handleViewDetails}>
+            <IconEye stroke="#fff" />
+          </Button>
         </div>
       </div>
-    </div>
+    </li>
   );
 };
 
