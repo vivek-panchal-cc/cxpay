@@ -252,6 +252,9 @@ const WITHDRAW_OPTIONS_TABS_LIST = [
   { title: "Bank", url: "/wallet/withdrawals-bank" },
 ];
 
+// Withdraw options tabs list
+const WITHDRAW_STATUS_FILTER_LIST = ["accepted", "pending", "processing"];
+
 export {
   exp0ContainWhitespace,
   exp0ContainWordPassword,
@@ -292,6 +295,7 @@ export {
   CHARGES_TYPE_WW,
   CHARGES_TYPE_PL,
   WITHDRAW_OPTIONS_TABS_LIST,
+  WITHDRAW_STATUS_FILTER_LIST,
 };
 export {
   regexContainCapitalLetter,

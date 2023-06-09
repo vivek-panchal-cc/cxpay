@@ -2,21 +2,32 @@ import React from "react";
 
 const SectionWithdrawHistory = () => {
   return (
-    <div className="py-3 my-3 border border-start-0 border-end-0">
-      <p className="fs-6 text-center">Withdray History</p>
-      <ul>
-        {[1, 2, 3, 4, 5].map((widro) => (
-          <li key={widro} className="mb-2">
-            <div className="d-flex justify-content-between">
-              <div className="">
-                <p className="m-0">ID: WDRE12333CEEQ</p>
-                <p className="m-0">5th May 2023</p>
+    <div class="wcr-innner-wrap wr-withdraw-his-wrap">
+      <div class="font-16-quick wr-wh-title w-100 pb-4">Withdrawal History</div>
+      <div class="wr-withdraw-his-data">
+        <ul class="d-flex flex-wrap w-100 align-items-center">
+          {[1, 2, 3, 4].map((widro) => (
+            <li class="d-flex flex-wrap w-100" key={widro}>
+              <div class="wh-status-icon">
+                <span></span>
               </div>
-              <div className="">- 100 ANG</div>
-            </div>
-          </li>
-        ))}
-      </ul>
+              <div class="wh-status-info">
+                <div class="dark_black div-font-18 wh-card-num">
+                  xxxx xxxx xxxx 1234
+                </div>
+                <div class="wh-id-date-wrap">
+                  <div class="div-font-14 wh-id">ID: 123456456</div>
+                  <div class="div-font-14 wh-date">24/05/2023 | 03:20 PM</div>
+                </div>
+                <div class="wh-status-amt-wrap">
+                  <div class="div-font-14 wh-status-div green">SUCCESS</div>
+                  <div class="div-font-18 wh-amt dark_black">-100 NAFl</div>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

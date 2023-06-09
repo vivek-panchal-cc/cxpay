@@ -6,18 +6,53 @@ import SectionWithdrawHistory from "./components/SectionWithdrawHistory";
 import SectionTransactionReceipt from "./components/SectionTransactionReceipt";
 import SectionAdminComments from "./components/SectionAdminComments";
 import SectionButtons from "./components/SectionButtons";
+import SectionHeader from "./components/SectionHeader";
+import { useNavigate, useParams } from "react-router-dom";
 
 const WithdrawDetails = () => {
+  const params = useParams();
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate(`/wallet/withdrawals-${params.tid}`);
+  };
+
   return (
-    <div className="w-75 shadow p-4">
-      <h4 className="fs-4">Transaction Details</h4>
-      <SectionTransactionDetails />
-      <SectionBankDetails />
-      <SectionEligibility />
-      <SectionWithdrawHistory />
-      <SectionTransactionReceipt />
-      <SectionAdminComments />
-      <SectionButtons />
+    <div className="walllet-refund-wrapper wallet-refund-details-wrappper wr-bank-details-wrapper">
+      <div class="wr-title-wrap">
+        <h2>Transection Details</h2>
+      </div>
+      <div class="wc-refund-main-wrap">
+        <div class="pattern-wrap pattern-wrap-top"></div>
+        <div class="wc-refund-main-inner">
+          <SectionHeader />
+          {/* Details Section */}
+          <div class="wcr-divider-wrap"></div>
+          <SectionTransactionDetails />
+          <div class="wcr-divider-wrap"></div>
+          {params.tid === "bank" ? (
+            <>
+              {/* Bank and Reciept details section */}
+              <div class="wcr-innner-wrap wbr-innner-wrap-3 d-flex flex-wrap w-100 align-items-center">
+                <SectionBankDetails />
+                <SectionTransactionReceipt />
+              </div>
+              <div class="wcr-divider-wrap"></div>
+              <SectionAdminComments />
+            </>
+          ) : null}
+          {params.tid === "card" ? (
+            <>
+              {/* Card Eligibility and withdraw-History details section */}
+              <SectionEligibility />
+              <div class="wcr-divider-wrap"></div>
+              <SectionWithdrawHistory />
+            </>
+          ) : null}
+        </div>
+        <div class="pattern-wrap pattern-wrap-bottom"></div>
+      </div>
+      <SectionButtons handleBack={handleBack} />
     </div>
   );
 };

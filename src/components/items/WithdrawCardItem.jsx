@@ -1,12 +1,7 @@
 import React, { useMemo } from "react";
 import Button from "components/ui/Button";
 import { useNavigate } from "react-router-dom";
-import {
-  IconArrowReturn,
-  IconCardBackground,
-  IconCreditCard,
-  IconEye,
-} from "styles/svgs";
+import { IconCardBackground, IconCreditCard } from "styles/svgs";
 
 const WithdrawCardItem = (props) => {
   const { className = "" } = props;
@@ -26,16 +21,18 @@ const WithdrawCardItem = (props) => {
     return <IconCreditCard height="inherit" />;
   }, []);
 
-  const handleInitiateRefund = () => {
-    navigate(`/wallet/withdraw-card/${"id"}`);
+  const handleInitiateRefund = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigate(`/wallet/withdraw-card/${"card"}`);
   };
 
-  const handleViewDetails = () => {
-    navigate(`/wallet/withdraw-details/${"id"}`);
+  const handleViewDetails = (e) => {
+    navigate(`/wallet/withdraw-details/${"card"}`);
   };
 
   return (
-    <li className={`${className}`}>
+    <li className={`${className}`} onClick={handleViewDetails}>
       <div className="rcard-img-wrap">{CardIcon}</div>
       <div className="rcard-details-wrap">
         <div className="card-details">
@@ -56,11 +53,8 @@ const WithdrawCardItem = (props) => {
           </div>
         </div>
         <div className="btns-wrap">
-          <Button className="refresh-ic" onClick={handleInitiateRefund}>
-            <IconArrowReturn fill="#fff" />
-          </Button>
-          <Button className="view-ic" onClick={handleViewDetails}>
-            <IconEye stroke="#fff" />
+          <Button className="wr-withdraw-btn" onClick={handleInitiateRefund}>
+            withdraw
           </Button>
         </div>
       </div>

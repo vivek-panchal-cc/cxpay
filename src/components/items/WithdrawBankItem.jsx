@@ -1,14 +1,28 @@
 import React from "react";
 import Button from "components/ui/Button";
 import { THEME_COLORS } from "constants/all";
-import { IconBank } from "styles/svgs";
+import { IconBank, IconEye } from "styles/svgs";
+import { useNavigate } from "react-router-dom";
 
-const WithdrawBankItem = () => {
+const WithdrawBankItem = (props) => {
+  const { className = "" } = props;
+  const navigate = useNavigate();
+
+  const handleCancelWithdrawRequest = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigate(`/wallet`);
+  };
+
+  const handleViewDetails = (e) => {
+    navigate(`/wallet/withdraw-details/${"bank"}`);
+  };
+
   return (
-    <li>
+    <li className={className} onClick={handleViewDetails}>
       <div className="rcard-img-wrap">
         <div
-          className="bank-logo-wrap"
+          className="bank-logo-wrap wr-bank-svg"
           bg-color={THEME_COLORS[0 % THEME_COLORS.length]}
         >
           <IconBank />
@@ -29,8 +43,20 @@ const WithdrawBankItem = () => {
           </div>
           <div className="status-wrap">
             <Button className="btn btn-green">Accepted</Button>
+            <Button
+              className="wr-bank-cancel-req d-none d-md-block ms-auto"
+              onClick={handleCancelWithdrawRequest}
+            >
+              Cancel Request
+            </Button>
           </div>
         </div>
+        <Button
+          className="wr-bank-cancel-req ms-auto d-block d-md-none"
+          onClick={handleCancelWithdrawRequest}
+        >
+          Cancel Request
+        </Button>
       </div>
     </li>
   );

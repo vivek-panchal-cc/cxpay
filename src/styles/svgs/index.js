@@ -44,6 +44,7 @@ export { default as IconClock } from "./Clock";
 export { default as IconBin } from "./Bin";
 export { default as IconCreditCard } from "./CreditCard";
 export { default as IconArrowReturn } from "./ArrowReturn";
+export { default as IconDownload } from "./Download";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";

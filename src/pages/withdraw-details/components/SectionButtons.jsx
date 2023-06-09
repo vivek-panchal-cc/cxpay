@@ -1,10 +1,14 @@
+import Button from "components/ui/Button";
 import React from "react";
 
-const SectionButtons = () => {
+const SectionButtons = (props) => {
+  const { handleBack = () => {} } = props;
+
   return (
-    <div className="my-4 d-flex gap-3">
-      <button className="outline-btn px-4">Back</button>
-      <button className="outline-btn px-4">Cancel Request</button>
+    <div class="wr-details-back-btn">
+      <Button class="btn" onClick={handleBack}>
+        Back
+      </Button>
     </div>
   );
 };

@@ -2,28 +2,24 @@ import React from "react";
 
 const SectionBankDetails = () => {
   return (
-    <div className="pb-3 mb-3 border border-top-0 border-start-0 border-end-0">
-      <p className="fs-6 text-center">Bank Details</p>
-      <div className="row">
-        <div className="col-6">
-          <table className="w-100">
-            <tbody>
-              <tr>
-                <td>Transaction Id:</td>
-                <td>ABCD123XYZ1</td>
-              </tr>
-              <tr>
-                <td>Date:</td>
-                <td>06 Jun 2023</td>
-              </tr>
-              <tr>
-                <td>Time:</td>
-                <td>04:44 PM</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <div class="wr-bdatail-tbl pe-md-4">
+      <div class="font-16-quick  w-100 pb-2 dark_blue font-600">
+        Bank Details
       </div>
+      <table>
+        <tr>
+          <td>Bank Name</td>
+          <td>MCB Bank</td>
+        </tr>
+        <tr>
+          <td>Account Number</td>
+          <td>112233445566778899</td>
+        </tr>
+        <tr>
+          <td>Swift Code</td>
+          <td>ABC123456</td>
+        </tr>
+      </table>
     </div>
   );
 };
