@@ -1,3 +1,4 @@
+import React, { useContext, useEffect, useState } from "react";
 import Modal from "components/modals/Modal";
 import AccountFundedPopup from "components/popups/AccountFundedPopup";
 import {
@@ -13,7 +14,6 @@ import { storageRequest } from "helpers/storageRequests";
 import useCountriesCities from "hooks/useCountriesCities";
 import SelectBank from "pages/fund-account/components/SelectBank";
 import SelectCard from "pages/fund-account/components/SelectCard";
-import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";

@@ -18,21 +18,20 @@ const useWithdrawBankList = ({
 
   const retrieveWithdrawBankList = async (
     page = 1,
-    search = "",
     start_date = "",
     end_date = "",
     status = []
   ) => {
     setLoading(true);
     try {
-      const { data } = await apiRequest.activityList({
+      const { data } = await apiRequest.bankWithdrawList({
         page,
-        search,
         start_date,
         end_date,
         status,
       });
       if (!data.success) throw data.message;
+      console.log("JSH", data);
       const { list, pagination } = data.data || {};
       setListWithdraws(list);
       setPagination(pagination);

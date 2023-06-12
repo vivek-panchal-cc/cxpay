@@ -81,3 +81,10 @@ export const API_TRANSACTION_GET_ACTIVITY_DETAILS = "/get-activity-details";
 export const API_TRANSACTION_CHANGE_REQUEST_STATUS = "/change-request-status";
 export const API_TRANSACTION_GET_CHART_DATA = "/get-chart-data";
 export const API_TRANSACTION_GET_PRINT_DETAILS = "/get-print-details";
+
+export const API_TRANSACTION_BANK_WITHDRAW_LIST = "/bank-withdraw-list";
+export const API_TRANSACTION_BANK_WITHDRAW_DETAILS = "/bank-withdraw-detail";
+export const API_TRANSACTION_INITIATE_WITHDRAW_REQUEST =
+  "/initiate-withdraw-request";
+export const API_TRANSACTION_CANCEL_WITHDRAW_REQUEST =
+  "/cancel-withdraw-request";

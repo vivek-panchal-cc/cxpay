@@ -86,6 +86,12 @@ const API_getActivityDetails = apiUrl.API_TRANSACTION_GET_ACTIVITY_DETAILS;
 const API_changeRequestStatus = apiUrl.API_TRANSACTION_CHANGE_REQUEST_STATUS;
 const API_getChartData = apiUrl.API_TRANSACTION_GET_CHART_DATA;
 const API_getPrintDetails = apiUrl.API_TRANSACTION_GET_PRINT_DETAILS;
+const API_bankWithdrawList = apiUrl.API_TRANSACTION_BANK_WITHDRAW_LIST;
+const API_bankWithdrawDetails = apiUrl.API_TRANSACTION_BANK_WITHDRAW_DETAILS;
+const API_initiateWithdrawRequest =
+  apiUrl.API_TRANSACTION_INITIATE_WITHDRAW_REQUEST;
+const API_cancelWithdrawRequest =
+  apiUrl.API_TRANSACTION_CANCEL_WITHDRAW_REQUEST;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -519,7 +525,7 @@ export const getPrintDetails = (params) => {
   return axiosTransactionInstance.post(`${API_getPrintDetails}`, params);
 };
 
-// Withdraw Related APIs
+// Withdraw Related APIs ------------------------------------------------------------------------------------------
 
 // GET @
 // @params
@@ -533,10 +539,10 @@ export const getCardTransactionsList = (params) => {
   return axiosTransactionInstance.post(`${""}`, params);
 };
 
-// POST @
-// @params auth_token, start_date, end_date, page, search, status
-export const getBankWithdrawList = (params) => {
-  return axiosTransactionInstance.post(`${""}`, params);
+// POST @bank-withdraw-list
+// @params auth_token, page, from_date, to_date, status
+export const bankWithdrawList = (params) => {
+  return axiosTransactionInstance.post(`${API_bankWithdrawList}`, params);
 };
 
 // POST @
@@ -545,22 +551,25 @@ export const getCardWithdrawDetails = (params) => {
   return axiosTransactionInstance.post(`${""}`, params);
 };
 
-// POST @
+// POST @bank-withdraw-detail
 // @params auth_token, withdraw_id
-export const getBankWithdrawDetails = (params) => {
-  return axiosTransactionInstance.post(`${""}`, params);
+export const bankWithdrawDetails = (params) => {
+  return axiosTransactionInstance.post(`${API_bankWithdrawDetails}`, params);
 };
 
 // POST @
 // @params auth_token
-export const withdrawRequest = (params) => {
-  return axiosTransactionInstance.post(`${""}`, params);
+export const initiateWithdrawRequest = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_initiateWithdrawRequest}`,
+    params
+  );
 };
 
-// POST @
+// POST @cancel-withdraw-request
 // @params auth_token, withdraw_id
 export const cancelWithdrawRequest = (params) => {
-  return axiosTransactionInstance.post(`${""}`, params);
+  return axiosTransactionInstance.post(`${API_cancelWithdrawRequest}`, params);
 };
 
 export const apiRequest = {
@@ -634,4 +643,9 @@ export const apiRequest = {
   changeRequestStatus,
   getChartData,
   getPrintDetails,
+  // Withdraw Related
+  bankWithdrawList,
+  bankWithdrawDetails,
+  initiateWithdrawRequest,
+  cancelWithdrawRequest,
 };

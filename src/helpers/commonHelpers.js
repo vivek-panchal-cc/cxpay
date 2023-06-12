@@ -4,7 +4,7 @@ const getChargedAmount = (charges = [], amounts = []) => {
   const total = amounts.reduce((prev, curr) => prev + curr, 0);
   let allCharges = [],
     grandTotal = total;
-  allCharges = charges.map((item) => {
+  allCharges = charges?.map((item) => {
     const { type = "", amount = 0, text = "" } = item;
     const thisCharge = { desc: "", amount: 0 };
     switch (type) {

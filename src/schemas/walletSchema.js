@@ -71,10 +71,31 @@ const EditBankSchema = yup.object().shape({
   bank_holder_last_name: lastNameSchema.required("Please enter Last name"),
 });
 
+const withdrawCardSchema = yup.object().shape({});
+
+const withdrawBankSchema = yup.object().shape({
+  bank_id: yup.string(),
+  bank_account_number: bankNumberSchema,
+  bank_name: bankNameSchema,
+  swift_code: swiftCodeSchema,
+  account_type: yup.string(),
+  amount: yup
+    .string()
+    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid Amount")
+    .required("Please enter Amount"),
+  comment: yup
+    .string()
+    .max(50, "Maximum limit is 50 characters.")
+    .required("Please enter specifications"),
+  user_date_time: yup.string().required(),
+});
+
 export {
   addCardSchema,
   linkBankSchema,
   uploadCardImageSchema,
   EditCardSchema,
   EditBankSchema,
+  withdrawCardSchema,
+  withdrawBankSchema,
 };

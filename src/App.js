@@ -116,10 +116,7 @@ function App() {
               path="/wallet/withdraw-card/:tid?"
               element={<WithdrawCard />}
             />
-            <Route
-              path="/wallet/withdraw-bank/:tid?"
-              element={<WithdrawBank />}
-            />
+            <Route path="/wallet/withdraw-bank" element={<WithdrawBank />} />
             <Route
               path="/wallet/withdraw-details/:tid"
               element={<WithdrawDetails />}

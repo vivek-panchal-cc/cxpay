@@ -59,7 +59,7 @@ const WithdrawalsBank = () => {
   };
 
   const handleRequestWithdraw = (e) => {
-    navigate(`/wallet/withdraw-bank/${"bank"}`);
+    navigate(`/wallet/withdraw-bank`);
   };
 
   return (
