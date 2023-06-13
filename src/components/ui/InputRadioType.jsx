@@ -15,7 +15,7 @@ const InputRadioType = (props) => {
   } = props;
 
   return (
-    <div className="radio-wrap my-4 mw-100">
+    <div className="radio-wrap mb-4 mw-100">
       <div className="col-6 form-check">
         <input
           className={`form-check-input ${

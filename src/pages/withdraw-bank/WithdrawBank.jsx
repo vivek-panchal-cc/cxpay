@@ -10,7 +10,7 @@ import SelectLinkedBank from "./components/SelectLinkedBank";
 import { fetchBanksList } from "features/user/userWalletSlice";
 import { LoaderContext } from "context/loaderContext";
 import { useDispatch, useSelector } from "react-redux";
-import { CHARGES_TYPE_PL, CURRENCY_SYMBOL } from "constants/all";
+import { CHARGES_TYPE_WW, CURRENCY_SYMBOL } from "constants/all";
 import useCharges from "hooks/useCharges";
 import { getChargedAmount } from "helpers/commonHelpers";
 import { withdrawBankSchema } from "schemas/walletSchema";
@@ -39,7 +39,7 @@ const WithdrawBank = () => {
   });
   const [banksList] = useCountryBanks();
   const [loadingCharges, charges] = useCharges({
-    chargesType: CHARGES_TYPE_PL,
+    chargesType: CHARGES_TYPE_WW,
   });
 
   const formik = useFormik({
@@ -51,7 +51,7 @@ const WithdrawBank = () => {
       account_type: "savings",
       amount: "",
       comment: "",
-      user_date_time: "2023-06-08 15:10:12",
+      user_date_time: "2023-06-13 18:58:12",
       save_bank: false,
     },
     validationSchema: withdrawBankSchema,
@@ -76,6 +76,7 @@ const WithdrawBank = () => {
 
   // For handling selecting bank account from the linked banks list
   const handleSelectExistingBank = async (selectedBank) => {
+    console.log("JSK", selectedBank);
     const { id, account_type, bank_name, swift_code, bank_number } =
       selectedBank || {};
     await formik.setFieldValue("bank_id", id);
@@ -120,6 +121,7 @@ const WithdrawBank = () => {
     const parseAmount =
       amount?.trim() && !isNaN(amount) ? parseFloat(amount) : 0;
     const chargesDetails = getChargedAmount(charges, [parseAmount]);
+    chargesDetails.total = chargesDetails.total - chargesDetails.totalCharges;
     setPaymentDetails(chargesDetails);
   }, [formik.values.amount, charges]);
 
@@ -145,8 +147,8 @@ const WithdrawBank = () => {
         <div className="settings-inner-sec wallet-ac-is wr-form-wrap">
           <div className="profile-info">
             <h3>Bank Withdraw</h3>
+            <Breadcrumb className="mt-2" />
           </div>
-          <Breadcrumb />
           <div className="wallet-fund-form-wrap">
             <form onSubmit={formik.handleSubmit}>
               <InputRadioType
@@ -311,10 +313,15 @@ const WithdrawBank = () => {
                         </tr>
                       ))}
                       <tr>
-                        <td>Net Payable</td>
+                        <td>Total Amount</td>
                         <td>
-                          {CURRENCY_SYMBOL}{" "}
-                          {paymentDetails?.grandTotal?.toFixed(2)}
+                          {CURRENCY_SYMBOL} {paymentDetails?.total?.toFixed(2)}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                          {CURRENCY_SYMBOL} {paymentDetails?.total?.toFixed(2)}
                         </td>
                       </tr>
                     </tbody>

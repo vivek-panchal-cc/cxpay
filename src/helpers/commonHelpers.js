@@ -3,6 +3,7 @@ const getChargedAmount = (charges = [], amounts = []) => {
     return { allCharges: [], grandTotal: 0, total: 0 };
   const total = amounts.reduce((prev, curr) => prev + curr, 0);
   let allCharges = [],
+    totalCharges = 0,
     grandTotal = total;
   allCharges = charges?.map((item) => {
     const { type = "", amount = 0, text = "" } = item;
@@ -21,12 +22,14 @@ const getChargedAmount = (charges = [], amounts = []) => {
         break;
     }
     grandTotal += thisCharge.amount;
+    totalCharges += thisCharge.amount;
     return thisCharge;
   });
   return {
     allCharges,
-    grandTotal,
+    totalCharges,
     total,
+    grandTotal,
   };
 };
 

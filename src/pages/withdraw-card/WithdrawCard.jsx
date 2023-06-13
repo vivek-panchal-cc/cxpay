@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
-import { CHARGES_TYPE_PL, CURRENCY_SYMBOL } from "constants/all";
+import { CHARGES_TYPE_WW, CURRENCY_SYMBOL } from "constants/all";
 import Input from "components/ui/Input";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { withdrawCardSchema } from "schemas/walletSchema";
@@ -24,10 +24,11 @@ const WithdrawCard = () => {
   const [paymentDetails, setPaymentDetails] = useState({
     allCharges: [],
     grandTotal: 0.0,
+    totalCharges: 0.0,
     total: 0.0,
   });
   const [loadingCharges, charges] = useCharges({
-    chargesType: CHARGES_TYPE_PL,
+    chargesType: CHARGES_TYPE_WW,
   });
 
   const formik = useFormik({
@@ -61,6 +62,7 @@ const WithdrawCard = () => {
     const parseAmount =
       amount?.trim() && !isNaN(amount) ? parseFloat(amount) : 0;
     const chargesDetails = getChargedAmount(charges, [parseAmount]);
+    chargesDetails.total = chargesDetails.total - chargesDetails.totalCharges;
     setPaymentDetails(chargesDetails);
   }, [formik.values.amount, charges]);
 
@@ -69,8 +71,21 @@ const WithdrawCard = () => {
     <div>
       <div className="settings-inner-sec wallet-ac-is wr-card-form-wrap">
         <div className="profile-info">
-          <h3>Withdraw from card</h3>
-          <Breadcrumb />
+          <h3>Card Withdraw</h3>
+          <Breadcrumb className="mt-2" />
+        </div>
+        <div className="row wr-form-choose-act mb-4">
+          <div className="col-12 p-0">
+            <div className="form-field cursor-pointer">
+              <p className="form-choose-act-wrap px-5">
+                <span>
+                  You are eligible for a withdrawal of
+                  <b> 500.00 ANG </b>
+                  for card
+                </span>
+              </p>
+            </div>
+          </div>
         </div>
         <div className="wallet-fund-form-wrap">
           <form onSubmit={formik.handleSubmit}>
@@ -123,10 +138,6 @@ const WithdrawCard = () => {
               <div className="col-12 p-0">
                 <table>
                   <tbody>
-                    {/* <tr>
-                      <td>Total Amount</td>
-                      <td className="amount">90.00</td>
-                    </tr> */}
                     {paymentDetails?.allCharges?.map((item, index) => (
                       <tr key={item?.desc?.trim() || index}>
                         <td>{item?.desc}</td>
@@ -136,10 +147,15 @@ const WithdrawCard = () => {
                       </tr>
                     ))}
                     <tr>
-                      <td>Net Payable</td>
+                      <td>Total Amount</td>
                       <td>
-                        {CURRENCY_SYMBOL}{" "}
-                        {paymentDetails?.grandTotal?.toFixed(2)}
+                        {CURRENCY_SYMBOL} {paymentDetails?.total?.toFixed(2)}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>
+                        {CURRENCY_SYMBOL} {paymentDetails?.total?.toFixed(2)}
                       </td>
                     </tr>
                   </tbody>
