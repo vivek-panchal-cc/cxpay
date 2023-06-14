@@ -1,24 +1,24 @@
 import React, { useEffect, useState, useContext } from "react";
-import Breadcrumb from "components/breadcrumb/Breadcrumb";
-import InputRadioType from "components/ui/InputRadioType";
-import InputSelect from "components/ui/InputSelect";
-import useCountryBanks from "hooks/useCountryBanks";
-import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { IconAddBackground, IconBank, IconRightArrowBig } from "styles/svgs";
-import SelectLinkedBank from "./components/SelectLinkedBank";
 import { fetchBanksList } from "features/user/userWalletSlice";
 import { LoaderContext } from "context/loaderContext";
 import { useDispatch, useSelector } from "react-redux";
-import { CHARGES_TYPE_WW, CURRENCY_SYMBOL } from "constants/all";
-import useCharges from "hooks/useCharges";
+import { CHARGES_TYPE_WD, CURRENCY_SYMBOL } from "constants/all";
 import { getChargedAmount } from "helpers/commonHelpers";
 import { withdrawBankSchema } from "schemas/walletSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import Breadcrumb from "components/breadcrumb/Breadcrumb";
+import InputRadioType from "components/ui/InputRadioType";
+import InputSelect from "components/ui/InputSelect";
+import Input from "components/ui/Input";
 import Modal from "components/modals/Modal";
 import FundEffectPopup from "components/popups/FundEffectPopup";
-import { Link } from "react-router-dom";
+import SelectLinkedBank from "./components/SelectLinkedBank";
+import useCountryBanks from "hooks/useCountryBanks";
+import useCharges from "hooks/useCharges";
 
 const WithdrawBank = () => {
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const WithdrawBank = () => {
   });
   const [banksList] = useCountryBanks();
   const [loadingCharges, charges] = useCharges({
-    chargesType: CHARGES_TYPE_WW,
+    chargesType: CHARGES_TYPE_WD,
   });
 
   const formik = useFormik({
@@ -51,7 +51,7 @@ const WithdrawBank = () => {
       account_type: "savings",
       amount: "",
       comment: "",
-      user_date_time: "2023-06-13 18:58:12",
+      user_date_time: "2023-06-14 12:38:12",
       save_bank: false,
     },
     validationSchema: withdrawBankSchema,
@@ -60,8 +60,8 @@ const WithdrawBank = () => {
         const { data } = await apiRequest.initiateWithdrawRequest(values);
         if (!data.success) throw data.message;
         setModalRefundedDetails({
-          amount: values.amount,
-          message: "Refunded to Your Bank",
+          amount: data?.data?.amount,
+          message: data?.message,
         });
         setShowModalRefunded(true);
       } catch (error) {
@@ -81,7 +81,7 @@ const WithdrawBank = () => {
       selectedBank || {};
     await formik.setFieldValue("bank_id", id);
     await formik.setFieldValue("bank_account_number", bank_number);
-    await formik.setFieldValue("bank_name", id);
+    await formik.setFieldValue("bank_name", 2);
     await formik.setFieldValue("swift_code", swift_code);
     await formik.setFieldValue("account_type", account_type);
     if (id) setAddNewBank(false);

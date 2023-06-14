@@ -23,7 +23,7 @@ const FundEffectPopup = (props) => {
               {CURRENCY_SYMBOL} {fund}
             </span>
           </h3>
-          <h3>{fundMessage}</h3>
+          <h4>{fundMessage}</h4>
           <Link
             to={redirect}
             className="btn btn-primary fund-done-btn mt-4"

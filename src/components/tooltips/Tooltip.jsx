@@ -1,7 +1,13 @@
 import React from "react";
 import { usePopperTooltip } from "react-popper-tooltip";
 
-function Tooltip({ tooltipText, isVisible }) {
+function Tooltip({
+  className = "",
+  classNameTooltip = "",
+  tooltipText = "",
+  placement = "",
+  isVisible,
+}) {
   const {
     getArrowProps,
     getTooltipProps,
@@ -9,7 +15,7 @@ function Tooltip({ tooltipText, isVisible }) {
     setTriggerRef,
     visible,
   } = usePopperTooltip({
-    placement: "bottom-end",
+    placement: placement || "bottom-end",
     closeOnOutsideClick: false,
     visible: isVisible,
     // onVisibleChange: setIsVisible,
@@ -17,12 +23,12 @@ function Tooltip({ tooltipText, isVisible }) {
 
   return (
     <>
-      <div className="w-100" ref={setTriggerRef}></div>
+      <div className={`w-100 ${className}`} ref={setTriggerRef}></div>
       {visible ? (
         <div
           ref={setTooltipRef}
           {...getTooltipProps({
-            className: "tooltip-container tooltip-invalid z-1",
+            className: `tooltip-container tooltip-invalid z-1 ${classNameTooltip}`,
           })}
         >
           <div {...getArrowProps({ className: "tooltip-arrow" })} />

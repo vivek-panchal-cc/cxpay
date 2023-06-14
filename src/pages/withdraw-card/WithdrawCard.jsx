@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
-import { CHARGES_TYPE_WW, CURRENCY_SYMBOL } from "constants/all";
+import { CHARGES_TYPE_WD, CURRENCY_SYMBOL } from "constants/all";
 import Input from "components/ui/Input";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { withdrawCardSchema } from "schemas/walletSchema";
@@ -28,11 +28,16 @@ const WithdrawCard = () => {
     total: 0.0,
   });
   const [loadingCharges, charges] = useCharges({
-    chargesType: CHARGES_TYPE_WW,
+    chargesType: CHARGES_TYPE_WD,
   });
 
   const formik = useFormik({
     initialValues: {
+      card_number: "",
+      card_expiry_date: "",
+      transaction_id: "",
+      txn_source: "",
+      user_date_time: "",
       specification: "",
       amount: "",
     },

@@ -18,23 +18,22 @@ const useWithdrawCardList = ({
 
   const retrieveWithdrawCardList = async (
     page = 1,
-    search = "",
     start_date = "",
     end_date = "",
     status = []
   ) => {
     setLoading(true);
     try {
-      const { data } = await apiRequest.activityList({
+      const { data } = await apiRequest.cardTransactionsList({
         page,
-        search,
         start_date,
         end_date,
         status,
       });
       if (!data.success) throw data.message;
-      const { list, pagination } = data.data || {};
-      setListWithdraws(list);
+      console.log(data);
+      const { cards, pagination } = data.data || {};
+      setListWithdraws(cards);
       setPagination(pagination);
     } catch (error) {
       console.log(error);

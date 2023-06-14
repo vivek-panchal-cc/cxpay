@@ -245,7 +245,7 @@ const SCHEDULE_BUFFER = 5;
 // Charges Types
 const CHARGES_TYPE_WW = "pay_type=WW";
 const CHARGES_TYPE_PL = "pay_type=PL";
-const CHARGES_TYPE_ = "";
+const CHARGES_TYPE_WD = "pay_type=WD";
 
 // Withdraw options tabs list
 const WITHDRAW_OPTIONS_TABS_LIST = [
@@ -295,6 +295,7 @@ export {
   NOTIFY_CON_REGISTER,
   CHARGES_TYPE_WW,
   CHARGES_TYPE_PL,
+  CHARGES_TYPE_WD,
   WITHDRAW_OPTIONS_TABS_LIST,
   WITHDRAW_STATUS_FILTER_LIST,
 };

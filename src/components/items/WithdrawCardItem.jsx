@@ -2,12 +2,24 @@ import React, { useMemo } from "react";
 import Button from "components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { IconCardBackground, IconCreditCard } from "styles/svgs";
+import { CURRENCY_SYMBOL } from "constants/all";
 
 const WithdrawCardItem = (props) => {
-  const { className = "" } = props;
-  const image = "";
-  const color = "#0000ff80";
+  const { className = "", itemDetails } = props;
+  const {
+    amount,
+    date,
+    image,
+    color,
+    remaining_amount,
+    status,
+    transaction_id,
+  } = itemDetails || {};
   const navigate = useNavigate();
+
+  const [dt, tmm] = date ? date.split(" ") : [];
+  const [dd, mm, yyyy] = dt ? dt.split("/") : [];
+  const fundDate = dt && tmm ? new Date(`${mm}/${dd}/${yyyy} ${tmm}`) : "";
 
   const CardIcon = useMemo(() => {
     if (image) return <img src={image} alt="" className="rounded" />;
@@ -24,11 +36,11 @@ const WithdrawCardItem = (props) => {
   const handleInitiateRefund = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    navigate(`/wallet/withdraw-card/${"card"}`);
+    navigate(`/wallet/withdraw-card/${transaction_id}`);
   };
 
   const handleViewDetails = (e) => {
-    navigate(`/wallet/withdraw-details/${"card"}`);
+    navigate(`/wallet/withdraw-details/${transaction_id}`);
   };
 
   return (
@@ -38,22 +50,35 @@ const WithdrawCardItem = (props) => {
         <div className="card-details">
           <div className="rcard-info">
             <h3>xxxx xxxx xxxx 1234</h3>
-            <p>24/05/2023 | 03:20 PM</p>
+            <p>
+              {fundDate
+                ? `${fundDate?.toLocaleDateString(
+                    "en-UK"
+                  )} | ${fundDate?.toLocaleTimeString()}`
+                : ""}
+              {/* 24/05/2023 | 03:20 PM */}
+            </p>
           </div>
           <div className="eligible-value-wrap">
-            Eligible : <span>200</span> ANG
+            Eligible : <span>{remaining_amount}</span> {CURRENCY_SYMBOL}
           </div>
         </div>
         <div className="rcard-status-wrap">
           <div className="total-val-wrap">
-            + <span>500</span> ANG
+            + <span>{amount}</span> {CURRENCY_SYMBOL}
           </div>
           <div className="status-wrap">
             <Button className="btn btn-green">Status</Button>
           </div>
         </div>
         <div className="btns-wrap">
-          <Button className="wr-withdraw-btn" onClick={handleInitiateRefund}>
+          <Button
+            className={`wr-withdraw-btn ${
+              status !== "Active" ? "opacity-50" : "opacity-100"
+            }`}
+            onClick={status === "Active" ? handleInitiateRefund : () => {}}
+            disabled={status !== "Active"}
+          >
             withdraw
           </Button>
         </div>

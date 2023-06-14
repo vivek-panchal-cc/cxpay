@@ -88,3 +88,4 @@ export const API_TRANSACTION_INITIATE_WITHDRAW_REQUEST =
   "/initiate-withdraw-request";
 export const API_TRANSACTION_CANCEL_WITHDRAW_REQUEST =
   "/cancel-withdraw-request";
+export const API_TRANSACTION_CARD_TRANSACTIONS_LIST = "/card-transactions-list";
