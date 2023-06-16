@@ -253,8 +253,18 @@ const WITHDRAW_OPTIONS_TABS_LIST = [
   { title: "Bank", url: "/wallet/withdrawals-bank" },
 ];
 
-// Withdraw options tabs list
-const WITHDRAW_STATUS_FILTER_LIST = ["accepted", "pending", "processing"];
+// Withdraw status filters list for card transactions
+const WITHDRAW_STATUS_FILTER_CARD = [
+  { title: "Refundable", status: "enable" },
+  { title: "Non Refundable", status: "disable" },
+];
+
+// Withdraw status filters list for bank transactions
+const WITHDRAW_STATUS_FILTER_BANK = [
+  { title: "ACCEPTED", status: "accepted" },
+  { title: "PENDING", status: "pending" },
+  { title: "PROCESSING", status: "processing" },
+];
 
 export {
   exp0ContainWhitespace,
@@ -297,7 +307,8 @@ export {
   CHARGES_TYPE_PL,
   CHARGES_TYPE_WD,
   WITHDRAW_OPTIONS_TABS_LIST,
-  WITHDRAW_STATUS_FILTER_LIST,
+  WITHDRAW_STATUS_FILTER_CARD,
+  WITHDRAW_STATUS_FILTER_BANK,
 };
 export {
   regexContainCapitalLetter,

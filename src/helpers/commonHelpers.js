@@ -76,4 +76,10 @@ const timeStampToTimeString = (tstamp) => {
   return `Just now`;
 };
 
+const dateFormattor = (date) => {
+  if (!date) return;
+  const dts = dt.toLocaleDateString("en-CA");
+  const tms = dt.toLocaleTimeString(undefined, { hourCycle: "h24" });
+};
+
 export { getChargedAmount, addObjToFormData, timeStampToTimeString };

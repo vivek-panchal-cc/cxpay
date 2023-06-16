@@ -8,7 +8,7 @@ import InputDropdown from "components/ui/InputDropdown";
 import Button from "components/ui/Button";
 import {
   WITHDRAW_OPTIONS_TABS_LIST,
-  WITHDRAW_STATUS_FILTER_LIST,
+  WITHDRAW_STATUS_FILTER_CARD,
 } from "constants/all";
 import useWithdrawCardList from "hooks/useWithdrawCardList";
 
@@ -112,7 +112,7 @@ const WithdrawalsCard = () => {
               id="refund-status-dd"
               className="dropdown-check-list"
               title="Status"
-              dropList={WITHDRAW_STATUS_FILTER_LIST}
+              dropList={WITHDRAW_STATUS_FILTER_CARD}
               onChange={handleChangeStatusFilter}
             />
           </div>

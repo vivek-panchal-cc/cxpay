@@ -2,8 +2,8 @@ import React from "react";
 
 const SectionTransactionDetails = () => {
   return (
-    <div class="wcr-innner-wrap wcr-innner-wrap-2 d-flex flex-wrap w-100">
-      <div class="w-50-md wcr-transition-info wcr-transition-info-1">
+    <div className="wcr-innner-wrap wcr-innner-wrap-2 d-flex flex-wrap w-100">
+      <div className="w-50-md wcr-transition-info wcr-transition-info-1">
         <table>
           <tbody>
             <tr>
@@ -21,7 +21,7 @@ const SectionTransactionDetails = () => {
           </tbody>
         </table>
       </div>
-      <div class="w-50-md wcr-transition-info wcr-transition-info-2">
+      <div className="w-50-md wcr-transition-info wcr-transition-info-2">
         <table>
           <tbody>
             <tr>
@@ -35,8 +35,8 @@ const SectionTransactionDetails = () => {
             <tr>
               <td>Status</td>
               <td>
-                <span class="green">Success</span> /{" "}
-                <span class="red">Failed</span>
+                <span className="green">Success</span> /{" "}
+                <span className="red">Failed</span>
               </td>
             </tr>
           </tbody>

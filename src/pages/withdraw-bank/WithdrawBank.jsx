@@ -50,7 +50,7 @@ const WithdrawBank = () => {
       swift_code: "",
       account_type: "savings",
       amount: "",
-      comment: "",
+      specification: "",
       user_date_time: "2023-06-14 12:38:12",
       save_bank: false,
     },
@@ -76,12 +76,11 @@ const WithdrawBank = () => {
 
   // For handling selecting bank account from the linked banks list
   const handleSelectExistingBank = async (selectedBank) => {
-    console.log("JSK", selectedBank);
     const { id, account_type, bank_name, swift_code, bank_number } =
       selectedBank || {};
     await formik.setFieldValue("bank_id", id);
     await formik.setFieldValue("bank_account_number", bank_number);
-    await formik.setFieldValue("bank_name", 2);
+    await formik.setFieldValue("bank_name", id);
     await formik.setFieldValue("swift_code", swift_code);
     await formik.setFieldValue("account_type", account_type);
     if (id) setAddNewBank(false);
@@ -266,14 +265,17 @@ const WithdrawBank = () => {
                   <div className="d-flex flex-column form-field">
                     <Input
                       type="text"
-                      name="comment"
+                      name="specification"
                       className="form-control"
                       placeholder="Payment specifications"
                       inputMode="text"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.comment}
-                      error={formik.touched.comment && formik.errors.comment}
+                      value={formik.values.specification}
+                      error={
+                        formik.touched.specification &&
+                        formik.errors.specification
+                      }
                     />
                   </div>
                 </div>

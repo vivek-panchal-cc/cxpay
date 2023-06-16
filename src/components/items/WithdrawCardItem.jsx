@@ -40,7 +40,7 @@ const WithdrawCardItem = (props) => {
   };
 
   const handleViewDetails = (e) => {
-    navigate(`/wallet/withdraw-details/${transaction_id}`);
+    navigate(`/wallet/withdraw-details/card/${transaction_id}`);
   };
 
   return (

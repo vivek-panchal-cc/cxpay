@@ -15,7 +15,7 @@ const WithdrawBankItem = (props) => {
   };
 
   const handleViewDetails = (e) => {
-    navigate(`/wallet/withdraw-details/${"bank"}`);
+    navigate(`/wallet/withdraw-details/bank/${"bank"}`);
   };
 
   return (

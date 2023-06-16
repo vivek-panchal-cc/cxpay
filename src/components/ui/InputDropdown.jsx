@@ -26,6 +26,7 @@ const InputDropdown = (props) => {
   }, [dropRef]);
 
   const handleChange = (e) => {
+    console.log(checkedList);
     const checked = e?.target?.checked;
     const value = e?.target?.value;
     let updatedList = [...checkedList];
@@ -44,20 +45,20 @@ const InputDropdown = (props) => {
         <ul className="status-items" ref={dropRef}>
           {dropList && dropList.length > 0
             ? dropList.map((item, index) => {
-                const isChecked = checkedList.includes(item);
+                const isChecked = checkedList.includes(item?.status);
                 return (
-                  <li key={item || index}>
+                  <li key={item?.status || index}>
                     <input
-                      id={item}
+                      id={item?.status}
                       type="checkbox"
                       className="position-absolute"
-                      value={item}
+                      value={item?.status}
                       onChange={handleChange}
                       checked={isChecked}
                     />
-                    <label htmlFor={item}>
+                    <label htmlFor={item?.status}>
                       <span className="checkmark"></span>
-                      {item}
+                      {item?.title}
                     </label>
                   </li>
                 );

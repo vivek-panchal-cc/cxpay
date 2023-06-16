@@ -2,8 +2,8 @@ import React from "react";
 
 const SectionBankDetails = () => {
   return (
-    <div class="wr-bdatail-tbl pe-md-4">
-      <div class="font-16-quick  w-100 pb-2 dark_blue font-600">
+    <div className="wr-bdatail-tbl pe-md-4">
+      <div className="font-16-quick  w-100 pb-2 dark_blue font-600">
         Bank Details
       </div>
       <table>

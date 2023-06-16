@@ -11,7 +11,7 @@ import useWithdrawBankList from "hooks/useWithdrawBankList";
 import { useNavigate } from "react-router-dom";
 import {
   WITHDRAW_OPTIONS_TABS_LIST,
-  WITHDRAW_STATUS_FILTER_LIST,
+  WITHDRAW_STATUS_FILTER_BANK,
 } from "constants/all";
 
 const WithdrawalsBank = () => {
@@ -20,20 +20,25 @@ const WithdrawalsBank = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [drawStatus, setDrawStatus] = useState([]);
   const [showDateFilter, setShowDateFilter] = useState(false);
+  const [filtersChanged, setFiltersChanged] = useState(false);
   const [filters, setFilters] = useState({
     startDate: "",
     endDate: "",
   });
+  const [allFilters, setAllFilters] = useState({
+    start_date: "",
+    end_date: "",
+    status: [],
+  });
   const [loadingWithdrawList, pagination, listWithdraws, reload] =
     useWithdrawBankList({
       page: currentPage,
-      start_date: filters.startDate
-        ? filters.startDate?.toLocaleDateString()
-        : "",
-      end_date: filters.endDate ? filters.endDate?.toLocaleDateString() : "",
-      status: drawStatus,
+      start_date: allFilters.start_date,
+      end_date: allFilters.end_date,
+      status: allFilters.status,
     });
 
+  // For date filter changes
   const handleChangeDateFilter = ({ startDate, endDate }) => {
     if (!startDate || !endDate) return;
     setFilters({
@@ -42,13 +47,34 @@ const WithdrawalsBank = () => {
     });
     setCurrentPage(1);
     setShowDateFilter(false);
+    setFiltersChanged(true);
   };
 
+  // For status filter changes
   const handleChangeStatusFilter = (statuses = []) => {
     if (!statuses) return;
     setDrawStatus(statuses);
+    setFiltersChanged(true);
   };
 
+  // For handling apply filter button click
+  const handleApplyFilters = () => {
+    const filStatus = drawStatus;
+    const filStrDate = filters.startDate
+      ? filters.startDate?.toLocaleDateString()
+      : "";
+    const filEndDate = filters.endDate
+      ? filters.endDate?.toLocaleDateString()
+      : "";
+    setAllFilters({
+      start_date: filStrDate,
+      end_date: filEndDate,
+      status: filStatus,
+    });
+    setFiltersChanged(false);
+  };
+
+  // For handling reset filter button click
   const handleResetFilters = () => {
     setCurrentPage(1);
     setDrawStatus([]);
@@ -58,6 +84,7 @@ const WithdrawalsBank = () => {
     });
   };
 
+  // For changing page from pagination
   const handleRequestWithdraw = (e) => {
     navigate(`/wallet/withdraw-bank`);
   };
@@ -89,12 +116,22 @@ const WithdrawalsBank = () => {
               id="refund-status-dd"
               className="dropdown-check-list"
               title="Status"
-              dropList={WITHDRAW_STATUS_FILTER_LIST}
+              dropList={WITHDRAW_STATUS_FILTER_BANK}
               onChange={handleChangeStatusFilter}
             />
           </div>
           <div className="refund-filter-btn-wrap">
-            <Button className="solid-btn">Apply</Button>
+            <Button
+              className="solid-btn position-relative"
+              onClick={handleApplyFilters}
+            >
+              Apply
+              {filtersChanged && (
+                <span className="position-absolute top-0 start-100 translate-middle p-2 rounded-circle bg-danger border border-light">
+                  <span className="visually-hidden">New alerts</span>
+                </span>
+              )}
+            </Button>
             <Button className="border-btn" onClick={handleResetFilters}>
               Clear
             </Button>

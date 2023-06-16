@@ -5,8 +5,8 @@ const SectionButtons = (props) => {
   const { handleBack = () => {} } = props;
 
   return (
-    <div class="wr-details-back-btn">
-      <Button class="btn" onClick={handleBack}>
+    <div className="wr-details-back-btn">
+      <Button className="btn" onClick={handleBack}>
         Back
       </Button>
     </div>
