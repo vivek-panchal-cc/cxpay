@@ -78,8 +78,14 @@ const timeStampToTimeString = (tstamp) => {
 
 const dateFormattor = (date) => {
   if (!date) return;
-  const dts = dt.toLocaleDateString("en-CA");
-  const tms = dt.toLocaleTimeString(undefined, { hourCycle: "h24" });
+  const dts = date.toLocaleDateString("en-CA");
+  const tms = date.toLocaleTimeString(undefined, { hourCycle: "h24" });
+  return `${dts} ${tms}`;
 };
 
-export { getChargedAmount, addObjToFormData, timeStampToTimeString };
+export {
+  getChargedAmount,
+  addObjToFormData,
+  timeStampToTimeString,
+  dateFormattor,
+};

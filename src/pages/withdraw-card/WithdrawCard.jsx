@@ -44,7 +44,7 @@ const WithdrawCard = () => {
     validationSchema: withdrawCardSchema,
     onSubmit: async (values, { setErrors }) => {
       try {
-        const { data } = await apiRequest.initiateWithdrawRequest(values);
+        const { data } = await apiRequest.initiateCardWithdraw(values);
         if (!data.success) throw data.message;
         setModalRefundedDetails({
           amount: values.amount,

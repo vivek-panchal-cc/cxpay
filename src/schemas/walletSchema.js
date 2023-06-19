@@ -96,7 +96,7 @@ const withdrawBankSchema = yup.object().shape({
     .string()
     .max(50, "Maximum limit is 50 characters.")
     .required("Please enter specifications"),
-  user_date_time: yup.string().required(),
+  // user_date_time: yup.string().required(),
 });
 
 export {

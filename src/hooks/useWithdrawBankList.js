@@ -31,8 +31,8 @@ const useWithdrawBankList = ({
         status,
       });
       if (!data.success) throw data.message;
-      const { list, pagination } = data.data || {};
-      setListWithdraws(list);
+      const { transactions, pagination } = data.data || {};
+      setListWithdraws(transactions);
       setPagination(pagination);
     } catch (error) {
       console.log(error);

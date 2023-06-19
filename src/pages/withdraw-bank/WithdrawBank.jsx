@@ -5,7 +5,7 @@ import { fetchBanksList } from "features/user/userWalletSlice";
 import { LoaderContext } from "context/loaderContext";
 import { useDispatch, useSelector } from "react-redux";
 import { CHARGES_TYPE_WD, CURRENCY_SYMBOL } from "constants/all";
-import { getChargedAmount } from "helpers/commonHelpers";
+import { dateFormattor, getChargedAmount } from "helpers/commonHelpers";
 import { withdrawBankSchema } from "schemas/walletSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
@@ -51,12 +51,13 @@ const WithdrawBank = () => {
       account_type: "savings",
       amount: "",
       specification: "",
-      user_date_time: "2023-06-14 12:38:12",
+      user_date_time: "", // date time string
       save_bank: false,
     },
     validationSchema: withdrawBankSchema,
     onSubmit: async (values, { setErrors }) => {
       try {
+        values.user_date_time = dateFormattor(new Date());
         const { data } = await apiRequest.initiateWithdrawRequest(values);
         if (!data.success) throw data.message;
         setModalRefundedDetails({

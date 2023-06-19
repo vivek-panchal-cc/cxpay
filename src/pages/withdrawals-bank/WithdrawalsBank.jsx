@@ -13,6 +13,7 @@ import {
   WITHDRAW_OPTIONS_TABS_LIST,
   WITHDRAW_STATUS_FILTER_BANK,
 } from "constants/all";
+import LoaderWithdrawItem from "loaders/LoaderWithdrawItem";
 
 const WithdrawalsBank = () => {
   const navigate = useNavigate();
@@ -146,13 +147,26 @@ const WithdrawalsBank = () => {
       </div>
       {/* Withdraw Card List */}
       <div className="refund-cards-list-wrap refund-comn-list-wrap">
-        <WithdrawBankList classNameList="refund-comn-ul bank-refund-ul" />
-        <Pagination
-          active={1}
-          size={5}
-          siblingCount={2}
-          onClickHandler={() => {}}
-        />
+        {loadingWithdrawList ? (
+          <div className="py-5">
+            {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+              <LoaderWithdrawItem key={item} itemType={"bank"} />
+            ))}
+          </div>
+        ) : (
+          <WithdrawBankList
+            classNameList="refund-comn-ul bank-refund-ul"
+            list={listWithdraws}
+          />
+        )}
+        {pagination && pagination.total > 10 ? (
+          <Pagination
+            active={pagination?.current_page}
+            size={pagination?.last_page}
+            siblingCount={2}
+            onClickHandler={handlePageChange}
+          />
+        ) : null}
       </div>
       <ModalDateRangePicker
         show={showDateFilter}

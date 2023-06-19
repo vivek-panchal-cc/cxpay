@@ -1,11 +1,20 @@
 import React from "react";
 import Button from "components/ui/Button";
-import { THEME_COLORS } from "constants/all";
+import { CURRENCY_SYMBOL, THEME_COLORS } from "constants/all";
 import { IconBank, IconEye } from "styles/svgs";
 import { useNavigate } from "react-router-dom";
 
 const WithdrawBankItem = (props) => {
-  const { className = "" } = props;
+  const { className = "", itemDetails } = props;
+  const {
+    transaction_id,
+    amount,
+    status,
+    date,
+    bank_account_number,
+    bank_name,
+  } = itemDetails || {};
+
   const navigate = useNavigate();
 
   const handleCancelWithdrawRequest = (e) => {
@@ -15,7 +24,7 @@ const WithdrawBankItem = (props) => {
   };
 
   const handleViewDetails = (e) => {
-    navigate(`/wallet/withdraw-details/bank/${"bank"}`);
+    navigate(`/wallet/withdraw-details/bank/${transaction_id}`);
   };
 
   return (
@@ -31,18 +40,18 @@ const WithdrawBankItem = (props) => {
       <div className="rcard-details-wrap">
         <div className="card-details">
           <div className="rcard-info">
-            <h3>xxxx xxxx xxxx 1234</h3>
+            <h3>{bank_name}</h3>
           </div>
           <div className="wrb-date-wrap">
-            <p>24/05/2023 | 03:20 PM</p>
+            <p>{date}</p>
           </div>
         </div>
         <div className="rcard-status-wrap">
           <div className="total-val-wrap">
-            + <span>500</span> ANG
+            + <span>{amount}</span> {CURRENCY_SYMBOL}
           </div>
           <div className="status-wrap">
-            <Button className="btn btn-green">Accepted</Button>
+            <Button className="btn btn-green">{status}</Button>
             <Button
               className="wr-bank-cancel-req d-none d-md-block ms-auto"
               onClick={handleCancelWithdrawRequest}

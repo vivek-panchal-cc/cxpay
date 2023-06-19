@@ -11,6 +11,7 @@ import {
   WITHDRAW_STATUS_FILTER_CARD,
 } from "constants/all";
 import useWithdrawCardList from "hooks/useWithdrawCardList";
+import LoaderWithdrawItem from "loaders/LoaderWithdrawItem";
 
 const WithdrawalsCard = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -137,10 +138,18 @@ const WithdrawalsCard = () => {
       </div>
       {/* Withdraw Card List */}
       <div className="refund-cards-list-wrap refund-comn-list-wrap">
-        <WithdrawCardList
-          classNameList="card-refund-ul refund-comn-ul"
-          list={listWithdraws}
-        />
+        {loadingWithdrawList ? (
+          <div className="py-5">
+            {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+              <LoaderWithdrawItem key={item} />
+            ))}
+          </div>
+        ) : (
+          <WithdrawCardList
+            classNameList="card-refund-ul refund-comn-ul"
+            list={listWithdraws}
+          />
+        )}
         {pagination && pagination.total > 10 ? (
           <Pagination
             active={pagination?.current_page}

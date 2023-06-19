@@ -95,6 +95,7 @@ const API_cancelWithdrawRequest =
 const API_cardTransactionsList = apiUrl.API_TRANSACTION_CARD_TRANSACTIONS_LIST;
 const API_cardTransactionsDetails =
   apiUrl.API_TRANSACTION_CARD_TRANSACTIONS_DETAILS;
+const API_initiateCardWithdraw = apiUrl.API_TRANSACTION_INITIATE_CARD_WITHDRAW;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -566,6 +567,12 @@ export const initiateWithdrawRequest = (params) => {
   );
 };
 
+// POST @initiate-card-withdraw
+// @params auth_token
+export const initiateCardWithdraw = (params) => {
+  return axiosTransactionInstance.post(`${API_initiateCardWithdraw}`, params);
+};
+
 // POST @cancel-withdraw-request
 // @params auth_token, withdraw_id
 export const cancelWithdrawRequest = (params) => {
@@ -647,6 +654,7 @@ export const apiRequest = {
   bankWithdrawList,
   bankWithdrawDetails,
   initiateWithdrawRequest,
+  initiateCardWithdraw,
   cancelWithdrawRequest,
   cardTransactionsList,
   cardTransactionsDetails,

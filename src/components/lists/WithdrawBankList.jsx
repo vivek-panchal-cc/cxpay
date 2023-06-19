@@ -2,12 +2,16 @@ import React from "react";
 import WithdrawBankItem from "components/items/WithdrawBankItem";
 
 const WithdrawBankList = (props) => {
-  const { classNameList = "", classNameItem = "" } = props;
+  const { classNameList = "", classNameItem = "", list = [] } = props;
 
   return (
     <ul className={`${classNameList}`}>
-      {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-        <WithdrawBankItem key={item} className={`${classNameItem}`} />
+      {list?.map((item, index) => (
+        <WithdrawBankItem
+          key={item?.transaction_id || index}
+          className={`${classNameItem}`}
+          itemDetails={item}
+        />
       ))}
     </ul>
   );
