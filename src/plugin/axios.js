@@ -38,20 +38,6 @@ const responseInterceptor = async (response) => {
   const expireTm = exp * 1000; // actual expire time
   const expireSlot = new Date(expireTm - 60000 * 5).getTime(); // reduce 5 min from the actual expire time
   const currentTm = new Date().getTime(); // time now
-  if (
-    !originalRequest.url.includes(API_LOGIN_REFRESH_TOKEN) &&
-    currentTm > expireSlot &&
-    currentTm < expireTm
-  ) {
-    try {
-      const { data } = await apiRequest.refreshToken({ token });
-      if (!data.success) throw data.message;
-      if (data.token) storageRequest.setAuth(data.token);
-    } catch (error) {
-      storageRequest.removeAuth();
-      window.location = "/login";
-    }
-  }
   return response;
 };
 

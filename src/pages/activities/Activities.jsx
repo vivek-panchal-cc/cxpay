@@ -103,7 +103,10 @@ const Activities = () => {
           </div>
           <InputDateRange
             className="date-filter-calendar"
-            handleClick={() => setShowFilter(true)}
+            onClick={() => {
+              console.log("JSK");
+              setShowFilter(true);
+            }}
             startDate={filters.startDate}
             endDate={filters.endDate}
           />

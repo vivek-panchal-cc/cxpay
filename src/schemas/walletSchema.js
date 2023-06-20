@@ -72,6 +72,10 @@ const EditBankSchema = yup.object().shape({
 });
 
 const withdrawCardSchema = yup.object().shape({
+  card_number: yup.string().required(),
+  card_expiry_date: cardExpirySchema,
+  transaction_id: yup.string().required(),
+  txn_source: yup.string().required(),
   amount: yup
     .string()
     .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid Amount")

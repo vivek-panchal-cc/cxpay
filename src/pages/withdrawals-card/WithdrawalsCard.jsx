@@ -79,6 +79,12 @@ const WithdrawalsCard = () => {
       startDate: "",
       endDate: "",
     });
+    setAllFilters({
+      start_date: "",
+      end_date: "",
+      status: [],
+    });
+    setFiltersChanged(false);
   };
 
   // For changing page from pagination
@@ -113,6 +119,7 @@ const WithdrawalsCard = () => {
               id="refund-status-dd"
               className="dropdown-check-list"
               title="Status"
+              valueList={drawStatus}
               dropList={WITHDRAW_STATUS_FILTER_CARD}
               onChange={handleChangeStatusFilter}
             />
@@ -150,7 +157,7 @@ const WithdrawalsCard = () => {
             list={listWithdraws}
           />
         )}
-        {pagination && pagination.total > 10 ? (
+        {!loadingWithdrawList && pagination && pagination.total > 10 ? (
           <Pagination
             active={pagination?.current_page}
             size={pagination?.last_page}

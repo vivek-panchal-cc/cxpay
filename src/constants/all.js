@@ -255,15 +255,15 @@ const WITHDRAW_OPTIONS_TABS_LIST = [
 
 // Withdraw status filters list for card transactions
 const WITHDRAW_STATUS_FILTER_CARD = [
-  { title: "Refundable", status: "enable" },
-  { title: "Non Refundable", status: "disable" },
+  { title: "Refundable", status: "ENABLE" },
+  { title: "Non Refundable", status: "DISABLE" },
 ];
 
 // Withdraw status filters list for bank transactions
 const WITHDRAW_STATUS_FILTER_BANK = [
-  { title: "ACCEPTED", status: "accepted" },
-  { title: "PENDING", status: "pending" },
-  { title: "PROCESSING", status: "processing" },
+  { title: "ACCEPTED", status: "ACCEPTED" },
+  { title: "PENDING", status: "PENDING" },
+  { title: "PROCESSING", status: "PROCESSING" },
 ];
 
 export {

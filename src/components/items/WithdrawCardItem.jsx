@@ -30,7 +30,7 @@ const WithdrawCardItem = (props) => {
           style={{ background: color }}
         />
       );
-    return <IconCreditCard height="inherit" />;
+    return <IconCreditCard height="100%" />;
   }, []);
 
   const handleInitiateRefund = (e) => {

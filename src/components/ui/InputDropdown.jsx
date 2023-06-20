@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 const InputDropdown = (props) => {
   const {
     id = "",
     className = "",
     title = "",
+    valueList = [],
     dropList = [],
     onChange = () => {},
   } = props;
@@ -12,7 +13,6 @@ const InputDropdown = (props) => {
 
   const dropRef = useRef(null);
   const [toggle, setToggle] = useState(false);
-  const [checkedList, setCheckedList] = useState([]);
 
   useEffect(() => {
     function handleclickOutside(event) {
@@ -25,16 +25,17 @@ const InputDropdown = (props) => {
     };
   }, [dropRef]);
 
-  const handleChange = (e) => {
-    console.log(checkedList);
-    const checked = e?.target?.checked;
-    const value = e?.target?.value;
-    let updatedList = [...checkedList];
-    if (checked) updatedList.push(value);
-    else updatedList.splice(checkedList.indexOf(value), 1);
-    setCheckedList(updatedList);
-    if (onChange) onChange(updatedList);
-  };
+  const handleChange = useCallback(
+    (e) => {
+      const checked = e?.target?.checked;
+      const value = e?.target?.value;
+      let updatedList = [...valueList];
+      if (checked) updatedList.push(value);
+      else updatedList.splice(valueList.indexOf(value), 1);
+      if (onChange) onChange(updatedList);
+    },
+    [valueList]
+  );
 
   return (
     <div id={id || `drop${randomStr}`} className={`${className}`}>
@@ -45,7 +46,7 @@ const InputDropdown = (props) => {
         <ul className="status-items" ref={dropRef}>
           {dropList && dropList.length > 0
             ? dropList.map((item, index) => {
-                const isChecked = checkedList.includes(item?.status);
+                const isChecked = valueList?.includes(item?.status);
                 return (
                   <li key={item?.status || index}>
                     <input

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import { CHARGES_TYPE_WD, CURRENCY_SYMBOL } from "constants/all";
 import Input from "components/ui/Input";
@@ -6,11 +6,12 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { withdrawCardSchema } from "schemas/walletSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
-import { getChargedAmount } from "helpers/commonHelpers";
+import { dateFormattor, getChargedAmount } from "helpers/commonHelpers";
 import useCharges from "hooks/useCharges";
 import Modal from "components/modals/Modal";
 import FundEffectPopup from "components/popups/FundEffectPopup";
 import { useFormik } from "formik";
+import useWithdrawDetails from "hooks/useWithdrawDetails";
 
 const WithdrawCard = () => {
   const params = useParams();
@@ -30,13 +31,24 @@ const WithdrawCard = () => {
   const [loadingCharges, charges] = useCharges({
     chargesType: CHARGES_TYPE_WD,
   });
+  const [loadingDetails, details] = useWithdrawDetails({
+    transaction_id: tid,
+    withdrawType: "card",
+  });
+
+  const {
+    card_number = "",
+    card_expiry_date = "",
+    transaction_id = "",
+    remaining_amount = "",
+  } = useMemo(() => ({ ...details }), [details]);
 
   const formik = useFormik({
     initialValues: {
-      card_number: "",
-      card_expiry_date: "",
-      transaction_id: "",
-      txn_source: "",
+      card_number: card_number,
+      card_expiry_date: card_expiry_date,
+      transaction_id: transaction_id,
+      txn_source: "CARD",
       user_date_time: "",
       specification: "",
       amount: "",
@@ -44,6 +56,7 @@ const WithdrawCard = () => {
     validationSchema: withdrawCardSchema,
     onSubmit: async (values, { setErrors }) => {
       try {
+        values.user_date_time = dateFormattor(new Date());
         const { data } = await apiRequest.initiateCardWithdraw(values);
         if (!data.success) throw data.message;
         setModalRefundedDetails({
@@ -85,7 +98,10 @@ const WithdrawCard = () => {
               <p className="form-choose-act-wrap px-5">
                 <span>
                   You are eligible for a withdrawal of
-                  <b> 500.00 ANG </b>
+                  <b>
+                    {" "}
+                    {remaining_amount} {CURRENCY_SYMBOL}{" "}
+                  </b>
                   for card
                 </span>
               </p>

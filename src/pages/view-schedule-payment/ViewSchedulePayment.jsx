@@ -6,7 +6,7 @@ import InputDateRange from "components/ui/InputDateRange";
 import { ScheduledPaymentContext } from "context/scheduledPaymentContext";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
 import React, { useContext, useEffect, useState } from "react";
-import { IconCalender, IconRefresh } from "styles/svgs";
+import { IconRefresh } from "styles/svgs";
 
 const ViewSchedulePayment = () => {
   const [showFilter, setShowFilter] = useState(false);
@@ -82,7 +82,7 @@ const ViewSchedulePayment = () => {
           <div className="schedule-pay-sd-wrap gap-4">
             <InputDateRange
               className="date-filter-calendar"
-              handleClick={() => setShowFilter(true)}
+              onClick={() => setShowFilter(true)}
               startDate={filters.startDate}
               endDate={filters.endDate}
             />
