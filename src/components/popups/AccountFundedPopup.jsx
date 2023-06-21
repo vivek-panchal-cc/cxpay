@@ -1,4 +1,4 @@
-import { CURRENCY_SYMBOL } from "constants/all";
+import WrapAmount from "components/wrapper/WrapAmount";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -14,7 +14,7 @@ function AccountFundedPopup(props) {
         <div className="modal-body">
           <h3>
             <span className="transfer-amt">
-              {CURRENCY_SYMBOL} {fund}
+              <WrapAmount value={fund} />
             </span>
             <br />
             Funded to your account
@@ -23,7 +23,7 @@ function AccountFundedPopup(props) {
             Available balance
             <br />
             <span className="available-bal-acc">
-              {CURRENCY_SYMBOL} {balance}
+              <WrapAmount value={balance} />
             </span>
           </p>
           <Link

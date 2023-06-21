@@ -8,6 +8,7 @@ import ReactDatePicker from "react-datepicker";
 import { schedulePaymentSchema } from "schemas/sendPaymentSchema";
 import Input from "components/ui/Input";
 import TimePicker from "components/time-picker/TimePicker";
+import WrapAmount from "components/wrapper/WrapAmount";
 
 const EditScheduledPayment = () => {
   const navigate = useNavigate();
@@ -111,21 +112,21 @@ const EditScheduledPayment = () => {
                 <div className="sp-total-text">Amount</div>
                 <div className="sp-total-amt">
                   <span>{CURRENCY_SYMBOL}</span>
-                  {sch_amount?.toFixed(2)}
+                  <WrapAmount value={sch_amount} prefix={""} />
                 </div>
               </div>
               <div className="d-flex justify-content-between w-100">
                 <div className="sp-total-text">Fees</div>
                 <div className="sp-total-amt">
                   <span>{CURRENCY_SYMBOL}</span>
-                  {sch_fees?.toFixed(2)}
+                  <WrapAmount value={sch_fees} prefix={""} />
                 </div>
               </div>
               <div className="d-flex justify-content-between w-100">
                 <div className="sp-total-text">Total</div>
                 <div className="sp-total-amt">
                   <span>{CURRENCY_SYMBOL}</span>
-                  {sch_total?.toFixed(2)}
+                  <WrapAmount value={sch_total} prefix={""} />
                 </div>
               </div>
             </div>

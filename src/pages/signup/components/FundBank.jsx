@@ -4,6 +4,7 @@ import InputSelect from "components/ui/InputSelect";
 import { Link } from "react-router-dom";
 import { FundContext } from "context/fundContext";
 import { CURRENCY_SYMBOL } from "constants/all";
+import WrapAmount from "components/wrapper/WrapAmount";
 
 function FundBank() {
   const { formik, countryList, cityList, paymentDetails, banksList } =
@@ -235,14 +236,14 @@ function FundBank() {
                 <tr key={item?.desc?.trim() || index}>
                   <td>{item?.desc}</td>
                   <td className="amount">
-                    {CURRENCY_SYMBOL} {item?.amount?.toFixed(2)}
+                    <WrapAmount value={item?.amount} />
                   </td>
                 </tr>
               ))}
               <tr>
                 <td>Net Payable</td>
                 <td>
-                  {CURRENCY_SYMBOL} {paymentDetails?.grandTotal?.toFixed(2)}
+                  <WrapAmount value={paymentDetails?.grandTotal} />
                 </td>
               </tr>
             </tbody>

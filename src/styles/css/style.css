@@ -8374,7 +8374,7 @@ button.shedule-date-filter:hover {
   color: var(--dark_blue);
 }
 
-.sp-total-amt span {
+.sp-total-amt span:first-child {
   color: var(--blue);
   margin-right: 15px;
 }

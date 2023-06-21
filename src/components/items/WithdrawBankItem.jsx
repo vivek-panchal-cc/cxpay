@@ -3,6 +3,7 @@ import Button from "components/ui/Button";
 import { CURRENCY_SYMBOL, THEME_COLORS } from "constants/all";
 import { IconBank, IconEye } from "styles/svgs";
 import { useNavigate } from "react-router-dom";
+import WrapAmount from "components/wrapper/WrapAmount";
 
 const WithdrawBankItem = (props) => {
   const { className = "", itemDetails } = props;
@@ -48,7 +49,7 @@ const WithdrawBankItem = (props) => {
         </div>
         <div className="rcard-status-wrap">
           <div className="total-val-wrap">
-            + <span>{amount}</span> {CURRENCY_SYMBOL}
+            <WrapAmount value={amount} prefix={`${CURRENCY_SYMBOL} +`} />
           </div>
           <div className="status-wrap">
             <Button className="btn btn-green">{status}</Button>

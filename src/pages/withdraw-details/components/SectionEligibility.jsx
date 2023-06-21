@@ -1,9 +1,15 @@
 import Button from "components/ui/Button";
-import { CURRENCY_SYMBOL } from "constants/all";
+import WrapAmount from "components/wrapper/WrapAmount";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const SectionEligibility = (props) => {
-  const { remaining_amount } = props;
+  const navigate = useNavigate();
+  const { remaining_amount, transaction_id, is_refundable } = props;
+
+  const handleInitiateRefund = (e) => {
+    navigate(`/wallet/withdraw-card/${transaction_id}`);
+  };
 
   return (
     <div className="wcr-innner-wrap wcr-innner-wrap-3 d-flex flex-wrap w-100 align-items-center">
@@ -11,14 +17,16 @@ const SectionEligibility = (props) => {
         <p className="font-16-quick">
           You are eligible to Withdraw{" "}
           <span className="blue">
-            {remaining_amount} {CURRENCY_SYMBOL}
+            <WrapAmount value={remaining_amount} />
           </span>{" "}
           against this Transection
         </p>
       </div>
       <div className="wcr-withdraw-btn">
         {remaining_amount > 0 ? (
-          <Button className="btn">Withdraw</Button>
+          <Button className="btn" onClick={handleInitiateRefund}>
+            Withdraw
+          </Button>
         ) : null}
       </div>
     </div>

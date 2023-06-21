@@ -1,3 +1,4 @@
+import WrapAmount from "components/wrapper/WrapAmount";
 import { CURRENCY_SYMBOL } from "constants/all";
 import React, { useMemo } from "react";
 import { IconBin, IconEdit } from "styles/svgs";
@@ -36,7 +37,7 @@ const SchedulePaymentItem = (props) => {
         <div className="activity-date">{dtString}</div>
         <div className="act-spec-add">{description}</div>
         <div className="seleted-value">
-          {CURRENCY_SYMBOL} -{amount.toFixed(2)}
+          <WrapAmount value={amount} prefix={`${CURRENCY_SYMBOL} -`} />
         </div>
       </div>
       <div className="right-activity-div">

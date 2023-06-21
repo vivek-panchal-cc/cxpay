@@ -14,6 +14,7 @@ import {
   IconRightArrowBig,
 } from "styles/svgs";
 import { CURRENCY_SYMBOL } from "constants/all";
+import WrapAmount from "components/wrapper/WrapAmount";
 
 function FundCreditCard(props) {
   const {
@@ -318,15 +319,14 @@ function FundCreditCard(props) {
                       <tr key={item?.desc?.trim() || index}>
                         <td>{item?.desc}</td>
                         <td className="amount">
-                          {CURRENCY_SYMBOL} {item?.amount?.toFixed(2)}
+                          <WrapAmount value={item?.amount} />
                         </td>
                       </tr>
                     ))}
                     <tr>
                       <td>Net Payable</td>
                       <td>
-                        {CURRENCY_SYMBOL}{" "}
-                        {paymentDetails?.grandTotal?.toFixed(2)}
+                        <WrapAmount value={paymentDetails?.grandTotal} />
                       </td>
                     </tr>
                   </tbody>

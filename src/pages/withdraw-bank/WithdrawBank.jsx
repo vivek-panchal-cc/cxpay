@@ -19,6 +19,7 @@ import FundEffectPopup from "components/popups/FundEffectPopup";
 import SelectLinkedBank from "./components/SelectLinkedBank";
 import useCountryBanks from "hooks/useCountryBanks";
 import useCharges from "hooks/useCharges";
+import WrapAmount from "components/wrapper/WrapAmount";
 
 const WithdrawBank = () => {
   const dispatch = useDispatch();
@@ -311,20 +312,20 @@ const WithdrawBank = () => {
                         <tr key={item?.desc?.trim() || index}>
                           <td>{item?.desc}</td>
                           <td className="amount">
-                            {CURRENCY_SYMBOL} {item?.amount?.toFixed(2)}
+                            <WrapAmount value={item?.amount} />
                           </td>
                         </tr>
                       ))}
                       <tr>
                         <td>Total Amount</td>
                         <td>
-                          {CURRENCY_SYMBOL} {paymentDetails?.total?.toFixed(2)}
+                          <WrapAmount value={paymentDetails?.total} />
                         </td>
                       </tr>
                       <tr>
                         <td></td>
                         <td>
-                          {CURRENCY_SYMBOL} {paymentDetails?.total?.toFixed(2)}
+                          <WrapAmount value={paymentDetails?.total} />
                         </td>
                       </tr>
                     </tbody>

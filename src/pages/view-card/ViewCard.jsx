@@ -119,7 +119,7 @@ function ViewCard(props) {
                 />
               ))
             ) : (
-              <p className="text-center">Card Not Found</p>
+              <p className="text-center">Card not found</p>
             )}
           </ul>
         </div>

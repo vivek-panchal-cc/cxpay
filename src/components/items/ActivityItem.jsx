@@ -6,6 +6,7 @@ import {
   activityConsts,
 } from "constants/all";
 import { IconEyeOpen } from "styles/svgs";
+import WrapAmount from "components/wrapper/WrapAmount";
 
 const ActivityItem = (props) => {
   const { activityDetails, handleClick } = props || {};
@@ -79,8 +80,10 @@ const ActivityItem = (props) => {
             </button>
           </div>
           <div className={`act-amt-wrap text-end ${classText}`}>
-            {CURRENCY_SYMBOL} {iconAmount}
-            {altAmount}
+            <WrapAmount
+              value={altAmount}
+              prefix={`${CURRENCY_SYMBOL} ${iconAmount}`}
+            />
           </div>
         </div>
       </div>

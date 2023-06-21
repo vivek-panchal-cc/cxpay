@@ -12,6 +12,7 @@ import Modal from "components/modals/Modal";
 import FundEffectPopup from "components/popups/FundEffectPopup";
 import { useFormik } from "formik";
 import useWithdrawDetails from "hooks/useWithdrawDetails";
+import WrapAmount from "components/wrapper/WrapAmount";
 
 const WithdrawCard = () => {
   const params = useParams();
@@ -97,11 +98,10 @@ const WithdrawCard = () => {
             <div className="form-field cursor-pointer">
               <p className="form-choose-act-wrap px-5">
                 <span>
-                  You are eligible for a withdrawal of
+                  You are eligible for a withdrawal of{" "}
                   <b>
-                    {" "}
-                    {remaining_amount} {CURRENCY_SYMBOL}{" "}
-                  </b>
+                    <WrapAmount value={remaining_amount} />
+                  </b>{" "}
                   for card
                 </span>
               </p>
@@ -163,20 +163,20 @@ const WithdrawCard = () => {
                       <tr key={item?.desc?.trim() || index}>
                         <td>{item?.desc}</td>
                         <td className="amount">
-                          {CURRENCY_SYMBOL} {item?.amount?.toFixed(2)}
+                          <WrapAmount value={item?.amount} />
                         </td>
                       </tr>
                     ))}
                     <tr>
                       <td>Total Amount</td>
                       <td>
-                        {CURRENCY_SYMBOL} {paymentDetails?.total?.toFixed(2)}
+                        <WrapAmount value={paymentDetails?.total} />
                       </td>
                     </tr>
                     <tr>
                       <td></td>
                       <td>
-                        {CURRENCY_SYMBOL} {paymentDetails?.total?.toFixed(2)}
+                        <WrapAmount value={paymentDetails?.total} />
                       </td>
                     </tr>
                   </tbody>

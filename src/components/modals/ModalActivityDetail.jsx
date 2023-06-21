@@ -14,6 +14,7 @@ import {
 } from "constants/all";
 import LoaderActivityDetail from "loaders/LoaderActivityDetail";
 import LoaderActivityProfile from "loaders/LoaderActivityProfile";
+import WrapAmount from "components/wrapper/WrapAmount";
 
 const ModalActivityDetail = (props) => {
   const {
@@ -152,11 +153,10 @@ const ModalActivityDetail = (props) => {
                   <h3>{name}</h3>
                   <div className={`loan-amount ${classBg}`}>
                     <p>
-                      <span className={`${classText}`}>{CURRENCY_SYMBOL}</span>
-                      <span className={`ms-1 ${classText}`}>
-                        {iconAmount}
-                        {typeof amount === "number" ? amount.toFixed(2) : ""}
-                      </span>
+                      <WrapAmount
+                        value={amount}
+                        prefix={`${CURRENCY_SYMBOL} ${iconAmount}`}
+                      />
                     </p>
                     <p>{specification}</p>
                   </div>

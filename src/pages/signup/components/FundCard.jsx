@@ -6,6 +6,7 @@ import { FundContext } from "context/fundContext";
 import DatePicker from "react-datepicker";
 import { IconCalender, IconEyeClose, IconEyeOpen } from "styles/svgs";
 import { CURRENCY_SYMBOL } from "constants/all";
+import WrapAmount from "components/wrapper/WrapAmount";
 
 function FundCard() {
   const { formik, countryList, cityList, paymentDetails } =
@@ -246,7 +247,7 @@ function FundCard() {
               <div className="payment-footer-col-label">{item?.desc}</div>
               <h4 className="amount d-flex justify-content-between">
                 <span>{CURRENCY_SYMBOL}</span>
-                {item?.amount?.toFixed(2)}
+                <WrapAmount value={item?.amount} prefix="" />
               </h4>
             </li>
           ))}
@@ -254,7 +255,7 @@ function FundCard() {
             <div className="payment-footer-col-label">Net Payable</div>
             <h4 className="amount d-flex justify-content-between">
               <span>{CURRENCY_SYMBOL}</span>
-              {paymentDetails?.grandTotal?.toFixed(2)}
+              <WrapAmount value={paymentDetails?.grandTotal} prefix="" />
             </h4>
           </li>
         </ul>

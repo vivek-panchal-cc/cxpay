@@ -74,12 +74,12 @@ const WithdrawDetails = () => {
     () => (
       <>
         {/* Card Eligibility and withdraw-History details section */}
-        <SectionEligibility {...{ remaining_amount }} />
+        <SectionEligibility {...{ remaining_amount, transaction_id }} />
         <div className="wcr-divider-wrap"></div>
         <SectionWithdrawHistory {...{ withdraw_details }} />
       </>
     ),
-    [remaining_amount, withdraw_details]
+    [remaining_amount, withdraw_details, transaction_id]
   );
 
   return (

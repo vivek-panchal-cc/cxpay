@@ -1,5 +1,6 @@
-import { CURRENCY_SYMBOL } from "constants/all";
-import React, { useEffect, useMemo, useState } from "react";
+import WrapAmount from "components/wrapper/WrapAmount";
+import { LoaderContext } from "context/loaderContext";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 const chartOption = {
@@ -112,6 +113,7 @@ const months = [
 ];
 
 const BalanceGraph = (props) => {
+  const { isLoading } = useContext(LoaderContext);
   const { graphBackgroundImage, balanceDataArr, balance, monthDataArr } = props;
   const [options, setOptions] = useState({ ...chartOption });
 
@@ -167,7 +169,7 @@ const BalanceGraph = (props) => {
               Available Balance
             </h6>
             <h2 className="h3 text-black fw-bolder">
-              {CURRENCY_SYMBOL} {availableBalance}
+              <WrapAmount value={availableBalance} />
             </h2>
           </div>
           {lockBalance ? (
@@ -176,14 +178,14 @@ const BalanceGraph = (props) => {
                 Block Amount
               </h6>
               <h2 className="h3 text-black fw-bolder">
-                {CURRENCY_SYMBOL} {lockBalance}
+                <WrapAmount value={lockBalance} />
               </h2>
             </div>
           ) : null}
         </div>
         <div className="px-2 z-1">
           <div id="chart">
-            {options.series[0].data.length > 0 ? (
+            {!isLoading && options.series[0].data.length > 0 ? (
               <ReactApexChart
                 options={options.options}
                 series={options.series}

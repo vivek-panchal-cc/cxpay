@@ -1,5 +1,5 @@
-import { CURRENCY_SYMBOL } from "constants/all";
 import React from "react";
+import WrapAmount from "components/wrapper/WrapAmount";
 
 const PaymentUserItem = (props) => {
   const { name, profileImg, amount } = props;
@@ -12,7 +12,7 @@ const PaymentUserItem = (props) => {
         <div className="sp-user-nm">{name}</div>
       </div>
       <div className="sp-amt">
-        {CURRENCY_SYMBOL} {typeof amount === "number" ? amount?.toFixed(2) : ""}
+        <WrapAmount value={amount} />
       </div>
     </li>
   );

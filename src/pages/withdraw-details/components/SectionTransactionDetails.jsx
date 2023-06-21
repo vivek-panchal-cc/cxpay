@@ -1,4 +1,4 @@
-import { CURRENCY_SYMBOL } from "constants/all";
+import WrapAmount from "components/wrapper/WrapAmount";
 import React from "react";
 
 const SectionTransactionDetails = (props) => {
@@ -37,13 +37,13 @@ const SectionTransactionDetails = (props) => {
             <tr>
               <td>Amount</td>
               <td>
-                {total_amount} {CURRENCY_SYMBOL}
+                <WrapAmount value={total_amount} />
               </td>
             </tr>
             <tr>
               <td>Fees</td>
               <td>
-                {fees} {CURRENCY_SYMBOL}
+                <WrapAmount value={fees} />
               </td>
             </tr>
             <tr>

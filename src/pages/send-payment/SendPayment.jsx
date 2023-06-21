@@ -18,6 +18,7 @@ import { CURRENCY_SYMBOL } from "constants/all";
 import { IconClock } from "styles/svgs";
 import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
 import ModalConfirmation from "components/modals/ModalConfirmation";
+import WrapAmount from "components/wrapper/WrapAmount";
 
 function SendPayment(props) {
   const navigate = useNavigate();
@@ -345,7 +346,7 @@ function SendPayment(props) {
                       <div className="amount-currency-wrap">
                         <h4 className="amount">
                           <span>{CURRENCY_SYMBOL}</span>
-                          {paymentDetails?.total?.toFixed(2)}
+                          <WrapAmount value={paymentDetails?.total} prefix="" />
                         </h4>
                       </div>
                     </li>
@@ -356,7 +357,7 @@ function SendPayment(props) {
                         </div>
                         <h4 className="amount">
                           <span>{CURRENCY_SYMBOL}</span>
-                          {item?.amount?.toFixed(2)}
+                          <WrapAmount value={item?.amount} prefix="" />
                         </h4>
                       </li>
                     ))}
@@ -367,7 +368,10 @@ function SendPayment(props) {
                       <div className="amount-currency-wrap">
                         <h4 className="amount">
                           <span>{CURRENCY_SYMBOL}</span>
-                          {paymentDetails?.grandTotal?.toFixed(2)}
+                          <WrapAmount
+                            value={paymentDetails?.grandTotal}
+                            prefix=""
+                          />
                         </h4>
                       </div>
                     </li>

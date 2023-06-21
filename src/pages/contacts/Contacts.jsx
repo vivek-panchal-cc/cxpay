@@ -224,7 +224,7 @@ const Contacts = () => {
                 ))
               )}
               {contacts.length <= 0 ? (
-                <p className="text-center">Contacts Not Found.</p>
+                <p className="text-center">Contacts not found.</p>
               ) : null}
             </ul>
           </div>

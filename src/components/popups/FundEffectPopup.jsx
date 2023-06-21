@@ -1,4 +1,4 @@
-import { CURRENCY_SYMBOL } from "constants/all";
+import WrapAmount from "components/wrapper/WrapAmount";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -20,7 +20,7 @@ const FundEffectPopup = (props) => {
         <div className="modal-body text-center">
           <h3>
             <span className="transfer-amt">
-              {CURRENCY_SYMBOL} {fund}
+              <WrapAmount value={fund} />
             </span>
           </h3>
           <h4>{fundMessage}</h4>

@@ -1,4 +1,4 @@
-import { CURRENCY_SYMBOL } from "constants/all";
+import WrapAmount from "components/wrapper/WrapAmount";
 import React from "react";
 import { IconBank } from "styles/svgs";
 
@@ -28,7 +28,7 @@ const SectionHeader = (props) => {
             <div className="wcr-card-amt wbr-card-amt">
               <p className="green font-bold">{status}</p>
               <h2>
-                {amount} {CURRENCY_SYMBOL}
+                <WrapAmount value={amount} />
               </h2>
             </div>
           </div>
