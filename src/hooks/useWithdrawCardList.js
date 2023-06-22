@@ -31,8 +31,8 @@ const useWithdrawCardList = ({
         status,
       });
       if (!data.success) throw data.message;
-      const { cards, pagination } = data.data || {};
-      setListWithdraws(cards);
+      const { transactions, pagination } = data.data || {};
+      setListWithdraws(transactions);
       setPagination(pagination);
     } catch (error) {
       console.log(error);

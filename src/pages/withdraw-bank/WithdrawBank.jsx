@@ -9,7 +9,7 @@ import { dateFormattor, getChargedAmount } from "helpers/commonHelpers";
 import { withdrawBankSchema } from "schemas/walletSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import InputRadioType from "components/ui/InputRadioType";
 import InputSelect from "components/ui/InputSelect";
@@ -20,8 +20,10 @@ import SelectLinkedBank from "./components/SelectLinkedBank";
 import useCountryBanks from "hooks/useCountryBanks";
 import useCharges from "hooks/useCharges";
 import WrapAmount from "components/wrapper/WrapAmount";
+import useAvailableCardBalance from "hooks/useAvailableCardBalance";
 
 const WithdrawBank = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { defaultBank } = useSelector((state) => state.userWallet);
   const { setIsLoading } = useContext(LoaderContext);
@@ -42,6 +44,8 @@ const WithdrawBank = () => {
   const [loadingCharges, charges] = useCharges({
     chargesType: CHARGES_TYPE_WD,
   });
+  const [loadingCardBalance, { remaining_amount, bank_withdraw }] =
+    useAvailableCardBalance();
 
   const formik = useFormik({
     initialValues: {
@@ -109,6 +113,12 @@ const WithdrawBank = () => {
       setIsLoading(false);
     })();
   }, []);
+
+  // For redirection to card withdraw list when bank_withdraw is disabled
+  useEffect(() => {
+    if (!loadingCardBalance && bank_withdraw === false && remaining_amount > 5)
+      navigate("/wallet/withdrawals-card");
+  }, [loadingCardBalance, remaining_amount, bank_withdraw]);
 
   // For default primary bank selection
   useEffect(() => {

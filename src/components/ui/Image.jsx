@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Image = (props) => {
   const { src, className, style, alt, fallbacksrc } = props;
   const [isError, setIsError] = useState(false);
+
   return (
     <img
-      src={src || ""}
+      src={src || fallbacksrc}
       className={className}
       style={style}
       alt={alt}

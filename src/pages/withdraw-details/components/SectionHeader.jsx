@@ -23,7 +23,12 @@ const SectionHeader = (props) => {
           <div className="wcr-info-1 d-flex flex-wrap">
             <div className="wcr-card-data">
               <h2>{name}</h2>
-              <p>xxxx xxxx xxxx {accountNumber}</p>
+              <p>
+                xxxx xxxx xxxx{" "}
+                {accountNumber
+                  ? accountNumber?.substr(accountNumber.length - 4)
+                  : "XXXX"}
+              </p>
             </div>
             <div className="wcr-card-amt wbr-card-amt">
               <p className="green font-bold">{status}</p>

@@ -74,7 +74,7 @@ const ProfileInfo = (props) => {
 
   return (
     <ul>
-      {user_type !== "personal" ? (
+      {user_type === "business" ? (
         <li>
           <div className="pi-title-div">Business URL</div>
           <div className="profile-info-right-desc with-edit-ic">

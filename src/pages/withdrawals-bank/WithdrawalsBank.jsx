@@ -14,6 +14,7 @@ import {
   WITHDRAW_STATUS_FILTER_BANK,
 } from "constants/all";
 import LoaderWithdrawItem from "loaders/LoaderWithdrawItem";
+import useAvailableCardBalance from "hooks/useAvailableCardBalance";
 
 const WithdrawalsBank = () => {
   const navigate = useNavigate();
@@ -31,6 +32,8 @@ const WithdrawalsBank = () => {
     end_date: "",
     status: [],
   });
+  const [loadingCardBalance, { remaining_amount, bank_withdraw }] =
+    useAvailableCardBalance();
   const [loadingWithdrawList, pagination, listWithdraws, reload] =
     useWithdrawBankList({
       page: currentPage,
@@ -146,7 +149,11 @@ const WithdrawalsBank = () => {
           </div>
         </div>
         <div className="wrb-req-btn ">
-          <Button className="btn" onClick={handleRequestWithdraw}>
+          <Button
+            className="btn"
+            onClick={bank_withdraw ? handleRequestWithdraw : null}
+            disabled={loadingCardBalance || !bank_withdraw}
+          >
             <IconPlusLarge fill="#fff" />
             Request Withdraw
           </Button>

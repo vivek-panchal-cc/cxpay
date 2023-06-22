@@ -45,6 +45,7 @@ const WithdrawCard = () => {
   } = useMemo(() => ({ ...details }), [details]);
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       card_number: card_number,
       card_expiry_date: card_expiry_date,
@@ -62,7 +63,7 @@ const WithdrawCard = () => {
         if (!data.success) throw data.message;
         setModalRefundedDetails({
           amount: values.amount,
-          message: "Refunded to Your Bank",
+          message: "Refunded to Your Card",
         });
         setShowModalRefunded(true);
       } catch (error) {
