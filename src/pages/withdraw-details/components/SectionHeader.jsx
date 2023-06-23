@@ -1,42 +1,59 @@
+import React, { useContext } from "react";
 import WrapAmount from "components/wrapper/WrapAmount";
-import React from "react";
-import { IconBank } from "styles/svgs";
+import { WithdrawDetailsContext } from "context/withdrawDetailsContext";
+import { IconBank, IconCard } from "styles/svgs";
+import LoaderWdrawHeader from "loaders/LoaderWdrawHeader";
 
 const SectionHeader = (props) => {
+  const { isLoading, withdrawType, details } = useContext(
+    WithdrawDetailsContext
+  );
   const {
-    name = "",
-    accountNumber = "",
+    card_number = "",
+    bank_name = "",
+    bank_account_number = "",
     amount = "",
     status = "",
     specification = "",
-  } = props || {};
+  } = details || {};
+
+  const name = withdrawType === "card" ? card_number : bank_name;
+  const accNumber = withdrawType === "card" ? card_number : bank_account_number;
 
   return (
     <>
       <div className="wcr-innner-wrap wcr-innner-wrap-1 d-flex flex-wrap w-100">
         <div className="wcr-img-wrap wbr-img-wrap">
           <span bg-color="#000">
-            <IconBank stroke="#363853" />
+            {withdrawType === "card" ? <IconCard stroke="#363853" /> : null}
+            {withdrawType === "bank" ? <IconBank stroke="#363853" /> : null}
           </span>
         </div>
         <div className="wcr-info-main">
-          <div className="wcr-info-1 d-flex flex-wrap">
-            <div className="wcr-card-data">
-              <h2>{name}</h2>
-              <p>
-                xxxx xxxx xxxx{" "}
-                {accountNumber
-                  ? accountNumber?.substr(accountNumber.length - 4)
-                  : "XXXX"}
-              </p>
+          {isLoading ? (
+            <div className="wcr-info-1 d-flex flex-wrap">
+              <LoaderWdrawHeader
+                loaderPorps={{ height: 20, width: "100%" }}
+                divProps={{ rx: "5", ry: "5", width: "12%", height: "20" }}
+              />
             </div>
-            <div className="wcr-card-amt wbr-card-amt">
-              <p className="green font-bold">{status}</p>
-              <h2>
-                <WrapAmount value={amount} />
-              </h2>
+          ) : (
+            <div className="wcr-info-1 d-flex flex-wrap">
+              <div className="wcr-card-data">
+                <h2>{name}</h2>
+                <p>
+                  xxxx xxxx xxxx{" "}
+                  {accNumber ? accNumber?.substr(accNumber.length - 4) : "XXXX"}
+                </p>
+              </div>
+              <div className="wcr-card-amt wbr-card-amt">
+                <p className="green font-bold">{status}</p>
+                <h2>
+                  <WrapAmount value={amount} />
+                </h2>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
       <div className="wcr-info-2">

@@ -1,7 +1,13 @@
 import WrapAmount from "components/wrapper/WrapAmount";
-import React from "react";
+import { WithdrawDetailsContext } from "context/withdrawDetailsContext";
+import LoaderDiv from "loaders/LoaderDiv";
+import React, { useContext } from "react";
 
 const SectionTransactionDetails = (props) => {
+  const { isLoading, withdrawType, details } = useContext(
+    WithdrawDetailsContext
+  );
+
   const {
     transaction_id = "",
     date = "",
@@ -9,7 +15,7 @@ const SectionTransactionDetails = (props) => {
     total_amount = "",
     fees = "",
     status = "",
-  } = props || {};
+  } = details || {};
 
   return (
     <div className="wcr-innner-wrap wcr-innner-wrap-2 d-flex flex-wrap w-100">
@@ -18,15 +24,25 @@ const SectionTransactionDetails = (props) => {
           <tbody>
             <tr>
               <td>Transection ID</td>
-              <td>{transaction_id}</td>
+              <td>
+                {isLoading ? (
+                  <LoaderDiv height="20" width="50%" />
+                ) : (
+                  transaction_id
+                )}
+              </td>
             </tr>
             <tr>
               <td>Date</td>
-              <td>{date}</td>
+              <td>
+                {isLoading ? <LoaderDiv height="20" width="50%" /> : date}
+              </td>
             </tr>
             <tr>
               <td>Time</td>
-              <td>{time}</td>
+              <td>
+                {isLoading ? <LoaderDiv height="20" width="50%" /> : time}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -37,19 +53,32 @@ const SectionTransactionDetails = (props) => {
             <tr>
               <td>Amount</td>
               <td>
-                <WrapAmount value={total_amount} />
+                {isLoading ? (
+                  <LoaderDiv height="20" width="50%" />
+                ) : (
+                  <WrapAmount value={total_amount} />
+                )}
               </td>
             </tr>
             <tr>
               <td>Fees</td>
               <td>
-                <WrapAmount value={fees} />
+                {isLoading ? (
+                  <LoaderDiv height="20" width="50%" />
+                ) : (
+                  <WrapAmount value={fees} />
+                )}
               </td>
             </tr>
             <tr>
               <td>Status</td>
               <td>
-                <span className="green">{status}</span>
+                {isLoading ? (
+                  <LoaderDiv height="20" width="50%" />
+                ) : (
+                  <span className="green">{status}</span>
+                )}
+
                 {/* <span className="green">Success</span> /{" "} */}
                 {/* <span className="red">Failed</span> */}
               </td>

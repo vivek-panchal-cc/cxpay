@@ -61,7 +61,7 @@ function App() {
 
   return (
     <>
-      <Routes>
+      <Routes location={location} key={location.pathname}>
         {/* List of Public Routes */}
         <Route element={<PublicLayout />}>
           <Route path="/login" element={<Login />} />

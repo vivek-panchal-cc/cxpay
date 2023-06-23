@@ -1,16 +1,21 @@
+import React, { useContext } from "react";
 import Button from "components/ui/Button";
 import WrapAmount from "components/wrapper/WrapAmount";
-import React from "react";
+import { WithdrawDetailsContext } from "context/withdrawDetailsContext";
 import { useNavigate } from "react-router-dom";
 
 const SectionEligibility = (props) => {
   const navigate = useNavigate();
-  const { remaining_amount, transaction_id, is_refundable } = props;
+  const { isLoading, withdrawType, details } = useContext(
+    WithdrawDetailsContext
+  );
+  const { remaining_amount, transaction_id, is_refundable } = details || {};
 
   const handleInitiateRefund = (e) => {
     navigate(`/wallet/withdraw-card/${transaction_id}`);
   };
 
+  if (withdrawType && withdrawType === "bank") return null;
   return (
     <div className="wcr-innner-wrap wcr-innner-wrap-3 d-flex flex-wrap w-100 align-items-center">
       <div className="wcr-eligible-msg">

@@ -247,7 +247,7 @@ const Contacts = () => {
         setConatctData={setConatctData}
         setInvitationSentPopup={setInvitationSentPopup}
         setConatctDetailPopup={setConatctDetailPopup}
-        isInvitedFlag={true}
+        isInvitedFlag={false}
         {...{ invitetitle }}
       />
       <InvitationSent

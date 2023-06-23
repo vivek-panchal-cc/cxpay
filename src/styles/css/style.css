@@ -9138,7 +9138,7 @@ ul.bank-refund-ul .rcard-info {
 }
 .wr-withdraw-his-data .wh-id-date-wrap > div,
 .wr-withdraw-his-data .wh-status-amt-wrap > div {
-  width: 50%;
+  /* width: 50%; */
 }
 .wh-card-num {
   width: 26%;

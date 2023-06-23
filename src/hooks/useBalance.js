@@ -15,8 +15,8 @@ const useBalance = () => {
       if (!data.success) throw data.message;
       const { available_balance, lock_amount } = data.data || {};
       setBalance({
-        available: available_balance || "",
-        lock: lock_amount || "",
+        available: available_balance,
+        lock: lock_amount,
       });
     } catch (error) {
       setBalance({});

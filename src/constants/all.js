@@ -219,6 +219,17 @@ const activityConsts = {
         textDetailStatus: "Amount Credited",
         desc: "From YYYY",
       },
+      [ACT_STATUS_PENDING]: {
+        iconStatus: "",
+        iconAmount: "+",
+        classStatus: "btn-red",
+        classBg: "cx-bg-red",
+        classText: "",
+        classDetailStatus: "cx-color-red",
+        textStatus: "Pending",
+        textDetailStatus: "Amount Credited",
+        desc: "From YYYY",
+      },
     },
     [ACT_TRANSACT_DEBIT]: {
       [ACT_STATUS_PAID]: {

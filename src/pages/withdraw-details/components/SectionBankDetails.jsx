@@ -1,7 +1,18 @@
-import React from "react";
+import { WithdrawDetailsContext } from "context/withdrawDetailsContext";
+import React, { useContext } from "react";
 
 const SectionBankDetails = (props) => {
-  const { bank_account_number, bank_name, swift_code } = props || {};
+  const { isLoading, withdrawType, details } = useContext(
+    WithdrawDetailsContext
+  );
+
+  const { bank_account_number, bank_name, swift_code } = details || {};
+
+  if (
+    withdrawType === "card" ||
+    !(bank_account_number && bank_name && swift_code)
+  )
+    return null;
   return (
     <div className="wr-bdatail-tbl pe-md-4">
       <div className="font-16-quick  w-100 pb-2 dark_blue font-600">

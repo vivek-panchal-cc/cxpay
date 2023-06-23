@@ -1,9 +1,14 @@
-import React from "react";
+import { WithdrawDetailsContext } from "context/withdrawDetailsContext";
+import React, { useContext } from "react";
 import { IconDownload } from "styles/svgs";
 
 const SectionTransactionReceipt = (props) => {
-  const { receipt_images } = props || {};
+  const { isLoading, withdrawType, details } = useContext(
+    WithdrawDetailsContext
+  );
+  const { receipt_images = [] } = details || {};
 
+  if (withdrawType === "card") return null;
   return (
     <div className="wr-bdatail-dwld ps-xl-5 ps-md-4 border-start">
       <div className="font-16-quick  w-100 pb-md-4 pb-3 dark_blue font-600">
@@ -11,14 +16,15 @@ const SectionTransactionReceipt = (props) => {
       </div>
       <div className="wr-dwld-wrap">
         <ul>
-          <li>
-            <button>
-              <IconDownload stroke="black" />
-            </button>
-          </li>
-          <li></li>
-          <li></li>
-          <li></li>
+          {[1, 2, 3, 4]?.map((item) => {
+            return (
+              <li key={item}>
+                <button>
+                  <IconDownload stroke="black" />
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
