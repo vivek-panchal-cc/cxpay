@@ -11,11 +11,12 @@ const SectionTransactionDetails = (props) => {
   const {
     transaction_id = "",
     date = "",
-    time = "",
     total_amount = "",
     fees = "",
     status = "",
   } = details || {};
+
+  const [w_dt, w_tm] = date ? date.split("|") : [];
 
   return (
     <div className="wcr-innner-wrap wcr-innner-wrap-2 d-flex flex-wrap w-100">
@@ -35,13 +36,13 @@ const SectionTransactionDetails = (props) => {
             <tr>
               <td>Date</td>
               <td>
-                {isLoading ? <LoaderDiv height="20" width="50%" /> : date}
+                {isLoading ? <LoaderDiv height="20" width="50%" /> : w_dt}
               </td>
             </tr>
             <tr>
               <td>Time</td>
               <td>
-                {isLoading ? <LoaderDiv height="20" width="50%" /> : time}
+                {isLoading ? <LoaderDiv height="20" width="50%" /> : w_tm}
               </td>
             </tr>
           </tbody>
