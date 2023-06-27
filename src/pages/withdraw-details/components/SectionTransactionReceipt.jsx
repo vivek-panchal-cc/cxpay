@@ -16,7 +16,7 @@ const SectionTransactionReceipt = (props) => {
       </div>
       <div className="wr-dwld-wrap">
         <ul>
-          {[1, 2, 3, 4]?.map((item) => {
+          {receipt_images?.map((item) => {
             return (
               <li key={item}>
                 <button>

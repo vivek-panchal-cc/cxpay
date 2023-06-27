@@ -26,7 +26,12 @@ const SectionBankDetails = (props) => {
           </tr>
           <tr>
             <td>Account Number</td>
-            <td>XXXX XXXX XXXX {bank_account_number}</td>
+            <td>
+              XXXX XXXX XXXX{" "}
+              {bank_account_number
+                ? bank_account_number?.substr(bank_account_number.length - 4)
+                : "XXXX"}
+            </td>
           </tr>
           <tr>
             <td>Swift Code</td>

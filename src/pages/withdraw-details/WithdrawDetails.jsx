@@ -36,7 +36,6 @@ const WithdrawDetails = () => {
             {/* Card Eligibility and withdraw-History details section */}
             <>
               <SectionEligibility />
-              <div className="wcr-divider-wrap"></div>
               <SectionWithdrawHistory />
             </>
             {/* Bank and Reciept details section */}

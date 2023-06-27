@@ -62,8 +62,8 @@ const WithdrawCard = () => {
         const { data } = await apiRequest.initiateCardWithdraw(values);
         if (!data.success) throw data.message;
         setModalRefundedDetails({
-          amount: values.amount,
-          message: "Refunded to Your Card",
+          amount: values?.amount,
+          message: data?.message,
         });
         setShowModalRefunded(true);
       } catch (error) {
@@ -214,7 +214,7 @@ const WithdrawCard = () => {
         <FundEffectPopup
           fund={modalRefundedDetails.amount}
           fundMessage={modalRefundedDetails.message}
-          redirect="/wallet/withdrawals-bank"
+          redirect="/wallet/withdrawals-card"
         />
       </Modal>
     </div>

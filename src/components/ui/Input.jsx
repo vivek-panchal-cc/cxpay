@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 import styles from "./input.module.scss";
 
 const Input = forwardRef((props, ref) => {
-  const { labelname, error, disabled, type } = props;
+  const { labelname, error, disabled, type, classNameContainer = "" } = props;
 
   const getType = () => {
     switch (type) {
@@ -34,7 +34,7 @@ const Input = forwardRef((props, ref) => {
   };
 
   return (
-    <div className={`d-flex flex-column form-field`}>
+    <div className={`d-flex flex-column form-field ${classNameContainer}`}>
       {labelname ? (
         <label htmlFor="" className="mb-2">
           {labelname}

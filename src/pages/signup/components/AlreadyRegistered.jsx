@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function AlreadyRegistered(props) {
   return (
@@ -13,9 +14,9 @@ function AlreadyRegistered(props) {
           </p>
           {/* <p className="user_name">{username}</p> */}
           <div className="popup-btn-wrap">
-            <a className="btn btn-primary" href="/login">
+            <Link className="btn btn-primary" to="/login">
               Go to Login
-            </a>
+            </Link>
           </div>
         </div>
       </div>

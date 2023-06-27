@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { LoginSchema } from "schemas/validationSchema";
@@ -132,7 +132,7 @@ const Login = () => {
                     <p className="text-danger text-center">{formik.status}</p>
                   ) : null}
                   <p className="forgot-password-text text-center">
-                    <a href="/forgot-password">Forgot Password?</a>
+                    <Link to="/forgot-password">Forgot Password?</Link>
                   </p>
                   <div className="text-center login-btn">
                     <input
@@ -145,7 +145,7 @@ const Login = () => {
                     />
                   </div>
                   <p className="sign-up-text text-center">
-                    Don't have an account ? <a href="/signup">Signup</a>
+                    Don't have an account ? <Link to="/signup">Signup</Link>
                   </p>
                 </form>
               </div>
@@ -154,9 +154,12 @@ const Login = () => {
                   <span>OR</span>
                 </div>
                 <div className="login-signup-inner login-with-opt-wrap">
-                  <a className="btn btn-primary blue-bg" href="/login-with-otp">
+                  <Link
+                    className="btn btn-primary blue-bg"
+                    to="/login-with-otp"
+                  >
                     Login with OTP
-                  </a>
+                  </Link>
                   {/* <p className="sign-up-text text-center">
                     Don't have an account ? <a href="/signup">Signup</a>
                   </p> */}

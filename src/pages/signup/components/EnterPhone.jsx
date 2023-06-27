@@ -10,6 +10,7 @@ import { SignupContext } from "context/signupContext";
 import InputSelect from "components/ui/InputSelect";
 import { toast } from "react-toastify";
 import { CXPAY_LOGO } from "constants/all";
+import { Link } from "react-router-dom";
 
 function EnterPhone(props) {
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
@@ -120,7 +121,7 @@ function EnterPhone(props) {
                   />
                 </div>
                 <p className="sign-up-text text-center">
-                  Already have an account? <a href="/login">Login</a>
+                  Already have an account? <Link to="/login">Login</Link>
                 </p>
               </form>
             </div>

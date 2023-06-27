@@ -10,6 +10,7 @@ import InputSelect from "components/ui/InputSelect";
 import { IconEyeClose, IconEyeOpen } from "styles/svgs";
 import { LoaderContext } from "context/loaderContext";
 import { storageRequest } from "helpers/storageRequests";
+import { Link } from "react-router-dom";
 
 function PersonalForm(props) {
   const { setIsLoading } = useContext(LoaderContext);
@@ -296,7 +297,7 @@ function PersonalForm(props) {
               </div>
             </form>
             <p className="sign-up-text text-center">
-              Already have an account? <a href="/login">Login</a>
+              Already have an account? <Link to="/login">Login</Link>
             </p>
           </div>
         </div>

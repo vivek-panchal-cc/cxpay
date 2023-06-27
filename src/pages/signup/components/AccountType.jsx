@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { SignupContext } from "context/signupContext";
 import { CXPAY_LOGO } from "constants/all";
+import { Link } from "react-router-dom";
 
 function SelectaccountType(props) {
   const { setSignUpCreds } = useContext(SignupContext);
@@ -75,7 +76,7 @@ function SelectaccountType(props) {
                 </div>
               </form>
               <p className="sign-up-text text-center">
-                Already have an account? <a href="/login">Login</a>
+                Already have an account? <Link to="/login">Login</Link>
               </p>
             </div>
           </div>

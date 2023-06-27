@@ -17,24 +17,27 @@ const SectionEligibility = (props) => {
 
   if (withdrawType && withdrawType === "bank") return null;
   return (
-    <div className="wcr-innner-wrap wcr-innner-wrap-3 d-flex flex-wrap w-100 align-items-center">
-      <div className="wcr-eligible-msg">
-        <p className="font-16-quick">
-          You are eligible to Withdraw{" "}
-          <span className="blue">
-            <WrapAmount value={remaining_amount} />
-          </span>{" "}
-          against this Transection
-        </p>
+    <>
+      <div className="wcr-innner-wrap wcr-innner-wrap-3 d-flex flex-wrap w-100 align-items-center">
+        <div className="wcr-eligible-msg">
+          <p className="font-16-quick">
+            You are eligible to Withdraw{" "}
+            <span className="blue">
+              <WrapAmount value={remaining_amount} />
+            </span>{" "}
+            against this Transection
+          </p>
+        </div>
+        <div className="wcr-withdraw-btn">
+          {remaining_amount > 0 ? (
+            <Button className="btn" onClick={handleInitiateRefund}>
+              Withdraw
+            </Button>
+          ) : null}
+        </div>
       </div>
-      <div className="wcr-withdraw-btn">
-        {remaining_amount > 0 ? (
-          <Button className="btn" onClick={handleInitiateRefund}>
-            Withdraw
-          </Button>
-        ) : null}
-      </div>
-    </div>
+      <div className="wcr-divider-wrap"></div>
+    </>
   );
 };
 

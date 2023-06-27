@@ -13,10 +13,11 @@ import { LoaderContext } from "context/loaderContext";
 import { MAX_GROUP_MEMBERS } from "constants/all";
 import { ContactsContext } from "context/contactsContext";
 import { addObjToFormData } from "helpers/commonHelpers";
+import Button from "components/ui/Button";
 import "./editGroup.css";
 
 export default function EditGroup() {
-  let { id } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const [contactList, setContactList] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
@@ -147,30 +148,32 @@ export default function EditGroup() {
             />
           </div>
         </div>
-        <EditGroupList
-          data={contactList}
-          setData={setContactList}
-          groupId={id}
-          // getGroupDetail={() => getGroupDetail(id)}
-          selectedItems={(items) => formik.setFieldValue("contact", items)}
-          getItem={formik.values.contact}
-        />
-        <div className="edit-group-bottom-main text-center">
-          <div>
-            <input
-              type="submit"
-              className={`btn btn-primary ${
-                formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
-              }`}
-              disabled={formik.isSubmitting}
-              value="Save Group"
-            />
-          </div>
-          <a className="eg-del-grp custom-link-color" onClick={deleteGroupData}>
-            Delete Group
-          </a>
-        </div>
       </form>
+      <EditGroupList
+        data={contactList}
+        setData={setContactList}
+        groupId={id}
+        // getGroupDetail={() => getGroupDetail(id)}
+        selectedItems={(items) => formik.setFieldValue("contact", items)}
+        getItem={formik.values.contact}
+      />
+      <div className="edit-group-bottom-main text-center">
+        <div>
+          <Button
+            type="button"
+            className={`btn btn-primary ${
+              formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+            }`}
+            disabled={formik.isSubmitting}
+            onClick={formik.handleSubmit}
+          >
+            Save Group
+          </Button>
+        </div>
+        <a className="eg-del-grp custom-link-color" onClick={deleteGroupData}>
+          Delete Group
+        </a>
+      </div>
       <ModalConfirmation
         id="create-group-popup"
         show={showDeleteGroupPopup}

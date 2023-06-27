@@ -6,6 +6,7 @@ import "./contactList.css";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
+import LoaderAddGroupContact from "loaders/LoaderAddGroupContact";
 
 function ContactListingModal(props) {
   const {
@@ -22,6 +23,7 @@ function ContactListingModal(props) {
   } = props;
   const modalRef = useRef(null);
   const { setIsLoading } = useContext(LoaderContext);
+  const [loadingContacts, setLoadingContacts] = useState(false);
   const [remainingContactListing, setRemainingContactListing] = useState([]);
   const [selectedRemainingContact, setSelectedRemainingContact] = useState([]);
   const [selectedFullContactArray, setSelectedFullContactArray] = useState([]);
@@ -94,7 +96,7 @@ function ContactListingModal(props) {
 
   const retriveRemainingContact = async (page, searchText) => {
     try {
-      setIsLoading(true);
+      setLoadingContacts(true);
       const { data } = await apiRequest.getRemainingGroupContact({
         group_id: groupId,
         page: page,
@@ -123,7 +125,7 @@ function ContactListingModal(props) {
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setLoadingContacts(false);
     }
   };
 
@@ -153,11 +155,12 @@ function ContactListingModal(props) {
           <div className="modal-content">
             <div className="modal-body">
               <h1 className="text-center mb-4">Add Contacts</h1>
-              <div className="con-md-search-wrap">
-                <div className="form-field search-field">
+              <div className="con-md-search-wrap gap-3 justify-content-center">
+                <div className="form-field search-field ms-0">
                   <div
                     className="clearsearchbox"
                     onClick={handleResetContactData}
+                    style={{ opacity: searchContactName ? 1 : 0 }}
                   >
                     <IconCross />
                   </div>
@@ -166,10 +169,11 @@ function ContactListingModal(props) {
                     className="form-control js-searchBox-input"
                     name="search-field"
                     placeholder="Search..."
+                    value={searchContactName}
                     onChange={searchContactData}
                   />
                   <div className="search-btn">
-                    <IconSearch />
+                    <IconSearch style={{ stroke: "#0081c5" }} />
                   </div>
                 </div>
                 <div className="con-md-del-wrap">
@@ -183,29 +187,35 @@ function ContactListingModal(props) {
               </div>
               <div className="cml-container">
                 <ul onScroll={onScroll}>
-                  {remainingContactListing.length > 0
-                    ? remainingContactListing.map((ele) => (
-                        <li key={"li-" + ele.account_number}>
-                          <div className="modal-contact-list-wrap">
-                            <div className="cm-listing-check">
-                              <input
-                                id={ele.account_number}
-                                type="checkbox"
-                                value={ele.account_number}
-                                onChange={handleChange}
-                                checked={selectedRemainingContact.includes(
-                                  ele.account_number
-                                )}
-                              />
-                              <label htmlFor={ele.account_number}>
-                                {ele.member_name}
-                              </label>
-                            </div>
-                          </div>
-                        </li>
+                  {remainingContactListing?.map((ele) => (
+                    <li key={"li-" + ele.account_number}>
+                      <div className="modal-contact-list-wrap">
+                        <div className="cm-listing-check">
+                          <input
+                            id={ele.account_number}
+                            type="checkbox"
+                            value={ele.account_number}
+                            onChange={handleChange}
+                            checked={selectedRemainingContact.includes(
+                              ele.account_number
+                            )}
+                          />
+                          <label htmlFor={ele.account_number}>
+                            {ele.member_name}
+                          </label>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                  {loadingContacts
+                    ? [1, 2, 3, 4, 5, 6].map((item) => (
+                        <LoaderAddGroupContact key={item} itemType={"bank"} />
                       ))
-                    : "No contacts found"}
+                    : null}
                 </ul>
+                {!loadingContacts && remainingContactListing.length <= 0 ? (
+                  <p className="text-center">No contacts found.</p>
+                ) : null}
               </div>
             </div>
           </div>

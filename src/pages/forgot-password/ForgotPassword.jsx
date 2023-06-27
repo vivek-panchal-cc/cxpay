@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import useCountriesCities from "hooks/useCountriesCities";
 import InputSelect from "components/ui/InputSelect";
 import { CXPAY_LOGO } from "constants/all";
+import { Link } from "react-router-dom";
 
 function ForgotPassword() {
   const [showOtpPopup, setShowOtpPopup] = useState(false);
@@ -114,7 +115,7 @@ function ForgotPassword() {
                     />
                   </div>
                   <p className="sign-up-text text-center">
-                    Already have an account? <a href="/login">Login</a>
+                    Already have an account? <Link to="/login">Login</Link>
                   </p>
                 </form>
               </div>

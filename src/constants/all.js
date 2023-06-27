@@ -127,6 +127,12 @@ const ACT_STATUS_DECLINED = "DECLINED";
 const ACT_STATUS_CANCELLED = "CANCELLED";
 const ACT_STATUS_PAID = "PAID";
 const ACT_STATUS_FAILED = "FAILED";
+const ACT_STATUS_PROCESSING = "PROCESSING";
+const ACT_STATUS_APPROVED = "APPROVED";
+const ACT_STATUS_REJECTED = "REJECTED";
+const TXN_TYPE_PL = "PL";
+const TXN_TYPE_WW = "WW";
+const TXN_TYPE_WD = "WD";
 
 const activityConsts = {
   [ACT_TYPE_REQUEST]: {
@@ -209,6 +215,52 @@ const activityConsts = {
   },
   [ACT_TYPE_TRANSACTION]: {
     [ACT_TRANSACT_CREDIT]: {
+      [TXN_TYPE_PL || TXN_TYPE_WW]: {
+        [ACT_STATUS_PENDING]: {
+          iconStatus: "",
+          iconAmount: "+",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Pending",
+          textDetailStatus: "Amount Credit Pending",
+          desc: "From YYYY",
+        },
+        [ACT_STATUS_PROCESSING]: {
+          iconStatus: "",
+          iconAmount: "+",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Precessing",
+          textDetailStatus: "Amount Credit In Progress",
+          desc: "From YYYY",
+        },
+        [ACT_STATUS_PAID]: {
+          iconStatus: "",
+          iconAmount: "+",
+          classStatus: "btn-green",
+          classBg: "cx-bg-green",
+          classText: "cx-color-green",
+          classDetailStatus: "cx-color-green",
+          textStatus: "Receive",
+          textDetailStatus: "Amount Credited",
+          desc: "From YYYY",
+        },
+        [ACT_STATUS_FAILED]: {
+          iconStatus: "",
+          iconAmount: "",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "cx-color-red",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Failed",
+          textDetailStatus: "Amount Credit Failed",
+          desc: "From YYYY",
+        },
+      },
       [ACT_STATUS_PAID]: {
         iconStatus: "",
         iconAmount: "+",
@@ -244,6 +296,81 @@ const activityConsts = {
       },
     },
     [ACT_TRANSACT_DEBIT]: {
+      [TXN_TYPE_WW]: {
+        [ACT_STATUS_PENDING]: {
+          iconStatus: "",
+          iconAmount: "-",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Pending",
+          textDetailStatus: "Amount Debit Pending",
+          desc: "To YYYY",
+        },
+        [ACT_STATUS_PAID]: {
+          iconStatus: "",
+          iconAmount: "-",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Sent",
+          textDetailStatus: "Amount Debited",
+          desc: "To YYYY",
+        },
+        [ACT_STATUS_FAILED]: {
+          iconStatus: "",
+          iconAmount: "-",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "cx-color-red",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Failed",
+          textDetailStatus: "Amount Debit Failed",
+          desc: "To YYYY",
+        },
+      },
+      [TXN_TYPE_WD]: {
+        [ACT_STATUS_PENDING]: {
+          iconStatus: "",
+          iconAmount: "-",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Pending",
+          textDetailStatus: "Amount Debit Pending",
+          desc: "To YYYY",
+        },
+        [ACT_STATUS_PROCESSING]: {},
+        [ACT_STATUS_APPROVED]: {},
+        [ACT_STATUS_REJECTED]: {},
+        [ACT_STATUS_DECLINED]: {},
+        [ACT_STATUS_CANCELLED]: {},
+        [ACT_STATUS_PAID]: {
+          iconStatus: "",
+          iconAmount: "-",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Sent",
+          textDetailStatus: "Amount Debited",
+          desc: "To YYYY",
+        },
+        [ACT_STATUS_FAILED]: {
+          iconStatus: "",
+          iconAmount: "-",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "cx-color-red",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Failed",
+          textDetailStatus: "Amount Debit Failed",
+          desc: "To YYYY",
+        },
+      },
       [ACT_STATUS_PAID]: {
         iconStatus: "",
         iconAmount: "-",
