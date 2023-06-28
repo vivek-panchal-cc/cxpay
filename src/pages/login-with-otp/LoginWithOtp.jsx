@@ -59,16 +59,6 @@ const LoginWithOtp = (props) => {
           <div className="col-xs-12">
             <div className="login-signup-content-wrap login-signup01-content-wrap">
               <div className="login-signup-inner">
-                <Modal
-                  id="login_otp_modal"
-                  show={showVerifyPhonePopup}
-                  // setShow={setShowVerifyPhonePopup}
-                >
-                  <VerifyLoginOtp
-                    setShow={setShowVerifyPhonePopup}
-                    {...{ mobileNumber, countryCode }}
-                  />
-                </Modal>
                 <h4 className="text-center">Welcome to</h4>
                 <div className="login-logo-image text-center">
                   <a href="/">
@@ -141,6 +131,16 @@ const LoginWithOtp = (props) => {
           </div>
         </div>
       </div>
+      <Modal
+        id="login_otp_modal"
+        show={showVerifyPhonePopup}
+        // setShow={setShowVerifyPhonePopup}
+      >
+        <VerifyLoginOtp
+          setShow={setShowVerifyPhonePopup}
+          {...{ mobileNumber, countryCode }}
+        />
+      </Modal>
     </div>
   );
 };

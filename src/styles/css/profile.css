@@ -1,0 +1,218 @@
+/* profile page css starts*/
+.profile-right-sec {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 50px 72px 50px 81px;
+}
+
+.profile-top-sec {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 66px;
+}
+
+.profile-avtar {
+  width: 122px;
+  height: 122px;
+  /* border-radius: 55px; */
+  background-color: #fff;
+  border: 1.5px solid var(--blue);
+  flex-wrap: wrap;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50px;
+}
+
+.profile-avtar > img {
+  display: block;
+  max-width: 122px;
+  height: auto;
+}
+
+.profile-info {
+  padding-left: 36px;
+}
+
+.profile-info h3 {
+  font-size: 28px;
+  line-height: 40px;
+  /* text-transform: capitalize; */
+  color: #323232;
+  margin-bottom: 0;
+}
+
+.profile-info p a {
+  color: var(--light-grey);
+}
+
+.profile-info p a:hover {
+  color: var(--blue);
+}
+
+.profile-bottom-info-sec ul li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border-radius: 15px;
+  background-color: transparent;
+  box-shadow: none;
+  transition: all 0.5s ease-in-out;
+  padding: 18px 23px 18px 37px;
+  font-family: "Comfortaa", sans-serif;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 25px;
+  color: var(--light-grey);
+  cursor: pointer;
+}
+
+.profile-bottom-info-sec ul li .profile-info-right-desc {
+  color: var(--dark_blue);
+}
+
+.profile-bottom-info-sec {
+  max-width: 670px;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.profile-info-right-desc {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: 0;
+  /* width: 57%; */
+  align-items: center;
+  width: calc(100% - 180px);
+  padding-left: 50px;
+}
+
+.profile-info-right-desc .edit-button {
+  width: 32px;
+  height: 32px;
+  background: #f7f7f9;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.profile-bottom-info-sec ul li:hover {
+  background-color: #fff;
+  box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.profile-bottom-info-sec ul li:not(:last-child) {
+  margin-bottom: 34px;
+}
+
+.profile-qr {
+  max-width: 270px;
+  margin-left: auto;
+  margin-right: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.profile-qr-inner {
+  padding: 32px 36px;
+  background: #ffffff;
+  box-shadow: 0px 12px 20px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 43px;
+}
+
+.profile-qr p {
+  color: #969696;
+  font-weight: 400;
+  line-height: 16px;
+  margin-bottom: 0;
+  padding-bottom: 35px;
+}
+
+.profile-inner-sec {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.profile-info-right-desc .edit-button:hover {
+  background-color: var(--blue);
+}
+
+.profile-info-right-desc .edit-button:hover svg path {
+  stroke: #fff;
+}
+
+.profile-qr-inner img {
+  max-width: 196px;
+  height: auto;
+}
+
+/* Dashboard Page End By Varsha Rohit  */
+/* Profile Update BY VR  Start */
+.profile-info-right-desc p {
+  margin-bottom: 0px;
+  font-size: 22px;
+  line-height: 25px;
+  font-weight: 500;
+  color: var(--dark_blue);
+  width: calc(100% - 36px);
+  padding-right: 15px;
+  white-space: normal;
+  word-break: break-all;
+}
+
+.profile-info-right-desc > .profile-edit-form-wrap .form-field {
+  width: 100%;
+  margin-right: 10px;
+}
+
+.profile-info-right-desc > .profile-edit-form-wrap input.form-control {
+  width: 100%;
+  height: 50px !important;
+  padding: 0px 12px !important;
+}
+
+.profile-edit-form-wrap button.edit-button {
+  margin-top: 10px;
+}
+
+.profile-info-right-desc form.profile-edit-form-wrap .form-field {
+  margin-bottom: 0px !important;
+}
+
+.profile-bottom-info-sec .profile-info-right-desc p {
+  width: 100% !important;
+  padding-right: 0px !important;
+}
+
+.profile-bottom-info-sec .with-edit-ic p {
+  width: calc(100% - 35px) !important;
+}
+
+/* CSS for Delete Account butotn */
+.profile-del-acc-btn button.btn {
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 500;
+  padding: 16px 32px;
+  min-width: auto;
+  background-color: var(--blue);
+}
+
+.profile-del-acc-btn button.btn:hover {
+  background-color: var(--dark_blue);
+}

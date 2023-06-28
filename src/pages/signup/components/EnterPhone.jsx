@@ -54,12 +54,6 @@ function EnterPhone(props) {
         <div className="col-xs-12">
           <div className="login-signup-content-wrap login-signup01-content-wrap">
             <div className="login-signup-inner">
-              <Modal id="login_otp_modal" show={showVerifyPhonePopup}>
-                <VerifyPhone {...{ signUpCreds, setSignUpCreds }} />
-              </Modal>
-              <Modal id="already_register_user" show={showRegisteredPopup}>
-                <AlreadyRegistered />
-              </Modal>
               <h4 className="text-center">Welcome to</h4>
               <div className="login-logo-image text-center">
                 <a href="/">
@@ -128,6 +122,12 @@ function EnterPhone(props) {
           </div>
         </div>
       </div>
+      <Modal id="login_otp_modal" show={showVerifyPhonePopup}>
+        <VerifyPhone {...{ signUpCreds, setSignUpCreds }} />
+      </Modal>
+      <Modal id="already_register_user" show={showRegisteredPopup}>
+        <AlreadyRegistered />
+      </Modal>
     </div>
   );
 }

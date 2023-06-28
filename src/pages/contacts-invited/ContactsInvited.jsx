@@ -146,18 +146,6 @@ const Invited = () => {
               </button>
             </div>
             <div className="con-btn-wrap con-invite-btn-wrap">
-              <ModalAddContact
-                id="invite_contact"
-                show={show}
-                setShow={setShow}
-                getConatcts={[]}
-                getInvitedConatcts={reloadContacts}
-                setConatctData={setConatctData}
-                setInvitationSentPopup={setInvitationSentPopup}
-                setConatctDetailPopup={setConatctDetailPopup}
-                isInvitedFlag={true}
-                {...{ invitetitle }}
-              />
               <InvitationSent
                 id="invitation_sent"
                 show={showInvitationSentPopup}
@@ -220,6 +208,18 @@ const Invited = () => {
           ></Pagination>
         ) : null}
       </div>
+      <ModalAddContact
+        id="invite_contact"
+        show={show}
+        setShow={setShow}
+        getConatcts={[]}
+        getInvitedConatcts={reloadContacts}
+        setConatctData={setConatctData}
+        setInvitationSentPopup={setInvitationSentPopup}
+        setConatctDetailPopup={setConatctDetailPopup}
+        isInvitedFlag={true}
+        {...{ invitetitle }}
+      />
       <ModalConfirmation
         heading={"Delete Contact"}
         subHeading={`Are you sure to remove?`}

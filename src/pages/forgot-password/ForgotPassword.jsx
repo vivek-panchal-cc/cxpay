@@ -52,13 +52,6 @@ function ForgotPassword() {
                   </a>
                 </div>
                 <h5 className="text-center">Forgot Password</h5>
-                <Modal
-                  id="forgot-password-popup"
-                  show={showOtpPopup}
-                  // setShow={setShowOtpPopup}
-                >
-                  <VerifyOtp setShow={setShowOtpPopup} values={formik.values} />
-                </Modal>
                 <form onSubmit={formik.handleSubmit}>
                   <div className="row">
                     <div className="col-4 ps-0">
@@ -123,6 +116,13 @@ function ForgotPassword() {
           </div>
         </div>
       </div>
+      <Modal
+        id="forgot-password-popup"
+        show={showOtpPopup}
+        // setShow={setShowOtpPopup}
+      >
+        <VerifyOtp setShow={setShowOtpPopup} values={formik.values} />
+      </Modal>
     </div>
   );
 }

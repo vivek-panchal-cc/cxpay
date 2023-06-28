@@ -1,0 +1,111 @@
+/* Forms Related CSS */
+form .form-field .form-control {
+  border: 1px solid var(--blue) !important;
+  border-radius: 18px !important;
+  /* filter: drop-shadow(0px 3.76623px 15.6926px rgba(37, 31, 48, 0.2)); */
+  filter: drop-shadow(0px 2px 4px rgba(37, 31, 48, 0.2));
+  background-color: #ffffff;
+  padding: 17px 22px !important;
+  font-family: "Comfortaa", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+  /* color: var(--light-grey); */
+  color: var(--dark_blue);
+}
+
+form .form-control::placeholder {
+  /* font-weight: 400; */
+  font-family: "Comfortaa", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--light-grey);
+}
+
+form .form-control:-webkit-placeholder {
+  /* font-weight: 400; */
+  font-family: "Comfortaa", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--light-grey);
+}
+
+form .form-control:-moz-placeholder {
+  /* font-weight: 400; */
+  font-family: "Comfortaa", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--light-grey);
+}
+
+form .form-control:focus {
+  box-shadow: none;
+  border-color: var(--blue);
+}
+
+form .form-field {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+form {
+  margin-bottom: 0;
+}
+
+form .form-field .eye-icon {
+  position: absolute;
+  display: inline-block;
+  vertical-align: middle;
+  left: auto;
+  right: 18px;
+  /* top: 50%;
+    transform: translateY(-50%); */
+  bottom: auto;
+  margin: auto;
+  cursor: pointer;
+}
+
+form .form-control[type="password"] {
+  padding-right: 40px;
+}
+
+form .form-field .eye-icon .eye-open {
+  display: none;
+}
+/* login sign up 03 css start */
+form .form-field select.form-control {
+  background-position: right 8px center;
+  background-size: 13px auto;
+  cursor: pointer;
+  padding-right: 33px !important;
+  padding-left: 15px !important;
+}
+
+form .row {
+  width: 100%;
+  margin: auto;
+}
+
+form .form-field.wallet-cb-wrap {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+form.verification-code-form .form-field .form-control {
+  min-width: auto;
+  width: auto;
+  max-width: 65px;
+  font-size: 24px;
+  line-height: 26px;
+  padding: 15.5px 10px !important;
+  margin: 0 5px;
+  color: var(--dark_blue);
+  text-align: center;
+}
