@@ -85,7 +85,6 @@ const MINUTES = {
     "57",
     "58",
     "59",
-    "60",
   ],
   quater: ["00", "15", "30", "45"],
 };
@@ -153,8 +152,8 @@ const TimePicker = ({
         minute: "2-digit",
         hourCycle: "h12",
       });
-      const [hr, min_pr] = timeSelect.split(":");
-      const [min, pr] = min_pr.split(" ");
+      const [hr, min_pr] = timeSelect?.split(":") || ["", ""];
+      const [min, pr] = min_pr?.split(" ") || ["", ""];
       const timeStr = `${hr}:${min} ${pr?.trim()}`;
       setTimePicked({ hour: hr, minutes: min, period: pr?.trim() });
       alignTimePickedToTop(hr, min, pr.trim(), minutesSelection);

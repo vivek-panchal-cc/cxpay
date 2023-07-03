@@ -222,7 +222,14 @@ const Invited = () => {
       />
       <ModalConfirmation
         heading={"Delete Contact"}
-        subHeading={`Are you sure to remove?`}
+        subHeading={
+          <>
+            Are you sure to remove{" "}
+            <span className="fs-6 fw-bold" style={{ whiteSpace: "nowrap" }}>
+              {selectedContacts?.[0] || ""} ?
+            </span>
+          </>
+        }
         show={showConfirmDelSingle}
         setShow={setShowConfirmDelSingle}
         handleCallback={handleDeleteContact}

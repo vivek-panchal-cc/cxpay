@@ -268,7 +268,9 @@ const Contacts = () => {
         subHeading={
           <>
             Are you sure to remove{" "}
-            <span className="fs-6 fw-bold">{contactName}</span> ?
+            <span className="fs-6 fw-bold" style={{ whiteSpace: "nowrap" }}>
+              {contactName} ?
+            </span>
           </>
         }
         show={showConfirmDelSingle}

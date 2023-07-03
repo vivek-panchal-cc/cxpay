@@ -14,8 +14,12 @@ const RequestPayment = () => {
   const navigate = useNavigate();
   const inputAmountRefs = useRef([]);
   const { setIsLoading } = useContext(LoaderContext);
-  const { handleRequestCreds, requestCreds, handleCancelPayment } =
-    useContext(SendPaymentContext);
+  const {
+    handleRequestCreds,
+    requestCreds,
+    handleCancelPayment,
+    prevPathRedirect,
+  } = useContext(SendPaymentContext);
   const { wallet } = requestCreds || [];
 
   const [showRequestedPopup, setShowRequestedPopup] = useState(false);
@@ -107,7 +111,7 @@ const RequestPayment = () => {
   }, [formik.values?.wallet]);
 
   if (!requestCreds?.wallet || requestCreds.wallet.length <= 0)
-    navigate("/request", { replace: true });
+    navigate(prevPathRedirect || "/request", { replace: true });
 
   return (
     <>
