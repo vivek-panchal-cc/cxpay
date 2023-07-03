@@ -38,12 +38,12 @@ const InputDropdown = (props) => {
   );
 
   return (
-    <div id={id || `drop${randomStr}`} className={`${className}`}>
-      <span className="anchor" onClick={(e) => setToggle((cs) => !cs)}>
+    <div id={id || `drop${randomStr}`} className={`${className}`} ref={dropRef}>
+      <span className="anchor" onClick={() => setToggle((e) => !e)}>
         {title}
       </span>
       {toggle ? (
-        <ul className="status-items" ref={dropRef}>
+        <ul className="status-items">
           {dropList && dropList.length > 0
             ? dropList.map((item, index) => {
                 const isChecked = valueList?.includes(item?.status);
