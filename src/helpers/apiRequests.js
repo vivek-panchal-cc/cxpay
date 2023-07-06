@@ -97,6 +97,8 @@ const API_cardTransactionsDetails =
   apiUrl.API_TRANSACTION_CARD_TRANSACTIONS_DETAILS;
 const API_initiateCardWithdraw = apiUrl.API_TRANSACTION_INITIATE_CARD_WITHDRAW;
 const API_availableCardBalance = apiUrl.API_TRANSACTION_AVAILABLE_CARD_BALANCE;
+const API_viewBankWithdrawReceipt =
+  apiUrl.API_TRANSACTION_VIEW_BANK_WITHDRAW_RECEIPT;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -586,6 +588,15 @@ export const cancelWithdrawRequest = (params) => {
   return axiosTransactionInstance.post(`${API_cancelWithdrawRequest}`, params);
 };
 
+// POST @view-bank-withdraw-receipt
+// @params auth_token, receipt_id
+export const viewBankWithdrawReceipt = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_viewBankWithdrawReceipt}`,
+    params
+  );
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -660,6 +671,7 @@ export const apiRequest = {
   // Withdraw Related
   bankWithdrawList,
   bankWithdrawDetails,
+  viewBankWithdrawReceipt,
   initiateWithdrawRequest,
   availableCardBalance,
   initiateCardWithdraw,

@@ -14,11 +14,11 @@ const FILE_SIZE = 5 * 1048576;
 const emailSchema = yup
   .string()
   .email("Please enter a valid email")
-  .required("Please enter Email");
+  .required("Please enter email");
 
 const passwordSchema = yup
   .string()
-  .required("Please enter Password")
+  .required("Please enter password")
   .min(
     8,
     "Password must contain 8 to 16 characters and contain at least one number, one uppercase & lowercase letter and one special character."
@@ -51,22 +51,22 @@ const passwordSchema = yup
 const confirmPasswordSchema = yup
   .string()
   .oneOf([yup.ref("password"), null], "Password must be matched")
-  .required("Please enter Confirm Password");
+  .required("Please enter confirm Password");
 
 const changeConfirmPasswordSchema = yup
   .string()
   .oneOf([yup.ref("new_password"), null], "Password must be matched")
-  .required("Please enter Confirm Password");
+  .required("Please enter confirm Password");
 
 const profileImageSchema = yup
   .mixed()
   .test({
-    message: "File Type is not allowed",
+    message: "File type is not allowed",
     test: (file) =>
       file?.name ? isValidFileType(file.name?.toLowerCase(), "image") : true,
   })
   .test({
-    message: "Profile picture must not exceed 5 MB size.",
+    message: "Profile picture must not exceed 5 mb size.",
     test: (file) => (file?.size ? file.size <= FILE_SIZE : true),
   });
 
@@ -97,34 +97,34 @@ const cardNumberSchema = yup
     "Please enter a valid card number",
     (value) => valid.number(value).isPotentiallyValid
   )
-  .required("Please enter Card Number");
+  .required("Please enter card number");
 
 const cardExpirySchema = yup
   .string()
-  .required("Please enter Expiry Date")
+  .required("Please enter expiry date")
   .test(
     "test-expiry-date",
-    "Please enter valid Expiry Date",
+    "Please enter valid expiry date",
     (value) => valid.expirationDate(value, 10).isValid
   );
 
 const cardCvvSchema = yup
   .string()
-  .required("Please enter CVV")
+  .required("Please enter cvv")
   .test(
     "test-cvv",
-    "Please enter valid CVV",
+    "Please enter valid cvv",
     (value) => valid.cvv(value, [3, 4]).isValid
   );
 
 const billingAddressSchema = yup
   .string()
-  .required("Please enter Billing address")
-  .max(55, "The address must not be greater than 55 characters.");
+  .required("Please enter billing address")
+  .max(55, "Address must not be greater than 55 characters.");
 
 const addressSchema = yup
   .string()
-  .required("Please enter Address")
+  .required("Please enter address")
   .max(55, "Address must not be greater than 55 characters.");
 
 const bankNameSchema = yup
@@ -135,7 +135,7 @@ const bankNameSchema = yup
 const routingNumberSchema = yup
   .string()
   .max(9, "Maximum limit is 9 digits")
-  .required("Please enter Routing number")
+  .required("Please enter routing number")
   .matches(/^\d*$/, "Invalid routing number");
 
 const swiftCodeSchema = yup
@@ -148,12 +148,12 @@ const swiftCodeSchema = yup
 const bankNumberSchema = yup
   .string()
   .max(18, "Maximum limit is 18 digits")
-  .required("Please enter Account number")
+  .required("Please enter account number")
   .matches(/^\d*$/, "Invalid account number");
 
-const countrySchema = yup.string().required("Please select Country");
+const countrySchema = yup.string().required("Please select country");
 
-const citySchema = yup.string().required("Please select City");
+const citySchema = yup.string().required("Please select city");
 
 const otpSchema = yup
   .string()

@@ -49,8 +49,8 @@ const fundSchema = yup.object().shape({
   transactionType: yup.string().required(),
   transactionAmount: yup
     .string()
-    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid Amount")
-    .required("Please enter Amount"),
+    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
+    .required("Please enter amount"),
   txn_mode: yup.string().required(),
   // Validations For CARD
   card_id: yupWhenCard(yup.number()),
@@ -58,10 +58,10 @@ const fundSchema = yup.object().shape({
   expiry_date: yupWhenCard(cardExpirySchema),
   security_code: yupWhenCard(cardCvvSchema),
   card_holder_first_name: yupWhenCard(
-    firstNameSchema.required("Please enter First name")
+    firstNameSchema.required("Please enter first name")
   ),
   card_holder_last_name: yupWhenCard(
-    lastNameSchema.required("Please enter Last name")
+    lastNameSchema.required("Please enter last name")
   ),
   billing_address: yupWhenCard(billingAddressSchema),
   save_card: yupWhenCard(yup.boolean()),
@@ -72,10 +72,10 @@ const fundSchema = yup.object().shape({
   routing_number: yupWhenBank(routingNumberSchema),
   bank_account_number: yupWhenBank(bankNumberSchema),
   bank_holder_first_name: yupWhenBank(
-    firstNameSchema.required("Please enter First name")
+    firstNameSchema.required("Please enter first name")
   ),
   bank_holder_last_name: yupWhenBank(
-    lastNameSchema.required("Please enter Last name")
+    lastNameSchema.required("Please enter last name")
   ),
   address: yupWhenBank(addressSchema),
   save_bank: yupWhenBank(yup.boolean()),

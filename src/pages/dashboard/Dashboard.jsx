@@ -168,7 +168,7 @@ const Dashboard = () => {
             {/* Recent Activity */}
             <RecentActivities
               loading={loadingAct}
-              activitiesList={activitiesList ? activitiesList.slice(0, 5) : []}
+              activitiesList={activitiesList ? activitiesList.slice(0, 10) : []}
             />
           </div>
           {/*   <!-- Dashboard card section starts --> */}

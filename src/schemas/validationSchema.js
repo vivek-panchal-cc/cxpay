@@ -15,8 +15,8 @@ import {
 } from "./commonSchema";
 
 const signUpPersonalAccountSchema = yup.object().shape({
-  first_name: firstNameSchema.required("Please enter First name"),
-  last_name: lastNameSchema.required("Please enter Last name"),
+  first_name: firstNameSchema.required("Please enter first name"),
+  last_name: lastNameSchema.required("Please enter last name"),
   user_type: yup.string().required(),
   personal_id: yup
     .string()
@@ -36,7 +36,7 @@ const signUpPersonalAccountSchema = yup.object().shape({
 const signUpBusinessAccountSchema = yup.object().shape({
   company_name: yup
     .string()
-    .required("Please enter Company name")
+    .required("Please enter company name")
     .max(64, "Maximum limit is 64 characters"),
   user_type: yup.string().required(),
   email: emailSchema,
@@ -77,7 +77,7 @@ const LoginSchema = yup.object().shape({
   user_name: mobileSchema,
   password: yup
     .string()
-    .required("Please enter Password")
+    .required("Please enter password")
     .max(16, "Maximum limit is 16 characters"),
 });
 
@@ -88,7 +88,7 @@ const verifyLoginOtpSchema = yup.object().shape({
 const editProfileBusinessUserSchema = yup.object().shape({
   company_name: yup
     .string()
-    .required("Please enter Company name")
+    .required("Please enter company name")
     .max(64, "Maximum limit is 64 characters"),
   user_type: yup.string().required(),
   email: emailSchema,
@@ -101,8 +101,8 @@ const editProfileBusinessUserSchema = yup.object().shape({
 });
 
 const editProfilePersonalUserSchema = yup.object().shape({
-  first_name: firstNameSchema.required("Please enter First name"),
-  last_name: lastNameSchema.required("Please enter Last name"),
+  first_name: firstNameSchema.required("Please enter first name"),
+  last_name: lastNameSchema.required("Please enter last name"),
   personal_id: yup
     .string()
     // .required("Please enter personal id")
@@ -130,7 +130,7 @@ const resetPasswordSchema = yup.object().shape({
 const addBusinessUrlSchema = yup.object().shape({
   business_url: yup
     .string()
-    .required("Please enter business URL")
+    .required("Please enter business url")
     // .matches(url_regex, "Please enter valid business URL")
     .nullable(),
 });
@@ -153,7 +153,7 @@ const businessInfoSchema = yup.object().shape({
     .string()
     // .required("Please enter personal id")
     .matches(/^\S*$/, "Space is not allowed")
-    .max(25, "Business ID must not be greater than 25 characters."),
+    .max(25, "Business id must not be greater than 25 characters."),
 });
 
 const createGroupSchema = yup.object().shape({

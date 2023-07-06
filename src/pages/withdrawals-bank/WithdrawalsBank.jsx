@@ -85,9 +85,10 @@ const WithdrawalsBank = () => {
     setFilters({
       startDate: "",
       endDate: "",
+      
     });
     setAllFilters({
-      start_date: "",
+      start_date: "", 
       end_date: "",
       status: [],
     });

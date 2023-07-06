@@ -20,8 +20,8 @@ const addCardSchema = yup.object().shape({
   card_number: cardNumberSchema,
   expiry_date: cardExpirySchema,
   security_code: yup.string(),
-  card_holder_first_name: firstNameSchema.required("Please enter First name"),
-  card_holder_last_name: lastNameSchema.required("Please enter Last name"),
+  card_holder_first_name: firstNameSchema.required("Please enter first name"),
+  card_holder_last_name: lastNameSchema.required("Please enter last name"),
   email: emailSchema,
   billing_address: billingAddressSchema,
   country: countrySchema,
@@ -34,8 +34,8 @@ const linkBankSchema = yup.object().shape({
   bank_name: bankNameSchema,
   swift_code: swiftCodeSchema,
   bank_number: bankNumberSchema,
-  bank_holder_first_name: firstNameSchema.required("Please enter First name"),
-  bank_holder_last_name: lastNameSchema.required("Please enter Last name"),
+  bank_holder_first_name: firstNameSchema.required("Please enter first name"),
+  bank_holder_last_name: lastNameSchema.required("Please enter last name"),
   email: emailSchema,
   address: addressSchema,
   country: countrySchema,
@@ -44,7 +44,7 @@ const linkBankSchema = yup.object().shape({
 
 const uploadCardImageSchema = yup.object().shape({
   card_image: yup.mixed().test({
-    message: "File Type is not allowed",
+    message: "File type is not allowed",
     test: (file) =>
       file?.name ? isValidFileType(file?.name?.toLowerCase(), "image") : false,
   }),
@@ -56,8 +56,8 @@ const EditCardSchema = yup.object().shape({
   country: countrySchema,
   city: citySchema,
   color: yup.string(),
-  card_holder_first_name: firstNameSchema.required("Please enter First name"),
-  card_holder_last_name: lastNameSchema.required("Please enter Last name"),
+  card_holder_first_name: firstNameSchema.required("Please enter first name"),
+  card_holder_last_name: lastNameSchema.required("Please enter last name"),
   billing_address: billingAddressSchema,
 });
 
@@ -67,8 +67,8 @@ const EditBankSchema = yup.object().shape({
   country: countrySchema,
   city: citySchema,
   address: addressSchema,
-  bank_holder_first_name: firstNameSchema.required("Please enter First name"),
-  bank_holder_last_name: lastNameSchema.required("Please enter Last name"),
+  bank_holder_first_name: firstNameSchema.required("Please enter first name"),
+  bank_holder_last_name: lastNameSchema.required("Please enter last name"),
 });
 
 const withdrawCardSchema = yup.object().shape({
@@ -78,8 +78,8 @@ const withdrawCardSchema = yup.object().shape({
   txn_source: yup.string().required(),
   amount: yup
     .string()
-    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid Amount")
-    .required("Please enter Amount"),
+    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
+    .required("Please enter amount"),
   specification: yup
     .string()
     .max(50, "Maximum limit is 50 characters.")
@@ -94,8 +94,8 @@ const withdrawBankSchema = yup.object().shape({
   account_type: yup.string(),
   amount: yup
     .string()
-    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid Amount")
-    .required("Please enter Amount"),
+    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
+    .required("Please enter amount"),
   specification: yup
     .string()
     .max(50, "Maximum limit is 50 characters.")

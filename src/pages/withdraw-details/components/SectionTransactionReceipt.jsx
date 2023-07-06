@@ -1,38 +1,37 @@
-import axios from "axios";
-import { WithdrawDetailsContext } from "context/withdrawDetailsContext";
 import React, { useContext } from "react";
+import { WithdrawDetailsContext } from "context/withdrawDetailsContext";
 import { IconDownload } from "styles/svgs";
+import { apiRequest } from "helpers/apiRequests";
+import { toast } from "react-toastify";
+import { LoaderContext } from "context/loaderContext";
 
 const SectionTransactionReceipt = (props) => {
+  const { setIsLoading } = useContext(LoaderContext);
   const { isLoading, withdrawType, details } = useContext(
     WithdrawDetailsContext
   );
-  const { receipt_images = [] } = details || {};
+  const { transaction_id, receipt_images = [] } = details || {};
 
-  const downloadRecipt = async (recipt) => {
+  const downloadRecipt = async (reciptId) => {
+    setIsLoading(true);
     try {
-      const link = `https://cors-anywhere.herokuapp.com/${recipt}`;
-      fetch(link, {
-        headers: {
-          "Access-Control-Allow-Headers": "X-Requested-With",
-          "X-Requested-With": "XMLHttpRequest",
-        },
-      })
-        .then((response) => response.blob())
-        .then((blob) => {
-          const blobURL = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = blobURL;
-          a.style = "display: none";
-          a.download = "cwnecowencwe";
-          document.body.appendChild(a);
-          a.click();
-        })
-        .catch(() => {
-          console.log("ERROR");
-        });
+      const { data } = await apiRequest.viewBankWithdrawReceipt({
+        receipt_id: reciptId,
+      });
+      if (!data.success) throw data?.message;
+      const base64pdf = data.data;
+      const dtnow = new Date().toISOString();
+      const linkSource = `data:application/pdf;base64,${base64pdf}`;
+      const downloadLink = document.createElement("a");
+      const fileName = `${transaction_id}_${reciptId}_${dtnow}.pdf`;
+      downloadLink.href = linkSource;
+      downloadLink.download = fileName;
+      downloadLink.click();
     } catch (error) {
       console.log(error);
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -45,11 +44,11 @@ const SectionTransactionReceipt = (props) => {
       <div className="wr-dwld-wrap">
         <ul>
           {[1, 2, 3, 4]?.map((item, index) => {
-            const recipt = receipt_images?.[index];
+            const reciptId = receipt_images?.[index];
             return (
               <li key={item}>
-                {recipt && recipt.length > 0 ? (
-                  <button onClick={() => downloadRecipt(recipt)} download>
+                {reciptId ? (
+                  <button onClick={() => downloadRecipt(reciptId)} download>
                     <IconDownload stroke="black" />
                   </button>
                 ) : null}
