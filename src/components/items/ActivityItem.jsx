@@ -18,6 +18,7 @@ const ActivityItem = (props) => {
     status,
     name,
     request_type,
+    txn_type,
     user_type,
     activity_type,
     reference_id,
@@ -29,32 +30,31 @@ const ActivityItem = (props) => {
     profile_image || "/assets/images/single_contact_profile.png";
   const altAmount = typeof amount === "number" ? amount.toFixed(2) : "";
 
-  const description = useMemo(() => {
-    const { desc } =
-      activityConsts?.[activity_type]?.[request_type]?.[status] || {};
-    if (!desc) return "";
-    const aDesc = name
-      ? desc?.replace(/XXXX/g, altAmount).replace(/YYYY/, name)
-      : specification;
-    return aDesc;
-  }, [activity_type, altAmount, name, request_type, specification, status]);
-
   const {
     iconStatus = "",
     iconAmount = "",
     classStatus = "",
     classText = "",
     textStatus = "",
+    description = "",
   } = useMemo(() => {
     if (!activity_type) return {};
+    let details = {};
     switch (activity_type) {
       case ACT_TYPE_REQUEST:
-        return activityConsts[activity_type]?.[request_type]?.[status] || {};
+        details = activityConsts[activity_type]?.[request_type]?.[status];
+        break;
       case ACT_TYPE_TRANSACTION:
-        return activityConsts[activity_type]?.[request_type]?.[status] || {};
+        details =
+          activityConsts[activity_type]?.[request_type]?.[txn_type]?.[status];
+        break;
       default:
         return {};
     }
+    const { desc = "" } = details || {};
+    const aDesc =
+      desc?.replace(/XXXX/g, altAmount).replace(/YYYY/, name) || specification;
+    return Object.assign({ ...details }, { description: aDesc });
   }, [activity_type, request_type, status]);
 
   return (

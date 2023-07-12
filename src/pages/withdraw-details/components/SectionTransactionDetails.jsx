@@ -24,7 +24,7 @@ const SectionTransactionDetails = (props) => {
         <table>
           <tbody>
             <tr>
-              <td>Transection ID</td>
+              <td>Transaction ID</td>
               <td>
                 {isLoading ? (
                   <LoaderDiv height="20" width="50%" />

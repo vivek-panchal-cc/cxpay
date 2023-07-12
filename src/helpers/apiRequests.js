@@ -562,7 +562,7 @@ export const bankWithdrawList = (params) => {
 };
 
 // POST @bank-withdraw-detail
-// @params auth_token, withdraw_id
+// @params auth_token, transaction_id
 export const bankWithdrawDetails = (params) => {
   return axiosTransactionInstance.post(`${API_bankWithdrawDetails}`, params);
 };
@@ -583,7 +583,7 @@ export const initiateCardWithdraw = (params) => {
 };
 
 // POST @cancel-withdraw-request
-// @params auth_token, withdraw_id
+// @params auth_token, transaction_id
 export const cancelWithdrawRequest = (params) => {
   return axiosTransactionInstance.post(`${API_cancelWithdrawRequest}`, params);
 };

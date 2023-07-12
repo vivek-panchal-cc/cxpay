@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import WrapAmount from "components/wrapper/WrapAmount";
 
 const WithdrawBankItem = (props) => {
-  const { className = "", itemDetails } = props;
+  const { className = "", itemDetails, handleCancel = () => {} } = props;
   const {
     transaction_id,
     amount,
@@ -21,7 +21,7 @@ const WithdrawBankItem = (props) => {
   const handleCancelWithdrawRequest = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    navigate(`/wallet`);
+    handleCancel(transaction_id);
   };
 
   const handleViewDetails = (e) => {
@@ -53,20 +53,24 @@ const WithdrawBankItem = (props) => {
           </div>
           <div className="status-wrap">
             <Button className="btn btn-green">{status}</Button>
-            <Button
-              className="wr-bank-cancel-req d-none d-md-block ms-auto"
-              onClick={handleCancelWithdrawRequest}
-            >
-              Cancel Request
-            </Button>
+            {status !== "CANCELLED" ? (
+              <Button
+                className="wr-bank-cancel-req d-none d-md-block ms-auto"
+                onClick={handleCancelWithdrawRequest}
+              >
+                Cancel Request
+              </Button>
+            ) : null}
           </div>
         </div>
-        <Button
-          className="wr-bank-cancel-req ms-auto d-block d-md-none"
-          onClick={handleCancelWithdrawRequest}
-        >
-          Cancel Request
-        </Button>
+        {status !== "CANCELLED" ? (
+          <Button
+            className="wr-bank-cancel-req ms-auto d-block d-md-none"
+            onClick={handleCancelWithdrawRequest}
+          >
+            Cancel Request
+          </Button>
+        ) : null}
       </div>
     </li>
   );

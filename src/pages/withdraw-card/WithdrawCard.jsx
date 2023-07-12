@@ -62,7 +62,7 @@ const WithdrawCard = () => {
         const { data } = await apiRequest.initiateCardWithdraw(values);
         if (!data.success) throw data.message;
         setModalRefundedDetails({
-          amount: values?.amount,
+          amount: data?.data?.amount,
           message: data?.message,
         });
         setShowModalRefunded(true);
@@ -92,7 +92,7 @@ const WithdrawCard = () => {
       <div className="settings-inner-sec wallet-ac-is wr-card-form-wrap">
         <div className="profile-info">
           <h3>Card Withdraw</h3>
-          <Breadcrumb className="mt-2" />
+          <Breadcrumb className="mt-2" skipIndexes={[2]} />
         </div>
         <div className="row wr-form-choose-act mb-4">
           <div className="col-12 p-0">
@@ -133,9 +133,9 @@ const WithdrawCard = () => {
               </div>
             </div>
             <div className="row">
-              <p className="dark_blue font-16 font-600">
+              {/* <p className="dark_blue font-16 font-600">
                 Please enter amount to refund
-              </p>
+              </p> */}
               <div className="col-12 p-0 amt-with-currency">
                 <span>{CURRENCY_SYMBOL}</span>
                 <div className="d-flex flex-column form-field">

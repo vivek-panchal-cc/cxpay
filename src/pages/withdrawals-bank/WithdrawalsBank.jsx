@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import WithdrawBankList from "components/lists/WithdrawBankList";
 import Pagination from "components/pagination/Pagination";
 import TabsWithdrawOptions from "components/tabs/TabsWithdrawOptions";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
+import ModalConfirmation from "components/modals/ModalConfirmation";
 import InputDateRange from "components/ui/InputDateRange";
 import Button from "components/ui/Button";
 import InputDropdown from "components/ui/InputDropdown";
@@ -15,9 +16,16 @@ import {
 } from "constants/all";
 import LoaderWithdrawItem from "loaders/LoaderWithdrawItem";
 import useAvailableCardBalance from "hooks/useAvailableCardBalance";
+import { apiRequest } from "helpers/apiRequests";
+import { LoaderContext } from "context/loaderContext";
+import { toast } from "react-toastify";
 
 const WithdrawalsBank = () => {
+  const { setIsLoading } = useContext(LoaderContext);
   const navigate = useNavigate();
+
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [cancelWithdrawId, setCancelWithdrawId] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [drawStatus, setDrawStatus] = useState([]);
@@ -85,10 +93,9 @@ const WithdrawalsBank = () => {
     setFilters({
       startDate: "",
       endDate: "",
-      
     });
     setAllFilters({
-      start_date: "", 
+      start_date: "",
       end_date: "",
       status: [],
     });
@@ -100,10 +107,40 @@ const WithdrawalsBank = () => {
     navigate(`/wallet/withdraw-bank`);
   };
 
+  // For cancel the withdraw request
+  const handleCancelWithdrawRequest = (wid) => {
+    if (!wid) return;
+    setCancelWithdrawId(wid);
+    setShowConfirmation(true);
+  };
+
+  const confirmCancelWithdraw = async () => {
+    if (!cancelWithdrawId) return;
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.cancelWithdrawRequest({
+        transaction_id: cancelWithdrawId,
+      });
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+      reload();
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+      console.log(error);
+    } finally {
+      setShowConfirmation(false);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!showConfirmation) setCancelWithdrawId("");
+  }, [showConfirmation]);
+
   return (
     <div className="walllet-refund-wrapper wb-refund-wrapper">
       <div className="wr-title-wrap">
-        <h2>Wallet Transactions</h2>
+        <h2>Withdraw</h2>
       </div>
       <TabsWithdrawOptions
         className="wr-page-link-wrap d-flex"
@@ -172,8 +209,14 @@ const WithdrawalsBank = () => {
           <WithdrawBankList
             classNameList="refund-comn-ul bank-refund-ul"
             list={listWithdraws}
+            handleCancel={handleCancelWithdrawRequest}
           />
         )}
+        {!loadingWithdrawList && listWithdraws.length <= 0 ? (
+          <div className="text-center py-4">
+            <p className="fs-5">Withdraw not found.</p>
+          </div>
+        ) : null}
         {!loadingWithdrawList && pagination && pagination.total > 10 ? (
           <Pagination
             active={pagination?.current_page}
@@ -191,6 +234,14 @@ const WithdrawalsBank = () => {
         startDate={filters.startDate}
         endDate={filters.endDate}
         handleChangeDateRange={handleChangeDateFilter}
+      />
+      <ModalConfirmation
+        id="cancel-withdraw-request"
+        show={showConfirmation}
+        setShow={setShowConfirmation}
+        heading="Cancel Withdraw Request"
+        subHeading="Are you sure want to cancel withdraw request?"
+        handleCallback={confirmCancelWithdraw}
       />
     </div>
   );

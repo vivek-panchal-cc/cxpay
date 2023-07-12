@@ -73,15 +73,11 @@ const WithdrawCardItem = (props) => {
           </div>
         </div>
         <div className="btns-wrap">
-          <Button
-            className={`wr-withdraw-btn ${
-              is_refundable ? "opacity-100" : "opacity-50"
-            }`}
-            onClick={is_refundable ? handleInitiateRefund : () => {}}
-            disabled={!is_refundable}
-          >
-            withdraw
-          </Button>
+          {is_refundable ? (
+            <Button className="wr-withdraw-btn" onClick={handleInitiateRefund}>
+              withdraw
+            </Button>
+          ) : null}
         </div>
       </div>
     </li>

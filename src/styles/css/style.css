@@ -306,6 +306,15 @@ pointer-events: none;
   color: #fff;
 }
 
+.login-btn input[type="submit"]:active,
+.btn-primary:active,
+.btn:active,
+.btn:focus-visible {
+  color: #fff !important;
+  background-color: #0080c4 !important;
+  box-shadow: inset 0em 0em 20px #0000002d;
+}
+
 .login-btn {
   margin-bottom: 17px;
 }

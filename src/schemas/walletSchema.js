@@ -78,7 +78,7 @@ const withdrawCardSchema = yup.object().shape({
   txn_source: yup.string().required(),
   amount: yup
     .string()
-    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
+    .matches(/^\d*(\.\d+)?$/, "Please enter valid amount")
     .required("Please enter amount"),
   specification: yup
     .string()
@@ -94,7 +94,7 @@ const withdrawBankSchema = yup.object().shape({
   account_type: yup.string(),
   amount: yup
     .string()
-    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
+    .matches(/^\d*(\.\d+)?$/, "Please enter valid amount")
     .required("Please enter amount"),
   specification: yup
     .string()

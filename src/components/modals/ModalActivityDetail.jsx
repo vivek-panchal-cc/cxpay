@@ -38,8 +38,9 @@ const ModalActivityDetail = (props) => {
     mobile_number,
     request_from,
     paid_to,
-    specification,
+    txn_type,
     status,
+    specification,
     activity_type,
     request_type,
   } = details || {};
@@ -62,7 +63,10 @@ const ModalActivityDetail = (props) => {
       case ACT_TYPE_REQUEST:
         return activityConsts[activity_type]?.[request_type]?.[status] || {};
       case ACT_TYPE_TRANSACTION:
-        return activityConsts[activity_type]?.[request_type]?.[status] || {};
+        return (
+          activityConsts[activity_type]?.[request_type]?.[txn_type]?.[status] ||
+          {}
+        );
       default:
         return {};
     }

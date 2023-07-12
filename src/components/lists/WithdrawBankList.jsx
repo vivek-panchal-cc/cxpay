@@ -2,7 +2,12 @@ import React from "react";
 import WithdrawBankItem from "components/items/WithdrawBankItem";
 
 const WithdrawBankList = (props) => {
-  const { classNameList = "", classNameItem = "", list = [] } = props;
+  const {
+    classNameList = "",
+    classNameItem = "",
+    list = [],
+    handleCancel = () => {},
+  } = props;
 
   return (
     <ul className={`${classNameList}`}>
@@ -11,6 +16,7 @@ const WithdrawBankList = (props) => {
           key={item?.transaction_id || index}
           className={`${classNameItem}`}
           itemDetails={item}
+          handleCancel={handleCancel}
         />
       ))}
     </ul>

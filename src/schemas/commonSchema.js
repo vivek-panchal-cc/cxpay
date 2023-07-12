@@ -51,12 +51,12 @@ const passwordSchema = yup
 const confirmPasswordSchema = yup
   .string()
   .oneOf([yup.ref("password"), null], "Password must be matched")
-  .required("Please enter confirm Password");
+  .required("Please enter confirm password");
 
 const changeConfirmPasswordSchema = yup
   .string()
   .oneOf([yup.ref("new_password"), null], "Password must be matched")
-  .required("Please enter confirm Password");
+  .required("Please enter confirm password");
 
 const profileImageSchema = yup
   .mixed()
@@ -130,7 +130,7 @@ const addressSchema = yup
 const bankNameSchema = yup
   .string()
   .max(150, "Maximum limit is 150 characters.")
-  .required("Please enter Bank name");
+  .required("Please enter bank name");
 
 const routingNumberSchema = yup
   .string()

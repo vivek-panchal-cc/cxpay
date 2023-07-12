@@ -25,7 +25,7 @@ const SectionEligibility = (props) => {
             <span className="blue">
               <WrapAmount value={remaining_amount} />
             </span>{" "}
-            against this Transection
+            against this Transaction
           </p>
         </div>
         <div className="wcr-withdraw-btn">

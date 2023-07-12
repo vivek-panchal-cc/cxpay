@@ -10,6 +10,7 @@ const SectionHeader = (props) => {
   );
   const {
     card_number = "",
+    card_expiry_date = "",
     bank_name = "",
     bank_account_number = "",
     amount = "",
@@ -18,7 +19,6 @@ const SectionHeader = (props) => {
   } = details || {};
 
   const name = withdrawType === "card" ? card_number : bank_name;
-  const accNumber = withdrawType === "card" ? card_number : bank_account_number;
 
   return (
     <>
@@ -42,8 +42,11 @@ const SectionHeader = (props) => {
               <div className="wcr-card-data">
                 <h2>{name}</h2>
                 <p>
-                  xxxx xxxx xxxx{" "}
-                  {accNumber ? accNumber?.substr(accNumber.length - 4) : "XXXX"}
+                  {withdrawType === "card"
+                    ? card_expiry_date
+                    : `xxxx xxxx xxxx ${bank_account_number?.substr(
+                        bank_account_number?.length - 4
+                      )}`}
                 </p>
               </div>
               <div className="wcr-card-amt wbr-card-amt">

@@ -23,7 +23,7 @@ const WithdrawDetails = () => {
     <div className="walllet-refund-wrapper wallet-refund-details-wrappper wr-bank-details-wrapper">
       <WithdrawDetailsProvider>
         <div className="wr-title-wrap">
-          <h2>Transection Details</h2>
+          <h2>Transaction Details</h2>
         </div>
         <div className="wc-refund-main-wrap">
           <div className="pattern-wrap pattern-wrap-top"></div>

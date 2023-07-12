@@ -13,7 +13,12 @@ const contentTitles = [
 ];
 
 function Breadcrumb(props) {
-  const { divider, activelinkcolor, inactivelinkcolor } = props;
+  const {
+    divider,
+    activelinkcolor,
+    inactivelinkcolor,
+    skipIndexes = [],
+  } = props;
   const location = useLocation();
   const [crumbs, setCrumbs] = useState([]);
 
@@ -39,17 +44,20 @@ function Breadcrumb(props) {
   return (
     <div {...props}>
       <ul className="breadcrumb">
-        {crumbs.map((item, index) => (
-          <li key={`${item.url}`} className="text-capitalize">
-            {index < crumbs.length - 1 ? (
-              <Link to={item.url} replace>
-                {item.title}
-              </Link>
-            ) : (
-              <a className="cursor-pointer">{item.title}</a>
-            )}
-          </li>
-        ))}
+        {crumbs.map((item, index) => {
+          if (skipIndexes.includes(index)) return false;
+          return (
+            <li key={`${item.url}`} className="text-capitalize">
+              {index < crumbs.length - 1 ? (
+                <Link to={item.url} replace>
+                  {item.title}
+                </Link>
+              ) : (
+                <a className="cursor-pointer">{item.title}</a>
+              )}
+            </li>
+          );
+        })}
       </ul>
       <style>
         {`

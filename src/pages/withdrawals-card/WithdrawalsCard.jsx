@@ -95,7 +95,7 @@ const WithdrawalsCard = () => {
   return (
     <div className="walllet-refund-wrapper">
       <div className="wr-title-wrap">
-        <h2>Wallet Transactions</h2>
+        <h2>Withdraw</h2>
       </div>
       <TabsWithdrawOptions
         className="wr-page-link-wrap d-flex"
@@ -157,6 +157,11 @@ const WithdrawalsCard = () => {
             list={listWithdraws}
           />
         )}
+        {!loadingWithdrawList && listWithdraws.length <= 0 ? (
+          <div className="text-center py-4">
+            <p className="fs-5">Withdraw not found.</p>
+          </div>
+        ) : null}
         {!loadingWithdrawList && pagination && pagination.total > 10 ? (
           <Pagination
             active={pagination?.current_page}

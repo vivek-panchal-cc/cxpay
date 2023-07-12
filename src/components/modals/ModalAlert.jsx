@@ -49,6 +49,7 @@ function ModalAlert(props) {
               <div className="verify-code-btn-wrap">
                 <button
                   type="button"
+                  autoFocus={true}
                   onClick={handleBtnClick}
                   className="btn money-sent-pop-close"
                 >

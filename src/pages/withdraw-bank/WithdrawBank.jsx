@@ -89,9 +89,10 @@ const WithdrawBank = () => {
     await formik.setFieldValue("bank_name", id);
     await formik.setFieldValue("swift_code", swift_code);
     await formik.setFieldValue("account_type", account_type);
-    if (id) setAddNewBank(false);
-    setDisableBankField(true);
     setSelectExistingBank(false);
+    if (!id) return handleLinkNewBank();
+    setAddNewBank(false);
+    setDisableBankField(true);
   };
 
   // For handling link a new bank account
