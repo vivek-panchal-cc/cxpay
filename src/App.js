@@ -104,7 +104,6 @@ function App() {
               path="/wallet/fund-account/:fundtype?"
               element={<FundAccount />}
             />
-            {/* Withdraw */}
             <Route
               path="/wallet/withdrawals-card"
               element={<WithdrawalsCard />}

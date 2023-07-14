@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { FUND_CARD } from "constants/all";
+import { FUND_CARD, FUND_CASH } from "constants/all";
 import FundProvider from "context/fundContext";
 import FundCreditCard from "./components/FundCreditCard";
+import FundCashCredit from "./components/FundCashCredit";
 
 function FundAccount(props) {
   const params = useParams();
@@ -17,8 +18,8 @@ function FundAccount(props) {
     switch (params.fundtype) {
       case FUND_CARD:
         return <FundCreditCard />;
-      // case FUND_CASH:
-      //   return <FundCashCredit />;
+      case FUND_CASH:
+        return <FundCashCredit />;
       // case FUND_BANK:
       //   return <FundBankTransfer />;
       default:

@@ -45,6 +45,9 @@ export { default as IconBin } from "./Bin";
 export { default as IconCreditCard } from "./CreditCard";
 export { default as IconArrowReturn } from "./ArrowReturn";
 export { default as IconDownload } from "./Download";
+export { default as IconUpload } from "./Upload";
+export { default as IconDownArrow } from "./ArrowDown";
+export { default as IconPlusBorder } from "./PlusBorder";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";
