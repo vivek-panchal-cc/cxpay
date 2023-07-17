@@ -73,6 +73,8 @@ const API_viewSchedulePayment = apiUrl.API_ONBOARD_VIEW_SCHEDULE_PAYMENT;
 
 // TRANSACTION SERVICES
 const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
+const API_initiateManualFundAdd =
+  apiUrl.API_TRANSACTION_INITIATE_MANUAL_FUND_ADD;
 const API_getBalance = apiUrl.API_TRANSACTION_GET_BALANCE;
 const API_walletTransferOtp = apiUrl.API_TRANSACTION_WALLET_TRANSFER_OTP;
 const API_walletPersonalOtpVerify =
@@ -436,6 +438,12 @@ export const addFund = (params) => {
   return axiosTransactionInstance.post(`${API_addFund}`, params);
 };
 
+// POST @initiate-manual-fund-add
+// @params auth_token, amount, specification, fees, receipt[]
+export const initiateManualFundAdd = (params) => {
+  return axiosTransactionInstance.post(`${API_initiateManualFundAdd}`, params);
+};
+
 // POST @get-balance
 // @params
 export const getBalance = () => {
@@ -651,6 +659,7 @@ export const apiRequest = {
   invitedContactsList,
   getCharges,
   addFund,
+  initiateManualFundAdd,
   getBalance,
   walletTransferOtp,
   walletPersonalOtpVerify,

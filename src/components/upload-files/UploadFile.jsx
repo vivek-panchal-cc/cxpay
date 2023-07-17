@@ -1,60 +1,107 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IconDownload, IconPlusBorder, IconUpload } from "styles/svgs";
+import Button from "components/ui/Button";
+import styles from "./uploadFile.module.scss";
 
 const UploadFile = (props) => {
-  const {} = props || {};
+  const {
+    name = "",
+    files = [],
+    onChange = () => {},
+    showPreview = true,
+    max = 3,
+    error = "",
+  } = props || {};
+
+  const [previewImgs, setPreviewImgs] = useState([]);
+
+  useEffect(() => {
+    if (!showPreview || !files) return;
+    const previews = files?.map((file) => URL.createObjectURL(file) || "");
+    setPreviewImgs(previews);
+  }, [files]);
+
+  const handleChange = async (e) => {
+    const tmpfiles = e?.target?.files || [];
+    if (tmpfiles.length <= 0) return;
+    onChange([...files, ...tmpfiles]);
+  };
+
+  const handleDeleteFile = (index) => {
+    const filteredFiles = files.filter((f, i) => i !== index);
+    console.log(filteredFiles);
+    onChange(filteredFiles);
+  };
 
   return (
-    <div>
-      <div class="row">
-        <div class="col-12 p-0">
-          <div class="form-field">
-            <div class="fc-upload-receipt-wrap">
-              <label for="upload_receipt" class="">
-                <IconUpload stroke={"#0081C5"} />
-                Upload receipt
-              </label>
-              {/* <input id="upload_receipt" type="file" /> */}
-              <span></span>
+    <div className={`${styles.uploadfile}`}>
+      <div className="row">
+        <div
+          className="col-12 p-0"
+          style={{ height: files.length > 0 ? "0" : "fit-content" }}
+        >
+          <input
+            id="upload_receipt"
+            type="file"
+            name={name}
+            onChange={handleChange}
+            accept="*"
+            multiple
+          />
+          {(!files || files.length <= 0) && (
+            <div className="form-field">
+              <div className="fc-upload-receipt-wrap">
+                <label htmlFor="upload_receipt" className="">
+                  <IconUpload stroke={"#0081C5"} />
+                  Upload receipt
+                </label>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
-      <div class="row">
-        <div class="col-12 p-0">
-          <div class="form-field">
-            <ul class="fund-cash-download-wrap">
-              <li>
-                <div class="fc-download-file">
-                  <a href="#" download>
-                    <IconDownload stroke={"#000"} />
-                  </a>
-                </div>
-                <a href="#" class="fc-del-pdf">
-                  Delete
-                </a>
-              </li>
-              <li>
-                <div class="fc-download-file">
-                  <a href="#" download>
-                    <IconDownload stroke={"#000"} />
-                  </a>
-                </div>
-                <a href="#" class="fc-del-pdf">
-                  Delete
-                </a>
-              </li>
-              <li>
-                <div>
-                  <a href="#">
-                    <IconPlusBorder stroke={"#BDBDBD"} />
-                  </a>
-                </div>
-              </li>
+      <div className="row">
+        <div className="col-12 p-0">
+          <div className="form-field">
+            <ul className="fund-cash-download-wrap">
+              {previewImgs.map((item, index) => (
+                <li
+                  key={item}
+                  className=""
+                  style={{
+                    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.40), rgba(0, 0, 0, 0.40)), url('${item}')`,
+                  }}
+                >
+                  <div className="fc-download-file">
+                    <a href={item} download>
+                      <IconDownload stroke={"#fff"} />
+                    </a>
+                  </div>
+                  <Button
+                    className="fc-del-pdf border-0"
+                    onClick={() => handleDeleteFile(index)}
+                  >
+                    Delete
+                  </Button>
+                </li>
+              ))}
+              {files.length < max && files.length > 0 ? (
+                <li>
+                  <div>
+                    <label
+                      htmlFor="upload_receipt"
+                      className="border-0 bg-transparent cursor-pointer"
+                    >
+                      <IconPlusBorder stroke={"#BDBDBD"} />
+                    </label>
+                  </div>
+                </li>
+              ) : null}
             </ul>
           </div>
         </div>
       </div>
+      <p className="text-danger ps-2 mt-0 pb-2">{error}</p>
     </div>
   );
 };

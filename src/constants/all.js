@@ -18,6 +18,22 @@ const expContainNumber = /^(?=.*\d)/;
 const expContainSpecialChar = /^(?=.*[!@#$%^&*])/;
 const validFileExtensions = {
   image: ["jpg", "png", "jpeg", "svg", "heif", "hevc"],
+  receipt: [
+    "jpg",
+    "png",
+    "jpeg",
+    "heif",
+    "hevc",
+    "pdf",
+    "gif",
+    "tif",
+    "tiff",
+    "webp",
+    "docm",
+    "docx",
+    "dot",
+    "dotx",
+  ],
 };
 
 // Test Functions
@@ -407,6 +423,7 @@ const SCHEDULE_BUFFER = 5;
 const CHARGES_TYPE_WW = "pay_type=WW";
 const CHARGES_TYPE_PL = "pay_type=PL";
 const CHARGES_TYPE_WD = "pay_type=WD";
+const CHARGES_TYPE_MF = "pay_type=MF";
 
 // Withdraw options tabs list
 const WITHDRAW_OPTIONS_TABS_LIST = [
@@ -467,6 +484,7 @@ export {
   CHARGES_TYPE_WW,
   CHARGES_TYPE_PL,
   CHARGES_TYPE_WD,
+  CHARGES_TYPE_MF,
   WITHDRAW_OPTIONS_TABS_LIST,
   WITHDRAW_STATUS_FILTER_CARD,
   WITHDRAW_STATUS_FILTER_BANK,

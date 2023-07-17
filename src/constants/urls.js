@@ -68,6 +68,8 @@ export const API_ONBOARD_VIEW_SCHEDULE_PAYMENT = "/view-schedule-payment";
 
 // customer-transaction Urls
 export const API_TRANSACTION_ADD_FUND = "/add-fund";
+export const API_TRANSACTION_INITIATE_MANUAL_FUND_ADD =
+  "/initiate-manual-fund-add";
 export const API_TRANSACTION_GET_BALANCE = "/get-balance";
 export const API_TRANSACTION_WALLET_TRANSFER_OTP = "/wallet-transfer-otp";
 export const API_TRANSACTION_WALLET_PERSONAL_OTP_VERIFY =

@@ -14,6 +14,10 @@ import {
   lastNameSchema,
   routingNumberSchema,
 } from "./commonSchema";
+import { isValidFileType } from "constants/all";
+
+const FILE_SIZE = 5 * 1048576;
+const FILE_COUNT = 3;
 
 const yupWhenCard = (validations) => {
   return yup.mixed().when("txn_mode", {
@@ -81,4 +85,42 @@ const fundSchema = yup.object().shape({
   save_bank: yupWhenBank(yup.boolean()),
 });
 
-export { fundSchema };
+const fundCashCreditSchema = yup.object().shape({
+  amount: yup
+    .string()
+    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
+    .required("Please enter amount"),
+  specification: yup
+    .string()
+    .max(50, "Maximum limit is 50 characters.")
+    .required("Please enter specifications"),
+  fees: yup.string(),
+  receipt: yup
+    .mixed()
+    .test({
+      message: `Please upload receipt`,
+      test: (files) => files.length > 0,
+    })
+    .test({
+      message: `Maximum ${FILE_COUNT} files allowed`,
+      test: (files) => files.length <= FILE_COUNT,
+    })
+    .test({
+      message: "File type is not allowed",
+      test: (files) => {
+        for (const file of files)
+          if (!isValidFileType(file.name?.toLowerCase(), "receipt"))
+            return false;
+        return true;
+      },
+    })
+    .test({
+      message: "Receipt must not exceed 5 mb size.",
+      test: (files) => {
+        for (const file of files) if (file.size > FILE_SIZE) return false;
+        return true;
+      },
+    }),
+});
+
+export { fundSchema, fundCashCreditSchema };
