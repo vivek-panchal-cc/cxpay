@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import Input from "components/ui/Input";
 import UploadFile from "components/upload-files/UploadFile";
 import { useFormik } from "formik";
-import { IconBank, IconDownArrow } from "styles/svgs";
 import { fundCashCreditSchema } from "schemas/fundSchema";
 import { getChargedAmount } from "helpers/commonHelpers";
 import useCharges from "hooks/useCharges";
@@ -10,6 +9,7 @@ import { CHARGES_TYPE_MF } from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { apiRequest } from "helpers/apiRequests";
 import { LoaderContext } from "context/loaderContext";
+import BankDetailsSection from "./BankDetailsSection";
 
 const FundCashCredit = (props) => {
   const { setIsLoading } = useContext(LoaderContext);
@@ -77,29 +77,7 @@ const FundCashCredit = (props) => {
             <div className="row">
               <div className="col-12 p-0">
                 <div className="form-field">
-                  <div className="fc-bdetails-dd-wrap active">
-                    <div className="fc-bdetails-dd-title ">
-                      <IconBank stroke={"#363853"} />
-                      <span>Bank Details</span>
-                      <IconDownArrow storke={"#0081C5"} />
-                    </div>
-                    <div className="fc-bdetails-dd-content">
-                      <table>
-                        <tr>
-                          <td>Bank Name : </td>
-                          <td>Bank Name Here</td>
-                        </tr>
-                        <tr>
-                          <td>Account Number : </td>
-                          <td>1234567890</td>
-                        </tr>
-                        <tr>
-                          <td>Swift Code : </td>
-                          <td>1234567890</td>
-                        </tr>
-                      </table>
-                    </div>
-                  </div>
+                  <BankDetailsSection />
                 </div>
               </div>
             </div>
@@ -181,8 +159,11 @@ const FundCashCredit = (props) => {
                 <div className="btn-wrap">
                   <input
                     type="submit"
-                    className="btn btn-primary"
                     value="Fund"
+                    className={`btn btn-primary ${
+                      formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                    } ${formik.isValid ? "" : "opacity-75"}`}
+                    disabled={formik.isSubmitting}
                   />
                 </div>
               </div>

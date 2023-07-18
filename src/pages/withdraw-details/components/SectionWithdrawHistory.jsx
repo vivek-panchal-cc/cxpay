@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { WithdrawDetailsContext } from "context/withdrawDetailsContext";
 import LoaderWdrawHistory from "loaders/LoaderWdrawHistory";
+import { withdrawConsts } from "constants/all";
 
 const SectionWithdrawHistory = (props) => {
   const { isLoading, withdrawType, details } = useContext(
@@ -49,13 +50,18 @@ const SectionWithdrawHistory = (props) => {
                         xxxx xxxx xxxx {card_number}
                       </div>
                       <div className="wh-id-date-wrap">
-                        <div className="div-font-14 wh-id">
+                        <div
+                          className="div-font-14 wh-id"
+                          style={{ whiteSpace: "nowrap" }}
+                        >
                           ID: {refund_ref_id}
                         </div>
                         <div className="div-font-14 wh-date">{date}</div>
                       </div>
                       <div className="wh-status-amt-wrap">
-                        <div className="div-font-14 wh-status-div green">
+                        <div
+                          className={`div-font-14 wh-status-div ${withdrawConsts?.[status]?.classText}`}
+                        >
                           {status}
                         </div>
                         <div className="div-font-18 wh-amt dark_black">

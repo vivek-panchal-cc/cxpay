@@ -138,6 +138,7 @@ const EditScheduledPayment = () => {
                 type="button"
                 className="btn"
                 onClick={formik.handleSubmit}
+                disabled={formik.isSubmitting}
               >
                 Update
               </button>

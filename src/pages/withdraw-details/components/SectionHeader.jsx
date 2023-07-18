@@ -3,6 +3,7 @@ import WrapAmount from "components/wrapper/WrapAmount";
 import { WithdrawDetailsContext } from "context/withdrawDetailsContext";
 import { IconBank, IconCard } from "styles/svgs";
 import LoaderWdrawHeader from "loaders/LoaderWdrawHeader";
+import { withdrawConsts } from "constants/all";
 
 const SectionHeader = (props) => {
   const { isLoading, withdrawType, details } = useContext(
@@ -19,6 +20,7 @@ const SectionHeader = (props) => {
   } = details || {};
 
   const name = withdrawType === "card" ? card_number : bank_name;
+  const { classText, classStatus } = withdrawConsts?.[status] || {};
 
   return (
     <>
@@ -50,8 +52,8 @@ const SectionHeader = (props) => {
                 </p>
               </div>
               <div className="wcr-card-amt wbr-card-amt">
-                <p className="green font-bold">{status}</p>
-                <h2>
+                <p className={`font-bold ${classText}`}>{status}</p>
+                <h2 className={`${classText}`}>
                   <WrapAmount value={amount} />
                 </h2>
               </div>

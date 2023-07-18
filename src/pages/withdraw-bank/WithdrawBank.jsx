@@ -82,11 +82,17 @@ const WithdrawBank = () => {
 
   // For handling selecting bank account from the linked banks list
   const handleSelectExistingBank = async (selectedBank) => {
-    const { id, account_type, bank_name, swift_code, bank_number } =
-      selectedBank || {};
+    const {
+      id,
+      account_type,
+      bank_name,
+      swift_code,
+      bank_number,
+      country_bank_id,
+    } = selectedBank || {};
     await formik.setFieldValue("bank_id", id);
     await formik.setFieldValue("bank_account_number", bank_number);
-    await formik.setFieldValue("bank_name", id);
+    await formik.setFieldValue("bank_name", country_bank_id);
     await formik.setFieldValue("swift_code", swift_code);
     await formik.setFieldValue("account_type", account_type);
     setSelectExistingBank(false);
@@ -116,10 +122,10 @@ const WithdrawBank = () => {
   }, []);
 
   // For redirection to card withdraw list when bank_withdraw is disabled
-  useEffect(() => {
-    if (!loadingCardBalance && bank_withdraw === false && remaining_amount > 5)
-      navigate("/wallet/withdrawals-card");
-  }, [loadingCardBalance, remaining_amount, bank_withdraw]);
+  // useEffect(() => {
+  //   if (!loadingCardBalance && bank_withdraw === false && remaining_amount > 5)
+  //     navigate("/wallet/withdrawals-card");
+  // }, [loadingCardBalance, remaining_amount, bank_withdraw]);
 
   // For default primary bank selection
   useEffect(() => {
@@ -311,14 +317,15 @@ const WithdrawBank = () => {
                   />
                 </div>
               </div>
+              <div>
+                It will takes 2 to 4 working days to complete this transaction.
+                For any query, drop a mail on{" "}
+                <a href="mailto:hello@cxpay.global">hello@cxpay.global</a>
+              </div>
               <div className="row wbr-final-amt-wrap">
                 <div className="col-12 p-0">
                   <table>
                     <tbody>
-                      {/* <tr>
-                        <td>Total Amount</td>
-                        <td className="amount">90.00</td>
-                      </tr> */}
                       {paymentDetails?.allCharges?.map((item, index) => (
                         <tr key={item?.desc?.trim() || index}>
                           <td>{item?.desc}</td>

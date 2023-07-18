@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Button from "components/ui/Button";
-import { CURRENCY_SYMBOL, THEME_COLORS } from "constants/all";
+import { CURRENCY_SYMBOL, THEME_COLORS, withdrawConsts } from "constants/all";
 import { IconBank, IconEye } from "styles/svgs";
 import { useNavigate } from "react-router-dom";
 import WrapAmount from "components/wrapper/WrapAmount";
@@ -28,6 +28,16 @@ const WithdrawBankItem = (props) => {
     navigate(`/wallet/withdraw-details/bank/${transaction_id}`);
   };
 
+  const showCancelRequestButton = useCallback(
+    ({ className }) =>
+      status === "PENDING" ? (
+        <Button className={className} onClick={handleCancelWithdrawRequest}>
+          Cancel Request
+        </Button>
+      ) : null,
+    []
+  );
+
   return (
     <li className={className} onClick={handleViewDetails}>
       <div className="rcard-img-wrap">
@@ -52,25 +62,19 @@ const WithdrawBankItem = (props) => {
             <WrapAmount value={amount} prefix={`${CURRENCY_SYMBOL} +`} />
           </div>
           <div className="status-wrap">
-            <Button className="btn btn-green">{status}</Button>
-            {status !== "CANCELLED" ? (
-              <Button
-                className="wr-bank-cancel-req d-none d-md-block ms-auto"
-                onClick={handleCancelWithdrawRequest}
-              >
-                Cancel Request
-              </Button>
-            ) : null}
+            <Button
+              className={`btn ${withdrawConsts?.[status]?.classStatus || ""}`}
+            >
+              {status}
+            </Button>
+            {showCancelRequestButton({
+              className: "wr-bank-cancel-req d-none d-md-block ms-auto",
+            })}
           </div>
         </div>
-        {status !== "CANCELLED" ? (
-          <Button
-            className="wr-bank-cancel-req ms-auto d-block d-md-none"
-            onClick={handleCancelWithdrawRequest}
-          >
-            Cancel Request
-          </Button>
-        ) : null}
+        {showCancelRequestButton({
+          className: "wr-bank-cancel-req ms-auto d-block d-md-none",
+        })}
       </div>
     </li>
   );

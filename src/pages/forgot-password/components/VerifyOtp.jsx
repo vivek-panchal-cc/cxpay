@@ -109,6 +109,7 @@ function VerifyOtp(props) {
                 className={"form-control"}
                 value={formik.values.user_otp}
                 onChange={formik.handleChange}
+                isSubmitting={formik.isSubmitting}
                 handleSubmit={formik.handleSubmit}
                 error={formik.touched.user_otp && formik.errors.user_otp}
               />

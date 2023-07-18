@@ -146,9 +146,11 @@ const ACT_STATUS_FAILED = "FAILED";
 const ACT_STATUS_PROCESSING = "PROCESSING";
 const ACT_STATUS_APPROVED = "APPROVED";
 const ACT_STATUS_REJECTED = "REJECTED";
+const ACT_STATUS_SUCCESS = "SUCCESS";
 const TXN_TYPE_PL = "PL";
 const TXN_TYPE_WW = "WW";
 const TXN_TYPE_WD = "WD";
+const TXN_TYPE_MF = "MF";
 
 const activityConsts = {
   [ACT_TYPE_REQUEST]: {
@@ -277,6 +279,41 @@ const activityConsts = {
           desc: "From YYYY",
         },
       },
+      [TXN_TYPE_MF]: {
+        [ACT_STATUS_PENDING]: {
+          iconStatus: "",
+          iconAmount: "+",
+          classStatus: "btn-blue",
+          classBg: "cx-bg-blue",
+          classText: "",
+          classDetailStatus: "cx-color-blue",
+          textStatus: "Credit Pending",
+          textDetailStatus: "Cash credit pending",
+          desc: "You credited cash",
+        },
+        [ACT_STATUS_APPROVED]: {
+          iconStatus: "",
+          iconAmount: "+",
+          classStatus: "btn-green",
+          classBg: "cx-bg-green",
+          classText: "cx-color-green",
+          classDetailStatus: "cx-color-green",
+          textStatus: "Credited",
+          textDetailStatus: "Cash credited",
+          desc: "You credited cash",
+        },
+        [ACT_STATUS_REJECTED]: {
+          iconStatus: "",
+          iconAmount: "",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "cx-color-red",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Rejected",
+          textDetailStatus: "Cash credit rejected",
+          desc: "You credited cash",
+        },
+      },
       [TXN_TYPE_WW]: {
         [ACT_STATUS_PENDING]: {
           iconStatus: "",
@@ -296,7 +333,7 @@ const activityConsts = {
           classBg: "cx-bg-red",
           classText: "",
           classDetailStatus: "cx-color-red",
-          textStatus: "Precessing",
+          textStatus: "Processing",
           textDetailStatus: "Amount Credit In Progress",
           desc: "From YYYY",
         },
@@ -395,7 +432,7 @@ const activityConsts = {
           classDetailStatus: "cx-color-red",
           textStatus: "Refunded",
           textDetailStatus: "Amount Debited",
-          desc: "To YYYY",
+          desc: "You refunded",
         },
         [ACT_STATUS_FAILED]: {
           iconStatus: "",
@@ -410,6 +447,41 @@ const activityConsts = {
         },
       },
     },
+  },
+};
+
+const withdrawConsts = {
+  [ACT_STATUS_PENDING]: {
+    classStatus: "btn-blue",
+    classText: "cx-color-blue",
+  },
+  [ACT_STATUS_PROCESSING]: {
+    classStatus: "btn-blue",
+    classText: "cx-color-blue",
+  },
+  [ACT_STATUS_APPROVED]: {
+    classStatus: "btn-blue",
+    classText: "cx-color-blue",
+  },
+  [ACT_STATUS_REJECTED]: {
+    classStatus: "btn-red",
+    classText: "cx-color-red",
+  },
+  [ACT_STATUS_CANCELLED]: {
+    classStatus: "btn-red",
+    classText: "cx-color-red",
+  },
+  [ACT_STATUS_PAID]: {
+    classStatus: "btn-green",
+    classText: "cx-color-green",
+  },
+  [ACT_STATUS_SUCCESS]: {
+    classStatus: "btn-green",
+    classText: "cx-color-green",
+  },
+  [ACT_STATUS_FAILED]: {
+    classStatus: "btn-red",
+    classText: "cx-color-red",
   },
 };
 
@@ -439,9 +511,11 @@ const WITHDRAW_STATUS_FILTER_CARD = [
 
 // Withdraw status filters list for bank transactions
 const WITHDRAW_STATUS_FILTER_BANK = [
-  { title: "ACCEPTED", status: "ACCEPTED" },
   { title: "PENDING", status: "PENDING" },
   { title: "PROCESSING", status: "PROCESSING" },
+  { title: "APPROVED", status: "APPROVED" },
+  { title: "CANCELLED", status: "CANCELLED" },
+  { title: "REJECTED", status: "REJECTED" },
 ];
 
 export {
@@ -455,6 +529,7 @@ export {
   url_regex,
   notificationType,
   activityConsts,
+  withdrawConsts,
   THEME_COLORS,
   CURRENCY_SYMBOL,
   SCHEDULE_BUFFER,

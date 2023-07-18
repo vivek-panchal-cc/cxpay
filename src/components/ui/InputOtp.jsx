@@ -10,6 +10,7 @@ function InputOtp(props) {
     className,
     name,
     value,
+    isSubmitting = false,
     handleSubmit,
   } = props;
 
@@ -60,7 +61,7 @@ function InputOtp(props) {
       case "Enter":
         e.preventDefault();
         e.stopPropagation();
-        if (handleSubmit) handleSubmit();
+        if (handleSubmit && !isSubmitting) handleSubmit();
         return;
       default:
         return;

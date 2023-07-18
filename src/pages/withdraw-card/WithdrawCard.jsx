@@ -13,6 +13,7 @@ import FundEffectPopup from "components/popups/FundEffectPopup";
 import { useFormik } from "formik";
 import useWithdrawDetails from "hooks/useWithdrawDetails";
 import WrapAmount from "components/wrapper/WrapAmount";
+import Button from "components/ui/Button";
 
 const WithdrawCard = () => {
   const params = useParams();
@@ -155,6 +156,11 @@ const WithdrawCard = () => {
                 </div>
               </div>
             </div>
+            <div>
+              It will takes 2 to 4 working days to complete this transaction.
+              For any query, drop a mail on{" "}
+              <a href="mailto:hello@cxpay.global">hello@cxpay.global</a>
+            </div>
             {/* <!-- payment blocks footer section starts --> */}
             <div className="row wbr-final-amt-wrap">
               <div className="col-12 p-0">
@@ -187,13 +193,12 @@ const WithdrawCard = () => {
             <div className="row">
               <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
                 <div className="btn-wrap">
-                  <Link
-                    to="/wallet/withdrawals-card"
+                  <Button
                     className="btn outline-btn"
-                    replace
+                    onClick={() => navigate(-1)}
                   >
                     Cancel
-                  </Link>
+                  </Button>
                 </div>
                 <div className="btn-wrap">
                   <input

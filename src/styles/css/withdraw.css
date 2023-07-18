@@ -91,6 +91,7 @@
   top: 32px;
   border: 1px solid rgba(0, 0, 0, 0.25);
   background-color: var(--white);
+  z-index: 1;
 }
 .dropdown-check-list.visible {
   border-color: transparent;
@@ -394,9 +395,6 @@ ul.bank-refund-ul .rcard-info {
 }
 .wcr-card-amt {
   width: 200px;
-}
-.wcr-card-amt h2 {
-  color: var(--green);
 }
 .wcr-info-2 h4 {
   font-weight: 600;

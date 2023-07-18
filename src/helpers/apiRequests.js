@@ -101,7 +101,7 @@ const API_initiateCardWithdraw = apiUrl.API_TRANSACTION_INITIATE_CARD_WITHDRAW;
 const API_availableCardBalance = apiUrl.API_TRANSACTION_AVAILABLE_CARD_BALANCE;
 const API_viewBankWithdrawReceipt =
   apiUrl.API_TRANSACTION_VIEW_BANK_WITHDRAW_RECEIPT;
-
+const API_getBankDetails = apiUrl.API_TRANSACTION_GET_BANK_DETAILS;
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
 // POST @login API
@@ -438,6 +438,12 @@ export const addFund = (params) => {
   return axiosTransactionInstance.post(`${API_addFund}`, params);
 };
 
+// GET @get-bank-details (FOR MANUAL FUND)
+// @params auth_token
+export const getBankDetails = () => {
+  return axiosTransactionInstance.get(`${API_getBankDetails}`);
+};
+
 // POST @initiate-manual-fund-add
 // @params auth_token, amount, specification, fees, receipt[]
 export const initiateManualFundAdd = (params) => {
@@ -659,6 +665,7 @@ export const apiRequest = {
   invitedContactsList,
   getCharges,
   addFund,
+  getBankDetails,
   initiateManualFundAdd,
   getBalance,
   walletTransferOtp,

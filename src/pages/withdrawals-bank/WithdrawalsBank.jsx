@@ -189,8 +189,9 @@ const WithdrawalsBank = () => {
         <div className="wrb-req-btn ">
           <Button
             className="btn"
-            onClick={bank_withdraw ? handleRequestWithdraw : null}
-            disabled={loadingCardBalance || !bank_withdraw}
+            onClick={handleRequestWithdraw}
+            // onClick={bank_withdraw ? handleRequestWithdraw : null}
+            // disabled={loadingCardBalance || !bank_withdraw}
           >
             <IconPlusLarge fill="#fff" />
             Request Withdraw

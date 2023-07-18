@@ -55,12 +55,12 @@ function VerifyLoginOtp(props) {
         const { error, payload } = await dispatch(fetchLoginOtpVerify(values));
         if (error) throw payload;
       } catch (error) {
+        resetForm();
         const { message = "", data } = error || {};
         if (data?.suspend_account) {
           toast.error(message);
           navigate("/login", { replace: true });
         }
-        resetForm();
         if (typeof message === "string") setStatus(message);
       }
     },
@@ -107,6 +107,7 @@ function VerifyLoginOtp(props) {
                 className={"form-control"}
                 value={formik.values.login_otp}
                 onChange={formik.handleChange}
+                isSubmitting={formik.isSubmitting}
                 handleSubmit={formik.handleSubmit}
                 error={formik.touched.login_otp && formik.errors.login_otp}
               />

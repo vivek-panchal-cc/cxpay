@@ -1,4 +1,5 @@
 import WrapAmount from "components/wrapper/WrapAmount";
+import { withdrawConsts } from "constants/all";
 import { WithdrawDetailsContext } from "context/withdrawDetailsContext";
 import LoaderDiv from "loaders/LoaderDiv";
 import React, { useContext } from "react";
@@ -77,7 +78,11 @@ const SectionTransactionDetails = (props) => {
                 {isLoading ? (
                   <LoaderDiv height="20" width="50%" />
                 ) : (
-                  <span className="green">{status}</span>
+                  <span
+                    className={`${withdrawConsts?.[status]?.classText || ""}`}
+                  >
+                    {status}
+                  </span>
                 )}
 
                 {/* <span className="green">Success</span> /{" "} */}

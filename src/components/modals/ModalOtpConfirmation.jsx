@@ -144,6 +144,7 @@ function ModalOtpConfirmation(props) {
                     value={formik.values.otp}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
+                    isSubmitting={formik.isSubmitting}
                     handleSubmit={!formik.isSubmitting && formik.handleSubmit}
                     error={formik.touched.otp && formik.errors.otp}
                   />
