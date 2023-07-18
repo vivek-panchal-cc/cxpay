@@ -122,10 +122,10 @@ const WithdrawBank = () => {
   }, []);
 
   // For redirection to card withdraw list when bank_withdraw is disabled
-  // useEffect(() => {
-  //   if (!loadingCardBalance && bank_withdraw === false && remaining_amount > 5)
-  //     navigate("/wallet/withdrawals-card");
-  // }, [loadingCardBalance, remaining_amount, bank_withdraw]);
+  useEffect(() => {
+    if (!loadingCardBalance && bank_withdraw === false && remaining_amount > 5)
+      navigate("/wallet/withdrawals-card");
+  }, [loadingCardBalance, remaining_amount, bank_withdraw]);
 
   // For default primary bank selection
   useEffect(() => {
