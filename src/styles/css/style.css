@@ -11,6 +11,7 @@
   --green: #56be15;
   --red: #ff3333;
   --yellow: #f9db3e;
+  --orange: #ff4500;
   /* var(--sky_Blue); */
 }
 .red {
@@ -6724,6 +6725,17 @@ button.btn.btn-yellow:hover {
   background: rgba(255, 241, 0, 1);
   color: var(--dark_black);
 }
+
+button.btn.btn-orange {
+  background: rgba(255, 69, 0, 0.2);
+  color: var(--orange);
+}
+
+button.btn.btn-orange:hover {
+  background: rgba(255, 69, 0, 1);
+  color: #fff;
+}
+
 .act-user-info-wrap {
   width: 37%;
   padding-right: 30px;

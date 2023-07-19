@@ -103,6 +103,10 @@ const WithdrawalsBank = () => {
   };
 
   // For changing page from pagination
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   const handleRequestWithdraw = (e) => {
     navigate(`/wallet/withdraw-bank`);
   };

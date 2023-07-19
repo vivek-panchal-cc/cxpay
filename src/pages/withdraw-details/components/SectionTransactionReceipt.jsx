@@ -19,11 +19,12 @@ const SectionTransactionReceipt = (props) => {
         receipt_id: reciptId,
       });
       if (!data.success) throw data?.message;
-      const base64pdf = data.data;
+      const { encoded_file, file_name } = data.data;
+      const extension = file_name?.split(".")?.[1] || "";
       const dtnow = new Date().toISOString();
-      const linkSource = `data:application/pdf;base64,${base64pdf}`;
+      const linkSource = `data:application/${extension};base64,${encoded_file}`;
       const downloadLink = document.createElement("a");
-      const fileName = `${transaction_id}_${reciptId}_${dtnow}.pdf`;
+      const fileName = `${transaction_id}_${reciptId}_${dtnow}`;
       downloadLink.href = linkSource;
       downloadLink.download = fileName;
       downloadLink.click();

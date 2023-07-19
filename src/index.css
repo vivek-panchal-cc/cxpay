@@ -124,6 +124,9 @@ code {
 .cx-bg-gray {
   background: rgba(157, 162, 165, 0.1);
 }
+.cx-bg-orange {
+  background: rgba(255, 69, 0, 0.1);
+}
 
 .cx-color-blue {
   color: #0081c5;
@@ -136,4 +139,7 @@ code {
 }
 .cx-color-gray {
   color: #2c2f31;
+}
+.cx-color-orange {
+  color: #ff4500;
 }
