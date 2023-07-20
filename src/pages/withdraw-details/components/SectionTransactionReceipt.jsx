@@ -24,7 +24,7 @@ const SectionTransactionReceipt = (props) => {
       const dtnow = new Date().toISOString();
       const linkSource = `data:application/${extension};base64,${encoded_file}`;
       const downloadLink = document.createElement("a");
-      const fileName = `${transaction_id}_${reciptId}_${dtnow}`;
+      const fileName = `${transaction_id}_${reciptId}_${dtnow}.${extension}`;
       downloadLink.href = linkSource;
       downloadLink.download = fileName;
       downloadLink.click();
