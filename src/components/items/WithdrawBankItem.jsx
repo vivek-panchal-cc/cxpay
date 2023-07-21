@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import Button from "components/ui/Button";
 import { CURRENCY_SYMBOL, THEME_COLORS, withdrawConsts } from "constants/all";
-import { IconBank, IconEye } from "styles/svgs";
+import { IconBank } from "styles/svgs";
 import { useNavigate } from "react-router-dom";
 import WrapAmount from "components/wrapper/WrapAmount";
 
@@ -16,6 +16,11 @@ const WithdrawBankItem = (props) => {
     bank_name,
   } = itemDetails || {};
 
+  const {
+    classText = "",
+    classStatus = "",
+    iconAmount = "",
+  } = withdrawConsts?.[status] || {};
   const navigate = useNavigate();
 
   const handleCancelWithdrawRequest = (e) => {
@@ -58,15 +63,15 @@ const WithdrawBankItem = (props) => {
           </div>
         </div>
         <div className="rcard-status-wrap">
-          <div className="total-val-wrap">
-            <WrapAmount value={amount} prefix={`${CURRENCY_SYMBOL} +`} />
+          <div className={`total-val-wrap`}>
+            <WrapAmount
+              className={classText}
+              value={amount}
+              prefix={`${CURRENCY_SYMBOL} ${iconAmount}`}
+            />
           </div>
           <div className="status-wrap">
-            <Button
-              className={`btn ${withdrawConsts?.[status]?.classStatus || ""}`}
-            >
-              {status}
-            </Button>
+            <Button className={`btn ${classStatus}`}>{status}</Button>
             {showCancelRequestButton({
               className: "wr-bank-cancel-req d-none d-md-block ms-auto",
             })}

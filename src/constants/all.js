@@ -492,34 +492,42 @@ const activityConsts = {
 
 const withdrawConsts = {
   [ACT_STATUS_PENDING]: {
+    iconAmount: "",
     classStatus: "btn-blue",
     classText: "cx-color-blue",
   },
   [ACT_STATUS_PROCESSING]: {
+    iconAmount: "",
     classStatus: "btn-blue",
     classText: "cx-color-blue",
   },
   [ACT_STATUS_APPROVED]: {
-    classStatus: "btn-blue",
-    classText: "cx-color-blue",
+    iconAmount: "-",
+    classStatus: "btn-green",
+    classText: "cx-color-green",
   },
   [ACT_STATUS_REJECTED]: {
+    iconAmount: "",
     classStatus: "btn-red",
     classText: "cx-color-red",
   },
   [ACT_STATUS_CANCELLED]: {
+    iconAmount: "",
     classStatus: "btn-red",
     classText: "cx-color-red",
   },
   [ACT_STATUS_PAID]: {
+    iconAmount: "",
     classStatus: "btn-green",
     classText: "cx-color-green",
   },
   [ACT_STATUS_SUCCESS]: {
+    iconAmount: "",
     classStatus: "btn-green",
     classText: "cx-color-green",
   },
   [ACT_STATUS_FAILED]: {
+    iconAmount: "",
     classStatus: "btn-red",
     classText: "cx-color-red",
   },

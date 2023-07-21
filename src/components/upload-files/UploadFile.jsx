@@ -29,7 +29,6 @@ const UploadFile = (props) => {
 
   const handleDeleteFile = (index) => {
     const filteredFiles = files.filter((f, i) => i !== index);
-    console.log(filteredFiles);
     onChange(filteredFiles);
   };
 
