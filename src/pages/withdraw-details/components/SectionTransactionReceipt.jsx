@@ -64,9 +64,13 @@ const SectionTransactionReceipt = (props) => {
           {[1, 2, 3, 4]?.map((item, index) => {
             const { id = "", receipt = "" } = receipt_images?.[index] || {};
             return (
-              <li key={item}>
+              <li key={item} className={`${id ? "bg-transparent" : ""}`}>
                 {id ? (
-                  <button onClick={() => downloadRecipt(id)} download>
+                  <button
+                    className="d-flex justify-content-center align-items-center p-0"
+                    onClick={() => downloadRecipt(id)}
+                    download
+                  >
                     {getFileIcon(receipt)}
                   </button>
                 ) : null}

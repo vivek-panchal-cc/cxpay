@@ -889,6 +889,10 @@
     font-size: 22px;
     line-height: 30px;
   }
+  .wr-dwld-wrap ul li {
+    width: 52px;
+    height: 52px;
+  }
 }
 @media only screen and (max-width: 1199px) {
   .profile-right-sec {
@@ -4075,9 +4079,9 @@
     width: 45px;
     height: 45px;
   }
-  .wr-dwld-wrap ul li button svg {
+  /* .wr-dwld-wrap ul li button svg {
     width: 18px;
-  }
+  } */
   .form-choose-act-wrap svg:first-child {
     margin-right: 15px;
   }
