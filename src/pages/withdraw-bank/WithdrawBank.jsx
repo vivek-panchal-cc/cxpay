@@ -21,6 +21,7 @@ import useCountryBanks from "hooks/useCountryBanks";
 import useCharges from "hooks/useCharges";
 import WrapAmount from "components/wrapper/WrapAmount";
 import useAvailableCardBalance from "hooks/useAvailableCardBalance";
+import ModalConfirmation from "components/modals/ModalConfirmation";
 
 const WithdrawBank = () => {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const WithdrawBank = () => {
   const [selectExistingBank, setSelectExistingBank] = useState(false);
   const [disbleBankField, setDisableBankField] = useState(false);
   const [showModalRefunded, setShowModalRefunded] = useState(false);
+  const [showWithdrawConfirm, setShowWithdrawConfirm] = useState(false);
   const [modalRefundedDetails, setModalRefundedDetails] = useState({
     amount: "",
     message: "",
@@ -61,24 +63,39 @@ const WithdrawBank = () => {
     },
     validationSchema: withdrawBankSchema,
     onSubmit: async (values, { setErrors }) => {
-      try {
-        values.user_date_time = dateFormattor(new Date());
-        const { data } = await apiRequest.initiateWithdrawRequest(values);
-        if (!data.success) throw data.message;
-        setModalRefundedDetails({
-          amount: data?.data?.amount,
-          message: data?.message,
-        });
-        setShowModalRefunded(true);
-      } catch (error) {
-        console.log(error);
-        if (typeof error === "string") return toast.error(error);
-        const errorObj = {};
-        for (const property in error) errorObj[property] = error[property]?.[0];
-        setErrors(errorObj);
-      }
+      setShowWithdrawConfirm(true);
     },
   });
+
+  const handleBankWithdraw = async () => {
+    const values = formik.values || {};
+    const validateObj = await formik.validateForm(values);
+    setShowWithdrawConfirm(false);
+    if (Object.keys(validateObj).length > 0) {
+      formik.setTouched(validateObj);
+      formik.setErrors(validateObj);
+      return;
+    }
+    setIsLoading(true);
+    try {
+      values.user_date_time = dateFormattor(new Date());
+      const { data } = await apiRequest.initiateWithdrawRequest(values);
+      if (!data.success) throw data.message;
+      setModalRefundedDetails({
+        amount: data?.data?.amount,
+        message: data?.message,
+      });
+      setShowModalRefunded(true);
+    } catch (error) {
+      console.log(error);
+      if (typeof error === "string") return toast.error(error);
+      const errorObj = {};
+      for (const property in error) errorObj[property] = error[property]?.[0];
+      formik.setErrors(errorObj);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // For handling selecting bank account from the linked banks list
   const handleSelectExistingBank = async (selectedBank) => {
@@ -384,6 +401,16 @@ const WithdrawBank = () => {
           redirect="/wallet/withdrawals-bank"
         />
       </Modal>
+      <ModalConfirmation
+        id="delete-group-member-popup"
+        show={showWithdrawConfirm}
+        setShow={setShowWithdrawConfirm}
+        heading={"Are you sure want to withdraw amount?"}
+        subHeading={
+          "Once it's initiated, your requested amount will be blocked until the transaction completes."
+        }
+        handleCallback={handleBankWithdraw}
+      />
     </>
   );
 };

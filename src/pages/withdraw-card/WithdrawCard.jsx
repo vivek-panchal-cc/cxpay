@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import { CHARGES_TYPE_WD, CURRENCY_SYMBOL } from "constants/all";
 import Input from "components/ui/Input";
@@ -14,12 +14,16 @@ import { useFormik } from "formik";
 import useWithdrawDetails from "hooks/useWithdrawDetails";
 import WrapAmount from "components/wrapper/WrapAmount";
 import Button from "components/ui/Button";
+import ModalConfirmation from "components/modals/ModalConfirmation";
+import { LoaderContext } from "context/loaderContext";
 
 const WithdrawCard = () => {
   const params = useParams();
   const navigate = useNavigate();
   const { tid } = params || {};
+  const { setIsLoading } = useContext(LoaderContext);
   const [showModalRefunded, setShowModalRefunded] = useState(false);
+  const [showWithdrawConfirm, setShowWithdrawConfirm] = useState(false);
   const [modalRefundedDetails, setModalRefundedDetails] = useState({
     amount: "",
     message: "",
@@ -58,24 +62,39 @@ const WithdrawCard = () => {
     },
     validationSchema: withdrawCardSchema,
     onSubmit: async (values, { setErrors }) => {
-      try {
-        values.user_date_time = dateFormattor(new Date());
-        const { data } = await apiRequest.initiateCardWithdraw(values);
-        if (!data.success) throw data.message;
-        setModalRefundedDetails({
-          amount: data?.data?.amount,
-          message: data?.message,
-        });
-        setShowModalRefunded(true);
-      } catch (error) {
-        console.log(error);
-        if (typeof error === "string") return toast.error(error);
-        const errorObj = {};
-        for (const property in error) errorObj[property] = error[property]?.[0];
-        setErrors(errorObj);
-      }
+      setShowWithdrawConfirm(true);
     },
   });
+
+  const handleCardWithdraw = async () => {
+    const values = formik.values || {};
+    const validateObj = await formik.validateForm(values);
+    setShowWithdrawConfirm(false);
+    if (Object.keys(validateObj).length > 0) {
+      formik.setTouched(validateObj);
+      formik.setErrors(validateObj);
+      return;
+    }
+    setIsLoading(true);
+    try {
+      values.user_date_time = dateFormattor(new Date());
+      const { data } = await apiRequest.initiateCardWithdraw(values);
+      if (!data.success) throw data.message;
+      setModalRefundedDetails({
+        amount: data?.data?.amount,
+        message: data?.message,
+      });
+      setShowModalRefunded(true);
+    } catch (error) {
+      console.log(error);
+      if (typeof error === "string") return toast.error(error);
+      const errorObj = {};
+      for (const property in error) errorObj[property] = error[property]?.[0];
+      formik.setErrors(errorObj);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // For calculating fees, total, when entered amount changes
   useEffect(() => {
@@ -222,6 +241,16 @@ const WithdrawCard = () => {
           redirect="/wallet/withdrawals-card"
         />
       </Modal>
+      <ModalConfirmation
+        id="delete-group-member-popup"
+        show={showWithdrawConfirm}
+        setShow={setShowWithdrawConfirm}
+        heading={"Are you sure want to withdraw amount?"}
+        subHeading={
+          "Once it's initiated, your requested amount will be blocked until the transaction completes."
+        }
+        handleCallback={handleCardWithdraw}
+      />
     </div>
   );
 };

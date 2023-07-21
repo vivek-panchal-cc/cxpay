@@ -63,6 +63,7 @@ function ModalConfirmation(props) {
                     className="btn btn-primary px-4 py-3"
                     style={{ minWidth: "initial" }}
                     onClick={handleCallback}
+                    autoFocus={true}
                   >
                     confirm
                   </button>
