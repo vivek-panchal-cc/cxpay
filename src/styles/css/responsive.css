@@ -889,10 +889,6 @@
     font-size: 22px;
     line-height: 30px;
   }
-  .wr-dwld-wrap ul li {
-    width: 52px;
-    height: 52px;
-  }
 }
 @media only screen and (max-width: 1199px) {
   .profile-right-sec {

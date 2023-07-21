@@ -34,6 +34,7 @@ const validFileExtensions = {
     "dot",
     "dotx",
   ],
+  pdf: ["pdf"],
 };
 
 // Test Functions

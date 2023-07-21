@@ -1,9 +1,15 @@
 import React, { useContext } from "react";
 import { WithdrawDetailsContext } from "context/withdrawDetailsContext";
-import { IconDownload } from "styles/svgs";
+import {
+  IconDownload,
+  IconDownloadDocument,
+  IconDownloadImage,
+  IconDownloadPdf,
+} from "styles/svgs";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
+import { isValidFileType } from "constants/all";
 
 const SectionTransactionReceipt = (props) => {
   const { setIsLoading } = useContext(LoaderContext);
@@ -36,6 +42,17 @@ const SectionTransactionReceipt = (props) => {
     }
   };
 
+  const getFileIcon = (fileName = "") => {
+    switch (true) {
+      case isValidFileType(fileName?.toLowerCase(), "image"):
+        return <IconDownloadImage />;
+      case isValidFileType(fileName?.toLowerCase(), "pdf"):
+        return <IconDownloadPdf />;
+      default:
+        return <IconDownloadDocument />;
+    }
+  };
+
   if (withdrawType === "card") return null;
   return (
     <div className="wr-bdatail-dwld ps-xl-5 ps-md-4 border-start">
@@ -45,12 +62,12 @@ const SectionTransactionReceipt = (props) => {
       <div className="wr-dwld-wrap">
         <ul>
           {[1, 2, 3, 4]?.map((item, index) => {
-            const reciptId = receipt_images?.[index];
+            const { id = "", receipt = "" } = receipt_images?.[index] || {};
             return (
               <li key={item}>
-                {reciptId ? (
-                  <button onClick={() => downloadRecipt(reciptId)} download>
-                    <IconDownload stroke="black" />
+                {id ? (
+                  <button onClick={() => downloadRecipt(id)} download>
+                    {getFileIcon(receipt)}
                   </button>
                 ) : null}
               </li>
