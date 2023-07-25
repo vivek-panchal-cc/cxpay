@@ -3,15 +3,20 @@ import Input from "components/ui/Input";
 import UploadFile from "components/upload-files/UploadFile";
 import { useFormik } from "formik";
 import { fundCashCreditSchema } from "schemas/fundSchema";
-import { getChargedAmount } from "helpers/commonHelpers";
+import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
 import useCharges from "hooks/useCharges";
 import { CHARGES_TYPE_MF } from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { apiRequest } from "helpers/apiRequests";
 import { LoaderContext } from "context/loaderContext";
 import BankDetailsSection from "./BankDetailsSection";
+import Button from "components/ui/Button";
+import { useNavigate } from "react-router";
+import Breadcrumb from "components/breadcrumb/Breadcrumb";
+import { toast } from "react-toastify";
 
-const FundCashCredit = (props) => {
+const FundManualTopup = (props) => {
+  const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
 
   const [loadingCharges, charges] = useCharges({
@@ -19,6 +24,7 @@ const FundCashCredit = (props) => {
   });
   const [paymentDetails, setPaymentDetails] = useState({
     allCharges: [],
+    totalCharges: 0.0,
     grandTotal: 0.0,
     total: 0.0,
   });
@@ -31,14 +37,20 @@ const FundCashCredit = (props) => {
       receipt: [],
     },
     validationSchema: fundCashCreditSchema,
-    onSubmit: async (values, { setErrors }) => {
+    onSubmit: async (values, { setErrors, resetForm }) => {
       setIsLoading(true);
       try {
-        const { data } = await apiRequest.initiateManualFundAdd(values);
+        const muValues = { ...values };
+        muValues.fees = paymentDetails.totalCharges;
+        const formData = new FormData();
+        for (const key in muValues)
+          addObjToFormData(muValues[key], key, formData);
+        for (const file of values.receipt) formData.append("receipt[]", file);
+        const { data } = await apiRequest.initiateManualFundAdd(formData);
         if (!data.success) throw data.message;
+        resetForm();
         toast.success(data.message);
-        // setVisiblePopupFunded(true);
-        // storageRequest.removeSignupCreds();
+        navigate("/activities");
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
         const errorObj = {};
@@ -65,12 +77,7 @@ const FundCashCredit = (props) => {
       <div className="settings-inner-sec wallet-ac-is">
         <div className="profile-info">
           <h3>Fund your account</h3>
-          <ul className="breadcrumb">
-            <li>
-              <a href="#">Wallet</a>
-            </li>
-            <li>Fund Account</li>
-          </ul>
+          <Breadcrumb skipIndexes={[1]} />
         </div>
         <div className="wallet-fund-form-wrap">
           <form onSubmit={formik.handleSubmit}>
@@ -152,9 +159,12 @@ const FundCashCredit = (props) => {
             <div className="row">
               <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
                 <div className="btn-wrap">
-                  <a href="#" className="btn outline-btn">
+                  <Button
+                    className="btn outline-btn"
+                    onClick={() => navigate(-1)}
+                  >
                     Cancel
-                  </a>
+                  </Button>
                 </div>
                 <div className="btn-wrap">
                   <input
@@ -175,4 +185,4 @@ const FundCashCredit = (props) => {
   );
 };
 
-export default FundCashCredit;
+export default FundManualTopup;

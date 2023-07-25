@@ -16,7 +16,10 @@ const UploadFile = (props) => {
   const [previewImgs, setPreviewImgs] = useState([]);
 
   useEffect(() => {
-    if (!showPreview || !files) return;
+    if (!showPreview || !files || files.length <= 0) {
+      setPreviewImgs([]);
+      return;
+    }
     const previews = files?.map((file) => URL.createObjectURL(file) || "");
     setPreviewImgs(previews);
   }, [files]);

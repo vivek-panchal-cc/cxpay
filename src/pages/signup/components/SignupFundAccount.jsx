@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { CXPAY_LOGO, FUND_CARD } from "constants/all";
+import { CXPAY_LOGO, FUND_CARD, FUND_MANUAL } from "constants/all";
 import FundProvider from "context/fundContext";
 import { LoaderContext } from "context/loaderContext";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { storageRequest } from "helpers/storageRequests";
 import { useDispatch } from "react-redux";
 import FundCard from "./FundCard";
+import FundManual from "./FundManual";
+import InputSelect from "components/ui/InputSelect";
 
 function SignupFundAccount() {
   const { setIsLoading } = useContext(LoaderContext);
@@ -32,19 +34,19 @@ function SignupFundAccount() {
     }
   };
 
-  // Fund type change handler
-  // const handleFundTypeChange = (e) => {
-  //   const fundType = e.currentTarget.value;
-  //   navigate(`/signup/${fundType}`, { replace: true });
-  // };
+  /** Fund type change handler */
+  const handleFundTypeChange = (e) => {
+    const fundType = e.currentTarget.value;
+    navigate(`/signup/${fundType}`, { replace: true });
+  };
 
   const getFundForm = () => {
     const type = params ? params.fundtype : "";
     switch (type) {
       case FUND_CARD:
         return <FundCard />;
-      // case FUND_BANK:
-      //   return <FundBank />;
+      case FUND_MANUAL:
+        return <FundManual />;
       default:
         return <Navigate to={"/"} replace={true} />;
     }
@@ -71,7 +73,7 @@ function SignupFundAccount() {
               </div>
               <h5 className="text-center">Signup</h5>
               <h4 className="blue-text text-center">fund your Account</h4>
-              {/* <form action="">
+              <form action="">
                 <InputSelect
                   className="form-select form-control text-capitalize"
                   name="fund_type"
@@ -79,13 +81,13 @@ function SignupFundAccount() {
                   onChange={handleFundTypeChange}
                 >
                   <option value={FUND_CARD}>
-                    {FUND_CARD.replace(/-/g, " ")}{" "}
+                    {FUND_CARD.replace(/-/g, " ")}
                   </option>
-                  <option value={FUND_BANK}>
-                    {FUND_BANK.replace(/-/g, " ")}{" "}
+                  <option value={FUND_MANUAL}>
+                    {FUND_MANUAL.replace(/-/g, " ")}
                   </option>
                 </InputSelect>
-              </form> */}
+              </form>
               {/* </div> */}
               <FundProvider>{getFundForm()}</FundProvider>
             </div>

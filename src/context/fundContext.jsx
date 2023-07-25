@@ -1,12 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Modal from "components/modals/Modal";
 import AccountFundedPopup from "components/popups/AccountFundedPopup";
-import {
-  CHARGES_TYPE_PL,
-  FUND_BANK,
-  FUND_CARD,
-  FUND_CASH,
-} from "constants/all";
+import { CHARGES_TYPE_PL, FUND_BANK, FUND_CARD } from "constants/all";
 import { fetchBanksList, fetchCardsList } from "features/user/userWalletSlice";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
@@ -262,8 +257,6 @@ const FundProvider = ({ children }) => {
         );
         formik.setValues(initValCard);
         attachDefaultCard();
-        return;
-      case FUND_CASH:
         return;
       case FUND_BANK:
         const initValBank = Object.assign(

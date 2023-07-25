@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "components/ui/Input";
 import InputSelect from "components/ui/InputSelect";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
@@ -15,8 +15,10 @@ import {
 } from "styles/svgs";
 import { CURRENCY_SYMBOL } from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
+import Button from "components/ui/Button";
 
 function FundCreditCard(props) {
+  const navigate = useNavigate();
   const {
     formik,
     countryList,
@@ -26,6 +28,7 @@ function FundCreditCard(props) {
     handleSelectNewCard,
     handleSelectExistingCard,
   } = useContext(FundContext);
+
   const [showCvv, setShowCvv] = useState(false);
   const [addNewCard, setAddNewCard] = useState(false);
 
@@ -62,7 +65,7 @@ function FundCreditCard(props) {
       <div className="settings-inner-sec wallet-ac-is">
         <div className="profile-info">
           <h3>Fund your account</h3>
-          <Breadcrumb />
+          <Breadcrumb skipIndexes={[1]} />
         </div>
         <div className="wallet-fund-form-wrap">
           <form onSubmit={formik.handleSubmit}>
@@ -336,9 +339,12 @@ function FundCreditCard(props) {
             <div className="row">
               <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
                 <div className="btn-wrap">
-                  <Link to="/wallet" replace className="btn outline-btn">
+                  <Button
+                    className="btn outline-btn"
+                    onClick={() => navigate(-1)}
+                  >
                     Cancel
-                  </Link>
+                  </Button>
                 </div>
                 <div className="btn-wrap">
                   <input

@@ -3,6 +3,7 @@ import styles from "./modal.module.scss";
 import {
   ACT_REQUEST_RECEIVE,
   ACT_REQUEST_SEND,
+  ACT_STATUS_APPROVED,
   ACT_STATUS_PAID,
   ACT_STATUS_PENDING,
   ACT_TRANSACT_CREDIT,
@@ -120,6 +121,7 @@ const ModalActivityDetail = (props) => {
       case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_RECEIVE}_${ACT_STATUS_PAID}`:
       case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_CREDIT}_${ACT_STATUS_PAID}`:
       case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_DEBIT}_${ACT_STATUS_PAID}`:
+      case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_CREDIT}_${ACT_STATUS_APPROVED}`:
         return (
           <button
             type="button"

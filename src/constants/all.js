@@ -82,7 +82,7 @@ const CXPAY_SHADOW_LOGO = "/assets/images/cxpay_me_shadow_logo.png";
 
 // Fund account flow constants
 const FUND_CARD = "credit-card";
-const FUND_CASH = "cash-credit";
+const FUND_MANUAL = "manual-topup";
 const FUND_BANK = "bank-transfer";
 const MAX_PAYMENT_CONTACTS = 30;
 const MAX_REQUEST_CONTACTS = 30;
@@ -583,7 +583,7 @@ export {
   CURRENCY_SYMBOL,
   SCHEDULE_BUFFER,
   FUND_CARD,
-  FUND_CASH,
+  FUND_MANUAL,
   FUND_BANK,
   MAX_GROUP_MEMBERS,
   MAX_PAYMENT_CONTACTS,
@@ -600,6 +600,11 @@ export {
   ACT_STATUS_DECLINED,
   ACT_STATUS_CANCELLED,
   ACT_STATUS_PAID,
+  ACT_STATUS_FAILED,
+  ACT_STATUS_PROCESSING,
+  ACT_STATUS_APPROVED,
+  ACT_STATUS_REJECTED,
+  ACT_STATUS_SUCCESS,
   NOTIFY_REQUEST,
   NOTIFY_RECEIVE,
   NOTIFY_PAY_FAIL,

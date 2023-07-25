@@ -1,4 +1,4 @@
-import { FUND_CARD, FUND_CASH } from "constants/all";
+import { FUND_CARD, FUND_MANUAL } from "constants/all";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -23,10 +23,10 @@ function FundYourAccountPopup() {
                 <p>Credit Card</p>
               </div>
             </Link>
-            <Link to={`/wallet/fund-account/${FUND_CASH}`}>
+            <Link to={`/wallet/fund-account/${FUND_MANUAL}`}>
               <div className="fund-payment-option">
                 <img src="/assets/images/fund_case.svg" alt="" />
-                <p>Cash Credit</p>
+                <p>Manual Top up</p>
               </div>
             </Link>
             {/* <Link to={`/wallet/fund-account/${FUND_BANK}`}>
