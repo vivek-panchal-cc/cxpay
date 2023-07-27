@@ -18,22 +18,7 @@ const expContainNumber = /^(?=.*\d)/;
 const expContainSpecialChar = /^(?=.*[!@#$%^&*])/;
 const validFileExtensions = {
   image: ["jpg", "png", "jpeg", "svg", "heif", "hevc"],
-  receipt: [
-    "jpg",
-    "png",
-    "jpeg",
-    "heif",
-    "hevc",
-    "pdf",
-    "gif",
-    "tif",
-    "tiff",
-    "webp",
-    "docm",
-    "docx",
-    "dot",
-    "dotx",
-  ],
+  receipt: ["jpg", "png", "jpeg", "heif", "hevc", "pdf", "tif", "tiff", "webp"],
   pdf: ["pdf"],
 };
 
@@ -288,9 +273,9 @@ const activityConsts = {
           classBg: "cx-bg-blue",
           classText: "",
           classDetailStatus: "cx-color-blue",
-          textStatus: "Credit Pending",
-          textDetailStatus: "Cash credit pending",
-          desc: "You credited cash",
+          textStatus: "Topup Pending",
+          textDetailStatus: "Topup Pending",
+          desc: "From YYYY",
         },
         [ACT_STATUS_APPROVED]: {
           iconStatus: "",
@@ -299,9 +284,9 @@ const activityConsts = {
           classBg: "cx-bg-green",
           classText: "cx-color-green",
           classDetailStatus: "cx-color-green",
-          textStatus: "Credited",
-          textDetailStatus: "Cash credited",
-          desc: "You credited cash",
+          textStatus: "Topup Approved",
+          textDetailStatus: "Topup Approved",
+          desc: "Topup request approved by admin",
         },
         [ACT_STATUS_REJECTED]: {
           iconStatus: "",
@@ -310,9 +295,9 @@ const activityConsts = {
           classBg: "cx-bg-red",
           classText: "cx-color-red",
           classDetailStatus: "cx-color-red",
-          textStatus: "Rejected",
-          textDetailStatus: "Cash credit rejected",
-          desc: "You credited cash",
+          textStatus: "Topup Rejected",
+          textDetailStatus: "Topup Rejected",
+          desc: "Topup request rejected by admin",
         },
       },
       [TXN_TYPE_WW]: {

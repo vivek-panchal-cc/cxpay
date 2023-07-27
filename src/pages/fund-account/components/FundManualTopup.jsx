@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import { fundCashCreditSchema } from "schemas/fundSchema";
 import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
 import useCharges from "hooks/useCharges";
-import { CHARGES_TYPE_MF } from "constants/all";
+import { CHARGES_TYPE_MF, CURRENCY_SYMBOL } from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { apiRequest } from "helpers/apiRequests";
 import { LoaderContext } from "context/loaderContext";
@@ -84,20 +84,24 @@ const FundManualTopup = (props) => {
             <div className="row">
               <div className="col-12 p-0">
                 <div className="form-field">
+                  <p className="text-dark mb-2">
+                    Bank Details to Deposit amount
+                  </p>
                   <BankDetailsSection />
                 </div>
               </div>
             </div>
             <div className="row">
-              <div className="col-12 p-0">
+              <div className="col-12 p-0 amt-with-currency">
+                <span>{CURRENCY_SYMBOL}</span>
                 <Input
+                  id="amount"
                   type="text"
                   inputMode="decimal"
-                  id="cc_amount"
                   className="form-control"
-                  placeholder="Amount"
                   name="amount"
                   maxLength="10"
+                  placeholder="Amount"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.amount}
@@ -123,14 +127,14 @@ const FundManualTopup = (props) => {
               </div>
             </div>
             <UploadFile
+              max={3}
               name="receipt"
+              showPreview={true}
               files={formik.values.receipt}
+              error={formik.touched.receipt && formik.errors.receipt}
               onChange={async (files) =>
                 await formik.setFieldValue("receipt", files)
               }
-              showPreview={true}
-              max={3}
-              error={formik.touched.receipt && formik.errors.receipt}
             />
 
             <div className="row wallet-fund-row-amt wallet-fund-row-amt-final">

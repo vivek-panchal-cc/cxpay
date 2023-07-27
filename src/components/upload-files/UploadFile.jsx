@@ -28,6 +28,7 @@ const UploadFile = (props) => {
     const tmpfiles = e?.target?.files || [];
     if (tmpfiles.length <= 0) return;
     onChange([...files, ...tmpfiles]);
+    e.target.value = null;
   };
 
   const handleDeleteFile = (index) => {
@@ -64,9 +65,9 @@ const UploadFile = (props) => {
       </div>
       <div className="row">
         <div className="col-12 p-0">
-          <div className="form-field">
+          <div className={`form-field ${previewImgs.length <= 0 ? "m-0" : ""}`}>
             <ul className="fund-cash-download-wrap">
-              {previewImgs.map((item, index) => (
+              {previewImgs?.map((item, index) => (
                 <li
                   key={item}
                   className=""

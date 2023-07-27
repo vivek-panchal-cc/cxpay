@@ -1,9 +1,10 @@
 import useBankDetails from "hooks/useBankDetails";
 import LoaderDiv from "loaders/LoaderDiv";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { IconBank, IconDownArrow } from "styles/svgs";
 
 const BankDetailsSection = (props) => {
+  const [toggle, setToggle] = useState(false);
   const [loading, details] = useBankDetails();
   const {
     bank_name = "",
@@ -14,10 +15,10 @@ const BankDetailsSection = (props) => {
   const showLoader = useCallback(
     () => (
       <LoaderDiv
-        height="14"
-        width="80%"
         rx="2"
         ry="2"
+        height="14"
+        width="80%"
         backgroundColor={"#cbf1fe80"}
         foregroundColor={"#0081c520"}
       />
@@ -27,12 +28,31 @@ const BankDetailsSection = (props) => {
 
   return (
     <div className="fc-bdetails-dd-wrap active">
-      <div className="fc-bdetails-dd-title ">
+      <div
+        className="fc-bdetails-dd-title"
+        onClick={() => setToggle((cs) => !cs)}
+      >
         <IconBank stroke={"#363853"} />
         <span>Bank Details</span>
-        <IconDownArrow storke={"#0081C5"} />
+        <IconDownArrow
+          stroke={"#0081c5"}
+          style={{
+            transition: "all 0.5s linear",
+            ...(toggle
+              ? { transform: "rotate(180deg)" }
+              : { transform: "rotate(0deg)" }),
+          }}
+        />
       </div>
-      <div className="fc-bdetails-dd-content">
+      <div
+        className="fc-bdetails-dd-content overflow-hidden"
+        style={{
+          transition: "all 0.5s linear",
+          ...(toggle
+            ? { maxHeight: "250px" }
+            : { paddingBottom: "0", paddingTop: "0", maxHeight: "0" }),
+        }}
+      >
         <table>
           <tbody>
             <tr>
