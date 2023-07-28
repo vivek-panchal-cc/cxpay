@@ -44,6 +44,7 @@ const ModalActivityDetail = (props) => {
     specification,
     activity_type,
     request_type,
+    comment,
   } = details || {};
 
   const modalRef = useRef(null);
@@ -208,6 +209,12 @@ const ModalActivityDetail = (props) => {
                               : "Sent To"}
                           </td>
                           <td>{paid_to}</td>
+                        </tr>
+                      )}
+                      {comment && (
+                        <tr>
+                          <td>Comment</td>
+                          <td>{comment}</td>
                         </tr>
                       )}
                     </tbody>

@@ -14,6 +14,7 @@ import Button from "components/ui/Button";
 import { useNavigate } from "react-router";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import { toast } from "react-toastify";
+import ModalAlert from "components/modals/ModalAlert";
 
 const FundManualTopup = (props) => {
   const navigate = useNavigate();
@@ -21,6 +22,10 @@ const FundManualTopup = (props) => {
 
   const [loadingCharges, charges] = useCharges({
     chargesType: CHARGES_TYPE_MF,
+  });
+  const [modalDetails, setModalDetails] = useState({
+    show: false,
+    message: "",
   });
   const [paymentDetails, setPaymentDetails] = useState({
     allCharges: [],
@@ -49,8 +54,7 @@ const FundManualTopup = (props) => {
         const { data } = await apiRequest.initiateManualFundAdd(formData);
         if (!data.success) throw data.message;
         resetForm();
-        toast.success(data.message);
-        navigate("/activities");
+        setModalDetails({ show: true, message: data?.message || "" });
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
         const errorObj = {};
@@ -61,6 +65,11 @@ const FundManualTopup = (props) => {
       }
     },
   });
+
+  const handleModalCallback = () => {
+    setModalDetails({ show: false, message: "" });
+    navigate(-1);
+  };
 
   // For calculating charges when amount changes for any contact
   useEffect(() => {
@@ -185,6 +194,15 @@ const FundManualTopup = (props) => {
           </form>
         </div>
       </div>
+      <ModalAlert
+        id="manual_fund_initiated"
+        className="fund-sucess-modal"
+        show={modalDetails?.show}
+        heading={modalDetails?.message}
+        headingImg={"/assets/images/fund-success-tick.svg"}
+        btnText={"Done"}
+        handleBtnClick={handleModalCallback}
+      />
     </>
   );
 };

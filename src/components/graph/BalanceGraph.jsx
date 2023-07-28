@@ -175,7 +175,7 @@ const BalanceGraph = (props) => {
           {lockBalance ? (
             <div className="p-4 pb-0">
               <h6 className="h6" style={{ color: "#0081c5" }}>
-                Block Amount
+                Reserved Amount
               </h6>
               <h2 className="h3 text-black fw-bolder">
                 <WrapAmount value={lockBalance} />
@@ -184,7 +184,7 @@ const BalanceGraph = (props) => {
           ) : null}
         </div>
         <div className="px-2 z-1">
-          <div id="chart">
+          <div id="chart" className="overflow-hidden">
             {!isLoading && options.series[0].data.length > 0 ? (
               <ReactApexChart
                 options={options.options}

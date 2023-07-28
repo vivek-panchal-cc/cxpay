@@ -1,3 +1,4 @@
+import Button from "components/ui/Button";
 import WrapAmount from "components/wrapper/WrapAmount";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -26,13 +27,12 @@ function AccountFundedPopup(props) {
               <WrapAmount value={balance} />
             </span>
           </p>
-          <Link
-            to="/wallet"
+          <Button
             className="btn btn-primary fund-done-btn"
-            replace={true}
+            onClick={() => navigate(-1)}
           >
             Done
-          </Link>
+          </Button>
         </div>
       </div>
     </div>

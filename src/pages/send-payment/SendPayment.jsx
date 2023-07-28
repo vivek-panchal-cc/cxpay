@@ -284,7 +284,7 @@ function SendPayment(props) {
         setShow={setShowScheduleConfirmPopup}
         heading={"Are you sure want to schedule this payment?"}
         subHeading={
-          "Once It's done, your scheduled amount will be blocked until payment."
+          "Once It's done, your scheduled amount will be reserved  until payment."
         }
         handleCallback={handleConfirmScheduleSubmit}
       />

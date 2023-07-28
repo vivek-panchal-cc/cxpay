@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import { CHARGES_TYPE_WD, CURRENCY_SYMBOL } from "constants/all";
 import Input from "components/ui/Input";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { withdrawCardSchema } from "schemas/walletSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
@@ -247,7 +247,7 @@ const WithdrawCard = () => {
         setShow={setShowWithdrawConfirm}
         heading={"Are you sure want to withdraw amount?"}
         subHeading={
-          "Once it's initiated, your requested amount will be blocked until the transaction completes."
+          "Once it's initiated, your requested amount will be reserved  until the transaction completes."
         }
         handleCallback={handleCardWithdraw}
       />

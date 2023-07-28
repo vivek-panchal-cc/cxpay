@@ -407,7 +407,7 @@ const WithdrawBank = () => {
         setShow={setShowWithdrawConfirm}
         heading={"Are you sure want to withdraw amount?"}
         subHeading={
-          "Once it's initiated, your requested amount will be blocked until the transaction completes."
+          "Once it's initiated, your requested amount will be reserved  until the transaction completes."
         }
         handleCallback={handleBankWithdraw}
       />

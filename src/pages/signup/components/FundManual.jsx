@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { fundCashCreditSchema } from "schemas/fundSchema";
 import { LoaderContext } from "context/loaderContext";
 import WrapAmount from "components/wrapper/WrapAmount";
+import ModalAlert from "components/modals/ModalAlert";
 
 const FundManual = () => {
   const navigate = useNavigate();
@@ -19,6 +20,10 @@ const FundManual = () => {
 
   const [loadingCharges, charges] = useCharges({
     chargesType: CHARGES_TYPE_MF,
+  });
+  const [modalDetails, setModalDetails] = useState({
+    show: false,
+    message: "",
   });
   const [paymentDetails, setPaymentDetails] = useState({
     allCharges: [],
@@ -47,8 +52,7 @@ const FundManual = () => {
         const { data } = await apiRequest.initiateManualFundAdd(formData);
         if (!data.success) throw data.message;
         resetForm();
-        toast.success(data.message);
-        navigate("/activities");
+        setModalDetails({ show: true, message: data?.message || "" });
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
         const errorObj = {};
@@ -59,6 +63,11 @@ const FundManual = () => {
       }
     },
   });
+
+  const handleModalCallback = () => {
+    setModalDetails({ show: false, message: "" });
+    navigate("/");
+  };
 
   // For calculating charges when amount changes for any contact
   useEffect(() => {
@@ -71,94 +80,109 @@ const FundManual = () => {
   }, [formik.values?.amount, charges]);
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div className="row">
-        <div className="col-12 p-0">
-          <div className="form-field">
-            <BankDetailsSection />
+    <>
+      <form onSubmit={formik.handleSubmit}>
+        <div className="row">
+          <div className="col-12 p-0">
+            <div className="form-field">
+              <BankDetailsSection />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-12 p-0">
-          <Input
-            type="text"
-            inputMode="decimal"
-            id="cc_amount"
-            className="form-control"
-            placeholder="Amount"
-            name="amount"
-            maxLength="10"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.amount}
-            error={formik.touched.amount && formik.errors.amount}
-          />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-12 p-0">
-          <Input
-            type="text"
-            id="cc_specification"
-            className="form-control"
-            placeholder="Specification"
-            name="specification"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.specification}
-            error={formik.touched.specification && formik.errors.specification}
-          />
-        </div>
-      </div>
-      <UploadFile
-        name="receipt"
-        showPreview={true}
-        max={3}
-        files={formik.values.receipt}
-        onChange={async (files) => await formik.setFieldValue("receipt", files)}
-        error={formik.touched.receipt && formik.errors.receipt}
-      />
-      <div className="payment-footer-block p-4">
-        <ul>
-          {paymentDetails?.allCharges?.map((item, index) => (
-            <li key={item?.desc?.trim() || index}>
-              <div className="payment-footer-col-label">{item?.desc}</div>
-              <h4 className="amount d-flex justify-content-between">
-                <span>{CURRENCY_SYMBOL}</span>
-                <WrapAmount value={item?.amount} prefix="" />
-              </h4>
-            </li>
-          ))}
-          <li>
-            <div className="payment-footer-col-label">Net Payable</div>
-            <h4 className="amount d-flex justify-content-between">
-              <span>{CURRENCY_SYMBOL}</span>
-              <WrapAmount value={paymentDetails?.grandTotal} prefix="" />
-            </h4>
-          </li>
-        </ul>
-      </div>
-      <div className="row">
-        <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
-          <div className="btn-wrap">
-            <input
-              type="submit"
-              className={`btn btn-primary ${
-                formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
-              } ${formik.isValid ? "" : "opacity-75"}`}
-              disabled={formik.isSubmitting}
-              value="Fund"
+        <div className="row">
+          <div className="col-12 p-0">
+            <Input
+              type="text"
+              inputMode="decimal"
+              id="cc_amount"
+              className="form-control"
+              placeholder="Amount"
+              name="amount"
+              maxLength="10"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.amount}
+              error={formik.touched.amount && formik.errors.amount}
             />
           </div>
-          <div className="btn-wrap">
-            <Link to={"/"} className="btn outline-btn" replace={true}>
-              {"Skip >>"}
-            </Link>
+        </div>
+        <div className="row">
+          <div className="col-12 p-0">
+            <Input
+              type="text"
+              id="cc_specification"
+              className="form-control"
+              placeholder="Specification"
+              name="specification"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.specification}
+              error={
+                formik.touched.specification && formik.errors.specification
+              }
+            />
           </div>
         </div>
-      </div>
-    </form>
+        <UploadFile
+          name="receipt"
+          showPreview={true}
+          max={3}
+          files={formik.values.receipt}
+          onChange={async (files) =>
+            await formik.setFieldValue("receipt", files)
+          }
+          error={formik.touched.receipt && formik.errors.receipt}
+        />
+        <div className="payment-footer-block p-4">
+          <ul>
+            {paymentDetails?.allCharges?.map((item, index) => (
+              <li key={item?.desc?.trim() || index}>
+                <div className="payment-footer-col-label">{item?.desc}</div>
+                <h4 className="amount d-flex justify-content-between">
+                  <span>{CURRENCY_SYMBOL}</span>
+                  <WrapAmount value={item?.amount} prefix="" />
+                </h4>
+              </li>
+            ))}
+            <li>
+              <div className="payment-footer-col-label">Net Payable</div>
+              <h4 className="amount d-flex justify-content-between">
+                <span>{CURRENCY_SYMBOL}</span>
+                <WrapAmount value={paymentDetails?.grandTotal} prefix="" />
+              </h4>
+            </li>
+          </ul>
+        </div>
+        <div className="row">
+          <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
+            <div className="btn-wrap">
+              <input
+                type="submit"
+                className={`btn btn-primary ${
+                  formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                } ${formik.isValid ? "" : "opacity-75"}`}
+                disabled={formik.isSubmitting}
+                value="Fund"
+              />
+            </div>
+            <div className="btn-wrap">
+              <Link to={"/"} className="btn outline-btn" replace={true}>
+                {"Skip >>"}
+              </Link>
+            </div>
+          </div>
+        </div>
+      </form>
+      <ModalAlert
+        id="manual_fund_initiated"
+        className="fund-sucess-modal"
+        show={modalDetails?.show}
+        heading={modalDetails?.message}
+        headingImg={"/assets/images/fund-success-tick.svg"}
+        btnText={"Done"}
+        handleBtnClick={handleModalCallback}
+      />
+    </>
   );
 };
 

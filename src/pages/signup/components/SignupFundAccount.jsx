@@ -12,6 +12,7 @@ import InputSelect from "components/ui/InputSelect";
 
 function SignupFundAccount() {
   const { setIsLoading } = useContext(LoaderContext);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [accessible, setAccessible] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function SignupFundAccount() {
   const creds = storageRequest.getCredsFromtStorage();
 
   const getUserDataFirstTime = async () => {
+    setIsLoading(true);
     try {
       const { payload } = await dispatch(fetchUserProfile());
       if (
@@ -31,6 +33,7 @@ function SignupFundAccount() {
       setAccessible(false);
     } finally {
       setIsLoading(false);
+      setIsLoaded(true);
     }
   };
 
@@ -53,10 +56,10 @@ function SignupFundAccount() {
   };
 
   useEffect(() => {
-    setIsLoading(true);
     getUserDataFirstTime();
   }, []);
 
+  if (!isLoaded) return null;
   if (!accessible) return navigate("/", { replace: true });
   return (
     <div className="login-signup common-body-bg">
