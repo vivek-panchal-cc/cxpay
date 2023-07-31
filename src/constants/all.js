@@ -89,6 +89,7 @@ const NOTIFY_RECEIVE = "receive";
 const NOTIFY_PAY_FAIL = "payment_fail";
 const NOTIFY_PAY_COMPLETE = "payment_completed";
 const NOTIFY_CON_REGISTER = "contact_register";
+const NOTIFY_MANUAL_TOPUP = "manual_top_up";
 
 // Notifications Type Constants
 const notificationType = {
@@ -111,6 +112,10 @@ const notificationType = {
   [NOTIFY_CON_REGISTER]: {
     icon: IconNotifyContactAccept,
     redirect: "/contacts",
+  },
+  [NOTIFY_MANUAL_TOPUP]: {
+    icon: IconNotifyMoneyRecieved,
+    redirect: "/activities",
   },
   "": {
     icon: "",
@@ -289,7 +294,7 @@ const activityConsts = {
           desc: "Topup request approved by admin",
         },
         [ACT_STATUS_REJECTED]: {
-          iconStatus: "",
+          iconStatus: <IconActReqDecline />,
           iconAmount: "",
           classStatus: "btn-red",
           classBg: "cx-bg-red",
@@ -418,7 +423,7 @@ const activityConsts = {
           desc: "Refund request approved by admin",
         },
         [ACT_STATUS_REJECTED]: {
-          iconStatus: "",
+          iconStatus: <IconActReqDecline />,
           iconAmount: "",
           classStatus: "btn-red",
           classBg: "cx-bg-red",
@@ -429,7 +434,7 @@ const activityConsts = {
           desc: "Refund request rejected by admin",
         },
         [ACT_STATUS_DECLINED]: {
-          iconStatus: "",
+          iconStatus: <IconActReqDecline />,
           iconAmount: "",
           classStatus: "btn-red",
           classBg: "cx-bg-red",
