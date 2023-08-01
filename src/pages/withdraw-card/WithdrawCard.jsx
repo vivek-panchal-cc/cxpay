@@ -16,11 +16,13 @@ import WrapAmount from "components/wrapper/WrapAmount";
 import Button from "components/ui/Button";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { LoaderContext } from "context/loaderContext";
+import { SystemOptionsContext } from "context/systemOptionsContext";
 
 const WithdrawCard = () => {
   const params = useParams();
   const navigate = useNavigate();
   const { tid } = params || {};
+  const { SUPPORT_EMAIL } = useContext(SystemOptionsContext);
   const { setIsLoading } = useContext(LoaderContext);
   const [showModalRefunded, setShowModalRefunded] = useState(false);
   const [showWithdrawConfirm, setShowWithdrawConfirm] = useState(false);
@@ -178,7 +180,7 @@ const WithdrawCard = () => {
             <div>
               It will takes 2 to 4 working days to complete this transaction.
               For any query, drop a mail on{" "}
-              <a href="mailto:hello@cxpay.global">hello@cxpay.global</a>
+              <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
             </div>
             {/* <!-- payment blocks footer section starts --> */}
             <div className="row wbr-final-amt-wrap">
@@ -247,7 +249,7 @@ const WithdrawCard = () => {
         setShow={setShowWithdrawConfirm}
         heading={"Are you sure want to withdraw amount?"}
         subHeading={
-          "Once it's initiated, your requested amount will be reserved  until the transaction completes."
+          "Once it's initiated, your requested amount will be reserved until the transaction completes."
         }
         handleCallback={handleCardWithdraw}
       />

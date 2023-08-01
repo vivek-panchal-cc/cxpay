@@ -19,23 +19,23 @@ const DownloadImage = (props) => {
       <path
         d="M43.75 14.75H26.25C24.8693 14.75 23.75 15.8693 23.75 17.25V34.75C23.75 36.1307 24.8693 37.25 26.25 37.25H43.75C45.1307 37.25 46.25 36.1307 46.25 34.75V17.25C46.25 15.8693 45.1307 14.75 43.75 14.75Z"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M30.625 23.5C31.6605 23.5 32.5 22.6605 32.5 21.625C32.5 20.5895 31.6605 19.75 30.625 19.75C29.5895 19.75 28.75 20.5895 28.75 21.625C28.75 22.6605 29.5895 23.5 30.625 23.5Z"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M46.25 29.75L40 23.5L26.25 37.25"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M0 47H69V53C69 61.8366 61.8366 69 53 69H16C7.16344 69 0 61.8366 0 53V47Z"

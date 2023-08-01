@@ -22,11 +22,13 @@ import useCharges from "hooks/useCharges";
 import WrapAmount from "components/wrapper/WrapAmount";
 import useAvailableCardBalance from "hooks/useAvailableCardBalance";
 import ModalConfirmation from "components/modals/ModalConfirmation";
+import { SystemOptionsContext } from "context/systemOptionsContext";
 
 const WithdrawBank = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { defaultBank } = useSelector((state) => state.userWallet);
+  const { SUPPORT_EMAIL } = useContext(SystemOptionsContext);
   const { setIsLoading } = useContext(LoaderContext);
   const [addNewBank, setAddNewBank] = useState(false);
   const [selectExistingBank, setSelectExistingBank] = useState(false);
@@ -337,7 +339,7 @@ const WithdrawBank = () => {
               <div>
                 It will takes 2 to 4 working days to complete this transaction.
                 For any query, drop a mail on{" "}
-                <a href="mailto:hello@cxpay.global">hello@cxpay.global</a>
+                <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
               </div>
               <div className="row wbr-final-amt-wrap">
                 <div className="col-12 p-0">
@@ -407,7 +409,7 @@ const WithdrawBank = () => {
         setShow={setShowWithdrawConfirm}
         heading={"Are you sure want to withdraw amount?"}
         subHeading={
-          "Once it's initiated, your requested amount will be reserved  until the transaction completes."
+          "Once it's initiated, your requested amount will be reserved until the transaction completes."
         }
         handleCallback={handleBankWithdraw}
       />

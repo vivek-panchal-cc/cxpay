@@ -45,6 +45,7 @@ import WithdrawalsBank from "pages/withdrawals-bank/WithdrawalsBank";
 import WithdrawCard from "pages/withdraw-card/WithdrawCard";
 import WithdrawBank from "pages/withdraw-bank/WithdrawBank";
 import WithdrawDetails from "pages/withdraw-details/WithdrawDetails";
+import useSystemOptions from "hooks/useSystemOptions";
 
 async function loadData() {
   await import(`./styles/js/custom`);

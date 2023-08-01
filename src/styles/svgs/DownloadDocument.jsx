@@ -14,37 +14,37 @@ const DownloadDocument = (props) => {
       <path
         d="M37.9163 14.4167H28.2497C27.6087 14.4167 26.994 14.6714 26.5408 15.1246C26.0876 15.5778 25.833 16.1925 25.833 16.8334V36.1667C25.833 36.8077 26.0876 37.4224 26.5408 37.8756C26.994 38.3288 27.6087 38.5834 28.2497 38.5834H42.7497C43.3906 38.5834 44.0053 38.3288 44.4585 37.8756C44.9117 37.4224 45.1663 36.8077 45.1663 36.1667V21.6667L37.9163 14.4167Z"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M37.917 14.4167V21.6667H45.167"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M31.875 26H39.125"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M31.875 29H39.125"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M31.875 32H39.125"
         stroke="white"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M0 47H69V53C69 61.8366 61.8366 69 53 69H16C7.16344 69 0 61.8366 0 53V47Z"
