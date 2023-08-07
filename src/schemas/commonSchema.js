@@ -6,10 +6,9 @@ import {
   exp0ContainWhitespace,
   isValidFileType,
   exp0ContainWordPassword,
+  FILE_SIZE,
 } from "constants/all";
 import valid from "card-validator";
-
-const FILE_SIZE = 5 * 1048576;
 
 const emailSchema = yup
   .string()

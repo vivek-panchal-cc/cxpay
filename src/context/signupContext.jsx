@@ -1,5 +1,5 @@
 import { storageRequest } from "helpers/storageRequests";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import useCountriesCities from "hooks/useCountriesCities";
 
 const initialValues = {
@@ -18,6 +18,10 @@ const SignupProvider = ({ children }) => {
   const creds = storageRequest.getCredsFromtStorage();
   const [signUpCreds, setSignUpCreds] = useState(creds || initialValues);
   const [countries, cities] = useCountriesCities();
+  const signupValues = useMemo(
+    () => ({ signUpCreds, setSignUpCreds }),
+    [signUpCreds, setSignUpCreds]
+  );
 
   useEffect(() => {
     const creds = storageRequest.getCredsFromtStorage();
@@ -39,7 +43,7 @@ const SignupProvider = ({ children }) => {
   }, [countries, cities]);
 
   return (
-    <SignupContext.Provider value={{ signUpCreds, setSignUpCreds }}>
+    <SignupContext.Provider value={signupValues}>
       {children}
     </SignupContext.Provider>
   );

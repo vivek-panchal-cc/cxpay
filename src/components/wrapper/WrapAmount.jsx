@@ -1,5 +1,5 @@
-import { CURRENCY_SYMBOL } from "constants/all";
 import React from "react";
+import { CURRENCY_SYMBOL } from "constants/all";
 import { NumericFormat } from "react-number-format";
 
 const WrapAmount = ({ value, toFixed = 2, affix = "prefix", ...props }) => {
@@ -13,7 +13,7 @@ const WrapAmount = ({ value, toFixed = 2, affix = "prefix", ...props }) => {
       thousandSeparator
       allowNegative
       {...(affix === "prefix" ? { prefix: `${CURRENCY_SYMBOL} ` } : {})}
-      {...(affix === "suffix" ? { suffix: `${CURRENCY_SYMBOL} ` } : {})}
+      {...(affix === "suffix" ? { suffix: ` ${CURRENCY_SYMBOL}` } : {})}
       {...props}
     />
   );

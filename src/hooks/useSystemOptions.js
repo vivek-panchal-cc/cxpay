@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { apiRequest } from "helpers/apiRequests";
 
 const useSystemOptions = () => {
@@ -18,7 +18,7 @@ const useSystemOptions = () => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getSystemOptions();
   }, []);
 

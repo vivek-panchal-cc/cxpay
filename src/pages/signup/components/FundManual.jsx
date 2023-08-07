@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Input from "components/ui/Input";
 import UploadFile from "components/upload-files/UploadFile";
-import { CHARGES_TYPE_MF, CURRENCY_SYMBOL } from "constants/all";
+import { CHARGES_TYPE_MF, CURRENCY_SYMBOL, FILE_SIZE } from "constants/all";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
 import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
@@ -124,9 +124,10 @@ const FundManual = () => {
           </div>
         </div>
         <UploadFile
+          max={3}
+          maxSize={FILE_SIZE}
           name="receipt"
           showPreview={true}
-          max={3}
           files={formik.values.receipt}
           onChange={async (files) =>
             await formik.setFieldValue("receipt", files)

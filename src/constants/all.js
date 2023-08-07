@@ -51,6 +51,7 @@ const isValidFileType = (fileName, fileType) => {
 };
 
 const otpCounterTime = 180;
+const FILE_SIZE = 5 * 1048576;
 
 // theme colors
 const THEME_COLORS = ["light_blue"];
@@ -607,6 +608,7 @@ export {
   WITHDRAW_OPTIONS_TABS_LIST,
   WITHDRAW_STATUS_FILTER_CARD,
   WITHDRAW_STATUS_FILTER_BANK,
+  FILE_SIZE,
 };
 export {
   regexContainCapitalLetter,

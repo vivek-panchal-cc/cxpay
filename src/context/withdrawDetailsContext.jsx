@@ -1,5 +1,5 @@
 import useWithdrawDetails from "hooks/useWithdrawDetails";
-import React from "react";
+import React, { useMemo } from "react";
 import { useParams } from "react-router-dom";
 
 export const WithdrawDetailsContext = React.createContext({});
@@ -12,14 +12,17 @@ const WithdrawDetailsProvider = ({ children }) => {
     withdrawType: type,
   });
 
+  const withdrawDetails = useMemo(
+    () => ({
+      isLoading: loadingDetails,
+      withdrawType: type?.toLowerCase(),
+      details: details,
+    }),
+    [loadingDetails, details, type]
+  );
+
   return (
-    <WithdrawDetailsContext.Provider
-      value={{
-        isLoading: loadingDetails,
-        withdrawType: type?.toLowerCase(),
-        details: details,
-      }}
-    >
+    <WithdrawDetailsContext.Provider value={withdrawDetails}>
       {children}
     </WithdrawDetailsContext.Provider>
   );

@@ -10,6 +10,7 @@ const UploadFile = (props) => {
     onChange = () => {},
     showPreview = true,
     max = 3,
+    maxSize = Number.MAX_VALUE,
     error = "",
   } = props || {};
 
@@ -20,7 +21,11 @@ const UploadFile = (props) => {
       setPreviewImgs([]);
       return;
     }
-    const previews = files?.map((file) => URL.createObjectURL(file) || "");
+    const previews = files?.map((file) => ({
+      url: URL.createObjectURL(file),
+      size: file.size,
+      isError: file?.size > maxSize,
+    }));
     setPreviewImgs(previews);
   }, [files]);
 
@@ -69,10 +74,12 @@ const UploadFile = (props) => {
             <ul className="fund-cash-download-wrap">
               {previewImgs?.map((item, index) => (
                 <li
-                  key={item}
+                  key={item?.url || index}
                   className=""
                   style={{
-                    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.40), rgba(0, 0, 0, 0.40)), url('${item}')`,
+                    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.40), rgba(0, 0, 0, 0.40)), url('${item?.url}')`,
+                    border: item?.isError ? "2px solid red" : "",
+                    boxShadow: item?.isError ? "inset 0 0 15px #ff0000" : "",
                   }}
                 >
                   <div className="fc-download-file">

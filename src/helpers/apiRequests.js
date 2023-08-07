@@ -1,4 +1,5 @@
 import * as apiUrl from "constants/urls";
+import { param } from "jquery";
 import {
   axiosLoginInstance,
   axiosOnboardInstance,
@@ -701,6 +702,25 @@ export const getAllSystemOptions = () => {
   return axiosOnboardInstance.post(`${API_getAllSystemOptions}`);
 };
 
+// Add fund with Cybersource, APIs ------------------------------------------------------------------------------------------
+
+/** POST @setup-payerauth
+ * @param card_number, transactionAmount, expiry_date, save_card
+ * @returns success, message, data: { transactionId, referenceId, accessToken, deviceDataCollectionUrl }
+ */
+export const setupPayerAuth = (params) => {
+  return axiosTransactionInstance.post(`${"/setup-payerauth"}`, params);
+};
+
+/** POST @check-enrollment
+ * @param status, referenceId
+ * @returns success, message, data: null
+ * @returns success, message, data: { veResEnrolled, paResStatus, transactionId, referenceId, accessToken, stepUpURL }
+ */
+export const checkEnrollment = (params) => {
+  return axiosTransactionInstance.post(`${"/check-enrollment"}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -785,4 +805,7 @@ export const apiRequest = {
   cardTransactionsList,
   cardTransactionsDetails,
   getAllSystemOptions,
+  // cybersource add-fund
+  setupPayerAuth,
+  checkEnrollment,
 };

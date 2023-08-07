@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import { fundCashCreditSchema } from "schemas/fundSchema";
 import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
 import useCharges from "hooks/useCharges";
-import { CHARGES_TYPE_MF, CURRENCY_SYMBOL } from "constants/all";
+import { CHARGES_TYPE_MF, CURRENCY_SYMBOL, FILE_SIZE } from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { apiRequest } from "helpers/apiRequests";
 import { LoaderContext } from "context/loaderContext";
@@ -137,6 +137,7 @@ const FundManualTopup = (props) => {
             </div>
             <UploadFile
               max={3}
+              maxSize={FILE_SIZE}
               name="receipt"
               showPreview={true}
               files={formik.values.receipt}

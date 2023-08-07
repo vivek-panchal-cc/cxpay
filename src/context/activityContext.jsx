@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { apiRequest } from "helpers/apiRequests";
 import { SendPaymentContext } from "./sendPaymentContext";
 import { LoaderContext } from "./loaderContext";
@@ -167,8 +167,13 @@ const ActivityProvider = ({ children }) => {
     }
   };
 
+  const activityValues = useMemo(
+    () => ({ reloadList, handleActivityDetail }),
+    [reloadList, handleActivityDetail]
+  );
+
   return (
-    <ActivityContext.Provider value={{ reloadList, handleActivityDetail }}>
+    <ActivityContext.Provider value={activityValues}>
       {children}
       <ModalActivityDetail
         id="user-details-popup"

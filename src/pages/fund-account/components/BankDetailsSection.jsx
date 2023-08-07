@@ -4,7 +4,7 @@ import React, { useCallback, useState } from "react";
 import { IconBank, IconDownArrow } from "styles/svgs";
 
 const BankDetailsSection = (props) => {
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
   const [loading, details] = useBankDetails();
   const {
     bank_name = "",
