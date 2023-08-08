@@ -16,6 +16,8 @@ import { fundSchema } from "schemas/fundSchema";
 import { LoaderContext } from "./loaderContext";
 import useCountryBanks from "hooks/useCountryBanks";
 import { getChargedAmount } from "helpers/commonHelpers";
+import { fetchSetupPayerAuth } from "features/payment/payAddFundSlice";
+import ModalPaymentAddFund from "components/modals/ModalPaymentAddFund";
 
 const initialValues = {
   email: "",
@@ -85,19 +87,21 @@ const FundProvider = ({ children }) => {
     onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
       setIsLoading(true);
       try {
-        const [{ data: dataFund }, { data: dataBalance }] = await Promise.all([
-          await apiRequest.addFund(values),
-          await apiRequest.getBalance(),
-        ]);
-        if (!dataFund.success || !dataBalance.success)
-          throw dataFund.success ? dataBalance.message : dataFund.message;
-        toast.success(dataFund.message);
-        setFundedDetails({
-          fund: paymentDetails.total,
-          balance: dataBalance?.data?.available_balance,
-        });
-        setVisiblePopupFunded(true);
-        storageRequest.removeSignupCreds();
+        // const [{ data: dataFund }, { data: dataBalance }] = await Promise.all([
+        //   await apiRequest.addFund(values),
+        //   await apiRequest.getBalance(),
+        // ]);
+        // if (!dataFund.success || !dataBalance.success)
+        //   throw dataFund.success ? dataBalance.message : dataFund.message;
+        // toast.success(dataFund.message);
+        // setFundedDetails({
+        //   fund: paymentDetails.total,
+        //   balance: dataBalance?.data?.available_balance,
+        // });
+        // setVisiblePopupFunded(true);
+        // storageRequest.removeSignupCreds();
+        const { error, payload } = await dispatch(fetchSetupPayerAuth(values));
+        if (error) throw payload;
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
         const errorObj = {};
@@ -367,6 +371,7 @@ const FundProvider = ({ children }) => {
       >
         <AccountFundedPopup {...fundedDetails} />
       </Modal>
+      <ModalPaymentAddFund id="fund_payment_modal" />
       {params.fundtype === FUND_CARD &&
         (selectExistingCard ? <SelectCard /> : children)}
       {params.fundtype === FUND_BANK &&

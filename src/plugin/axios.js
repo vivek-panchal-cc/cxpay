@@ -1,6 +1,5 @@
 import axios from "axios";
 import { storageRequest } from "helpers/storageRequests";
-import { apiRequest } from "helpers/apiRequests";
 import { API_LOGIN_REFRESH_TOKEN } from "constants/urls";
 import { toast } from "react-toastify";
 import { browserName, fullVersion, timeZone } from "../helpers/headerRequests";

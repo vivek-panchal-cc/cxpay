@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { apiRequest } from "helpers/apiRequests";
 
 const initialState = {
-  loadingPayment: "",
+  loadingPayment: false,
   transactionDetails: {},
   setupDeviceAuthDetails: {
     transactionId: "",
@@ -11,6 +11,7 @@ const initialState = {
     deviceDataCollectionUrl: "",
   },
   enrollmentAuthDetails: {
+    status: "",
     veResEnrolled: "",
     paResStatus: "",
     transactionId: "",
@@ -24,7 +25,7 @@ const initialState = {
 };
 
 /** fetchSetupPayerAuth
- * @param card_number, transactionAmount, expiry_date, save_card
+ * @params card_number, transactionAmount, expiry_date, save_card
  * @returns success, message, data: { transactionId, referenceId, accessToken, deviceDataCollectionUrl }
  */
 export const fetchSetupPayerAuth = createAsyncThunk(
@@ -41,7 +42,7 @@ export const fetchSetupPayerAuth = createAsyncThunk(
 );
 
 /** fetchCheckEnrollment
- * @param status, referenceId
+ * @params status, referenceId
  * @returns success, message, data: null
  * @returns success, message, data: { veResEnrolled, paResStatus, transactionId, referenceId, accessToken, stepUpURL }
  */
@@ -58,9 +59,9 @@ export const fetchCheckEnrollment = createAsyncThunk(
   }
 );
 
-const paymentAddFundSlice = createSlice({
+const payAddFundSlice = createSlice({
   initialState: initialState,
-  name: "paymentAddFundSlice",
+  name: "payAddFund",
   extraReducers: (builder) => {
     builder.addCase(fetchSetupPayerAuth.pending, (state, action) => {
       return Object.assign({ ...initialState }, { loadingPayment: true });
@@ -71,14 +72,15 @@ const paymentAddFundSlice = createSlice({
       state.paymentStatus = "IN_PROGRESS";
     });
     builder.addCase(fetchSetupPayerAuth.rejected, (state, action) => {
+      state.error = true;
       state.loadingPayment = false;
       state.transactionDetails = action.payload.creds;
-      state.paymentStatus = "FAILED";
-      state.error = true;
       state.errorMessage = action.payload?.message || "";
+      state.paymentStatus = "FAILED";
     });
     builder.addCase(fetchCheckEnrollment.pending, (state, action) => {
       state.loadingPayment = true;
+      state.paymentStatus = "IN_PROGRESS";
     });
     builder.addCase(fetchCheckEnrollment.fulfilled, (state, action) => {
       state.loadingPayment = true;
@@ -87,11 +89,13 @@ const paymentAddFundSlice = createSlice({
       state.paymentStatus = "IN_PROGRESS";
     });
     builder.addCase(fetchCheckEnrollment.rejected, (state, action) => {
+      state.error = true;
       state.loadingPayment = false;
       state.transactionDetails = action.payload.creds;
-      state.paymentStatus = "FAILED";
-      state.error = true;
       state.errorMessage = action.payload?.message || "";
+      state.paymentStatus = "FAILED";
     });
   },
 });
+
+export default payAddFundSlice.reducer;
