@@ -85,7 +85,7 @@ const FundProvider = ({ children }) => {
     initialValues: {},
     validationSchema: fundSchema,
     onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
-      setIsLoading(true);
+      // setIsLoading(true);
       try {
         // const [{ data: dataFund }, { data: dataBalance }] = await Promise.all([
         //   await apiRequest.addFund(values),
@@ -108,7 +108,7 @@ const FundProvider = ({ children }) => {
         for (const property in error) errorObj[property] = error[property]?.[0];
         setErrors(errorObj);
       } finally {
-        setIsLoading(false);
+        // setIsLoading(false);
       }
     },
   });

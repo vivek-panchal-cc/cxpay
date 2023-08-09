@@ -19,9 +19,8 @@ const initialState = {
     accessToken: "",
     stepUpURL: "",
   },
-  paymentStatus: "", // IN_PROGRESS | COMPLETED | FAILED
-  error: false,
-  errorMessage: "",
+  paymentStatus: "", // IN_PROGRESS | IN_WAITING | COMPLETED | FAILED
+  message: "",
 };
 
 /** fetchSetupPayerAuth
@@ -34,7 +33,7 @@ export const fetchSetupPayerAuth = createAsyncThunk(
     try {
       const { data } = await apiRequest.setupPayerAuth(creds);
       if (!data.success) throw data.message;
-      return { data: data?.data, creds };
+      return { ...data, creds };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -52,7 +51,7 @@ export const fetchCheckEnrollment = createAsyncThunk(
     try {
       const { data } = await apiRequest.checkEnrollment(creds);
       if (!data.success) throw data.message;
-      return { data: data?.data, creds };
+      return { ...data, creds };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -62,6 +61,18 @@ export const fetchCheckEnrollment = createAsyncThunk(
 const payAddFundSlice = createSlice({
   initialState: initialState,
   name: "payAddFund",
+  reducers: {
+    fundPaymentCompleted(state, action) {
+      state.loadingPayment = false;
+      state.paymentStatus = "COMPLETED";
+      state.message = action.payload?.message || "";
+    },
+    fundPaymentFailed(state, action) {
+      state.loadingPayment = false;
+      state.paymentStatus = "FAILED";
+      state.message = action.payload?.message || "";
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchSetupPayerAuth.pending, (state, action) => {
       return Object.assign({ ...initialState }, { loadingPayment: true });
@@ -69,13 +80,13 @@ const payAddFundSlice = createSlice({
     builder.addCase(fetchSetupPayerAuth.fulfilled, (state, action) => {
       state.setupDeviceAuthDetails = action.payload.data;
       state.transactionDetails = action.payload.creds;
+      state.message = action.payload?.message || "";
       state.paymentStatus = "IN_PROGRESS";
     });
     builder.addCase(fetchSetupPayerAuth.rejected, (state, action) => {
-      state.error = true;
       state.loadingPayment = false;
       state.transactionDetails = action.payload.creds;
-      state.errorMessage = action.payload?.message || "";
+      state.message = action.payload?.message || "";
       state.paymentStatus = "FAILED";
     });
     builder.addCase(fetchCheckEnrollment.pending, (state, action) => {
@@ -83,19 +94,34 @@ const payAddFundSlice = createSlice({
       state.paymentStatus = "IN_PROGRESS";
     });
     builder.addCase(fetchCheckEnrollment.fulfilled, (state, action) => {
-      state.loadingPayment = true;
-      state.enrollmentAuthDetails = action.payload.data;
-      state.transactionDetails = action.payload.creds;
-      state.paymentStatus = "IN_PROGRESS";
+      const { status = "" } = action.payload?.data || {};
+      const { message = "" } = action.payload || "";
+      state.message = message;
+      switch (status) {
+        case "AUTHORIZED":
+          state.loadingPayment = false;
+          state.paymentStatus = "COMPLETED";
+          return;
+        case "PENDING_AUTHENTICATION":
+          state.loadingPayment = true;
+          state.enrollmentAuthDetails = action.payload?.data || {};
+          state.paymentStatus = "IN_WAITING";
+          return;
+        case "AUTHENTICATION_FAILED":
+          state.loadingPayment = false;
+          state.paymentStatus = "FAILED";
+          return;
+      }
     });
     builder.addCase(fetchCheckEnrollment.rejected, (state, action) => {
-      state.error = true;
       state.loadingPayment = false;
       state.transactionDetails = action.payload.creds;
-      state.errorMessage = action.payload?.message || "";
+      state.message = action.payload?.message || "";
       state.paymentStatus = "FAILED";
     });
   },
 });
 
+export const { fundPaymentCompleted, fundPaymentFailed } =
+  payAddFundSlice.actions;
 export default payAddFundSlice.reducer;
