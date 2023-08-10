@@ -709,7 +709,7 @@ export const getAllSystemOptions = () => {
  * @returns success, message, data: { transactionId, referenceId, accessToken, deviceDataCollectionUrl }
  */
 export const setupPayerAuth = (params) => {
-  return axiosTransactionInstance.post(`${"/setup-payerauth"}`, params);
+  return axiosTransactionInstance.post(`${"/add-fund-with-card"}`, params);
 };
 
 /** POST @check-enrollment

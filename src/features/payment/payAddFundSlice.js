@@ -59,8 +59,8 @@ export const fetchCheckEnrollment = createAsyncThunk(
 );
 
 const payAddFundSlice = createSlice({
-  initialState: initialState,
   name: "payAddFund",
+  initialState,
   reducers: {
     fundPaymentCompleted(state, action) {
       state.loadingPayment = false;

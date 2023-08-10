@@ -170,13 +170,13 @@ const ModalPaymentAddFund = (props) => {
   }, [loadingPayment]);
 
   useEffect(() => {
-    // const stepUpIframe = document.getElementsByName("step-up-iframe")[0];
-    // if (!stepUpIframe) return;
-    // const formsList =
-    //   stepUpIframe.contentWindow.document.getElementsByName("form");
-    // for (const form of formsList) {
-    //   console.log(form);
-    // }
+    const stepUpIframe = document.querySelector(
+      "iframe[name='step-up-iframe']"
+    );
+    if (!stepUpIframe) return;
+    stepUpIframe.addEventListener("load", () => {
+      console.log("JSK");
+    });
   }, [appChildrens]);
 
   if (!loadingPayment) return;
