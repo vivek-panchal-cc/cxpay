@@ -14,6 +14,7 @@ const ModalPaymentAddFund = (props) => {
   const modalRef = useRef(null);
   const modalBodyRef = useRef(null);
   const dataCollectFormRef = useRef(null);
+  const dataCollectFrameRef = useRef(null);
   const dispatch = useDispatch();
   const {
     loadingPayment,
@@ -98,6 +99,7 @@ const ModalPaymentAddFund = (props) => {
         name: "step-up-iframe",
         height: "400",
         width: "100%",
+        ref: (ref) => (dataCollectFrameRef.current = ref),
       });
       const inputJwt = React.createElement("input", {
         type: "hidden",
@@ -122,18 +124,13 @@ const ModalPaymentAddFund = (props) => {
   }, [enrollmentAuthDetails]);
 
   useEffect(() => {
-    if (dataCollectFormRef.current) {
-      dataCollectFormRef.current.submit();
-    }
-  }, [appChildrens, appChildrens.length]);
-
-  useEffect(() => {
     const handleEvent = (event) => {
       const { message, data, origin } = event;
       if (origin === "https://centinelapistag.cardinalcommerce.com") {
         const { MessageType, SessionId, Status } = JSON.parse(data || "");
         dispatch(
           fetchCheckEnrollment({
+            security_code: transactionDetails?.security_code || "",
             status: Status,
             referenceId,
           })
@@ -166,18 +163,14 @@ const ModalPaymentAddFund = (props) => {
   }, [enrollmentAuthDetails]);
 
   useEffect(() => {
-    if (loadingPayment) setLoading(true);
-  }, [loadingPayment]);
+    if (dataCollectFormRef.current) {
+      dataCollectFormRef.current.submit();
+    }
+  }, [appChildrens, appChildrens.length]);
 
   useEffect(() => {
-    const stepUpIframe = document.querySelector(
-      "iframe[name='step-up-iframe']"
-    );
-    if (!stepUpIframe) return;
-    stepUpIframe.addEventListener("load", () => {
-      console.log("JSK");
-    });
-  }, [appChildrens]);
+    if (loadingPayment) setLoading(true);
+  }, [loadingPayment]);
 
   if (!loadingPayment) return;
   return (

@@ -713,7 +713,7 @@ export const setupPayerAuth = (params) => {
 };
 
 /** POST @check-enrollment
- * @param status, referenceId
+ * @params status, referenceId, security_code
  * @returns success, message, data: null
  * @returns success, message, data: { veResEnrolled, paResStatus, transactionId, referenceId, accessToken, stepUpURL }
  */
