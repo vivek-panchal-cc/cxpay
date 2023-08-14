@@ -21,8 +21,6 @@ function FundCreditCard(props) {
   const navigate = useNavigate();
   const {
     formik,
-    countryList,
-    cityList,
     paymentDetails,
     disbleCardField,
     handleSelectNewCard,
@@ -148,106 +146,6 @@ function FundCreditCard(props) {
                     )}
                   </span>
                 </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-6 col-12 col-left p-0">
-                <Input
-                  type="name"
-                  className="form-control"
-                  placeholder="First Name"
-                  name="card_holder_first_name"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.card_holder_first_name}
-                  error={
-                    formik.touched.card_holder_first_name &&
-                    formik.errors.card_holder_first_name
-                  }
-                />
-              </div>
-              <div className="col-lg-6 col-12 col-right p-0">
-                <Input
-                  type="name"
-                  className="form-control"
-                  placeholder="Last Name"
-                  name="card_holder_last_name"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.card_holder_last_name}
-                  error={
-                    formik.touched.card_holder_last_name &&
-                    formik.errors.card_holder_last_name
-                  }
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-12 p-0">
-                <Input
-                  type="text"
-                  className="form-control"
-                  placeholder="Email"
-                  name="email"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.email}
-                  error={formik.touched.email && formik.errors.email}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-12 p-0">
-                <Input
-                  type="text"
-                  id="billing_address"
-                  className="form-control"
-                  placeholder="Billing Address"
-                  name="billing_address"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.billing_address}
-                  error={
-                    formik.touched.billing_address &&
-                    formik.errors.billing_address
-                  }
-                />
-              </div>
-            </div>
-            <div className="form-field two-fields mb-0">
-              <div className="field-half">
-                <InputSelect
-                  className="form-select form-control"
-                  name="country"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.country}
-                  error={formik.touched.country && formik.errors.country}
-                >
-                  <option value={""}>Select Country</option>
-                  {countryList?.map((country, index) => (
-                    <option key={country.iso} value={country.iso}>
-                      {country.country_name}
-                    </option>
-                  ))}
-                </InputSelect>
-              </div>
-              <div className="field-half">
-                <InputSelect
-                  className="form-select form-control"
-                  name="city"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.city}
-                  error={formik.touched.city && formik.errors.city}
-                >
-                  <option value={""}>Select City</option>
-                  {cityList[formik.values.country]?.map((city) => (
-                    <option key={city.city_name} value={city.city_name}>
-                      {city.city_name}
-                    </option>
-                  ))}
-                </InputSelect>
               </div>
             </div>
             <div className="row">

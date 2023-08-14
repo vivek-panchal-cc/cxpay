@@ -12,13 +12,13 @@ const contentTitles = [
   },
 ];
 
-function Breadcrumb(props) {
-  const {
-    divider,
-    activelinkcolor,
-    inactivelinkcolor,
-    skipIndexes = [],
-  } = props;
+function Breadcrumb({
+  divider = null,
+  activelinkcolor = null,
+  inactivelinkcolor = null,
+  skipIndexes = [],
+  ...props
+}) {
   const location = useLocation();
   const [crumbs, setCrumbs] = useState([]);
 

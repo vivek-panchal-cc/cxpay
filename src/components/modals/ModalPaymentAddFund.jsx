@@ -1,16 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./modal.module.scss";
 import { useDispatch, useSelector } from "react-redux";
+import LoaderPaymentProcess from "loaders/LoaderPaymentProcess";
+import { toast } from "react-toastify";
+import styles from "./modal.module.scss";
 import {
   fetchCheckEnrollment,
   fundPaymentCompleted,
   fundPaymentFailed,
+  fundPaymentReset,
 } from "features/payment/payAddFundSlice";
-import LoaderPaymentProcess from "loaders/LoaderPaymentProcess";
-import { toast } from "react-toastify";
+import {
+  API_TRANSACTION_DATE_COLLECTED_ORIGIN,
+  API_TRANSACTION_PAYMENT_RETURN_ORIGIN,
+} from "constants/urls";
 
 const ModalPaymentAddFund = (props) => {
-  const { id, className, classNameChild } = props;
+  const {
+    id,
+    className,
+    classNameChild,
+    onFundCompleted = () => {},
+    onFundFailed = () => {},
+  } = props;
   const modalRef = useRef(null);
   const modalBodyRef = useRef(null);
   const dataCollectFormRef = useRef(null);
@@ -55,11 +66,15 @@ const ModalPaymentAddFund = (props) => {
         setLoading(false);
         setAppChildrens([]);
         toast.success(message);
+        onFundCompleted();
+        dispatch(fundPaymentReset());
         break;
       case "FAILED":
         setLoading(false);
         setAppChildrens([]);
         toast.error(message);
+        onFundFailed();
+        dispatch(fundPaymentReset());
         break;
       default:
         break;
@@ -126,7 +141,7 @@ const ModalPaymentAddFund = (props) => {
   useEffect(() => {
     const handleEvent = (event) => {
       const { message, data, origin } = event;
-      if (origin === "https://centinelapistag.cardinalcommerce.com") {
+      if (origin === API_TRANSACTION_DATE_COLLECTED_ORIGIN) {
         const { MessageType, SessionId, Status } = JSON.parse(data || "");
         dispatch(
           fetchCheckEnrollment({
@@ -146,8 +161,8 @@ const ModalPaymentAddFund = (props) => {
   useEffect(() => {
     const handleEvent = (event) => {
       const { data, origin } = event;
-      if (origin === `http://14.194.129.238:5056`) {
-        console.log(data);
+      if (origin === API_TRANSACTION_PAYMENT_RETURN_ORIGIN) {
+        console.log("JSK", data);
         try {
           if (!data.success) throw data?.message;
           dispatch(fundPaymentCompleted({ message: data?.message }));
@@ -160,7 +175,7 @@ const ModalPaymentAddFund = (props) => {
     return () => {
       window.removeEventListener("message", handleEvent);
     };
-  }, [enrollmentAuthDetails]);
+  }, []);
 
   useEffect(() => {
     if (dataCollectFormRef.current) {

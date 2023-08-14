@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import Modal from "components/modals/Modal";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import AccountFundedPopup from "components/popups/AccountFundedPopup";
+import Modal from "components/modals/Modal";
 import { CHARGES_TYPE_PL, FUND_BANK, FUND_CARD } from "constants/all";
 import { fetchBanksList, fetchCardsList } from "features/user/userWalletSlice";
 import { useFormik } from "formik";
@@ -16,14 +16,15 @@ import { fundSchema } from "schemas/fundSchema";
 import { LoaderContext } from "./loaderContext";
 import useCountryBanks from "hooks/useCountryBanks";
 import { getChargedAmount } from "helpers/commonHelpers";
-import { fetchSetupPayerAuth } from "features/payment/payAddFundSlice";
+import { fetchAddFundWithCard } from "features/payment/payAddFundSlice";
 import ModalPaymentAddFund from "components/modals/ModalPaymentAddFund";
+import useCharges from "hooks/useCharges";
 
 const initialValues = {
-  email: "",
-  country: "",
-  city: "",
-  transactionType: "PL",
+  // email: "",
+  // country: "",
+  // city: "",
+  // transactionType: "PL",
   transactionAmount: "",
   chargedAmount: "0.00", // not required for API
 };
@@ -34,9 +35,6 @@ const cardCreds = {
   expiry_full: "", // not required for API
   expiry_date: "", // mm/yyyy
   security_code: "",
-  card_holder_first_name: "",
-  card_holder_last_name: "",
-  billing_address: "",
   save_card: false,
   txn_mode: "CARD",
 };
@@ -61,6 +59,9 @@ const FundProvider = ({ children }) => {
   const dispatch = useDispatch();
   const { setIsLoading } = useContext(LoaderContext);
   const { userProfile, userWallet } = useSelector((state) => state);
+  const [loadingCharges, charges] = useCharges({
+    chargesType: CHARGES_TYPE_PL,
+  });
   const [countryList, cityList] = useCountriesCities();
   const [banksList] = useCountryBanks();
 
@@ -70,7 +71,6 @@ const FundProvider = ({ children }) => {
   const [selectExistingBank, setSelectExistingBank] = useState(false);
   const [visiblePopupFunded, setVisiblePopupFunded] = useState(false);
   const [fundedDetails, setFundedDetails] = useState({ fund: "", balance: "" });
-  const [charges, setCharges] = useState([]);
   const [paymentDetails, setPaymentDetails] = useState({
     allCharges: [],
     grandTotal: 0.0,
@@ -82,40 +82,38 @@ const FundProvider = ({ children }) => {
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: {},
+    initialValues: {
+      ...initialValues,
+      ...(params.fundtype === FUND_CARD ? cardCreds : {}),
+      ...(params.fundtype === FUND_BANK ? bankCreds : {}),
+    },
     validationSchema: fundSchema,
     onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
-      // setIsLoading(true);
       try {
-        // const [{ data: dataFund }, { data: dataBalance }] = await Promise.all([
-        //   await apiRequest.addFund(values),
-        //   await apiRequest.getBalance(),
-        // ]);
-        // if (!dataFund.success || !dataBalance.success)
-        //   throw dataFund.success ? dataBalance.message : dataFund.message;
-        // toast.success(dataFund.message);
-        // setFundedDetails({
-        //   fund: paymentDetails.total,
-        //   balance: dataBalance?.data?.available_balance,
-        // });
-        // setVisiblePopupFunded(true);
-        // storageRequest.removeSignupCreds();
-        const { error, payload } = await dispatch(fetchSetupPayerAuth(values));
-        if (error) throw payload;
+        switch (params.fundtype) {
+          case FUND_CARD:
+            const { error, payload } = await dispatch(
+              fetchAddFundWithCard(values)
+            );
+            if (error) throw payload;
+            break;
+          case FUND_BANK:
+            return;
+          default:
+            return;
+        }
+        storageRequest.removeSignupCreds();
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
         const errorObj = {};
         for (const property in error) errorObj[property] = error[property]?.[0];
         setErrors(errorObj);
-      } finally {
-        // setIsLoading(false);
       }
     },
   });
 
   // ---------------------- FOR CARD ----------------------------------------------------
   const attachDefaultCard = async () => {
-    setIsLoading(true);
     await dispatch(fetchCardsList());
     setIsLoading(false);
   };
@@ -128,16 +126,11 @@ const FundProvider = ({ children }) => {
     const muValues = Object.assign(
       { ...formik.values },
       {
-        country: card.country,
-        city: card.city,
-        email: card.email,
         card_id: card.id,
         card_number: card.card_number,
         expiry_full: date,
         expiry_date: card.expiry_date,
-        card_holder_first_name: card.card_holder_first_name,
-        card_holder_last_name: card.card_holder_last_name,
-        billing_address: card.billing_address,
+        security_code: "",
       }
     );
     formik.setValues(muValues);
@@ -150,24 +143,12 @@ const FundProvider = ({ children }) => {
 
   const handleSelectNewCard = () => {
     setDisableCardField(false);
-    const muValues = Object.assign(
-      { ...initialValues },
-      {
-        country,
-        city,
-        email,
-        card_holder_first_name: first_name,
-        card_holder_last_name: last_name,
-        billing_address: address,
-      }
-    );
-    const values = Object.assign({ ...cardCreds }, { ...muValues });
+    const values = Object.assign({ ...cardCreds }, { ...initialValues });
     formik.setValues(values);
   };
 
   // ---------------------- FOR BANK ----------------------------------------------------
   const attachDefaultBank = async () => {
-    setIsLoading(true);
     await dispatch(fetchBanksList());
     setIsLoading(false);
   };
@@ -215,13 +196,19 @@ const FundProvider = ({ children }) => {
     formik.setValues(values);
   };
 
-  // For getting the charges of payment from API
-  const getPaymentCharges = async () => {
+  //   ---------------------------------------------------------------------------------------------------------------
+
+  // On successfull payment done
+  const handlePaymentCompleted = async () => {
     setIsLoading(true);
     try {
-      const { data } = await apiRequest.getCharges(CHARGES_TYPE_PL);
-      if (!data.success) throw data.message;
-      setCharges(data.data);
+      const { data } = await apiRequest.getBalance();
+      if (!data.success) throw data?.message;
+      setFundedDetails({
+        fund: paymentDetails.total || "",
+        balance: data?.data?.available_balance || "",
+      });
+      setVisiblePopupFunded(true);
     } catch (error) {
       console.log(error);
     } finally {
@@ -229,18 +216,10 @@ const FundProvider = ({ children }) => {
     }
   };
 
-  //   ---------------------------------------------------------------------------------------------------------------
-  useEffect(() => {
-    (async () => {
-      await getPaymentCharges();
-    })();
-  }, []);
-
   useEffect(() => {
     if (
       !userProfile.profile ||
       Object.keys(userProfile.profile).length <= 0 ||
-      countryList.length <= 0 ||
       !params.fundtype
     )
       return;
@@ -248,18 +227,10 @@ const FundProvider = ({ children }) => {
       { ...initialValues },
       { country, city, email }
     );
+    setIsLoading(true);
     switch (params.fundtype) {
       case FUND_CARD:
-        const initValCard = Object.assign(
-          { ...cardCreds },
-          {
-            ...muValues,
-            card_holder_first_name: first_name,
-            card_holder_last_name: last_name,
-            billing_address: address,
-          }
-        );
-        formik.setValues(initValCard);
+        formik.setValues({ ...cardCreds, ...initialValues });
         attachDefaultCard();
         return;
       case FUND_BANK:
@@ -278,7 +249,7 @@ const FundProvider = ({ children }) => {
       default:
         return;
     }
-  }, [userProfile.profile, countryList, params]);
+  }, [userProfile.profile, params]);
 
   useEffect(() => {
     if (params.fundtype !== FUND_CARD || countryList.length <= 0) return;
@@ -289,22 +260,6 @@ const FundProvider = ({ children }) => {
     if (params.fundtype !== FUND_BANK || countryList.length <= 0) return;
     userWallet.defaultBank && integrateBankDetails(userWallet.defaultBank);
   }, [userWallet.defaultBank]);
-
-  // useEffect(() => {
-  //   const amount = formik.values.transactionAmount
-  //     ? parseFloat(formik.values.transactionAmount)
-  //     : "";
-  //   if (!formik.values.transactionAmount || !chargesDetails || isNaN(amount)) {
-  //     setChargesDetails((cs) => ({ ...cs, fees: "0.00" }));
-  //     formik.setFieldValue("chargedAmount", "0.00");
-  //     return;
-  //   }
-  //   const percentage = parseFloat(chargesDetails.percentage);
-  //   const fees = amount * (percentage / 100);
-  //   const actualAmount = amount - fees;
-  //   setChargesDetails((cs) => ({ ...cs, fees: fees.toFixed(2).toString() }));
-  //   formik.setFieldValue("chargedAmount", actualAmount.toFixed(2).toString());
-  // }, [formik.values.transactionAmount]);
 
   // For calculating charges when amount changes for any contact
   useEffect(() => {
@@ -317,6 +272,7 @@ const FundProvider = ({ children }) => {
     setPaymentDetails(chargesDetails);
   }, [formik.values?.transactionAmount, charges]);
 
+  // For Bank Account-Type changes
   useEffect(() => {
     const { account_type } = formik?.values || {};
     if (!account_type) return;
@@ -346,24 +302,38 @@ const FundProvider = ({ children }) => {
     })();
   }, [formik.values.account_type]);
 
+  const fundDetails = useMemo(
+    () => ({
+      // countryList,
+      // cityList,
+      // banksList,
+      // disbleBankField,
+      // integrateBankDetails,
+      // handleSelectNewBank,
+      // handleSelectExistingBank,
+      formik,
+      disbleCardField,
+      paymentDetails,
+      integrateCardDetails,
+      handleSelectNewCard,
+      handleSelectExistingCard,
+    }),
+    [
+      formik,
+      disbleCardField,
+      paymentDetails,
+      integrateCardDetails,
+      handleSelectNewCard,
+      handleSelectExistingCard,
+    ]
+  );
+
   return (
-    <FundContext.Provider
-      value={{
-        formik,
-        countryList,
-        cityList,
-        banksList,
-        disbleCardField,
-        disbleBankField,
-        paymentDetails,
-        integrateCardDetails,
-        integrateBankDetails,
-        handleSelectNewCard,
-        handleSelectNewBank,
-        handleSelectExistingCard,
-        handleSelectExistingBank,
-      }}
-    >
+    <FundContext.Provider value={fundDetails}>
+      <ModalPaymentAddFund
+        id="fund_payment_modal"
+        onFundCompleted={handlePaymentCompleted}
+      />
       <Modal
         id="fund_sucess_modal"
         className="fund-sucess-modal"
@@ -371,7 +341,6 @@ const FundProvider = ({ children }) => {
       >
         <AccountFundedPopup {...fundedDetails} />
       </Modal>
-      <ModalPaymentAddFund id="fund_payment_modal" />
       {params.fundtype === FUND_CARD &&
         (selectExistingCard ? <SelectCard /> : children)}
       {params.fundtype === FUND_BANK &&

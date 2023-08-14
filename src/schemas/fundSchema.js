@@ -47,10 +47,10 @@ const cardNumberSchema2 = yup.string().when("card_id", {
 });
 
 const fundSchema = yup.object().shape({
-  email: emailSchema,
-  country: countrySchema,
-  city: citySchema,
-  transactionType: yup.string().required(),
+  // email: emailSchema,
+  // country: countrySchema,
+  // city: citySchema,
+  // transactionType: yup.string().required(),
   transactionAmount: yup
     .string()
     .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
@@ -61,13 +61,6 @@ const fundSchema = yup.object().shape({
   card_number: yupWhenCard(cardNumberSchema2),
   expiry_date: yupWhenCard(cardExpirySchema),
   security_code: yupWhenCard(cardCvvSchema),
-  card_holder_first_name: yupWhenCard(
-    firstNameSchema.required("Please enter first name")
-  ),
-  card_holder_last_name: yupWhenCard(
-    lastNameSchema.required("Please enter last name")
-  ),
-  billing_address: yupWhenCard(billingAddressSchema),
   save_card: yupWhenCard(yup.boolean()),
   // Validations For BANK
   bank_id: yupWhenBank(yup.string()),

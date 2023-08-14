@@ -1,9 +1,10 @@
+import React from "react";
 import Button from "components/ui/Button";
 import WrapAmount from "components/wrapper/WrapAmount";
-import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function AccountFundedPopup(props) {
+  const navigate = useNavigate();
   const { fund, balance } = props;
 
   return (

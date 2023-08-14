@@ -23,15 +23,15 @@ const initialState = {
   message: "",
 };
 
-/** fetchSetupPayerAuth
+/** fetchAddFundWithCard
  * @params card_number, transactionAmount, expiry_date, save_card
  * @returns success, message, data: { transactionId, referenceId, accessToken, deviceDataCollectionUrl }
  */
-export const fetchSetupPayerAuth = createAsyncThunk(
-  "payment/setupPayerAuth",
+export const fetchAddFundWithCard = createAsyncThunk(
+  "payment/addFundWithCard",
   async (creds, thunkAPI) => {
     try {
-      const { data } = await apiRequest.setupPayerAuth(creds);
+      const { data } = await apiRequest.addFundWithCard(creds);
       if (!data.success) throw data.message;
       return { ...data, creds };
     } catch (error) {
@@ -72,18 +72,21 @@ const payAddFundSlice = createSlice({
       state.paymentStatus = "FAILED";
       state.message = action.payload?.message || "";
     },
+    fundPaymentReset(state, action) {
+      return { ...initialState };
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchSetupPayerAuth.pending, (state, action) => {
+    builder.addCase(fetchAddFundWithCard.pending, (state, action) => {
       return Object.assign({ ...initialState }, { loadingPayment: true });
     });
-    builder.addCase(fetchSetupPayerAuth.fulfilled, (state, action) => {
+    builder.addCase(fetchAddFundWithCard.fulfilled, (state, action) => {
       state.setupDeviceAuthDetails = action.payload.data;
       state.transactionDetails = action.payload.creds;
       state.message = action.payload?.message || "";
       state.paymentStatus = "IN_PROGRESS";
     });
-    builder.addCase(fetchSetupPayerAuth.rejected, (state, action) => {
+    builder.addCase(fetchAddFundWithCard.rejected, (state, action) => {
       state.loadingPayment = false;
       state.transactionDetails = action.payload.creds;
       state.message = action.payload?.message || "";
@@ -122,6 +125,6 @@ const payAddFundSlice = createSlice({
   },
 });
 
-export const { fundPaymentCompleted, fundPaymentFailed } =
+export const { fundPaymentCompleted, fundPaymentFailed, fundPaymentReset } =
   payAddFundSlice.actions;
 export default payAddFundSlice.reducer;

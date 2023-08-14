@@ -704,11 +704,11 @@ export const getAllSystemOptions = () => {
 
 // Add fund with Cybersource, APIs ------------------------------------------------------------------------------------------
 
-/** POST @setup-payerauth
+/** POST @add-fund-with-card
  * @param card_number, transactionAmount, expiry_date, save_card
  * @returns success, message, data: { transactionId, referenceId, accessToken, deviceDataCollectionUrl }
  */
-export const setupPayerAuth = (params) => {
+export const addFundWithCard = (params) => {
   return axiosTransactionInstance.post(`${"/add-fund-with-card"}`, params);
 };
 
@@ -806,6 +806,6 @@ export const apiRequest = {
   cardTransactionsDetails,
   getAllSystemOptions,
   // cybersource add-fund
-  setupPayerAuth,
+  addFundWithCard,
   checkEnrollment,
 };

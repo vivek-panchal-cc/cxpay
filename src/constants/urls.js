@@ -99,3 +99,9 @@ export const API_TRANSACTION_INITIATE_CARD_WITHDRAW = "/initiate-card-withdraw";
 export const API_TRANSACTION_AVAILABLE_CARD_BALANCE = "/available-card-balance";
 export const API_TRANSACTION_VIEW_BANK_WITHDRAW_RECEIPT =
   "/view-bank-withdraw-receipt";
+
+// URLs for payments redirects and responses
+export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =
+  "https://centinelapistag.cardinalcommerce.com";
+export const API_TRANSACTION_PAYMENT_RETURN_ORIGIN =
+  process.env.REACT_APP_API_PAYMENT_RETURN || "http://3.140.192.108:8083";
