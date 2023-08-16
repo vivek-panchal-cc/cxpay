@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "components/ui/Button";
 import WrapAmount from "components/wrapper/WrapAmount";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function AccountFundedPopup(props) {
   const navigate = useNavigate();
+  const location = useLocation();
   const { fund, balance } = props;
+
+  useEffect(() => {
+    console.log("JSK", location);
+  }, [location]);
+
+  const handleRedirect = () => {
+    navigate("/wallet", { replace: true });
+  };
 
   return (
     <div className="modal-dialog modal-dialog-centered">
@@ -30,7 +39,7 @@ function AccountFundedPopup(props) {
           </p>
           <Button
             className="btn btn-primary fund-done-btn"
-            onClick={() => navigate(-1)}
+            onClick={handleRedirect}
           >
             Done
           </Button>

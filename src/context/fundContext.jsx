@@ -16,7 +16,10 @@ import { fundSchema } from "schemas/fundSchema";
 import { LoaderContext } from "./loaderContext";
 import useCountryBanks from "hooks/useCountryBanks";
 import { getChargedAmount } from "helpers/commonHelpers";
-import { fetchAddFundWithCard } from "features/payment/payAddFundSlice";
+import {
+  fetchAddFundWithCard,
+  fundPaymentReset,
+} from "features/payment/payAddFundSlice";
 import ModalPaymentAddFund from "components/modals/ModalPaymentAddFund";
 import useCharges from "hooks/useCharges";
 
@@ -271,6 +274,19 @@ const FundProvider = ({ children }) => {
     const chargesDetails = getChargedAmount(charges, [amount]);
     setPaymentDetails(chargesDetails);
   }, [formik.values?.transactionAmount, charges]);
+
+  useEffect(() => {
+    return () => {
+      switch (params.fundtype) {
+        case FUND_CARD:
+          return dispatch(fundPaymentReset());
+        case FUND_BANK:
+          return;
+        default:
+          return dispatch(fundPaymentReset());
+      }
+    };
+  }, [params]);
 
   // For Bank Account-Type changes
   useEffect(() => {

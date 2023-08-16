@@ -29,7 +29,7 @@ import SystemOptionsProvider from "context/systemOptionsContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <LoaderProvider>
         <SystemOptionsProvider>
@@ -39,5 +39,5 @@ root.render(
         </SystemOptionsProvider>
       </LoaderProvider>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

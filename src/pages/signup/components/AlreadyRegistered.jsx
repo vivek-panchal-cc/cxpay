@@ -9,7 +9,7 @@ function AlreadyRegistered(props) {
           <h3>Already Registered</h3>
         </div>
         <div className="modal-body">
-          <p style={{ "margin-bottom": "25px" }}>
+          <p style={{ "marginBottom": "25px" }}>
             Mobile number is already registered
           </p>
           {/* <p className="user_name">{username}</p> */}

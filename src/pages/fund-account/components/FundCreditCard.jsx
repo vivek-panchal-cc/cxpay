@@ -58,6 +58,25 @@ function FundCreditCard(props) {
     formik.setFieldValue("expiry_date", mmyy);
   };
 
+  // useEffect(() => {
+  //   const handlePopState = (state) => {
+  //     console.log("CALLED11", state);
+  //     const lostConfirm = confirm("Your work will be lost");
+  //     if (lostConfirm) {
+  //       // dispatch(fundPaymentReset());
+  //       window.removeEventListener("popstate", handlePopState);
+  //     } else {
+  //       window.removeEventListener("popstate", handlePopState);
+  //       navigate("/wallet/fund-account/credit-card");
+  //       // window.history.pushState(null, document.title, window.location.href);
+  //     }
+  //   };
+  //   window.addEventListener("popstate", handlePopState);
+  //   // return () => {
+  //   //   window.removeEventListener("popstate", handlePopState);
+  //   // };
+  // }, []);
+
   return (
     <>
       <div className="settings-inner-sec wallet-ac-is">
