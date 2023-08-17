@@ -18,7 +18,6 @@ const Profile = () => {
     last_name = "",
     company_name = "",
     mobile_number,
-    country_code,
   } = profile || {};
   const profileName =
     user_type === "personal" ? first_name + " " + last_name : company_name;
@@ -34,7 +33,7 @@ const Profile = () => {
     try {
       await dispatch(
         fetchDeactivateAccount({
-          mobile_number: `${country_code}-${mobile_number}`,
+          mobile_number: `${mobile_number}`,
         })
       );
     } catch (error) {

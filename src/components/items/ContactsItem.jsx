@@ -48,9 +48,7 @@ const ContactsItem = (props) => {
         )}
       </label>
       <div className="con-listing-phone">
-        <p>
-          +{contact?.country_code} {contact?.mobile}
-        </p>
+        <p>+{contact?.mobile}</p>
       </div>
       <div
         className={`${contact?.name ? "con-listing-mail" : "invited-con-mail"}`}

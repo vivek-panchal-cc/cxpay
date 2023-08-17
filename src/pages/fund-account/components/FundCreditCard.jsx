@@ -110,7 +110,7 @@ function FundCreditCard(props) {
             </div>
             <div className="row">
               <div className="col-lg-6 col-12 col-left col p-0">
-                <div className="form-field position-relative z-1">
+                <div className="form-field position-relative z-2">
                   <DatePicker
                     id="datepickeradd-card"
                     selected={formik.values.expiry_full}

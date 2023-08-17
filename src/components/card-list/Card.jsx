@@ -10,18 +10,19 @@ const Card = (props) => {
     cardBgImg,
     cardBgColor,
   } = props;
+
   return (
     <div
       className={`${customClass}`}
       style={
         cardBgImg
           ? {
-              background: `url(${cardBgImg})`,
+              background: `url(${cardBgImg}), url(${"/assets/images/chart-duumy.png"})`,
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
             }
-          : { backgroundColor: cardBgColor }
+          : { backgroundColor: cardBgColor || "#000" }
       }
     >
       {!cardBgImg ? <IconCardBackground /> : null}

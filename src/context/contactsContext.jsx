@@ -35,7 +35,7 @@ const ContactsProvider = ({ children }) => {
     setContacts = () => {}
   ) => {
     const reqData = {
-      country_code: contact?.country_code || "",
+      // country_code: contact?.country_code || "",
       mobile: contact?.mobile || "",
       mark_as_fav: contact.is_favourite ? 0 : 1,
     };
@@ -58,12 +58,12 @@ const ContactsProvider = ({ children }) => {
     try {
       const delContacts = [];
       contacts?.map((con) => {
-        const { account_number, country_code, mobile } = con;
+        const { account_number, mobile } = con;
         if (
           delContactUniqIds.includes(account_number) ||
           delContactUniqIds.includes(mobile)
         )
-          delContacts.push({ country_code, mobile });
+          delContacts.push({ mobile });
         return con;
       });
       const { data } = await apiRequest.deleteContact({

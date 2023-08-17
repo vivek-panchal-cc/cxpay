@@ -154,7 +154,7 @@ const ProfileInfo = (props) => {
         <div className="pi-title-div">Phone No.</div>
         <div className="profile-info-right-desc">
           <p>
-            + {country_code} {mobile_number}
+            +{country_code} {mobile_number}
           </p>
         </div>
       </li>
