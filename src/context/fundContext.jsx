@@ -275,18 +275,18 @@ const FundProvider = ({ children }) => {
     setPaymentDetails(chargesDetails);
   }, [formik.values?.transactionAmount, charges]);
 
-  useEffect(() => {
-    return () => {
-      switch (params.fundtype) {
-        case FUND_CARD:
-          return dispatch(fundPaymentReset());
-        case FUND_BANK:
-          return;
-        default:
-          return dispatch(fundPaymentReset());
-      }
-    };
-  }, [params]);
+  // useEffect(() => {
+  //   return () => {
+  //     switch (params.fundtype) {
+  //       case FUND_CARD:
+  //         return dispatch(fundPaymentReset());
+  //       case FUND_BANK:
+  //         return;
+  //       default:
+  //         return dispatch(fundPaymentReset());
+  //     }
+  //   };
+  // }, [params]);
 
   // For Bank Account-Type changes
   useEffect(() => {

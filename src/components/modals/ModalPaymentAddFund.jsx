@@ -13,6 +13,7 @@ import {
   API_TRANSACTION_DATE_COLLECTED_ORIGIN,
   API_TRANSACTION_PAYMENT_RETURN_ORIGIN,
 } from "constants/urls";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ModalPaymentAddFund = (props) => {
   const {
@@ -35,6 +36,9 @@ const ModalPaymentAddFund = (props) => {
     paymentStatus,
     message,
   } = useSelector((state) => state.payAddFund);
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [appChildrens, setAppChildrens] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -162,7 +166,6 @@ const ModalPaymentAddFund = (props) => {
     const handleEvent = (event) => {
       const { data, origin } = event;
       if (origin === API_TRANSACTION_PAYMENT_RETURN_ORIGIN) {
-        console.log("JSK", data);
         try {
           if (!data.success) throw data?.message;
           dispatch(fundPaymentCompleted({ message: data?.message }));
@@ -185,6 +188,24 @@ const ModalPaymentAddFund = (props) => {
 
   useEffect(() => {
     if (loadingPayment) setLoading(true);
+  }, [loadingPayment]);
+
+  useEffect(() => {
+    const handlePopState = (e) => {
+      const lostConfirm = confirm("Your work will be lost");
+      window.removeEventListener("popstate", handlePopState);
+      if (lostConfirm) {
+        dispatch(fundPaymentReset());
+      } else {
+        navigate(location.pathname);
+      }
+      navigate(location.pathname, { replace: true });
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      if (!loadingPayment)
+        window.removeEventListener("popstate", handlePopState);
+    };
   }, [loadingPayment]);
 
   if (!loadingPayment) return;
