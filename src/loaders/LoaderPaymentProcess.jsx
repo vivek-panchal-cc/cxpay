@@ -7,7 +7,7 @@ const LoaderPaymentProcess = (props) => {
       className={`${styles.default}`}
       style={{
         height: "400px",
-        background: "#fff",
+        background: "#00000000",
         ...(props?.style || {}),
       }}
     >

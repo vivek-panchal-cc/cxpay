@@ -61,7 +61,8 @@ const FundProvider = ({ children }) => {
   const params = useParams();
   const dispatch = useDispatch();
   const { setIsLoading } = useContext(LoaderContext);
-  const { userProfile, userWallet } = useSelector((state) => state);
+  const { userProfile, userWallet, payAddFund } = useSelector((state) => state);
+  const { loadingPayment = false, paymentStatus = "" } = payAddFund || {};
   const [loadingCharges, charges] = useCharges({
     chargesType: CHARGES_TYPE_PL,
   });
@@ -276,17 +277,16 @@ const FundProvider = ({ children }) => {
   }, [formik.values?.transactionAmount, charges]);
 
   // useEffect(() => {
-  //   return () => {
-  //     switch (params.fundtype) {
-  //       case FUND_CARD:
-  //         return dispatch(fundPaymentReset());
-  //       case FUND_BANK:
-  //         return;
-  //       default:
-  //         return dispatch(fundPaymentReset());
-  //     }
-  //   };
-  // }, [params]);
+  //   switch (params.fundtype) {
+  //     case FUND_CARD:
+  //       if (loadingPayment || paymentStatus) dispatch(fundPaymentReset());
+  //       break;
+  //     case FUND_BANK:
+  //       return;
+  //     default:
+  //       return;
+  //   }
+  // }, []);
 
   // For Bank Account-Type changes
   useEffect(() => {

@@ -138,7 +138,12 @@ const ModalPaymentAddFund = (props) => {
         ref: (ref) => (dataCollectFormRef.current = ref),
         children: [inputJwt, inputMd],
       });
-      setAppChildrens((cs) => cs.concat([iframe, form]));
+      if (appChildrens.length > 2) {
+        const muChild = [appChildrens[0], appChildrens[1], null, null];
+        muChild[3] = iframe;
+        muChild[4] = form;
+        setAppChildrens(muChild);
+      } else setAppChildrens((cs) => cs.concat([iframe, form]));
     }
   }, [enrollmentAuthDetails]);
 
@@ -191,15 +196,15 @@ const ModalPaymentAddFund = (props) => {
   }, [loadingPayment]);
 
   useEffect(() => {
-    const handlePopState = (e) => {
-      const lostConfirm = confirm("Your work will be lost");
-      window.removeEventListener("popstate", handlePopState);
-      if (lostConfirm) {
+    const handlePopState = async (e) => {
+      const conLeave = confirm("Do you want to leave this site?");
+      if (conLeave) {
         dispatch(fundPaymentReset());
+        window.addEventListener("popstate", null);
       } else {
+        window.addEventListener("popstate", null);
         navigate(location.pathname);
       }
-      navigate(location.pathname, { replace: true });
     };
     window.addEventListener("popstate", handlePopState);
     return () => {
@@ -222,11 +227,25 @@ const ModalPaymentAddFund = (props) => {
               <h3 className="text-center">Processing Your Payment</h3>
             </div>
             <div
-              className="modal-body d-flex justify-content-center flex-column"
+              className="modal-body d-flex justify-content-center flex-column position-relative"
               ref={modalBodyRef}
+              style={{
+                minHeight: "400px",
+                width: "100%",
+              }}
             >
               {appChildrens}
-              {loading ? <LoaderPaymentProcess message={message} /> : null}
+              {loading ? (
+                <div
+                  className="position-absolute z-2"
+                  style={{
+                    inset: "0",
+                    background: "#ffffff80",
+                  }}
+                >
+                  <LoaderPaymentProcess message={message} />
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

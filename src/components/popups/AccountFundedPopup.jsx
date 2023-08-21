@@ -8,10 +8,6 @@ function AccountFundedPopup(props) {
   const location = useLocation();
   const { fund, balance } = props;
 
-  useEffect(() => {
-    console.log("JSK", location);
-  }, [location]);
-
   const handleRedirect = () => {
     navigate("/wallet", { replace: true });
   };
