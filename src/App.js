@@ -55,7 +55,8 @@ function App() {
 
   useEffect(() => {
     loadData();
-    if (location.pathname && !location.pathname.includes("/signup"))
+    if (!location.pathname) return;
+    if (!location.pathname.includes("/signup"))
       storageRequest.removeSignupCreds();
   }, [location.pathname]);
 

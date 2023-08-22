@@ -32,10 +32,10 @@ export const fetchAddFundWithCard = createAsyncThunk(
   async (creds, thunkAPI) => {
     try {
       const { data } = await apiRequest.addFundWithCard(creds);
-      if (!data.success) throw data.message;
+      if (!data.success) throw data;
       return { ...data, creds };
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue({ ...error, creds });
     }
   }
 );
@@ -50,10 +50,10 @@ export const fetchCheckEnrollment = createAsyncThunk(
   async (creds, thunkAPI) => {
     try {
       const { data } = await apiRequest.checkEnrollment(creds);
-      if (!data.success) throw data.message;
+      if (!data.success) throw data;
       return { ...data, creds };
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue({ ...error, creds });
     }
   }
 );

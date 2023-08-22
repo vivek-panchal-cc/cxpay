@@ -16,10 +16,7 @@ import { fundSchema } from "schemas/fundSchema";
 import { LoaderContext } from "./loaderContext";
 import useCountryBanks from "hooks/useCountryBanks";
 import { getChargedAmount } from "helpers/commonHelpers";
-import {
-  fetchAddFundWithCard,
-  fundPaymentReset,
-} from "features/payment/payAddFundSlice";
+import { fetchAddFundWithCard } from "features/payment/payAddFundSlice";
 import ModalPaymentAddFund from "components/modals/ModalPaymentAddFund";
 import useCharges from "hooks/useCharges";
 
@@ -276,18 +273,6 @@ const FundProvider = ({ children }) => {
     setPaymentDetails(chargesDetails);
   }, [formik.values?.transactionAmount, charges]);
 
-  // useEffect(() => {
-  //   switch (params.fundtype) {
-  //     case FUND_CARD:
-  //       if (loadingPayment || paymentStatus) dispatch(fundPaymentReset());
-  //       break;
-  //     case FUND_BANK:
-  //       return;
-  //     default:
-  //       return;
-  //   }
-  // }, []);
-
   // For Bank Account-Type changes
   useEffect(() => {
     const { account_type } = formik?.values || {};
@@ -353,9 +338,12 @@ const FundProvider = ({ children }) => {
       <Modal
         id="fund_sucess_modal"
         className="fund-sucess-modal"
-        show={visiblePopupFunded}
+        show={visiblePopupFunded && fundedDetails.balance && fundedDetails.fund}
       >
-        <AccountFundedPopup {...fundedDetails} />
+        <AccountFundedPopup
+          {...fundedDetails}
+          setShow={setVisiblePopupFunded}
+        />
       </Modal>
       {params.fundtype === FUND_CARD &&
         (selectExistingCard ? <SelectCard /> : children)}

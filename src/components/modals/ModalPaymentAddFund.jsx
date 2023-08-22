@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LoaderPaymentProcess from "loaders/LoaderPaymentProcess";
 import { toast } from "react-toastify";
@@ -83,7 +83,7 @@ const ModalPaymentAddFund = (props) => {
       default:
         break;
     }
-  }, [paymentStatus]);
+  }, [paymentStatus, message]);
 
   useEffect(() => {
     if (accessTokenSetup && deviceDataCollectionUrl) {
@@ -196,13 +196,13 @@ const ModalPaymentAddFund = (props) => {
   }, [loadingPayment]);
 
   useEffect(() => {
-    const handlePopState = async (e) => {
+    const handlePopState = (event) => {
+      window.removeEventListener("popstate", handlePopState);
+      window.onpopstate = null;
       const conLeave = confirm("Do you want to leave this site?");
       if (conLeave) {
         dispatch(fundPaymentReset());
-        window.addEventListener("popstate", null);
       } else {
-        window.addEventListener("popstate", null);
         navigate(location.pathname);
       }
     };
@@ -240,7 +240,7 @@ const ModalPaymentAddFund = (props) => {
                   className="position-absolute z-2"
                   style={{
                     inset: "0",
-                    background: "#ffffff80",
+                    background: "#ffffff",
                   }}
                 >
                   <LoaderPaymentProcess message={message} />

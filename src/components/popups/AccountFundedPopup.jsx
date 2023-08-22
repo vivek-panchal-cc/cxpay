@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Button from "components/ui/Button";
 import WrapAmount from "components/wrapper/WrapAmount";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function AccountFundedPopup(props) {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { fund, balance } = props;
+  const { fund, balance, setShow } = props;
 
   const handleRedirect = () => {
     navigate("/wallet", { replace: true });
+    setShow(false);
   };
 
   return (

@@ -17,7 +17,7 @@ const Card = (props) => {
       style={
         cardBgImg
           ? {
-              background: `url(${cardBgImg}), url(${"/assets/images/chart-duumy.png"})`,
+              background: `url(${cardBgImg}), url(${"/assets/images/card_image_fallback.png"})`,
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
