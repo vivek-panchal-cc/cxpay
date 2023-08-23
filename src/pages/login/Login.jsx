@@ -21,7 +21,7 @@ const Login = () => {
 
   useEffect(() => {
     const token = storageRequest.getAuth();
-    if (token) navigate("/");
+    if (token) navigate("/", { replace: true });
   }, []);
 
   const formik = useFormik({
@@ -36,6 +36,7 @@ const Login = () => {
       try {
         const { error, payload } = await dispatch(fetchLogin(values));
         if (error) throw payload;
+        navigate("/", { replace: true });
       } catch (error) {
         if (typeof error === "string") setStatus(error);
         setErrors({

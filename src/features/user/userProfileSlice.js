@@ -94,13 +94,13 @@ const userProfileSlice = createSlice({
         console.log("Error getting user data", action.payload);
       })
       .addCase(fetchLogin.fulfilled, (state, action) => {
-        document.location.href = "/";
+        // document.location.href = "/";
       })
       .addCase(fetchLogin.rejected, (state, action) => {
         console.log("Error getting user data", action.payload);
       })
       .addCase(fetchLoginOtpVerify.fulfilled, (state, action) => {
-        document.location.href = "/";
+        // document.location.href = "/";
       })
       .addCase(fetchLoginOtpVerify.rejected, (state, action) => {
         console.log("Error getting user data", action.payload);
@@ -108,12 +108,12 @@ const userProfileSlice = createSlice({
       .addCase(fetchLogout.fulfilled, (state, action) => {
         storageRequest.removeAuth();
         toast.success(action.payload);
-        document.location.href = "/login";
+        // document.location.href = "/login";
       })
       .addCase(fetchLogout.rejected, (state, action) => {
         storageRequest.removeAuth();
         console.log("Error getting user data", action.payload);
-        document.location.href = "/login";
+        // document.location.href = "/login";
       })
       .addCase(fetchDeactivateAccount.fulfilled, (state, action) => {
         storageRequest.removeAuth();

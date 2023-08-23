@@ -48,8 +48,8 @@ function SignupFundAccount() {
     switch (type) {
       case FUND_CARD:
         return <FundCard />;
-      case FUND_MANUAL:
-        return <FundManual />;
+      // case FUND_MANUAL:
+      //   return <FundManual />;
       default:
         return <Navigate to={"/"} replace={true} />;
     }
@@ -76,7 +76,7 @@ function SignupFundAccount() {
               </div>
               <h5 className="text-center">Signup</h5>
               <h4 className="blue-text text-center">fund your Account</h4>
-              <form action="">
+              {/* <form action="">
                 <InputSelect
                   className="form-select form-control text-capitalize"
                   name="fund_type"
@@ -90,7 +90,7 @@ function SignupFundAccount() {
                     {FUND_MANUAL.replace(/-/g, " ")}
                   </option>
                 </InputSelect>
-              </form>
+              </form> */}
               {/* </div> */}
               <FundProvider>{getFundForm()}</FundProvider>
             </div>

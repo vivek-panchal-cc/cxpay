@@ -115,6 +115,7 @@ const FundProvider = ({ children }) => {
 
   // ---------------------- FOR CARD ----------------------------------------------------
   const attachDefaultCard = async () => {
+    setIsLoading(true);
     await dispatch(fetchCardsList());
     setIsLoading(false);
   };
@@ -150,6 +151,7 @@ const FundProvider = ({ children }) => {
 
   // ---------------------- FOR BANK ----------------------------------------------------
   const attachDefaultBank = async () => {
+    setIsLoading(true);
     await dispatch(fetchBanksList());
     setIsLoading(false);
   };
@@ -228,7 +230,6 @@ const FundProvider = ({ children }) => {
       { ...initialValues },
       { country, city, email }
     );
-    setIsLoading(true);
     switch (params.fundtype) {
       case FUND_CARD:
         formik.setValues({ ...cardCreds, ...initialValues });

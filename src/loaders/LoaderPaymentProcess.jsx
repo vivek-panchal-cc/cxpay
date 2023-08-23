@@ -12,11 +12,12 @@ const LoaderPaymentProcess = (props) => {
       }}
     >
       <div className="d-flex flex-column align-items-center justify-content-center">
-        <div className="dotcontainer">
+        {/* <div className="dotcontainer">
           <div className="dot"></div>
           <div className="dot"></div>
           <div className="dot"></div>
-        </div>
+        </div> */}
+        <img src="/assets/images/loading-cdot.gif" alt="" srcset="" />
         <p className="mt-5 pb-0 text-secondary badge">
           Please wait, we are processing your payment.
         </p>

@@ -54,6 +54,7 @@ function VerifyLoginOtp(props) {
       try {
         const { error, payload } = await dispatch(fetchLoginOtpVerify(values));
         if (error) throw payload;
+        navigate("/", { replace: true });
       } catch (error) {
         resetForm();
         const { message = "", data } = error || {};
