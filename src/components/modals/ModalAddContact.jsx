@@ -40,7 +40,9 @@ function ModalAddContact(props) {
     validationSchema: inviteContactSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
-        const { data } = await apiRequest.addContact(values);
+        let newVal = values;
+        newVal.mobile = newVal.country_code+newVal.mobile;
+        const { data } = await apiRequest.addContact(newVal);
         if (!data.success) throw data.message;
         const { alreadyAdded, alreadyInvited, contactDetails } =
           data?.data || {};
