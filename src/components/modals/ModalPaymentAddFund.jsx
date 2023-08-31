@@ -64,7 +64,7 @@ const ModalPaymentAddFund = (props) => {
         break;
       case "IN_WAITING":
         setLoading(false);
-        toast.warning(message, { autoClose: 1000 });
+        // toast.warning(message, { autoClose: 1000 });
         break;
       case "COMPLETED":
         setLoading(false);
