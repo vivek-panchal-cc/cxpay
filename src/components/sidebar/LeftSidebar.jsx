@@ -16,10 +16,14 @@ import {
 
 function LeftSidebar() {
   const location = useLocation();
-  const { profile } = useSelector((state) => state.userProfile);
+  const { profile, isLoading } = useSelector((state) => state.userProfile);
   const { user_type } = profile || "";
 
   const thisRoute = useMemo(() => location.pathname.split("/")[1], [location]);
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <div className="dashboard-left-wrap">
@@ -45,42 +49,62 @@ function LeftSidebar() {
               <span>Dashboard</span>
             </Link>
           </li>
-          <li className={`${thisRoute === "send" ? "active" : ""}`}>
-            <Link to="/send" replace>
-              <IconSend style={{ stroke: "#F3F3F3" }} />
-              <span>Send</span>
-            </Link>
-          </li>
-          <li className={`${thisRoute === "request" ? "active" : ""}`}>
-            <Link to="/request" replace>
-              <IconRequest />
-              <span>Request</span>
-            </Link>
-          </li>
-          <li className={`${thisRoute === "activities" ? "active" : ""}`}>
-            <Link to="/activities" replace>
-              <IconActivity />
-              <span>Activities</span>
-            </Link>
-          </li>
-          <li className={`${thisRoute === "wallet" ? "active" : ""}`}>
-            <Link to="/wallet" replace>
-              <IconWallet />
-              <span>Wallet</span>
-            </Link>
-          </li>
-          <li
-            className={`${
-              thisRoute === "contacts" || thisRoute === "contacts-invited"
-                ? "active"
-                : ""
-            }`}
-          >
-            <Link to="/contacts" replace>
-              <IconContact style={{ stroke: "#F3F3F3" }} />
-              <span>Contacts</span>
-            </Link>
-          </li>
+          {user_type !== "agent" && (
+            <>
+              <li className={`${thisRoute === "send" ? "active" : ""}`}>
+                <Link to="/send" replace>
+                  <IconSend style={{ stroke: "#F3F3F3" }} />
+                  <span>Send</span>
+                </Link>
+              </li>
+              <li className={`${thisRoute === "request" ? "active" : ""}`}>
+                <Link to="/request" replace>
+                  <IconRequest />
+                  <span>Request</span>
+                </Link>
+              </li>
+              <li className={`${thisRoute === "activities" ? "active" : ""}`}>
+                <Link to="/activities" replace>
+                  <IconActivity />
+                  <span>Activities</span>
+                </Link>
+              </li>
+              <li className={`${thisRoute === "wallet" ? "active" : ""}`}>
+                <Link to="/wallet" replace>
+                  <IconWallet />
+                  <span>Wallet</span>
+                </Link>
+              </li>
+              <li
+                className={`${
+                  thisRoute === "contacts" || thisRoute === "contacts-invited"
+                    ? "active"
+                    : ""
+                }`}
+              >
+                <Link to="/contacts" replace>
+                  <IconContact style={{ stroke: "#F3F3F3" }} />
+                  <span>Contacts</span>
+                </Link>
+              </li>
+            </>
+          )}
+          {user_type === "agent" && (
+            <>
+              <li className={`${thisRoute === "activities" ? "active" : ""}`}>
+                <Link to="/activities" replace>
+                  <IconActivity />
+                  <span>Activities</span>
+                </Link>
+              </li>
+              <li className={`${thisRoute === "top-up" ? "active" : ""}`}>
+                <Link to="/top-up" replace>
+                  <IconWallet />
+                  <span>Top Up</span>
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
         <ul className="dashboard-bottom-links">
           <li className={`${thisRoute === "profile" ? "active" : ""}`}>

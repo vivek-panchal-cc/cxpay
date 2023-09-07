@@ -45,13 +45,71 @@ import WithdrawalsBank from "pages/withdrawals-bank/WithdrawalsBank";
 import WithdrawCard from "pages/withdraw-card/WithdrawCard";
 import WithdrawBank from "pages/withdraw-bank/WithdrawBank";
 import WithdrawDetails from "pages/withdraw-details/WithdrawDetails";
+import TopUp from "pages/top-up/TopUp";
+import TopUpDetails from "pages/top-up/TopUpDetails";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserProfile } from "features/user/userProfileSlice";
 
 async function loadData() {
   await import(`./styles/js/custom`);
 }
 
+function withUserProtection(WrappedComponent, allowedUserTypes = []) {
+  return function ProtectedComponent(props) {
+    const { profile } = useSelector((state) => state.userProfile);
+    const { user_type } = profile || {};
+
+    if (!allowedUserTypes.includes(user_type)) {
+      return <Navigate to="/" />;
+    }
+    return <WrappedComponent {...props} />;
+  };
+}
+
+const AllowedAgent = ["agent"];
+const AllowedBusiness = ["business"];
+const AllowedBusinessPersonal = ["business", "personal"];
+const AllowedAllTypes = ["business", "personal", "agent"];
+
+// user_types = business and personal
+const ProtectedWallet = withUserProtection(Wallet, AllowedBusinessPersonal);
+const ProtectedAddCard = withUserProtection(AddCard, AllowedBusinessPersonal);
+const ProtectedLinkBank = withUserProtection(LinkBank, AllowedBusinessPersonal);
+const ProtectedViewCard = withUserProtection(ViewCard, AllowedBusinessPersonal);
+const ProtectedEditCard = withUserProtection(EditCard, AllowedBusinessPersonal);
+const ProtectedBankList = withUserProtection(BankList, AllowedBusinessPersonal);
+const ProtectedFundAccount = withUserProtection(FundAccount, AllowedBusinessPersonal);
+const ProtectedWithdrawalsCard = withUserProtection(WithdrawalsCard, AllowedBusinessPersonal);
+const ProtectedWithdrawalsBank = withUserProtection(WithdrawalsBank, AllowedBusinessPersonal);
+const ProtectedWithdrawCard = withUserProtection(WithdrawCard, AllowedBusinessPersonal);
+const ProtectedWithdrawBank = withUserProtection(WithdrawBank, AllowedBusinessPersonal);
+const ProtectedWithdrawDetails = withUserProtection(WithdrawDetails, AllowedBusinessPersonal);
+const ProtectedActivities = withUserProtection(Activities, AllowedBusinessPersonal);
+const ProtectedContacts = withUserProtection(Contacts, AllowedBusinessPersonal);
+const ProtectedContactsInvited = withUserProtection(ContactsInvited, AllowedBusinessPersonal);
+const ProtectedEditGroup = withUserProtection(EditGroup, AllowedBusinessPersonal);
+const ProtectedSendContact = withUserProtection(SendContact, AllowedBusinessPersonal);
+const ProtectedSendPayment = withUserProtection(SendPayment, AllowedBusinessPersonal);
+const ProtectedRequestContact = withUserProtection(RequestContact, AllowedBusinessPersonal);
+const ProtectedRequestPayment = withUserProtection(RequestPayment, AllowedBusinessPersonal);
+const ProtectedViewSchedulePayment = withUserProtection(ViewSchedulePayment, AllowedBusinessPersonal);
+const ProtectedEditScheduledPayment = withUserProtection(EditScheduledPayment, AllowedBusinessPersonal);
+const ProtectedEditProfile = withUserProtection(EditProfile, AllowedBusinessPersonal);
+
+// user_types = business
+const ProtectedBusinessInfo = withUserProtection(BusinessInfo, AllowedBusiness);
+
+// user_types = agent
+const ProtectedTopUp = withUserProtection(TopUp, AllowedAgent);
+const ProtectedTopUpDetails = withUserProtection(TopUpDetails, AllowedAgent);
+
 function App() {
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(fetchUserProfile());
+  // }, [dispatch]);
 
   useEffect(() => {
     loadData();
@@ -87,61 +145,75 @@ function App() {
           <Route element={<DashboardLayout />}>
             {/* settings */}
             <Route path="/setting" element={<Setting />} />
-            <Route path="/setting/edit-profile" element={<EditProfile />} />
+            <Route path="/setting/edit-profile" element={<ProtectedEditProfile />} />
             <Route path="/setting/notification" element={<Notification />} />
             <Route
               path="/setting/change-password"
               element={<ChangePassword />}
             />
-            <Route path="/setting/business-info" element={<BusinessInfo />} />
+            <Route path="/setting/business-info" element={<ProtectedBusinessInfo />} />
+            <Route path="/top-up" element={<ProtectedTopUp />} />
+            <Route path="/top-up-details" element={<ProtectedTopUpDetails />} />
             {/* wallet */}
-            <Route path="/wallet" element={<Wallet />} />
-            <Route path="/wallet/add-card" element={<AddCard />} />
-            <Route path="/wallet/link-bank" element={<LinkBank />} />
-            <Route path="/wallet/view-card" element={<ViewCard />} />
-            <Route path="/wallet/view-card/edit-card" element={<EditCard />} />
-            <Route path="/wallet/bank-list" element={<BankList />} />
+            <Route path="/wallet" element={<ProtectedWallet />} />
+            <Route path="/wallet/add-card" element={<ProtectedAddCard />} />
+            <Route path="/wallet/link-bank" element={<ProtectedLinkBank />} />
+            <Route path="/wallet/view-card" element={<ProtectedViewCard />} />
+            <Route
+              path="/wallet/view-card/edit-card"
+              element={<ProtectedEditCard />}
+            />
+            <Route path="/wallet/bank-list" element={<ProtectedBankList />} />
             <Route
               path="/wallet/fund-account/:fundtype?"
-              element={<FundAccount />}
+              element={<ProtectedFundAccount />}
             />
             <Route
               path="/wallet/withdrawals-card"
-              element={<WithdrawalsCard />}
+              element={<ProtectedWithdrawalsCard />}
             />
             <Route
               path="/wallet/withdrawals-bank"
-              element={<WithdrawalsBank />}
+              element={<ProtectedWithdrawalsBank />}
             />
             <Route
               path="/wallet/withdraw-card/:tid?"
-              element={<WithdrawCard />}
+              element={<ProtectedWithdrawCard />}
             />
-            <Route path="/wallet/withdraw-bank" element={<WithdrawBank />} />
+            <Route
+              path="/wallet/withdraw-bank"
+              element={<ProtectedWithdrawBank />}
+            />
             <Route
               path="/wallet/withdraw-details/:type/:tid"
-              element={<WithdrawDetails />}
+              element={<ProtectedWithdrawDetails />}
             />
             <Route path="/profile" element={<Profile />} />
             {/* contacts */}
             <Route path="/" element={<Dashboard />} />
             <Route path="/activities" element={<Activities />} />
             <Route path="/view-notification" element={<ViewNotification />} />
-            <Route path="/contacts" element={<Contacts />} />
-            <Route path="/contacts-invited" element={<ContactsInvited />} />
-            <Route path="/edit-group/:id" element={<EditGroup />} />
-            <Route path="/send" element={<SendContact />} />
-            <Route path="/send/payment" element={<SendPayment />} />
-            <Route path="/request" element={<RequestContact />} />
-            <Route path="/request/payment" element={<RequestPayment />} />
+            <Route path="/contacts" element={<ProtectedContacts />} />
+            <Route
+              path="/contacts-invited"
+              element={<ProtectedContactsInvited />}
+            />
+            <Route path="/edit-group/:id" element={<ProtectedEditGroup />} />
+            <Route path="/send" element={<ProtectedSendContact />} />
+            <Route path="/send/payment" element={<ProtectedSendPayment />} />
+            <Route path="/request" element={<ProtectedRequestContact />} />
+            <Route
+              path="/request/payment"
+              element={<ProtectedRequestPayment />}
+            />
             <Route element={<ScheduledPaymentLayout />}>
               <Route
                 path="/view-schedule-payment"
-                element={<ViewSchedulePayment />}
+                element={<ProtectedViewSchedulePayment />}
               />
               <Route
                 path="/view-schedule-payment/update"
-                element={<EditScheduledPayment />}
+                element={<ProtectedEditScheduledPayment />}
               />
             </Route>
           </Route>

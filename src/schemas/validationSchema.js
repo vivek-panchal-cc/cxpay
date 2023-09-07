@@ -72,6 +72,11 @@ const verifyForgotPasswordOtpSchema = yup.object().shape({
   user_otp: otpSchema,
 });
 
+const topUpSchema = yup.object().shape({
+  country_code: yup.string().required("Code is required"),
+  mobile_number: mobileSchema,  
+});
+
 const LoginSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
   user_name: mobileSchema,
@@ -181,6 +186,7 @@ export {
   editProfilePersonalUserSchema,
   forgotPasswordSchema,
   verifyForgotPasswordOtpSchema,
+  topUpSchema,
   resetPasswordSchema,
   loginWithOtpSchema,
   inviteContactSchema,

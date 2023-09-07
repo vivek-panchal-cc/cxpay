@@ -32,6 +32,9 @@ const Dashboard = () => {
   const { first_name, company_name } = useSelector(
     (state) => state.userProfile.profile
   );
+  const { profile } = useSelector((state) => state.userProfile);
+  const { user_type } = profile || "";
+
   const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
   const [inviteContactList, setInviteContactList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -150,12 +153,14 @@ const Dashboard = () => {
                 <h2>Hello {first_name || company_name},</h2>
                 <p>
                   Welcome to CXpay
-                  <Link
-                    className="wallet-top-1-btn"
-                    onClick={handleFundAccountPopup}
-                  >
-                    <span>+ Add Funds</span>
-                  </Link>
+                  {(user_type === "business" || user_type === "personal") && (
+                    <Link
+                      className="wallet-top-1-btn"
+                      onClick={handleFundAccountPopup}
+                    >
+                      <span>+ Add Funds</span>
+                    </Link>
+                  )}
                 </p>
               </div>
               <BalanceGraph
@@ -172,130 +177,134 @@ const Dashboard = () => {
             />
           </div>
           {/*   <!-- Dashboard card section starts --> */}
-          <div className="dashboard-card-links-sec">
-            <div className="dashboard-card-sec mb-0">
-              <div className="title-content-wrap">
-                <h3>My Cards</h3>
-                <p>
-                  {cardsList.length} Cards
-                  <Link to="/wallet/add-card">
-                    <span>+ Add Card</span>
-                  </Link>
-                </p>
+          {(user_type === "business" || user_type === "personal") && (
+            <div className="dashboard-card-links-sec">
+              <div className="dashboard-card-sec mb-0">
+                <div className="title-content-wrap">
+                  <h3>My Cards</h3>
+                  <p>
+                    {cardsList.length} Cards
+                    <Link to="/wallet/add-card">
+                      <span>+ Add Card</span>
+                    </Link>
+                  </p>
+                </div>
+                <CardList
+                  cardsList={cardsList}
+                  getCurrentSlideCard={handleGetCurrentSlideCard}
+                  walletSlider={false}
+                  svgWidth="300"
+                  svgHeight="130"
+                />
               </div>
-              <CardList
-                cardsList={cardsList}
-                getCurrentSlideCard={handleGetCurrentSlideCard}
-                walletSlider={false}
-                svgWidth="300"
-                svgHeight="130"
-              />
-            </div>
-            {/* <!-- Dashboard recent contacts section starts --> */}
-            <div className="dashboard-recent-contact-sec">
-              <div className="recent-contact-sec">
-                <ContactsSelection className="col-12">
-                  <ContactsSelection.Header
-                    className=""
-                    heading="Recent Contact"
-                    subHeading=""
-                    searchValue={searchContactText}
-                    handleSearch={handleSearchContact}
-                    clearSearch={handleResetContactData}
-                  />
-                  <ContactsSelection.Body
-                    isLoading={isLoadingContacts}
-                    classNameContainer="send-group-slider"
-                    contacts={inviteContactList}
-                    selectedContacts={[]}
-                    handleSelectedItems={handleSelectContact}
-                    handleReachEnd={handleReachEndContacts}
-                    fullWidth={false}
-                    emptyListMsg="Contacts not found"
-                    ListItemComponent={ContactCard}
-                    ListItemComponentProps={{
-                      fullWidth: false,
-                      isSelectable: true,
-                      fallbackImgUrl:
-                        "assets/images/single_contact_profile.png",
-                    }}
-                    ListItemComponentAlias={{
-                      account_number: "id",
-                      name: "title",
-                      profile_image: "imgUrl",
-                    }}
-                  />
-                </ContactsSelection>
+              {/* <!-- Dashboard recent contacts section starts --> */}
+              <div className="dashboard-recent-contact-sec">
+                <div className="recent-contact-sec">
+                  <ContactsSelection className="col-12">
+                    <ContactsSelection.Header
+                      className=""
+                      heading="Recent Contact"
+                      subHeading=""
+                      searchValue={searchContactText}
+                      handleSearch={handleSearchContact}
+                      clearSearch={handleResetContactData}
+                    />
+                    <ContactsSelection.Body
+                      isLoading={isLoadingContacts}
+                      classNameContainer="send-group-slider"
+                      contacts={inviteContactList}
+                      selectedContacts={[]}
+                      handleSelectedItems={handleSelectContact}
+                      handleReachEnd={handleReachEndContacts}
+                      fullWidth={false}
+                      emptyListMsg="Contacts not found"
+                      ListItemComponent={ContactCard}
+                      ListItemComponentProps={{
+                        fullWidth: false,
+                        isSelectable: true,
+                        fallbackImgUrl:
+                          "assets/images/single_contact_profile.png",
+                      }}
+                      ListItemComponentAlias={{
+                        account_number: "id",
+                        name: "title",
+                        profile_image: "imgUrl",
+                      }}
+                    />
+                  </ContactsSelection>
+                </div>
               </div>
+              {/* <!-- Dashboard extra links section starts -->	  */}
+
+              <div className="extra-links-wrap">
+                <ul>
+                  <li>
+                    <Link
+                      className="wallet-top-1-btn"
+                      onClick={handleFundAccountPopup}
+                    >
+                      <span className="icon-link-text">
+                        <IconAdd />
+                        Fund Your Account
+                      </span>
+                      <span className="arrow-wrap">
+                        <IconRightArrowBig />
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/view-schedule-payment">
+                      <span className="icon-link-text">
+                        <IconWallet stroke="#363853" />
+                        Scheduled Payments
+                      </span>
+                      <span className="arrow-wrap">
+                        <IconRightArrowBig />
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/send">
+                      <span className="icon-link-text">
+                        <IconSend style={{ stroke: "#363853" }} />
+                        Send
+                      </span>
+                      <span className="arrow-wrap">
+                        <IconRightArrowBig />
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <a
+                      className="cursor-pointer"
+                      onClick={() => setShowNewContPop(true)}
+                    >
+                      <span className="icon-link-text">
+                        <IconAdd />
+                        Add a Contact
+                      </span>
+                      <span className="arrow-wrap">
+                        <IconRightArrowBig />
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <Link to="/send">
+                      <span className="icon-link-text">
+                        <IconMessage />
+                        Group Payment
+                      </span>
+                      <span className="arrow-wrap">
+                        <IconRightArrowBig />
+                      </span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              {/* <!-- Dashboard extra links section close -->  */}
             </div>
-            {/* <!-- Dashboard extra links section starts -->	  */}
-            <div className="extra-links-wrap">
-              <ul>
-                <li>
-                  <Link
-                    className="wallet-top-1-btn"
-                    onClick={handleFundAccountPopup}
-                  >
-                    <span className="icon-link-text">
-                      <IconAdd />
-                      Fund Your Account
-                    </span>
-                    <span className="arrow-wrap">
-                      <IconRightArrowBig />
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/view-schedule-payment">
-                    <span className="icon-link-text">
-                      <IconWallet stroke="#363853" />
-                      Scheduled Payments
-                    </span>
-                    <span className="arrow-wrap">
-                      <IconRightArrowBig />
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/send">
-                    <span className="icon-link-text">
-                      <IconSend style={{ stroke: "#363853" }} />
-                      Send
-                    </span>
-                    <span className="arrow-wrap">
-                      <IconRightArrowBig />
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <a
-                    className="cursor-pointer"
-                    onClick={() => setShowNewContPop(true)}
-                  >
-                    <span className="icon-link-text">
-                      <IconAdd />
-                      Add a Contact
-                    </span>
-                    <span className="arrow-wrap">
-                      <IconRightArrowBig />
-                    </span>
-                  </a>
-                </li>
-                <li>
-                  <Link to="/send">
-                    <span className="icon-link-text">
-                      <IconMessage />
-                      Group Payment
-                    </span>
-                    <span className="arrow-wrap">
-                      <IconRightArrowBig />
-                    </span>
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            {/* <!-- Dashboard extra links section close -->  */}
-          </div>
+          )}
         </div>
         {/* Fund Account Popup */}
         <Modal

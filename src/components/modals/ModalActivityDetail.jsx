@@ -11,6 +11,7 @@ import {
   ACT_TRANSACT_DEBIT,
   ACT_TYPE_REQUEST,
   ACT_TYPE_TRANSACTION,
+  TXN_TYPE_AGENT,
   CURRENCY_SYMBOL,
   activityConsts,
 } from "constants/all";
@@ -46,6 +47,8 @@ const ModalActivityDetail = (props) => {
     activity_type,
     request_type,
     comment,
+    txn_mode,
+    payment_type,
   } = details || {};
 
   const modalRef = useRef(null);
@@ -191,6 +194,12 @@ const ModalActivityDetail = (props) => {
                           </span>
                         </td>
                       </tr>
+                      {txn_type === TXN_TYPE_AGENT && (
+                        <tr>
+                          <td>Payment Type</td>
+                          <td>{txn_mode}</td>
+                        </tr>
+                      )}
                       {request_from && (
                         <tr>
                           <td>

@@ -168,6 +168,9 @@
   .wallet-fund-row-amt table td {
     padding: 20px 20px 10px;
   }
+  .top-up-fund-row-amt table td {
+    padding: 20px 20px 10px;
+  }
   .login-signup-02 .login-signup-content-wrap h4.blue-text {
     margin-bottom: 20px;
   }
@@ -1963,6 +1966,16 @@
     line-height: 25px;
   }
   .wallet-fund-row-amt table td {
+    font-size: 15px;
+  }
+  .top-up-fund-row-amt .col-12 {
+    margin: 20px 0px 20px;
+  }
+  .top-up-fund-row-amt table td:last-child {
+    font-size: 15px;
+    line-height: 25px;
+  }
+  .top-up-fund-row-amt table td {
     font-size: 15px;
   }
   .dashboard-link-wrap {
@@ -4381,6 +4394,13 @@
     line-height: 23px;
   }
   .wallet-fund-row-amt table td {
+    padding: 20px 15px 10px;
+  }
+  .top-up-fund-row-amt table td:last-child {
+    font-size: 17px;
+    line-height: 23px;
+  }  
+  .top-up-fund-row-amt table td {
     padding: 20px 15px 10px;
   }
   .contact-top-btn-nav {
