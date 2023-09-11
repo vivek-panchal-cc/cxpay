@@ -37,6 +37,7 @@ import RequestContact from "pages/request/RequestContact";
 import RequestPayment from "pages/request-payment/RequestPayment";
 import ViewSchedulePayment from "pages/view-schedule-payment/ViewSchedulePayment";
 import Activities from "pages/activities/Activities";
+import TopUpActivities from "pages/top-up/TopUpActivities";
 import ScheduledPaymentLayout from "layouts/ScheduledPaymentLayout";
 import EditScheduledPayment from "pages/edit-scheduled-payment/EditScheduledPayment";
 import Dashboard from "pages/dashboard/Dashboard";
@@ -102,6 +103,7 @@ const ProtectedBusinessInfo = withUserProtection(BusinessInfo, AllowedBusiness);
 // user_types = agent
 const ProtectedTopUp = withUserProtection(TopUp, AllowedAgent);
 const ProtectedTopUpDetails = withUserProtection(TopUpDetails, AllowedAgent);
+const ProtectedTopUpActivities = withUserProtection(TopUpActivities, AllowedAgent);
 
 function App() {
   const location = useLocation();
@@ -154,6 +156,7 @@ function App() {
             <Route path="/setting/business-info" element={<ProtectedBusinessInfo />} />
             <Route path="/top-up" element={<ProtectedTopUp />} />
             <Route path="/top-up-details" element={<ProtectedTopUpDetails />} />
+            <Route path="/top-up-activities" element={<ProtectedTopUpActivities />} />
             {/* wallet */}
             <Route path="/wallet" element={<ProtectedWallet />} />
             <Route path="/wallet/add-card" element={<ProtectedAddCard />} />
@@ -191,7 +194,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             {/* contacts */}
             <Route path="/" element={<Dashboard />} />
-            <Route path="/activities" element={<Activities />} />
+            <Route path="/activities" element={<ProtectedActivities />} />
             <Route path="/view-notification" element={<ViewNotification />} />
             <Route path="/contacts" element={<ProtectedContacts />} />
             <Route

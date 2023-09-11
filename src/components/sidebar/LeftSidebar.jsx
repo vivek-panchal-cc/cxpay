@@ -91,16 +91,16 @@ function LeftSidebar() {
           )}
           {user_type === "agent" && (
             <>
-              <li className={`${thisRoute === "activities" ? "active" : ""}`}>
-                <Link to="/activities" replace>
-                  <IconActivity />
-                  <span>Activities</span>
-                </Link>
-              </li>
               <li className={`${thisRoute === "top-up" ? "active" : ""}`}>
                 <Link to="/top-up" replace>
-                  <IconWallet />
+                  <IconSend style={{ stroke: "#F3F3F3" }} />
                   <span>Top Up</span>
+                </Link>
+              </li>
+              <li className={`${thisRoute === "top-up-activities" ? "active" : ""}`}>
+                <Link to="/top-up-activities" replace>
+                  <IconActivity />
+                  <span>Activities</span>
                 </Link>
               </li>
             </>

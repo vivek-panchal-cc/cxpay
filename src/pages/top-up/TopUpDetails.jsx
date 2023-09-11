@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { getChargedAmount } from "helpers/commonHelpers";
 import { useNavigate, useLocation } from "react-router-dom";
 import TopUpFundedPopup from "components/popups/TopUpFundedPopup";
+import { CURRENCY_SYMBOL } from "constants/all";
 
 const TopUpDetails = () => {
   const navigate = useNavigate();
@@ -230,7 +231,8 @@ const TopUpDetails = () => {
         <div className="wallet-fund-form-wrap">
           <form onSubmit={formik.handleSubmit}>
             <div className="row">
-              <div className="col-9 p-0">
+              <div className="col-9 p-0 amt-with-currency">
+                <span>{CURRENCY_SYMBOL}</span>
                 <Input
                   id="transfer_amount"
                   type="text"
@@ -335,7 +337,7 @@ const TopUpDetails = () => {
           show={showTopUpModal}
         >
           <TopUpFundedPopup
-            fund={modalDetailsData.transfer_amount}
+            fund={paymentDetails.total}
             balance={fundedDetails.balance || 0}
             setShow={setShowTopUpModal}
             userName={user_name}

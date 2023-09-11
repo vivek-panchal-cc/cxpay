@@ -2855,6 +2855,25 @@ img.img-hover {
   padding: 0px 0px 0px;
 }
 
+.full-width {
+  width: 100%;
+}
+
+.full-width td,
+.full-width th {
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 15px;
+  transition: all 0.5s ease-in-out;
+  width: auto; /* or you can specify a percentage if you prefer */
+}
+
+.activity-list-table th:first-child {
+  width: 45%;
+}
+
 /* Signup OPT Popup */
 .login-otp-numbers .form-field {
   display: flex;

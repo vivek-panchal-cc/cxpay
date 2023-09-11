@@ -9,6 +9,7 @@ import { fetchGetNotifications } from "features/user/userNotificationSlice";
 import ContactsProvider from "context/contactsContext";
 import SendPaymentProvider from "context/sendPaymentContext";
 import ActivityProvider from "context/activityContext";
+import TopUpActivityProvider from "context/topUpActivityContext";
 
 function DashboardLayout() {
   const dispatch = useDispatch();
@@ -56,8 +57,10 @@ function DashboardLayout() {
             <ContactsProvider>
               <SendPaymentProvider>
                 <ActivityProvider>
-                  <NotificationBar />
-                  <Outlet />
+                  <TopUpActivityProvider>
+                    <NotificationBar />
+                    <Outlet />
+                  </TopUpActivityProvider>
                 </ActivityProvider>
               </SendPaymentProvider>
             </ContactsProvider>

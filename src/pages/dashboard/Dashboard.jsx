@@ -12,9 +12,11 @@ import ContactCard from "components/cards/ContactCard";
 import RecentActivities from "../../components/activity/RecentActivities";
 import useBalance from "hooks/useBalance";
 import useChartData from "hooks/useChartData";
+import useTopUpBalance from "hooks/useTopUpBalance";
 import ModalAddContact from "components/modals/ModalAddContact";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import useActivities from "hooks/useActivities";
+import useTopUpActivities from "hooks/useTopUpActivities";
 import {
   IconAdd,
   IconMessage,
@@ -22,6 +24,8 @@ import {
   IconSend,
   IconWallet,
 } from "styles/svgs";
+import RecentTopUpActivities from "components/top-up/RecentTopUpActivities";
+import AgentBalanceGraph from "components/graph/AgentBalanceGraph";
 
 const graphBackgroundImage = "/assets/images/chart-duumy.png";
 
@@ -46,8 +50,11 @@ const Dashboard = () => {
   const [slideCard, setSlideCard] = useState({});
 
   const [loadingBalance, balance] = useBalance();
+  const [loadingTopUpBalance, topUpBalance] = useTopUpBalance();
   const [loadingChart, chartData] = useChartData();
   const [loadingAct, actPagination, activitiesList, reload] = useActivities({});
+  const [loadingTopUp, actTopUpPagination, topUpActivitiesList, topUpReload] =
+    useTopUpActivities({});
 
   // For adding new Contact
   const [showNewContPop, setShowNewContPop] = useState(false);
@@ -153,7 +160,7 @@ const Dashboard = () => {
                 <h2>Hello {first_name || company_name},</h2>
                 <p>
                   Welcome to CXpay
-                  {(user_type === "business" || user_type === "personal") && (
+                  {user_type !== "agent" && (
                     <Link
                       className="wallet-top-1-btn"
                       onClick={handleFundAccountPopup}
@@ -163,21 +170,41 @@ const Dashboard = () => {
                   )}
                 </p>
               </div>
-              <BalanceGraph
-                graphBackgroundImage={graphBackgroundImage}
-                balance={balance}
-                balanceDataArr={chartData.balanceArr}
-                monthDataArr={chartData.monthArr}
-              />
+              {user_type !== "agent" ? (
+                <BalanceGraph
+                  graphBackgroundImage={graphBackgroundImage}
+                  balance={balance}
+                  balanceDataArr={chartData.balanceArr}
+                  monthDataArr={chartData.monthArr}
+                />
+              ) : (
+                <AgentBalanceGraph
+                  graphBackgroundImage={graphBackgroundImage}
+                  balance={topUpBalance}
+                  balanceDataArr={chartData.balanceArr}
+                  monthDataArr={chartData.monthArr}
+                />
+              )}
             </div>
             {/* Recent Activity */}
-            <RecentActivities
-              loading={loadingAct}
-              activitiesList={activitiesList ? activitiesList.slice(0, 5) : []}
-            />
+            {user_type !== "agent" ? (
+              <RecentActivities
+                loading={loadingAct}
+                activitiesList={
+                  activitiesList ? activitiesList.slice(0, 5) : []
+                }
+              />
+            ) : (
+              <RecentTopUpActivities
+                loading={loadingTopUp}
+                activitiesList={
+                  topUpActivitiesList ? topUpActivitiesList.slice(0, 5) : []
+                }
+              />
+            )}
           </div>
           {/*   <!-- Dashboard card section starts --> */}
-          {(user_type === "business" || user_type === "personal") && (
+          {user_type !== "agent" && (
             <div className="dashboard-card-links-sec">
               <div className="dashboard-card-sec mb-0">
                 <div className="title-content-wrap">

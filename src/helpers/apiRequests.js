@@ -109,6 +109,9 @@ const API_getAgentWiseCardList =
   apiUrl.API_TRANSACTION_GET_AGENT_WISE_CARD_LIST;
 const API_agentTopUps = apiUrl.API_TRANSACTION_AGENT_TOP_UPS;
 const API_getTopupPrintDetails = apiUrl.API_TRANSACTION_GET_TOPUP_PRINT_DETAILS;
+const API_getTopupTransactionHistory = apiUrl.API_TRANSACTION_GET_TOPUP_TRANSACTION_HISTORY;
+const API_getTopupActivityDetails = apiUrl.API_TRANSACTION_GET_TOPUP_ACTIVITY_DETAILS;
+const API_getMonthlyRechargeTotal = apiUrl.API_TRANSACTION_MONTHLY_RECHARGE_TOTAL;
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
 /** POST @login API
@@ -539,6 +542,27 @@ export const getTopUpPrintDetails = (params) => {
   return axiosTransactionInstance.post(`${API_getTopupPrintDetails}`, params);
 };
 
+/** GET @get-topup-print-details
+ * @params
+ */
+export const getTopUpTransactionHistory = (params) => {
+  return axiosTransactionInstance.post(`${API_getTopupTransactionHistory}`, params);
+};
+
+/** POST @get-topup-activity-details
+ * @params auth_token, id
+ */
+ export const getTopupActivityDetails = (params) => {
+  return axiosTransactionInstance.post(`${API_getTopupActivityDetails}`, params);
+};
+
+/** POST @get-activity-details
+ * @params auth_token
+ */
+ export const getMonthlyRechargeTotal = (params) => {
+  return axiosTransactionInstance.post(`${API_getMonthlyRechargeTotal}`, params);
+};
+
 /** POST @initiate-manual-fund-add
  * @params auth_token, amount, specification, fees, receipt[]
  */
@@ -816,6 +840,9 @@ export const apiRequest = {
   getAgentWiseCardList,
   agentTopUps,
   getTopUpPrintDetails,
+  getTopUpTransactionHistory,
+  getTopupActivityDetails,
+  getMonthlyRechargeTotal,
   initiateManualFundAdd,
   getBalance,
   walletTransferOtp,

@@ -24,7 +24,7 @@ const AvatarInfo = (props) => {
         <h3>{profileName}</h3>
         <p>
           <a href={`mailto:${profileEmail}`}>{profileEmail}</a>{" "}
-          <span>{profileNumber}</span>
+          <span>+{profileNumber}</span>
         </p>
       </div>
     </div>

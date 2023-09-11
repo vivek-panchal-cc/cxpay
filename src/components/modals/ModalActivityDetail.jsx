@@ -194,7 +194,7 @@ const ModalActivityDetail = (props) => {
                           </span>
                         </td>
                       </tr>
-                      {txn_type === TXN_TYPE_AGENT && (
+                      {txn_type === TXN_TYPE_AGENT && txn_mode && (
                         <tr>
                           <td>Payment Type</td>
                           <td>{txn_mode}</td>
