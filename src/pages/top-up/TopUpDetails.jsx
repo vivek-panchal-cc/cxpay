@@ -102,6 +102,11 @@ const TopUpDetails = () => {
     },
     validationSchema: topUpDetailsSchema,
     onSubmit: async (values, { setErrors, resetForm }) => {
+      // Check if paymentDetails.total is negative
+      if (paymentDetails.total < 0) {
+        toast.error("Amount should be in positive.");
+        return; // This will exit the function, preventing the rest of the code from running
+      }
       setIsLoading(true);
       try {
         const { data } = await apiRequest.agentTopUps(values);

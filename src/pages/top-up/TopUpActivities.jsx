@@ -52,11 +52,11 @@ const TopUpActivities = () => {
     setActivitiesDateBind(activityDateList);
   }, [activitiesList]);
 
-  const handleChangeDateFilter = async ({ fromDate, toDate }) => {
-    if (!fromDate || !toDate) return;
+  const handleChangeDateFilter = async ({ startDate, endDate }) => {
+    if (!startDate || !endDate) return;
     setFilters({
-      fromDate: fromDate,
-      toDate: toDate,
+      fromDate: startDate,
+      toDate: endDate,
     });
     setCurrentPage(1);
     setShowFilter(false);
@@ -116,8 +116,8 @@ const TopUpActivities = () => {
             onClick={() => {
               setShowFilter(true);
             }}
-            fromDate={filters.fromDate}
-            toDate={filters.toDate}
+            startDate={filters.fromDate}
+            endDate={filters.toDate}
           />
           <button className="shedule-date-filter" onClick={handleResetFilter}>
             <IconRefresh />
@@ -180,8 +180,8 @@ const TopUpActivities = () => {
         setShow={setShowFilter}
         classNameChild={"schedule-time-modal"}
         heading="Date Filter"
-        fromDate={filters.fromDate}
-        toDate={filters.toDate}
+        startDate={filters.fromDate}
+        endDate={filters.toDate}
         handleChangeDateRange={handleChangeDateFilter}
       />
     </div>

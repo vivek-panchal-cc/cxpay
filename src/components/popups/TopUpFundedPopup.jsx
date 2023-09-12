@@ -24,15 +24,16 @@ function TopUpFundedPopup(props) {
               <WrapAmount value={fund} />
             </span>
             <br />
-            Funded to {userName} account
+            {/* Funded to {userName} account */}
+            Topup Successful
           </h3>
-          <p>
+          {/* <p>
             Available balance
             <br />
             <span className="available-bal-acc">
               <WrapAmount value={balance} />
             </span>
-          </p>
+          </p> */}
           <Button
             className="btn btn-primary fund-done-btn"
             onClick={handleRedirect}
