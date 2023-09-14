@@ -52,7 +52,7 @@ const topUpDetailsSchema = yup.object().shape({
     .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
     .required("Please enter amount"),
   commission_type_id: yup.string().required("Please select payment type"),
-  reference_id: yup.string().required("Please enter reference id"),
+  reference_id: yup.string().notRequired(),
 });
 
 const fundSchema = yup.object().shape({

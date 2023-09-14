@@ -19,7 +19,8 @@ function Businessform(props) {
     new: false,
     confirm: false,
   });
-  const { countryList, cityList } = signUpCreds || {};
+  const { countryList, cityList, country_iso, selected_country_name } =
+    signUpCreds || {};
 
   const formik = useFormik({
     initialValues: {
@@ -31,7 +32,7 @@ function Businessform(props) {
       address: "",
       password: "",
       confirm_password: "", //not required for API
-      country: "",
+      country: country_iso || "",
       city: "",
       profile_image: "",
     },
@@ -133,14 +134,12 @@ function Businessform(props) {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.country}
-                error={formik.touched.country && formik.errors.country}
+                disabled
+                // error={formik.touched.country && formik.errors.country}
               >
-                <option value={""}>Select Country</option>
-                {countryList?.map((country, index) => (
-                  <option key={country?.iso || index} value={country.iso}>
-                    {country.country_name}
-                  </option>
-                ))}
+                <option key={country_iso} value={country_iso}>
+                  {selected_country_name || "Select Country"}
+                </option>
               </InputSelect>
               <InputSelect
                 className="form-select form-control"
@@ -151,7 +150,7 @@ function Businessform(props) {
                 error={formik.touched.city && formik.errors.city}
               >
                 <option value={""}>Select City</option>
-                {cityList[formik.values.country]?.map((city, index) => (
+                {cityList[country_iso]?.map((city, index) => (
                   <option key={city?.city_name || index} value={city.city_name}>
                     {city.city_name}
                   </option>

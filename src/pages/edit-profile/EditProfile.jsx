@@ -1,6 +1,7 @@
 import useCountriesCities from "hooks/useCountriesCities";
 import React from "react";
 import { useSelector } from "react-redux";
+import AgentForm from "./components/AgentForm";
 import Businessform from "./components/BusinessForm";
 import PersonalForm from "./components/PersonalForm";
 
@@ -15,6 +16,8 @@ const EditProfile = () => {
         return <Businessform {...{ countryList, cityList }} />;
       case "personal":
         return <PersonalForm {...{ countryList, cityList }} />;
+      case "agent":
+        return <AgentForm {...{ countryList, cityList }} />;
       default:
         return null;
     }

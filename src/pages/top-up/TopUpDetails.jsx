@@ -28,6 +28,7 @@ const TopUpDetails = () => {
   const [showTopUpModal, setShowTopUpModal] = useState(false);
   const [modalDetailsData, setModalDetailsData] = useState({});
   const [fundedDetails, setFundedDetails] = useState({ balance: "" });
+  const [transferredAmount, setTransferredAmount] = useState("");
   const { setIsLoading } = useContext(LoaderContext);
   const { profile } = useSelector((state) => state.userProfile);
   const {
@@ -45,6 +46,11 @@ const TopUpDetails = () => {
     grandTotal: 0.0,
     total: 0.0,
   });
+
+  const isCashPaymentType = () => {
+    if (!selectedCard) return true; // If there's no selectedCard yet, default to treating it as 'cash'
+    return selectedCard.collection_type.toLowerCase() === "cash";
+  };
 
   // Sort paymentTypeDetails to prioritize 'cash'
   const sortedPaymentTypes = [...paymentTypeDetails].sort((a, b) => {
@@ -107,10 +113,21 @@ const TopUpDetails = () => {
         toast.error("Amount should be in positive.");
         return; // This will exit the function, preventing the rest of the code from running
       }
+      if (isCashPaymentType()) {
+        values.reference_id = "";
+      } else if (!values.reference_id) {
+        // If payment type isn't "Cash" and reference_id is empty, set an error
+        setErrors({
+          reference_id: "Please enter reference id",
+        });
+        return;
+      }
       setIsLoading(true);
       try {
         const { data } = await apiRequest.agentTopUps(values);
         if (!data.success) throw data.message;
+        const { transfer_amount } = data.data;
+        setTransferredAmount(transfer_amount);
         toast.success(data.message);
         resetForm();
         setModalDetailsData(values);
@@ -279,24 +296,26 @@ const TopUpDetails = () => {
                 </InputSelect>
               </div>
             </div>
-            <div className="row">
-              <div className="col-9 p-0">
-                <Input
-                  type="text"
-                  inputMode="text"
-                  id="reference_id"
-                  className="form-control"
-                  placeholder="Reference Id"
-                  name="reference_id"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.reference_id}
-                  error={
-                    formik.touched.reference_id && formik.errors.reference_id
-                  }
-                />
+            {!isCashPaymentType() && (
+              <div className="row">
+                <div className="col-9 p-0">
+                  <Input
+                    type="text"
+                    inputMode="text"
+                    id="reference_id"
+                    className="form-control"
+                    placeholder="Reference Id"
+                    name="reference_id"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.reference_id}
+                    error={
+                      formik.touched.reference_id && formik.errors.reference_id
+                    }
+                  />
+                </div>
               </div>
-            </div>
+            )}
             <div className="row top-up-fund-row-amt top-up-fund-row-amt-final">
               <div className="col-9 p-0">
                 <table>
@@ -343,7 +362,7 @@ const TopUpDetails = () => {
         >
           <TopUpFundedPopup
             fund={paymentDetails.total}
-            balance={fundedDetails.balance || 0}
+            balance={transferredAmount}
             setShow={setShowTopUpModal}
             userName={user_name}
           />

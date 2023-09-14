@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
-import { editProfilePersonalUserSchema } from "schemas/validationSchema";
+import { editProfileAgentUserSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,7 +13,7 @@ import { fetchUserProfile } from "features/user/userProfileSlice";
 import { LoaderContext } from "context/loaderContext";
 import { CURRENCY_SYMBOL } from "constants/all";
 
-function PersonalForm(props) {
+function AgentForm(props) {
   const { countryList, cityList } = props;
   const { profile } = useSelector((state) => state.userProfile);
   const {
@@ -48,7 +48,7 @@ function PersonalForm(props) {
       country: country || "",
       city: city || "",
     },
-    validationSchema: editProfilePersonalUserSchema,
+    validationSchema: editProfileAgentUserSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
       setIsLoading(true);
       try {
@@ -258,4 +258,4 @@ function PersonalForm(props) {
   );
 }
 
-export default PersonalForm;
+export default AgentForm;

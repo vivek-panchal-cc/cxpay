@@ -77,7 +77,7 @@ function Setting() {
                 {(item?.title === "Business info" &&
                   user_type === "personal") ||
                 (item?.title === "Business info" && user_type === "agent") ||
-                (item?.title === "Profile" && user_type === "agent") ? (
+                (item?.title === "Notifications" && user_type === "agent") ? (
                   ""
                 ) : (
                   <li key={item.title?.trim() || index}>

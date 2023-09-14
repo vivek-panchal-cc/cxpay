@@ -20,7 +20,9 @@ const Profile = () => {
     mobile_number,
   } = profile || {};
   const profileName =
-    user_type === "personal" ? first_name + " " + last_name : company_name;
+    user_type === "personal" || user_type === "agent"
+      ? first_name + " " + last_name
+      : company_name;
 
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
 

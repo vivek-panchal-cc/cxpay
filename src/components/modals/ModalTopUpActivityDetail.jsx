@@ -33,6 +33,7 @@ const ModalTopUpActivityDetail = (props) => {
     activity_type,
     request_type,
     topup_type,
+    card_name,
     topup_ref_id,
     agent_commission,
     card_commission,
@@ -131,7 +132,7 @@ const ModalTopUpActivityDetail = (props) => {
                           <td>Mobile Number</td>
                           <td>
                             <span className={classDetailStatus}>
-                              {mobile_number}
+                              +{mobile_number}
                             </span>
                           </td>
                         </tr>
@@ -145,7 +146,12 @@ const ModalTopUpActivityDetail = (props) => {
                       {topup_type && (
                         <tr>
                           <td>Payment Type</td>
-                          <td>{topup_type}</td>
+                          <td>
+                            {topup_type}
+                            {topup_type.toLowerCase() === "card"
+                              ? " - " + card_name
+                              : ""}
+                          </td>
                         </tr>
                       )}
                       <tr>
