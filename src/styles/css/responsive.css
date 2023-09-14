@@ -4769,3 +4769,73 @@
     height: 54px;
   }
 }
+
+/* Mobile-first styles */
+
+.recurring-occurrence {
+  width: 100%; /* Use 100% width on mobile for full width */
+  height: auto; /* Auto height depending on content */
+  display: flex;
+  flex-direction: column; /* stack buttons vertically on mobile */
+  justify-content: center;
+  gap: 10px;  /* Slight gap for mobile */
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.btn-recurring-occurrence, 
+.recurring-end-date {
+  border-radius: 16.95px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+  outline: none;
+  width: 100%; /* Almost full width on mobile */
+  padding: 8px 10px; /* Reduce padding slightly for mobile */
+}
+
+.btn-recurring-occurrence:hover, 
+.recurring-end-date:hover {
+  opacity: 0.8;
+}
+
+.btn-recurring-occurrence,
+.btn-recurring-occurrence-active {
+  background: #0081C5;
+  color: white;
+}
+
+.recurring-end-date,
+.recurring-end-date-active {
+  background: #FFFFFF;
+  color: #0081C5;
+  border: 0.85px solid #0081C5;
+}
+
+/* Tablet (and upwards) styles */
+
+@media (min-width: 768px) {
+  .recurring-occurrence {
+    flex-direction: row; /* On larger screens, lay them out horizontally */
+    gap: 15px; 
+    width: 357px; /* Set to your fixed width for tablets and up */
+    height: 39px; /* Fixed height for tablets and up */
+    margin-bottom: 15px;
+  }
+
+  .btn-recurring-occurrence {
+    min-width: 204px; /* Original width */
+    padding: 8px 23px; /* Original padding */
+  }
+
+  .recurring-end-date {
+    min-width: 138px; /* Original width */
+    padding: 8px 19px; /* Original padding */
+  }
+}
+
+/* If you want to add more styles for larger screens like big tablets or desktops, add another media query */
+@media (min-width: 1024px) {
+  /* Styles for larger screens */
+}

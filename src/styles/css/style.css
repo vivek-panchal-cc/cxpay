@@ -7214,3 +7214,172 @@ ul.recent-act-lw-main .act-info-wrap-left {
 .fund-account-form .payment-footer-block ul li > h4 {
   width: 53% !important;
 }
+
+.tab-buttons{
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* Base styles for tab-buttons */
+.tab-buttons button {
+  font-family: "Comfortaa", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 34px;
+  text-align: left;
+  color: var(--light-grey);
+  padding: 8px 26px;
+  border-radius: 15px !important;
+  border: none; /* To remove the default button border */
+  cursor: pointer; /* To display pointer on hover */
+  background-color: transparent; /* Setting the initial background color as transparent */
+  transition: all 0.3s ease; /* For smooth transitions on hover or active state */
+}
+
+/* Adjust padding for the second button (If needed) */
+.tab-buttons button:nth-child(2) {
+  padding: 8px 19px;
+}
+
+/* Styles for the active button */
+.tab-buttons .active {
+  background-color: var(--blue);
+  color: #fff;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Adding hover effects (optional) */
+.tab-buttons button:hover {
+  background-color: var(--blue);
+  color: #fff;
+}
+
+/* Recurring css */
+.recurring-occurrence {
+  width: 357px;
+  height: 39px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;  
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.btn-recurring-occurrence, .recurring-end-date {
+  border-radius: 16.95px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+  outline: none;
+}
+
+.btn-recurring-occurrence:hover, .recurring-end-date:hover {
+  opacity: 0.8;
+}
+
+.btn-recurring-occurrence {
+  min-width: 204px;
+  height: 39px;
+  padding: 8px 23px;
+  background: #0081C5;
+  color: white;
+}
+
+.recurring-end-date {
+  min-width: 138px;
+  height: 39px;
+  padding: 8px 19px;
+  background: #FFFFFF;
+  color: #0081C5;
+  border: 0.85px solid #0081C5;
+}
+
+.btn-recurring-occurrence-active {
+  background: #0081C5;
+  color: white;
+}
+
+.recurring-end-date-active {
+  background: #0081C5;
+  color: white;
+}
+
+.main-wrapper {
+  width: 169px;
+  height: 40px;
+  border-radius: 12px;  
+  border: 1px solid #0081C5;
+  box-shadow: 0px 3.76px 15.69px 0px #251F3033;
+  display: flex; /* To align the children horizontally */
+  align-items: center; /* To center them vertically */
+  justify-content: space-between; /* To spread the items equally */
+  padding: 0 10px; /* A bit of padding on the left and right */
+  margin-bottom: 15px;
+}
+
+.number-label {
+  width: 12px;
+  height: 26px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 26px;  
+  color: #363853; 
+  text-align: center; /* Center the number */
+}
+
+.button-wrapper {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  background: #F2F2F2; /* Default is for '-' */
+  display: flex; /* To center the button */
+  align-items: center; 
+  justify-content: center;
+}
+
+.button-wrapper.plus {
+  background: #24BEEF;
+}
+
+.button-wrapper button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  outline: none;
+}
+
+.date-filter-calendar-recurring {  
+  position: relative;
+  overflow: hidden;
+  height: 60px;
+  border-radius: 18px;
+  border: 1px solid #0081C5;  
+  box-shadow: 0px 3.7662px 15.6926px 0px rgba(37, 31, 48, 0.2);
+}
+
+.form-control-recurring {  
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 14px;
+  font-weight: 500;  
+  letter-spacing: 0;
+  text-align: left;  
+  color: #000;
+  border: none;
+  outline: none;
+  padding-left: 18px;
+  width: 100%;
+  height: 100%;
+  /* padding-top: 17px; */
+}
+
+.date-cal {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}

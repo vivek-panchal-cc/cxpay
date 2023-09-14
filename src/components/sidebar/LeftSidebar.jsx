@@ -75,6 +75,12 @@ function LeftSidebar() {
                   <span>Wallet</span>
                 </Link>
               </li>
+              <li className={`${thisRoute === "recurring-payment" ? "active" : ""}`}>
+                <Link to="/send/recurring-payment" replace>
+                  <IconWallet />
+                  <span>Recurring</span>
+                </Link>
+              </li>
               <li
                 className={`${
                   thisRoute === "contacts" || thisRoute === "contacts-invited"
