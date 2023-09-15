@@ -15,7 +15,7 @@ const RecentTopUpActivities = (props) => {
     <div className="dashboard-recent-activity-sec">
       <div className="recent-activity-sec d-flex justify-content-between">
         <div className="title-content-wrap">
-          <h3>Recent Top-Up Activity</h3>
+          <h3>Recent Activity</h3>
         </div>
         <div className=""></div>
       </div>

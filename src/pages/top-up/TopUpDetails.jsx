@@ -261,7 +261,7 @@ const TopUpDetails = () => {
                   inputMode="decimal"
                   className="form-control"
                   name="transfer_amount"
-                  maxLength="10"
+                  maxLength="6"
                   placeholder="Amount"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -321,15 +321,15 @@ const TopUpDetails = () => {
                 <table>
                   <tbody>
                     <tr>
-                      <td>Amount</td>
-                      <td>
-                        <WrapAmount value={paymentDetails.total} />
-                      </td>
-                    </tr>
-                    <tr>
                       <td>Commission</td>
                       <td>
                         <WrapAmount value={paymentDetails.totalCharges} />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Amount</td>
+                      <td>
+                        <WrapAmount value={paymentDetails.total} />
                       </td>
                     </tr>
                   </tbody>
