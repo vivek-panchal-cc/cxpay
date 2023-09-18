@@ -109,10 +109,10 @@ const TopUpDetails = () => {
     validationSchema: topUpDetailsSchema,
     onSubmit: async (values, { setErrors, resetForm }) => {
       // Check if paymentDetails.total is negative
-      if (paymentDetails.total < 0) {
-        toast.error("Amount should be in positive.");
-        return; // This will exit the function, preventing the rest of the code from running
-      }
+      // if (paymentDetails.total < 0) {
+      //   toast.error("Amount should be greater than commission");
+      //   return; // This will exit the function, preventing the rest of the code from running
+      // }
       if (isCashPaymentType()) {
         values.reference_id = "";
       } else if (!values.reference_id) {

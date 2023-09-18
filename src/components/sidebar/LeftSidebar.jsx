@@ -2,6 +2,7 @@ import { CXPAY_SHADOW_LOGO } from "constants/all";
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import $ from 'jquery';
 import {
   IconActivity,
   IconContact,
@@ -25,9 +26,13 @@ function LeftSidebar() {
     return null;
   }
 
+  const handleToggleClick = () => {
+    $(".dashboard-page > .container-fluid > .row").toggleClass("sidebar-open");
+  };
+
   return (
     <div className="dashboard-left-wrap">
-      <span className="toggle-admin-btn">
+      <span className="toggle-admin-btn" onClick={handleToggleClick}>
         <img
           src="/assets/images/dashaboard-button-toggle.png"
           alt="button dashboard icon"
@@ -97,7 +102,11 @@ function LeftSidebar() {
                   <span>Top Up</span>
                 </Link>
               </li>
-              <li className={`${thisRoute === "top-up-activities" ? "active" : ""}`}>
+              <li
+                className={`${
+                  thisRoute === "top-up-activities" ? "active" : ""
+                }`}
+              >
                 <Link to="/top-up-activities" replace>
                   <IconActivity />
                   <span>Activities</span>
