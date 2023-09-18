@@ -2991,7 +2991,8 @@
   }
   /* sp sec 15-05 end */
   .schedule-pay-sd-wrap {
-    justify-content: flex-start;
+    /* justify-content: flex-start; */
+    justify-content: space-between;
     padding-top: 15px;
     margin-bottom: 15px;
   }
