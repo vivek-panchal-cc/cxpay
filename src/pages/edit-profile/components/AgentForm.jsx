@@ -151,7 +151,7 @@ function AgentForm(props) {
                 />
               </div>
             </div>
-            <Input
+            {/* <Input
               type="text"
               className="form-control"
               placeholder="Personal ID"
@@ -160,7 +160,7 @@ function AgentForm(props) {
               onBlur={formik.handleBlur}
               value={formik.values.personal_id}
               error={formik.touched.personal_id && formik.errors.personal_id}
-            />
+            /> */}
             <Input
               type="text"
               disabled

@@ -2284,7 +2284,8 @@
     font-size: 17px;
   }
   .search-field {
-    max-width: 277px;
+    /* max-width: 277px; */
+    width: 100%;
   }
   .search-field input[type="search"] {
     padding: 12px 22px 12px 40px !important;
@@ -4767,5 +4768,23 @@
   .wr-form-wrap .btns-inline .btn,
   .wr-card-form-wrap .btns-inline .btn {
     height: 54px;
+  }
+}
+
+.responsive-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* for momentum scrolling on iOS */
+}
+
+/* Optimize for smaller screens */
+@media screen and (max-width: 767px) {
+  .full-width{
+    width: 100%
+  }
+
+  .full-width td,
+  .full-width th {
+    padding: 8px 10px; /* reduce padding for mobile */
+    font-size: 0.8rem; /* reduce font size for mobile */
   }
 }
