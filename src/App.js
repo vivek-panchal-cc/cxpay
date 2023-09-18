@@ -50,6 +50,7 @@ import TopUp from "pages/top-up/TopUp";
 import TopUpDetails from "pages/top-up/TopUpDetails";
 import { useDispatch, useSelector } from "react-redux";
 import RecurringPayment from "pages/recurring/RecurringPayment";
+import SendRecurringPayment from "pages/send-recurring-payment/SendRecurringPayment"; 
 import { fetchUserProfile } from "features/user/userProfileSlice";
 
 async function loadData() {
@@ -98,6 +99,7 @@ const ProtectedViewSchedulePayment = withUserProtection(ViewSchedulePayment, All
 const ProtectedEditScheduledPayment = withUserProtection(EditScheduledPayment, AllowedBusinessPersonal);
 const ProtectedEditProfile = withUserProtection(EditProfile, AllowedBusinessPersonal);
 const ProtectedRecurringPayment = withUserProtection(RecurringPayment, AllowedBusinessPersonal);
+const ProtectedSendRecurringPayment = withUserProtection(SendRecurringPayment, AllowedBusinessPersonal);
 
 // user_types = business
 const ProtectedBusinessInfo = withUserProtection(BusinessInfo, AllowedBusiness);
@@ -207,6 +209,7 @@ function App() {
             <Route path="/send" element={<ProtectedSendContact />} />
             <Route path="/send/payment" element={<ProtectedSendPayment />} />
             <Route path="/send/recurring-payment" element={<ProtectedRecurringPayment />} />
+            <Route path="/send/recurring-payment-send" element={<ProtectedSendRecurringPayment />} />
             <Route path="/request" element={<ProtectedRequestContact />} />
             <Route
               path="/request/payment"

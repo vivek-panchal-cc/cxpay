@@ -74,7 +74,12 @@ const verifyForgotPasswordOtpSchema = yup.object().shape({
 
 const topUpSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
-  mobile_number: mobileSchema,  
+  mobile_number: mobileSchema,
+});
+
+const recurringSchema = yup.object().shape({
+  start_date: yup.date().required("Start date is required").nullable(),
+  select_frequency_id: yup.string().required("Please select frequency"),  
 });
 
 const LoginSchema = yup.object().shape({
@@ -187,6 +192,7 @@ export {
   forgotPasswordSchema,
   verifyForgotPasswordOtpSchema,
   topUpSchema,
+  recurringSchema,
   resetPasswordSchema,
   loginWithOtpSchema,
   inviteContactSchema,

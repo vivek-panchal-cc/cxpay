@@ -45,6 +45,7 @@ function SendContact() {
     handleSendGroup,
     selectedContacts,
     selectedGroup,
+    handleSendRecurringContacts,
   } = useContext(SendPaymentContext);
 
   const handleResetContactData = () => {
@@ -280,9 +281,7 @@ function SendContact() {
               <Button
                 type="button"
                 className="btn btn-next ws--btn ms-0"
-                onClick={() => {
-                  setShowSchedulePopup(true);
-                }}
+                onClick={handleSendRecurringContacts}
                 disabled={selectedContactsIds.length < 1}
               >
                 <IconClock style={{ stroke: "#FFFFFF" }} />

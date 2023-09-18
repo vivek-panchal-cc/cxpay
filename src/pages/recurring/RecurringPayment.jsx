@@ -7,19 +7,18 @@ import { apiRequest } from "helpers/apiRequests";
 import useBalance from "hooks/useBalance";
 import useChartData from "hooks/useChartData";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
-import { topUpSchema } from "schemas/validationSchema";
+import { recurringSchema, topUpSchema } from "schemas/validationSchema";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import ReactDatePicker from "react-datepicker";
 import InputDatePicker from "components/ui/InputDatePicker";
-import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
 import ModalDatePicker from "components/modals/ModalDatePicker";
 
 function RecurringPayment() {
   const { setIsLoading } = useContext(LoaderContext);
   const navigate = useNavigate();
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [activeButton, setActiveButton] = useState(null);
+  const [activeDatePicker, setActiveDatePicker] = useState("");
+  const [activeButton, setActiveButton] = useState("occurrences");
+  const [occurrenceCount, setOccurrenceCount] = useState(0);
   const [cardsList, setCardsList] = useState([]);
   const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
   const [slideCard, setSlideCard] = useState({});
@@ -41,8 +40,47 @@ function RecurringPayment() {
   });
 
   const handleChangeDateFilter = (date) => {
-    formik.setFieldValue("date", date);
-    setShowDatePicker(false);
+    if (activeDatePicker === "start") {
+      formik.setFieldValue("start_date", date);
+    } else if (activeDatePicker === "end") {
+      formik.setFieldValue("end_date", date);
+    }
+    setActiveDatePicker("");
+  };
+
+  const handleSelectChange = (event) => {
+    formik.setFieldValue(event.target.name, event.target.value);
+  };
+
+  const incrementCount = () => {
+    setOccurrenceCount((prevCount) => {
+      const newCount = prevCount + 1;
+      formik.setFieldValue("occurrence_count", newCount);
+      return newCount;
+    });
+  };
+
+  const decrementCount = () => {
+    if (occurrenceCount > 0) {
+      setOccurrenceCount((prevCount) => {
+        const newCount = prevCount - 1;
+        formik.setFieldValue("occurrence_count", newCount);
+        return newCount;
+      });
+    }
+  };
+
+  const handleOccurrenceButtonClick = (e) => {
+    e.preventDefault();
+    setActiveButton("occurrences");
+    formik.setFieldValue("end_date", "");
+  };
+
+  const handleEndDateButtonClick = (e) => {
+    e.preventDefault();
+    setActiveButton("end_date");
+    setOccurrenceCount(0);
+    formik.setFieldValue("occurrence_count", 0);
   };
 
   const getActivitiesList = async (page = 1, filters = {}) => {
@@ -78,21 +116,24 @@ function RecurringPayment() {
 
   const formik = useFormik({
     initialValues: {
-      country_code: "",
-      mobile_number: "",
+      start_date: "",
+      end_date: "",
+      select_frequency_id: "",
+      occurrence_count: 0,
     },
-    validationSchema: topUpSchema,
+    validationSchema: recurringSchema,
+    validateOnChange: true,
+    validateOnBlur: true,
+    context: { activeButton },
     onSubmit: async (values, { setErrors }) => {
+      if (activeButton === "end_date" && !values.end_date) {
+        setErrors({ end_date: "End date is required" });
+        return;
+      }
       setIsLoading(true);
-      const mergedMobileNumber = `${values.country_code}${values.mobile_number}`;
       try {
-        const { data } = await apiRequest.getCustomerDetail({
-          mobile_number: mergedMobileNumber,
-        });
-        if (!data.success) throw data.message;
-        toast.success(data.message);
-        navigate("/top-up-details", {
-          state: { customerDetails: data },
+        navigate("/send/recurring-payment-send", {
+          state: { formData: values },
         });
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
@@ -105,6 +146,10 @@ function RecurringPayment() {
     },
   });
 
+  useEffect(() => {
+    formik.validateForm();
+  }, [activeButton]);
+
   return (
     <>
       <div className="settings-inner-sec wallet-ac-is">
@@ -113,7 +158,7 @@ function RecurringPayment() {
           <Breadcrumb skipIndexes={[1]} />
         </div>
         <div className="wallet-fund-form-wrap">
-          <form>
+          <form onSubmit={formik.handleSubmit}>
             <div className="bg-white-A700 flex flex-col font-visbyroundcf items-center justify-end mx-auto md:pr-10 pr-11 sm:pr-5 w-full">
               <div className="flex md:flex-col flex-row md:gap-10 items-start justify-between mx-auto w-full">
                 <div className="flex md:flex-1 md:flex-col flex-row md:gap-5 items-start justify-evenly w-[79%] md:w-full">
@@ -127,14 +172,15 @@ function RecurringPayment() {
                       >
                         <InputDatePicker
                           className="date-filter-calendar-recurring"
-                          date={formik.values.date}
+                          date={formik.values.start_date}
                           onClick={() => {
-                            setShowDatePicker(true);
+                            setActiveDatePicker("start");
                           }}
                         />
-                        {formik.touched.date && formik.errors.date ? (
+                        {formik.touched.start_date &&
+                        formik.errors.start_date ? (
                           <p className="text-danger pb-0">
-                            {formik.errors.date}
+                            {formik.errors.start_date}
                           </p>
                         ) : null}
                       </div>
@@ -143,9 +189,9 @@ function RecurringPayment() {
                         <div className="col-12 p-0">
                           <InputSelect
                             className="form-select form-control"
-                            style={{ height: "60px" }}
+                            style={{ height: "60px", marginBottom: "15px" }}
                             name="select_frequency_id"
-                            // onChange={handleCardDetailsChange}
+                            onChange={handleSelectChange}
                             onBlur={formik.handleBlur}
                             value={formik.values.select_frequency_id}
                             error={
@@ -163,59 +209,71 @@ function RecurringPayment() {
 
                       <div className="recurring-occurrence">
                         <button
+                          type="button"
                           className={`btn ${
                             activeButton === "occurrences"
-                              ? "btn-recurring-occurrence-active"
-                              : "btn-recurring-occurrence"
+                              ? "btn-active"
+                              : "btn-inactive"
                           }`}
-                          onClick={() => setActiveButton("occurrences")}
+                          onClick={handleOccurrenceButtonClick}
                         >
                           No of Occurrences
                         </button>
                         <button
+                          type="button"
                           className={`btn ${
-                            activeButton === "endDate"
-                              ? "recurring-end-date-active"
-                              : "recurring-end-date"
+                            activeButton === "end_date"
+                              ? "btn-active"
+                              : "btn-inactive"
                           }`}
-                          onClick={() => setActiveButton("endDate")}
+                          onClick={handleEndDateButtonClick}
                         >
                           End date
                         </button>
                       </div>
 
-                      <div className="main-wrapper">
-                        <div className="button-wrapper">
-                          <button>-</button>
+                      {activeButton === "occurrences" && (
+                        <div className="main-wrapper">
+                          <div className="button-wrapper">
+                            <button type="button" onClick={decrementCount}>
+                              -
+                            </button>{" "}
+                          </div>
+                          <label className="number-label">
+                            {occurrenceCount}
+                          </label>
+                          <div className="button-wrapper plus">
+                            <button type="button" onClick={incrementCount}>
+                              +
+                            </button>
+                          </div>
                         </div>
-                        <label className="number-label">0</label>
-                        <div className="button-wrapper plus">
-                          <button>+</button>
-                        </div>
-                      </div>
+                      )}
 
-                      <div
-                        className="common-dr-picker"
-                        style={{ marginBottom: "15px", marginTop: "15px" }}
-                      >
-                        <InputDatePicker
-                          className="date-filter-calendar-recurring"
-                          date={formik.values.date}
-                          onClick={() => {
-                            setShowDatePicker(true);
-                          }}
-                        />
-                        {formik.touched.date && formik.errors.date ? (
-                          <p className="text-danger pb-0">
-                            {formik.errors.date}
-                          </p>
-                        ) : null}
-                      </div>
+                      {activeButton === "end_date" && (
+                        <div
+                          className="common-dr-picker"
+                          style={{ marginBottom: "15px", marginTop: "15px" }}
+                        >
+                          <InputDatePicker
+                            className="date-filter-calendar-recurring"
+                            date={formik.values.end_date}
+                            onClick={() => {
+                              setActiveDatePicker("end");
+                            }}
+                          />
+                          {formik.touched.end_date && formik.errors.end_date ? (
+                            <p className="text-danger pb-0">
+                              {formik.errors.end_date}
+                            </p>
+                          ) : null}
+                        </div>
+                      )}
 
                       <div className="pay-btn-wrap">
                         <button
                           type="button"
-                          onClick={() => {}}
+                          onClick={() => navigate("/send")}
                           className="btn btn-cancel-payment"
                         >
                           Cancel
@@ -236,12 +294,10 @@ function RecurringPayment() {
           </form>
         </div>
         <ModalDatePicker
-          show={showDatePicker}
-          setShow={setShowDatePicker}
+          show={activeDatePicker !== ""}
+          setShow={() => setActiveDatePicker("")}
           classNameChild={"schedule-time-modal"}
           heading="Date Filter"
-          //   startDate={filters.startDate}
-          //   endDate={filters.endDate}
           handleChangeDate={handleChangeDateFilter}
         />
       </div>

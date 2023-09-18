@@ -54,6 +54,34 @@ const SendPaymentProvider = (props) => {
     navigate("/send/payment");
   };
 
+    // For Send contacts button click for recurring
+    const handleSendRecurringContacts = (contacts = null, request_id = "") => {
+      const sendContactsList =
+        contacts && contacts.length > 0 ? contacts : selectedContacts;
+      if (!sendContactsList || sendContactsList.length <= 0)
+        return toast.warning("Please select at least one contact");
+      if (sendContactsList.length > MAX_PAYMENT_CONTACTS)
+        return toast.warning(`You have exceed the contact limit.`);
+      const alias = {
+        account_number: "receiver_account_number",
+      };
+      const listAlias = sendContactsList.map((item) => ({
+        ...renameKeys(alias, item),
+        personal_amount: item.personal_amount || "",
+        specifications: item.specifications || "",
+      }));
+      const tmpCreds = { wallet: listAlias };
+      setDisableEdit(request_id ? true : false);
+      if (request_id && request_id.length > 0) {
+        tmpCreds.request_id = request_id;
+        setSelectedContacts([]);
+        setSelectedGroup([]);
+        setRequestCreds([]);
+      }
+      setSendCreds(tmpCreds);
+      navigate("/send/recurring-payment");
+    };
+
   // For Send group button click
   const handleSendGroup = async () => {
     if (!selectedGroup || selectedGroup.length <= 0)
@@ -212,6 +240,7 @@ const SendPaymentProvider = (props) => {
         handleSelectedGroup,
         handleCancelPayment,
         handleSendContacts,
+        handleSendRecurringContacts,
         handleSendRequest,
         handleSendGroup,
         handleRequestCreds,
