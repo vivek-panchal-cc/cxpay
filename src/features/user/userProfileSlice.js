@@ -7,6 +7,7 @@ const initialState = {
   profile: {},
   card: {},
   bank: {},
+  isLoading: false,
 };
 
 // Async thunks for asynchronous logic
@@ -87,11 +88,16 @@ const userProfileSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchUserProfile.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
         state.profile = action.payload;
+        state.isLoading = false;
       })
       .addCase(fetchUserProfile.rejected, (state, action) => {
         console.log("Error getting user data", action.payload);
+        state.isLoading = false;
       })
       .addCase(fetchLogin.fulfilled, (state, action) => {
         // document.location.href = "/";

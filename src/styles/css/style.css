@@ -908,7 +908,7 @@ pointer-events: none;
 }
 
 .search-field {
-  max-width: 327px;
+  /* max-width: 327px; */
   margin-left: auto;
   margin-right: 0;
   margin-bottom: 0;
@@ -2855,6 +2855,25 @@ img.img-hover {
   padding: 0px 0px 0px;
 }
 
+.full-width {
+  width: 100%;
+}
+
+.full-width td,
+.full-width th {
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 15px;
+  transition: all 0.5s ease-in-out;
+  width: auto; /* or you can specify a percentage if you prefer */
+}
+
+.activity-list-table th:first-child {
+  width: 45%;
+}
+
 /* Signup OPT Popup */
 .login-otp-numbers .form-field {
   display: flex;
@@ -3694,6 +3713,38 @@ margin-bottom:0px;
   padding-bottom: 32px;
 }
 
+.top-up-fund-row-amt .col-12 {
+  background: #f3f3f3;
+  border-radius: 18px;
+  /* height: 175px; */
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 20px !important;
+  margin: 45px 0px 65px;
+}
+
+.top-up-fund-row-amt table {
+  width: 100%;
+}
+
+.top-up-fund-row-amt table td:last-child {
+  text-align: right;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 29px;
+  color: var(--dark_blue);
+}
+
+.top-up-fund-row-amt table td {
+  padding: 10px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+  color: #5B5B5B;
+  vertical-align: middle;
+}
+
 .select-form-field select {
   width: 100%;
   border: 1px solid var(--blue) !important;
@@ -3713,6 +3764,10 @@ margin-bottom:0px;
 }
 
 .wallet-fund-row-amt-final .col-12 {
+  margin: 0px 0px 15px;
+}
+
+.top-up-fund-row-amt-final .col-12 {
   margin: 0px 0px 15px;
 }
 

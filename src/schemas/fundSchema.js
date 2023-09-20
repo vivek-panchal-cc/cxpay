@@ -46,6 +46,15 @@ const cardNumberSchema2 = yup.string().when("card_id", {
   otherwise: () => cardNumberSchema.required("Please enter card number"),
 });
 
+const topUpDetailsSchema = yup.object().shape({
+  transfer_amount: yup
+    .string()
+    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
+    .required("Please enter amount"),
+  commission_type_id: yup.string().required("Please select payment type"),
+  reference_id: yup.string().notRequired(),
+});
+
 const fundSchema = yup.object().shape({
   // email: emailSchema,
   // country: countrySchema,
@@ -116,4 +125,4 @@ const fundCashCreditSchema = yup.object().shape({
     }),
 });
 
-export { fundSchema, fundCashCreditSchema };
+export { fundSchema, fundCashCreditSchema, topUpDetailsSchema };

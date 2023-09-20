@@ -72,6 +72,11 @@ const verifyForgotPasswordOtpSchema = yup.object().shape({
   user_otp: otpSchema,
 });
 
+const topUpSchema = yup.object().shape({
+  country_code: yup.string().required("Code is required"),
+  mobile_number: mobileSchema,  
+});
+
 const LoginSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
   user_name: mobileSchema,
@@ -101,6 +106,23 @@ const editProfileBusinessUserSchema = yup.object().shape({
 });
 
 const editProfilePersonalUserSchema = yup.object().shape({
+  first_name: firstNameSchema.required("Please enter first name"),
+  last_name: lastNameSchema.required("Please enter last name"),
+  personal_id: yup
+    .string()
+    // .required("Please enter personal id")
+    .matches(/^\S*$/, "Space is not allowed")
+    .max(100, "Maximum limit is exceeded"),
+  user_type: yup.string().required(),
+  email: emailSchema,
+  address: addressSchema,
+  country: countrySchema,
+  city: citySchema,
+  country_code: yup.string().required("required"),
+  profile_image: profileImageSchema,
+  // mobile_number: yup.string().required("Mobile number is required"),
+});
+const editProfileAgentUserSchema = yup.object().shape({
   first_name: firstNameSchema.required("Please enter first name"),
   last_name: lastNameSchema.required("Please enter last name"),
   personal_id: yup
@@ -179,8 +201,10 @@ export {
   verifyLoginOtpSchema,
   editProfileBusinessUserSchema,
   editProfilePersonalUserSchema,
+  editProfileAgentUserSchema,
   forgotPasswordSchema,
   verifyForgotPasswordOtpSchema,
+  topUpSchema,
   resetPasswordSchema,
   loginWithOtpSchema,
   inviteContactSchema,

@@ -141,7 +141,7 @@ const WithdrawCard = () => {
                     inputMode="text"
                     id="specification"
                     className="form-control"
-                    placeholder="Sepecification"
+                    placeholder="Specification"
                     name="specification"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}

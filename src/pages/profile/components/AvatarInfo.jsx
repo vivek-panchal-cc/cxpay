@@ -2,7 +2,8 @@ import Image from "components/ui/Image";
 import React from "react";
 
 const AvatarInfo = (props) => {
-  const { profileImg, profileName, profileEmail, profileType } = props;
+  const { profileImg, profileName, profileEmail, profileType, profileNumber } =
+    props;
 
   return (
     <div className="profile-top-sec">
@@ -22,7 +23,8 @@ const AvatarInfo = (props) => {
       <div className="profile-info">
         <h3>{profileName}</h3>
         <p>
-          <a href={`mailto:${profileEmail}`}>{profileEmail}</a>
+          <a href={`mailto:${profileEmail}`}>{profileEmail}</a>{" "}
+          {profileNumber && <span>+{profileNumber}</span>}
         </p>
       </div>
     </div>

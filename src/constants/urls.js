@@ -99,6 +99,13 @@ export const API_TRANSACTION_INITIATE_CARD_WITHDRAW = "/initiate-card-withdraw";
 export const API_TRANSACTION_AVAILABLE_CARD_BALANCE = "/available-card-balance";
 export const API_TRANSACTION_VIEW_BANK_WITHDRAW_RECEIPT =
   "/view-bank-withdraw-receipt";
+export const API_TRANSACTION_GET_CUSTOMER_DETAIL = "/get-customer-detail";
+export const API_TRANSACTION_GET_AGENT_WISE_CARD_LIST = "/agent-wise-card-list";
+export const API_TRANSACTION_AGENT_TOP_UPS = "/agent-topups";
+export const API_TRANSACTION_GET_TOPUP_PRINT_DETAILS = "/get-topup-print-details";
+export const API_TRANSACTION_GET_TOPUP_TRANSACTION_HISTORY = "/topup-transaction-history";
+export const API_TRANSACTION_GET_TOPUP_ACTIVITY_DETAILS = "/topup-transaction-details";
+export const API_TRANSACTION_MONTHLY_RECHARGE_TOTAL = "/agent-recharge-total";
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =

@@ -104,6 +104,14 @@ const API_availableCardBalance = apiUrl.API_TRANSACTION_AVAILABLE_CARD_BALANCE;
 const API_viewBankWithdrawReceipt =
   apiUrl.API_TRANSACTION_VIEW_BANK_WITHDRAW_RECEIPT;
 const API_getBankDetails = apiUrl.API_TRANSACTION_GET_BANK_DETAILS;
+const API_getCustomerDetail = apiUrl.API_TRANSACTION_GET_CUSTOMER_DETAIL;
+const API_getAgentWiseCardList =
+  apiUrl.API_TRANSACTION_GET_AGENT_WISE_CARD_LIST;
+const API_agentTopUps = apiUrl.API_TRANSACTION_AGENT_TOP_UPS;
+const API_getTopupPrintDetails = apiUrl.API_TRANSACTION_GET_TOPUP_PRINT_DETAILS;
+const API_getTopupTransactionHistory = apiUrl.API_TRANSACTION_GET_TOPUP_TRANSACTION_HISTORY;
+const API_getTopupActivityDetails = apiUrl.API_TRANSACTION_GET_TOPUP_ACTIVITY_DETAILS;
+const API_getMonthlyRechargeTotal = apiUrl.API_TRANSACTION_MONTHLY_RECHARGE_TOTAL;
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
 /** POST @login API
@@ -503,6 +511,58 @@ export const getBankDetails = () => {
   return axiosTransactionInstance.get(`${API_getBankDetails}`);
 };
 
+/** POST @get-customer-detail
+ * @params auth_token, mobile_number, user_timezone
+ */
+
+export const getCustomerDetail = (params) => {
+  return axiosTransactionInstance.post(`${API_getCustomerDetail}`, params);
+};
+
+/** POST @get-customer-detail
+ * @params
+ */
+
+export const getAgentWiseCardList = () => {
+  return axiosTransactionInstance.post(`${API_getAgentWiseCardList}`);
+};
+
+/** POST @get-customer-detail
+ * @params
+ */
+
+export const agentTopUps = (params) => {
+  return axiosTransactionInstance.post(`${API_agentTopUps}`, params);
+};
+
+/** GET @get-topup-print-details
+ * @params
+ */
+export const getTopUpPrintDetails = (params) => {
+  return axiosTransactionInstance.post(`${API_getTopupPrintDetails}`, params);
+};
+
+/** GET @get-topup-print-details
+ * @params
+ */
+export const getTopUpTransactionHistory = (params) => {
+  return axiosTransactionInstance.post(`${API_getTopupTransactionHistory}`, params);
+};
+
+/** POST @get-topup-activity-details
+ * @params auth_token, id
+ */
+ export const getTopupActivityDetails = (params) => {
+  return axiosTransactionInstance.post(`${API_getTopupActivityDetails}`, params);
+};
+
+/** POST @get-activity-details
+ * @params auth_token
+ */
+ export const getMonthlyRechargeTotal = (params) => {
+  return axiosTransactionInstance.post(`${API_getMonthlyRechargeTotal}`, params);
+};
+
 /** POST @initiate-manual-fund-add
  * @params auth_token, amount, specification, fees, receipt[]
  */
@@ -776,6 +836,13 @@ export const apiRequest = {
   getCharges,
   addFund,
   getBankDetails,
+  getCustomerDetail,
+  getAgentWiseCardList,
+  agentTopUps,
+  getTopUpPrintDetails,
+  getTopUpTransactionHistory,
+  getTopupActivityDetails,
+  getMonthlyRechargeTotal,
   initiateManualFundAdd,
   getBalance,
   walletTransferOtp,

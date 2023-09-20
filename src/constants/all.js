@@ -143,6 +143,7 @@ const TXN_TYPE_PL = "PL";
 const TXN_TYPE_WW = "WW";
 const TXN_TYPE_WD = "WD";
 const TXN_TYPE_MF = "MF";
+const TXN_TYPE_AGENT = "AGENT TOPUP";
 
 const activityConsts = {
   [ACT_TYPE_REQUEST]: {
@@ -352,6 +353,52 @@ const activityConsts = {
           desc: "From YYYY",
         },
       },
+      [TXN_TYPE_AGENT]: {
+        [ACT_STATUS_PENDING]: {
+          iconStatus: "",
+          iconAmount: "+",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Pending",
+          textDetailStatus: "Amount Credit Pending",
+          desc: "From YYYY",
+        },
+        [ACT_STATUS_PROCESSING]: {
+          iconStatus: "",
+          iconAmount: "+",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Processing",
+          textDetailStatus: "Amount Credit In Progress",
+          desc: "From YYYY",
+        },
+        [ACT_STATUS_PAID]: {
+          iconStatus: "",
+          iconAmount: "+",
+          classStatus: "btn-green",
+          classBg: "cx-bg-green",
+          classText: "cx-color-green",
+          classDetailStatus: "cx-color-green",
+          textStatus: "Receive",
+          textDetailStatus: "Amount Credited",
+          desc: "From YYYY",
+        },
+        [ACT_STATUS_FAILED]: {
+          iconStatus: "",
+          iconAmount: "",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "cx-color-red",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Failed",
+          textDetailStatus: "Amount Credit Failed",
+          desc: "From YYYY",
+        },
+      }
     },
     [ACT_TRANSACT_DEBIT]: {
       [TXN_TYPE_WW]: {
@@ -478,6 +525,41 @@ const activityConsts = {
           desc: "You refunded",
         },
       },
+      [TXN_TYPE_AGENT]: {
+        [ACT_STATUS_PENDING]: {
+          iconStatus: "",
+          iconAmount: "-",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Pending",
+          textDetailStatus: "Amount Debit Pending",
+          desc: "To YYYY",
+        },
+        [ACT_STATUS_PAID]: {
+          iconStatus: "",
+          iconAmount: "-",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Sent",
+          textDetailStatus: "Amount Debited",
+          desc: "To YYYY",
+        },
+        [ACT_STATUS_FAILED]: {
+          iconStatus: "",
+          iconAmount: "-",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "cx-color-red",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Failed",
+          textDetailStatus: "Amount Debit Failed",
+          desc: "To YYYY",
+        },
+      }
     },
   },
 };
@@ -609,6 +691,7 @@ export {
   WITHDRAW_STATUS_FILTER_CARD,
   WITHDRAW_STATUS_FILTER_BANK,
   FILE_SIZE,
+  TXN_TYPE_AGENT,
 };
 export {
   regexContainCapitalLetter,

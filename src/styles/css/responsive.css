@@ -168,6 +168,9 @@
   .wallet-fund-row-amt table td {
     padding: 20px 20px 10px;
   }
+  .top-up-fund-row-amt table td {
+    padding: 20px 20px 10px;
+  }
   .login-signup-02 .login-signup-content-wrap h4.blue-text {
     margin-bottom: 20px;
   }
@@ -1965,6 +1968,16 @@
   .wallet-fund-row-amt table td {
     font-size: 15px;
   }
+  .top-up-fund-row-amt .col-12 {
+    margin: 20px 0px 20px;
+  }
+  .top-up-fund-row-amt table td:last-child {
+    font-size: 15px;
+    line-height: 25px;
+  }
+  .top-up-fund-row-amt table td {
+    font-size: 15px;
+  }
   .dashboard-link-wrap {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -2271,7 +2284,8 @@
     font-size: 17px;
   }
   .search-field {
-    max-width: 277px;
+    /* max-width: 277px; */
+    width: 100%;
   }
   .search-field input[type="search"] {
     padding: 12px 22px 12px 40px !important;
@@ -2977,7 +2991,8 @@
   }
   /* sp sec 15-05 end */
   .schedule-pay-sd-wrap {
-    justify-content: flex-start;
+    /* justify-content: flex-start; */
+    justify-content: space-between;
     padding-top: 15px;
     margin-bottom: 15px;
   }
@@ -4383,6 +4398,13 @@
   .wallet-fund-row-amt table td {
     padding: 20px 15px 10px;
   }
+  .top-up-fund-row-amt table td:last-child {
+    font-size: 17px;
+    line-height: 23px;
+  }  
+  .top-up-fund-row-amt table td {
+    padding: 20px 15px 10px;
+  }
   .contact-top-btn-nav {
     flex-wrap: wrap;
   }
@@ -4747,5 +4769,23 @@
   .wr-form-wrap .btns-inline .btn,
   .wr-card-form-wrap .btns-inline .btn {
     height: 54px;
+  }
+}
+
+.responsive-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* for momentum scrolling on iOS */
+}
+
+/* Optimize for smaller screens */
+@media screen and (max-width: 767px) {
+  .full-width{
+    width: 100%
+  }
+
+  .full-width td,
+  .full-width th {
+    padding: 8px 10px; /* reduce padding for mobile */
+    font-size: 0.8rem; /* reduce font size for mobile */
   }
 }

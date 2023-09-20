@@ -8,6 +8,8 @@ const initialValues = {
   user_otp: "",
   user_type: "",
   country_code: "",
+  selected_country_name: "",
+  country_iso: "",
   countryList: [],
   cityList: [],
 };
