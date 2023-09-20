@@ -142,7 +142,6 @@ const TopUpActivityProvider = ({ children }) => {
   const handleActivityRespond = (actDetails) => {
     setShowDetails(false);
     printTopUpActivityDetails(actDetails);
-    console.log("actDetails: ", actDetails);
   };
 
   const activityValues = useMemo(

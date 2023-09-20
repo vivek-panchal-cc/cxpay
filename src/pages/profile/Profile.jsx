@@ -20,7 +20,9 @@ const Profile = () => {
     mobile_number,
   } = profile || {};
   const profileName =
-    user_type === "personal" ? first_name + " " + last_name : company_name;
+    user_type === "personal" || user_type === "agent"
+      ? first_name + " " + last_name
+      : company_name;
 
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
 
@@ -75,9 +77,11 @@ const Profile = () => {
           </button>
         </div>
       </div>
-      <div className="profile-right-content col-lg-5 col-12">
-        <QrCode qrCodeImg={profile?.qr_code_image} />
-      </div>
+      {user_type !== "agent" && (
+        <div className="profile-right-content col-lg-5 col-12">
+          <QrCode qrCodeImg={profile?.qr_code_image} />
+        </div>
+      )}
     </div>
   );
 };

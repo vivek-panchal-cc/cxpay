@@ -105,6 +105,7 @@ const ProtectedRecurringPayment = withUserProtection(RecurringPayment, AllowedBu
 const ProtectedSendRecurringPayment = withUserProtection(SendRecurringPayment, AllowedBusinessPersonal);
 const ProtectedViewRecurringPayment = withUserProtection(ViewRecurringPayment, AllowedBusinessPersonal);
 const ProtectedEditRecurringPayment = withUserProtection(EditRecurringPayment, AllowedBusinessPersonal);
+const ProtectedNotification = withUserProtection(Notification, AllowedBusinessPersonal);
 
 // user_types = business
 const ProtectedBusinessInfo = withUserProtection(BusinessInfo, AllowedBusiness);
@@ -156,8 +157,8 @@ function App() {
           <Route element={<DashboardLayout />}>
             {/* settings */}
             <Route path="/setting" element={<Setting />} />
-            <Route path="/setting/edit-profile" element={<ProtectedEditProfile />} />
-            <Route path="/setting/notification" element={<Notification />} />
+            <Route path="/setting/edit-profile" element={<EditProfile />} />
+            <Route path="/setting/notification" element={<ProtectedNotification />} />
             <Route
               path="/setting/change-password"
               element={<ChangePassword />}

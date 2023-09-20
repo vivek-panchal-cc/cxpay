@@ -54,6 +54,7 @@ const TopUpActivityList = (props) => {
                     <th></th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {activitiesDateBind[key]?.map((activity, index) => {
                     return (

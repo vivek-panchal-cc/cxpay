@@ -171,6 +171,7 @@ function Businessform(props) {
                   onBlur={formik.handleBlur}
                   value={formik.values.country}
                   error={formik.touched.country && formik.errors.country}
+                  disabled
                 >
                   <option value={""}>Select Country</option>
                   {countryList?.map((country) => (

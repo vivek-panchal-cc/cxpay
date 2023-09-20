@@ -18,6 +18,9 @@ const Input = forwardRef((props, ref) => {
   };
 
   const changeElement = (element) => {
+    if (element?.target?.name == "email") {
+      element.currentTarget.value = element.currentTarget.value.trim();
+    }
     switch (type) {
       case "mobile":
         element.currentTarget.value = element.currentTarget.value.trim();

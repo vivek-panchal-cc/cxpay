@@ -153,10 +153,11 @@ const ProfileInfo = (props) => {
       <li>
         <div className="pi-title-div">Phone No.</div>
         <div className="profile-info-right-desc">
-          <p>
-            {/* +{country_code} {mobile_number} */}
-            +{mobile_number}
-          </p>
+          {mobile_number && (
+            <p>
+              {/* +{country_code} {mobile_number} */}+{mobile_number}
+            </p>
+          )}
         </div>
       </li>
       <li>

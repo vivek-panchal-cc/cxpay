@@ -18,6 +18,29 @@ function EnterPhone(props) {
   const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
   const { countryList } = signUpCreds || {};
 
+  const handleChangeCountry = (e) => {
+    formik.setFieldValue("country_code", e.target.value);
+    const selectedCountry = countryList?.find(
+      (c) => String(c.phonecode) === String(e.target.value)
+    );
+
+    if (selectedCountry) {
+      setSignUpCreds((cs) => ({
+        ...cs,
+        country_code: selectedCountry.phonecode,
+        selected_country_name: selectedCountry.country_name,
+        country_iso: selectedCountry.iso,
+      }));
+    } else {
+      setSignUpCreds((cs) => ({
+        ...cs,
+        country_code: "",
+        selected_country_name: "",
+        country_iso: "",
+      }));
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       mobile_number: "",
@@ -76,7 +99,8 @@ function EnterPhone(props) {
                         formik.touched.country_code &&
                         formik.errors.country_code
                       }
-                      onChange={formik.handleChange}
+                      // onChange={formik.handleChange}
+                      onChange={handleChangeCountry}
                     >
                       <option value={""}>Country</option>
                       {countryList?.map((country, index) => (

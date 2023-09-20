@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import NotificationDropdown from "./notification-dropdown/NotificationDropdown";
 import ProfileDropdown from "./profile-dropdown/ProfileDropdown";
 
 const NotificationBar = (props) => {
   const navbarRef = useRef(null);
+  const { profile } = useSelector((state) => state.userProfile);
+  const { user_type = "" } = profile || {};
 
   useEffect(() => {
     if (!navbarRef.current) return;
@@ -26,7 +29,7 @@ const NotificationBar = (props) => {
   return (
     <div className={`dashboard-top-sec no-search-ontop`} ref={navbarRef}>
       <div className="dashboard-notification-sec gap-4">
-        <NotificationDropdown />
+        {user_type !== "agent" && <NotificationDropdown />}
         <ProfileDropdown />
       </div>
     </div>

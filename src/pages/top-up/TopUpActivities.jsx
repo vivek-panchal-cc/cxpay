@@ -87,7 +87,7 @@ const TopUpActivities = () => {
     <div className="activities-sec">
       <div className="col-12 send-payment-ttile-wrap sdp-main-new-1 justify-content-between">
         <div className="title-content-wrap send-pay-title-sec w-auto">
-          <h3>Transaction History</h3>
+          <h3>Activities</h3>
           <p></p>
         </div>
         <div className="schedule-pay-sd-wrap gap-4 flex-wrap w-auto">
@@ -163,7 +163,7 @@ const TopUpActivities = () => {
       {!loadingAct
         ? Object.keys(activitiesDateBind || {}).length <= 0 && (
             <div className="text-center py-4">
-              <p className="fs-5">Transactions not found.</p>
+              <p className="fs-5">Activities not found.</p>
             </div>
           )
         : null}
