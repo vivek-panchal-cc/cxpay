@@ -2047,6 +2047,13 @@
     width: 40%;
     padding-left: 60px;
   }
+  .recurring-sp-details-main-wrap > div:first-child {
+    width: 40%;
+  }
+  .recurring-sp-details-main-wrap > div:last-child {
+    width: 60%;
+    /* padding-left: 60px; */
+  }
   .sdp-main-new-1 .title-content-wrap,
   .sdp-main-new-1 .schedule-pay-sd-wrap {
     width: 50%;
@@ -2974,6 +2981,9 @@
   .sp-details-main-wrap > div {
     width: 100%;
   }
+  .recurring-sp-details-main-wrap > div {
+    width: 100%;
+  }
   .sp-btn-inner-wrap {
     margin-top: 20px;
     margin-bottom: 30px;
@@ -2982,6 +2992,12 @@
     max-height: 300px;
   }
   .sp-details-inner-wrap li {
+    padding: 10px 15px;
+  }
+  .recurring-sp-details-inner-wrap ul {
+    max-height: 300px;
+  }
+  .recurring-sp-details-inner-wrap li {
     padding: 10px 15px;
   }
   .sp-top-sec .title-content-wrap p {
@@ -4475,6 +4491,12 @@
     padding: 10px;
   }
   .sp-details-inner-wrap ul {
+    padding-right: 10px;
+  }
+  .recurring-sp-details-inner-wrap li {
+    padding: 10px;
+  }
+  .recurring-sp-details-inner-wrap ul {
     padding-right: 10px;
   }
   .sp-total-amt span {

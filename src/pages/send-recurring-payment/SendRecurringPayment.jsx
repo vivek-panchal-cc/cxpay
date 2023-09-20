@@ -2,64 +2,45 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import ContactPaymentItem from "components/items/ContactPaymentItem";
-import {
-  sendPaymentOtpSchema,
-  sendPaymentSchema,
-} from "schemas/sendPaymentSchema";
+import { sendPaymentSchema } from "schemas/sendPaymentSchema";
 import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
-import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
 import { LoaderContext } from "context/loaderContext";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import ModalAlert from "components/modals/ModalAlert";
 import { CURRENCY_SYMBOL } from "constants/all";
-import { IconClock } from "styles/svgs";
-import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
-import ModalConfirmation from "components/modals/ModalConfirmation";
 import WrapAmount from "components/wrapper/WrapAmount";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
+import ModalConfirmation from "components/modals/ModalConfirmation";
+import ModalPaymentSchedulerRecurring from "components/modals/ModalPaymentSchedulerRecurring";
 
-function SendRecurringPayment(props) {
+function SendRecurringPayment(_props) {
   const navigate = useNavigate();
   const location = useLocation();
   const formData = location.state?.formData;
   const inputAmountRefs = useRef([]);
   const { setIsLoading } = useContext(LoaderContext);
-  const {
-    sendCreds,
-    charges,
-    disableEdit,
-    handleSendCreds,
-    handleCancelPayment,
-    prevPathRedirect,
-  } = useContext(SendPaymentContext);
-
-  const { mobile_number, country_code } = useSelector(
-    (state) => state?.userProfile?.profile
-  );
-  const { wallet, request_id } = sendCreds || [];
-
-  const [scrollTop, setScrollTop] = useState(false);
-  const [showOtpPoup, setShowOtpPopup] = useState(false);
-  const [showSentPopup, setShowSentPopup] = useState(false);
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
   const [showScheduleConfirmPopup, setShowScheduleConfirmPopup] =
     useState(false);
   const [scheduleCreds, setScheduleCreds] = useState(null);
-  const [sentDetail, setSentDetail] = useState({
-    heading: "",
-    message: "",
-    url: "",
-  });
+
+  const { sendCreds, charges, disableEdit, handleSendCreds } =
+    useContext(SendPaymentContext);
+
+  const { mobile_number, country_code } = useSelector(
+    (state) => state?.userProfile?.profile
+  );
+  const { wallet } = sendCreds || [];
+
   const [paymentDetails, setPaymentDetails] = useState({
     allCharges: [],
     grandTotal: 0.0,
     total: 0.0,
   });
 
-  function convertDateFormat(dateString) {
+  const convertDateFormat = (dateString) => {
     let dateObj = new Date(dateString);
     let dd = String(dateObj.getDate()).padStart(2, "0"); // get day and pad with 0 if needed
     let mm = String(dateObj.getMonth() + 1).padStart(2, "0"); // get month (0 indexed) and pad with 0 if needed
@@ -67,7 +48,7 @@ function SendRecurringPayment(props) {
 
     // Format and return the date
     return `${dd}/${mm}/${yyyy}`;
-  }
+  };
 
   const startDate = convertDateFormat(formData?.start_date);
   const endDate = convertDateFormat(formData?.end_date);
@@ -76,9 +57,8 @@ function SendRecurringPayment(props) {
     enableReinitialize: true,
     initialValues: sendCreds,
     validationSchema: sendPaymentSchema,
-    onSubmit: async (values, { setValues, setErrors }) => {
+    onSubmit: async (values) => {
       try {
-        if (showOtpPoup || showSentPopup) return;
         setIsLoading(true);
         const formData = new FormData();
         const muValues = { ...values };
@@ -93,11 +73,10 @@ function SendRecurringPayment(props) {
         muValues.total_amount = paymentDetails.grandTotal;
         for (const key in muValues)
           addObjToFormData(muValues[key], key, formData);
-        const { data } = await apiRequest.walletTransferOtp(formData);
+        const { data } = await apiRequest.createRecurringPayment(formData);
         if (!data.success) throw data.message;
-        toast.success(`${data?.data?.otp}`);
         toast.success(`${data.message}`);
-        setShowOtpPopup(true);
+        navigate("/view-recurring-payment");
       } catch (error) {
         if (typeof error === "string") toast.error(error);
       } finally {
@@ -106,62 +85,58 @@ function SendRecurringPayment(props) {
     },
   });
 
-  // For submitting OTP to API to make payment
-  const handleSubmitOtp = async (otp) => {
-    if (!otp || !mobile_number || !country_code) return;
-    setIsLoading(true);
-    try {
-      const { data } = await apiRequest.walletPersonalOtpVerify({
-        country_code,
-        mobile_number,
-        wallet_transfer_otp: otp,
-      });
-      if (!data.success) throw data;
-      toast.success(data.message);
-      setSentDetail({
-        heading: "Money Sent",
-        message: data.message,
-        url: "/assets/images/sent-payment-pop.svg",
-      });
-      setShowSentPopup(true);
-      return true;
-    } catch (error) {
-      const { message, data } = error || {};
-      const { wrong_otp_attempts } = data || {};
-      if (wrong_otp_attempts && wrong_otp_attempts >= 3) {
-        handleCancelPayment();
-        toast.error(message);
-        navigate("/send", { replace: true });
-      } else if (typeof message === "string" && !wrong_otp_attempts) {
-        setShowOtpPopup(false);
-        setSentDetail({
-          heading: message,
-          message: "",
-          url: "/assets/images/sent-payment-failed-pop.svg",
-        });
-        setShowSentPopup(true);
-        return false;
-      } else if (typeof message === "string") toast.error(message);
-      return false;
-    } finally {
-      setIsLoading(false);
-    }
+  const convertDateFormatToAppend = (dateStr) => {
+    if (!dateStr || dateStr.includes("NaN")) return "";
+    const [day, month, year] = dateStr.split("/");
+    return `${month}/${day}/${year}`;
   };
 
-  // For resending the OTP after timeout
-  const handleResendOtp = async () => {
+  const handleConfirmRecurringSubmit = async () => {
+    if (!scheduleCreds) return;
+    const validateObj = await formik.validateForm(formik.values);
+    if (Object.keys(validateObj).length > 0) {
+      formik.setTouched(validateObj);
+      formik.setErrors(validateObj);
+      setShowSchedulePopup(false);
+      return;
+    }
     setIsLoading(true);
+    setShowScheduleConfirmPopup(false);
     try {
-      const { data } = await apiRequest.resendWalletTransferOtp({
-        country_code,
-        mobile_number,
-      });
+      const formDataAppend = new FormData();
+      const muValues = { ...formik.values, ...scheduleCreds };
+      const formattedData = {
+        schedule_payment: muValues?.wallet?.map((walletItem) => ({
+          specification: walletItem.specifications,
+          amount: walletItem.personal_amount,
+          receiver_account_number: walletItem.receiver_account_number,
+        })),
+        fees: charges,
+        total: paymentDetails.grandTotal.toString(),
+        schedule_date: muValues.schedule_date,
+        overall_specification: muValues.overall_specification,
+        group_id: sendCreds?.group_id ? sendCreds?.group_id : "",
+        amount: paymentDetails?.total.toString(),
+        recurring_start_date: convertDateFormatToAppend(startDate),
+        recurring_end_date: convertDateFormatToAppend(endDate ? endDate : ""),
+        no_of_occurrence:
+          formData?.occurrence_count === 0
+            ? ""
+            : formData?.occurrence_count.toString(),
+        frequency: formData?.select_frequency_id,
+      };
+      for (const key in formattedData)
+        addObjToFormData(formattedData[key], key, formDataAppend);
+      const { data } = await apiRequest.createRecurringPayment(formDataAppend);
       if (!data.success) throw data.message;
-      toast.success(`${data?.data?.login_otp}`);
-      toast.success(data.message);
+      setShowSchedulePopup(false);
+      toast.success(`${data.message}`);
+      delete muValues.wallet;
+      navigate("/view-recurring-payment");
     } catch (error) {
       if (typeof error === "string") toast.error(error);
     } finally {
+      setScheduleCreds(null);
       setIsLoading(false);
     }
   };
@@ -177,7 +152,7 @@ function SendRecurringPayment(props) {
   };
 
   // For getting credentials for scheduling payment
-  const handleSchedulePayment = async () => {
+  const handleRecurringPayment = async () => {
     const validateObj = await formik.validateForm(formik.values);
     if (Object.keys(validateObj).length > 0) {
       formik.setTouched(validateObj);
@@ -195,47 +170,6 @@ function SendRecurringPayment(props) {
     setShowScheduleConfirmPopup(true);
   };
 
-  // For post the schedule payment
-  const handleConfirmScheduleSubmit = async () => {
-    if (!scheduleCreds) return;
-    const validateObj = await formik.validateForm(formik.values);
-    if (Object.keys(validateObj).length > 0) {
-      formik.setTouched(validateObj);
-      formik.setErrors(validateObj);
-      setShowSchedulePopup(false);
-      return;
-    }
-    setIsLoading(true);
-    setShowScheduleConfirmPopup(false);
-    try {
-      const formData = new FormData();
-      const muValues = { ...formik.values, ...scheduleCreds };
-      muValues.schedule_payment = muValues?.wallet?.map(
-        ({ specifications, personal_amount, receiver_account_number }) => ({
-          specifications,
-          personal_amount,
-          receiver_account_number,
-        })
-      );
-      muValues.fees = charges;
-      muValues.amount = paymentDetails.total;
-      muValues.total = paymentDetails.grandTotal;
-      delete muValues.wallet;
-      for (const key in muValues)
-        addObjToFormData(muValues[key], key, formData);
-      const { data } = await apiRequest.createSchedulePayment(formData);
-      if (!data.success) throw data.message;
-      setShowSchedulePopup(false);
-      toast.success(`${data.message}`);
-      navigate("/view-schedule-payment");
-    } catch (error) {
-      if (typeof error === "string") toast.error(error);
-    } finally {
-      setScheduleCreds(null);
-      setIsLoading(false);
-    }
-  };
-
   // For validation of inputs with scroll
   useEffect(() => {
     if ((!formik.isSubmitting && !formik.errors) || !formik.errors.wallet)
@@ -246,7 +180,7 @@ function SendRecurringPayment(props) {
       block: "center",
       inline: "nearest",
     });
-  }, [formik.isSubmitting, scrollTop]);
+  }, [formik.isSubmitting]);
 
   // For calculating charges when amount changes for any contact
   useEffect(() => {
@@ -263,32 +197,7 @@ function SendRecurringPayment(props) {
   //   navigate(prevPathRedirect || "/send", { replace: true });
   return (
     <>
-      {/* Modal For OTP confirmation */}
-      <ModalOtpConfirmation
-        id="group_pay_otp_modal"
-        className="otp-verification-modal group_pay_otp_modal"
-        show={showOtpPoup}
-        allowClickOutSide={true}
-        setShow={setShowOtpPopup}
-        heading="OTP Verification"
-        headingImg="/assets/images/sent-payment-otp-pop.svg"
-        subHeading="We have sent you verification code to initiate payment. Enter OTP below"
-        validationSchema={sendPaymentOtpSchema}
-        handleSubmitOtp={handleSubmitOtp}
-        handleResendOtp={handleResendOtp}
-      />
-      {/* Modal For Money Sent successfully */}
-      <ModalAlert
-        id="money_sent_modal"
-        className="money-sent-modal"
-        show={showSentPopup}
-        heading={sentDetail.heading}
-        subHeading={sentDetail.message}
-        headingImg={sentDetail.url}
-        btnText="Done"
-        handleBtnClick={handleCancelPayment}
-      />
-      <ModalPaymentScheduler
+      <ModalPaymentSchedulerRecurring
         classNameChild="schedule-time-modal"
         show={showSchedulePopup}
         setShow={setShowSchedulePopup}
@@ -302,11 +211,15 @@ function SendRecurringPayment(props) {
         subHeading={
           "Once It's done, your scheduled amount will be reserved until payment."
         }
-        handleCallback={handleConfirmScheduleSubmit}
+        handleCallback={handleConfirmRecurringSubmit}
       />
       <div className="col-12 send-payment-ttile-wrap">
         <div className="title-content-wrap send-pay-title-sec">
-          <h3>Recurring Payment</h3>
+          <h3>
+            {sendCreds.group_id
+              ? "Group Recurring Payment"
+              : "Recurring Payment"}
+          </h3>
           <Breadcrumb skipIndexes={[1]} />
         </div>
       </div>
@@ -523,9 +436,10 @@ function SendRecurringPayment(props) {
                 Cancel
               </button>
               <button
-                type="submit"
+                type="button"
                 className="btn btn-send-payment"
                 disabled={formik.isSubmitting}
+                onClick={handleRecurringPayment}
               >
                 Schedule
               </button>

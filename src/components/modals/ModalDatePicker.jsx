@@ -51,6 +51,7 @@ function ModalDatePicker(props) {
               <h3 className="text-center">{heading}</h3>
             </div>
             <ReactDatePicker
+              minDate={props.minDate || new Date()}
               selected={selectedDate}
               onChange={handleDateChange}
               inline

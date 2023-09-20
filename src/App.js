@@ -40,6 +40,9 @@ import Activities from "pages/activities/Activities";
 import TopUpActivities from "pages/top-up/TopUpActivities";
 import ScheduledPaymentLayout from "layouts/ScheduledPaymentLayout";
 import EditScheduledPayment from "pages/edit-scheduled-payment/EditScheduledPayment";
+import ViewRecurringPayment from "pages/view-recurring-payment/ViewRecurringPayment";
+import RecurringPaymentLayout from "layouts/RecurringPaymentLayout";
+import EditRecurringPayment from "pages/edit-recurring-payment/EditRecurringPayment";
 import Dashboard from "pages/dashboard/Dashboard";
 import WithdrawalsCard from "pages/withdrawals-card/WithdrawalsCard";
 import WithdrawalsBank from "pages/withdrawals-bank/WithdrawalsBank";
@@ -100,6 +103,8 @@ const ProtectedEditScheduledPayment = withUserProtection(EditScheduledPayment, A
 const ProtectedEditProfile = withUserProtection(EditProfile, AllowedBusinessPersonal);
 const ProtectedRecurringPayment = withUserProtection(RecurringPayment, AllowedBusinessPersonal);
 const ProtectedSendRecurringPayment = withUserProtection(SendRecurringPayment, AllowedBusinessPersonal);
+const ProtectedViewRecurringPayment = withUserProtection(ViewRecurringPayment, AllowedBusinessPersonal);
+const ProtectedEditRecurringPayment = withUserProtection(EditRecurringPayment, AllowedBusinessPersonal);
 
 // user_types = business
 const ProtectedBusinessInfo = withUserProtection(BusinessInfo, AllowedBusiness);
@@ -223,6 +228,16 @@ function App() {
               <Route
                 path="/view-schedule-payment/update"
                 element={<ProtectedEditScheduledPayment />}
+              />
+            </Route>
+            <Route element={<RecurringPaymentLayout />}>
+              <Route
+                path="/view-recurring-payment"
+                element={<ProtectedViewRecurringPayment />}
+              />
+              <Route
+                path="/view-recurring-payment/update"
+                element={<ProtectedEditRecurringPayment />}
               />
             </Route>
           </Route>

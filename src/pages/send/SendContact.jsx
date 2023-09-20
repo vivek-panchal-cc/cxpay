@@ -46,6 +46,7 @@ function SendContact() {
     selectedContacts,
     selectedGroup,
     handleSendRecurringContacts,
+    handleSendRecurringGroup,
   } = useContext(SendPaymentContext);
 
   const handleResetContactData = () => {
@@ -267,7 +268,7 @@ function SendContact() {
                 <IconPlus style={{ stroke: "#fff" }} />
                 Create Group
               </Button>
-              <Button
+              {/* <Button
                 type="button"
                 className="btn btn-next ws--btn ms-0"
                 onClick={() => {
@@ -277,7 +278,7 @@ function SendContact() {
               >
                 <IconClock style={{ stroke: "#FFFFFF" }} />
                 Schedule Payment
-              </Button>
+              </Button> */}
               <Button
                 type="button"
                 className="btn btn-next ws--btn ms-0"
@@ -343,6 +344,14 @@ function SendContact() {
               >
                 <IconSend style={{ stroke: "#fff" }} />
                 Send
+              </Button>
+              <Button
+                type="button"
+                className="btn btn-next ws--btn ms-0"
+                onClick={handleSendRecurringGroup}                
+              >
+                <IconClock style={{ stroke: "#FFFFFF" }} />
+                Recurring Payment
               </Button>
             </>
           ) : null}

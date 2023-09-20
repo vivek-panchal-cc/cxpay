@@ -144,22 +144,40 @@ const TimePicker = ({
     [hourListRef, minListRef, perListRef]
   );
 
+  // const handleChange = useCallback(
+  //   (date) => {
+  //     if (!date) return;
+  //     const timeSelect = date?.toLocaleTimeString("en", {
+  //       hour: "2-digit",
+  //       minute: "2-digit",
+  //       hourCycle: "h12",
+  //     });
+  //     const [hr, min_pr] = timeSelect?.split(":") || ["", ""];
+  //     const [min, pr] = min_pr?.split(" ") || ["", ""];
+  //     const timeStr = `${hr}:${min} ${pr?.trim()}`;
+  //     setTimePicked({ hour: hr, minutes: min, period: pr?.trim() });
+  //     alignTimePickedToTop(hr, min, pr.trim(), minutesSelection);
+  //     if (onChange) onChange(timeStr);
+  //   },
+  //   [alignTimePickedToTop, minutesSelection, onChange]
+  // );
+
   const handleChange = useCallback(
-    (date) => {
-      if (!date) return;
-      const timeSelect = date?.toLocaleTimeString("en", {
+    (hour, minute, period) => {
+      let newDate = new Date(selecteDate); // start with the selectedDate
+      newDate.setHours(period === "PM" ? hour + 12 : hour); // adjust for AM/PM
+      newDate.setMinutes(minute);
+
+      const timeStr = newDate.toLocaleTimeString("en", {
         hour: "2-digit",
         minute: "2-digit",
         hourCycle: "h12",
       });
-      const [hr, min_pr] = timeSelect?.split(":") || ["", ""];
-      const [min, pr] = min_pr?.split(" ") || ["", ""];
-      const timeStr = `${hr}:${min} ${pr?.trim()}`;
-      setTimePicked({ hour: hr, minutes: min, period: pr?.trim() });
-      alignTimePickedToTop(hr, min, pr.trim(), minutesSelection);
+
+      setTimePicked({ hour: hour, minutes: minute, period: period });
       if (onChange) onChange(timeStr);
     },
-    [alignTimePickedToTop, minutesSelection, onChange]
+    [selecteDate, onChange]
   );
 
   useEffect(() => {
@@ -245,7 +263,14 @@ const TimePicker = ({
                     <li
                       className={`cx_time_li ${classActive} ${classNonSelectable}`}
                       key={item}
-                      onClick={(el) => !flagDisable && handleChange(dt)}
+                      onClick={(el) =>
+                        !flagDisable &&
+                        handleChange(
+                          parseInt(item),
+                          parseInt(timePicked.minutes),
+                          timePicked.period
+                        )
+                      }
                     >
                       {item}
                     </li>
@@ -270,7 +295,14 @@ const TimePicker = ({
                     <li
                       className={`cx_time_li ${classActive} ${classNonSelectable}`}
                       key={item}
-                      onClick={(el) => !flagDisable && handleChange(dt)}
+                      onClick={(el) =>
+                        !flagDisable &&
+                        handleChange(
+                          parseInt(timePicked.hour),
+                          parseInt(item),
+                          timePicked.period
+                        )
+                      }
                     >
                       {item}
                     </li>
@@ -289,7 +321,13 @@ const TimePicker = ({
                     <li
                       className={`cx_time_li ${classActive}`}
                       key={item}
-                      onClick={(el) => handleChange(dt)}
+                      onClick={(el) =>
+                        handleChange(
+                          parseInt(timePicked.hour),
+                          parseInt(timePicked.minutes),
+                          item
+                        )
+                      }
                     >
                       {item}
                     </li>

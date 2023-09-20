@@ -54,33 +54,63 @@ const SendPaymentProvider = (props) => {
     navigate("/send/payment");
   };
 
-    // For Send contacts button click for recurring
-    const handleSendRecurringContacts = (contacts = null, request_id = "") => {
-      const sendContactsList =
-        contacts && contacts.length > 0 ? contacts : selectedContacts;
-      if (!sendContactsList || sendContactsList.length <= 0)
-        return toast.warning("Please select at least one contact");
-      if (sendContactsList.length > MAX_PAYMENT_CONTACTS)
-        return toast.warning(`You have exceed the contact limit.`);
-      const alias = {
-        account_number: "receiver_account_number",
-      };
-      const listAlias = sendContactsList.map((item) => ({
-        ...renameKeys(alias, item),
-        personal_amount: item.personal_amount || "",
-        specifications: item.specifications || "",
-      }));
-      const tmpCreds = { wallet: listAlias };
-      setDisableEdit(request_id ? true : false);
-      if (request_id && request_id.length > 0) {
-        tmpCreds.request_id = request_id;
-        setSelectedContacts([]);
-        setSelectedGroup([]);
-        setRequestCreds([]);
-      }
-      setSendCreds(tmpCreds);
-      navigate("/send/recurring-payment");
+  // For Send contacts button click for recurring
+  const handleSendRecurringContacts = (contacts = null, request_id = "") => {
+    const sendContactsList =
+      contacts && contacts.length > 0 ? contacts : selectedContacts;
+    if (!sendContactsList || sendContactsList.length <= 0)
+      return toast.warning("Please select at least one contact");
+    if (sendContactsList.length > MAX_PAYMENT_CONTACTS)
+      return toast.warning(`You have exceed the contact limit.`);
+    const alias = {
+      account_number: "receiver_account_number",
     };
+    const listAlias = sendContactsList.map((item) => ({
+      ...renameKeys(alias, item),
+      personal_amount: item.personal_amount || "",
+      specifications: item.specifications || "",
+    }));
+    const tmpCreds = { wallet: listAlias };
+    setDisableEdit(request_id ? true : false);
+    if (request_id && request_id.length > 0) {
+      tmpCreds.request_id = request_id;
+      setSelectedContacts([]);
+      setSelectedGroup([]);
+      setRequestCreds([]);
+    }
+    setSendCreds(tmpCreds);
+    navigate("/send/recurring-payment");
+  };
+
+  const handleSendRecurringGroup = async () => {
+    if (!selectedGroup || selectedGroup.length <= 0)
+      return toast.warning("Please select at least one group");
+    const { group_id } = selectedGroup[0];
+    const groupDetails = await getGroupDetail(group_id);
+    if (!groupDetails) return;
+    const { group_member_details } = groupDetails;
+    if (!group_member_details || group_member_details.length <= 0)
+      return toast.warning(`Group contains no contacts`);
+    if (group_member_details.length > MAX_PAYMENT_CONTACTS)
+      return toast.warning(
+        `Group contains more than ${MAX_PAYMENT_CONTACTS} contacts`
+      );
+    const alias = {
+      member_account_number: "receiver_account_number",
+      member_profile_image: "profile_image",
+      member_country_code: "country_code",
+      member_mobile: "mobile",
+      member_email: "email",
+      member_name: "name",
+    };
+    const listAlias = group_member_details.map((item) => ({
+      ...renameKeys(alias, item),
+      personal_amount: "",
+      specifications: "",
+    }));
+    setSendCreds({ group_id, wallet: [...listAlias] });
+    navigate("/send/recurring-payment");
+  };
 
   // For Send group button click
   const handleSendGroup = async () => {
@@ -241,6 +271,7 @@ const SendPaymentProvider = (props) => {
         handleCancelPayment,
         handleSendContacts,
         handleSendRecurringContacts,
+        handleSendRecurringGroup,
         handleSendRequest,
         handleSendGroup,
         handleRequestCreds,
