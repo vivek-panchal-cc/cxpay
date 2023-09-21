@@ -116,6 +116,6 @@ export const API_TRANSACTION_VIEW_RECURRING_PAYMENT = "/view-recurring-schedule-
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =
-  "https://centinelapistag.cardinalcommerce.com";
+  process.env.REACT_APP_API_CYBERSOURCE_ORIGIN_URL || "https://centinelapistag.cardinalcommerce.com";
 export const API_TRANSACTION_PAYMENT_RETURN_ORIGIN =
   process.env.REACT_APP_API_PAYMENT_RETURN || "http://3.140.192.108:8083";
