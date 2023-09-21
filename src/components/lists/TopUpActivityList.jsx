@@ -44,7 +44,7 @@ const TopUpActivityList = (props) => {
           <div className="tab-content-block-part" key={key}>
             <p>{key}</p>
             <ul className={`activity-lw-main ${classNameList}`}>
-              <table className="border-none full-width activity-list-table">
+              <table className="border-none full-width activity-list-table agent-recent-activity-list-table">
                 <thead>
                   <tr>
                     <th></th>

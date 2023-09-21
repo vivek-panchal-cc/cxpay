@@ -4417,7 +4417,7 @@
   .top-up-fund-row-amt table td:last-child {
     font-size: 17px;
     line-height: 23px;
-  }  
+  }
   .top-up-fund-row-amt table td {
     padding: 20px 15px 10px;
   }
@@ -4797,7 +4797,7 @@
 @media (min-width: 768px) {
   .recurring-occurrence {
     flex-direction: row; /* On larger screens, lay them out horizontally */
-    gap: 15px; 
+    gap: 15px;
     width: 357px; /* Set to your fixed width for tablets and up */
     height: 39px; /* Fixed height for tablets and up */
     margin-bottom: 15px;
@@ -4819,25 +4819,25 @@
   /* Styles for larger screens */
 }
 
-@media all and (max-width:1280px) and (min-width:992px) {
-  .RecurringScheduleDateWrap>div:not(:last-child) {
+@media all and (max-width: 1280px) and (min-width: 992px) {
+  .RecurringScheduleDateWrap > div:not(:last-child) {
     margin-right: 40px;
   }
 }
 
-@media all and (max-width:1100px) and (min-width:992px) {
+@media all and (max-width: 1100px) and (min-width: 992px) {
   .RSDaterange {
     min-width: 270px;
   }
 }
 
-@media all and (max-width:991px) {
+@media all and (max-width: 991px) {
   .rs_cm_div .rssvg_wrap {
     width: 40px;
     padding-right: 10px;
   }
 
-  .rs_cm_div .rssvg_wrap+div {
+  .rs_cm_div .rssvg_wrap + div {
     width: calc(100% - 40px);
   }
 
@@ -4853,12 +4853,12 @@
     min-width: 180px;
   }
 
-  .RecurringScheduleDateWrap>div:not(:last-child) {
+  .RecurringScheduleDateWrap > div:not(:last-child) {
     margin-right: 25px;
   }
 }
 
-@media all and (max-width:767px) {
+@media all and (max-width: 767px) {
   .RSDaterange.rs_cm_div {
     width: 100%;
     min-width: 100%;
@@ -4881,13 +4881,50 @@
 
 /* Optimize for smaller screens */
 @media screen and (max-width: 767px) {
-  .full-width{
-    width: 100%
+  .full-width {
+    width: 100%;
   }
 
   .full-width td,
   .full-width th {
-    padding: 8px 10px; /* reduce padding for mobile */
+    /* padding: 8px 10px; */
+    padding: 5px 5px; /* reduce padding for mobile */
     font-size: 0.8rem; /* reduce font size for mobile */
+  }
+
+  .agent-recent-activity-list-table td.act-user-info-wrap.d-flex {
+    padding: 0;
+  }
+
+  .agent-recent-activity-list-table h2 {
+    font-size: 12px !important;
+    line-height: 16px !important;
+  }
+  
+  .act-user-in {
+    padding-left: 0px !important;
+  }
+
+.agent-recent-activity-list-table img {
+    width: 75%;
+    height: 75%;
+}
+}
+@media screen and (max-width: 560px){
+th.topup-table-header {
+  font-size: 10px;
+  line-height: 15px;
+}
+}
+@media(max-width: 991px){
+  .rc-refund-all-wrap {
+    flex-wrap: wrap;
+  }
+  .rc-refund-all-wrap .rc-refund-second-wrap {
+    width: 100%;
+    margin: 20px 0 0;
+  }
+  .rc-refund-all-wrap .rc-refund-main-wrap {
+      width: 100%;
   }
 }

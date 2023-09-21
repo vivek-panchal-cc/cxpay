@@ -72,6 +72,19 @@ const fetchDeactivateAccount = createAsyncThunk(
   }
 );
 
+const fetchDeactivateAccountForAgent = createAsyncThunk(
+  "user/deactivateAccountForAgent",
+  async (creds, thunkAPI) => {
+    try {
+      const { data } = await apiRequest.deactivateAgentAccount(creds);
+      if (!data.success) throw data.message;
+      return data.message;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const userProfileSlice = createSlice({
   name: "userProfile",
   initialState,
@@ -128,6 +141,14 @@ const userProfileSlice = createSlice({
       })
       .addCase(fetchDeactivateAccount.rejected, (state, action) => {
         toast.error(action.payload);
+      })
+      .addCase(fetchDeactivateAccountForAgent.fulfilled, (state, action) => {
+        storageRequest.removeAuth();
+        toast.success(action.payload);
+        document.location.href = "/login";
+      })
+      .addCase(fetchDeactivateAccountForAgent.rejected, (state, action) => {
+        toast.error(action.payload);
       });
   },
 });
@@ -138,6 +159,7 @@ export {
   fetchUserProfile,
   fetchLoginOtpVerify,
   fetchDeactivateAccount,
+  fetchDeactivateAccountForAgent
 };
 export const { setUserProfile, setEditCard, setEditBank } =
   userProfileSlice.actions;

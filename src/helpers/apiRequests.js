@@ -66,6 +66,7 @@ const API_getRemainingGroupContact =
 const API_getCountryBanks = apiUrl.API_ONBOARD_GET_COUNTRY_BANKS;
 const API_resendVerifyEmail = apiUrl.API_ONBOARD_RESEND_VERIFY_EMAIL;
 const API_deactivateAccount = apiUrl.API_ONBOARD_DEACTIVATE_ACCOUNT;
+const API_deactivateAccountAgent = apiUrl.API_ONBOARD_DEACTIVATE_ACCOUNT_AGENT;
 const API_createSchedulePayment = apiUrl.API_ONBOARD_CREATE_SCHEDULE_PAYMENT;
 const API_listSchedulePayment = apiUrl.API_ONBOARD_LIST_SCHEDULE_PAYMENT;
 const API_deleteSchedulePayment = apiUrl.API_ONBOARD_DELETE_SCHEDULE_PAYMENT;
@@ -503,6 +504,13 @@ export const deactivateAccount = (params) => {
   return axiosOnboardInstance.post(`${API_deactivateAccount}`, params);
 };
 
+/** POST @deactivate-account
+ * @params auth_token
+ */
+export const deactivateAgentAccount = (params) => {
+  return axiosOnboardInstance.post(`${API_deactivateAccountAgent}`, params);
+};
+
 /** GET @get-charges
  * @params
  */
@@ -585,7 +593,7 @@ export const createRecurringPayment = (params) => {
 };
 
 /** POST @update-recurring-payment
- * @params auth_token
+ * @params auth_token, recurring_payment_id
  */
 export const updateRecurringPayment = (params) => {
   return axiosTransactionInstance.post(`${API_updateRecurringPayment}`, params);
@@ -910,6 +918,7 @@ export const apiRequest = {
   resendWalletTransferOtp,
   resendVerifyEmail,
   deactivateAccount,
+  deactivateAgentAccount,
   sendPaymentRequest,
   createSchedulePayment,
   listSchedulePayment,

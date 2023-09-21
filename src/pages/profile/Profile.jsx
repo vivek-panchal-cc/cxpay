@@ -6,7 +6,10 @@ import QrCode from "./components/QrCode";
 import "./profile.css";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { LoaderContext } from "context/loaderContext";
-import { fetchDeactivateAccount } from "features/user/userProfileSlice";
+import {
+  fetchDeactivateAccount,
+  fetchDeactivateAccountForAgent,
+} from "features/user/userProfileSlice";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -33,11 +36,15 @@ const Profile = () => {
   const handleDeleteAccount = async () => {
     setIsLoading(true);
     try {
-      await dispatch(
-        fetchDeactivateAccount({
-          mobile_number: `${mobile_number}`,
-        })
-      );
+      if (user_type !== "agent") {
+        await dispatch(
+          fetchDeactivateAccount({
+            mobile_number: `${mobile_number}`,
+          })
+        );
+      } else {
+        await dispatch(fetchDeactivateAccountForAgent());
+      }
     } catch (error) {
       console.log(error);
     } finally {

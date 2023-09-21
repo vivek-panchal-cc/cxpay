@@ -60,6 +60,7 @@ export const API_ONBOARD_DELETE_NOTIFICATIONS = "/delete-notifications";
 export const API_ONBOARD_GET_COUNTRY_BANKS = "/get-country-banks";
 export const API_ONBOARD_RESEND_VERIFY_EMAIL = "/resend-verify-email";
 export const API_ONBOARD_DEACTIVATE_ACCOUNT = "/deactivate-account";
+export const API_ONBOARD_DEACTIVATE_ACCOUNT_AGENT = "/agent-delete";
 export const API_ONBOARD_CREATE_SCHEDULE_PAYMENT = "/create-schedule-payment";
 export const API_ONBOARD_LIST_SCHEDULE_PAYMENT = "/list-schedule-payment";
 export const API_ONBOARD_DELETE_SCHEDULE_PAYMENT = "/delete-schedule-payment";

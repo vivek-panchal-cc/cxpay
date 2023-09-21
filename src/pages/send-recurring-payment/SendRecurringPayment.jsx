@@ -27,7 +27,7 @@ function SendRecurringPayment(_props) {
   const [scheduleCreds, setScheduleCreds] = useState(null);
 
   const { sendCreds, charges, disableEdit, handleSendCreds } =
-    useContext(SendPaymentContext);
+  useContext(SendPaymentContext);
 
   const { mobile_number, country_code } = useSelector(
     (state) => state?.userProfile?.profile
@@ -111,7 +111,7 @@ function SendRecurringPayment(_props) {
           amount: walletItem.personal_amount,
           receiver_account_number: walletItem.receiver_account_number,
         })),
-        fees: charges,
+        fees: charges?.length > 0  ? charges : "",
         total: paymentDetails.grandTotal.toString(),
         schedule_date: muValues.schedule_date,
         overall_specification: muValues.overall_specification,
@@ -193,8 +193,8 @@ function SendRecurringPayment(_props) {
     setPaymentDetails(getChargedAmount(charges, amounts));
   }, [formik.values?.wallet, charges]);
 
-  // if (!sendCreds?.wallet || sendCreds.wallet.length <= 0)
-  //   navigate(prevPathRedirect || "/send", { replace: true });
+  if (!sendCreds?.wallet || sendCreds.wallet.length <= 0)
+    navigate(prevPathRedirect || "/send", { replace: true });
   return (
     <>
       <ModalPaymentSchedulerRecurring
