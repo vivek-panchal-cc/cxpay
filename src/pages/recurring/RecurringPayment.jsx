@@ -18,7 +18,7 @@ function RecurringPayment() {
   const navigate = useNavigate();
   const [activeDatePicker, setActiveDatePicker] = useState("");
   const [activeButton, setActiveButton] = useState("occurrences");
-  const [occurrenceCount, setOccurrenceCount] = useState(0);
+  const [occurrenceCount, setOccurrenceCount] = useState(1);
   const [startDate, setStartDate] = useState(null);
   const [cardsList, setCardsList] = useState([]);
   const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
@@ -56,22 +56,16 @@ function RecurringPayment() {
   };
 
   const incrementCount = () => {
-    setOccurrenceCount((prevCount) => {
-      const newCount = prevCount + 1;
-      formik.setFieldValue("occurrence_count", newCount);
-      formik.setFieldTouched("occurrence_count", true);
-      return newCount;
-    });
+    const newCount = formik.values.occurrence_count + 1;
+    formik.setFieldValue("occurrence_count", newCount);
+    setOccurrenceCount(newCount);
   };
 
   const decrementCount = () => {
-    if (occurrenceCount > 0) {
-      setOccurrenceCount((prevCount) => {
-        const newCount = prevCount - 1;
-        formik.setFieldValue("occurrence_count", newCount);
-        formik.setFieldTouched("occurrence_count", true);
-        return newCount;
-      });
+    if (formik.values.occurrence_count > 1) {
+      const newCount = formik.values.occurrence_count - 1;
+      formik.setFieldValue("occurrence_count", newCount);
+      setOccurrenceCount(newCount);
     }
   };
 
@@ -124,7 +118,7 @@ function RecurringPayment() {
       start_date: "",
       end_date: "",
       select_frequency_id: "",
-      occurrence_count: 0,
+      occurrence_count: 1,
     },
     validationSchema: recurringSchema,
     validateOnChange: true,

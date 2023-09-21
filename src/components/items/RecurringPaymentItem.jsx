@@ -1,10 +1,12 @@
 import WrapAmount from "components/wrapper/WrapAmount";
 import { CURRENCY_SYMBOL } from "constants/all";
 import React, { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { IconBin, IconEdit } from "styles/svgs";
 
 const RecurringPaymentItem = (props) => {
   const { details, handleEdit, handleDelete } = props;
+  const navigate = useNavigate();
   const {
     id,
     name = "",
@@ -27,10 +29,14 @@ const RecurringPaymentItem = (props) => {
     return { dtString };
   }, [dateTime]);
 
+  const handleViewDetails = (e) => {
+    navigate(`/view-recurring-payment-details/${id}`);
+  };
+
   return (
     <li>
       <div className="left-activity-div">
-        <div className="user-thumb-name">
+        <div className="user-thumb-name" onClick={handleViewDetails}>
           <img src={profileImg} alt="" />
           <span>{name}</span>
         </div>

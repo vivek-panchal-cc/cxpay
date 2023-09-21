@@ -135,13 +135,13 @@ const TopUpActivities = () => {
           Object.keys(activitiesDateBind)?.map((key) => (
             <div key={key}>
               <div className="activity-month">{key}</div>
-              <table className="border-none full-width">
+              <table className="border-none full-width agent-recent-activity-list-table">
                 <thead>
                   <tr>
                     <th></th>
-                    <th style={mainDivStyle}>Customer Amount</th>
-                    <th style={mainDivStyle}>Commission</th>
-                    <th style={mainDivStyle}>Total Amount</th>
+                    <th style={mainDivStyle} className='topup-table-header'>Customer Amount</th>
+                    <th style={mainDivStyle} className='topup-table-header'>Commission</th>
+                    <th style={mainDivStyle} className='topup-table-header'>Total Amount</th>
                     <th></th>
                   </tr>
                 </thead>

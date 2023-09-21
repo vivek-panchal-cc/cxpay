@@ -56,7 +56,7 @@ const WithdrawBank = () => {
       bank_id: "",
       bank_account_number: "",
       bank_name: "",
-      swift_code: "",
+      // swift_code: "",
       account_type: "savings",
       amount: "",
       specification: "",
@@ -105,14 +105,14 @@ const WithdrawBank = () => {
       id,
       account_type,
       bank_name,
-      swift_code,
+      // swift_code,
       bank_number,
       country_bank_id,
     } = selectedBank || {};
     await formik.setFieldValue("bank_id", id);
     await formik.setFieldValue("bank_account_number", bank_number);
     await formik.setFieldValue("bank_name", country_bank_id);
-    await formik.setFieldValue("swift_code", swift_code);
+    // await formik.setFieldValue("swift_code", swift_code);
     await formik.setFieldValue("account_type", account_type);
     setSelectExistingBank(false);
     if (!id) return handleLinkNewBank();
@@ -126,7 +126,7 @@ const WithdrawBank = () => {
     await formik.setFieldValue("bank_id", "");
     await formik.setFieldValue("bank_account_number", "");
     await formik.setFieldValue("bank_name", "");
-    await formik.setFieldValue("swift_code", "");
+    // await formik.setFieldValue("swift_code", "");
     await formik.setFieldValue("account_type", "savings");
     setAddNewBank(true);
   };
@@ -236,7 +236,7 @@ const WithdrawBank = () => {
                     />
                   </div>
                 </div>
-                <div className="col-lg-6 col-12 col-right p-0">
+                {/* <div className="col-lg-6 col-12 col-right p-0">
                   <div className="d-flex flex-column">
                     <Input
                       type="text-uppercase"
@@ -253,7 +253,7 @@ const WithdrawBank = () => {
                       }
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="row">
                 <div className="col-12 p-0">

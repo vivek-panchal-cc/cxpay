@@ -32,7 +32,7 @@ const addCardSchema = yup.object().shape({
 const linkBankSchema = yup.object().shape({
   account_type: yup.string(),
   bank_name: bankNameSchema,
-  swift_code: swiftCodeSchema,
+  // swift_code: swiftCodeSchema,
   bank_number: bankNumberSchema,
   bank_holder_first_name: firstNameSchema.required("Please enter first name"),
   bank_holder_last_name: lastNameSchema.required("Please enter last name"),
@@ -90,7 +90,7 @@ const withdrawBankSchema = yup.object().shape({
   bank_id: yup.string(),
   bank_account_number: bankNumberSchema,
   bank_name: bankNameSchema,
-  swift_code: swiftCodeSchema,
+  // swift_code: swiftCodeSchema,
   account_type: yup.string(),
   amount: yup
     .string()

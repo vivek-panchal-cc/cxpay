@@ -15,7 +15,7 @@ const EditRecurringPayment = () => {
   const navigate = useNavigate();
   const [activeDatePicker, setActiveDatePicker] = useState("");
   const [activeButton, setActiveButton] = useState("occurrences");
-  const [occurrenceCount, setOccurrenceCount] = useState(0);
+  const [occurrenceCount, setOccurrenceCount] = useState(1);
   const [startDate, setStartDate] = useState(null);
   const { upPaymentEntry, updateRecurringPayment, cancelUpdatePayment } =
     useContext(RecurringPaymentContext);
@@ -56,36 +56,16 @@ const EditRecurringPayment = () => {
   };
 
   const incrementCount = () => {
-    setOccurrenceCount((prevCount) => {
-      const newCount = prevCount + 1;
-      formik.setFieldValue("no_of_occurrence", newCount);
-      formik.setFieldTouched("no_of_occurrence", true);
-      return newCount;
-    });
+    const newCount = formik.values.no_of_occurrence + 1;
+    formik.setFieldValue("no_of_occurrence", newCount);
   };
 
   const decrementCount = () => {
-    if (occurrenceCount > 0) {
-      setOccurrenceCount((prevCount) => {
-        const newCount = prevCount - 1;
-        formik.setFieldValue("no_of_occurrence", newCount);
-        formik.setFieldTouched("no_of_occurrence", true);
-        return newCount;
-      });
+    if (formik.values.no_of_occurrence > 1) {
+      const newCount = formik.values.no_of_occurrence - 1;
+      formik.setFieldValue("no_of_occurrence", newCount);
     }
   };
-
-  // const incrementCount = () => {
-  //   const newCount = formik.values.no_of_occurrence + 1;
-  //   formik.setFieldValue("no_of_occurrence", newCount);
-  // };
-
-  // const decrementCount = () => {
-  //   if (formik.values.no_of_occurrence > 0) {
-  //     const newCount = formik.values.no_of_occurrence - 1;
-  //     formik.setFieldValue("no_of_occurrence", newCount);
-  //   }
-  // };
 
   const handleOccurrenceButtonClick = (e) => {
     e.preventDefault();
@@ -142,8 +122,8 @@ const EditRecurringPayment = () => {
       return "";
     }
 
-    const formattedMonth = date.getMonth() + 1;
-    const formattedDay = date.getDate();
+    const formattedMonth = ("0" + (date.getMonth() + 1)).slice(-2); // Ensures it is two digits
+    const formattedDay = ("0" + date.getDate()).slice(-2); // Ensures it is two digits
     const formattedYear = date.getFullYear();
 
     return `${formattedMonth}/${formattedDay}/${formattedYear}`;
@@ -152,7 +132,7 @@ const EditRecurringPayment = () => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      specification: overall_specification || "",
+      // specification: overall_specification || "",
       no_of_occurrence: no_of_occurrence || 0,
       recurring_end_date: recurring_end_date || "",
       recurring_start_date: recurring_start_date || "",
@@ -175,7 +155,7 @@ const EditRecurringPayment = () => {
         return;
       }
       const {
-        specification,
+        // specification,
         no_of_occurrence,
         recurring_end_date,
         recurring_start_date,
@@ -183,7 +163,7 @@ const EditRecurringPayment = () => {
       } = values;
       const params = {
         recurring_payment_id: id,
-        overall_specification: specification,
+        // overall_specification: specification,
         no_of_occurrence: no_of_occurrence.toString(),
         recurring_end_date: formatDateToMDY(recurring_end_date),
         recurring_start_date: formatDateToMDY(recurring_start_date),
@@ -390,7 +370,7 @@ const EditRecurringPayment = () => {
                     </div>
                   )}
                 </div>
-                <label style={{ color: "#363853", marginBottom: "15px" }}>
+                {/* <label style={{ color: "#363853", marginBottom: "15px" }}>
                   Specification
                 </label>
                 <div className="form-field">
@@ -407,7 +387,7 @@ const EditRecurringPayment = () => {
                       formik.errors.specification
                     }
                   />
-                </div>
+                </div> */}
               </div>
             </form>
           </div>

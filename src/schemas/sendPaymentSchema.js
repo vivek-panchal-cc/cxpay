@@ -75,10 +75,10 @@ const schedulePaymentSchemaRecurring = yup.object().shape({
 });
 
 const schedulePaymentSchemaRecurringForUpdate = yup.object().shape({
-  specification: yup
-    .string()
-    .max(50, "Maximum limit is 50 characters.")
-    .required("Please enter specifications"),
+  // specification: yup
+  //   .string()
+  //   .max(50, "Maximum limit is 50 characters.")
+  //   .required("Please enter specifications"),
   recurring_start_date: yup
     .date()
     .required("Start date is required")

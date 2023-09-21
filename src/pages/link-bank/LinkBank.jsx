@@ -25,7 +25,7 @@ const LinkBank = (props) => {
     initialValues: {
       account_type: "current",
       bank_name: "",
-      swift_code: "",
+      // swift_code: "",
       bank_number: "",
       bank_holder_first_name: first_name || "",
       bank_holder_last_name: last_name || "",
@@ -45,7 +45,7 @@ const LinkBank = (props) => {
         if (typeof error === "string") return toast.error(error);
         setErrors({
           bank_name: error.bank_name?.[0],
-          swift_code: error.swift_code?.[0],
+          // swift_code: error.swift_code?.[0],
           bank_number: error.bank_number?.[0],
           bank_holder_first_name: error.bank_holder_first_name?.[0],
           bank_holder_last_name: error.bank_holder_last_name?.[0],
@@ -136,7 +136,7 @@ const LinkBank = (props) => {
                 </InputSelect>
               </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-12 col p-0">
                 <Input
                   type="text-uppercase"
@@ -150,7 +150,7 @@ const LinkBank = (props) => {
                   error={formik.touched.swift_code && formik.errors.swift_code}
                 />
               </div>
-            </div>
+            </div> */}
             <div className="row">
               <div className="col-12 col p-0">
                 <Input
