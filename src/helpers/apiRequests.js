@@ -109,9 +109,23 @@ const API_getAgentWiseCardList =
   apiUrl.API_TRANSACTION_GET_AGENT_WISE_CARD_LIST;
 const API_agentTopUps = apiUrl.API_TRANSACTION_AGENT_TOP_UPS;
 const API_getTopupPrintDetails = apiUrl.API_TRANSACTION_GET_TOPUP_PRINT_DETAILS;
-const API_getTopupTransactionHistory = apiUrl.API_TRANSACTION_GET_TOPUP_TRANSACTION_HISTORY;
-const API_getTopupActivityDetails = apiUrl.API_TRANSACTION_GET_TOPUP_ACTIVITY_DETAILS;
-const API_getMonthlyRechargeTotal = apiUrl.API_TRANSACTION_MONTHLY_RECHARGE_TOTAL;
+const API_getTopupTransactionHistory =
+  apiUrl.API_TRANSACTION_GET_TOPUP_TRANSACTION_HISTORY;
+const API_getTopupActivityDetails =
+  apiUrl.API_TRANSACTION_GET_TOPUP_ACTIVITY_DETAILS;
+const API_getMonthlyRechargeTotal =
+  apiUrl.API_TRANSACTION_MONTHLY_RECHARGE_TOTAL;
+
+//Recurring
+const API_createRecurringPayment =
+  apiUrl.API_TRANSACTION_CREATE_RECURRING_PAYMENT;
+const API_updateRecurringPayment =
+  apiUrl.API_TRANSACTION_UPDATE_RECURRING_PAYMENT;
+const API_deleteRecurringPayment =
+  apiUrl.API_TRANSACTION_DELETE_RECURRING_PAYMENT;
+const API_listRecurringPayment = apiUrl.API_TRANSACTION_LIST_RECURRING_PAYMENT;
+const API_viewRecurringPayment = apiUrl.API_TRANSACTION_VIEW_RECURRING_PAYMENT;
+
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
 /** POST @login API
@@ -546,21 +560,67 @@ export const getTopUpPrintDetails = (params) => {
  * @params
  */
 export const getTopUpTransactionHistory = (params) => {
-  return axiosTransactionInstance.post(`${API_getTopupTransactionHistory}`, params);
+  return axiosTransactionInstance.post(
+    `${API_getTopupTransactionHistory}`,
+    params
+  );
 };
 
 /** POST @get-topup-activity-details
  * @params auth_token, id
  */
- export const getTopupActivityDetails = (params) => {
-  return axiosTransactionInstance.post(`${API_getTopupActivityDetails}`, params);
+export const getTopupActivityDetails = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_getTopupActivityDetails}`,
+    params
+  );
 };
+
+//Recurring
+/**
+ * @params auth_token
+ */
+export const createRecurringPayment = (params) => {  
+  return axiosTransactionInstance.post(`${API_createRecurringPayment}`, params);
+};
+
+/** POST @update-recurring-payment
+ * @params auth_token
+ */
+export const updateRecurringPayment = (params) => {
+  return axiosTransactionInstance.post(`${API_updateRecurringPayment}`, params);
+};
+
+/** POST @list-recurring-payment
+ * @params auth_token, start_date, end_date, page
+ */
+export const listRecurringPayment = (params) => {
+  return axiosTransactionInstance.post(`${API_listRecurringPayment}`, params);
+};
+
+/** POST @delete-recurring-payment
+ * @params auth_token, recurring_payment_id
+ */
+export const deleteRecurringPayment = (params) => {
+  return axiosTransactionInstance.post(`${API_deleteRecurringPayment}`, params);
+};
+
+/** POST @view-recurring-payment
+ * @params auth_token, user_timezone, recurring_payment_id
+ */
+export const viewRecurringPayment = (params) => {
+  return axiosTransactionInstance.post(`${API_viewRecurringPayment}`, params);
+};
+// End of recurring
 
 /** POST @get-activity-details
  * @params auth_token
  */
- export const getMonthlyRechargeTotal = (params) => {
-  return axiosTransactionInstance.post(`${API_getMonthlyRechargeTotal}`, params);
+export const getMonthlyRechargeTotal = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_getMonthlyRechargeTotal}`,
+    params
+  );
 };
 
 /** POST @initiate-manual-fund-add
@@ -875,4 +935,10 @@ export const apiRequest = {
   // cybersource add-fund
   addFundWithCard,
   checkEnrollment,
+  // Recurring
+  createRecurringPayment,
+  updateRecurringPayment,
+  listRecurringPayment,
+  deleteRecurringPayment,
+  viewRecurringPayment,
 };

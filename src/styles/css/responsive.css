@@ -2047,6 +2047,13 @@
     width: 40%;
     padding-left: 60px;
   }
+  .recurring-sp-details-main-wrap > div:first-child {
+    width: 40%;
+  }
+  .recurring-sp-details-main-wrap > div:last-child {
+    width: 60%;
+    /* padding-left: 60px; */
+  }
   .sdp-main-new-1 .title-content-wrap,
   .sdp-main-new-1 .schedule-pay-sd-wrap {
     width: 50%;
@@ -2975,6 +2982,9 @@
   .sp-details-main-wrap > div {
     width: 100%;
   }
+  .recurring-sp-details-main-wrap > div {
+    width: 100%;
+  }
   .sp-btn-inner-wrap {
     margin-top: 20px;
     margin-bottom: 30px;
@@ -2983,6 +2993,12 @@
     max-height: 300px;
   }
   .sp-details-inner-wrap li {
+    padding: 10px 15px;
+  }
+  .recurring-sp-details-inner-wrap ul {
+    max-height: 300px;
+  }
+  .recurring-sp-details-inner-wrap li {
     padding: 10px 15px;
   }
   .sp-top-sec .title-content-wrap p {
@@ -4479,6 +4495,12 @@
   .sp-details-inner-wrap ul {
     padding-right: 10px;
   }
+  .recurring-sp-details-inner-wrap li {
+    padding: 10px;
+  }
+  .recurring-sp-details-inner-wrap ul {
+    padding-right: 10px;
+  }
   .sp-total-amt span {
     margin-right: 10px;
   }
@@ -4772,6 +4794,86 @@
   }
 }
 
+@media (min-width: 768px) {
+  .recurring-occurrence {
+    flex-direction: row; /* On larger screens, lay them out horizontally */
+    gap: 15px; 
+    width: 357px; /* Set to your fixed width for tablets and up */
+    height: 39px; /* Fixed height for tablets and up */
+    margin-bottom: 15px;
+  }
+
+  .btn-recurring-occurrence {
+    min-width: 204px; /* Original width */
+    padding: 8px 23px; /* Original padding */
+  }
+
+  .recurring-end-date {
+    min-width: 138px; /* Original width */
+    padding: 8px 19px; /* Original padding */
+  }
+}
+
+/* If you want to add more styles for larger screens like big tablets or desktops, add another media query */
+@media (min-width: 1024px) {
+  /* Styles for larger screens */
+}
+
+@media all and (max-width:1280px) and (min-width:992px) {
+  .RecurringScheduleDateWrap>div:not(:last-child) {
+    margin-right: 40px;
+  }
+}
+
+@media all and (max-width:1100px) and (min-width:992px) {
+  .RSDaterange {
+    min-width: 270px;
+  }
+}
+
+@media all and (max-width:991px) {
+  .rs_cm_div .rssvg_wrap {
+    width: 40px;
+    padding-right: 10px;
+  }
+
+  .rs_cm_div .rssvg_wrap+div {
+    width: calc(100% - 40px);
+  }
+
+  .rs_cm_div .rssvg_wrap svg {
+    max-width: 30px;
+  }
+
+  .RSDaterange {
+    min-width: 200px;
+  }
+  .RSFrequency,
+  .RSOccurances {
+    min-width: 180px;
+  }
+
+  .RecurringScheduleDateWrap>div:not(:last-child) {
+    margin-right: 25px;
+  }
+}
+
+@media all and (max-width:767px) {
+  .RSDaterange.rs_cm_div {
+    width: 100%;
+    min-width: 100%;
+    margin-right: 0px !important;
+    margin-bottom: 15px;
+  }
+
+  .RecurringScheduleDateWrap {
+    flex-wrap: wrap;
+  }
+
+  .RSOccurances.rs_cm_div {
+    margin-bottom: 10px;
+  }
+}
 .responsive-table-wrapper {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch; /* for momentum scrolling on iOS */

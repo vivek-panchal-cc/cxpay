@@ -107,6 +107,13 @@ export const API_TRANSACTION_GET_TOPUP_TRANSACTION_HISTORY = "/topup-transaction
 export const API_TRANSACTION_GET_TOPUP_ACTIVITY_DETAILS = "/topup-transaction-details";
 export const API_TRANSACTION_MONTHLY_RECHARGE_TOTAL = "/agent-recharge-total";
 
+//Recurring
+export const API_TRANSACTION_CREATE_RECURRING_PAYMENT = "/create-recurring-schedule-payment";
+export const API_TRANSACTION_UPDATE_RECURRING_PAYMENT = "/update-recurring-schedule-payment";
+export const API_TRANSACTION_DELETE_RECURRING_PAYMENT = "/delete-recurring-schedule-payment";
+export const API_TRANSACTION_LIST_RECURRING_PAYMENT = "/list-recurring-schedule-payment";
+export const API_TRANSACTION_VIEW_RECURRING_PAYMENT = "/view-recurring-schedule-payment";
+
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =
   "https://centinelapistag.cardinalcommerce.com";

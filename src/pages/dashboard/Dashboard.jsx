@@ -291,6 +291,17 @@ const Dashboard = () => {
                     </Link>
                   </li>
                   <li>
+                    <Link to="/view-recurring-payment">
+                      <span className="icon-link-text">
+                        <IconWallet stroke="#363853" />
+                        Recurring Payments
+                      </span>
+                      <span className="arrow-wrap">
+                        <IconRightArrowBig />
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
                     <Link to="/send">
                       <span className="icon-link-text">
                         <IconSend style={{ stroke: "#363853" }} />

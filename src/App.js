@@ -40,6 +40,9 @@ import Activities from "pages/activities/Activities";
 import TopUpActivities from "pages/top-up/TopUpActivities";
 import ScheduledPaymentLayout from "layouts/ScheduledPaymentLayout";
 import EditScheduledPayment from "pages/edit-scheduled-payment/EditScheduledPayment";
+import ViewRecurringPayment from "pages/view-recurring-payment/ViewRecurringPayment";
+import RecurringPaymentLayout from "layouts/RecurringPaymentLayout";
+import EditRecurringPayment from "pages/edit-recurring-payment/EditRecurringPayment";
 import Dashboard from "pages/dashboard/Dashboard";
 import WithdrawalsCard from "pages/withdrawals-card/WithdrawalsCard";
 import WithdrawalsBank from "pages/withdrawals-bank/WithdrawalsBank";
@@ -49,6 +52,8 @@ import WithdrawDetails from "pages/withdraw-details/WithdrawDetails";
 import TopUp from "pages/top-up/TopUp";
 import TopUpDetails from "pages/top-up/TopUpDetails";
 import { useDispatch, useSelector } from "react-redux";
+import RecurringPayment from "pages/recurring/RecurringPayment";
+import SendRecurringPayment from "pages/send-recurring-payment/SendRecurringPayment"; 
 import { fetchUserProfile } from "features/user/userProfileSlice";
 
 async function loadData() {
@@ -95,6 +100,11 @@ const ProtectedRequestContact = withUserProtection(RequestContact, AllowedBusine
 const ProtectedRequestPayment = withUserProtection(RequestPayment, AllowedBusinessPersonal);
 const ProtectedViewSchedulePayment = withUserProtection(ViewSchedulePayment, AllowedBusinessPersonal);
 const ProtectedEditScheduledPayment = withUserProtection(EditScheduledPayment, AllowedBusinessPersonal);
+const ProtectedEditProfile = withUserProtection(EditProfile, AllowedBusinessPersonal);
+const ProtectedRecurringPayment = withUserProtection(RecurringPayment, AllowedBusinessPersonal);
+const ProtectedSendRecurringPayment = withUserProtection(SendRecurringPayment, AllowedBusinessPersonal);
+const ProtectedViewRecurringPayment = withUserProtection(ViewRecurringPayment, AllowedBusinessPersonal);
+const ProtectedEditRecurringPayment = withUserProtection(EditRecurringPayment, AllowedBusinessPersonal);
 const ProtectedNotification = withUserProtection(Notification, AllowedBusinessPersonal);
 
 // user_types = business
@@ -204,6 +214,8 @@ function App() {
             <Route path="/edit-group/:id" element={<ProtectedEditGroup />} />
             <Route path="/send" element={<ProtectedSendContact />} />
             <Route path="/send/payment" element={<ProtectedSendPayment />} />
+            <Route path="/send/recurring-payment" element={<ProtectedRecurringPayment />} />
+            <Route path="/send/recurring-payment-send" element={<ProtectedSendRecurringPayment />} />
             <Route path="/request" element={<ProtectedRequestContact />} />
             <Route
               path="/request/payment"
@@ -217,6 +229,16 @@ function App() {
               <Route
                 path="/view-schedule-payment/update"
                 element={<ProtectedEditScheduledPayment />}
+              />
+            </Route>
+            <Route element={<RecurringPaymentLayout />}>
+              <Route
+                path="/view-recurring-payment"
+                element={<ProtectedViewRecurringPayment />}
+              />
+              <Route
+                path="/view-recurring-payment/update"
+                element={<ProtectedEditRecurringPayment />}
               />
             </Route>
           </Route>

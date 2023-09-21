@@ -79,7 +79,7 @@ function LeftSidebar() {
                   <IconWallet />
                   <span>Wallet</span>
                 </Link>
-              </li>
+              </li>              
               <li
                 className={`${
                   thisRoute === "contacts" || thisRoute === "contacts-invited"

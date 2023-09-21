@@ -63,6 +63,29 @@ const schedulePaymentSchema = yup.object().shape({
     .required("Please enter specifications"),
 });
 
+const schedulePaymentSchemaRecurring = yup.object().shape({
+  date: yup
+    .date()
+    .min(getYesterDay(), "Date cannot be in the past")
+    .required("Date is required"),
+  specification: yup
+    .string()
+    .max(50, "Maximum limit is 50 characters.")
+    .required("Please enter specifications"),
+});
+
+const schedulePaymentSchemaRecurringForUpdate = yup.object().shape({
+  specification: yup
+    .string()
+    .max(50, "Maximum limit is 50 characters.")
+    .required("Please enter specifications"),
+  recurring_start_date: yup
+    .date()
+    .required("Start date is required")
+    .nullable(),
+  frequency: yup.string().required("Please select frequency"),
+});
+
 const sendPaymentOtpSchema = yup.object().shape({
   otp: otpSchema,
 });
@@ -72,4 +95,6 @@ export {
   sendPaymentOtpSchema,
   sendRequestSchema,
   schedulePaymentSchema,
+  schedulePaymentSchemaRecurring,
+  schedulePaymentSchemaRecurringForUpdate,
 };

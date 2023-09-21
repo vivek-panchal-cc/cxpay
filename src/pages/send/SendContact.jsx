@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { apiRequest } from "helpers/apiRequests";
-import { IconSend, IconEdit, IconPlus } from "styles/svgs";
+import { IconSend, IconEdit, IconPlus, IconClock } from "styles/svgs";
 import { useNavigate } from "react-router-dom";
 import ContactsSelection from "components/contacts-selection/ContactsSelection";
 import Button from "components/ui/Button";
@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import ModalCreateGroup from "components/modals/ModalCreateGroup";
 import { MAX_GROUP_MEMBERS } from "constants/all";
 import ModalAddContact from "components/modals/ModalAddContact";
+import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
 
 function SendContact() {
   const [contactsList, setContactsList] = useState([]);
@@ -33,6 +34,8 @@ function SendContact() {
   const [showCreateGroupPopup, setShowCreateGroupPopup] = useState(false);
   // For adding new Contact
   const [showNewContPop, setShowNewContPop] = useState(false);
+  //
+  const [showSchedulePopup, setShowSchedulePopup] = useState(false);
 
   const navigate = useNavigate();
   const {
@@ -42,6 +45,8 @@ function SendContact() {
     handleSendGroup,
     selectedContacts,
     selectedGroup,
+    handleSendRecurringContacts,
+    handleSendRecurringGroup,
   } = useContext(SendPaymentContext);
 
   const handleResetContactData = () => {
@@ -263,6 +268,26 @@ function SendContact() {
                 <IconPlus style={{ stroke: "#fff" }} />
                 Create Group
               </Button>
+              {/* <Button
+                type="button"
+                className="btn btn-next ws--btn ms-0"
+                onClick={() => {
+                  setShowSchedulePopup(true);
+                }}
+                disabled={selectedContactsIds.length < 1}
+              >
+                <IconClock style={{ stroke: "#FFFFFF" }} />
+                Schedule Payment
+              </Button> */}
+              <Button
+                type="button"
+                className="btn btn-next ws--btn ms-0"
+                onClick={handleSendRecurringContacts}
+                disabled={selectedContactsIds.length < 1}
+              >
+                <IconClock style={{ stroke: "#FFFFFF" }} />
+                Recurring Payment
+              </Button>
             </>
           ) : null}
         </ContactsSelection.Footer>
@@ -320,6 +345,14 @@ function SendContact() {
                 <IconSend style={{ stroke: "#fff" }} />
                 Send
               </Button>
+              <Button
+                type="button"
+                className="btn btn-next ws--btn ms-0"
+                onClick={handleSendRecurringGroup}                
+              >
+                <IconClock style={{ stroke: "#FFFFFF" }} />
+                Recurring Payment
+              </Button>
             </>
           ) : null}
         </ContactsSelection.Footer>
@@ -342,6 +375,13 @@ function SendContact() {
         setInvitationSentPopup={() => {}}
         setConatctDetailPopup={() => {}}
         isNavigate={false}
+      />
+
+      <ModalPaymentScheduler
+        classNameChild="schedule-time-modal"
+        show={showSchedulePopup}
+        setShow={setShowSchedulePopup}
+        // handleSubmit={handleScheduleSubmit}
       />
     </div>
   );
