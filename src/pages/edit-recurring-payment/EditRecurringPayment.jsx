@@ -239,7 +239,7 @@ const EditRecurringPayment = () => {
                 onClick={formik.handleSubmit}
                 disabled={formik.isSubmitting}
               >
-                Update
+                Update Recurring
               </button>
             </div>
           </div>

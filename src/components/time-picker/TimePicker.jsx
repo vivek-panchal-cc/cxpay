@@ -162,22 +162,41 @@ const TimePicker = ({
   //   [alignTimePickedToTop, minutesSelection, onChange]
   // );
 
+  // const handleChange = useCallback(
+  //   (hour, minute, period) => {
+  //     let newDate = new Date(selecteDate); // start with the selectedDate
+  //     newDate.setHours(period === "PM" ? hour + 12 : hour); // adjust for AM/PM
+  //     newDate.setMinutes(minute);
+
+  //     const timeStr = newDate.toLocaleTimeString("en", {
+  //       hour: "2-digit",
+  //       minute: "2-digit",
+  //       hourCycle: "h12",
+  //     });
+
+  //     setTimePicked({ hour: hour, minutes: minute, period: period });
+  //     if (onChange) onChange(timeStr);
+  //   },
+  //   [selecteDate, onChange]
+  // );
+
   const handleChange = useCallback(
     (hour, minute, period) => {
       let newDate = new Date(selecteDate); // start with the selectedDate
       newDate.setHours(period === "PM" ? hour + 12 : hour); // adjust for AM/PM
       newDate.setMinutes(minute);
 
-      const timeStr = newDate.toLocaleTimeString("en", {
+      const timeStr = newDate?.toLocaleTimeString("en", {
         hour: "2-digit",
         minute: "2-digit",
         hourCycle: "h12",
       });
 
       setTimePicked({ hour: hour, minutes: minute, period: period });
+      alignTimePickedToTop(hour, minute, period, minutesSelection);
       if (onChange) onChange(timeStr);
     },
-    [selecteDate, onChange]
+    [selecteDate, alignTimePickedToTop, minutesSelection, onChange]
   );
 
   useEffect(() => {

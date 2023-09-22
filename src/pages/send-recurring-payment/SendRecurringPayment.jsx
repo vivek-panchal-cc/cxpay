@@ -114,7 +114,7 @@ function SendRecurringPayment(_props) {
         fees: charges?.length > 0  ? charges : "",
         total: paymentDetails.grandTotal.toString(),
         schedule_date: muValues.schedule_date,
-        overall_specification: muValues.overall_specification,
+        // overall_specification: muValues.overall_specification,
         group_id: sendCreds?.group_id ? sendCreds?.group_id : "",
         amount: paymentDetails?.total.toString(),
         recurring_start_date: convertDateFormatToAppend(startDate),
@@ -441,7 +441,7 @@ function SendRecurringPayment(_props) {
                 disabled={formik.isSubmitting}
                 onClick={handleRecurringPayment}
               >
-                Schedule
+                Initiate Recurring
               </button>
             </div>
           </div>

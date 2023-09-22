@@ -120,6 +120,7 @@ const ViewRecurringPayment = () => {
                           description: item?.overall_specification,
                           amount: totalAmount,
                           profileImg: profileURL,
+                          frequency: item?.frequency,
                         }}
                         handleEdit={handleSelectPaymentEntry}
                         handleDelete={handleDeletePayment}
