@@ -15,6 +15,8 @@ import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
 
 function SendContact() {
   const [contactsList, setContactsList] = useState([]);
+  const [schedulePaymentForContact, setSchedulePaymentForContact] =
+    useState(false);
   const [groupList, setGroupList] = useState([]);
   // For selected contacts || group
   const [selectedContactsIds, setSelectedContactsIds] = useState([]);
@@ -47,6 +49,8 @@ function SendContact() {
     selectedGroup,
     handleSendRecurringContacts,
     handleSendRecurringGroup,
+    handleSendContactsSchedule,
+    handleSendGroupSchedule,
   } = useContext(SendPaymentContext);
 
   const handleResetContactData = () => {
@@ -268,17 +272,18 @@ function SendContact() {
                 <IconPlus style={{ stroke: "#fff" }} />
                 Create Group
               </Button>
-              {/* <Button
+              <Button
                 type="button"
                 className="btn btn-next ws--btn ms-0"
                 onClick={() => {
                   setShowSchedulePopup(true);
+                  setSchedulePaymentForContact(true);
                 }}
                 disabled={selectedContactsIds.length < 1}
               >
                 <IconClock style={{ stroke: "#FFFFFF" }} />
                 Schedule Payment
-              </Button> */}
+              </Button>
               <Button
                 type="button"
                 className="btn btn-next ws--btn ms-0"
@@ -348,7 +353,19 @@ function SendContact() {
               <Button
                 type="button"
                 className="btn btn-next ws--btn ms-0"
-                onClick={handleSendRecurringGroup}                
+                onClick={() => {
+                  setShowSchedulePopup(true);
+                  setSchedulePaymentForContact(false);
+                }}
+                disabled={selectedGroupIds.length < 1}
+              >
+                <IconClock style={{ stroke: "#FFFFFF" }} />
+                Schedule Payment
+              </Button>
+              <Button
+                type="button"
+                className="btn btn-next ws--btn ms-0"
+                onClick={handleSendRecurringGroup}
               >
                 <IconClock style={{ stroke: "#FFFFFF" }} />
                 Recurring Payment
@@ -381,7 +398,11 @@ function SendContact() {
         classNameChild="schedule-time-modal"
         show={showSchedulePopup}
         setShow={setShowSchedulePopup}
-        // handleSubmit={handleScheduleSubmit}
+        handleSubmit={
+          schedulePaymentForContact
+            ? handleSendContactsSchedule
+            : handleSendGroupSchedule
+        }
       />
     </div>
   );

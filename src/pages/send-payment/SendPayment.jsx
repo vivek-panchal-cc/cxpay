@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
 import { LoaderContext } from "context/loaderContext";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ModalAlert from "components/modals/ModalAlert";
 import { CURRENCY_SYMBOL } from "constants/all";
 import { IconClock } from "styles/svgs";
@@ -22,6 +22,8 @@ import WrapAmount from "components/wrapper/WrapAmount";
 
 function SendPayment(props) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const scheduleDate = location?.state?.scheduleDate;
   const inputAmountRefs = useRef([]);
   const { setIsLoading } = useContext(LoaderContext);
   const {
@@ -73,7 +75,7 @@ function SendPayment(props) {
             receiver_account_number,
           })
         );
-        muValues.fees = charges;
+        muValues.fees = charges?.length > 0 ? charges : "";
         muValues.total_amount = paymentDetails.grandTotal;
         for (const key in muValues)
           addObjToFormData(muValues[key], key, formData);
@@ -201,9 +203,10 @@ function SendPayment(props) {
           receiver_account_number,
         })
       );
-      muValues.fees = charges;
+      muValues.fees = charges?.length > 0 ? charges : "";
       muValues.amount = paymentDetails.total;
       muValues.total = paymentDetails.grandTotal;
+      muValues.schedule_date = scheduleDate;
       delete muValues.wallet;
       for (const key in muValues)
         addObjToFormData(muValues[key], key, formData);
@@ -294,6 +297,63 @@ function SendPayment(props) {
           <p>Please insert amount of money you want to send</p>
         </div>
       </div>
+      {scheduleDate && (
+        <div className="RecurringScheduleDateWrap">
+          <div className="RSDaterange rs_cm_div">
+            <div className="rssvg_wrap">
+              <svg
+                width="38"
+                height="38"
+                viewBox="0 0 38 38"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.744964 12.562C2.12034 6.69857 6.69857 2.12034 12.562 0.744962C16.7965 -0.24832 21.2035 -0.248321 25.438 0.744961C31.3014 2.12034 35.8797 6.69858 37.255 12.562C38.2483 16.7965 38.2483 21.2035 37.255 25.438C35.8797 31.3014 31.3014 35.8797 25.438 37.255C21.2035 38.2483 16.7965 38.2483 12.562 37.255C6.69858 35.8797 2.12034 31.3014 0.744964 25.438C-0.248321 21.2035 -0.248321 16.7965 0.744964 12.562Z"
+                  fill="#936EE3"
+                />
+                <path
+                  d="M25.1111 11H11.8889C10.8457 11 10 11.8457 10 12.8889V26.1111C10 27.1543 10.8457 28 11.8889 28H25.1111C26.1543 28 27 27.1543 27 26.1111V12.8889C27 11.8457 26.1543 11 25.1111 11Z"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M22 10V13"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M15 10V13"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M10 17H27"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <div className="rssvg_wrap_inner d-flex align-items-center">
+              <div>
+                <p>
+                  Schedule Date
+                  <br />
+                  <b>{scheduleDate}</b>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {/* <!-- payment block form starts -->  */}
       <form onSubmit={formik.handleSubmit}>
         <div className="one-time-pay-sec one-time-pay-wrap">
@@ -387,14 +447,25 @@ function SendPayment(props) {
               >
                 Cancel
               </button>
-              <button
-                type="submit"
-                className="btn btn-send-payment"
-                disabled={formik.isSubmitting}
-              >
-                Send
-              </button>
-              {!disableEdit && !request_id && (
+              {!scheduleDate && (
+                <button
+                  type="submit"
+                  className="btn btn-send-payment"
+                  disabled={formik.isSubmitting}
+                >
+                  Send
+                </button>
+              )}
+              {scheduleDate && (
+                <button
+                  type="button"
+                  className="btn btn-send-payment"
+                  onClick={handleScheduleSubmit}
+                >
+                  Schedule
+                </button>
+              )}
+              {/* {!disableEdit && !request_id && (
                 <button
                   type="button"
                   className="schedule-pay-btn"
@@ -403,7 +474,7 @@ function SendPayment(props) {
                   <IconClock style={{ stroke: "#363853" }} />
                   Schedule Payment
                 </button>
-              )}
+              )} */}
             </div>
           </div>
         </div>

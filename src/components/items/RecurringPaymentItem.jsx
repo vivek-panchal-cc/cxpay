@@ -14,6 +14,7 @@ const RecurringPaymentItem = (props) => {
     description = "",
     amount,
     profileImg = "",
+    frequency,
   } = details || {};
 
   const { dtString } = useMemo(() => {
@@ -40,8 +41,8 @@ const RecurringPaymentItem = (props) => {
           <img src={profileImg} alt="" />
           <span>{name}</span>
         </div>
-        <div className="activity-date">{dtString}</div>
-        <div className="act-spec-add">{description}</div>
+        <div className="activity-date-rec">{dtString}</div>
+        <div className="act-spec-add">{frequency}</div>
         <div className="seleted-value">
           <WrapAmount value={amount} prefix={`${CURRENCY_SYMBOL} -`} />
         </div>

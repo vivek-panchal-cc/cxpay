@@ -12,7 +12,7 @@ const ModalPaymentSchedulerRecurring = (props) => {
   const formik = useFormik({
     initialValues: {
       date: new Date(),      
-      specification: "",
+      // specification: "",
     },
     validationSchema: schedulePaymentSchemaRecurring,
     onSubmit: async (values, { setErrors, setValues, setStatus }) => {
@@ -21,7 +21,7 @@ const ModalPaymentSchedulerRecurring = (props) => {
       const dts = dt.toLocaleDateString("en-CA");      
       const params = {
         schedule_date: `${dts}`,
-        overall_specification: specification,
+        // overall_specification: specification,
       };
       handleSubmit && (await handleSubmit(params));
     },
@@ -77,7 +77,7 @@ const ModalPaymentSchedulerRecurring = (props) => {
                     <p className="text-danger pb-0">{formik.errors.date}</p>
                   ) : null}
                 </div>               
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-12 col p-0">
                     <div className="form-field">
                       <Input
@@ -95,7 +95,7 @@ const ModalPaymentSchedulerRecurring = (props) => {
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="popup-btn-wrap d-flex align-items-center justify-content-between gap-4">
                   <button
                     type="button"

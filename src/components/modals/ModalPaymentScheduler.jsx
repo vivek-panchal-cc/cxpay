@@ -15,7 +15,7 @@ const ModalPaymentScheduler = (props) => {
     initialValues: {
       date: new Date(),
       time: "",
-      specification: "",
+      // specification: "",
     },
     validationSchema: schedulePaymentSchema,
     onSubmit: async (values, { setErrors, setValues, setStatus }) => {
@@ -25,9 +25,9 @@ const ModalPaymentScheduler = (props) => {
       const tms = dt.toLocaleTimeString(undefined, { hourCycle: "h24" });
       const params = {
         schedule_date: `${dts} ${tms}`,
-        overall_specification: specification,
+        // overall_specification: specification,
       };
-      handleSubmit && (await handleSubmit(params));
+      handleSubmit && (await handleSubmit(params.schedule_date));
     },
   });
 
@@ -104,7 +104,7 @@ const ModalPaymentScheduler = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-12 col p-0">
                     <div className="form-field">
                       <Input
@@ -122,7 +122,7 @@ const ModalPaymentScheduler = (props) => {
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="popup-btn-wrap d-flex align-items-center justify-content-between gap-4">
                   <button
                     type="button"

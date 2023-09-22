@@ -2789,6 +2789,12 @@ span.date-cal {
   width: 100%;
 }
 
+.act-user-content-wrap .activity-date-rec {
+  min-width: 300px;
+  max-width: 180px;
+  width: 100%;
+}
+
 .act-user-content-wrap .act-spec-add {
   min-width: 250px;
   max-width: 250px;

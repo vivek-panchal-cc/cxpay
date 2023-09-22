@@ -57,10 +57,10 @@ const schedulePaymentSchema = yup.object().shape({
       (value, context) => compareDateTime(value, context.parent.date)
     )
     .required("Time is required"),
-  specification: yup
-    .string()
-    .max(50, "Maximum limit is 50 characters.")
-    .required("Please enter specifications"),
+  // specification: yup
+  //   .string()
+  //   .max(50, "Maximum limit is 50 characters.")
+  //   .required("Please enter specifications"),
 });
 
 const schedulePaymentSchemaRecurring = yup.object().shape({
@@ -68,10 +68,10 @@ const schedulePaymentSchemaRecurring = yup.object().shape({
     .date()
     .min(getYesterDay(), "Date cannot be in the past")
     .required("Date is required"),
-  specification: yup
-    .string()
-    .max(50, "Maximum limit is 50 characters.")
-    .required("Please enter specifications"),
+  // specification: yup
+  //   .string()
+  //   .max(50, "Maximum limit is 50 characters.")
+  //   .required("Please enter specifications"),
 });
 
 const schedulePaymentSchemaRecurringForUpdate = yup.object().shape({
