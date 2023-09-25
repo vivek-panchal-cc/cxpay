@@ -91,8 +91,9 @@ function SendRecurringPayment(_props) {
     return `${month}/${day}/${year}`;
   };
 
-  const handleConfirmRecurringSubmit = async () => {
-    if (!scheduleCreds) return;
+  const handleConfirmRecurringSubmit = async (scheduleDetails) => {
+    setScheduleCreds(scheduleDetails);
+    // if (!scheduleCreds) return;
     const validateObj = await formik.validateForm(formik.values);
     if (Object.keys(validateObj).length > 0) {
       formik.setTouched(validateObj);
@@ -113,7 +114,8 @@ function SendRecurringPayment(_props) {
         })),
         fees: charges?.length > 0  ? charges : "",
         total: paymentDetails.grandTotal.toString(),
-        schedule_date: muValues.schedule_date,
+        // schedule_date: muValues.schedule_date,
+        schedule_date: new Date().toISOString().split('T')[0],
         // overall_specification: muValues.overall_specification,
         group_id: sendCreds?.group_id ? sendCreds?.group_id : "",
         amount: paymentDetails?.total.toString(),
@@ -164,7 +166,13 @@ function SendRecurringPayment(_props) {
   };
 
   const handleScheduleSubmit = async (scheduleDetails) => {
-    if (!scheduleDetails) return;
+    const validateObj = await formik.validateForm(formik.values);
+    if (Object.keys(validateObj).length > 0) {
+      formik.setTouched(validateObj);
+      formik.setErrors(validateObj);
+      setScrollTop((cs) => !cs);
+      return;
+    }
     setShowSchedulePopup(false);
     setScheduleCreds(scheduleDetails);
     setShowScheduleConfirmPopup(true);
@@ -220,7 +228,7 @@ function SendRecurringPayment(_props) {
               ? "Group Recurring Payment"
               : "Recurring Payment"}
           </h3>
-          <Breadcrumb skipIndexes={[1]} />
+          <Breadcrumb skipIndexes={[2]} />
         </div>
       </div>
       {/* <!-- payment block form starts -->  */}
@@ -439,7 +447,7 @@ function SendRecurringPayment(_props) {
                 type="button"
                 className="btn btn-send-payment"
                 disabled={formik.isSubmitting}
-                onClick={handleRecurringPayment}
+                onClick={handleConfirmRecurringSubmit}
               >
                 Initiate Recurring
               </button>

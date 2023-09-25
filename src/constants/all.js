@@ -625,6 +625,12 @@ const WITHDRAW_OPTIONS_TABS_LIST = [
   { title: "Bank", url: "/wallet/withdrawals-bank" },
 ];
 
+// Payment options tabs list
+const PAYMENT_OPTIONS_TABS_LIST = [
+  { title: "Schedule Payments", url: "/view-schedule-payment" },
+  { title: "Recurring Payments", url: "/view-recurring-payment" },
+];
+
 // Withdraw status filters list for card transactions
 const WITHDRAW_STATUS_FILTER_CARD = [
   { title: "Refundable", status: "ENABLE" },
@@ -688,6 +694,7 @@ export {
   CHARGES_TYPE_WD,
   CHARGES_TYPE_MF,
   WITHDRAW_OPTIONS_TABS_LIST,
+  PAYMENT_OPTIONS_TABS_LIST,
   WITHDRAW_STATUS_FILTER_CARD,
   WITHDRAW_STATUS_FILTER_BANK,
   FILE_SIZE,

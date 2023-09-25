@@ -9,8 +9,8 @@ const SectionRecurringDetails = (props) => {
   const tableTr = {
     display: "flex",
     flexDirection: "column",
-    marginBottom: "25px"
-  }
+    marginBottom: "25px",
+  };
 
   const {
     amount = "",
@@ -57,16 +57,18 @@ const SectionRecurringDetails = (props) => {
       <div className="w-35-md rcr-transition-info rcr-transition-info-2">
         <table>
           <tbody>
-            <tr style={tableTr}>
-              <td>Specification</td>
-              <td>
-                {isLoading ? (
-                  <LoaderDiv height="20" width="50%" />
-                ) : (
-                  overall_specification
-                )}
-              </td>
-            </tr>
+            {overall_specification && (
+              <tr style={tableTr}>
+                <td>Specification</td>
+                <td>
+                  {isLoading ? (
+                    <LoaderDiv height="20" width="50%" />
+                  ) : (
+                    overall_specification
+                  )}
+                </td>
+              </tr>
+            )}
             <tr style={tableTr}>
               <td>Created Date</td>
               <td>

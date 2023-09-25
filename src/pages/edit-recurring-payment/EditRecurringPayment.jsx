@@ -34,6 +34,7 @@ const EditRecurringPayment = () => {
     recurring_start_date,
     frequency,
   } = upPaymentEntry || {};
+  const [selectedFrequency, setSelectedFrequency] = useState(frequency);
 
   const convertToUSDateFormat = (dateStr) => {
     const [day, month, year] = dateStr.split("/");
@@ -56,8 +57,10 @@ const EditRecurringPayment = () => {
   };
 
   const incrementCount = () => {
-    const newCount = formik.values.no_of_occurrence + 1;
-    formik.setFieldValue("no_of_occurrence", newCount);
+    if (formik.values.no_of_occurrence < 99) {
+      const newCount = formik.values.no_of_occurrence + 1;
+      formik.setFieldValue("no_of_occurrence", newCount);
+    }
   };
 
   const decrementCount = () => {
@@ -127,6 +130,11 @@ const EditRecurringPayment = () => {
     const formattedYear = date.getFullYear();
 
     return `${formattedMonth}/${formattedDay}/${formattedYear}`;
+  };
+
+  const handleFrequencyClick = (frequency) => {
+    setSelectedFrequency(frequency);
+    formik.setFieldValue("frequency", frequency);
   };
 
   const formik = useFormik({
@@ -247,12 +255,12 @@ const EditRecurringPayment = () => {
             <form onSubmit={formik.handleSubmit}>
               <div className="row">
                 <div className="flex flex-col items-start justify-start md:ml-[0] ml-[309px] w-[63%] md:w-full">
-                  <label style={{ color: "#363853" }}>Start Date</label>
 
                   <div
                     className="common-dr-picker"
                     style={{ marginBottom: "15px", marginTop: "15px" }}
                   >
+                  <label className="rec-label-class">Start Date</label>
                     <InputDatePicker
                       className="date-filter-calendar-recurring"
                       date={formik.values.recurring_start_date}
@@ -268,7 +276,7 @@ const EditRecurringPayment = () => {
                     ) : null}
                   </div>
 
-                  <div className="row">
+                  {/* <div className="row">
                     <div className="col-12 p-0">
                       <InputSelect
                         className="form-select form-control"
@@ -296,6 +304,24 @@ const EditRecurringPayment = () => {
                         </option>
                       </InputSelect>
                     </div>
+                  </div> */}
+
+                  <label className="rec-label-class">Frequency</label>
+                  <div className="frequency-buttons">
+                    {["daily", "weekly", "monthly", "yearly"].map((freq) => (
+                      <button
+                        key={freq}
+                        type="button"
+                        className={`btn ${
+                          selectedFrequency === freq
+                            ? "btn-freqActive"
+                            : "btn-freqInactive"
+                        }`}
+                        onClick={() => handleFrequencyClick(freq)}
+                      >
+                        {freq.charAt(0).toUpperCase() + freq.slice(1)}
+                      </button>
+                    ))}
                   </div>
 
                   <div className="recurring-occurrence">

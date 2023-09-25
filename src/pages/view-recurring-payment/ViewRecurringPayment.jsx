@@ -106,7 +106,7 @@ const ViewRecurringPayment = () => {
                 <ul className="act-user-content-wrap">
                   {paymentsDateBind[key]?.map((item) => {
                     const totalAmount = (item?.amount + item?.fees_total)
-                    const profileURL = item.is_group
+                    const profileURL = item.is_group === "1"
                       ? "/assets/images/group_contact_profile.png"
                       : item.image ||
                         "/assets/images/single_contact_profile.png";
