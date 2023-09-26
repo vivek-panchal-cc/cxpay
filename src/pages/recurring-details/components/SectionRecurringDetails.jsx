@@ -14,11 +14,22 @@ const SectionRecurringDetails = (props) => {
 
   const {
     amount = "",
-    frequency = "",
-    overall_specification = "",
+    frequency = "",    
     created_date = "",
     fees_total = "",
+    no_of_occurrence = "",
+    recurring_end_date = "",
+    set_recurring_flag = "",
   } = props?.details || {};
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const formattedDay = ("0" + date.getDate()).slice(-2); // Ensures it is two digits
+    const formattedMonth = ("0" + (date.getMonth() + 1)).slice(-2); // Ensures it is two digits
+    const formattedYear = date.getFullYear();
+
+    return `${formattedDay}/${formattedMonth}/${formattedYear}`;
+  };
 
   return (
     <div className="rcr-innner-wrap rcr-innner-wrap-2 d-flex flex-wrap w-100">
@@ -57,18 +68,6 @@ const SectionRecurringDetails = (props) => {
       <div className="w-35-md rcr-transition-info rcr-transition-info-2">
         <table>
           <tbody>
-            {overall_specification && (
-              <tr style={tableTr}>
-                <td>Specification</td>
-                <td>
-                  {isLoading ? (
-                    <LoaderDiv height="20" width="50%" />
-                  ) : (
-                    overall_specification
-                  )}
-                </td>
-              </tr>
-            )}
             <tr style={tableTr}>
               <td>Created Date</td>
               <td>
@@ -79,6 +78,30 @@ const SectionRecurringDetails = (props) => {
                 )}
               </td>
             </tr>
+            {set_recurring_flag === "OCCURRENCE" ? (
+              <tr style={tableTr}>
+                <td>Occurrences</td>
+                <td>
+                  {isLoading ? (
+                    <LoaderDiv height="20" width="50%" />
+                  ) : (
+                    no_of_occurrence
+                  )}
+                </td>
+              </tr>
+            ) : null}
+            {set_recurring_flag === "DATE" ? (
+              <tr style={tableTr}>
+                <td>End Date</td>
+                <td>
+                  {isLoading ? (
+                    <LoaderDiv height="20" width="50%" />
+                  ) : (
+                    formatDate(recurring_end_date)
+                  )}
+                </td>
+              </tr>
+            ) : null}
           </tbody>
         </table>
       </div>

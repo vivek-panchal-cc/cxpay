@@ -10,11 +10,11 @@ import WrapAmount from "components/wrapper/WrapAmount";
 import InputDatePicker from "components/ui/InputDatePicker";
 import InputSelect from "components/ui/InputSelect";
 import ModalDatePicker from "components/modals/ModalDatePicker";
+import InputNumber from "components/ui/InputNumber";
 
 const EditRecurringPayment = () => {
   const navigate = useNavigate();
   const [activeDatePicker, setActiveDatePicker] = useState("");
-  const [activeButton, setActiveButton] = useState("occurrences");
   const [occurrenceCount, setOccurrenceCount] = useState(1);
   const [startDate, setStartDate] = useState(null);
   const { upPaymentEntry, updateRecurringPayment, cancelUpdatePayment } =
@@ -33,8 +33,12 @@ const EditRecurringPayment = () => {
     recurring_end_date,
     recurring_start_date,
     frequency,
+    set_recurring_flag,
   } = upPaymentEntry || {};
   const [selectedFrequency, setSelectedFrequency] = useState(frequency);
+  const [activeButton, setActiveButton] = useState(
+    set_recurring_flag === "DATE" ? "recurring_end_date" : "occurrences"
+  );
 
   const convertToUSDateFormat = (dateStr) => {
     const [day, month, year] = dateStr.split("/");
@@ -73,14 +77,14 @@ const EditRecurringPayment = () => {
   const handleOccurrenceButtonClick = (e) => {
     e.preventDefault();
     setActiveButton("occurrences");
-    formik.setFieldValue("recurring_end_date", "");
+    // formik.setFieldValue("recurring_end_date", "");
   };
 
   const handleEndDateButtonClick = (e) => {
     e.preventDefault();
     setActiveButton("recurring_end_date");
     setOccurrenceCount(0);
-    formik.setFieldValue("no_of_occurrence", 0);
+    // formik.setFieldValue("no_of_occurrence", 0);
   };
 
   const {
@@ -255,12 +259,11 @@ const EditRecurringPayment = () => {
             <form onSubmit={formik.handleSubmit}>
               <div className="row">
                 <div className="flex flex-col items-start justify-start md:ml-[0] ml-[309px] w-[63%] md:w-full">
-
                   <div
                     className="common-dr-picker"
                     style={{ marginBottom: "15px", marginTop: "15px" }}
                   >
-                  <label className="rec-label-class">Start Date</label>
+                    <label className="rec-label-class">Start Date</label>
                     <InputDatePicker
                       className="date-filter-calendar-recurring"
                       date={formik.values.recurring_start_date}
@@ -333,6 +336,7 @@ const EditRecurringPayment = () => {
                           : "btn-inactive"
                       }`}
                       onClick={handleOccurrenceButtonClick}
+                      disabled={set_recurring_flag === "DATE"}
                     >
                       No of Occurrences
                     </button>
@@ -344,35 +348,57 @@ const EditRecurringPayment = () => {
                           : "btn-inactive"
                       }`}
                       onClick={handleEndDateButtonClick}
+                      disabled={set_recurring_flag === "OCCURRENCE"}
                     >
                       End date
                     </button>
                   </div>
 
                   {activeButton === "occurrences" && (
-                    <div>
-                      <div className="main-wrapper">
-                        <div className="button-wrapper">
-                          <button type="button" onClick={decrementCount}>
-                            -
-                          </button>{" "}
-                        </div>
-                        <label className="number-label">
-                          {formik.values.no_of_occurrence}
-                        </label>
-                        <div className="button-wrapper plus">
-                          <button type="button" onClick={incrementCount}>
-                            +
-                          </button>
+                    <div className="row">
+                      <div className="col-6 col p-0">
+                        <div className="form-field">
+                          <InputNumber
+                            type="number"
+                            min="1"
+                            max="99"
+                            className="form-control"
+                            placeholder="No. of occurrences"
+                            name="no_of_occurrence"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.no_of_occurrence}
+                            error={
+                              formik.touched.no_of_occurrence &&
+                              formik.errors.no_of_occurrence
+                            }
+                          />
                         </div>
                       </div>
-                      {formik.touched.no_of_occurrence &&
-                      formik.errors.no_of_occurrence ? (
-                        <p className="text-danger pb-0">
-                          {formik.errors.no_of_occurrence}
-                        </p>
-                      ) : null}
                     </div>
+                    // <div>
+                    //   <div className="main-wrapper">
+                    //     <div className="button-wrapper">
+                    //       <button type="button" onClick={decrementCount}>
+                    //         -
+                    //       </button>{" "}
+                    //     </div>
+                    //     <label className="number-label">
+                    //       {formik.values.no_of_occurrence}
+                    //     </label>
+                    //     <div className="button-wrapper plus">
+                    //       <button type="button" onClick={incrementCount}>
+                    //         +
+                    //       </button>
+                    //     </div>
+                    //   </div>
+                    //   {formik.touched.no_of_occurrence &&
+                    //   formik.errors.no_of_occurrence ? (
+                    //     <p className="text-danger pb-0">
+                    //       {formik.errors.no_of_occurrence}
+                    //     </p>
+                    //   ) : null}
+                    // </div>
                   )}
 
                   {activeButton === "recurring_end_date" && (

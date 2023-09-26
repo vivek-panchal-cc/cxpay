@@ -66,7 +66,8 @@ function withUserProtection(WrappedComponent, allowedUserTypes = []) {
     const { profile } = useSelector((state) => state.userProfile);
     const { user_type } = profile || {};
 
-    if (!allowedUserTypes.includes(user_type)) {
+    if (profile && Object.keys(profile).length > 0 && !allowedUserTypes.includes(user_type)) {
+      console.warn("Unauthorized user type detected, navigating away");
       return <Navigate to="/" />;
     }
     return <WrappedComponent {...props} />;

@@ -2,7 +2,9 @@ import RecurringPaymentItem from "components/items/RecurringPaymentItem";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
 import Pagination from "components/pagination/Pagination";
+import TabsPaymentOptions from "components/tabs/TabsPaymentOptions";
 import InputDateRange from "components/ui/InputDateRange";
+import { PAYMENT_OPTIONS_TABS_LIST } from "constants/all";
 import { RecurringPaymentContext } from "context/recurringPaymentContext";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
 import React, { useContext, useEffect, useState } from "react";
@@ -60,7 +62,7 @@ const ViewRecurringPayment = () => {
   };
 
   useEffect(() => {
-    if (!listPayments) return;    
+    if (!listPayments) return;
     const paymentDateList = {};
     listPayments?.map((item) => {
       const dt = new Date(item?.date);
@@ -75,9 +77,17 @@ const ViewRecurringPayment = () => {
   return (
     <>
       <div className="activities-sec">
+        <div className="wr-title-wrap">
+          <h3>My Recurring Payment</h3>
+          <p>Please select payment date</p>
+        </div>
+        <TabsPaymentOptions
+          className="wr-page-link-wrap d-flex"
+          tabsList={PAYMENT_OPTIONS_TABS_LIST}
+        />
         <div className="col-12 send-payment-ttile-wrap sdp-main-new-1">
           <div className="title-content-wrap send-pay-title-sec">
-            <h3>My Recurring Payment</h3>
+            {/* <h3>My Recurring Payment</h3> */}
           </div>
           <div className="schedule-pay-sd-wrap gap-4">
             <InputDateRange
@@ -105,11 +115,12 @@ const ViewRecurringPayment = () => {
                 <div className="activity-month">{key}</div>
                 <ul className="act-user-content-wrap">
                   {paymentsDateBind[key]?.map((item) => {
-                    const totalAmount = (item?.amount + item?.fees_total)
-                    const profileURL = item.is_group === "1"
-                      ? "/assets/images/group_contact_profile.png"
-                      : item.image ||
-                        "/assets/images/single_contact_profile.png";
+                    const totalAmount = item?.amount + item?.fees_total;
+                    const profileURL =
+                      item.is_group === "1"
+                        ? "/assets/images/group_contact_profile.png"
+                        : item.image ||
+                          "/assets/images/single_contact_profile.png";
                     return (
                       <RecurringPaymentItem
                         key={item.id}

@@ -26,7 +26,7 @@ function SendRecurringPayment(_props) {
     useState(false);
   const [scheduleCreds, setScheduleCreds] = useState(null);
 
-  const { sendCreds, charges, disableEdit, handleSendCreds } =
+  const { sendCreds, charges, disableEdit, handleSendCreds, prevPathRedirect } =
   useContext(SendPaymentContext);
 
   const { mobile_number, country_code } = useSelector(

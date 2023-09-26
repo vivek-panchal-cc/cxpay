@@ -2,7 +2,9 @@ import SchedulePaymentItem from "components/items/SchedulePaymentItem";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
 import Pagination from "components/pagination/Pagination";
+import TabsPaymentOptions from "components/tabs/TabsPaymentOptions";
 import InputDateRange from "components/ui/InputDateRange";
+import { PAYMENT_OPTIONS_TABS_LIST } from "constants/all";
 import { ScheduledPaymentContext } from "context/scheduledPaymentContext";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
 import React, { useContext, useEffect, useState } from "react";
@@ -75,9 +77,17 @@ const ViewSchedulePayment = () => {
   return (
     <>
       <div className="activities-sec">
+        <div className="wr-title-wrap">
+          <h3>My Scheduled Payment</h3>
+          <p>Please select payment date</p>
+        </div>
+        <TabsPaymentOptions
+          className="wr-page-link-wrap d-flex"
+          tabsList={PAYMENT_OPTIONS_TABS_LIST}
+        />
         <div className="col-12 send-payment-ttile-wrap sdp-main-new-1">
           <div className="title-content-wrap send-pay-title-sec">
-            <h3>My Scheduled Payment</h3>
+            {/* <h3>My Scheduled Payment</h3> */}
           </div>
           <div className="schedule-pay-sd-wrap gap-4">
             <InputDateRange

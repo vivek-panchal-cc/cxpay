@@ -1,0 +1,81 @@
+import React, { forwardRef } from "react";
+import styles from "./input.module.scss";
+
+const InputNumber = forwardRef((props, ref) => {
+  const {
+    labelname,
+    error,
+    disabled,
+    type,
+    classNameContainer = "",
+    ...rest
+  } = props;
+
+  const getType = () => {
+    switch (type) {
+      case "mobile":
+        return "text";
+      case "name":
+        return "text";
+      case "text-uppercase":
+        return "text";
+      default:
+        return type;
+    }
+  };
+
+  const changeElement = (element) => {
+    // Allow user to clear the input
+    if (!element.currentTarget.value) {
+      return element;
+    }
+
+    if (element?.target?.name == "email") {
+      element.currentTarget.value = element.currentTarget.value.trim();
+    }
+    
+    // Enforce min and max for type="number"
+    if (type === "number") {
+      if (+element.currentTarget.value < +props.min) {
+        element.currentTarget.value = props.min;
+      } else if (+element.currentTarget.value > +props.max) {
+        element.currentTarget.value = props.max;
+      }
+    }
+    switch (type) {
+      case "mobile":
+        element.currentTarget.value = element.currentTarget.value.trim();
+        return element;
+      case "name":
+        element.currentTarget.value = element.currentTarget.value.trimStart();
+        return element;
+      case "text-uppercase":
+        element.currentTarget.value = element.currentTarget.value.toUpperCase();
+        return element;
+      default:
+        return element;
+    }
+  };
+
+  return (
+    <div className={`d-flex flex-column form-field ${classNameContainer}`}>
+      {labelname ? (
+        <label htmlFor="" className="mb-2">
+          {labelname}
+        </label>
+      ) : null}
+      <input
+        {...rest}
+        type={getType()}
+        onChange={(e) => props?.onChange(changeElement(e))}
+        className={`${styles.number_input} ${props.className} ${
+          disabled ? "cursor-not-allowed" : ""
+        }`}
+        ref={ref}
+      />
+      {error ? <p className="text-danger ps-2">{error}</p> : null}
+    </div>
+  );
+});
+
+export default InputNumber;

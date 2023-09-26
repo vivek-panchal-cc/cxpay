@@ -8,7 +8,7 @@ import SectionRecurringDates from "./components/SectionRecurringDates";
 import SectionRecurringGroupList from "./components/SectionRecurringGroupList";
 
 const RecurringDetails = () => {
-  const [recurringDetails, setRecurringDetails] = useState(null);  
+  const [recurringDetails, setRecurringDetails] = useState(null);
   const params = useParams();
   const navigate = useNavigate();
   const { id } = params || {};
@@ -48,15 +48,12 @@ const RecurringDetails = () => {
           </div>
           {/* <div className="pattern-wrap pattern-wrap-bottom"></div> */}
         </div>
-        {recurringDetails?.is_group === "0" && (
-          <div className="rc-refund-second-wrap">
-            <div>
-            </div>
-            <div className="rc-refund-main-inner section-recurring-dates">
-              <SectionRecurringDates details={recurringDetails} />
-            </div>
+        <div className="rc-refund-second-wrap">
+          <div></div>
+          <div className="rc-refund-main-inner section-recurring-dates">
+            <SectionRecurringDates details={recurringDetails} />
           </div>
-        )}
+        </div>
       </div>
       {recurringDetails?.is_group === "1" && (
         <div className="rc-refund-group-wrap">

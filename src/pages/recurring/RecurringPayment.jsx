@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useFormik } from "formik";
-import InputSelect from "components/ui/InputSelect";
+import InputNumber from "components/ui/InputNumber";
 import useCountriesCities from "hooks/useCountriesCities";
 import { LoaderContext } from "context/loaderContext";
 import { apiRequest } from "helpers/apiRequests";
@@ -140,7 +140,7 @@ function RecurringPayment() {
       start_date: "",
       end_date: "",
       select_frequency_id: "daily",
-      occurrence_count: 1,
+      occurrence_count: "",
     },
     validationSchema: recurringSchema,
     validateOnChange: true,
@@ -311,29 +311,50 @@ function RecurringPayment() {
                       </div>
 
                       {activeButton === "occurrences" && (
-                        <div>
-                          <div className="main-wrapper">
-                            <div className="button-wrapper">
-                              <button type="button" onClick={decrementCount}>
-                                -
-                              </button>{" "}
-                            </div>
-                            <label className="number-label">
-                              {occurrenceCount}
-                            </label>
-                            <div className="button-wrapper plus">
-                              <button type="button" onClick={incrementCount}>
-                                +
-                              </button>
+                        <div className="row">
+                          <div className="col-6 col p-0">
+                            <div className="form-field">
+                              <InputNumber
+                                type="number"
+                                min="1"
+                                max="99"
+                                className="form-control"
+                                placeholder="No. of occurrences"
+                                name="occurrence_count"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.occurrence_count}
+                                error={
+                                  formik.touched.occurrence_count &&
+                                  formik.errors.occurrence_count
+                                }
+                              />
                             </div>
                           </div>
-                          {formik.touched.occurrence_count &&
-                          formik.errors.occurrence_count ? (
-                            <p className="text-danger pb-0">
-                              {formik.errors.occurrence_count}
-                            </p>
-                          ) : null}
                         </div>
+                        // <div>
+                        //   <div className="main-wrapper">
+                        //     <div className="button-wrapper">
+                        //       <button type="button" onClick={decrementCount}>
+                        //         -
+                        //       </button>{" "}
+                        //     </div>
+                        //     <label className="number-label">
+                        //       {occurrenceCount}
+                        //     </label>
+                        //     <div className="button-wrapper plus">
+                        //       <button type="button" onClick={incrementCount}>
+                        //         +
+                        //       </button>
+                        //     </div>
+                        //   </div>
+                        //   {formik.touched.occurrence_count &&
+                        //   formik.errors.occurrence_count ? (
+                        //     <p className="text-danger pb-0">
+                        //       {formik.errors.occurrence_count}
+                        //     </p>
+                        //   ) : null}
+                        // </div>
                       )}
 
                       {activeButton === "end_date" && (
