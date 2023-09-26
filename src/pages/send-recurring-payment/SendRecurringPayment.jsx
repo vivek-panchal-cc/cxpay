@@ -215,7 +215,7 @@ function SendRecurringPayment(_props) {
         id="delete-group-member-popup"
         show={showScheduleConfirmPopup}
         setShow={setShowScheduleConfirmPopup}
-        heading={"Are you sure want to schedule this payment?"}
+        heading={"Are you sure want to schedule this recurring payment?"}
         subHeading={
           "Once It's done, your scheduled amount will be reserved until payment."
         }

@@ -24,37 +24,74 @@ const InputNumber = forwardRef((props, ref) => {
     }
   };
 
+  // const changeElement = (element) => {
+  //   // Allow user to clear the input
+  //   if (!element.currentTarget.value) {
+  //     return element;
+  //   }
+
+  //   if (element?.target?.name == "email") {
+  //     element.currentTarget.value = element.currentTarget.value.trim();
+  //   }
+
+  //   // Enforce min and max for type="number"
+  //   if (type === "number") {
+  //     if (+element.currentTarget.value < +props.min) {
+  //       element.currentTarget.value = props.min;
+  //     } else if (+element.currentTarget.value > +props.max) {
+  //       element.currentTarget.value = props.max;
+  //     }
+  //   }
+  //   switch (type) {
+  //     case "mobile":
+  //       element.currentTarget.value = element.currentTarget.value.trim();
+  //       return element;
+  //     case "name":
+  //       element.currentTarget.value = element.currentTarget.value.trimStart();
+  //       return element;
+  //     case "text-uppercase":
+  //       element.currentTarget.value = element.currentTarget.value.toUpperCase();
+  //       return element;
+  //     default:
+  //       return element;
+  //   }
+  // };
+
   const changeElement = (element) => {
+    let value = element.currentTarget.value;
+
     // Allow user to clear the input
-    if (!element.currentTarget.value) {
-      return element;
+    if (!value) {
+      return value;
     }
 
-    if (element?.target?.name == "email") {
-      element.currentTarget.value = element.currentTarget.value.trim();
-    }
-    
-    // Enforce min and max for type="number"
     if (type === "number") {
-      if (+element.currentTarget.value < +props.min) {
-        element.currentTarget.value = props.min;
-      } else if (+element.currentTarget.value > +props.max) {
-        element.currentTarget.value = props.max;
+      if (value.length > 2) {
+        value = value.substring(0, 2); // Take the first two digits only
+      }
+      if (+value > +props.max) {
+        value = value.substring(0, value.length - 1); // Trim the last character
+      } else if (+value < +props.min && !/^0+$/.test(value)) {
+        value = props.min;
       }
     }
+
+    // The rest of your code remains unchanged...
     switch (type) {
       case "mobile":
-        element.currentTarget.value = element.currentTarget.value.trim();
-        return element;
+        value = value.trim();
+        break;
       case "name":
-        element.currentTarget.value = element.currentTarget.value.trimStart();
-        return element;
+        value = value.trimStart();
+        break;
       case "text-uppercase":
-        element.currentTarget.value = element.currentTarget.value.toUpperCase();
-        return element;
+        value = value.toUpperCase();
+        break;
       default:
-        return element;
+        break;
     }
+
+    return value;
   };
 
   return (
@@ -67,7 +104,13 @@ const InputNumber = forwardRef((props, ref) => {
       <input
         {...rest}
         type={getType()}
-        onChange={(e) => props?.onChange(changeElement(e))}
+        onChange={(e) => {
+          const newValue = changeElement(e);
+          if (props.onChange) {
+            e.currentTarget.value = newValue; // Set the adjusted value back
+            props.onChange(e);
+          }
+        }}
         className={`${styles.number_input} ${props.className} ${
           disabled ? "cursor-not-allowed" : ""
         }`}

@@ -413,7 +413,7 @@ function RecurringPayment() {
           id="delete-group-member-popup"
           show={showScheduleConfirmPopup}
           setShow={setShowScheduleConfirmPopup}
-          heading={"Are you sure want to schedule this payment?"}
+          heading={"Are you sure want to schedule this recurring payment?"}
           subHeading={
             "From selected current date, your recurring schedule payment will be executed now."
           }

@@ -48,7 +48,7 @@ const EditRecurringPayment = () => {
   const handleChangeDateFilter = (date) => {
     if (activeDatePicker === "start") {
       formik.setFieldValue("recurring_start_date", date);
-      setStartDate(date);
+      setStartDate(new Date(date));
       formik.setFieldValue("recurring_end_date", "");
     } else if (activeDatePicker === "end") {
       formik.setFieldValue("recurring_end_date", date);
@@ -446,7 +446,7 @@ const EditRecurringPayment = () => {
         </div>
       </div>
       <ModalDatePicker
-        minDate={activeDatePicker === "start" ? new Date() : startDate}
+        minDate={activeDatePicker === "start" ? new Date() : new Date(formik.values.recurring_start_date)}
         show={activeDatePicker !== ""}
         setShow={() => setActiveDatePicker("")}
         classNameChild={"schedule-time-modal"}
