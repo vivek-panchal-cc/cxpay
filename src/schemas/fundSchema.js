@@ -60,9 +60,13 @@ const fundSchema = yup.object().shape({
   // country: countrySchema,
   // city: citySchema,
   // transactionType: yup.string().required(),
+  // transactionAmount: yup
+  //   .string()
+  //   .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
+  //   .required("Please enter amount"),
   transactionAmount: yup
     .string()
-    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
+    .matches(/^(0|[1-9]\d*)?(\.\d+)?$/, "Please enter valid amount")
     .required("Please enter amount"),
   txn_mode: yup.string().required(),
   // Validations For CARD

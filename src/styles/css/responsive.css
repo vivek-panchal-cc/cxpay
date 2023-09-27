@@ -3047,6 +3047,9 @@
   .wr-bank-details-wrapper .wcr-innner-wrap-1 {
     padding-bottom: 20px;
   }
+  .rc-refund-main-inner .rcr-innner-wrap-1 {
+    padding-bottom: 20px;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -4593,6 +4596,33 @@
   }
   .wr-card-form-wrap .wbr-final-amt-wrap {
     padding: 20px 20px 0px;
+  }
+  .frequency-buttons .btn {
+    min-width :100%;
+  }
+  .recurring-occurrence {
+    width: 100%;
+    flex-wrap: wrap;
+    margin-bottom: 90px !important;
+  }
+  .recurring-occurrence .btn {
+    min-width :100%;
+    max-width: 100%;
+    width: 100%;
+  }
+  .main-wrapper {
+    width: 100%;
+  }
+  .rcr-card-data {
+    width: 100%;
+    padding-bottom: 0;
+  }
+  .rcr-card-amt {
+    width: 100%;
+  }
+  .rc-refund-group-wrap {
+    max-width: 100%;
+    width: 100%;
   }
 }
 @media only screen and (max-width: 480px) {

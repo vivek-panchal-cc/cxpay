@@ -1959,6 +1959,7 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  gap: 10px;
 }
 
 .pay-btn-wrap .btn-cancel-payment,
@@ -7545,6 +7546,17 @@ ul.recent-act-lw-main .act-info-wrap-left {
   justify-content: center;
 }
 
+.rc-refund-main-inner .rcr-innner-wrap-1 {
+    padding-bottom: 0px;
+}
+
+.rcr-img-wrap img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 55px;
+}
+
 .rcr-innner-wrap table {
   width: 100%;
 }
@@ -7745,4 +7757,47 @@ ul.recent-act-lw-main .act-info-wrap-left {
 .rcr-innner-wrap.rcr-table-hover table tr tr,
 .rcr-innner-wrap.rcr-table-hover table tr td {
   padding: 10px;
+}
+
+.frequency-buttons{
+  gap: 10px;
+  display: flex;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+.frequency-buttons .btn {
+  background-color: var(--dark_blue);
+  border: none;
+  font-family: "Comfortaa", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 20px;
+  text-align: center;
+  color: #ffffff;
+  padding: 15px 20px;
+  min-width: 140px;
+  /* border-radius: 15px !important; */
+  box-shadow: 4px 4px 30px 5px rgba(48, 106, 255, 0.1);
+}
+
+.frequency-buttons .btn-freqActive {
+  background: #0081C5;
+  color: white;
+  border-radius: 50px !important;
+}
+
+.frequency-buttons .btn-freqInactive {
+  background: #F2F2F2;
+  color: #0081C5;
+  border: 0.85px solid #0081C5;
+  border-radius: 50px !important;
+}
+
+.rec-label-class{
+  font-family: "Visby Round CF", sans-serif;
+  font-style: normal;  
+  font-size: 16px; 
+  margin-bottom: 15px;
+  color: var(--dark_blue);
 }

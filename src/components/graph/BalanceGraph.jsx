@@ -127,8 +127,9 @@ const BalanceGraph = (props) => {
   }, [balance]);
 
   useEffect(() => {
-    if (!balanceDataArr && !monthDataArr) return;
-    const tmpObj = { ...chartOption };
+    const chartObj = JSON.parse(JSON.stringify(chartOption));
+    // if (!balanceDataArr && !monthDataArr) return;
+    const tmpObj = { ...chartObj };    
     const spends = months.map(() => 0);
     if (monthDataArr && monthDataArr.length > 0) {
       months.map((mon, index) => {
@@ -148,7 +149,12 @@ const BalanceGraph = (props) => {
       tmpObj.options.xaxis.categories = months;
       tmpObj.options.xaxis.min = minx;
       tmpObj.options.xaxis.max = maxx;
-      setOptions(tmpObj);
+      tmpObj.options.tooltip.custom = chartOption.options.tooltip.custom;
+      setOptions({ ...tmpObj });
+      return;
+    } else {
+      setOptions(chartObj);
+      return;
     }
   }, [balanceDataArr, monthDataArr]);
 

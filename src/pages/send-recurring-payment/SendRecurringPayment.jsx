@@ -26,13 +26,13 @@ function SendRecurringPayment(_props) {
     useState(false);
   const [scheduleCreds, setScheduleCreds] = useState(null);
 
-  const { sendCreds, charges, disableEdit, handleSendCreds } =
-  useContext(SendPaymentContext);
+  const { sendCreds, charges, disableEdit, handleSendCreds, prevPathRedirect } =
+    useContext(SendPaymentContext);
 
   const { mobile_number, country_code } = useSelector(
     (state) => state?.userProfile?.profile
   );
-  const { wallet } = sendCreds || [];
+  const { wallet } = sendCreds || [];  
 
   const [paymentDetails, setPaymentDetails] = useState({
     allCharges: [],
@@ -91,8 +91,9 @@ function SendRecurringPayment(_props) {
     return `${month}/${day}/${year}`;
   };
 
-  const handleConfirmRecurringSubmit = async () => {
-    if (!scheduleCreds) return;
+  const handleConfirmRecurringSubmit = async (scheduleDetails) => {
+    setScheduleCreds(scheduleDetails);
+    // if (!scheduleCreds) return;
     const validateObj = await formik.validateForm(formik.values);
     if (Object.keys(validateObj).length > 0) {
       formik.setTouched(validateObj);
@@ -111,9 +112,10 @@ function SendRecurringPayment(_props) {
           amount: walletItem.personal_amount,
           receiver_account_number: walletItem.receiver_account_number,
         })),
-        fees: charges?.length > 0  ? charges : "",
+        fees: charges?.length > 0 ? charges : "",
         total: paymentDetails.grandTotal.toString(),
-        schedule_date: muValues.schedule_date,
+        // schedule_date: muValues.schedule_date,
+        schedule_date: new Date().toISOString().split("T")[0],
         // overall_specification: muValues.overall_specification,
         group_id: sendCreds?.group_id ? sendCreds?.group_id : "",
         amount: paymentDetails?.total.toString(),
@@ -145,9 +147,19 @@ function SendRecurringPayment(_props) {
   const handleDeleteContact = (ditem) => {
     if (!formik.values) return;
     const { wallet } = formik.values;
-    const filteredContacts = wallet?.filter(
-      (item) => item.email !== ditem.email && item.mobile !== ditem.mobile
-    );
+    const filteredContacts = wallet?.filter((item) => {
+      if (ditem.email) {
+        if (
+          ditem.mobile &&
+          ditem.email !== item.email &&
+          ditem.mobile !== item.mobile
+        ) {
+          return true;
+        } else if (ditem.email !== item.email) {
+          return true;
+        }
+      }
+    });
     handleSendCreds(filteredContacts);
   };
 
@@ -164,7 +176,13 @@ function SendRecurringPayment(_props) {
   };
 
   const handleScheduleSubmit = async (scheduleDetails) => {
-    if (!scheduleDetails) return;
+    const validateObj = await formik.validateForm(formik.values);
+    if (Object.keys(validateObj).length > 0) {
+      formik.setTouched(validateObj);
+      formik.setErrors(validateObj);
+      setScrollTop((cs) => !cs);
+      return;
+    }
     setShowSchedulePopup(false);
     setScheduleCreds(scheduleDetails);
     setShowScheduleConfirmPopup(true);
@@ -207,7 +225,7 @@ function SendRecurringPayment(_props) {
         id="delete-group-member-popup"
         show={showScheduleConfirmPopup}
         setShow={setShowScheduleConfirmPopup}
-        heading={"Are you sure want to schedule this payment?"}
+        heading={"Are you sure want to schedule this recurring payment?"}
         subHeading={
           "Once It's done, your scheduled amount will be reserved until payment."
         }
@@ -220,7 +238,7 @@ function SendRecurringPayment(_props) {
               ? "Group Recurring Payment"
               : "Recurring Payment"}
           </h3>
-          <Breadcrumb skipIndexes={[1]} />
+          <Breadcrumb skipIndexes={[2]} />
         </div>
       </div>
       {/* <!-- payment block form starts -->  */}
@@ -433,13 +451,13 @@ function SendRecurringPayment(_props) {
                 onClick={() => navigate("/send/recurring-payment")}
                 className="btn btn-cancel-payment"
               >
-                Cancel
+                Back
               </button>
               <button
                 type="button"
                 className="btn btn-send-payment"
                 disabled={formik.isSubmitting}
-                onClick={handleRecurringPayment}
+                onClick={handleConfirmRecurringSubmit}
               >
                 Initiate Recurring
               </button>

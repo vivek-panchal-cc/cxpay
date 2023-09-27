@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
-import InputSelect from "components/ui/InputSelect";
+import InputNumber from "components/ui/InputNumber";
 import useCountriesCities from "hooks/useCountriesCities";
 import { LoaderContext } from "context/loaderContext";
 import { apiRequest } from "helpers/apiRequests";
@@ -12,14 +12,18 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import InputDatePicker from "components/ui/InputDatePicker";
 import ModalDatePicker from "components/modals/ModalDatePicker";
+import ModalConfirmation from "components/modals/ModalConfirmation";
 
 function RecurringPayment() {
   const { setIsLoading } = useContext(LoaderContext);
   const navigate = useNavigate();
   const [activeDatePicker, setActiveDatePicker] = useState("");
   const [activeButton, setActiveButton] = useState("occurrences");
+  const [selectedFrequency, setSelectedFrequency] = useState("daily");
   const [occurrenceCount, setOccurrenceCount] = useState(1);
   const [startDate, setStartDate] = useState(null);
+  const [showScheduleConfirmPopup, setShowScheduleConfirmPopup] =
+    useState(false);
   const [cardsList, setCardsList] = useState([]);
   const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
   const [slideCard, setSlideCard] = useState({});
@@ -39,6 +43,21 @@ function RecurringPayment() {
     grandTotal: 0.0,
     total: 0.0,
   });
+  const myInputRef = useRef(null);
+
+  useEffect(() => {
+    const preventPageScroll = (e) => {
+      if (document.activeElement === myInputRef.current) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("wheel", preventPageScroll, { passive: false });
+
+    return () => {
+      document.removeEventListener("wheel", preventPageScroll);
+    };
+  }, []);
 
   const handleChangeDateFilter = (date) => {
     if (activeDatePicker === "start") {
@@ -56,9 +75,11 @@ function RecurringPayment() {
   };
 
   const incrementCount = () => {
-    const newCount = formik.values.occurrence_count + 1;
-    formik.setFieldValue("occurrence_count", newCount);
-    setOccurrenceCount(newCount);
+    if (formik.values.occurrence_count < 99) {
+      const newCount = formik.values.occurrence_count + 1;
+      formik.setFieldValue("occurrence_count", newCount);
+      setOccurrenceCount(newCount);
+    }
   };
 
   const decrementCount = () => {
@@ -113,29 +134,81 @@ function RecurringPayment() {
     getCardsList();
   }, []);
 
+  const handleFrequencyClick = (frequency) => {
+    setSelectedFrequency(frequency);
+    formik.setFieldValue("select_frequency_id", frequency);
+  };
+
+  const handleScheduleSubmit = async (scheduleDetails) => {
+    const validateObj = await formik.validateForm(formik.values);
+    if (Object.keys(validateObj).length > 0) {
+      formik.setTouched(validateObj);
+      formik.setErrors(validateObj);
+      setScrollTop((cs) => !cs);
+      return;
+    }
+    setShowScheduleConfirmPopup(true);
+  };
+
   const formik = useFormik({
     initialValues: {
       start_date: "",
       end_date: "",
-      select_frequency_id: "",
-      occurrence_count: 1,
+      select_frequency_id: "daily",
+      occurrence_count: "1",
     },
     validationSchema: recurringSchema,
     validateOnChange: true,
     validateOnBlur: true,
+    validateOnMount: true,
     context: { activeButton },
     validate: (values) => {
       let errors = {};
       if (activeButton === "occurrences" && values.occurrence_count <= 0) {
         errors.occurrence_count = "Occurrence must be greater than 0";
       }
+      if (activeButton === "end_date" && !values.end_date) {
+        errors.end_date = "End date is required";
+      }
+      if (values.start_date && values.end_date) {
+        const startDate = new Date(values.start_date);
+        const endDate = new Date(values.end_date);
+        const timeDiff = endDate - startDate;
+        const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+        switch (values.select_frequency_id) {
+          case "daily":
+            if (daysDiff < 1) {
+              errors.end_date =
+                "For daily frequency, end date should be at least 1 day after start date.";
+            }
+            break;
+          case "weekly":
+            if (daysDiff < 7) {
+              errors.end_date =
+                "For weekly frequency, end date should be at least 7 days after start date.";
+            }
+            break;
+          case "monthly":
+            if (daysDiff < 28) {
+              // or 30 if you prefer
+              errors.end_date =
+                "For monthly frequency, end date should be at least 28 days after start date.";
+            }
+            break;
+          case "yearly":
+            if (daysDiff < 365) {
+              errors.end_date =
+                "For yearly frequency, end date should be at least 365 days after start date.";
+            }
+            break;
+          default:
+            break;
+        }
+      }
       return errors;
     },
     onSubmit: async (values, { setErrors }) => {
-      if (activeButton === "end_date" && !values.end_date) {
-        setErrors({ end_date: "End date is required" });
-        return;
-      }
       setIsLoading(true);
       try {
         navigate("/send/recurring-payment-send", {
@@ -152,6 +225,29 @@ function RecurringPayment() {
     },
   });
 
+  const handleConfirmRecurringSubmit = async () => {
+    const validateObj = await formik.validateForm(formik.values);
+    if (Object.keys(validateObj).length > 0) {
+      formik.setTouched(validateObj);
+      formik.setErrors(validateObj);
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      navigate("/send/recurring-payment-send", {
+        state: { formData: formik.values },
+      });
+    } catch (error) {
+      if (typeof error === "string") return toast.error(error);
+      const errorObj = {};
+      for (const property in error) errorObj[property] = error[property]?.[0];
+      formik.setErrors(errorObj);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     formik.validateForm();
   }, [activeButton]);
@@ -161,7 +257,7 @@ function RecurringPayment() {
       <div className="settings-inner-sec wallet-ac-is">
         <div className="profile-info">
           <h3>Recurring Schedule Payment</h3>
-          <Breadcrumb skipIndexes={[1]} />
+          <Breadcrumb skipIndexes={[2]} />
         </div>
         <div className="wallet-fund-form-wrap">
           <form onSubmit={formik.handleSubmit}>
@@ -170,12 +266,11 @@ function RecurringPayment() {
                 <div className="flex md:flex-1 md:flex-col flex-row md:gap-5 items-start justify-evenly w-[79%] md:w-full">
                   <div className="flex flex-1 flex-col justify-start md:mt-0 mt-[174px] w-full">
                     <div className="flex flex-col items-start justify-start md:ml-[0] ml-[309px] w-[63%] md:w-full">
-                      <label style={{ color: "#363853" }}>Start Date</label>
-
                       <div
                         className="common-dr-picker"
                         style={{ marginBottom: "15px", marginTop: "15px" }}
                       >
+                        <label className="rec-label-class">Start Date</label>
                         <InputDatePicker
                           className="date-filter-calendar-recurring"
                           date={formik.values.start_date}
@@ -191,7 +286,7 @@ function RecurringPayment() {
                         ) : null}
                       </div>
 
-                      <div className="row">
+                      {/* <div className="row">
                         <div className="col-12 p-0">
                           <InputSelect
                             className="form-select form-control"
@@ -220,6 +315,25 @@ function RecurringPayment() {
                             </option>
                           </InputSelect>
                         </div>
+                      </div> */}
+                      <label className="rec-label-class">Frequency</label>
+                      <div className="frequency-buttons">
+                        {["daily", "weekly", "monthly", "yearly"].map(
+                          (freq) => (
+                            <button
+                              key={freq}
+                              type="button"
+                              className={`btn ${
+                                selectedFrequency === freq
+                                  ? "btn-freqActive"
+                                  : "btn-freqInactive"
+                              }`}
+                              onClick={() => handleFrequencyClick(freq)}
+                            >
+                              {freq.charAt(0).toUpperCase() + freq.slice(1)}
+                            </button>
+                          )
+                        )}
                       </div>
 
                       <div className="recurring-occurrence">
@@ -248,29 +362,51 @@ function RecurringPayment() {
                       </div>
 
                       {activeButton === "occurrences" && (
-                        <div>
-                          <div className="main-wrapper">
-                            <div className="button-wrapper">
-                              <button type="button" onClick={decrementCount}>
-                                -
-                              </button>{" "}
-                            </div>
-                            <label className="number-label">
-                              {occurrenceCount}
-                            </label>
-                            <div className="button-wrapper plus">
-                              <button type="button" onClick={incrementCount}>
-                                +
-                              </button>
+                        <div className="row">
+                          <div className="col-6 col p-0">
+                            <div className="form-field">
+                              <InputNumber
+                                ref={myInputRef}
+                                type="number"
+                                min="1"
+                                max="99"
+                                className="form-control"
+                                placeholder="No. of occurrences"
+                                name="occurrence_count"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.occurrence_count}
+                                error={
+                                  formik.touched.occurrence_count &&
+                                  formik.errors.occurrence_count
+                                }
+                              />
                             </div>
                           </div>
-                          {formik.touched.occurrence_count &&
-                          formik.errors.occurrence_count ? (
-                            <p className="text-danger pb-0">
-                              {formik.errors.occurrence_count}
-                            </p>
-                          ) : null}
                         </div>
+                        // <div>
+                        //   <div className="main-wrapper">
+                        //     <div className="button-wrapper">
+                        //       <button type="button" onClick={decrementCount}>
+                        //         -
+                        //       </button>{" "}
+                        //     </div>
+                        //     <label className="number-label">
+                        //       {occurrenceCount}
+                        //     </label>
+                        //     <div className="button-wrapper plus">
+                        //       <button type="button" onClick={incrementCount}>
+                        //         +
+                        //       </button>
+                        //     </div>
+                        //   </div>
+                        //   {formik.touched.occurrence_count &&
+                        //   formik.errors.occurrence_count ? (
+                        //     <p className="text-danger pb-0">
+                        //       {formik.errors.occurrence_count}
+                        //     </p>
+                        //   ) : null}
+                        // </div>
                       )}
 
                       {activeButton === "end_date" && (
@@ -302,9 +438,10 @@ function RecurringPayment() {
                           Cancel
                         </button>
                         <button
-                          type="submit"
+                          type="button"
                           className="btn btn-send-payment"
                           disabled={formik.isSubmitting}
+                          onClick={handleScheduleSubmit}
                         >
                           Next
                         </button>
@@ -323,6 +460,16 @@ function RecurringPayment() {
           classNameChild={"schedule-time-modal"}
           heading="Date Filter"
           handleChangeDate={handleChangeDateFilter}
+        />
+        <ModalConfirmation
+          id="delete-group-member-popup"
+          show={showScheduleConfirmPopup}
+          setShow={setShowScheduleConfirmPopup}
+          heading={"Are you sure want to schedule this recurring payment?"}
+          subHeading={
+            "From selected current date, your recurring schedule payment will be executed now."
+          }
+          handleCallback={handleConfirmRecurringSubmit}
         />
       </div>
     </>

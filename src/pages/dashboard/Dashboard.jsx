@@ -279,7 +279,7 @@ const Dashboard = () => {
                       </span>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link to="/view-schedule-payment">
                       <span className="icon-link-text">
                         <IconWallet stroke="#363853" />
@@ -295,6 +295,17 @@ const Dashboard = () => {
                       <span className="icon-link-text">
                         <IconWallet stroke="#363853" />
                         Recurring Payments
+                      </span>
+                      <span className="arrow-wrap">
+                        <IconRightArrowBig />
+                      </span>
+                    </Link>
+                  </li> */}
+                  <li>
+                    <Link to="/view-schedule-payment">
+                      <span className="icon-link-text">
+                        <IconWallet stroke="#363853" />
+                        Payments
                       </span>
                       <span className="arrow-wrap">
                         <IconRightArrowBig />

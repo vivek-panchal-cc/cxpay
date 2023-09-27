@@ -25,7 +25,7 @@ const SectionHeader = (props) => {
     <>
       <div
         className="rcr-innner-wrap rcr-innner-wrap-1 d-flex flex-wrap w-100"
-        style={{ paddingBottom: "0px" }}
+        // style={{ paddingBottom: "0px" }}
       >
         <div className="rcrc-img-wrap rcr-img-wrap">
           <span bg-color="#000" className="user-thumb-name">

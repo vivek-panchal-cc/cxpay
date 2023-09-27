@@ -47,6 +47,17 @@ const SectionRecurringDates = (props) => {
           width: "89px",
           height: "revert",
         };
+      case "paid":
+        return {
+          color: "#56BE16",
+          backgroundColor: "lightgreen",
+          borderRadius: "15px",
+          fontSize: "12px",
+          textAlign: "center",
+          lineHeight: "24px",
+          width: "89px",
+          height: "revert",
+        };
       default:
         return {};
     }
@@ -70,6 +81,8 @@ const SectionRecurringDates = (props) => {
                   <div style={getStatusStyle(dateEntry.status)}>
                     {dateEntry.status.toLowerCase() === "pending"
                       ? "UPCOMING"
+                      : dateEntry.status.toLowerCase() === "paid"
+                      ? "SUCCESS"
                       : dateEntry.status}
                   </div>
                 </td>
