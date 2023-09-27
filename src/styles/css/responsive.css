@@ -1437,6 +1437,13 @@
     padding-right: 10px;
     min-width: 80px;
   }
+  .rcr-info-1 {
+    flex-direction: column;
+  }
+  .rcr-card-data {
+    width: calc(100% - 0px);
+  }
+
 }
 @media only screen and (max-width: 1366px) and (min-width: 992px) {
   .business-info-right-sec {
@@ -4624,6 +4631,29 @@
     max-width: 100%;
     width: 100%;
   }
+  .RecurringScheduleDateWrap > div:nth-child(2),
+  .RecurringScheduleDateWrap > div:nth-child(3){
+  flex-basis: 37.5%;
+  justify-content: flex-start;  
+  }
+  .act-user-content-wrap .user-thumb-name {
+    min-width: 140px;
+    max-width: 190px;
+  }
+  .act-user-content-wrap .activity-date-rec {
+    min-width: 220px;
+    max-width: 150px;
+    display: none;
+  }
+  .act-user-content-wrap .act-spec-add {
+    min-width: 100px;
+    max-width: 90px;
+    display: none;
+  }
+  .act-user-content-wrap .left-activity-div .seleted-value {
+    min-width: 95px;
+    max-width: 65px;
+  }
 }
 @media only screen and (max-width: 480px) {
   /* .profile-inner-sec.p-4 {
@@ -4807,6 +4837,34 @@
     font-size: 12px;
     line-height: 16px;
   }
+  .gl-td-1{
+    width: 40% !important;
+    padding: 10px 0px;
+  }
+  .gl-td-2 {
+    width: 40% !important;
+  }
+  .gl-td-3 {
+    width: 20% !important;
+  }
+  .act-user-content-wrap .user-thumb-name {
+    min-width: 140px;
+    max-width: 190px;
+  }
+  .act-user-content-wrap .activity-date-rec {
+    min-width: 220px;
+    max-width: 150px;
+    display: none;
+  }
+  .act-user-content-wrap .act-spec-add {
+    min-width: 100px;
+    max-width: 90px;
+    display: none;
+  }
+  .act-user-content-wrap .left-activity-div .seleted-value {
+    min-width: 95px;
+    max-width: 65px;
+  }
 }
 @media only screen and (max-width: 1366px) and (min-width: 768px) {
   .fund-account-form .payment-footer-block .amount {
@@ -4821,6 +4879,26 @@
   .wr-form-wrap .btns-inline .btn,
   .wr-card-form-wrap .btns-inline .btn {
     height: 54px;
+  }
+}
+@media only screen and (max-width: 350px) {
+  .act-user-content-wrap .user-thumb-name {
+    min-width: 140px;
+    max-width: 190px;
+  }
+  .act-user-content-wrap .activity-date-rec {
+    min-width: 220px;
+    max-width: 150px;
+    display: none;
+  }
+  .act-user-content-wrap .act-spec-add {
+    min-width: 100px;
+    max-width: 90px;
+    display: none;
+  }
+  .act-user-content-wrap .left-activity-div .seleted-value {
+    min-width: 45px;
+    max-width: 65px;
   }
 }
 

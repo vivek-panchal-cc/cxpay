@@ -18,8 +18,8 @@ const RecurringPaymentProvider = ({ children }) => {
   const [loadingPayments, pagination, listPayments, reloadRecurringPayments] =
     useRecurringPayments({
       page: currentPage,
-      start_date: startDate,
-      end_date: endDate,
+      from_date: startDate,
+      to_date: endDate,
     });
 
   const handleDateFilter = (stDate, edDate) => {
