@@ -2,7 +2,7 @@ import React from "react";
 import WrapAmount from "components/wrapper/WrapAmount";
 
 const PaymentUserItem = (props) => {
-  const { name, profileImg, amount } = props;
+  const { name, profileImg, amount, groupAmount } = props;
   return (
     <li>
       <div className="sp-user-wrap">
@@ -11,9 +11,15 @@ const PaymentUserItem = (props) => {
         </div>
         <div className="sp-user-nm">{name}</div>
       </div>
-      <div className="sp-amt">
-        <WrapAmount value={amount} />
-      </div>
+      {amount ? (
+        <div className="sp-amt">
+          <WrapAmount value={amount} />
+        </div>
+      ) : (
+        <div className="sp-amt">
+          <WrapAmount value={groupAmount} />
+        </div>
+      )}
     </li>
   );
 };

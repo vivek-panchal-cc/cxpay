@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useCallback } from "react";
 import styles from "./input.module.scss";
 
 const InputNumber = forwardRef((props, ref) => {
@@ -10,6 +10,26 @@ const InputNumber = forwardRef((props, ref) => {
     classNameContainer = "",
     ...rest
   } = props;
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+
+    let value = +e.currentTarget.value; // Convert string to number
+
+    if (e.deltaY < 0) {
+      // Scrolling up
+      value = Math.min(value + 1, +props.max);
+    } else {
+      // Scrolling down
+      value = Math.max(value - 1, +props.min);
+    }
+
+    e.currentTarget.value = value;
+
+    if (props.onChange) {
+      props.onChange(e); // Notify parent component about the change
+    }
+  };
 
   const getType = () => {
     switch (type) {
@@ -111,6 +131,7 @@ const InputNumber = forwardRef((props, ref) => {
             props.onChange(e);
           }
         }}
+        onWheel={handleWheel}
         className={`${styles.number_input} ${props.className} ${
           disabled ? "cursor-not-allowed" : ""
         }`}

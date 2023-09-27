@@ -58,6 +58,28 @@ function SendPayment(props) {
     total: 0.0,
   });
 
+  function convertDateFormat(inputDateStr) {
+    // Convert input string to a Date object
+    const dateObj = new Date(inputDateStr);
+
+    // Extract day, month, year, hour, minute, and second
+    const day = String(dateObj.getDate()).padStart(2, "0");
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0"); // +1 because months are 0-indexed
+    const year = dateObj.getFullYear();
+
+    let hour = dateObj.getHours();
+    const minute = String(dateObj.getMinutes()).padStart(2, "0");
+    const second = String(dateObj.getSeconds()).padStart(2, "0");
+
+    // Convert 24-hour format to 12-hour format
+    const isPM = hour >= 12;
+    hour = isPM ? (hour === 12 ? hour : hour - 12) : hour === 0 ? 12 : hour; // Adjust for 12-hour format
+    const period = isPM ? "PM" : "AM";
+
+    // Return formatted string
+    return `${day}/${month}/${year} ${hour}:${minute}:${second} ${period}`;
+  }
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: sendCreds,
@@ -152,13 +174,32 @@ function SendPayment(props) {
     }
   };
 
-  // For deleting the contacts from payment list
+  // // For deleting the contacts from payment list
+  // const handleDeleteContact = (ditem) => {
+  //   if (!formik.values) return;
+  //   const { wallet } = formik.values;
+  //   const filteredContacts = wallet?.filter(
+  //     (item) => item.email !== ditem.email && item.mobile !== ditem.mobile
+  //   );
+  //   handleSendCreds(filteredContacts);
+  // };
+
   const handleDeleteContact = (ditem) => {
     if (!formik.values) return;
     const { wallet } = formik.values;
-    const filteredContacts = wallet?.filter(
-      (item) => item.email !== ditem.email && item.mobile !== ditem.mobile
-    );
+    const filteredContacts = wallet?.filter((item) => {
+      if (ditem.email) {
+        if (
+          ditem.mobile &&
+          ditem.email !== item.email &&
+          ditem.mobile !== item.mobile
+        ) {
+          return true;
+        } else if (ditem.email !== item.email) {
+          return true;
+        }
+      }
+    });
     handleSendCreds(filteredContacts);
   };
 
@@ -347,7 +388,7 @@ function SendPayment(props) {
                 <p>
                   Schedule Date
                   <br />
-                  <b>{scheduleDate}</b>
+                  <b>{convertDateFormat(scheduleDate)}</b>
                 </p>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import InputNumber from "components/ui/InputNumber";
 import useCountriesCities from "hooks/useCountriesCities";
@@ -43,6 +43,21 @@ function RecurringPayment() {
     grandTotal: 0.0,
     total: 0.0,
   });
+  const myInputRef = useRef(null);
+
+  useEffect(() => {
+    const preventPageScroll = (e) => {
+      if (document.activeElement === myInputRef.current) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("wheel", preventPageScroll, { passive: false });
+
+    return () => {
+      document.removeEventListener("wheel", preventPageScroll);
+    };
+  }, []);
 
   const handleChangeDateFilter = (date) => {
     if (activeDatePicker === "start") {
@@ -140,7 +155,7 @@ function RecurringPayment() {
       start_date: "",
       end_date: "",
       select_frequency_id: "daily",
-      occurrence_count: "",
+      occurrence_count: "1",
     },
     validationSchema: recurringSchema,
     validateOnChange: true,
@@ -154,6 +169,42 @@ function RecurringPayment() {
       }
       if (activeButton === "end_date" && !values.end_date) {
         errors.end_date = "End date is required";
+      }
+      if (values.start_date && values.end_date) {
+        const startDate = new Date(values.start_date);
+        const endDate = new Date(values.end_date);
+        const timeDiff = endDate - startDate;
+        const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+        switch (values.select_frequency_id) {
+          case "daily":
+            if (daysDiff < 1) {
+              errors.end_date =
+                "For daily frequency, end date should be at least 1 day after start date.";
+            }
+            break;
+          case "weekly":
+            if (daysDiff < 7) {
+              errors.end_date =
+                "For weekly frequency, end date should be at least 7 days after start date.";
+            }
+            break;
+          case "monthly":
+            if (daysDiff < 28) {
+              // or 30 if you prefer
+              errors.end_date =
+                "For monthly frequency, end date should be at least 28 days after start date.";
+            }
+            break;
+          case "yearly":
+            if (daysDiff < 365) {
+              errors.end_date =
+                "For yearly frequency, end date should be at least 365 days after start date.";
+            }
+            break;
+          default:
+            break;
+        }
       }
       return errors;
     },
@@ -315,6 +366,7 @@ function RecurringPayment() {
                           <div className="col-6 col p-0">
                             <div className="form-field">
                               <InputNumber
+                                ref={myInputRef}
                                 type="number"
                                 min="1"
                                 max="99"

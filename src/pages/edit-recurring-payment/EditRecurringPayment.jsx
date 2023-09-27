@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useMemo, useRef, useState, useEffect } from "react";
 import PaymentUserItem from "./components/PaymentUserItem";
 import { RecurringPaymentContext } from "context/recurringPaymentContext";
 import { useNavigate } from "react-router-dom";
@@ -39,6 +39,21 @@ const EditRecurringPayment = () => {
   const [activeButton, setActiveButton] = useState(
     set_recurring_flag === "DATE" ? "recurring_end_date" : "occurrences"
   );
+  const myInputRef = useRef(null);
+
+  useEffect(() => {
+    const preventPageScroll = (e) => {
+      if (document.activeElement === myInputRef.current) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("wheel", preventPageScroll, { passive: false });
+
+    return () => {
+      document.removeEventListener("wheel", preventPageScroll);
+    };
+  }, []);
 
   const convertToUSDateFormat = (dateStr) => {
     const [day, month, year] = dateStr.split("/");
@@ -159,6 +174,42 @@ const EditRecurringPayment = () => {
       if (activeButton === "occurrences" && values.no_of_occurrence <= 0) {
         errors.no_of_occurrence = "Occurrence must be greater than 0";
       }
+      if (values.recurring_start_date && values.recurring_end_date) {
+        const startDate = new Date(values.recurring_start_date);
+        const endDate = new Date(values.recurring_end_date);
+        const timeDiff = endDate - startDate;
+        const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+        switch (values.frequency) {
+          case "daily":
+            if (daysDiff < 1) {
+              errors.recurring_end_date =
+                "For daily frequency, end date should be at least 1 day after start date.";
+            }
+            break;
+          case "weekly":
+            if (daysDiff < 7) {
+              errors.recurring_end_date =
+                "For weekly frequency, end date should be at least 7 days after start date.";
+            }
+            break;
+          case "monthly":
+            if (daysDiff < 28) {
+              // or 30 if you prefer
+              errors.recurring_end_date =
+                "For monthly frequency, end date should be at least 28 days after start date.";
+            }
+            break;
+          case "yearly":
+            if (daysDiff < 365) {
+              errors.recurring_end_date =
+                "For yearly frequency, end date should be at least 365 days after start date.";
+            }
+            break;
+          default:
+            break;
+        }
+      }
       return errors;
     },
     onSubmit: async (values, { setErrors, setValues, setStatus }) => {
@@ -213,6 +264,7 @@ const EditRecurringPayment = () => {
                       name={item.member_name}
                       profileImg={profileURL}
                       amount={item.member_amount}
+                      groupAmount={item.amount}
                     />
                   );
                 })}
@@ -359,6 +411,7 @@ const EditRecurringPayment = () => {
                       <div className="col-6 col p-0">
                         <div className="form-field">
                           <InputNumber
+                            ref={myInputRef}
                             type="number"
                             min="1"
                             max="99"
@@ -446,7 +499,11 @@ const EditRecurringPayment = () => {
         </div>
       </div>
       <ModalDatePicker
-        minDate={activeDatePicker === "start" ? new Date() : new Date(formik.values.recurring_start_date)}
+        minDate={
+          activeDatePicker === "start"
+            ? new Date()
+            : new Date(formik.values.recurring_start_date)
+        }
         show={activeDatePicker !== ""}
         setShow={() => setActiveDatePicker("")}
         classNameChild={"schedule-time-modal"}

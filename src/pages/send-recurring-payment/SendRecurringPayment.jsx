@@ -27,12 +27,12 @@ function SendRecurringPayment(_props) {
   const [scheduleCreds, setScheduleCreds] = useState(null);
 
   const { sendCreds, charges, disableEdit, handleSendCreds, prevPathRedirect } =
-  useContext(SendPaymentContext);
+    useContext(SendPaymentContext);
 
   const { mobile_number, country_code } = useSelector(
     (state) => state?.userProfile?.profile
   );
-  const { wallet } = sendCreds || [];
+  const { wallet } = sendCreds || [];  
 
   const [paymentDetails, setPaymentDetails] = useState({
     allCharges: [],
@@ -112,10 +112,10 @@ function SendRecurringPayment(_props) {
           amount: walletItem.personal_amount,
           receiver_account_number: walletItem.receiver_account_number,
         })),
-        fees: charges?.length > 0  ? charges : "",
+        fees: charges?.length > 0 ? charges : "",
         total: paymentDetails.grandTotal.toString(),
         // schedule_date: muValues.schedule_date,
-        schedule_date: new Date().toISOString().split('T')[0],
+        schedule_date: new Date().toISOString().split("T")[0],
         // overall_specification: muValues.overall_specification,
         group_id: sendCreds?.group_id ? sendCreds?.group_id : "",
         amount: paymentDetails?.total.toString(),
@@ -147,9 +147,19 @@ function SendRecurringPayment(_props) {
   const handleDeleteContact = (ditem) => {
     if (!formik.values) return;
     const { wallet } = formik.values;
-    const filteredContacts = wallet?.filter(
-      (item) => item.email !== ditem.email && item.mobile !== ditem.mobile
-    );
+    const filteredContacts = wallet?.filter((item) => {
+      if (ditem.email) {
+        if (
+          ditem.mobile &&
+          ditem.email !== item.email &&
+          ditem.mobile !== item.mobile
+        ) {
+          return true;
+        } else if (ditem.email !== item.email) {
+          return true;
+        }
+      }
+    });
     handleSendCreds(filteredContacts);
   };
 
@@ -441,7 +451,7 @@ function SendRecurringPayment(_props) {
                 onClick={() => navigate("/send/recurring-payment")}
                 className="btn btn-cancel-payment"
               >
-                Cancel
+                Back
               </button>
               <button
                 type="button"
