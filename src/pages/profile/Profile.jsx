@@ -21,6 +21,7 @@ const Profile = () => {
     last_name = "",
     company_name = "",
     mobile_number,
+    is_delete_request
   } = profile || {};
   const profileName =
     user_type === "personal" || user_type === "agent"
@@ -79,6 +80,7 @@ const Profile = () => {
             type="button"
             className="btn"
             onClick={handleInitiateDeleteAccount}
+            disabled={is_delete_request}
           >
             Delete Account
           </button>

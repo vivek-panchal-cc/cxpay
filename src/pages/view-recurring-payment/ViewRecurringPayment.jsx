@@ -3,7 +3,7 @@ import ModalConfirmation from "components/modals/ModalConfirmation";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
 import Pagination from "components/pagination/Pagination";
 import TabsPaymentOptions from "components/tabs/TabsPaymentOptions";
-import InputDateRange from "components/ui/InputDateRange";
+import InputDateRangeRecurring from "components/ui/InputDateRangeRecurring";
 import { PAYMENT_OPTIONS_TABS_LIST } from "constants/all";
 import { RecurringPaymentContext } from "context/recurringPaymentContext";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
@@ -31,15 +31,36 @@ const ViewRecurringPayment = () => {
     endDate: "",
   });
 
+  const formatDate = (dateObj) => {
+    if (dateObj instanceof Date) {
+      const day = String(dateObj.getDate()).padStart(2, "0");
+      const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const year = dateObj.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+    return null;
+  };
+
   const handleChangeDateFilter = async ({ startDate, endDate }) => {
     if (!startDate || !endDate) return;
-    setFilters({ startDate: startDate, endDate: endDate });
+
+    const formattedStartDate = formatDate(startDate);
+    const formattedEndDate = formatDate(endDate);
+
+    setFilters({ startDate: formattedStartDate, endDate: formattedEndDate });
     setShowFilter(false);
-    handleDateFilter(
-      startDate.toLocaleDateString(),
-      endDate.toLocaleDateString()
-    );
+    handleDateFilter(formattedStartDate, formattedEndDate);
   };
+
+  // const handleChangeDateFilter = async ({ startDate, endDate }) => {
+  //   if (!startDate || !endDate) return;
+  //   setFilters({ startDate: startDate, endDate: endDate });
+  //   setShowFilter(false);
+  //   handleDateFilter(
+  //     startDate.toLocaleDateString(),
+  //     endDate.toLocaleDateString()
+  //   );
+  // };
 
   const handleDeletePayment = async (spid) => {
     if (!spid) return;
@@ -90,7 +111,7 @@ const ViewRecurringPayment = () => {
             {/* <h3>My Recurring Payment</h3> */}
           </div>
           <div className="schedule-pay-sd-wrap gap-4">
-            <InputDateRange
+            <InputDateRangeRecurring
               className="date-filter-calendar"
               onClick={() => setShowFilter(true)}
               startDate={filters.startDate}
