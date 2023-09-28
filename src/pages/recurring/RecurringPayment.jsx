@@ -139,6 +139,24 @@ function RecurringPayment() {
     formik.setFieldValue("select_frequency_id", frequency);
   };
 
+  // const handleScheduleSubmit = async (scheduleDetails) => {
+  //   const validateObj = await formik.validateForm(formik.values);
+  //   if (Object.keys(validateObj).length > 0) {
+  //     formik.setTouched(validateObj);
+  //     formik.setErrors(validateObj);
+  //     setScrollTop((cs) => !cs);
+  //     return;
+  //   }
+  //   setShowScheduleConfirmPopup(true);
+  // };
+
+  const formatDate = (date) => {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(date.getDate()).padStart(2, "0")}`;
+  };
+
   const handleScheduleSubmit = async (scheduleDetails) => {
     const validateObj = await formik.validateForm(formik.values);
     if (Object.keys(validateObj).length > 0) {
@@ -147,7 +165,19 @@ function RecurringPayment() {
       setScrollTop((cs) => !cs);
       return;
     }
-    setShowScheduleConfirmPopup(true);
+
+    // Extract the date part only (to avoid time comparison)
+    const today = new Date();
+    const todayDateStr = formatDate(today);
+    const startDateObj = new Date(formik.values.start_date);
+    const startDateStr = formatDate(startDateObj);
+
+    // Check if start_date is equal to the current date
+    if (startDateStr === todayDateStr) {
+      setShowScheduleConfirmPopup(true); // Show the popup otherwise
+    } else {
+      handleConfirmRecurringSubmit(); // Directly execute the handleConfirmRecurringSubmit if start_date is today
+    }
   };
 
   const formik = useFormik({
