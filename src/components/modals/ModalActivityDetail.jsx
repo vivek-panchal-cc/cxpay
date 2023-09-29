@@ -168,7 +168,9 @@ const ModalActivityDetail = (props) => {
                     <p>
                       <WrapAmount
                         value={amount}
-                        prefix={`${CURRENCY_SYMBOL} ${iconAmount}`}
+                        prefix={`${CURRENCY_SYMBOL} ${
+                          iconAmount === "-" ? "" : iconAmount
+                        }`}
                       />
                     </p>
                     <p>{specification}</p>

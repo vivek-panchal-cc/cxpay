@@ -44,7 +44,7 @@ const RecurringPaymentItem = (props) => {
         <div className="activity-date-rec">{dtString}</div>
         <div className="act-spec-add">{frequency.toUpperCase()}</div>
         <div className="seleted-value">
-          <WrapAmount value={amount} prefix={`${CURRENCY_SYMBOL} -`} />
+          <WrapAmount value={amount} prefix={`${CURRENCY_SYMBOL} `} />
         </div>
       </div>
       <div className="right-activity-div">

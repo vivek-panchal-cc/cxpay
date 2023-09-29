@@ -82,7 +82,9 @@ const ActivityItem = (props) => {
           <div className={`act-amt-wrap text-end ${classText}`}>
             <WrapAmount
               value={altAmount}
-              prefix={`${CURRENCY_SYMBOL} ${iconAmount}`}
+              prefix={`${CURRENCY_SYMBOL} ${
+                iconAmount === "-" ? "" : iconAmount
+              }`}
             />
           </div>
         </div>

@@ -90,7 +90,9 @@ const TopUpActivityItem = (props) => {
         <div style={labelStyle}>
           <WrapAmount
             value={topup_amount}
-            prefix={`${CURRENCY_SYMBOL} ${iconAmount}`}
+            prefix={`${CURRENCY_SYMBOL} ${
+              iconAmount === "-" ? "" : iconAmount
+            }`}
           />
         </div>
       </td>
@@ -98,7 +100,9 @@ const TopUpActivityItem = (props) => {
         <div style={labelStyle}>
           <WrapAmount
             value={formattedTotalCommission}
-            prefix={`${CURRENCY_SYMBOL} ${iconAmount}`}
+            prefix={`${CURRENCY_SYMBOL} ${
+              iconAmount === "-" ? "" : iconAmount
+            }`}
           />
         </div>
       </td>
@@ -106,7 +110,9 @@ const TopUpActivityItem = (props) => {
         <div style={labelStyle}>
           <WrapAmount
             value={formattedSum}
-            prefix={`${CURRENCY_SYMBOL} ${iconAmount}`}
+            prefix={`${CURRENCY_SYMBOL} ${
+              iconAmount === "-" ? "" : iconAmount
+            }`}
           />
         </div>
       </td>
