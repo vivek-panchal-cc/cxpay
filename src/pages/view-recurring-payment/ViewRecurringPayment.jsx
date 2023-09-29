@@ -138,8 +138,9 @@ const ViewRecurringPayment = () => {
                   {paymentsDateBind[key]?.map((item) => {
                     const totalAmount = item?.amount + item?.fees_total;
                     const profileURL =
-                      item.is_group === "1"
-                        ? "/assets/images/group_contact_profile.png"
+                      item.is_group.toString() === "1"
+                        ? item.image ||
+                          "/assets/images/group_contact_profile.png"
                         : item.image ||
                           "/assets/images/single_contact_profile.png";
                     return (

@@ -181,8 +181,6 @@ const EditRecurringPayment = () => {
     const startDateObj = new Date(formik.values.recurring_start_date);
     const startDateStr = formatDate(startDateObj);
 
-    console.log("todayDateStr: ", todayDateStr);
-    console.log("startDateStr: ", startDateStr);
     // Check if recurring_start_date is equal to the current date
     if (startDateStr === todayDateStr) {
       if (
