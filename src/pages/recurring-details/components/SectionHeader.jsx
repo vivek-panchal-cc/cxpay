@@ -15,8 +15,8 @@ const SectionHeader = (props) => {
   } = props?.details || {};
 
   const profileURL =
-    is_group === "1"
-      ? "/assets/images/group_contact_profile.png"
+    is_group.toString() === "1"
+      ? image || "/assets/images/group_contact_profile.png"
       : image || "/assets/images/single_contact_profile.png";
 
   const { classText, classStatus } = withdrawConsts?.[status] || {};

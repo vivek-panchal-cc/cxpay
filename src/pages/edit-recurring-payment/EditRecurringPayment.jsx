@@ -11,10 +11,13 @@ import InputDatePicker from "components/ui/InputDatePicker";
 import InputSelect from "components/ui/InputSelect";
 import ModalDatePicker from "components/modals/ModalDatePicker";
 import InputNumber from "components/ui/InputNumber";
+import ModalConfirmation from "components/modals/ModalConfirmation";
 
 const EditRecurringPayment = () => {
   const navigate = useNavigate();
   const [activeDatePicker, setActiveDatePicker] = useState("");
+  const [showScheduleConfirmPopup, setShowScheduleConfirmPopup] =
+    useState(false);
   const [occurrenceCount, setOccurrenceCount] = useState(1);
   const [startDate, setStartDate] = useState(null);
   const { upPaymentEntry, updateRecurringPayment, cancelUpdatePayment } =
@@ -156,6 +159,46 @@ const EditRecurringPayment = () => {
     formik.setFieldValue("frequency", frequency);
   };
 
+  const formatDate = (date) => {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(date.getDate()).padStart(2, "0")}`;
+  };
+
+  const handleScheduleSubmit = async (scheduleDetails) => {
+    const validateObj = await formik.validateForm(formik.values);
+    if (Object.keys(validateObj).length > 0) {
+      formik.setTouched(validateObj);
+      formik.setErrors(validateObj);
+      setScrollTop((cs) => !cs);
+      return;
+    }
+
+    // Extract the date part only (to avoid time comparison)
+    const today = new Date();
+    const todayDateStr = formatDate(today);
+    const startDateObj = new Date(formik.values.recurring_start_date);
+    const startDateStr = formatDate(startDateObj);
+
+    // Check if recurring_start_date is equal to the current date
+    if (startDateStr === todayDateStr) {
+      if (
+        activeButton === "recurring_end_date" &&
+        !formik.values.recurring_end_date
+      ) {
+        formik.setErrors({
+          ...formik.errors,
+          recurring_end_date: "End date is required",
+        });
+        return;
+      }
+      setShowScheduleConfirmPopup(true); // Show the popup otherwise
+    } else {
+      formik.handleSubmit();
+    }
+  };
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -237,6 +280,9 @@ const EditRecurringPayment = () => {
       } catch (error) {
         console.log(error);
       }
+      finally{
+        setShowScheduleConfirmPopup(false);
+      }
     },
   });
 
@@ -300,8 +346,9 @@ const EditRecurringPayment = () => {
               <button
                 type="button"
                 className="btn"
-                onClick={formik.handleSubmit}
+                // onClick={formik.handleSubmit}
                 disabled={formik.isSubmitting}
+                onClick={handleScheduleSubmit}
               >
                 Update Recurring
               </button>
@@ -509,6 +556,16 @@ const EditRecurringPayment = () => {
         classNameChild={"schedule-time-modal"}
         heading="Date Filter"
         handleChangeDate={handleChangeDateFilter}
+      />
+      <ModalConfirmation
+        id="delete-group-member-popup"
+        show={showScheduleConfirmPopup}
+        setShow={setShowScheduleConfirmPopup}
+        heading={"Are you sure want to schedule this recurring payment?"}
+        subHeading={
+          "From selected current date, your recurring schedule payment will be executed now."
+        }
+        handleCallback={formik.handleSubmit}
       />
     </>
   );
