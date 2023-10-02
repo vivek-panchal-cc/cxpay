@@ -41,7 +41,8 @@ const TopUpActivities = () => {
     const activityDateList = {};
     activitiesList?.map((item) => {
       const { date } = item || {};
-      const [dd, mm, yr] = date?.split("/") || [];
+      // const [dd, mm, yr] = date?.split("/") || [];
+      const [yr, mm, dd] = date?.split(" ")[0].split("-") || [];
       if (!dd || !mm || !yr) return false;
       const dt = new Date(`${yr}-${mm}-${dd}`);
       const month = dt.toLocaleDateString("default", { month: "long" });

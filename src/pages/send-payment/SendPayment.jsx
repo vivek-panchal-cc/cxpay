@@ -217,6 +217,13 @@ function SendPayment(props) {
 
   const handleScheduleSubmit = async (scheduleDetails) => {
     if (!scheduleDetails) return;
+    const validateObj = await formik.validateForm(formik.values);
+    if (Object.keys(validateObj).length > 0) {
+      formik.setTouched(validateObj);
+      formik.setErrors(validateObj);
+      setShowSchedulePopup(false);
+      return;
+    }
     setShowSchedulePopup(false);
     setScheduleCreds(scheduleDetails);
     setShowScheduleConfirmPopup(true);

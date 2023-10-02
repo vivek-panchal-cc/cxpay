@@ -259,6 +259,7 @@ function SendContact() {
                 type="button"
                 className="btn btn-next ws--btn ms-0"
                 onClick={handleSendContacts}
+                disabled={selectedContactsIds.length < 1}
               >
                 <IconSend style={{ stroke: "#fff" }} />
                 Send
@@ -338,6 +339,7 @@ function SendContact() {
                 type="button"
                 className="btn btn-cancel-payment"
                 onClick={handleEditGroup}
+                disabled={selectedGroupIds.length < 1}
               >
                 <IconEdit style={{ stroke: "#0081c5" }} />
                 Edit
@@ -346,6 +348,7 @@ function SendContact() {
                 type="button"
                 className="btn btn-next ws--btn"
                 onClick={handleSendGroup}
+                disabled={selectedGroupIds.length < 1}
               >
                 <IconSend style={{ stroke: "#fff" }} />
                 Send

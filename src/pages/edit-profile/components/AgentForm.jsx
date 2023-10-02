@@ -97,7 +97,7 @@ function AgentForm(props) {
                 showLabel={false}
                 previewSrc={profile_image}
                 fallbackSrc={
-                  profile_image ? profile_image : "/assets/images/Personal.png"
+                  profile_image ? profile_image : "/assets/images/Agent-account.png"
                 }
                 showLoader={true}
                 classNameInput="d-none"

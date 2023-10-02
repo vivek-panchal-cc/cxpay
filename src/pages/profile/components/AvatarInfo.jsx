@@ -14,7 +14,9 @@ const AvatarInfo = (props) => {
           fallbacksrc={
             profileType === "business"
               ? "/assets/images/Business-account.png"
-              : "/assets/images/Personal.png"
+              : profileType === "personal"
+              ? "/assets/images/Personal.png"
+              : "/assets/images/Agent-account.png"
           }
           className="h-100 w-100 object-fit-cover"
           style={{ objectPosition: "center" }}
