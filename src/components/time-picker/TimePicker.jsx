@@ -270,7 +270,10 @@ const TimePicker = ({
                   const min = timePicked.minutes;
                   const per = timePicked.period;
                   const dt = new Date(`${selectedDateStr} ${hr}:${min} ${per}`);
-                  const flagDisable = dt.getTime() < currentBuffTMS;
+                  const flagDisable =
+                    dt.getTime() < currentBuffTMS && per === "AM";
+
+                  // const flagDisable = dt.getTime() < currentBuffTMS;
                   const classActive =
                     timePicked.hour === item && !flagDisable
                       ? "cx_time_li_active"
@@ -295,7 +298,11 @@ const TimePicker = ({
                   const min = parseInt(item);
                   const per = timePicked.period;
                   const dt = new Date(`${selectedDateStr} ${hr}:${min} ${per}`);
-                  const flagDisable = dt.getTime() <= currentBuffTMS;
+                  const flagDisable =
+                    dt.getTime() <= currentBuffTMS &&
+                    hr === liveTime.split(":")[0] &&
+                    per === "AM";
+                  // const flagDisable = dt.getTime() <= currentBuffTMS;
                   const classActive =
                     timePicked.minutes === item && !flagDisable
                       ? "cx_time_li_active"

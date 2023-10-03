@@ -7,6 +7,7 @@ import {
 } from "constants/all";
 import { IconEyeOpen } from "styles/svgs";
 import WrapAmount from "components/wrapper/WrapAmount";
+import { formatDate } from "helpers/commonHelpers";
 
 const ActivityItem = (props) => {
   const { activityDetails, handleClick } = props || {};
@@ -66,7 +67,7 @@ const ActivityItem = (props) => {
           </div>
           <div className="act-user-in">
             <h2>{name || specification}</h2>
-            <p>{date}</p>
+            <p>{formatDate(date)}</p>
           </div>
         </div>
         <div className="act-specification-text">

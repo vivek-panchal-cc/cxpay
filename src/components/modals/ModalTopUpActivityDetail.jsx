@@ -8,6 +8,7 @@ import {
 import LoaderActivityDetail from "loaders/LoaderActivityDetail";
 import LoaderActivityProfile from "loaders/LoaderActivityProfile";
 import WrapAmount from "components/wrapper/WrapAmount";
+import { formatDate } from "helpers/commonHelpers";
 
 const ModalTopUpActivityDetail = (props) => {
   const {
@@ -22,11 +23,11 @@ const ModalTopUpActivityDetail = (props) => {
   } = props;
 
   const {
-    name,
-    amount,
+    customer_name,
+    topup_amount,
     date,
-    image,
-    mobile_number,
+    profile_image,
+    customer_mobile_number,
     txn_type,
     status,
     specification,
@@ -38,10 +39,11 @@ const ModalTopUpActivityDetail = (props) => {
     agent_commission,
     card_commission,
     system_commission,
-  } = details || {};
+  } = details || {};  
 
   const modalRef = useRef(null);
-  const profileUrl = image || "/assets/images/single_contact_profile.png";
+  const profileUrl =
+    profile_image || "/assets/images/single_contact_profile.png";
 
   const totalCommission = useMemo(() => {
     return (
@@ -111,11 +113,11 @@ const ModalTopUpActivityDetail = (props) => {
                 <LoaderActivityDetail />
               ) : (
                 <>
-                  <h3>{name}</h3>
+                  <h3>{customer_name}</h3>
                   <div className={`loan-amount ${classBg}`}>
                     <p>
                       <WrapAmount
-                        value={amount}
+                        value={topup_amount}
                         // prefix={`${CURRENCY_SYMBOL} ${iconAmount}`}
                       />
                     </p>
@@ -125,14 +127,14 @@ const ModalTopUpActivityDetail = (props) => {
                     <tbody>
                       <tr>
                         <td>Date</td>
-                        <td>{date}</td>
+                        <td>{formatDate(date)}</td>
                       </tr>
-                      {mobile_number && (
+                      {customer_mobile_number && (
                         <tr>
                           <td>Mobile Number</td>
                           <td>
                             <span className={classDetailStatus}>
-                              +{mobile_number}
+                              +{customer_mobile_number}
                             </span>
                           </td>
                         </tr>
@@ -148,7 +150,7 @@ const ModalTopUpActivityDetail = (props) => {
                           <td>Payment Type</td>
                           <td>
                             {topup_type}
-                            {topup_type.toLowerCase() === "card"
+                            {topup_type.toLowerCase() === "card" && card_name
                               ? " - " + card_name
                               : ""}
                           </td>

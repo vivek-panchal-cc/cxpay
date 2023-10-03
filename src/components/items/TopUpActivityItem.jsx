@@ -7,6 +7,7 @@ import {
 } from "constants/all";
 import { IconEyeOpen } from "styles/svgs";
 import WrapAmount from "components/wrapper/WrapAmount";
+import { formatDate } from "helpers/commonHelpers";
 
 const TopUpActivityItem = (props) => {
   const { activityDetails, handleClick, visibleIcon } = props || {};
@@ -77,13 +78,13 @@ const TopUpActivityItem = (props) => {
 
   return (
     <tr onClick={() => handleClick({ id, activity_type, reference_id })}>
-      <td className="act-user-info-wrap d-flex">
+      <td className="act-user-info-wrap d-flex" style={{ width: "55%" }}>
         <div className="act-user-thumb">
           <img src={profileUrl} alt="" />
         </div>
         <div className="act-user-in">
           <h2>{customer_name}</h2>
-          <p>{date}</p>
+          <p>{formatDate(date)}</p>
         </div>
       </td>
       <td className={`act-amt-wrap text-end ${classText}`}>

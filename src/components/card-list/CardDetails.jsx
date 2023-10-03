@@ -27,14 +27,14 @@ function CardDetails(props) {
               <td>Expiry Date</td>
               <td>{expiry_date}</td>
             </tr>
-            <tr>
+            {/* <tr>
               <td>First Name</td>
               <td>{card_holder_first_name}</td>
             </tr>
             <tr>
               <td>Last Name</td>
               <td>{card_holder_last_name}</td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>

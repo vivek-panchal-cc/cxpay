@@ -83,9 +83,42 @@ const dateFormattor = (date) => {
   return `${dts} ${tms}`;
 };
 
+const formatDate = (dateStr) => {
+  const dateObj = new Date(dateStr);
+  const dd = String(dateObj.getDate()).padStart(2, "0");
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const month = monthNames[dateObj.getMonth()];
+  const yyyy = dateObj.getFullYear();
+
+  let hh = dateObj.getHours();
+  let period = "AM";
+  if (hh >= 12) {
+    if (hh > 12) hh -= 12; // Convert to 12-hour format
+    period = "PM";
+  }
+  hh = String(hh).padStart(2, "0");
+  const min = String(dateObj.getMinutes()).padStart(2, "0");
+
+  return `${dd} ${month} ${yyyy}, at ${hh}:${min} ${period}`;
+};
+
 export {
   getChargedAmount,
   addObjToFormData,
   timeStampToTimeString,
   dateFormattor,
+  formatDate,
 };
