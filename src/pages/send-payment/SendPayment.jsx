@@ -59,8 +59,14 @@ function SendPayment(props) {
   });
 
   function convertDateFormat(inputDateStr) {
-    // Convert input string to a Date object
-    const dateObj = new Date(inputDateStr);
+    // Convert the string to an ISO-like format
+    const isoFormatStr = inputDateStr.replace(" ", "T");
+
+    // Convert ISO-like string to a Date object
+    const dateObj = new Date(isoFormatStr);
+    if (isNaN(dateObj.getTime())) {
+      return "Invalid Date";
+    }
 
     // Extract day, month, year, hour, minute, and second
     const day = String(dateObj.getDate()).padStart(2, "0");

@@ -7711,6 +7711,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   font-weight: 600;
   line-height: 20px;
   margin-bottom: 20px;
+  padding-left: 10px;
 }
 
 .rc-refund-main-inner.section-recurring-dates .freq-date-header tr {

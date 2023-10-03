@@ -360,7 +360,7 @@ function SendRecurringPayment(_props) {
             <p>
               Frequency
               <br />
-              <b>{formData?.select_frequency_id}</b>
+              <b>{formData?.select_frequency_id.toUpperCase()}</b>
             </p>
           </div>
         </div>

@@ -84,7 +84,14 @@ const dateFormattor = (date) => {
 };
 
 const formatDate = (dateStr) => {
-  const dateObj = new Date(dateStr);
+  // Convert to ISO string format
+  const isoDateStr = dateStr.replace(" ", "T");
+
+  const dateObj = new Date(isoDateStr);
+  if (isNaN(dateObj.getTime())) {
+    return "Invalid Date";
+  }
+
   const dd = String(dateObj.getDate()).padStart(2, "0");
   const monthNames = [
     "Jan",
