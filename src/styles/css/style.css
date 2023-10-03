@@ -7756,7 +7756,8 @@ ul.recent-act-lw-main .act-info-wrap-left {
 }
 .rcr-innner-wrap.rcr-table-hover table tr tr,
 .rcr-innner-wrap.rcr-table-hover table tr td {
-  padding: 10px;
+  padding: 10px 10px;
+  /* padding-top: 10px; */
 }
 
 .frequency-buttons{

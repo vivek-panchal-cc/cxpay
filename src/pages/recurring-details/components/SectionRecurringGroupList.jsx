@@ -2,8 +2,8 @@ import WrapAmount from "components/wrapper/WrapAmount";
 import React from "react";
 
 const SectionRecurringGroupList = (props) => {
-  const tableTr = {
-    marginBottom: "25px",
+  const tableTh = {
+    padding: "0px 10px",
   };
 
   const { payload = [] } = props?.details || {};
@@ -15,14 +15,14 @@ const SectionRecurringGroupList = (props) => {
         <table>
           <thead className="freq-date-header">
             <tr>
-              <th>Name</th>
-              <th>Specification</th>
-              <th>Amount</th>
+              <th style={tableTh}>Name</th>
+              <th style={tableTh}>Specification</th>
+              <th style={tableTh}>Amount</th>
             </tr>
           </thead>
           <tbody className="group-member-box-shadow">
             {payload?.map((dateEntry, index) => (
-              <tr style={tableTr} key={index}>
+              <tr key={index}>
                 <td className="gl-td-1">{dateEntry.member_name}</td>
                 <td className="gl-td-2">{dateEntry.specification}</td>
                 <td className="gl-td-3"><WrapAmount value = {dateEntry.amount} /></td>
