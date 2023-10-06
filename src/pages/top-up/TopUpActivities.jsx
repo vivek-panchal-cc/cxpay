@@ -36,6 +36,12 @@ const TopUpActivities = () => {
     fontWeight: "700",
   };
 
+  const visibility = {
+    visibility: "hidden"
+  };
+
+  const combinedStyle = { ...mainDivStyle, ...visibility };
+
   useEffect(() => {
     if (!activitiesList) return;
     const activityDateList = {};
@@ -133,19 +139,45 @@ const TopUpActivities = () => {
             ))}
           </div>
         ) : (
-          Object.keys(activitiesDateBind)?.map((key) => (
+          Object.keys(activitiesDateBind)?.map((key, index) => (
             <div key={key}>
-              <div className="activity-month">{key}</div>
               <table className="border-none full-width agent-recent-activity-list-table">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th style={mainDivStyle} className='topup-table-header'>Customer Amount</th>
-                    <th style={mainDivStyle} className='topup-table-header'>Commission</th>
-                    <th style={mainDivStyle} className='topup-table-header'>Total Amount</th>
-                    <th></th>
-                  </tr>
-                </thead>
+                {index === 0 ? (
+                  <thead>
+                    <tr>
+                      <th className="activity-month">{key}</th>
+                      <th style={mainDivStyle} className="topup-table-header">
+                        Customer Amount
+                      </th>
+                      <th style={mainDivStyle} className="topup-table-header">
+                        Commission
+                      </th>
+                      <th style={mainDivStyle} className="topup-table-header">
+                        Total Amount
+                      </th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                ) : (
+                  index !== 0 && (
+                    <thead>
+                      <tr>
+                        <th className="activity-month">{key}</th>
+                        <th style={combinedStyle} className="topup-table-header">
+                          Customer Amount
+                        </th>
+                        <th style={combinedStyle} className="topup-table-header">
+                          Commission
+                        </th>
+                        <th style={combinedStyle} className="topup-table-header">
+                          Total Amount
+                        </th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                  )
+                )}
+                {/* <div className="activity-month">{key}</div> */}
                 <tbody>
                   {activitiesDateBind[key]?.map((activity, index) => (
                     <TopUpActivityItem

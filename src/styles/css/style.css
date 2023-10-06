@@ -2858,8 +2858,8 @@ img.img-hover {
   font-size: 14px;
   line-height: 18px;
   color: #969696;
-  /* padding: 0px 0px 20px; */
-  padding: 0px 0px 0px;
+  padding: 0px 0px 20px;
+  /* padding: 0px 0px 0px; */
 }
 
 .full-width {

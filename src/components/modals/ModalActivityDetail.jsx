@@ -18,6 +18,7 @@ import {
 import LoaderActivityDetail from "loaders/LoaderActivityDetail";
 import LoaderActivityProfile from "loaders/LoaderActivityProfile";
 import WrapAmount from "components/wrapper/WrapAmount";
+import { formatDate } from "helpers/commonHelpers";
 
 const ModalActivityDetail = (props) => {
   const {
@@ -179,7 +180,7 @@ const ModalActivityDetail = (props) => {
                     <tbody>
                       <tr>
                         <td>Date</td>
-                        <td>{date}</td>
+                        <td>{formatDate(date)}</td>
                       </tr>
                       {request_type === ACT_REQUEST_SEND &&
                         status === ACT_STATUS_PAID && (
