@@ -14,6 +14,12 @@ const TopUpActivityList = (props) => {
     fontWeight: "700",
   };
 
+  const visibility = {
+    visibility: "hidden",
+  };
+
+  const combinedStyle = { ...mainDivStyle, ...visibility };
+
   useEffect(() => {
     if (!activitiesList || activitiesList.length <= 0) return;
     const activityDateList = {};
@@ -41,21 +47,55 @@ const TopUpActivityList = (props) => {
           ))}
         </div>
       ) : (
-        Object.keys(activitiesDateBind)?.map((key) => (
+        Object.keys(activitiesDateBind)?.map((key, index) => (
           <div className="tab-content-block-part" key={key}>
-            <p>{key}</p>
+            {/* <p>{key}</p> */}
             <ul className={`activity-lw-main ${classNameList}`}>
               <table className="border-none full-width activity-list-table agent-recent-activity-list-table">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th style={mainDivStyle}>Customer Amount</th>
-                    <th style={mainDivStyle}>Commission</th>
-                    <th style={mainDivStyle}>Total Amount</th>
-                    <th></th>
-                  </tr>
-                </thead>
-
+                {index === 0 ? (
+                  <thead>
+                    <tr>
+                      <th className="activity-month">{key}</th>
+                      <th style={mainDivStyle} className="topup-table-header">
+                        Customer Amount
+                      </th>
+                      <th style={mainDivStyle} className="topup-table-header">
+                        Commission
+                      </th>
+                      <th style={mainDivStyle} className="topup-table-header">
+                        Total Amount
+                      </th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                ) : (
+                  index !== 0 && (
+                    <thead>
+                      <tr>
+                        <th className="activity-month">{key}</th>
+                        <th
+                          style={combinedStyle}
+                          className="topup-table-header"
+                        >
+                          Customer Amount
+                        </th>
+                        <th
+                          style={combinedStyle}
+                          className="topup-table-header"
+                        >
+                          Commission
+                        </th>
+                        <th
+                          style={combinedStyle}
+                          className="topup-table-header"
+                        >
+                          Total Amount
+                        </th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                  )
+                )}
                 <tbody>
                   {activitiesDateBind[key]?.map((activity, index) => {
                     return (
