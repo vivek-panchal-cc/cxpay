@@ -151,7 +151,7 @@ const Dashboard = () => {
   return (
     <>
       {/* Close Fund Account Popup */}
-      <div className="dashboard-home-container">
+      <div className={`dashboard-home-container ${user_type === 'agent' ? 'agent' : ''}`}>
         <div className="dashboard-bottom-sec">
           <div className="dashboard-graph-sec">
             {/* Start Graph Section */}

@@ -7803,3 +7803,34 @@ ul.recent-act-lw-main .act-info-wrap-left {
   margin-bottom: 15px;
   color: var(--dark_blue);
 }
+
+.share-options{  
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;  
+  max-height: 0;  /* Initially no height */
+  overflow: hidden; /* Hide overflow content */
+  transform: translateY(-100%); /* Move it up */
+  opacity: 0;
+  transition: max-height 0.5s ease-in-out, transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  pointer-events: none;
+}
+
+.share-options.active {
+  max-height: 50px;  /* Adjust this value to your need */
+  transform: translateY(0);  /* Reset to initial position */
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.qr-share-icon{
+    margin-left: 10px;
+    background: var(--blue);
+    box-shadow: 0px 23px 63px rgba(0, 0, 0, 0.12);
+    border-radius: 25px !important;    
+    padding: 0px 15px;
+    min-width: auto;
+    height: 50px;
+    color: #f3f3f3;
+}

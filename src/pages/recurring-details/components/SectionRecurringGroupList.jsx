@@ -21,13 +21,22 @@ const SectionRecurringGroupList = (props) => {
             </tr>
           </thead>
           <tbody className="group-member-box-shadow">
-            {payload?.map((dateEntry, index) => (
-              <tr key={index}>
-                <td className="gl-td-1">{dateEntry.member_name}</td>
-                <td className="gl-td-2">{dateEntry.specification}</td>
-                <td className="gl-td-3"><WrapAmount value = {dateEntry.amount} /></td>
-              </tr>
-            ))}
+            {payload
+              ?.filter(
+                (dateEntry) =>
+                  dateEntry.member_name ||
+                  dateEntry.specification ||
+                  dateEntry.amount
+              )
+              ?.map((dateEntry, index) => (
+                <tr key={index}>
+                  <td className="gl-td-1">{dateEntry.member_name}</td>
+                  <td className="gl-td-2">{dateEntry.specification}</td>
+                  <td className="gl-td-3">
+                    <WrapAmount value={dateEntry.amount} />
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

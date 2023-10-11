@@ -78,7 +78,7 @@ const TopUpActivityItem = (props) => {
 
   return (
     <tr onClick={() => handleClick({ id, activity_type, reference_id })}>
-      <td className="act-user-info-wrap d-flex" style={{ width: "55%" }}>
+      <td className="act-user-info-wrap d-flex">
         <div className="act-user-thumb">
           <img src={profileUrl} alt="" />
         </div>

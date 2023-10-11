@@ -176,6 +176,15 @@
   padding-left: 35px;
 }
 
+.dashboard-home-container.agent .dashboard-graph-sec{
+  width: 100%;
+  padding-right: 0;  /* assuming you want to remove the padding for agent view */
+}
+
+.dashboard-home-container.agent .dashboard-bottom-sec{
+  flex-direction: column;  /* only if you want items to stack vertically */
+}
+
 /* .dashboard-home-container .dashboard-bottom-sec {
     padding-top: 20px;
   } */
