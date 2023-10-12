@@ -112,8 +112,13 @@ const TimePicker = ({
 
   const { selectedDateStr, selectedTMS, currentBuffTMS } = useMemo(() => {
     const selectedDateStr = selecteDate
-      ? selecteDate.toLocaleDateString()
-      : new Date().toLocaleDateString();
+      ? `${
+          selecteDate.getMonth() + 1
+        }/${selecteDate.getDate()}/${selecteDate.getFullYear()}`
+      : `${
+          new Date().getMonth() + 1
+        }/${new Date().getDate()}/${new Date().getFullYear()}`;
+
     const selectedTMS = new Date(
       `${selectedDateStr} ${selectedTime}`
     ).getTime();
@@ -265,11 +270,27 @@ const TimePicker = ({
           <div className="cx_time_container" ref={toggleRef}>
             <div className="cx_time_lists">
               <ul className="cx_time_ul" ref={hourListRef}>
-                {HOURS.map((item) => {
+                {HOURS?.map((item) => {
                   const hr = parseInt(item);
                   const min = timePicked.minutes;
                   const per = timePicked.period;
-                  const dt = new Date(`${selectedDateStr} ${hr}:${min} ${per}`);
+                  const dt = new Date(
+                    selectedDateStr +
+                      " " +
+                      item +
+                      ":" +
+                      timePicked.minutes +
+                      " " +
+                      timePicked.period
+                  );
+
+                  let adjustedHour = item === "12" ? 0 : parseInt(item);
+                  if (per === "PM") {
+                    adjustedHour += 12;
+                  }
+                  dt.setHours(adjustedHour);
+                  dt.setMinutes(parseInt(min));
+
                   const flagDisable =
                     dt.getTime() < currentBuffTMS && per === "AM";
 
@@ -293,11 +314,25 @@ const TimePicker = ({
                 })}
               </ul>
               <ul className="cx_time_ul" ref={minListRef}>
-                {MINUTES[minutesSelection].map((item) => {
+                {MINUTES[minutesSelection]?.map((item) => {
                   const hr = parseInt(timePicked.hour);
                   const min = parseInt(item);
                   const per = timePicked.period;
-                  const dt = new Date(`${selectedDateStr} ${hr}:${min} ${per}`);
+                  const dt = new Date(
+                    selectedDateStr +
+                      " " +
+                      timePicked.hour +
+                      ":" +
+                      item +
+                      " " +
+                      timePicked.period
+                  );
+
+                  let adjustedHour =
+                    timePicked.period === "PM" && timePicked.hour !== "12"
+                      ? parseInt(timePicked.hour) + 12
+                      : parseInt(timePicked.hour);
+
                   const flagDisable =
                     dt.getTime() <= currentBuffTMS &&
                     hr === liveTime.split(":")[0] &&
@@ -322,11 +357,25 @@ const TimePicker = ({
                 })}
               </ul>
               <ul className="cx_time_ul" ref={perListRef}>
-                {PERIOD.map((item) => {
+                {PERIOD?.map((item) => {
                   const hr = timePicked.hour;
                   const min = timePicked.minutes;
                   const per = item;
-                  const dt = new Date(`${selectedDateStr} ${hr}:${min} ${per}`);
+                  const dt = new Date(
+                    selectedDateStr +
+                      " " +
+                      timePicked.hour +
+                      ":" +
+                      timePicked.minutes +
+                      " " +
+                      item
+                  );
+
+                  let adjustedHour =
+                    item === "PM" && timePicked.hour !== "12"
+                      ? parseInt(timePicked.hour) + 12
+                      : parseInt(timePicked.hour);
+
                   const classActive =
                     timePicked.period === item ? "cx_time_li_active" : "";
                   return (

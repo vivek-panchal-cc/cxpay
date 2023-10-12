@@ -26,6 +26,32 @@ const EditScheduledPayment = () => {
     overall_specification,
   } = upPaymentEntry || {};
 
+  // const {
+  //   contacts = [],
+  //   sch_dt,
+  //   sch_tm,
+  //   sch_amount,
+  //   sch_fees,
+  //   sch_total,
+  // } = useMemo(() => {
+  //   if (!payment_schedule_date) return {};
+  //   const sch_dt = new Date(payment_schedule_date);
+  //   const sch_tm = sch_dt.toLocaleTimeString(undefined, {
+  //     hour: "2-digit",
+  //     minute: "2-digit",
+  //     hourCycle: "h12",
+  //   });
+  //   const singleCont = [
+  //     { member_name: name, member_image: image, member_amount: amount },
+  //   ];
+  //   const contacts =
+  //     is_group && payload && payload.length > 0 ? payload : singleCont;
+  //   const sch_amount = typeof amount === "number" ? amount : 0;
+  //   const sch_fees = typeof fees_total === "number" ? fees_total : 0;
+  //   const sch_total = sch_amount + sch_fees;
+  //   return { sch_dt, sch_tm, contacts, sch_amount, sch_fees, sch_total };
+  // }, [payment_schedule_date, is_group, payload, amount, fees_total]);
+
   const {
     contacts = [],
     sch_dt,
@@ -35,7 +61,14 @@ const EditScheduledPayment = () => {
     sch_total,
   } = useMemo(() => {
     if (!payment_schedule_date) return {};
-    const sch_dt = new Date(payment_schedule_date);
+    
+    // Manually parsing the dateTime
+    const [datePart, timePart] = payment_schedule_date.split(' ');
+    const [year, month, day] = datePart.split('-').map(str => parseInt(str, 10));
+    const [hour, minute, second] = timePart.split(':').map(str => parseInt(str, 10));
+
+    const sch_dt = new Date(year, month - 1, day, hour, minute, second); // Constructing date object
+
     const sch_tm = sch_dt.toLocaleTimeString(undefined, {
       hour: "2-digit",
       minute: "2-digit",
@@ -85,7 +118,7 @@ const EditScheduledPayment = () => {
         <div className="sp-top-sec">
           <div className="title-content-wrap common-title-wrap">
             <h3>Update Schedule Payment</h3>
-            <p>Please select Payment date</p>
+            {/* <p>Please select Payment date</p> */}
           </div>
         </div>
         <div className="sp-details-main-wrap">

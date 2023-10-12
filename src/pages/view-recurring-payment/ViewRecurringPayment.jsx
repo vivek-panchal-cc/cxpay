@@ -100,7 +100,7 @@ const ViewRecurringPayment = () => {
       <div className="activities-sec">
         <div className="wr-title-wrap">
           <h3>My Recurring Payment</h3>
-          <p>Please select payment date</p>
+          {/* <p>Please select payment date</p> */}
         </div>
         <TabsPaymentOptions
           className="wr-page-link-wrap d-flex"

@@ -293,7 +293,7 @@ const EditRecurringPayment = () => {
         <div className="sp-top-sec">
           <div className="title-content-wrap common-title-wrap">
             <h3>Update Recurring Payment</h3>
-            <p>Please select Payment date</p>
+            {/* <p>Please select Payment date</p> */}
           </div>
         </div>
         <div className="recurring-sp-details-main-wrap">

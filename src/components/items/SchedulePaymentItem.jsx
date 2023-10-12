@@ -1,5 +1,6 @@
 import WrapAmount from "components/wrapper/WrapAmount";
 import { CURRENCY_SYMBOL } from "constants/all";
+import { formatDate } from "helpers/commonHelpers";
 import React, { useMemo } from "react";
 import { IconBin, IconEdit } from "styles/svgs";
 
@@ -14,18 +15,18 @@ const SchedulePaymentItem = (props) => {
     profileImg = "",
   } = details || {};
 
-  const { dtString } = useMemo(() => {
-    if (!dateTime) return { dtString: "" };
-    const dt = new Date(dateTime);
-    const dtString = dt
-      .toLocaleString("en-IN", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      })
-      .replace(", ", ", at ")
-      .replace(/-/g, " ");
-    return { dtString };
-  }, [dateTime]);
+  // const { dtString } = useMemo(() => {
+  //   if (!dateTime) return { dtString: "" };
+  //   const dt = new Date(dateTime);
+  //   const dtString = dt
+  //     .toLocaleString("en-IN", {
+  //       dateStyle: "medium",
+  //       timeStyle: "short",
+  //     })
+  //     .replace(", ", ", at ")
+  //     .replace(/-/g, " ");
+  //   return { dtString };
+  // }, [dateTime]);
 
   return (
     <li>
@@ -34,7 +35,7 @@ const SchedulePaymentItem = (props) => {
           <img src={profileImg} alt="" />
           <span>{name}</span>
         </div>
-        <div className="activity-date">{dtString}</div>
+        <div className="activity-date">{formatDate(dateTime)}</div>
         <div className="act-spec-add">{description}</div>
         <div className="seleted-value">
           <WrapAmount value={amount} prefix={`${CURRENCY_SYMBOL} `} />

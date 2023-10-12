@@ -16,7 +16,9 @@ const AvatarInfo = (props) => {
               ? "/assets/images/Business-account.png"
               : profileType === "personal"
               ? "/assets/images/Personal.png"
-              : "/assets/images/Agent-account.png"
+              : profileType === "agent"
+              ? "/assets/images/Agent-account.png"
+              : "/assets/images/single_contact_profile.png"
           }
           className="h-100 w-100 object-fit-cover"
           style={{ objectPosition: "center" }}
