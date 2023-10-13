@@ -22,6 +22,12 @@ function PersonalForm(props) {
   const { countryList, cityList, country_iso, selected_country_name } =
     signUpCreds || {};
 
+  const [passwordStrength, setPasswordStrength] = useState("");
+  const [passwordStrengthData, setPasswordStrengthData] = useState({
+    strength: "",
+    percent: 0,
+  });
+
   const formik = useFormik({
     initialValues: {
       first_name: "",
@@ -64,6 +70,14 @@ function PersonalForm(props) {
     },
   });
 
+  useEffect(() => {
+    setPasswordStrengthData(checkPasswordStrength(formik.values.password));
+  }, [formik.values.password]);
+
+  useEffect(() => {
+    setPasswordStrength(checkPasswordStrength(formik.values.password));
+  }, [formik.values.password]);
+
   // For making input scroll into view on validation error
   useEffect(() => {
     const { errors } = formik;
@@ -73,6 +87,26 @@ function PersonalForm(props) {
     if (!inputField) return;
     inputField.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [formik.isSubmitting]);
+
+  const checkPasswordStrength = (password) => {
+    const regexWeak = /^(?=.*[a-zA-Z])/;
+    const regexMedium = /^(?=.*[0-9])(?=.*[a-zA-Z])/;
+    const regexStrong = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])/;
+    const regexVeryStrong =
+      /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&#])/;
+
+    if (regexVeryStrong.test(password) && password.length >= 12) {
+      return { strength: "secure", percent: 100 };
+    } else if (regexStrong.test(password) && password.length >= 10) {
+      return { strength: "strong", percent: 75 };
+    } else if (regexMedium.test(password) && password.length >= 8) {
+      return { strength: "medium", percent: 50 };
+    } else if (regexWeak.test(password)) {
+      return { strength: "weak", percent: 25 };
+    } else {
+      return { strength: "very weak", percent: 0 };
+    }
+  };
 
   return (
     <div className="container login-signup-01 login-signup-02">
@@ -139,7 +173,7 @@ function PersonalForm(props) {
                     name="country"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.country}                    
+                    value={formik.values.country}
                     disabled
                     // error={formik.touched.country && formik.errors.country}
                   >
@@ -231,6 +265,32 @@ function PersonalForm(props) {
                     />
                   )}
                 </span>
+                {formik.values.password && (
+                  <div className="password-strength-container">
+                    <div
+                      className="password-strength-bar"
+                      style={{
+                        width:
+                          passwordStrengthData.strength === "very weak"
+                            ? "100%"
+                            : "80%",
+                      }}
+                    >
+                      <div
+                        className={`strength-indicator ${passwordStrengthData.strength}`}
+                        style={{ width: `${passwordStrengthData.percent}%` }}
+                      ></div>
+                    </div>
+                    {passwordStrengthData.strength !== "very weak" && (
+                      <span
+                        className={`strength-label ${passwordStrengthData.strength}`}
+                      >
+                        {passwordStrengthData.strength.charAt(0).toUpperCase() +
+                          passwordStrengthData.strength.slice(1)}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div className="form-field">

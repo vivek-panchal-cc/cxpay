@@ -12,6 +12,7 @@ import {
   citySchema,
   addressSchema,
   otpSchema,
+  passwordStrengthSchema,
 } from "./commonSchema";
 
 const signUpPersonalAccountSchema = yup.object().shape({
@@ -24,7 +25,7 @@ const signUpPersonalAccountSchema = yup.object().shape({
     .max(100, "Maximum limit exceeded"),
   email: emailSchema,
   address: addressSchema,
-  password: passwordSchema,
+  password: passwordStrengthSchema,
   confirm_password: confirmPasswordSchema,
   profile_image: profileImageSchema,
   country: countrySchema,
@@ -41,7 +42,7 @@ const signUpBusinessAccountSchema = yup.object().shape({
   user_type: yup.string().required(),
   email: emailSchema,
   address: addressSchema,
-  password: passwordSchema,
+  password: passwordStrengthSchema,
   confirm_password: confirmPasswordSchema,
   profile_image: profileImageSchema,
   country: countrySchema,

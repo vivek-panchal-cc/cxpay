@@ -47,6 +47,28 @@ const passwordSchema = yup
     "Password must contain 8 to 16 characters and contain at least one number, one uppercase & lowercase letter and one special character."
   );
 
+  const passwordStrengthSchema = yup
+  .string()
+  .min(8, "Password should be at least 8 characters")
+  .matches(
+    /^(?=.*[a-z])/,
+    "At least one lowercase character"
+  )
+  .matches(
+    /^(?=.*[A-Z])/,
+    "At least one uppercase character"
+  )
+  .matches(
+    /^(?=.*[0-9])/,
+    "At least one numeric character"
+  )
+  .matches(
+    /^(?=.*[@$!%*?&#])/,
+    "At least one special character (@, $, !, %, *, ?, &, #)"
+  )
+  .required("Password is required");
+
+
 const confirmPasswordSchema = yup
   .string()
   .oneOf([yup.ref("password"), null], "Password must be matched")
@@ -163,6 +185,7 @@ const otpSchema = yup
 export {
   emailSchema,
   passwordSchema,
+  passwordStrengthSchema,
   confirmPasswordSchema,
   changeConfirmPasswordSchema,
   profileImageSchema,

@@ -7834,3 +7834,60 @@ ul.recent-act-lw-main .act-info-wrap-left {
     height: 50px;
     color: #f3f3f3;
 }
+
+.password-strength-bar {
+  width: 80%;
+  height: 5px;
+  background-color: #e0e0e0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.strength-indicator {
+  height: 5px;
+  transition: width 0.5s;
+}
+
+.strength-indicator.weak {
+  background-color: red;
+}
+
+.strength-indicator.medium {
+  background-color: orange;
+}
+
+.strength-indicator.strong {
+  background-color: green;
+}
+
+.strength-indicator.secure {
+  background-color: darkgreen;
+}
+
+.password-strength-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.strength-label {
+  margin-left: 10px;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.strength-label.weak {
+  color: red;
+}
+
+.strength-label.medium {
+  color: orange;
+}
+
+.strength-label.strong {
+  color: green;
+}
+
+.strength-label.secure {
+  color: darkgreen;
+}

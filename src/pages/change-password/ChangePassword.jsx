@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
@@ -19,6 +19,11 @@ function ChangePassword() {
     old: false,
     new: false,
     confirm: false,
+  });
+  const [passwordStrength, setPasswordStrength] = useState("");
+  const [passwordStrengthData, setPasswordStrengthData] = useState({
+    strength: "",
+    percent: 0,
   });
 
   const formik = useFormik({
@@ -46,6 +51,34 @@ function ChangePassword() {
       }
     },
   });
+
+  useEffect(() => {
+    setPasswordStrengthData(checkPasswordStrength(formik.values.new_password));
+  }, [formik.values.new_password]);
+
+  useEffect(() => {
+    setPasswordStrength(checkPasswordStrength(formik.values.new_password));
+  }, [formik.values.new_password]);
+
+  const checkPasswordStrength = (password) => {
+    const regexWeak = /^(?=.*[a-zA-Z])/;
+    const regexMedium = /^(?=.*[0-9])(?=.*[a-zA-Z])/;
+    const regexStrong = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])/;
+    const regexVeryStrong =
+      /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&#])/;
+
+    if (regexVeryStrong.test(password) && password.length >= 12) {
+      return { strength: "secure", percent: 100 };
+    } else if (regexStrong.test(password) && password.length >= 10) {
+      return { strength: "strong", percent: 75 };
+    } else if (regexMedium.test(password) && password.length >= 8) {
+      return { strength: "medium", percent: 50 };
+    } else if (regexWeak.test(password)) {
+      return { strength: "weak", percent: 25 };
+    } else {
+      return { strength: "very weak", percent: 0 };
+    }
+  };
 
   return (
     <div className="settings-password-right-sec settings-vc-sec">
@@ -127,6 +160,34 @@ function ChangePassword() {
                       />
                     )}
                   </span>
+                  {formik.values.new_password && (
+                    <div className="password-strength-container">
+                      <div
+                        className="password-strength-bar"
+                        style={{
+                          width:
+                            passwordStrengthData.strength === "very weak"
+                              ? "100%"
+                              : "80%",
+                        }}
+                      >
+                        <div
+                          className={`strength-indicator ${passwordStrengthData.strength}`}
+                          style={{ width: `${passwordStrengthData.percent}%` }}
+                        ></div>
+                      </div>
+                      {passwordStrengthData.strength !== "very weak" && (
+                        <span
+                          className={`strength-label ${passwordStrengthData.strength}`}
+                        >
+                          {passwordStrengthData.strength
+                            .charAt(0)
+                            .toUpperCase() +
+                            passwordStrengthData.strength.slice(1)}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <div className="form-field">
                   <Input
