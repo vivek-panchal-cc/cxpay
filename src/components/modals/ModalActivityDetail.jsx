@@ -236,6 +236,14 @@ const ModalActivityDetail = (props) => {
                   </table>
                   <div className="d-flex gap-3 justify-content-center">
                     {getActivityActions()}
+                    <button
+                      type="button"
+                      className="btn close-btn"
+                      style={{ minWidth: "200px" }}
+                      onClick={() => setShow(false)}
+                    >
+                      Close
+                    </button>
                   </div>
                 </>
               )}

@@ -800,6 +800,7 @@ pointer-events: none;
 }
 
 .modal-body h3 {
+  word-break: break-all;
   font-size: 32px;
   line-height: 26px;
   margin: 0;

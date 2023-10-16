@@ -39,7 +39,7 @@ const ModalTopUpActivityDetail = (props) => {
     agent_commission,
     card_commission,
     system_commission,
-  } = details || {};  
+  } = details || {};
 
   const modalRef = useRef(null);
   const profileUrl =
@@ -164,6 +164,14 @@ const ModalTopUpActivityDetail = (props) => {
                   </table>
                   <div className="d-flex gap-3 justify-content-center">
                     {getActivityActions()}
+                    <button
+                      type="button"
+                      className="btn close-btn"
+                      style={{ minWidth: "200px" }}
+                      onClick={() => setShow(false)}
+                    >
+                      Close
+                    </button>
                   </div>
                 </>
               )}
