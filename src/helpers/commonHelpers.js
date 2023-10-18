@@ -122,10 +122,33 @@ const formatDate = (dateStr) => {
   return `${dd} ${month} ${yyyy}, at ${hh}:${min} ${period}`;
 };
 
+function formatDateToDesiredFormat(dateString) {
+  // Convert "YYYY-MM-DD HH:MM:SS" to "YYYY/MM/DDTHH:MM:SS" format
+  const reformattedDate = dateString.replace(" ", "T");
+
+  const dateObj = new Date(reformattedDate);
+
+  // Extract the day, month, and year
+  const day = String(dateObj.getDate()).padStart(2, "0");
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0"); // Add 1 to get the month number and pad to 2 digits
+  const year = dateObj.getFullYear();
+
+  // Extract the hours and minutes
+  let hours = dateObj.getHours();
+  const minutes = String(dateObj.getMinutes()).padStart(2, "0");
+  const period = hours >= 12 ? "PM" : "AM";
+
+  if (hours > 12) hours -= 12; // Convert 24-hour format to 12-hour format
+  if (hours === 0) hours = 12; // If it's 00 hours, change to 12 (for 12 AM)
+
+  return `${day}/${month}/${year} | ${hours}:${minutes} ${period}`;
+}
+
 export {
   getChargedAmount,
   addObjToFormData,
   timeStampToTimeString,
   dateFormattor,
   formatDate,
+  formatDateToDesiredFormat,
 };

@@ -127,6 +127,9 @@ const API_deleteRecurringPayment =
 const API_listRecurringPayment = apiUrl.API_TRANSACTION_LIST_RECURRING_PAYMENT;
 const API_viewRecurringPayment = apiUrl.API_TRANSACTION_VIEW_RECURRING_PAYMENT;
 
+//Reserved Amount
+const API_listReservedAmount = apiUrl.API_RESERVED_AMOUNT_LIST;
+
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
 /** POST @login API
@@ -621,6 +624,15 @@ export const viewRecurringPayment = (params) => {
 };
 // End of recurring
 
+//Reserved Amount
+/** POST @reserved-amount-list
+ * @params auth_token, user_timezone, from_date, to_date
+ */
+ export const listReservedAmount = (params) => {
+  return axiosTransactionInstance.post(`${API_listReservedAmount}`, params);
+};
+//End of Reserved Amount
+
 /** POST @get-activity-details
  * @params auth_token
  */
@@ -950,4 +962,5 @@ export const apiRequest = {
   listRecurringPayment,
   deleteRecurringPayment,
   viewRecurringPayment,
+  listReservedAmount,
 };

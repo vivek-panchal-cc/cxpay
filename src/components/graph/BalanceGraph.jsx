@@ -1,5 +1,7 @@
+import ModalReservedAmount from "components/modals/ModalReservedAmount";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { LoaderContext } from "context/loaderContext";
+import { apiRequest } from "helpers/apiRequests";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
@@ -116,6 +118,9 @@ const BalanceGraph = (props) => {
   const { isLoading } = useContext(LoaderContext);
   const { graphBackgroundImage, balanceDataArr, balance, monthDataArr } = props;
   const [options, setOptions] = useState({ ...chartOption });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [reservedDetails, setReservedDetails] = useState([]);
+  const [loadingDetails, setLoadingDetails] = useState(false);
 
   const { availableBalance, lockBalance } = useMemo(() => {
     const { available, lock } = balance || {};
@@ -129,7 +134,7 @@ const BalanceGraph = (props) => {
   useEffect(() => {
     const chartObj = JSON.parse(JSON.stringify(chartOption));
     // if (!balanceDataArr && !monthDataArr) return;
-    const tmpObj = { ...chartObj };    
+    const tmpObj = { ...chartObj };
     const spends = months.map(() => 0);
     if (monthDataArr && monthDataArr.length > 0) {
       months.map((mon, index) => {
@@ -158,52 +163,93 @@ const BalanceGraph = (props) => {
     }
   }, [balanceDataArr, monthDataArr]);
 
+  const handleOpenModal = async () => {
+    setIsModalOpen(true);
+    setLoadingDetails(true);
+    try {
+      const { data } = await apiRequest.listReservedAmount();
+      if (!data.success) throw data.message;
+      const details = data.data.transactions;
+      if (!details) {
+        setIsModalOpen(false);
+        return;
+      }
+      if (Array.isArray(details) && details.length > 0) {
+        setReservedDetails(details);
+      } else {
+        // Handle case where details is not an array or is an empty array.
+        setIsModalOpen(false);
+        toast.error("No transaction details available.");
+      }
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+      setIsModalOpen(false);
+    } finally {
+      setLoadingDetails(false);
+    }
+  };
+
   return (
-    <div
-      className="dashboard-graph-wrap rounded-4"
-      style={{
-        background: `url(${graphBackgroundImage})`,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-      }}
-    >
-      <div className="w-100">
-        <div className="d-flex">
-          <div className="p-4">
-            <h6 className="h6" style={{ color: "#0081c5" }}>
-              Available Balance
-            </h6>
-            <h2 className="h3 text-black fw-bolder">
-              <WrapAmount value={availableBalance} />
-            </h2>
-          </div>
-          {lockBalance ? (
-            <div className="p-4 pb-0">
+    <>
+      <div
+        className="dashboard-graph-wrap rounded-4"
+        style={{
+          background: `url(${graphBackgroundImage})`,
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
+      >
+        <div className="w-100">
+          <div className="d-flex">
+            <div className="p-4">
               <h6 className="h6" style={{ color: "#0081c5" }}>
-                Reserved Amount
+                Available Balance
               </h6>
               <h2 className="h3 text-black fw-bolder">
-                <WrapAmount value={lockBalance} />
+                <WrapAmount value={availableBalance} />
               </h2>
             </div>
-          ) : null}
-        </div>
-        <div className="px-2 z-1">
-          <div id="chart" className="overflow-hidden">
-            {!isLoading && options.series[0].data.length > 0 ? (
-              <ReactApexChart
-                options={options.options}
-                series={options.series}
-                type="area"
-                height={150}
-                width={"100%"}
-              />
+            {lockBalance ? (
+              <div className="p-4 pb-0">
+                <h6 className="h6" style={{ color: "#0081c5" }}>
+                  Reserved Amount
+                </h6>
+                <h2
+                  className="h3 text-black fw-bolder reserved-amount"
+                  onClick={handleOpenModal}                  
+                  title="Click to view details"
+                >
+                  <WrapAmount value={lockBalance} />
+                </h2>
+              </div>
             ) : null}
+          </div>
+          <div className="px-2 z-1">
+            <div id="chart" className="overflow-hidden">
+              {!isLoading && options.series[0].data.length > 0 ? (
+                <ReactApexChart
+                  options={options.options}
+                  series={options.series}
+                  type="area"
+                  height={150}
+                  width={"100%"}
+                />
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <ModalReservedAmount
+        id="user-details-popup"
+        className="reserved-amount-modal"
+        show={isModalOpen}
+        setShow={setIsModalOpen}
+        loading={loadingDetails}
+        details={reservedDetails}
+        onClose={() => setIsModalOpen(false)}
+      />
+    </>
   );
 };
 

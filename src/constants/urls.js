@@ -115,6 +115,9 @@ export const API_TRANSACTION_DELETE_RECURRING_PAYMENT = "/delete-recurring-sched
 export const API_TRANSACTION_LIST_RECURRING_PAYMENT = "/list-recurring-schedule-payment";
 export const API_TRANSACTION_VIEW_RECURRING_PAYMENT = "/view-recurring-schedule-payment";
 
+//Reserved Amount
+export const API_RESERVED_AMOUNT_LIST = "/reserved-amount-list";
+
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =
   process.env.REACT_APP_API_CYBERSOURCE_ORIGIN_URL || "https://centinelapistag.cardinalcommerce.com";
