@@ -122,33 +122,73 @@ const AgentBalanceGraph = (props) => {
     const commissionAmount =
       typeof commission_amount === "number" ? commission_amount.toFixed(2) : "";
     const rechargeAmount =
-      typeof recharge_amount === "number" && recharge_amount > 0 ? recharge_amount.toFixed(2) : "";
+      typeof recharge_amount === "number" && recharge_amount > 0
+        ? recharge_amount.toFixed(2)
+        : "";
     return { commissionAmount, rechargeAmount };
   }, [balance]);
 
+  // useEffect(() => {
+  //   if (!balanceDataArr && !monthDataArr) return;
+  //   const tmpObj = { ...chartOption };
+  //   const spends = months.map(() => 0);
+  //   if (monthDataArr && monthDataArr.length > 0) {
+  //     months.map((mon, index) => {
+  //       const ind = monthDataArr.indexOf(mon);
+  //       if (ind > -1) {
+  //         const amount = balanceDataArr[ind];
+  //         spends[index] = amount;
+  //       }
+  //       return mon;
+  //     });
+  //     const dtnow = new Date();
+  //     dtnow.setMonth(dtnow.getMonth() - 2);
+  //     const minx = dtnow.getMonth() + 1;
+  //     dtnow.setMonth(dtnow.getMonth() + 5);
+  //     const maxx = dtnow.getMonth() + 1;
+  //     tmpObj.series[0].data = spends;
+  //     tmpObj.options.xaxis.categories = months;
+  //     tmpObj.options.xaxis.min = minx;
+  //     tmpObj.options.xaxis.max = maxx;
+  //     setOptions(tmpObj);
+  //   }
+  // }, [balanceDataArr, monthDataArr]);
+
   useEffect(() => {
-    if (!balanceDataArr && !monthDataArr) return;
-    const tmpObj = { ...chartOption };
+    const chartObj = JSON.parse(JSON.stringify(chartOption));
+    const tmpObj = { ...chartObj };
     const spends = months.map(() => 0);
+    let minIndex = Number.MAX_VALUE;
+    let maxIndex = -1;
     if (monthDataArr && monthDataArr.length > 0) {
       months.map((mon, index) => {
         const ind = monthDataArr.indexOf(mon);
         if (ind > -1) {
+          if (index < minIndex) minIndex = index;
+          if (index > maxIndex) maxIndex = index;
           const amount = balanceDataArr[ind];
           spends[index] = amount;
         }
         return mon;
       });
-      const dtnow = new Date();
-      dtnow.setMonth(dtnow.getMonth() - 2);
-      const minx = dtnow.getMonth() + 1;
-      dtnow.setMonth(dtnow.getMonth() + 5);
-      const maxx = dtnow.getMonth() + 1;
+      maxIndex++;
+      minIndex++;
+      let diff = maxIndex - minIndex;
+      while (diff <= 3) {
+        if (minIndex - 1 >= 1) minIndex--;
+        if (maxIndex + 1 <= 12) maxIndex++;
+        diff = maxIndex - minIndex;
+      }
       tmpObj.series[0].data = spends;
       tmpObj.options.xaxis.categories = months;
-      tmpObj.options.xaxis.min = minx;
-      tmpObj.options.xaxis.max = maxx;
-      setOptions(tmpObj);
+      tmpObj.options.xaxis.min = minIndex;
+      tmpObj.options.xaxis.max = maxIndex;
+      tmpObj.options.tooltip.custom = chartOption.options.tooltip.custom;
+      setOptions({ ...tmpObj });
+      return;
+    } else {
+      setOptions(chartObj);
+      return;
     }
   }, [balanceDataArr, monthDataArr]);
 

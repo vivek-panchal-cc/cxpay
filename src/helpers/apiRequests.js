@@ -73,6 +73,7 @@ const API_deleteSchedulePayment = apiUrl.API_ONBOARD_DELETE_SCHEDULE_PAYMENT;
 const API_updateSchedulePayment = apiUrl.API_ONBOARD_UPDATE_SCHEDULE_PAYMENT;
 const API_viewSchedulePayment = apiUrl.API_ONBOARD_VIEW_SCHEDULE_PAYMENT;
 const API_getAllSystemOptions = apiUrl.API_ONBOARD_GET_ALL_SYSTEM_OPTIONS;
+const API_markAllAsReadNotifications = apiUrl.API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS;
 
 // TRANSACTION SERVICES
 const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
@@ -842,6 +843,13 @@ export const getAllSystemOptions = () => {
   return axiosOnboardInstance.post(`${API_getAllSystemOptions}`);
 };
 
+/** POST @get-all-system-options
+ * @params
+ */
+export const markAllAsReadNotifications = () => {
+  return axiosOnboardInstance.post(`${API_markAllAsReadNotifications}`);
+};
+
 // Add fund with Cybersource, APIs ------------------------------------------------------------------------------------------
 
 /** POST @add-fund-with-card
@@ -953,6 +961,7 @@ export const apiRequest = {
   cardTransactionsList,
   cardTransactionsDetails,
   getAllSystemOptions,
+  markAllAsReadNotifications,
   // cybersource add-fund
   addFundWithCard,
   checkEnrollment,

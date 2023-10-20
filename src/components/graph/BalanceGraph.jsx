@@ -4,6 +4,7 @@ import { LoaderContext } from "context/loaderContext";
 import { apiRequest } from "helpers/apiRequests";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import { IconShowReservedAmount } from "styles/svgs";
 
 const chartOption = {
   series: [
@@ -131,29 +132,66 @@ const BalanceGraph = (props) => {
     return { availableBalance, lockBalance };
   }, [balance]);
 
+  // useEffect(() => {
+  //   const chartObj = JSON.parse(JSON.stringify(chartOption));
+  //   const tmpObj = { ...chartObj };
+  //   const spends = months.map(() => 0);
+  //   if (monthDataArr && monthDataArr.length > 0) {
+  //     months.map((mon, index) => {
+  //       const ind = monthDataArr.indexOf(mon);
+  //       if (ind > -1) {
+  //         const amount = balanceDataArr[ind];
+  //         spends[index] = amount;
+  //       }
+  //       return mon;
+  //     });
+  //     const dtnow = new Date();
+  //     dtnow.setMonth(dtnow.getMonth() - 2);
+  //     const minx = dtnow.getMonth() + 1;
+  //     dtnow.setMonth(dtnow.getMonth() + 5);
+  //     const maxx = dtnow.getMonth() + 1;
+  //     tmpObj.series[0].data = spends;
+  //     tmpObj.options.xaxis.categories = months;
+  //     tmpObj.options.xaxis.min = minx;
+  //     tmpObj.options.xaxis.max = maxx;
+  //     tmpObj.options.tooltip.custom = chartOption.options.tooltip.custom;
+  //     setOptions({ ...tmpObj });
+  //     return;
+  //   } else {
+  //     setOptions(chartObj);
+  //     return;
+  //   }
+  // }, [balanceDataArr, monthDataArr]);
+
   useEffect(() => {
     const chartObj = JSON.parse(JSON.stringify(chartOption));
-    // if (!balanceDataArr && !monthDataArr) return;
     const tmpObj = { ...chartObj };
     const spends = months.map(() => 0);
+    let minIndex = Number.MAX_VALUE;
+    let maxIndex = -1;
     if (monthDataArr && monthDataArr.length > 0) {
       months.map((mon, index) => {
         const ind = monthDataArr.indexOf(mon);
         if (ind > -1) {
+          if (index < minIndex) minIndex = index;
+          if (index > maxIndex) maxIndex = index;
           const amount = balanceDataArr[ind];
           spends[index] = amount;
         }
         return mon;
       });
-      const dtnow = new Date();
-      dtnow.setMonth(dtnow.getMonth() - 2);
-      const minx = dtnow.getMonth() + 1;
-      dtnow.setMonth(dtnow.getMonth() + 5);
-      const maxx = dtnow.getMonth() + 1;
+      maxIndex++;
+      minIndex++;
+      let diff = maxIndex - minIndex;
+      while (diff <= 3) {
+        if (minIndex - 1 >= 1) minIndex--;
+        if (maxIndex + 1 <= 12) maxIndex++;
+        diff = maxIndex - minIndex;
+      }
       tmpObj.series[0].data = spends;
       tmpObj.options.xaxis.categories = months;
-      tmpObj.options.xaxis.min = minx;
-      tmpObj.options.xaxis.max = maxx;
+      tmpObj.options.xaxis.min = minIndex;
+      tmpObj.options.xaxis.max = maxIndex;
       tmpObj.options.tooltip.custom = chartOption.options.tooltip.custom;
       setOptions({ ...tmpObj });
       return;
@@ -211,18 +249,25 @@ const BalanceGraph = (props) => {
               </h2>
             </div>
             {lockBalance ? (
-              <div className="p-4 pb-0">
-                <h6 className="h6" style={{ color: "#0081c5" }}>
-                  Reserved Amount
-                </h6>
-                <h2
-                  className="h3 text-black fw-bolder reserved-amount"
-                  onClick={handleOpenModal}                  
-                  title="Click to view details"
-                >
-                  <WrapAmount value={lockBalance} />
-                </h2>
-              </div>
+              <>
+                <div className="p-4 pb-0">
+                  <h6 className="h6 mb-1" style={{ color: "#0081c5" }}>
+                    Reserved Amount&nbsp;
+                    <span
+                      className="eye-icon ms-2"
+                      title="Click to view reserved amount"
+                    >
+                      <IconShowReservedAmount
+                        className="h3 mb-1 text-black fw-bolder reserved-amount"
+                        onClick={handleOpenModal}
+                      />
+                    </span>
+                  </h6>
+                  <h2 className="h3 text-black fw-bolder">
+                    <WrapAmount value={lockBalance} />
+                  </h2>
+                </div>
+              </>
             ) : null}
           </div>
           <div className="px-2 z-1">

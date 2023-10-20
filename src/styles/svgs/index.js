@@ -53,6 +53,8 @@ export { default as IconDownArrow } from "./ArrowDown";
 export { default as IconPlusBorder } from "./PlusBorder";
 export { default as IconManualWithdraw } from "./ManualWithdraw";
 export { default as IconSchedulePayment } from "./SchedulePayment";
+export { default as IconShowReservedAmount } from "./ShowReservedAmount";
+export { default as IconCloseModal } from "./CloseModal";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";

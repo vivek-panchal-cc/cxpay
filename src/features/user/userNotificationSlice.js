@@ -54,6 +54,19 @@ export const fetchMarkAsRead = createAsyncThunk(
   }
 );
 
+export const fetchMarkAllAsRead = createAsyncThunk(
+  "notify/markAsAllReadNotification",
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await apiRequest.markAllAsReadNotifications();
+      if (!data.success) throw data.message;
+      return { message: data.message };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const fetchDeleteNotifications = createAsyncThunk(
   "notify/deleteNotification",
   async ({ id = "", delete_all = false }, thunkAPI) => {
@@ -133,6 +146,14 @@ const userNotificationslice = createSlice({
       })
       .addCase(fetchDeleteNotifications.fulfilled, (state, action) => {})
       .addCase(fetchDeleteNotifications.rejected, (state, action) => {
+        console.log("ERROR ", action.payload);
+      })
+      .addCase(fetchMarkAllAsRead.fulfilled, (state, action) => {
+        state.allNotifications?.forEach((notification) => {
+          notification.status = 1;
+        });
+      })
+      .addCase(fetchMarkAllAsRead.rejected, (state, action) => {
         console.log("ERROR ", action.payload);
       });
   },

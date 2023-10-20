@@ -6,6 +6,7 @@ import {
   fetchDeleteNotifications,
   fetchGetAllNotifications,
   fetchMarkAsRead,
+  fetchMarkAllAsRead,
 } from "features/user/userNotificationSlice";
 import { LoaderContext } from "context/loaderContext";
 import { notificationType } from "constants/all";
@@ -23,6 +24,9 @@ function ViewNotification(props) {
     (state) => state.userNotification
   );
   const { current_page, total, last_page } = pagination || {};
+  const hasUnreadNotifications = allNotifications?.some(
+    (notification) => !notification.status
+  );
 
   const handleNotificationPageChange = async (page) => {
     setIsLoading(true);
@@ -47,7 +51,7 @@ function ViewNotification(props) {
     try {
       const { error, payload } = await dispatch(fetchMarkAsRead(id));
       if (error) throw payload;
-      toast.success(payload.message);
+      // toast.success(payload.message);
     } catch (error) {
       console.log(error);
     } finally {
@@ -85,6 +89,19 @@ function ViewNotification(props) {
     }
   };
 
+  const handleMarkAllAsRead = async () => {
+    setIsLoading(true);
+    try {
+      const { error, payload } = await dispatch(fetchMarkAllAsRead());      
+      if (error) throw payload;
+      toast.success(payload.message);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     handleNotificationPageChange(1);
   }, []);
@@ -98,6 +115,15 @@ function ViewNotification(props) {
             <p> </p>
           </div>
           <div className="pr-4">
+            {hasUnreadNotifications && allNotifications.length > 0 ? (
+              <Button
+                type="button"
+                className="btn me-2"
+                onClick={handleMarkAllAsRead}
+              >
+                Mark all as read
+              </Button>
+            ) : null}
             {allNotifications && allNotifications.length > 0 ? (
               <Button type="button" className="btn" onClick={handleDeleteAll}>
                 Clear all

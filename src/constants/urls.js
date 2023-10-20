@@ -67,6 +67,7 @@ export const API_ONBOARD_DELETE_SCHEDULE_PAYMENT = "/delete-schedule-payment";
 export const API_ONBOARD_UPDATE_SCHEDULE_PAYMENT = "/update-schedule-payment";
 export const API_ONBOARD_VIEW_SCHEDULE_PAYMENT = "/view-schedule-payment";
 export const API_ONBOARD_GET_ALL_SYSTEM_OPTIONS = "/get-all-system-options";
+export const API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS = "/mark-all-as-read";
 
 // customer-transaction Urls
 export const API_TRANSACTION_ADD_FUND = "/add-fund";

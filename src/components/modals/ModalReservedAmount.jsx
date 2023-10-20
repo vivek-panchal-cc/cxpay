@@ -3,7 +3,11 @@ import styles from "./modal.module.scss";
 import { CURRENCY_SYMBOL } from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { formatDateToDesiredFormat } from "helpers/commonHelpers";
-import { IconManualWithdraw, IconSchedulePayment } from "styles/svgs";
+import {
+  IconManualWithdraw,
+  IconSchedulePayment,
+  IconCloseModal,
+} from "styles/svgs";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
 
 const ModalReservedAmount = (props) => {
@@ -13,15 +17,15 @@ const ModalReservedAmount = (props) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
-    function handleclickOutside(event) {
+    function handleClickOutside(event) {
       if (!modalRef.current) return;
       const childDialog = modalRef.current?.children[0];
       if (childDialog && !childDialog.contains(event.target))
         if (setShow) setShow(false);
     }
-    document.addEventListener("mousedown", handleclickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleclickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [modalRef, setShow]);
 
@@ -37,7 +41,7 @@ const ModalReservedAmount = (props) => {
           <div className="modal-dialog-reserved-amount modal-dialog-centered">
             <div className="modal-content">
               <h5>Reserved Amount</h5>
-              <div class="res-data-wrap">
+              <div className="res-data-wrap">
                 {[1, 2, 3, 4, 5]?.map((item) => (
                   <LoaderActivityItem key={item} />
                 ))}
@@ -55,9 +59,18 @@ const ModalReservedAmount = (props) => {
     >
       <div ref={modalRef} className={classNameChild} style={{ width: "70%" }}>
         <div className="modal-dialog-reserved-amount modal-dialog-centered">
-          <div className="modal-content">
+          <div className="modal-content" style={{ position: "relative" }}>
+            <IconCloseModal
+              style={{
+                position: "absolute",
+                top: "30px",
+                right: "30px",
+                cursor: "pointer",
+              }}
+              onClick={() => setShow(false)}
+            />{" "}            
             <h5>Reserved Amount</h5>
-            <div class="res-data-wrap">
+            <div className="res-data-wrap">
               {Array.isArray(details) && details.length > 0 ? (
                 details?.map((detail) => (
                   <React.Fragment key={detail.date}>
@@ -75,7 +88,6 @@ const ModalReservedAmount = (props) => {
 
                         <div className="act-user-in">
                           <h2>{detail.name}</h2>
-                          {/* <p>{formatDate(detail.date)}</p> */}
                         </div>
                       </div>
                       <div className={`act-amt-wrap mobile-amt`}>

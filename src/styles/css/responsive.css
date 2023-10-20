@@ -1500,6 +1500,12 @@
   ul.recent-act-lw-main .act-amt-status-wrap > div {
     width: 50%;
   }
+  .rese-modal-wrap .res-data-wrap {
+    padding-right: 20px;
+  }
+  .rese-modal-wrap .modal-body .act-specification-text > p {
+    font-size: 12px !important;
+  }
 }
 @media only screen and (max-width: 1199px) and (min-width: 992px) {
   .business-info-right .profile-qr {
@@ -2130,11 +2136,13 @@
     width: 100%;
   }
   .rese-modal-wrap .act-info-wrap-left .modal-body {
-    width: 40%;
+    width: 46%;
   }
-  .rese-modal-wrap .act-user-info-wrap,
-  .rese-modal-wrap .act-specification-text {
+  .rese-modal-wrap .act-user-info-wrap {
     width: 30%;
+  }
+  .rese-modal-wrap .act-specification-text.p-0 {
+    width: 24% !important;
   }
 }
 @media only screen and (max-width: 991px) {
@@ -3111,6 +3119,9 @@
   }
   .rc-refund-main-inner .rcr-innner-wrap-1 {
     padding-bottom: 20px;
+  }
+  .rese-modal-wrap .act-info-wrap-left .modal-body > div {
+    width: 100% !important;
   }
 }
 
@@ -4989,6 +5000,9 @@
   }
   .fund-account-form .payment-footer-block.p-4 {
     padding: 23px 17px;
+  }
+  .rese-modal-wrap .act-amt-wrap span:first-child {
+    font-size: 15px;
   }
 }
 @media only screen and (min-width: 768px) {
