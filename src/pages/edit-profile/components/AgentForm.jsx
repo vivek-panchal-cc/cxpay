@@ -97,7 +97,9 @@ function AgentForm(props) {
                 showLabel={false}
                 previewSrc={profile_image}
                 fallbackSrc={
-                  profile_image ? profile_image : "/assets/images/Agent-account.png"
+                  profile_image
+                    ? profile_image
+                    : "/assets/images/Agent-account.png"
                 }
                 showLoader={true}
                 classNameInput="d-none"
@@ -121,6 +123,11 @@ function AgentForm(props) {
                       ? "Change Profile Picture"
                       : "Select Profile Picture"}
                   </label>
+                  {!profile_image && !formik.values.profile_image ? (
+                    <p className="red">
+                      Note: Allowed formats are JPEG, PNG, JPG
+                    </p>
+                  ) : null}
                 </p>
                 <p className="text-danger">{formik.errors.profile_image}</p>
               </div>

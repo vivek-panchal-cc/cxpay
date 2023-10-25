@@ -9,6 +9,7 @@ import SectionRecurringGroupList from "./components/SectionRecurringGroupList";
 
 const RecurringDetails = () => {
   const [recurringDetails, setRecurringDetails] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
   const { id } = params || {};
@@ -18,6 +19,7 @@ const RecurringDetails = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchRecurringPaymentDetails = async () => {
       try {
         const { data } = await apiRequest.viewRecurringPayment({
@@ -26,6 +28,8 @@ const RecurringDetails = () => {
         setRecurringDetails(data?.data);
       } catch (error) {
         console.error("Error fetching recurring payment details:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -41,9 +45,12 @@ const RecurringDetails = () => {
         <div className="rc-refund-main-wrap">
           <div className="pattern-wrap"></div>
           <div className="rc-refund-main-inner">
-            <SectionHeader details={recurringDetails} />
+            <SectionHeader details={recurringDetails} loading={isLoading} />
             <div className="rcr-divider-wrap"></div>
-            <SectionRecurringDetails details={recurringDetails} />
+            <SectionRecurringDetails
+              details={recurringDetails}
+              loading={isLoading}
+            />
             {/* <div className="rcr-divider-wrap"></div> */}
           </div>
           {/* <div className="pattern-wrap pattern-wrap-bottom"></div> */}
@@ -51,14 +58,20 @@ const RecurringDetails = () => {
         <div className="rc-refund-second-wrap">
           <div></div>
           <div className="rc-refund-main-inner section-recurring-dates">
-            <SectionRecurringDates details={recurringDetails} />
+            <SectionRecurringDates
+              details={recurringDetails}
+              loading={isLoading}
+            />
           </div>
         </div>
       </div>
       {recurringDetails?.is_group === "1" && (
         <div className="rc-refund-group-wrap">
           <div className="rc-refund-group-inner">
-            <SectionRecurringGroupList details={recurringDetails} />
+            <SectionRecurringGroupList
+              details={recurringDetails}
+              loading={isLoading}
+            />
           </div>
         </div>
       )}

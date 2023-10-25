@@ -14,8 +14,28 @@ function CardItem(props) {
     mark_as_default,
   } = item;
 
+  const handleCardClick = (e) => {
+    if (
+      e.target.tagName === "INPUT" ||
+      e.target.tagName === "LABEL" ||
+      e.target === document.getElementById(`bnk_acc_${index}`)
+    ) {
+      // if the click is directly on the radio or the label, we don't want to toggle
+      return;
+    }
+    document.getElementById(`bnk_acc_${index}`)?.click();
+  };
+
+  const handleButtonClick = (e, callback, item) => {
+    e.stopPropagation(); // Prevent triggering the parent div's onClick
+    callback(item);
+  };
+
   return (
-    <li className="db-view-bank-div-main db-view-bank-common-div">
+    <li
+      className="db-view-bank-div-main db-view-bank-common-div"
+      onClick={handleCardClick}
+    >
       <div className="bank-card-name-wrap">
         <div
           className="bank-card-wrap"
@@ -51,14 +71,16 @@ function CardItem(props) {
       <button
         type="button"
         className="bank-del-wrap border-0"
-        onClick={() => handleEdit(item)}
+        // onClick={() => handleEdit(item)}
+        onClick={(e) => handleButtonClick(e, handleEdit, item)}
       >
         <IconEdit style={{ stroke: "#9b9b9b" }} />
       </button>
       <button
         type="button"
         className="bank-del-wrap border-0"
-        onClick={() => handleDelete(item)}
+        // onClick={() => handleDelete(item)}
+        onClick={(e) => handleButtonClick(e, handleDelete, item)}
       >
         <IconCancel style={{ stroke: "#9b9b9b" }} />
       </button>

@@ -14,8 +14,20 @@ function CreditCard(props) {
     image,
   } = item;
 
+  const handleCardClick = (e) => {
+    if (
+      e.target.tagName === "INPUT" ||
+      e.target.tagName === "LABEL" ||
+      e.target === document.getElementById(`bnk_acc_${index}`)
+    ) {
+      // if the click is directly on the radio or the label, we don't want to toggle
+      return;
+    }
+    document.getElementById(`bnk_acc_${index}`)?.click();
+  };
+
   return (
-    <li className="db-view-bank-div-main db-view-bank-common-div">
+    <li className="db-view-bank-div-main db-view-bank-common-div" onClick={handleCardClick}>
       <div className="bank-card-name-wrap">
         <div
           className="bank-card-wrap"

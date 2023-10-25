@@ -64,6 +64,7 @@ const UploadFile = (props) => {
                   Upload receipt
                 </label>
               </div>
+              <p className="red">Note: Allowed formats are JPEG, PNG, PDF, JPG</p>
             </div>
           )}
         </div>
