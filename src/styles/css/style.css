@@ -2785,6 +2785,7 @@ span.date-cal {
   height: 48px;
   border-radius: 100%;
   margin-right: 50px;
+  object-fit: cover;
 }
 
 .act-user-content-wrap .user-thumb-name span {

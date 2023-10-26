@@ -21,7 +21,8 @@ const signUpPersonalAccountSchema = yup.object().shape({
   personal_id: yup
     .string()
     .matches(/^\S*$/, "Space is not allowed")
-    .max(100, "Maximum limit exceeded")
+    .max(100, "Maximum limit is 100 characters")
+    // .max(100, "Maximum limit exceeded")
     .required("Please enter personal id"),
   email: emailSchema,
   address: addressSchema,
@@ -118,7 +119,8 @@ const editProfilePersonalUserSchema = yup.object().shape({
     .string()
     .required("Please enter personal id")
     .matches(/^\S*$/, "Space is not allowed")
-    .max(100, "Maximum limit is exceeded"),
+    // .max(100, "Maximum limit is exceeded")
+    .max(100, "Maximum limit is 100 characters"),
   user_type: yup.string().required(),
   email: emailSchema,
   address: addressSchema,

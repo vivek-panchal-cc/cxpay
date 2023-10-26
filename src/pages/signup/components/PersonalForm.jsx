@@ -100,9 +100,11 @@ function PersonalForm(props) {
                 fallbackSrc="/assets/images/Personal.png"
                 classNameInput="d-none"
               />
-              {!formik.values.profile_image ? (
-                <p className="red text-center">Note: Allowed formats are JPEG, PNG, JPG</p>
-              ) : null}
+              {/* {!formik.values.profile_image ? ( */}
+              <p className="red text-center">
+                Note: Allowed formats are JPEG, PNG, JPG
+              </p>
+              {/* ) : null} */}
               <h5 className="text-center">Signup</h5>
               <h4 className="blue-text text-center">
                 Please Enter Your Details
@@ -142,7 +144,7 @@ function PersonalForm(props) {
                     name="country"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.country}                    
+                    value={formik.values.country}
                     disabled
                     // error={formik.touched.country && formik.errors.country}
                   >

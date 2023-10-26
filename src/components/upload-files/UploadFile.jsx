@@ -64,7 +64,7 @@ const UploadFile = (props) => {
                   Upload receipt
                 </label>
               </div>
-              <p className="red">Note: Allowed formats are JPEG, PNG, PDF, JPG</p>
+              {/* <p className="red">Note: Allowed formats are JPEG, PNG, PDF, JPG</p> */}
             </div>
           )}
         </div>
@@ -110,6 +110,9 @@ const UploadFile = (props) => {
               ) : null}
             </ul>
           </div>
+          <p className="red mx-2 text-[#dc3545] font-bold">
+            Note: Allowed formats are JPEG, PNG, PDF, JPG
+          </p>
         </div>
       </div>
       <p className="text-danger ps-2 mt-0 pb-2">{error}</p>
