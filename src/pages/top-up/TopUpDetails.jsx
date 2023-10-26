@@ -18,13 +18,14 @@ import { CURRENCY_SYMBOL } from "constants/all";
 const TopUpDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const customerDetails = location.state?.customerDetails;
+  const customerDetails = location.state?.customerDetails?.data;
   const {
     account_number = "",
     mobile_number = "",
     profile_image = "",
     user_name = "",
-  } = customerDetails?.data || {};
+    national_id = "",
+  } = customerDetails || {};
   const [showTopUpModal, setShowTopUpModal] = useState(false);
   const [modalDetailsData, setModalDetailsData] = useState({});
   const [fundedDetails, setFundedDetails] = useState({ balance: "" });
@@ -118,7 +119,7 @@ const TopUpDetails = () => {
       } else if (!values.reference_id) {
         // If payment type isn't "Cash" and reference_id is empty, set an error
         setErrors({
-          reference_id: "Please enter reference id",
+          reference_id: "Please enter reference id / transaction id",
         });
         return;
       }
@@ -249,6 +250,7 @@ const TopUpDetails = () => {
           profileImg={profile_image}
           profileName={user_name}
           profileNumber={mobile_number}
+          nationalId={national_id}
         />
         <div className="wallet-fund-form-wrap">
           <form onSubmit={formik.handleSubmit}>
@@ -304,7 +306,7 @@ const TopUpDetails = () => {
                     inputMode="text"
                     id="reference_id"
                     className="form-control"
-                    placeholder="Reference Id"
+                    placeholder="Reference Id / Transaction Id"
                     name="reference_id"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
