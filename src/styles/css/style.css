@@ -792,6 +792,17 @@ pointer-events: none;
   border-radius: 40px;
 }
 
+.modal-dialog-reserved-amount {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  box-shadow: none;
+  flex-wrap: wrap;
+  overflow: hidden;
+  border-radius: 40px;
+  min-width: 80%;
+}
+
 .modal-content {
   border-radius: 40px;
   padding: 55px 60px 40px;
@@ -800,6 +811,7 @@ pointer-events: none;
 }
 
 .modal-body h3 {
+  word-break: break-all;
   font-size: 32px;
   line-height: 26px;
   margin: 0;
@@ -2773,6 +2785,7 @@ span.date-cal {
   height: 48px;
   border-radius: 100%;
   margin-right: 50px;
+  object-fit: cover;
 }
 
 .act-user-content-wrap .user-thumb-name span {
@@ -3748,7 +3761,7 @@ margin-bottom:0px;
   font-weight: 500;
   font-size: 16px;
   line-height: 18px;
-  color: #5B5B5B;
+  color: #5b5b5b;
   vertical-align: middle;
 }
 
@@ -7272,7 +7285,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   width: 53% !important;
 }
 
-.tab-buttons{
+.tab-buttons {
   margin-top: 10px;
   width: 100%;
 }
@@ -7318,12 +7331,13 @@ ul.recent-act-lw-main .act-info-wrap-left {
   height: 39px;
   display: flex;
   justify-content: space-between;
-  gap: 15px;  
+  gap: 15px;
   align-items: center;
   margin-bottom: 30px !important;
 }
 
-.btn-recurring-occurrence, .recurring-end-date {
+.btn-recurring-occurrence,
+.recurring-end-date {
   border-radius: 16.95px;
   border: none;
   font-size: 14px;
@@ -7332,7 +7346,8 @@ ul.recent-act-lw-main .act-info-wrap-left {
   outline: none;
 }
 
-.btn-recurring-occurrence:hover, .recurring-end-date:hover {
+.btn-recurring-occurrence:hover,
+.recurring-end-date:hover {
   opacity: 0.8;
 }
 
@@ -7340,7 +7355,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   min-width: 204px;
   height: 39px;
   padding: 8px 23px;
-  background: #0081C5;
+  background: #0081c5;
   color: white;
 }
 
@@ -7348,27 +7363,27 @@ ul.recent-act-lw-main .act-info-wrap-left {
   min-width: 138px;
   height: 39px;
   padding: 8px 19px;
-  background: #FFFFFF;
-  color: #0081C5;
-  border: 0.85px solid #0081C5;
+  background: #ffffff;
+  color: #0081c5;
+  border: 0.85px solid #0081c5;
 }
 
 .btn-recurring-occurrence-active {
-  background: #0081C5;
+  background: #0081c5;
   color: white;
 }
 
 .recurring-end-date-active {
-  background: #0081C5;
+  background: #0081c5;
   color: white;
 }
 
 .main-wrapper {
   width: 169px;
   height: 40px;
-  border-radius: 12px;  
-  border: 1px solid #0081C5;
-  box-shadow: 0px 3.76px 15.69px 0px #251F3033;
+  border-radius: 12px;
+  border: 1px solid #0081c5;
+  box-shadow: 0px 3.76px 15.69px 0px #251f3033;
   display: flex; /* To align the children horizontally */
   align-items: center; /* To center them vertically */
   justify-content: space-between; /* To spread the items equally */
@@ -7379,11 +7394,11 @@ ul.recent-act-lw-main .act-info-wrap-left {
 .number-label {
   width: 12px;
   height: 26px;
-  font-family: 'Comfortaa', sans-serif;
+  font-family: "Comfortaa", sans-serif;
   font-size: 20px;
   font-weight: 500;
-  line-height: 26px;  
-  color: #363853; 
+  line-height: 26px;
+  color: #363853;
   text-align: center; /* Center the number */
 }
 
@@ -7391,14 +7406,14 @@ ul.recent-act-lw-main .act-info-wrap-left {
   width: 28px;
   height: 28px;
   border-radius: 10px;
-  background: #F2F2F2; /* Default is for '-' */
+  background: #f2f2f2; /* Default is for '-' */
   display: flex; /* To center the button */
-  align-items: center; 
+  align-items: center;
   justify-content: center;
 }
 
 .button-wrapper.plus {
-  background: #24BEEF;
+  background: #24beef;
 }
 
 .button-wrapper button {
@@ -7409,21 +7424,21 @@ ul.recent-act-lw-main .act-info-wrap-left {
   outline: none;
 }
 
-.date-filter-calendar-recurring {  
+.date-filter-calendar-recurring {
   position: relative;
   overflow: hidden;
   height: 60px;
   border-radius: 18px;
-  border: 1px solid #0081C5;  
+  border: 1px solid #0081c5;
   box-shadow: 0px 3.7662px 15.6926px 0px rgba(37, 31, 48, 0.2);
 }
 
-.form-control-recurring {  
-  font-family: 'Comfortaa', sans-serif;
+.form-control-recurring {
+  font-family: "Comfortaa", sans-serif;
   font-size: 14px;
-  font-weight: 500;  
+  font-weight: 500;
   letter-spacing: 0;
-  text-align: left;  
+  text-align: left;
   color: #000;
   border: none;
   outline: none;
@@ -7442,15 +7457,15 @@ ul.recent-act-lw-main .act-info-wrap-left {
 }
 
 .btn-active {
-  background: #0081C5;
+  background: #0081c5;
   color: white;
   border-radius: 50px !important;
 }
 
 .btn-inactive {
-  background: #F2F2F2;
-  color: #0081C5;
-  border: 0.85px solid #0081C5;
+  background: #f2f2f2;
+  color: #0081c5;
+  border: 0.85px solid #0081c5;
   border-radius: 50px !important;
 }
 
@@ -7458,7 +7473,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   display: flex;
   width: 100%;
   /* justify-content: space-between; */
-  background-color: #24BEEF1A;
+  background-color: #24beef1a;
   padding: 20px;
   border-radius: 17px;
   margin-top: 15px;
@@ -7468,11 +7483,11 @@ ul.recent-act-lw-main .act-info-wrap-left {
   flex-basis: 25%;
 }
 .RecurringScheduleDateWrap > div:nth-child(2),
-.RecurringScheduleDateWrap > div:nth-child(3){
+.RecurringScheduleDateWrap > div:nth-child(3) {
   flex-basis: 37.5%;
   justify-content: center;
 }
-.RecurringScheduleDateWrap>div {
+.RecurringScheduleDateWrap > div {
   display: flex;
   flex-wrap: wrap;
 }
@@ -7497,17 +7512,17 @@ ul.recent-act-lw-main .act-info-wrap-left {
   padding-right: 15px;
 }
 
-.rs_cm_div .rssvg_wrap+div {
+.rs_cm_div .rssvg_wrap + div {
   width: calc(100% - 55px);
 }
 
-.RecurringScheduleDateWrap>div:not(:last-child) {
+.RecurringScheduleDateWrap > div:not(:last-child) {
   margin-right: 0px;
 }
 
 .divider_date {
   height: 1px;
-  bordeR: 1px dashed #4ECAF2;
+  border: 1px dashed #4ecaf2;
   width: 135px;
   margin-left: 15px;
   margin-right: 15px;
@@ -7547,10 +7562,10 @@ ul.recent-act-lw-main .act-info-wrap-left {
 }
 
 .rc-refund-main-inner .rcr-innner-wrap-1 {
-    padding-bottom: 0px;
+  padding-bottom: 0px;
 }
 
-.rcr-img-wrap img{
+.rcr-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -7580,7 +7595,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   color: var(--dark_blue);
 }
 
-.rc-refund-all-wrap{
+.rc-refund-all-wrap {
   display: flex;
 }
 
@@ -7614,7 +7629,8 @@ ul.recent-act-lw-main .act-info-wrap-left {
   margin-left: 5%;
   width: 40%;
   border-radius: 24px;
-  background-color: #24BEEF1A;
+  /* background-color: #24beef1a; */
+  background-color: #F3F3F3;
   max-height: 420px;
   overflow-y: auto;
 }
@@ -7634,10 +7650,10 @@ ul.recent-act-lw-main .act-info-wrap-left {
   padding: 35px 25px;
 }
 
-.rc-refund-group-wrap {  
+.rc-refund-group-wrap {
   margin-top: 15px;
   max-width: 1000px;
-  width: 55%;  
+  width: 55%;
 }
 .rc-refund-group-wrap .pattern-wrap {
   background-repeat: repeat-x;
@@ -7695,7 +7711,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   font-family: "Quicksand", sans-serif;
 }
 
-.freq-date-header{
+.freq-date-header {
   font-family: "Quicksand", sans-serif;
   color: var(--dark_blue);
   line-height: 20px;
@@ -7704,7 +7720,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   margin-bottom: 20px;
 }
 
-.rcr-group-label{
+.rcr-group-label {
   font-family: "Quicksand", sans-serif;
   color: var(--dark_blue);
   font-size: 16px;
@@ -7720,9 +7736,10 @@ ul.recent-act-lw-main .act-info-wrap-left {
 .section-recurring-dates .rcr-transition-info-1 table td:first-child {
   width: calc(100% - 89px);
 }
-.section-recurring-dates .rcr-transition-info-1 table td:last-child{
+.section-recurring-dates .rcr-transition-info-1 table td:last-child {
   width: 20% !important;
-  border: 8px solid #eaf9fe;
+  /* border: 8px solid #eaf9fe; */
+  border: 8px solid #F3F3F3;
 }
 
 .rc-refund-main-inner.section-recurring-dates > .d-flex > div {
@@ -7734,14 +7751,14 @@ ul.recent-act-lw-main .act-info-wrap-left {
 }
 
 .w-50-md.rcr-transition-info.rcr-transition-info-1 {
-    width: 100% !important;
+  width: 100% !important;
 }
 
 .w-50-md.rcr-transition-info.rcr-transition-info-1.first-rec-detail {
-    width: 50% !important;
+  width: 50% !important;
 }
 
-.gl-td-1{
+.gl-td-1 {
   width: 50% !important;
   padding: 10px 0px;
 }
@@ -7752,7 +7769,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   width: 25% !important;
 }
 .rcr-innner-wrap.rcr-table-hover table tbody tr:hover {
-  box-shadow: 0px 0px 9px 1px rgba(0,0,0,0.25);
+  box-shadow: 0px 0px 9px 1px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 }
 .rcr-innner-wrap.rcr-table-hover table tr tr,
@@ -7761,7 +7778,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   /* padding-top: 10px; */
 }
 
-.frequency-buttons{
+.frequency-buttons {
   gap: 10px;
   display: flex;
   margin-bottom: 50px;
@@ -7784,42 +7801,43 @@ ul.recent-act-lw-main .act-info-wrap-left {
 }
 
 .frequency-buttons .btn-freqActive {
-  background: #0081C5;
+  background: #0081c5;
   color: white;
   border-radius: 50px !important;
 }
 
 .frequency-buttons .btn-freqInactive {
-  background: #F2F2F2;
-  color: #0081C5;
-  border: 0.85px solid #0081C5;
+  background: #f2f2f2;
+  color: #0081c5;
+  border: 0.85px solid #0081c5;
   border-radius: 50px !important;
 }
 
-.rec-label-class{
+.rec-label-class {
   font-family: "Visby Round CF", sans-serif;
-  font-style: normal;  
-  font-size: 16px; 
+  font-style: normal;
+  font-size: 16px;
   margin-bottom: 15px;
   color: var(--dark_blue);
 }
 
-.share-options{  
+.share-options {
   display: flex;
   justify-content: center;
   gap: 5px;
-  width: 100%;  
-  max-height: 0;  /* Initially no height */
+  width: 100%;
+  max-height: 0; /* Initially no height */
   overflow: hidden; /* Hide overflow content */
   transform: translateY(-100%); /* Move it up */
   opacity: 0;
-  transition: max-height 0.5s ease-in-out, transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  transition: max-height 0.5s ease-in-out, transform 0.5s ease-in-out,
+    opacity 0.5s ease-in-out;
   pointer-events: none;
 }
 
 .share-options.active {
-  max-height: 50px;  /* Adjust this value to your need */
-  transform: translateY(0);  /* Reset to initial position */
+  max-height: 50px; /* Adjust this value to your need */
+  transform: translateY(0); /* Reset to initial position */
   opacity: 1;
   pointer-events: auto;
 }
@@ -7890,4 +7908,87 @@ ul.recent-act-lw-main .act-info-wrap-left {
 
 .strength-label.secure {
   color: darkgreen;
+}
+
+/* Reserved Modal CSS */
+.rese-modal-wrap .act-info-wrap-left {
+  padding-right: 0px;
+  width: 100%;
+  align-items: center;
+}
+.rese-modal-wrap .act-info-wrap-left:not(:last-child) {
+  margin-bottom: 20px;
+}
+.rese-modal-wrap .act-info-wrap-left .modal-body {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.rese-modal-wrap .act-user-info-wrap {
+  padding-right: 20px;
+}
+.rese-modal-wrap .res-data-wrap {
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 25px;
+}
+.rese-modal-wrap .modal-content {
+  padding: 50px 30px 50px 40px;
+}
+.rese-modal-wrap .act-specification-text > p {
+  padding: 8px 15px !important;
+  font-size: 14px !important;
+  line-height: 16px !important;
+  width: fit-content;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.rese-modal-wrap p.withdraw {
+  background: rgba(0, 129, 197, 0.2);
+  color: rgba(147, 110, 227, 1);
+}
+.rese-modal-wrap p.withdraw:hover {
+  background: rgba(0, 129, 197, 0.2);
+  color: rgba(147, 110, 227, 1);
+}
+.rese-modal-wrap p.schedule_payment {
+  background: rgba(147, 110, 227, 0.2);
+  color: rgba(0, 129, 197, 1);
+}
+.rese-modal-wrap p.schedule_payment:hover {
+  background: rgba(147, 110, 227, 0.2);
+  color: rgba(0, 129, 197, 1);
+}
+.rese-modal-wrap .act-amt-wrap span:first-child {
+  font-size: 16px;
+  line-height: 20px;
+  color: red;
+}
+.rese-modal-wrap .act-amt-wrap span {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+}
+.rese-modal-wrap .act-user-in {
+  padding-left: 20px;
+}
+.rese-modal-wrap .modal-content > h5 {
+  margin-bottom: 25px;
+}
+.rese-modal-wrap .act-specification-text p svg {
+  margin-right: 5px;
+  width: 12px;
+}
+.h3.text-black.fw-bolder.reserved-amount span {
+  color: #0081c5;
+}
+.h3.text-black.fw-bolder.reserved-amount:hover {
+  color: #0081c5;
+  cursor: pointer;
+}
+.rese-modal-wrap .modal-body .act-specification-text {
+  padding-right: 0px !important;
+  width: 45% !important;
+}
+.rese-modal-wrap .modal-body .act-amt-wrap {
+  width: 55% !important;
 }

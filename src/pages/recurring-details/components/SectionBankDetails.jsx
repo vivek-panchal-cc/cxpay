@@ -33,10 +33,10 @@ const SectionBankDetails = (props) => {
                 : "XXXX"}
             </td>
           </tr>
-          <tr>
+          {/* <tr>
             <td>Swift Code</td>
             <td>{swift_code}</td>
-          </tr>
+          </tr> */}
         </tbody>
       </table>
     </div>

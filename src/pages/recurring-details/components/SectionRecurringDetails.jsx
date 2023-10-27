@@ -1,10 +1,9 @@
+import React from "react";
 import WrapAmount from "components/wrapper/WrapAmount";
-import { WithdrawDetailsContext } from "context/withdrawDetailsContext";
 import LoaderDiv from "loaders/LoaderDiv";
-import React, { useContext } from "react";
 
 const SectionRecurringDetails = (props) => {
-  const { isLoading } = useContext(WithdrawDetailsContext);
+  const isLoading = props?.loading;
 
   const tableTr = {
     display: "flex",
@@ -14,7 +13,7 @@ const SectionRecurringDetails = (props) => {
 
   const {
     amount = "",
-    frequency = "",    
+    frequency = "",
     created_date = "",
     fees_total = "",
     no_of_occurrence = "",
@@ -59,7 +58,11 @@ const SectionRecurringDetails = (props) => {
             <tr style={tableTr}>
               <td>Frequency</td>
               <td>
-                {isLoading ? <LoaderDiv height="20" width="50%" /> : frequency.toUpperCase()}
+                {isLoading ? (
+                  <LoaderDiv height="20" width="50%" />
+                ) : (
+                  frequency.toUpperCase()
+                )}
               </td>
             </tr>
           </tbody>

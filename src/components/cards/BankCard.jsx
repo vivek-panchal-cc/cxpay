@@ -5,20 +5,29 @@ import { IconBank } from "styles/svgs";
 function BankCard(props) {
   const { index, defaultText, item, defaultSelected, handleDefaultBank } =
     props;
-  const {
-    id,
-    bank_name,
-    bank_number,
-    routing_number,
-    account_type,
-  } = item;
+  const { id, bank_name, bank_number, routing_number, account_type } = item;
 
   const getCapitalized = (text) => {
     return text.charAt(0).toUpperCase() + text.slice(1);
   };
 
+  const handleBankClick = (e) => {
+    if (
+      e.target.tagName === "INPUT" ||
+      e.target.tagName === "LABEL" ||
+      e.target === document.getElementById(`bnk_acc_${id}_${index}`)
+    ) {
+      // if the click is directly on the radio or the label, we don't want to toggle
+      return;
+    }
+    document.getElementById(`bnk_acc_${id}_${index}`)?.click();
+  };
+
   return (
-    <li className="db-view-bank-div-main db-view-bank-common-div">
+    <li
+      className="db-view-bank-div-main db-view-bank-common-div"
+      onClick={handleBankClick}
+    >
       <div className="bank-logo-name-wrap">
         <div
           className="bank-logo-wrap"

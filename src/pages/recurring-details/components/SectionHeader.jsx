@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import WrapAmount from "components/wrapper/WrapAmount";
-import { WithdrawDetailsContext } from "context/withdrawDetailsContext";
 import LoaderWdrawHeader from "loaders/LoaderWdrawHeader";
 import { withdrawConsts } from "constants/all";
 
 const SectionHeader = (props) => {
-  const { isLoading } = useContext(WithdrawDetailsContext);
+  const isLoading = props?.loading;
 
   const {
     amount = "",

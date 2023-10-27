@@ -67,6 +67,7 @@ export const API_ONBOARD_DELETE_SCHEDULE_PAYMENT = "/delete-schedule-payment";
 export const API_ONBOARD_UPDATE_SCHEDULE_PAYMENT = "/update-schedule-payment";
 export const API_ONBOARD_VIEW_SCHEDULE_PAYMENT = "/view-schedule-payment";
 export const API_ONBOARD_GET_ALL_SYSTEM_OPTIONS = "/get-all-system-options";
+export const API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS = "/mark-all-as-read";
 
 // customer-transaction Urls
 export const API_TRANSACTION_ADD_FUND = "/add-fund";
@@ -114,6 +115,9 @@ export const API_TRANSACTION_UPDATE_RECURRING_PAYMENT = "/update-recurring-sched
 export const API_TRANSACTION_DELETE_RECURRING_PAYMENT = "/delete-recurring-schedule-payment";
 export const API_TRANSACTION_LIST_RECURRING_PAYMENT = "/list-recurring-schedule-payment";
 export const API_TRANSACTION_VIEW_RECURRING_PAYMENT = "/view-recurring-schedule-payment";
+
+//Reserved Amount
+export const API_RESERVED_AMOUNT_LIST = "/reserved-amount-list";
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =

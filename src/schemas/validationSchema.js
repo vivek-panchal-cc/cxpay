@@ -22,7 +22,9 @@ const signUpPersonalAccountSchema = yup.object().shape({
   personal_id: yup
     .string()
     .matches(/^\S*$/, "Space is not allowed")
-    .max(100, "Maximum limit exceeded"),
+    .max(100, "Maximum limit is 100 characters")
+    // .max(100, "Maximum limit exceeded")
+    .required("Please enter personal id"),
   email: emailSchema,
   address: addressSchema,
   password: passwordStrengthSchema,
@@ -80,7 +82,7 @@ const topUpSchema = yup.object().shape({
 
 const recurringSchema = yup.object().shape({
   start_date: yup.date().required("Start date is required").nullable(),
-  select_frequency_id: yup.string().required("Please select frequency"),  
+  select_frequency_id: yup.string().required("Please select frequency"),
 });
 
 const LoginSchema = yup.object().shape({
@@ -116,9 +118,10 @@ const editProfilePersonalUserSchema = yup.object().shape({
   last_name: lastNameSchema.required("Please enter last name"),
   personal_id: yup
     .string()
-    // .required("Please enter personal id")
+    .required("Please enter personal id")
     .matches(/^\S*$/, "Space is not allowed")
-    .max(100, "Maximum limit is exceeded"),
+    // .max(100, "Maximum limit is exceeded")
+    .max(100, "Maximum limit is 100 characters"),
   user_type: yup.string().required(),
   email: emailSchema,
   address: addressSchema,

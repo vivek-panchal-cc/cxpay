@@ -132,11 +132,11 @@ function Businessform(props) {
                 fallbackSrc="/assets/images/Business-account.png"
                 classNameInput="d-none"
               />
-              {!formik.values.profile_image ? (
-                <p className="red text-center">
-                  Note: Allowed formats are JPEG, PNG, JPG
-                </p>
-              ) : null}
+              {/* {!formik.values.profile_image ? ( */}
+              <p className="red text-center">
+                Note: Allowed formats are JPEG, PNG, JPG
+              </p>
+              {/* ) : null} */}
               <h5 className="text-center">Signup</h5>
               <h4 className="blue-text text-center">
                 Please Enter Business Details

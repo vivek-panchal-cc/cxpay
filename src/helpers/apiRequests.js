@@ -73,6 +73,7 @@ const API_deleteSchedulePayment = apiUrl.API_ONBOARD_DELETE_SCHEDULE_PAYMENT;
 const API_updateSchedulePayment = apiUrl.API_ONBOARD_UPDATE_SCHEDULE_PAYMENT;
 const API_viewSchedulePayment = apiUrl.API_ONBOARD_VIEW_SCHEDULE_PAYMENT;
 const API_getAllSystemOptions = apiUrl.API_ONBOARD_GET_ALL_SYSTEM_OPTIONS;
+const API_markAllAsReadNotifications = apiUrl.API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS;
 
 // TRANSACTION SERVICES
 const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
@@ -126,6 +127,9 @@ const API_deleteRecurringPayment =
   apiUrl.API_TRANSACTION_DELETE_RECURRING_PAYMENT;
 const API_listRecurringPayment = apiUrl.API_TRANSACTION_LIST_RECURRING_PAYMENT;
 const API_viewRecurringPayment = apiUrl.API_TRANSACTION_VIEW_RECURRING_PAYMENT;
+
+//Reserved Amount
+const API_listReservedAmount = apiUrl.API_RESERVED_AMOUNT_LIST;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -621,6 +625,15 @@ export const viewRecurringPayment = (params) => {
 };
 // End of recurring
 
+//Reserved Amount
+/** POST @reserved-amount-list
+ * @params auth_token, user_timezone, from_date, to_date
+ */
+ export const listReservedAmount = (params) => {
+  return axiosTransactionInstance.post(`${API_listReservedAmount}`, params);
+};
+//End of Reserved Amount
+
 /** POST @get-activity-details
  * @params auth_token
  */
@@ -830,6 +843,13 @@ export const getAllSystemOptions = () => {
   return axiosOnboardInstance.post(`${API_getAllSystemOptions}`);
 };
 
+/** POST @get-all-system-options
+ * @params
+ */
+export const markAllAsReadNotifications = () => {
+  return axiosOnboardInstance.post(`${API_markAllAsReadNotifications}`);
+};
+
 // Add fund with Cybersource, APIs ------------------------------------------------------------------------------------------
 
 /** POST @add-fund-with-card
@@ -941,6 +961,7 @@ export const apiRequest = {
   cardTransactionsList,
   cardTransactionsDetails,
   getAllSystemOptions,
+  markAllAsReadNotifications,
   // cybersource add-fund
   addFundWithCard,
   checkEnrollment,
@@ -950,4 +971,5 @@ export const apiRequest = {
   listRecurringPayment,
   deleteRecurringPayment,
   viewRecurringPayment,
+  listReservedAmount,
 };

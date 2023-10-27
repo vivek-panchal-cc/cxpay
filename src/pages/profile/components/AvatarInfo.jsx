@@ -1,9 +1,16 @@
 import Image from "components/ui/Image";
 import React from "react";
+import { IconMobile, IconPersonalId } from "styles/svgs";
 
 const AvatarInfo = (props) => {
-  const { profileImg, profileName, profileEmail, profileType, profileNumber } =
-    props;
+  const {
+    profileImg,
+    profileName,
+    profileEmail,
+    profileType,
+    profileNumber,
+    nationalId,
+  } = props;
 
   return (
     <div className="profile-top-sec">
@@ -26,10 +33,27 @@ const AvatarInfo = (props) => {
       </div>
       <div className="profile-info">
         <h3>{profileName}</h3>
-        <p>
-          <a href={`mailto:${profileEmail}`}>{profileEmail}</a>{" "}
-          {profileNumber && <span>+{profileNumber}</span>}
+        <p className="mb-0">
+          {/* <a href={`mailto:${profileEmail}`}>{profileEmail}</a>&nbsp; */}
+          {profileEmail && (
+            <>
+              <a href={`mailto:${profileEmail}`}>{profileEmail}</a>
+              &nbsp;
+            </>
+          )}
+          {profileNumber && (
+            <span>
+              <IconMobile />
+              &nbsp;+{profileNumber}
+            </span>
+          )}
         </p>
+        {nationalId && (
+          <p>
+            <IconPersonalId />
+            &nbsp;{nationalId}
+          </p>
+        )}
       </div>
     </div>
   );

@@ -121,6 +121,9 @@ function PersonalForm(props) {
                       ? "Change Profile Picture"
                       : "Select Profile Picture"}
                   </label>
+                  <p className="red">
+                    Note: Allowed formats are JPEG, PNG, JPG
+                  </p>
                 </p>
                 <p className="text-danger">{formik.errors.profile_image}</p>
               </div>

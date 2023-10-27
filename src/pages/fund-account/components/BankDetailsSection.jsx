@@ -63,10 +63,10 @@ const BankDetailsSection = (props) => {
               <td>Account Number : </td>
               <td>{loading ? showLoader() : bank_account_number}</td>
             </tr>
-            <tr>
+            {/* <tr>
               <td>Swift Code : </td>
               <td>{loading ? showLoader() : swift_code}</td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>

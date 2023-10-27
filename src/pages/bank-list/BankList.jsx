@@ -34,11 +34,12 @@ const BankList = () => {
   };
 
   // Getting confirmation before deleting bank
-  const handleOpenConfirmModal = (id) => {
+  const handleOpenConfirmModal = (id, event) => {
+    event.stopPropagation();
     setPopupError("");
     setSelectedBank(id);
     setShow(true);
-  };
+  };  
 
   // For Deleting bank after confirmation
   const handleDeleteBank = async () => {
@@ -85,6 +86,21 @@ const BankList = () => {
     }
   };
 
+  const handleListItemClick = (e, bankId, idx) => {
+    e.preventDefault();
+  
+    const element = document.getElementById(`bnk_acc_${bankId}_${idx}`);
+    
+    if(!element) {
+      console.error(`Element with ID bnk_acc_${bankId}_${idx} not found.`);
+      return;
+    }
+    
+    if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') {
+      element.click();
+    }
+  };
+
   return (
     <div className="">
       <div className="title-content-wrap send-pay-title-sec title-common-sec">
@@ -108,6 +124,7 @@ const BankList = () => {
                 <li
                   key={"list" + elm?.bank_number}
                   className="db-view-bank-div-main db-view-bank-common-div"
+                  onClick={(e) => handleListItemClick(e, elm.id, i)}
                 >
                   <div className="bank-logo-name-wrap">
                     <div
@@ -149,7 +166,7 @@ const BankList = () => {
                   </button> */}
                   <div
                     className="bank-del-wrap"
-                    onClick={() => handleOpenConfirmModal(elm.id)}
+                    onClick={(e) => handleOpenConfirmModal(elm.id, e)}
                   >
                     <IconCross style={{ stroke: "#9B9B9B" }} />
                   </div>

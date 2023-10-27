@@ -1443,7 +1443,6 @@
   .rcr-card-data {
     width: calc(100% - 0px);
   }
-
 }
 @media only screen and (max-width: 1366px) and (min-width: 992px) {
   .business-info-right-sec {
@@ -1500,6 +1499,12 @@
   }
   ul.recent-act-lw-main .act-amt-status-wrap > div {
     width: 50%;
+  }
+  .rese-modal-wrap .res-data-wrap {
+    padding-right: 20px;
+  }
+  .rese-modal-wrap .modal-body .act-specification-text > p {
+    font-size: 12px !important;
   }
 }
 @media only screen and (max-width: 1199px) and (min-width: 992px) {
@@ -1564,6 +1569,18 @@
   .req-user-name > .req-details-text {
     font-size: 12px;
     line-height: 20px;
+  }
+  .rese-modal-wrap > div {
+    width: 90% !important;
+  }
+  .rese-modal-wrap .act-specification-text.p-0 {
+    width: 27% !important;
+  }
+  .rese-modal-wrap .act-info-wrap-left .modal-body {
+    width: 45% !important;
+  }
+  .rese-modal-wrap .act-specification-text > p {
+    font-size: 12px !important;
   }
 }
 
@@ -1916,6 +1933,43 @@
     padding-top: 35px;
     padding-bottom: 35px;
   }
+  /* Re. popup style */
+  .rese-modal-wrap .modal-content {
+    padding: 40px 25px 40px 25px !important;
+  }
+
+  .rese-modal-wrap > div {
+    width: 95% !important;
+  }
+
+  .rese-modal-wrap .act-info-wrap-left > div {
+    width: 33.33% !important;
+  }
+  .rese-modal-wrap .modal-body {
+    flex-wrap: wrap;
+  }
+
+  .rese-modal-wrap .modal-body > div {
+    width: 100% !important;
+  }
+
+  .rese-modal-wrap .modal-body .act-specification-text {
+    padding-right: 0px;
+    text-align: right !important;
+    margin-left: auto !important;
+    margin-right: 0px !important;
+    margin-top: 10px;
+  }
+
+  .rese-modal-wrap .modal-body .act-specification-text p {
+    margin-left: auto !important;
+    margin-right: 0px !important;
+    text-align: right !important;
+    width: fit-content;
+  }
+  .rese-modal-wrap .act-specification-text > p {
+    font-size: 13px !important;
+  }
 }
 @media only screen and (max-width: 991px) and (min-width: 820px) {
   .profile-inner-sec .profile-left-content,
@@ -2080,6 +2134,15 @@
   .wr-form-wrap .btns-inline .btn-wrap:last-child .btn,
   .wr-card-form-wrap .btns-inline .btn-wrap:last-child .btn {
     width: 100%;
+  }
+  .rese-modal-wrap .act-info-wrap-left .modal-body {
+    width: 46%;
+  }
+  .rese-modal-wrap .act-user-info-wrap {
+    width: 30%;
+  }
+  .rese-modal-wrap .act-specification-text.p-0 {
+    width: 24% !important;
   }
 }
 @media only screen and (max-width: 991px) {
@@ -3057,8 +3120,16 @@
   .rc-refund-main-inner .rcr-innner-wrap-1 {
     padding-bottom: 20px;
   }
+  .rese-modal-wrap .act-info-wrap-left .modal-body > div {
+    width: 100% !important;
+  }
 }
 
+@media only screen and (min-width: 768px) {
+  .rese-modal-wrap .act-amt-wrap.mobile-amt {
+    display: none;
+  }
+}
 @media only screen and (max-width: 767px) {
   .logo-content-wrap h4 {
     font-size: 23px;
@@ -4138,6 +4209,62 @@
   .user-details-modal .modal-body {
     padding: 60px 30px 40px;
   }
+  .res-data-wrap .act-specification-text {
+    display: block;
+  }
+  .res-data-wrap {
+    padding-right: 0px !important;
+  }
+
+  .res-data-wrap .act-amt-wrap.mobile-amt {
+    padding-left: 0px;
+    margin-top: 10px;
+  }
+
+  .res-data-wrap .act-specification-text {
+    width: 100%;
+    display: block;
+    padding: 0px !important;
+    margin-top: 10px;
+  }
+
+  .res-data-wrap .act-specification-text.p-0 p {
+    padding: 0px !important;
+  }
+
+  .res-data-wrap .modal-body > div {
+    width: 100%;
+  }
+  .res-data-wrap .modal-body > div {
+    width: 100%;
+  }
+  .res-data-wrap .modal-body > div p {
+    margin-left: 0px !important;
+    text-align: left;
+  }
+
+  .res-data-wrap .modal-body {
+    justify-content: start;
+  }
+
+  .rese-modal-wrap > div {
+    width: 90% !important;
+  }
+
+  .rese-modal-wrap .modal-content {
+    padding: 35px 25px !important;
+  }
+
+  .rese-modal-wrap .act-user-in {
+    padding-left: 12px !important;
+  }
+  .rese-modal-wrap .act-info-wrap-left > div {
+    width: 100% !important;
+    text-align: left !important;
+  }
+  .rese-modal-wrap .act-info-wrap-left {
+    flex-wrap: wrap;
+  }
 }
 @media only screen and (max-width: 640px) {
   .crop_container {
@@ -4605,7 +4732,7 @@
     padding: 20px 20px 0px;
   }
   .frequency-buttons .btn {
-    min-width :100%;
+    min-width: 100%;
   }
   .recurring-occurrence {
     width: 100%;
@@ -4613,7 +4740,7 @@
     margin-bottom: 90px !important;
   }
   .recurring-occurrence .btn {
-    min-width :100%;
+    min-width: 100%;
     max-width: 100%;
     width: 100%;
   }
@@ -4632,9 +4759,9 @@
     width: 100%;
   }
   .RecurringScheduleDateWrap > div:nth-child(2),
-  .RecurringScheduleDateWrap > div:nth-child(3){
-  flex-basis: 37.5%;
-  justify-content: flex-start;  
+  .RecurringScheduleDateWrap > div:nth-child(3) {
+    flex-basis: 37.5%;
+    justify-content: flex-start;
   }
   .act-user-content-wrap .user-thumb-name {
     min-width: 140px;
@@ -4837,7 +4964,7 @@
     font-size: 12px;
     line-height: 16px;
   }
-  .gl-td-1{
+  .gl-td-1 {
     width: 40% !important;
     padding: 10px 0px;
   }
@@ -4873,6 +5000,9 @@
   }
   .fund-account-form .payment-footer-block.p-4 {
     padding: 23px 17px;
+  }
+  .rese-modal-wrap .act-amt-wrap span:first-child {
+    font-size: 15px;
   }
 }
 @media only screen and (min-width: 768px) {
@@ -4981,6 +5111,10 @@
   .RSOccurances.rs_cm_div {
     margin-bottom: 10px;
   }
+
+  .res-data-wrap .act-amt-wrap.desk-amt {
+    display: none;
+  }
 }
 .responsive-table-wrapper {
   overflow-x: auto;
@@ -5008,23 +5142,23 @@
     font-size: 12px !important;
     line-height: 16px !important;
   }
-  
+
   .act-user-in {
     padding-left: 0px !important;
   }
 
-.agent-recent-activity-list-table img {
+  .agent-recent-activity-list-table img {
     width: 75%;
     height: 75%;
+  }
 }
+@media screen and (max-width: 560px) {
+  th.topup-table-header {
+    font-size: 10px;
+    line-height: 15px;
+  }
 }
-@media screen and (max-width: 560px){
-th.topup-table-header {
-  font-size: 10px;
-  line-height: 15px;
-}
-}
-@media(max-width: 991px){
+@media (max-width: 991px) {
   .rc-refund-all-wrap {
     flex-wrap: wrap;
   }
@@ -5033,6 +5167,6 @@ th.topup-table-header {
     margin: 20px 0 0;
   }
   .rc-refund-all-wrap .rc-refund-main-wrap {
-      width: 100%;
+    width: 100%;
   }
 }

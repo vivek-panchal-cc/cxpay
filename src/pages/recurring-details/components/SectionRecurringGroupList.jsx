@@ -1,7 +1,9 @@
 import WrapAmount from "components/wrapper/WrapAmount";
+import LoaderDiv from "loaders/LoaderDiv";
 import React from "react";
 
 const SectionRecurringGroupList = (props) => {
+  const isLoading = props?.loading;
   const tableTh = {
     padding: "0px 10px",
   };
@@ -21,22 +23,36 @@ const SectionRecurringGroupList = (props) => {
             </tr>
           </thead>
           <tbody className="group-member-box-shadow">
-            {payload
-              ?.filter(
-                (dateEntry) =>
-                  dateEntry.member_name ||
-                  dateEntry.specification ||
-                  dateEntry.amount
-              )
-              ?.map((dateEntry, index) => (
-                <tr key={index}>
-                  <td className="gl-td-1">{dateEntry.member_name}</td>
-                  <td className="gl-td-2">{dateEntry.specification}</td>
-                  <td className="gl-td-3">
-                    <WrapAmount value={dateEntry.amount} />
-                  </td>
-                </tr>
-              ))}
+            {isLoading
+              ? [1, 2, 3, 4, 5]?.map((item) => (
+                  <tr key={item}>
+                    <td className="gl-td-1">
+                      <LoaderDiv height="20" width="70%" />
+                    </td>
+                    <td className="gl-td-2">
+                      <LoaderDiv height="20" width="70%" />
+                    </td>
+                    <td className="gl-td-3">
+                      <LoaderDiv height="20" width="70%" />
+                    </td>
+                  </tr>
+                ))
+              : payload
+                  ?.filter(
+                    (dateEntry) =>
+                      dateEntry.member_name ||
+                      dateEntry.specification ||
+                      dateEntry.amount
+                  )
+                  ?.map((dateEntry, index) => (
+                    <tr key={index}>
+                      <td className="gl-td-1">{dateEntry.member_name}</td>
+                      <td className="gl-td-2">{dateEntry.specification}</td>
+                      <td className="gl-td-3">
+                        <WrapAmount value={dateEntry.amount} />
+                      </td>
+                    </tr>
+                  ))}
           </tbody>
         </table>
       </div>
