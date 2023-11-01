@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { apiRequest } from "helpers/apiRequests";
 
-const useContacts = ({ page = 1, search = "" }) => {
+const useContacts = ({ page = 1, search = "", user_type = "" }) => {
   const [loading, setLoading] = useState(false);
   const [listContacts, setListContacts] = useState([]);
   const [pagination, setPagination] = useState({});
@@ -12,10 +12,10 @@ const useContacts = ({ page = 1, search = "" }) => {
   };
 
   // For getting contacts list
-  const retrieveContacts = async (page = 1, search = "") => {
+  const retrieveContacts = async (page = 1, search = "", user_type = "") => {
     setLoading(true);
     try {
-      const { data } = await apiRequest.contactsList({ page, search });
+      const { data } = await apiRequest.contactsList({ page, search, user_type });
       if (!data.success) throw data.message;
       const { contacts = [], pagination } = data.data || {};
       setPagination(pagination);
@@ -33,14 +33,14 @@ const useContacts = ({ page = 1, search = "" }) => {
 
   useEffect(() => {
     if (search === "") {
-      retrieveContacts(page, search);
+      retrieveContacts(page, search, user_type);
       return;
-    }
+    }    
     const timeOut = setTimeout(() => {
-      retrieveContacts(page, search);
+      retrieveContacts(page, search, user_type);
     }, 1000);
     return () => clearTimeout(timeOut);
-  }, [page, search.trim(), reloadFlag]);
+  }, [page, search.trim(), user_type.trim(), reloadFlag]);
 
   return [loading, pagination, listContacts, setListContacts, reload];
 };

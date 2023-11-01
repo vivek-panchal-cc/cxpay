@@ -19,6 +19,7 @@ import LoaderActivityDetail from "loaders/LoaderActivityDetail";
 import LoaderActivityProfile from "loaders/LoaderActivityProfile";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { formatDate } from "helpers/commonHelpers";
+import { IconCloseModal } from "styles/svgs";
 
 const ModalActivityDetail = (props) => {
   const {
@@ -152,6 +153,15 @@ const ModalActivityDetail = (props) => {
           <div className="modal-content">
             <div className="modal-header">
               <div className="user-profile-div bg-white">
+                <IconCloseModal
+                  style={{
+                    position: "absolute",
+                    top: "100px",
+                    right: "30px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setShow(false)}
+                />{" "}
                 {loading ? (
                   <LoaderActivityProfile />
                 ) : (
@@ -236,14 +246,14 @@ const ModalActivityDetail = (props) => {
                   </table>
                   <div className="d-flex gap-3 justify-content-center">
                     {getActivityActions()}
-                    <button
+                    {/* <button
                       type="button"
                       className="btn close-btn"
                       style={{ minWidth: "200px" }}
                       onClick={() => setShow(false)}
                     >
                       Close
-                    </button>
+                    </button> */}
                   </div>
                 </>
               )}

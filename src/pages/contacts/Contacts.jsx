@@ -14,6 +14,7 @@ import LoaderContact from "loaders/LoaderContact";
 import useContacts from "hooks/useContacts";
 import ContactDetail from "./components/ContactDetail";
 import InvitationSent from "./components/InvitationSent";
+import InputSelectSearch from "components/ui/InputSelectSearch";
 
 const Contacts = () => {
   const {
@@ -37,6 +38,7 @@ const Contacts = () => {
 
   // Contacts and it's pagination
   const [search, setSearch] = useState("");
+  const [userType, setUserType] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [
     isLoadingConts,
@@ -47,11 +49,17 @@ const Contacts = () => {
   ] = useContacts({
     page: currentPage,
     search: search,
+    user_type: userType,
   });
 
   const handleSearchContact = (elm) => {
     setCurrentPage(1);
     setSearch(elm.target.value);
+  };
+
+  const handleUserType = (elm) => {
+    setCurrentPage(1);
+    setUserType(elm.target.value);
   };
 
   const handlePopupInvite = (e) => {
@@ -135,6 +143,18 @@ const Contacts = () => {
                   <IconSearch />
                 </div>
               </div>
+            </div>
+            <div className="contact-customer-type">
+              <InputSelectSearch
+                className="anchor"
+                name="user_type_id"
+                onChange={handleUserType}
+              >
+                <option value="">User Type</option>
+                <option value="business">Business</option>
+                <option value="personal">Personal</option>
+                <option value="agent">Agent</option>
+              </InputSelectSearch>
             </div>
             <div className="contact-top-btn-nav">
               <div className="con-btn-wrap con-add-btn-wrap">
