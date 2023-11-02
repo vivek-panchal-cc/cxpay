@@ -14,6 +14,9 @@ const ContactsItem = (props) => {
   const { handleSendContacts, handleSendRequest } =
     useContext(SendPaymentContext);
 
+  const userType =
+    contact?.user_type?.charAt(0).toUpperCase() + contact?.user_type?.slice(1);
+
   return (
     <li>
       <label
@@ -54,6 +57,9 @@ const ContactsItem = (props) => {
         className={`${contact?.name ? "con-listing-mail" : "invited-con-mail"}`}
       >
         <p>{contact?.email}</p>
+      </div>
+      <div className="con-listing-phone">
+        <p>{userType}</p>
       </div>
       <div className="cont-listing-last-wrap">
         <div className="con-listing-edit-wrap">

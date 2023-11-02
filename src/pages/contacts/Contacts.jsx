@@ -145,9 +145,17 @@ const Contacts = () => {
               </div>
             </div>
             <div className="contact-customer-type">
+              <div
+                className="clearsearchbox"
+                style={{ opacity: userType ? 1 : 0 }}
+                onClick={() => setUserType("")}
+              >
+                <IconCross />
+              </div>
               <InputSelectSearch
                 className="anchor"
                 name="user_type_id"
+                value={userType}
                 onChange={handleUserType}
               >
                 <option value="">User Type</option>

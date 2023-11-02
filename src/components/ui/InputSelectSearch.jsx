@@ -2,6 +2,10 @@ import React from "react";
 
 function InputSelectSearch(props) {
   const { labelname, disabled } = props;
+
+  const shouldGrayOut = props.value === "" || props.value === "User Type";
+  const selectClassName = `${props.className} ${disabled ? "cursor-not-allowed" : ""} ${shouldGrayOut ? "grayed-out" : ""}`;
+
   return (
     <div className={`d-flex flex-column form-field`}>
       {labelname ? (
@@ -11,7 +15,7 @@ function InputSelectSearch(props) {
       ) : null}
       <select
         {...props}
-        className={`${props.className} ${disabled ? "cursor-not-allowed" : ""}`}
+        className={selectClassName}
       ></select>      
     </div>
   );
