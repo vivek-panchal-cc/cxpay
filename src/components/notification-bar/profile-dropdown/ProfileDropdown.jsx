@@ -51,7 +51,9 @@ const ProfileDropdown = () => {
                   ? "/assets/images/Business-account.png"
                   : profile?.user_type === "personal"
                   ? "/assets/images/Personal.png"
-                  : "/assets/images/Agent-account.png"
+                  : profile?.user_type === "agent"
+                  ? "/assets/images/Agent-account.png"
+                  : "/assets/images/single_contact_profile.png"
               }
               className="h-100 w-100 object-fit-cover"
               style={{ objectPosition: "center" }}
