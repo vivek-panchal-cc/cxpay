@@ -161,7 +161,7 @@ const Contacts = () => {
                 <option value="">User Type</option>
                 <option value="business">Business</option>
                 <option value="personal">Personal</option>
-                <option value="agent">Agent</option>
+                {/* <option value="agent">Agent</option> */}
               </InputSelectSearch>
             </div>
             <div className="contact-top-btn-nav">
