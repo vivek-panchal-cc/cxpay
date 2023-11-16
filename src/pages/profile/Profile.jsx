@@ -9,6 +9,7 @@ import { LoaderContext } from "context/loaderContext";
 import {
   fetchDeactivateAccount,
   fetchDeactivateAccountForAgent,
+  fetchUserProfile,
 } from "features/user/userProfileSlice";
 
 const Profile = () => {
@@ -21,7 +22,7 @@ const Profile = () => {
     last_name = "",
     company_name = "",
     mobile_number,
-    is_delete_request
+    is_delete_request,
   } = profile || {};
   const profileName =
     user_type === "personal" || user_type === "agent"
@@ -45,12 +46,21 @@ const Profile = () => {
         );
       } else {
         await dispatch(fetchDeactivateAccountForAgent());
+        await dispatch(fetchUserProfile());
       }
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
       setShowConfirmPopup(false);
+    }
+  };
+
+  const getSubHeading = () => {
+    if (user_type === "agent") {
+      return "Your request for account deletion has been submitted to the admin department. It will be done in the next 2-3 working days.";
+    } else {
+      return "Are you sure you want to delete your account? This will permanently erase all your details.";
     }
   };
 
@@ -61,7 +71,8 @@ const Profile = () => {
         show={showConfirmPopup}
         setShow={setShowConfirmPopup}
         heading="Delete Account"
-        subHeading="Are you sure you want to delete your account? This will permanently erase all your details."
+        // subHeading="Are you sure you want to delete your account? This will permanently erase all your details."
+        subHeading={getSubHeading()}
         handleCallback={handleDeleteAccount}
       ></ModalConfirmation>
 
