@@ -158,7 +158,7 @@ const Contacts = () => {
                 value={userType}
                 onChange={handleUserType}
               >
-                <option value="">User Type</option>
+                <option value="">Account Type</option>
                 <option value="business">Business</option>
                 <option value="personal">Personal</option>
                 {/* <option value="agent">Agent</option> */}

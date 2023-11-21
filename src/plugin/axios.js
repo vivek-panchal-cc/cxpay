@@ -18,6 +18,11 @@ const axiosTransactionInstance = axios.create({
     process.env.REACT_APP_API_CUSTOMER_TRANSACTION ||
     "http://3.140.192.108:8083",
 });
+const axiosAdminInstance = axios.create({
+  baseURL:
+    process.env.REACT_APP_API_CUSTOMER_ADMIN ||
+    "http://3.140.192.108:8084",
+});
 
 // Define inteceptors
 const requestInterceptor = (config) => {
@@ -74,4 +79,10 @@ axiosTransactionInstance.interceptors.response.use(
   responseErrorInterceptor
 );
 
-export { axiosLoginInstance, axiosOnboardInstance, axiosTransactionInstance };
+axiosAdminInstance.interceptors.request.use(requestInterceptor);
+axiosAdminInstance.interceptors.response.use(
+  responseInterceptor,
+  responseErrorInterceptor
+);
+
+export { axiosLoginInstance, axiosOnboardInstance, axiosTransactionInstance, axiosAdminInstance };

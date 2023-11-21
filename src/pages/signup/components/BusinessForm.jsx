@@ -41,6 +41,7 @@ function Businessform(props) {
       country: country_iso || "",
       city: "",
       profile_image: "",
+      terms_conditions: false,
     },
     validationSchema: signUpBusinessAccountSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
@@ -103,6 +104,15 @@ function Businessform(props) {
       return { strength: "weak", percent: 25 };
     } else {
       return { strength: "very weak", percent: 0 };
+    }
+  };
+
+  const openTermsConditionsPage = async (slug) => {
+    try {
+      const { request } = await apiRequest.getTermsConditions(slug);
+      window.open(request.responseURL, "_blank");
+    } catch (error) {
+      console.error("Error fetching terms and conditions:", error);
     }
   };
 
@@ -322,6 +332,39 @@ function Businessform(props) {
                     />
                   )}
                 </span>
+              </div>
+              <div className="form-field terms-conditions">
+                <input
+                  type="checkbox"
+                  id="terms_conditions"
+                  name="terms_conditions"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  checked={formik.values.terms_conditions}
+                />
+                <label htmlFor="terms_conditions">
+                  I have read and accept the{" "}
+                  <span
+                    className="hyperlink"
+                    onClick={() =>
+                      openTermsConditionsPage("top-up-during-testing")
+                    }
+                  >
+                    terms and conditions
+                  </span>
+                  {formik.touched.terms_conditions &&
+                    formik.errors.terms_conditions && (
+                      <span
+                        className="danger"
+                        style={{
+                          marginLeft: "8px",
+                          color: "#dc3545",
+                        }}
+                      >
+                        {formik.errors.terms_conditions}
+                      </span>
+                    )}
+                </label>
               </div>
               <div className="text-center sign-up-btn">
                 <input

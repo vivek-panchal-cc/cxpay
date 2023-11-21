@@ -69,6 +69,9 @@ export const API_ONBOARD_VIEW_SCHEDULE_PAYMENT = "/view-schedule-payment";
 export const API_ONBOARD_GET_ALL_SYSTEM_OPTIONS = "/get-all-system-options";
 export const API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS = "/mark-all-as-read";
 
+// customer-admin urls
+export const API_ONBOARD_TERMS_CONDITIONS = "/api/cms-page/details";
+
 // customer-transaction Urls
 export const API_TRANSACTION_ADD_FUND = "/add-fund";
 export const API_TRANSACTION_GET_BANK_DETAILS = "/get-bank-details";

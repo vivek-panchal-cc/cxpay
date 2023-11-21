@@ -3,7 +3,7 @@ import React from "react";
 function InputSelectSearch(props) {
   const { labelname, disabled } = props;
 
-  const shouldGrayOut = props.value === "" || props.value === "User Type";
+  const shouldGrayOut = props.value === "" || props.value === "Account Type";
   const selectClassName = `${props.className} ${disabled ? "cursor-not-allowed" : ""} ${shouldGrayOut ? "grayed-out" : ""}`;
 
   return (

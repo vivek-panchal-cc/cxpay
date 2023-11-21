@@ -78,7 +78,7 @@ const fetchDeactivateAccountForAgent = createAsyncThunk(
     try {
       const { data } = await apiRequest.deactivateAgentAccount(creds);
       if (!data.success) throw data.message;
-      toast.success(data?.message);
+      // toast.success(data?.message);
       return data.message;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -143,14 +143,14 @@ const userProfileSlice = createSlice({
       .addCase(fetchDeactivateAccount.rejected, (state, action) => {
         toast.error(action.payload);
       })
-      // .addCase(fetchDeactivateAccountForAgent.fulfilled, (state, action) => {
-      //   storageRequest.removeAuth();
-      //   toast.success(action.payload);
-      //   document.location.href = "/login";
-      // })
-      // .addCase(fetchDeactivateAccountForAgent.rejected, (state, action) => {
-      //   toast.error(action.payload);
-      // });
+      .addCase(fetchDeactivateAccountForAgent.fulfilled, (state, action) => {
+        // storageRequest.removeAuth();
+        toast.success(action.payload);
+        // document.location.href = "/login";
+      })
+      .addCase(fetchDeactivateAccountForAgent.rejected, (state, action) => {
+        toast.error(action.payload);
+      });
   },
 });
 

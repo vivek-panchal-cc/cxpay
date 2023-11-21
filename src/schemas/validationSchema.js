@@ -15,6 +15,10 @@ import {
   passwordStrengthSchema,
 } from "./commonSchema";
 
+const deleteAccountPassword = yup.object().shape({  
+  password: yup.string().required("Password required")  
+});
+
 const signUpPersonalAccountSchema = yup.object().shape({
   first_name: firstNameSchema.required("Please enter first name"),
   last_name: lastNameSchema.required("Please enter last name"),
@@ -33,6 +37,7 @@ const signUpPersonalAccountSchema = yup.object().shape({
   country: countrySchema,
   city: citySchema,
   country_code: yup.string().required("required"),
+  terms_conditions: yup.bool().oneOf([true], "*"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
@@ -50,6 +55,7 @@ const signUpBusinessAccountSchema = yup.object().shape({
   country: countrySchema,
   city: citySchema,
   country_code: yup.string().required("required"),
+  terms_conditions: yup.bool().oneOf([true], "*"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
@@ -205,6 +211,7 @@ export {
   LoginSchema,
   enterPhoneSchema,
   verifyOtpSchema,
+  deleteAccountPassword,
   signUpPersonalAccountSchema,
   signUpBusinessAccountSchema,
   verifyLoginOtpSchema,

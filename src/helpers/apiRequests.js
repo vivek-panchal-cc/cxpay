@@ -4,6 +4,7 @@ import {
   axiosLoginInstance,
   axiosOnboardInstance,
   axiosTransactionInstance,
+  axiosAdminInstance,
 } from "plugin/axios";
 
 // LOGIN SERVICES
@@ -73,7 +74,11 @@ const API_deleteSchedulePayment = apiUrl.API_ONBOARD_DELETE_SCHEDULE_PAYMENT;
 const API_updateSchedulePayment = apiUrl.API_ONBOARD_UPDATE_SCHEDULE_PAYMENT;
 const API_viewSchedulePayment = apiUrl.API_ONBOARD_VIEW_SCHEDULE_PAYMENT;
 const API_getAllSystemOptions = apiUrl.API_ONBOARD_GET_ALL_SYSTEM_OPTIONS;
-const API_markAllAsReadNotifications = apiUrl.API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS;
+const API_markAllAsReadNotifications =
+  apiUrl.API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS;
+
+// ADMIN SERVICES
+const API_termsAndConditions = apiUrl.API_ONBOARD_TERMS_CONDITIONS;
 
 // TRANSACTION SERVICES
 const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
@@ -515,6 +520,13 @@ export const deactivateAgentAccount = (params) => {
   return axiosOnboardInstance.post(`${API_deactivateAccountAgent}`, params);
 };
 
+/** POST @get-terms-conditions API
+ * @params slug
+ */
+export const getTermsConditions = (slug) => {
+  return axiosAdminInstance.get(`${API_termsAndConditions}?slug=${slug}`);
+};
+
 /** GET @get-charges
  * @params
  */
@@ -592,7 +604,7 @@ export const getTopupActivityDetails = (params) => {
 /**
  * @params auth_token
  */
-export const createRecurringPayment = (params) => {  
+export const createRecurringPayment = (params) => {
   return axiosTransactionInstance.post(`${API_createRecurringPayment}`, params);
 };
 
@@ -629,7 +641,7 @@ export const viewRecurringPayment = (params) => {
 /** POST @reserved-amount-list
  * @params auth_token, user_timezone, from_date, to_date
  */
- export const listReservedAmount = (params) => {
+export const listReservedAmount = (params) => {
   return axiosTransactionInstance.post(`${API_listReservedAmount}`, params);
 };
 //End of Reserved Amount
@@ -939,6 +951,7 @@ export const apiRequest = {
   resendVerifyEmail,
   deactivateAccount,
   deactivateAgentAccount,
+  getTermsConditions,
   sendPaymentRequest,
   createSchedulePayment,
   listSchedulePayment,

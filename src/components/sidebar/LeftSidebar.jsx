@@ -2,7 +2,7 @@ import { CXPAY_SHADOW_LOGO } from "constants/all";
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import $ from 'jquery';
+import $ from "jquery";
 import {
   IconActivity,
   IconContact,
@@ -79,7 +79,7 @@ function LeftSidebar() {
                   <IconWallet />
                   <span>Wallet</span>
                 </Link>
-              </li>              
+              </li>
               <li
                 className={`${
                   thisRoute === "contacts" || thisRoute === "contacts-invited"
@@ -114,6 +114,32 @@ function LeftSidebar() {
               </li>
             </>
           )}
+          {/* <li
+            className={`more-menu ${
+              thisRoute.startsWith("more") ? "active" : ""
+            }`}
+          >
+            <Link to="/more" replace>
+              <IconHome style={{ stroke: "#F3F3F3" }} />
+              <span>More</span>
+            </Link>
+            <ul className="more-sub-menu">
+              <li className={`${thisRoute === "more/request" ? "active" : ""}`}>
+                <Link to="/more/request" replace>
+                  <IconRequest />
+                  <span>Request</span>
+                </Link>
+              </li>
+              <li
+                className={`${thisRoute === "more/activities" ? "active" : ""}`}
+              >
+                <Link to="/more/activities" replace>
+                  <IconActivity />
+                  <span>Activities</span>
+                </Link>
+              </li>
+            </ul>
+          </li> */}
         </ul>
         <ul className="dashboard-bottom-links">
           <li className={`${thisRoute === "profile" ? "active" : ""}`}>
