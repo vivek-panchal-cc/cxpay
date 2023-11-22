@@ -64,7 +64,6 @@ const Profile = () => {
         } else if (fetchDeactivateAccountForAgent.rejected.match(response)) {
           responseMessage = response.payload;
         }
-        await dispatch(fetchUserProfile());
       }
       // Only show the responseMessage when it is not an empty string
       if (responseMessage?.trim() !== "") {
@@ -78,6 +77,7 @@ const Profile = () => {
       console.log(error);
     } finally {
       setIsLoading(false);
+      await dispatch(fetchUserProfile());
       // setShowConfirmPopup(false);
     }
   };

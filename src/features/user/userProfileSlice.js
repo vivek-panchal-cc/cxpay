@@ -78,7 +78,6 @@ const fetchDeactivateAccountForAgent = createAsyncThunk(
     try {
       const { data } = await apiRequest.deactivateAgentAccount(creds);
       if (!data.success) throw data.message;
-      // toast.success(data?.message);
       return data.message;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -136,12 +135,18 @@ const userProfileSlice = createSlice({
         // document.location.href = "/login";
       })
       .addCase(fetchDeactivateAccount.fulfilled, (state, action) => {
-        storageRequest.removeAuth();
-        toast.success(action.payload);
-        document.location.href = "/login";
+        if (state.profile.user_type === "business") {
+          toast.success(action.payload);
+        } else {
+          storageRequest.removeAuth();
+          document.location.href = "/login";
+        }
+        // storageRequest.removeAuth();
+        // toast.success(action.payload);
+        // document.location.href = "/login";
       })
       .addCase(fetchDeactivateAccount.rejected, (state, action) => {
-        toast.error(action.payload);
+        // toast.error(action.payload);
       })
       .addCase(fetchDeactivateAccountForAgent.fulfilled, (state, action) => {
         // storageRequest.removeAuth();
@@ -149,7 +154,7 @@ const userProfileSlice = createSlice({
         // document.location.href = "/login";
       })
       .addCase(fetchDeactivateAccountForAgent.rejected, (state, action) => {
-        toast.error(action.payload);
+        // toast.error(action.payload);
       });
   },
 });
@@ -160,7 +165,7 @@ export {
   fetchUserProfile,
   fetchLoginOtpVerify,
   fetchDeactivateAccount,
-  fetchDeactivateAccountForAgent
+  fetchDeactivateAccountForAgent,
 };
 export const { setUserProfile, setEditCard, setEditBank } =
   userProfileSlice.actions;
