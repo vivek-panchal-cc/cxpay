@@ -109,9 +109,9 @@ function PersonalForm(props) {
     }
   };
 
-  const openTermsConditionsPage = async (slug) => {
+  const openCMSPages = async (slug) => {
     try {
-      const { request } = await apiRequest.getTermsConditions(slug);
+      const { request } = await apiRequest.getCMSPage(slug);
       window.open(request.responseURL, "_blank");
     } catch (error) {
       console.error("Error fetching terms and conditions:", error);
@@ -373,7 +373,7 @@ function PersonalForm(props) {
                   <span
                     className="hyperlink"
                     onClick={() =>
-                      openTermsConditionsPage("terms-and-conditions")
+                      openCMSPages("terms-and-conditions")
                     }
                   >
                     terms and conditions

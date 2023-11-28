@@ -16,8 +16,11 @@ import {
   IconSetting,
   IconWallet,
 } from "styles/svgs";
+import { useCms } from "context/cmsContext";
+import { apiRequest } from "helpers/apiRequests";
 
 function LeftSidebar() {
+  const { cmsPages } = useCms();
   const location = useLocation();
   const navigate = useNavigate();
   const { profile, isLoading } = useSelector((state) => state.userProfile);
@@ -54,6 +57,15 @@ function LeftSidebar() {
     navigate("/", { replace: true });
     return null; // Prevent further rendering
   }
+
+  const openCMSPages = async (slug) => {
+    try {
+      const { request } = await apiRequest.getCMSPage(slug);
+      window.open(request.responseURL, "_blank");
+    } catch (error) {
+      console.error("Error fetching cms page:", error);
+    }
+  };
 
   return (
     <div className="dashboard-left-wrap">
@@ -155,28 +167,22 @@ function LeftSidebar() {
               <span>More</span>
             </a>
             <ul className="more-sub-menu">
-              <li className={`${thisRoute === "more/request" ? "active" : ""}`}>
-                <Link to="/more/request" replace>
-                  {/* <IconRequest /> */}
-                  <span>Request</span>
-                </Link>
-              </li>
-              <li
-                className={`${thisRoute === "more/activities" ? "active" : ""}`}
-              >
-                <Link to="/more/activities" replace>
-                  {/* <IconActivity /> */}
-                  <span>Activities</span>
-                </Link>
-              </li>
-              <li
-                className={`${thisRoute === "more/policies" ? "active" : ""}`}
-              >
-                <Link to="/more/policies" replace>
-                  {/* <IconActivity /> */}
-                  <span>Policies</span>
-                </Link>
-              </li>
+              {cmsPages?.map((page) => (
+                <li
+                  key={page.id}
+                  className={`${
+                    thisRoute === `more/${page.slug}` ? "active" : ""
+                  }`}
+                >
+                  <Link
+                    // to={`/more/${page.slug}`}
+                    onClick={() => openCMSPages(page.slug)}
+                    replace
+                  >
+                    <span>{page.title}</span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </li>
         </ul>

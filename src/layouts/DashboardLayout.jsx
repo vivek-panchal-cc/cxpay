@@ -10,6 +10,7 @@ import ContactsProvider from "context/contactsContext";
 import SendPaymentProvider from "context/sendPaymentContext";
 import ActivityProvider from "context/activityContext";
 import TopUpActivityProvider from "context/topUpActivityContext";
+import { CmsProvider } from "context/cmsContext";
 
 function DashboardLayout() {
   const dispatch = useDispatch();
@@ -39,7 +40,9 @@ function DashboardLayout() {
       <div className="container-fluid">
         <div className="row">
           <div className="col-xs-12 col-lg-3 dashboard-left-sec">
-            <LeftSidebar />
+            <CmsProvider>
+              <LeftSidebar />
+            </CmsProvider>
           </div>
           <div
             className={`col-xs-12 col-lg-9 dashboard-right-sec min-vh-100 ${

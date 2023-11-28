@@ -78,7 +78,8 @@ const API_markAllAsReadNotifications =
   apiUrl.API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS;
 
 // ADMIN SERVICES
-const API_termsAndConditions = apiUrl.API_ONBOARD_TERMS_CONDITIONS;
+const API_cmsPage = apiUrl.API_ADMIN_CMS_PAGE;
+const API_cmsPagesForMore = apiUrl.API_ADMIN_CMS_LIST;
 
 // TRANSACTION SERVICES
 const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
@@ -523,8 +524,15 @@ export const deactivateAgentAccount = (params) => {
 /** POST @get-terms-conditions API
  * @params slug
  */
-export const getTermsConditions = (slug) => {
-  return axiosAdminInstance.get(`${API_termsAndConditions}?slug=${slug}`);
+export const getCMSPage = (slug) => {
+  return axiosAdminInstance.get(`${API_cmsPage}?slug=${slug}`);
+};
+
+/** POST @get-cms-pages API
+ * @params
+ */
+export const getCMSPageLists = () => {
+  return axiosAdminInstance.get(`${API_cmsPagesForMore}`);
 };
 
 /** GET @get-charges
@@ -951,7 +959,8 @@ export const apiRequest = {
   resendVerifyEmail,
   deactivateAccount,
   deactivateAgentAccount,
-  getTermsConditions,
+  getCMSPage,
+  getCMSPageLists,
   sendPaymentRequest,
   createSchedulePayment,
   listSchedulePayment,

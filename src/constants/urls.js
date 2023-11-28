@@ -70,7 +70,8 @@ export const API_ONBOARD_GET_ALL_SYSTEM_OPTIONS = "/get-all-system-options";
 export const API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS = "/mark-all-as-read";
 
 // customer-admin urls
-export const API_ONBOARD_TERMS_CONDITIONS = "/api/cms-page/details";
+export const API_ADMIN_CMS_PAGE = "/api/cms-page/details";
+export const API_ADMIN_CMS_LIST = "/api/cms-page/displayed-page-list";
 
 // customer-transaction Urls
 export const API_TRANSACTION_ADD_FUND = "/add-fund";
@@ -107,23 +108,32 @@ export const API_TRANSACTION_VIEW_BANK_WITHDRAW_RECEIPT =
 export const API_TRANSACTION_GET_CUSTOMER_DETAIL = "/get-customer-detail";
 export const API_TRANSACTION_GET_AGENT_WISE_CARD_LIST = "/agent-wise-card-list";
 export const API_TRANSACTION_AGENT_TOP_UPS = "/agent-topups";
-export const API_TRANSACTION_GET_TOPUP_PRINT_DETAILS = "/get-topup-print-details";
-export const API_TRANSACTION_GET_TOPUP_TRANSACTION_HISTORY = "/topup-transaction-history";
-export const API_TRANSACTION_GET_TOPUP_ACTIVITY_DETAILS = "/topup-transaction-details";
+export const API_TRANSACTION_GET_TOPUP_PRINT_DETAILS =
+  "/get-topup-print-details";
+export const API_TRANSACTION_GET_TOPUP_TRANSACTION_HISTORY =
+  "/topup-transaction-history";
+export const API_TRANSACTION_GET_TOPUP_ACTIVITY_DETAILS =
+  "/topup-transaction-details";
 export const API_TRANSACTION_MONTHLY_RECHARGE_TOTAL = "/agent-recharge-total";
 
 //Recurring
-export const API_TRANSACTION_CREATE_RECURRING_PAYMENT = "/create-recurring-schedule-payment";
-export const API_TRANSACTION_UPDATE_RECURRING_PAYMENT = "/update-recurring-schedule-payment";
-export const API_TRANSACTION_DELETE_RECURRING_PAYMENT = "/delete-recurring-schedule-payment";
-export const API_TRANSACTION_LIST_RECURRING_PAYMENT = "/list-recurring-schedule-payment";
-export const API_TRANSACTION_VIEW_RECURRING_PAYMENT = "/view-recurring-schedule-payment";
+export const API_TRANSACTION_CREATE_RECURRING_PAYMENT =
+  "/create-recurring-schedule-payment";
+export const API_TRANSACTION_UPDATE_RECURRING_PAYMENT =
+  "/update-recurring-schedule-payment";
+export const API_TRANSACTION_DELETE_RECURRING_PAYMENT =
+  "/delete-recurring-schedule-payment";
+export const API_TRANSACTION_LIST_RECURRING_PAYMENT =
+  "/list-recurring-schedule-payment";
+export const API_TRANSACTION_VIEW_RECURRING_PAYMENT =
+  "/view-recurring-schedule-payment";
 
 //Reserved Amount
 export const API_RESERVED_AMOUNT_LIST = "/reserved-amount-list";
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =
-  process.env.REACT_APP_API_CYBERSOURCE_ORIGIN_URL || "https://centinelapistag.cardinalcommerce.com";
+  process.env.REACT_APP_API_CYBERSOURCE_ORIGIN_URL ||
+  "https://centinelapistag.cardinalcommerce.com";
 export const API_TRANSACTION_PAYMENT_RETURN_ORIGIN =
   process.env.REACT_APP_API_PAYMENT_RETURN || "http://3.140.192.108:8083";

@@ -592,6 +592,7 @@ pointer-events: none;
 
 .dashboard-link-wrap .more-sub-menu li a {  
   border-radius: 0;
+  padding: 15px 26px;
 }
 
 .dashboard-link-wrap ul.more-sub-menu li {
@@ -606,9 +607,17 @@ pointer-events: none;
   color: #fff;
 }
 
-.dashboard-link-wrap ul .more-menu a:hover, .dashboard-link-wrap ul .more-menu.active > a {
+.dashboard-link-wrap ul .more-menu:hover > a , .dashboard-link-wrap ul .more-menu a:hover, .dashboard-link-wrap ul .more-menu.active > a {
   background-color: #fff;
   color: var(--blue)
+}
+
+.dashboard-link-wrap ul .more-menu:hover > a svg path {
+  stroke: var(--blue);
+}
+
+.dashboard-link-wrap ul .more-menu a svg{
+  height: 19px;
 }
 
 .sidebar-open .toggle-admin-btn img {
@@ -8160,7 +8169,8 @@ ul.recent-act-lw-main .act-info-wrap-left {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1;
   left: 100%;
-  margin-top: -50px;
+  /* margin-top: -50px; */
+  margin-top: -47.5px;
   overflow: hidden;
 }
 
