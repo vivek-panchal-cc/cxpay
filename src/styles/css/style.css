@@ -582,6 +582,8 @@ pointer-events: none;
 
 .dashboard-link-wrap .more-sub-menu {
   padding-left: 0px;  
+  max-height: 250px;
+  overflow: auto;
 }
 
 .sidebar-open .dashboard-link-wrap .more-sub-menu li a {
