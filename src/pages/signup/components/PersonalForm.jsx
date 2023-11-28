@@ -373,7 +373,7 @@ function PersonalForm(props) {
                   <span
                     className="hyperlink"
                     onClick={() =>
-                      openTermsConditionsPage("top-up-during-testing")
+                      openTermsConditionsPage("terms-and-conditions")
                     }
                   >
                     terms and conditions

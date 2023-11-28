@@ -3308,7 +3308,7 @@
     line-height: 20px;
   }
   .profile-qr {
-    max-width: 225px;
+    max-width: 250px;
   }
   .profile-info-right-desc .edit-button {
     /* margin-left: 15px; */
@@ -3813,6 +3813,11 @@
     min-width: auto;
     border-radius: 15px !important;
     line-height: 25px;
+  }
+  .qr-share-icon{    
+    border-radius: 25px !important;
+    padding: 0px 14px;    
+    height: 45px;
   }
   .profile-info h3 {
     font-size: 17px;

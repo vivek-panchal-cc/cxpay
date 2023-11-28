@@ -57,6 +57,7 @@ export { default as IconShowReservedAmount } from "./ShowReservedAmount";
 export { default as IconCloseModal } from "./CloseModal";
 export { default as IconMobile } from "./Mobile";
 export { default as IconPersonalId } from "./PersonalId";
+export { default as IconMore } from "./More";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";

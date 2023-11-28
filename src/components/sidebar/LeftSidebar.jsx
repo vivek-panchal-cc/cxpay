@@ -1,13 +1,15 @@
 import { CXPAY_SHADOW_LOGO } from "constants/all";
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import $ from "jquery";
+import { toast } from "react-toastify";
 import {
   IconActivity,
   IconContact,
   IconHome,
   IconLogout,
+  IconMore,
   IconProfileVerified,
   IconRequest,
   IconSend,
@@ -17,8 +19,10 @@ import {
 
 function LeftSidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { profile, isLoading } = useSelector((state) => state.userProfile);
   const { user_type } = profile || "";
+  const is_kyc = true;
 
   const thisRoute = useMemo(() => location.pathname.split("/")[1], [location]);
 
@@ -29,6 +33,27 @@ function LeftSidebar() {
   const handleToggleClick = () => {
     $(".dashboard-page > .container-fluid > .row").toggleClass("sidebar-open");
   };
+
+  // List of restricted routes
+  const restrictedRoutes = [
+    "send",
+    "request",
+    "wallet",
+    "view-recurring-payment",
+    "view-schedule-payment",
+  ];
+
+  // Redirect logic for restricted routes
+  const shouldRedirectToRestrictedRoute =
+    !is_kyc && restrictedRoutes.includes(thisRoute);
+
+  if (shouldRedirectToRestrictedRoute) {
+    toast.warning("Complete your KYC first", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    navigate("/", { replace: true });
+    return null; // Prevent further rendering
+  }
 
   return (
     <div className="dashboard-left-wrap">
@@ -56,30 +81,36 @@ function LeftSidebar() {
           </li>
           {user_type !== "agent" && (
             <>
-              <li className={`${thisRoute === "send" ? "active" : ""}`}>
-                <Link to="/send" replace>
-                  <IconSend style={{ stroke: "#F3F3F3" }} />
-                  <span>Send</span>
-                </Link>
-              </li>
-              <li className={`${thisRoute === "request" ? "active" : ""}`}>
-                <Link to="/request" replace>
-                  <IconRequest />
-                  <span>Request</span>
-                </Link>
-              </li>
+              {is_kyc && (
+                <li className={`${thisRoute === "send" ? "active" : ""}`}>
+                  <Link to="/send" replace>
+                    <IconSend style={{ stroke: "#F3F3F3" }} />
+                    <span>Send</span>
+                  </Link>
+                </li>
+              )}
+              {is_kyc && (
+                <li className={`${thisRoute === "request" ? "active" : ""}`}>
+                  <Link to="/request" replace>
+                    <IconRequest />
+                    <span>Request</span>
+                  </Link>
+                </li>
+              )}
               <li className={`${thisRoute === "activities" ? "active" : ""}`}>
                 <Link to="/activities" replace>
                   <IconActivity />
                   <span>Activities</span>
                 </Link>
               </li>
-              <li className={`${thisRoute === "wallet" ? "active" : ""}`}>
-                <Link to="/wallet" replace>
-                  <IconWallet />
-                  <span>Wallet</span>
-                </Link>
-              </li>
+              {is_kyc && (
+                <li className={`${thisRoute === "wallet" ? "active" : ""}`}>
+                  <Link to="/wallet" replace>
+                    <IconWallet />
+                    <span>Wallet</span>
+                  </Link>
+                </li>
+              )}
               <li
                 className={`${
                   thisRoute === "contacts" || thisRoute === "contacts-invited"
@@ -114,19 +145,19 @@ function LeftSidebar() {
               </li>
             </>
           )}
-          {/* <li
+          <li
             className={`more-menu ${
               thisRoute.startsWith("more") ? "active" : ""
             }`}
           >
-            <Link to="/more" replace>
-              <IconHome style={{ stroke: "#F3F3F3" }} />
+            <a>
+              <IconMore style={{ stroke: "#F3F3F3" }} />
               <span>More</span>
-            </Link>
+            </a>
             <ul className="more-sub-menu">
               <li className={`${thisRoute === "more/request" ? "active" : ""}`}>
                 <Link to="/more/request" replace>
-                  <IconRequest />
+                  {/* <IconRequest /> */}
                   <span>Request</span>
                 </Link>
               </li>
@@ -134,12 +165,20 @@ function LeftSidebar() {
                 className={`${thisRoute === "more/activities" ? "active" : ""}`}
               >
                 <Link to="/more/activities" replace>
-                  <IconActivity />
+                  {/* <IconActivity /> */}
                   <span>Activities</span>
                 </Link>
               </li>
+              <li
+                className={`${thisRoute === "more/policies" ? "active" : ""}`}
+              >
+                <Link to="/more/policies" replace>
+                  {/* <IconActivity /> */}
+                  <span>Policies</span>
+                </Link>
+              </li>
             </ul>
-          </li> */}
+          </li>
         </ul>
         <ul className="dashboard-bottom-links">
           <li className={`${thisRoute === "profile" ? "active" : ""}`}>

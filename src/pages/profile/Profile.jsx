@@ -4,7 +4,7 @@ import AvatarInfo from "./components/AvatarInfo";
 import ProfileInfo from "./components/ProfileInfo";
 import QrCode from "./components/QrCode";
 import "./profile.css";
-import ModalConfirmation from "components/modals/ModalConfirmation";
+import ModalPasswordConfirmation from "components/modals/ModalPasswordConfirmation";
 import { LoaderContext } from "context/loaderContext";
 import {
   fetchDeactivateAccount,
@@ -83,7 +83,7 @@ const Profile = () => {
   };
 
   const getSubHeading = () => {
-    if (user_type === "agent") {
+    if (user_type === "agent" || user_type === "business") {
       return "Your request for account deletion has been submitted to the admin department. It will be done in the next 2-3 working days.";
     } else {
       return "Are you sure you want to delete your account? This will permanently erase all your details.";
@@ -92,7 +92,7 @@ const Profile = () => {
 
   return (
     <div className="profile-inner-sec p-4">
-      <ModalConfirmation
+      <ModalPasswordConfirmation
         id="delete-group-member-popup"
         show={showConfirmPopup}
         setShow={setShowConfirmPopup}
@@ -101,7 +101,7 @@ const Profile = () => {
         subHeading={getSubHeading()}
         handleCallback={handleDeleteAccount}
         error={showConfirmPopup.message}
-      ></ModalConfirmation>
+      ></ModalPasswordConfirmation>
 
       <div className="profile-left-content col-lg-7 col-12">
         <AvatarInfo
