@@ -50,6 +50,7 @@ const ModalActivityDetail = (props) => {
     request_type,
     comment,
     txn_mode,
+    fees,
     payment_type,
   } = details || {};
 
@@ -207,6 +208,17 @@ const ModalActivityDetail = (props) => {
                           </span>
                         </td>
                       </tr>
+                      {/* {fees > 0 && (
+                        <tr>
+                          <td>Fees</td>
+                          <td>
+                            <WrapAmount
+                              value={fees}
+                              prefix={`${CURRENCY_SYMBOL} `}
+                            />
+                          </td>
+                        </tr>
+                      )} */}
                       {txn_type === TXN_TYPE_AGENT && txn_mode && (
                         <tr>
                           <td>Payment Type</td>

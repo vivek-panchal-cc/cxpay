@@ -333,22 +333,23 @@ function Businessform(props) {
                   )}
                 </span>
               </div>
-              <div className="form-field terms-conditions">
-                <input
-                  type="checkbox"
-                  id="terms_conditions"
-                  name="terms_conditions"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  checked={formik.values.terms_conditions}
-                />
-                <label htmlFor="terms_conditions">
+              <div className="terms-conditions-container">
+                <div className="form-field terms-conditions">
+                  <input
+                    type="checkbox"
+                    id="terms_conditions"
+                    name="terms_conditions"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    checked={formik.values.terms_conditions}
+                  />
+                  <label htmlFor="terms_conditions"></label>
+                </div>
+                <label htmlFor="terms_conditions_1">
                   I have read and accept the{" "}
                   <span
                     className="hyperlink"
-                    onClick={() =>
-                      openCMSPages("terms-and-conditions")
-                    }
+                    onClick={() => openCMSPages("terms-and-conditions")}
                   >
                     terms and conditions
                   </span>
