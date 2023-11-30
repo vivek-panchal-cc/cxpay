@@ -37,6 +37,7 @@ const cardCreds = {
   security_code: "",
   save_card: false,
   txn_mode: "CARD",
+  card_token_id: "",
 };
 
 const bankCreds = {
@@ -133,6 +134,7 @@ const FundProvider = ({ children }) => {
         expiry_full: date,
         expiry_date: card.expiry_date,
         security_code: "",
+        card_token_id: card.card_token_id || "",
       }
     );
     formik.setValues(muValues);

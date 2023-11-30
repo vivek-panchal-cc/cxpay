@@ -57,6 +57,12 @@
   .dashboard-link-wrap ul li a {
     padding: 10px 26px;
   }
+  .dashboard-link-wrap .more-sub-menu li a {      
+    padding: 10px 26px;
+  }  
+  .dashboard-link-wrap .more-sub-menu {    
+    max-height: 200px;    
+  }
   .wallet-page-body .settings-inner-sec .profile-info {
     padding-bottom: 25px;
   }
@@ -307,6 +313,16 @@
   .dashboard-link-wrap ul li a {
     font-size: 13px;
     padding: 7.5px 26px;
+  }
+  .dashboard-link-wrap .more-sub-menu li a {    
+    font-size: 13px;  
+    padding: 7.5px 26px;
+  }
+  .dashboard-link-wrap .more-sub-menu {    
+    max-height: 150px;    
+  }
+  .sidebar-open .dashboard-link-wrap .more-sub-menu {        
+    max-height: 150px;    
   }
   /* .dashboard-link-wrap ul li a {
     padding: 7.5px 26px;

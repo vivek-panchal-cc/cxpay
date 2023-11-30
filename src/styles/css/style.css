@@ -577,7 +577,8 @@ pointer-events: none;
 .sidebar-open .dashboard-link-wrap .more-sub-menu {
   padding-left: 0px;
   width: 150px;
-  overflow: hidden;
+  max-height: 200px;
+  overflow: auto;
 }
 
 .dashboard-link-wrap .more-sub-menu {
@@ -8165,19 +8166,23 @@ ul.recent-act-lw-main .act-info-wrap-left {
 
 .dashboard-main-links .more-menu:hover .more-sub-menu {
   display: block;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  margin-top: 0;
 }
 
 .more-sub-menu {
   border-radius: 0 25px 25px 0;
   display: none;
-  position: absolute;
+  position: relative;
   background-color: #333;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1;
   left: 100%;
   /* margin-top: -50px; */
   /* margin-top: -47.5px; */
-  margin-top: -94.5px;
+  margin-top: 0;
   overflow: hidden;
 }
 

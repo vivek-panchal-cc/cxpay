@@ -1,5 +1,5 @@
 import { CXPAY_SHADOW_LOGO } from "constants/all";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import $ from "jquery";
@@ -29,6 +29,42 @@ function LeftSidebar() {
 
   const thisRoute = useMemo(() => location.pathname.split("/")[1], [location]);
 
+  const [submenuPosition, setSubmenuPosition] = useState({ top: 0, left: 0 });
+
+  const updateSubMenuPosition = () => {
+    const submenu = document.querySelector(".dashboard-main-links .more-sub-menu");
+    const moreMenu = document.querySelector(".dashboard-main-links .more-menu");
+
+    if (submenu && moreMenu) {
+      const rect = moreMenu.getBoundingClientRect();
+      const screenWidth = window.innerWidth;
+
+      setSubmenuPosition({
+        top: rect.top,
+        left: screenWidth > 768 ? rect.right : 0,
+      });
+    }
+  };
+
+  useEffect(() => {
+    function handleResize() {
+      updateSubMenuPosition();
+    }
+
+    function handleScroll() {
+      updateSubMenuPosition();
+    }
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup event listeners
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   if (isLoading) {
     return null;
   }
@@ -51,10 +87,13 @@ function LeftSidebar() {
     !is_kyc && restrictedRoutes.includes(thisRoute);
 
   if (shouldRedirectToRestrictedRoute) {
-    toast.warning("Complete your KYC first", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-    navigate("/", { replace: true });
+    useEffect(() => {
+      toast.warning("Complete your KYC first", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      navigate("/", { replace: true });
+    }, []); // Add an empty dependency array to ensure it runs only once
+
     return null; // Prevent further rendering
   }
 
@@ -161,12 +200,13 @@ function LeftSidebar() {
             className={`more-menu ${
               thisRoute.startsWith("more") ? "active" : ""
             }`}
+            onMouseEnter={updateSubMenuPosition}
           >
             <a>
               <IconMore style={{ stroke: "#F3F3F3" }} />
               <span>More</span>
             </a>
-            <ul className="more-sub-menu">
+            <ul className="more-sub-menu" style={{ top: `${submenuPosition.top}px`, left: `${submenuPosition.left}px` }}>
               {cmsPages?.map((page) => (
                 <li
                   key={page.id}
