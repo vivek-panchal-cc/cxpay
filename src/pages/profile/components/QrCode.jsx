@@ -87,7 +87,7 @@ const QrCode = (props) => {
         className="btn qr-btn"
         style={{ marginBottom: "20px" }}
       >
-        Request new QR
+        Refresh QR
       </Button>
       {qrCodeImg && (
         <Button

@@ -42,7 +42,7 @@ const QrCode = (props) => {
         onClick={handleGenerateQrCode}
         className="btn qr-btn"
       >
-        Request new QR
+        Refresh QR
       </Button>
     </div>
   );
