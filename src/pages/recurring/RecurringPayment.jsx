@@ -376,7 +376,7 @@ function RecurringPayment() {
                           }`}
                           onClick={handleOccurrenceButtonClick}
                         >
-                          No of Occurrences
+                          No. of Occurrences
                         </button>
                         <button
                           type="button"

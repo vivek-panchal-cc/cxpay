@@ -437,7 +437,7 @@ const EditRecurringPayment = () => {
                       onClick={handleOccurrenceButtonClick}
                       disabled={set_recurring_flag === "DATE"}
                     >
-                      No of Occurrences
+                      No. of Occurrences
                     </button>
                     <button
                       type="button"
