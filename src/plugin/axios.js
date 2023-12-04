@@ -47,7 +47,7 @@ const responseInterceptor = async (response) => {
 
 const responseErrorInterceptor = (error) => {
   const errResponse = error.response;
-  if (errResponse && errResponse.status === 401 && errResponse.data) {
+  if (errResponse && (errResponse.status === 401 || errResponse.status === 451) && errResponse.data) {
     const token = storageRequest.getAuth();
     if (token) {
       toast.success(
