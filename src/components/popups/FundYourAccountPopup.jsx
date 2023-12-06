@@ -20,7 +20,7 @@ function FundYourAccountPopup() {
             <Link to={`/wallet/fund-account/${FUND_CARD}`}>
               <div className="fund-payment-option">
                 <img src="/assets/images/fund-Wallet.svg" alt="" />
-                <p>Credit Card</p>
+                <p>Cards</p>
               </div>
             </Link>
             <Link to={`/wallet/fund-account/${FUND_MANUAL}`}>

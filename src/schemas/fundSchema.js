@@ -40,8 +40,8 @@ const cardNumberSchema2 = yup.string().when("card_id", {
   then: () =>
     yup
       .string()
-      .matches(/^\d*$/, "Credit card number is invalid")
-      .min(4, "Credit card number is invalid")
+      .matches(/^\d*$/, "Card number is invalid")
+      .min(4, "Card number is invalid")
       .required(),
   otherwise: () => cardNumberSchema.required("Please enter card number"),
 });

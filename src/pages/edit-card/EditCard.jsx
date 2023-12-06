@@ -179,7 +179,7 @@ function EditCard() {
                     type="text"
                     inputMode="numeric"
                     className="form-control opacity-75"
-                    placeholder="Credit Card Number"
+                    placeholder="Card Number"
                     name="card_number"
                     value={"XXXX XXXX XXXX " + card?.card_number}
                     disabled

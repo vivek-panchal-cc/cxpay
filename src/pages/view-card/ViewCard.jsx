@@ -86,7 +86,7 @@ function ViewCard(props) {
     <div className="">
       <div className="title-content-wrap send-pay-title-sec title-common-sec">
         <h3>View Cards</h3>
-        <p>My Credit Cards</p>
+        <p>My Cards</p>
       </div>
       <ModalConfirmation
         heading="Are you sure?"
@@ -102,7 +102,7 @@ function ViewCard(props) {
             <li className="db-view-bank-div-main db-view-bank-common-div db-view-bank-heading">
               <div className="bank-card-name-wrap"> Card Holder Name</div>
               <div className="bank-account-type-wrap">Primary Card</div>
-              <div className="bank-account-num-wrap">Credit Card Number</div>
+              <div className="bank-account-num-wrap">Card Number</div>
               <div className="bank-account-date-wrap">Expiration Date</div>
               <div className="bank-del-wrap"></div>
               <div className="bank-del-wrap"></div>

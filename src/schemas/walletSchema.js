@@ -51,7 +51,7 @@ const uploadCardImageSchema = yup.object().shape({
 });
 
 const EditCardSchema = yup.object().shape({
-  id: yup.string().required("Credit card-id is required"),
+  id: yup.string().required("Card-id is required"),
   email: emailSchema,
   country: countrySchema,
   city: citySchema,

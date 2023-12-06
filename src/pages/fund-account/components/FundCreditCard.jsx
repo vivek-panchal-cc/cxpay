@@ -92,7 +92,7 @@ function FundCreditCard(props) {
                   type="text"
                   inputMode="numeric"
                   className="form-control"
-                  placeholder="Credit Card Number"
+                  placeholder="Card Number"
                   name="card_number"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
