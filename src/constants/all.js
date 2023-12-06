@@ -67,7 +67,7 @@ const CXPAY_LOGO = "/assets/images/cxpay_me_logo.png";
 const CXPAY_SHADOW_LOGO = "/assets/images/cxpay_me_shadow_logo.png";
 
 // Fund account flow constants
-const FUND_CARD = "credit-card";
+const FUND_CARD = "card";
 const FUND_MANUAL = "manual-topup";
 const FUND_BANK = "bank-transfer";
 const MAX_PAYMENT_CONTACTS = 30;
