@@ -26,7 +26,9 @@ const Signup = () => {
             return <EnterPhone />;
         }
       case 3:
-        return <Navigate to={`/signup/${FUND_CARD}`} replace={true} />;
+        // return <Navigate to={`/signup/${FUND_CARD}`} replace={true} />;
+        return <Navigate to="/" replace={true} />;
+        // return <Navigate to="/complete-kyc" replace={true} />;
       default:
         return <EnterPhone />;
     }

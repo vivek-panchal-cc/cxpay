@@ -82,6 +82,7 @@ const Pagination = (props) => {
                   <span className="page-link skip">.....</span>
                 </li>
               )}
+              {startArrayNumber <= size && (
               <li
                 className="page-item"
                 onClick={(e) =>
@@ -92,6 +93,7 @@ const Pagination = (props) => {
                   {size}
                 </span>
               </li>
+              )}
             </>
           ) : (
             ((startArrayNumber = 1),

@@ -120,10 +120,12 @@ const AgentBalanceGraph = (props) => {
   const { commissionAmount, rechargeAmount } = useMemo(() => {
     const { commission_amount, recharge_amount } = balance || {};
     const commissionAmount =
-      typeof commission_amount === "number" ? commission_amount.toFixed(2) : "";
+      typeof commission_amount === "number"
+        ? commission_amount?.toFixed(2)
+        : "";
     const rechargeAmount =
       typeof recharge_amount === "number" && recharge_amount > 0
-        ? recharge_amount.toFixed(2)
+        ? recharge_amount?.toFixed(2)
         : "";
     return { commissionAmount, rechargeAmount };
   }, [balance]);
@@ -166,8 +168,14 @@ const AgentBalanceGraph = (props) => {
         if (ind > -1) {
           if (index < minIndex) minIndex = index;
           if (index > maxIndex) maxIndex = index;
-          const amount = balanceDataArr[ind];
-          spends[index] = amount;
+          let amount = balanceDataArr[ind];
+          // spends[index] = amount?.toFixed(2);
+          if (typeof amount === 'string') {
+            amount = parseFloat(amount);
+          }
+          const validAmount =
+            typeof amount === "number" ? amount.toFixed(2) : 0;
+          spends[index] = validAmount;
         }
         return mon;
       });

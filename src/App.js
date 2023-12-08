@@ -3,6 +3,7 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import PrivateLayout from "layouts/PrivateLayout.jsx";
 import { ToastContainer } from "react-toastify";
 // Pages
+import KycComplete from "pages/kyc-complete-form/KycComplete.jsx";
 import Login from "pages/login/Login.jsx";
 import Signup from "pages/signup/Singup.jsx";
 import LoginWithOtp from "pages/login-with-otp/LoginWithOtp";
@@ -156,6 +157,7 @@ function App() {
         </Route>
         {/* List of Private Routes */}
         <Route element={<PrivateLayout />}>
+          <Route path="/complete-kyc" element={<KycComplete />} />
           <Route path="/signup/:fundtype" element={<SignupFundAccount />} />
           <Route element={<DashboardLayout />}>
             {/* settings */}

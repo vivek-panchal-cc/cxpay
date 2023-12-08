@@ -175,8 +175,14 @@ const BalanceGraph = (props) => {
         if (ind > -1) {
           if (index < minIndex) minIndex = index;
           if (index > maxIndex) maxIndex = index;
-          const amount = balanceDataArr[ind];
-          spends[index] = amount;
+          let amount = balanceDataArr[ind];
+          // spends[index] = amount?.toFixed(2);
+          if (typeof amount === 'string') {
+            amount = parseFloat(amount);
+          }
+          const validAmount =
+            typeof amount === "number" ? amount.toFixed(2) : 0;
+          spends[index] = validAmount;
         }
         return mon;
       });
