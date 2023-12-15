@@ -4,6 +4,7 @@ import PrivateLayout from "layouts/PrivateLayout.jsx";
 import { ToastContainer } from "react-toastify";
 // Pages
 import KycComplete from "pages/kyc-complete-form/KycComplete.jsx";
+import KycCompleteInitial from "pages/kyc-complete-form/KycCompleteInitial.jsx";
 import Login from "pages/login/Login.jsx";
 import Signup from "pages/signup/Singup.jsx";
 import LoginWithOtp from "pages/login-with-otp/LoginWithOtp";
@@ -62,14 +63,32 @@ async function loadData() {
   await import(`./styles/js/custom`);
 }
 
+// function withUserProtection(WrappedComponent, allowedUserTypes = []) {
+//   return function ProtectedComponent(props) {
+//     const { profile } = useSelector((state) => state.userProfile);
+//     const { user_type } = profile || {};
+
+//     if (profile && Object.keys(profile).length > 0 && !allowedUserTypes.includes(user_type)) {
+//       console.warn("Unauthorized user type detected, navigating away");
+//       return <Navigate to="/" />;
+//     }
+//     return <WrappedComponent {...props} />;
+//   };
+// }
+
 function withUserProtection(WrappedComponent, allowedUserTypes = []) {
   return function ProtectedComponent(props) {
     const { profile } = useSelector((state) => state.userProfile);
-    const { user_type } = profile || {};
+    const { user_type, is_kyc } = profile || {};    
 
-    if (profile && Object.keys(profile).length > 0 && !allowedUserTypes.includes(user_type)) {
-      console.warn("Unauthorized user type detected, navigating away");
-      return <Navigate to="/" />;
+    if (profile && Object.keys(profile).length > 0) {
+      if (!is_kyc) {
+        console.warn("User has not completed KYC, navigating away");
+        return <Navigate to="/complete-kyc" />;
+      } else if (!allowedUserTypes.includes(user_type)) {
+        console.warn("Unauthorized user type detected, navigating away");
+        return <Navigate to="/" />;
+      }
     }
     return <WrappedComponent {...props} />;
   };
@@ -110,6 +129,7 @@ const ProtectedViewRecurringPayment = withUserProtection(ViewRecurringPayment, A
 const ProtectedEditRecurringPayment = withUserProtection(EditRecurringPayment, AllowedBusinessPersonal);
 const ProtectedRecurringDetails = withUserProtection(RecurringDetails, AllowedBusinessPersonal);
 const ProtectedNotification = withUserProtection(Notification, AllowedBusinessPersonal);
+const ProtectedViewNotification = withUserProtection(ViewNotification, AllowedBusinessPersonal);
 
 // user_types = business
 const ProtectedBusinessInfo = withUserProtection(BusinessInfo, AllowedBusiness);
@@ -118,6 +138,9 @@ const ProtectedBusinessInfo = withUserProtection(BusinessInfo, AllowedBusiness);
 const ProtectedTopUp = withUserProtection(TopUp, AllowedAgent);
 const ProtectedTopUpDetails = withUserProtection(TopUpDetails, AllowedAgent);
 const ProtectedTopUpActivities = withUserProtection(TopUpActivities, AllowedAgent);
+
+// user_types = all
+const ProtectedDashboard = withUserProtection(Dashboard, AllowedAllTypes);
 
 function App() {
   const location = useLocation();
@@ -158,6 +181,7 @@ function App() {
         {/* List of Private Routes */}
         <Route element={<PrivateLayout />}>
           <Route path="/complete-kyc" element={<KycComplete />} />
+          <Route path="/complete-kyc-initial" element={<KycCompleteInitial />} />
           <Route path="/signup/:fundtype" element={<SignupFundAccount />} />
           <Route element={<DashboardLayout />}>
             {/* settings */}
@@ -208,9 +232,9 @@ function App() {
             />
             <Route path="/profile" element={<Profile />} />
             {/* contacts */}
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<ProtectedDashboard />} />
             <Route path="/activities" element={<ProtectedActivities />} />
-            <Route path="/view-notification" element={<ViewNotification />} />
+            <Route path="/view-notification" element={<ProtectedViewNotification />} />
             <Route path="/contacts" element={<ProtectedContacts />} />
             <Route
               path="/contacts-invited"

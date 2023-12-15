@@ -9,7 +9,7 @@ import CustomizePalette from "./components/CustomizePalette";
 import UploadImage from "./components/UploadImage";
 import DatePicker from "react-datepicker";
 import { Link, useNavigate } from "react-router-dom";
-import { IconCalender } from "styles/svgs";
+import { IconCalender, IconEyeClose, IconEyeOpen } from "styles/svgs";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
@@ -33,6 +33,7 @@ function AddCard() {
     file: "",
     url: "",
   });
+  const [showCvv, setShowCvv] = useState(false);
   const [expDate, setExpDate] = useState();
   const [countryList, cityList] = useCountriesCities();
   const [cardColors] = useCardColors();
@@ -168,23 +169,25 @@ function AddCard() {
           </div>
           <div className="add-wallet-card-form-wrap">
             <form onSubmit={formik.handleSubmit}>
+            <div className="row">
+              <div className="col-12 col p-0">
+                <Input
+                  type="text"
+                  inputMode="numeric"
+                  className="form-control"
+                  placeholder="Card Number"
+                  name="card_number"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.card_number}
+                  error={
+                    formik.touched.card_number && formik.errors.card_number
+                  }
+                />
+              </div>
+              </div>
               <div className="row">
                 <div className="col-lg-6 col-12 col-left col p-0">
-                  <Input
-                    type="text"
-                    inputMode="numeric"
-                    className="form-control"
-                    placeholder="Card Number"
-                    name="card_number"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.card_number}
-                    error={
-                      formik.touched.card_number && formik.errors.card_number
-                    }
-                  />
-                </div>
-                <div className="col-lg-6 col-12 col-right col p-0">
                   <div className="form-field position-relative z-1">
                     <DatePicker
                       id="datepickeradd-card"
@@ -214,6 +217,35 @@ function AddCard() {
                     <p className="text-danger ps-2 shadow-none">
                       {formik.touched.expiry_date && formik.errors.expiry_date}
                     </p>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-12 col-right col p-0">
+                  <div className="position-relative">
+                    <Input
+                      type={showCvv ? "text" : "password"}
+                      inputMode="numeric"
+                      className="form-control"
+                      placeholder="CVV"
+                      name="security_code"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      // maxLength="3"
+                      value={formik.values.security_code}
+                      error={
+                        formik.touched.security_code &&
+                        formik.errors.security_code
+                      }
+                    />
+                    <span
+                      className="eye-icon position-absolute"
+                      style={{ top: "12px", right: "20px" }}
+                    >
+                      {showCvv ? (
+                        <IconEyeOpen onClick={() => setShowCvv((e) => !e)} />
+                      ) : (
+                        <IconEyeClose onClick={() => setShowCvv((e) => !e)} />
+                      )}
+                    </span>
                   </div>
                 </div>
               </div>

@@ -20,8 +20,7 @@ const axiosTransactionInstance = axios.create({
 });
 const axiosAdminInstance = axios.create({
   baseURL:
-    process.env.REACT_APP_API_CUSTOMER_ADMIN ||
-    "http://3.140.192.108:8084",
+    process.env.REACT_APP_API_CUSTOMER_ADMIN || "http://3.140.192.108:8084",
 });
 
 // Define inteceptors
@@ -45,18 +44,36 @@ const responseInterceptor = async (response) => {
   return response;
 };
 
+let isToastShown = false;
+
 const responseErrorInterceptor = (error) => {
   const errResponse = error.response;
-  if (errResponse && (errResponse.status === 401 || errResponse.status === 451) && errResponse.data) {
+  if (
+    errResponse &&
+    (errResponse.status === 401 ||
+      errResponse.status === 451 ||
+      errResponse.status === 422) &&
+    errResponse.data
+  ) {
     const token = storageRequest.getAuth();
     if (token) {
-      toast.success(
-        "Your session has expired. Please login again to continue working"
-      );
+      // toast.success(
+      //   "Your session has expired. Please login again to continue working"
+      // );
+      toast.success(errResponse.data.message);
     }
     storageRequest.removeAuth();
     window.location.href = "/login";
     return Promise.reject(error);
+  } else if (errResponse.status === 423 && !isToastShown) {
+    const token = storageRequest.getAuth();
+    if (token) {
+      toast.success(errResponse.data.message);
+      isToastShown = true;
+    }
+    setTimeout(() => {
+      window.location.href = "/complete-kyc-initial";
+    }, 3000);
   }
   return Promise.reject(error);
 };
@@ -85,4 +102,9 @@ axiosAdminInstance.interceptors.response.use(
   responseErrorInterceptor
 );
 
-export { axiosLoginInstance, axiosOnboardInstance, axiosTransactionInstance, axiosAdminInstance };
+export {
+  axiosLoginInstance,
+  axiosOnboardInstance,
+  axiosTransactionInstance,
+  axiosAdminInstance,
+};

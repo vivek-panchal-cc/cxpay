@@ -24,8 +24,7 @@ function LeftSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { profile, isLoading } = useSelector((state) => state.userProfile);
-  const { user_type } = profile || "";
-  const is_kyc = true;
+  const { user_type, is_kyc } = profile || "";
 
   const thisRoute = useMemo(() => location.pathname.split("/")[1], [location]);
 

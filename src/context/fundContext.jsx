@@ -12,7 +12,7 @@ import SelectCard from "pages/fund-account/components/SelectCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { fundSchema } from "schemas/fundSchema";
+import { fundSchema, fundSchemaWithoutCVV } from "schemas/fundSchema";
 import { LoaderContext } from "./loaderContext";
 import useCountryBanks from "hooks/useCountryBanks";
 import { getChargedAmount } from "helpers/commonHelpers";
@@ -79,6 +79,8 @@ const FundProvider = ({ children }) => {
     total: 0.0,
   });
 
+  const [isNewCard, setIsNewCard] = useState(true);
+
   const { first_name, last_name, email, city, country, address } =
     userProfile.profile || {};
 
@@ -89,9 +91,12 @@ const FundProvider = ({ children }) => {
       ...(params.fundtype === FUND_CARD ? cardCreds : {}),
       ...(params.fundtype === FUND_BANK ? bankCreds : {}),
     },
-    validationSchema: fundSchema,
+    validationSchema: isNewCard ? fundSchema : fundSchemaWithoutCVV,
     onSubmit: async (values, { setStatus, setErrors, resetForm }) => {
       try {
+        if (!isNewCard) {
+          delete values.security_code;
+        }
         switch (params.fundtype) {
           case FUND_CARD:
             const { error, payload } = await dispatch(
@@ -112,6 +117,10 @@ const FundProvider = ({ children }) => {
         setErrors(errorObj);
       }
     },
+  });
+
+  useEffect(() => {
+    setIsNewCard(formik.values.card_id === "" || !formik.values.card_id);
   });
 
   // ---------------------- FOR CARD ----------------------------------------------------
@@ -315,6 +324,7 @@ const FundProvider = ({ children }) => {
       // integrateBankDetails,
       // handleSelectNewBank,
       // handleSelectExistingBank,
+      isNewCard,
       formik,
       disbleCardField,
       paymentDetails,
@@ -323,6 +333,7 @@ const FundProvider = ({ children }) => {
       handleSelectExistingCard,
     }),
     [
+      isNewCard,
       formik,
       disbleCardField,
       paymentDetails,

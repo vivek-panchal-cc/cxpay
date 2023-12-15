@@ -91,6 +91,34 @@ const fundSchema = yup.object().shape({
   save_bank: yupWhenBank(yup.boolean()),
 });
 
+const fundSchemaWithoutCVV = yup.object().shape({
+  transactionAmount: yup
+    .string()
+    .matches(/^(0|[1-9]\d*)?(\.\d+)?$/, "Please enter valid amount")
+    .required("Please enter amount"),
+  txn_mode: yup.string().required(),
+  // Validations For CARD
+  card_id: yupWhenCard(yup.number()),
+  card_number: yupWhenCard(cardNumberSchema2),
+  expiry_date: yupWhenCard(cardExpirySchema),
+  // security_code: yupWhenCard(cardCvvSchema),
+  save_card: yupWhenCard(yup.boolean()),
+  // Validations For BANK
+  bank_id: yupWhenBank(yup.string()),
+  account_type: yupWhenBank(yup.string()),
+  bank_name: yupWhenBank(bankNameSchema),
+  routing_number: yupWhenBank(routingNumberSchema),
+  bank_account_number: yupWhenBank(bankNumberSchema),
+  bank_holder_first_name: yupWhenBank(
+    firstNameSchema.required("Please enter first name")
+  ),
+  bank_holder_last_name: yupWhenBank(
+    lastNameSchema.required("Please enter last name")
+  ),
+  address: yupWhenBank(addressSchema),
+  save_bank: yupWhenBank(yup.boolean()),
+});
+
 const fundCashCreditSchema = yup.object().shape({
   amount: yup
     .string()
@@ -129,4 +157,4 @@ const fundCashCreditSchema = yup.object().shape({
     }),
 });
 
-export { fundSchema, fundCashCreditSchema, topUpDetailsSchema };
+export { fundSchema, fundSchemaWithoutCVV, fundCashCreditSchema, topUpDetailsSchema };

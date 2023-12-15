@@ -25,6 +25,7 @@ function FundCreditCard(props) {
     disbleCardField,
     handleSelectNewCard,
     handleSelectExistingCard,
+    isNewCard,
   } = useContext(FundContext);
 
   const [showCvv, setShowCvv] = useState(false);
@@ -34,6 +35,8 @@ function FundCreditCard(props) {
     if (formik.values.card_id) setAddNewCard(false);
     else setAddNewCard(true);
   }, [formik.values]);
+
+  // const isNewCard = addNewCard;
 
   // For making input scroll into view on validation error
   useEffect(() => {
@@ -109,7 +112,13 @@ function FundCreditCard(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-6 col-12 col-left col p-0">
+              <div
+                className={`${
+                  isNewCard
+                    ? "col-lg-6 col-12 col-left col p-0"
+                    : "col-12 col p-0"
+                }`}
+              >
                 <div className="form-field position-relative z-2">
                   <DatePicker
                     id="datepickeradd-card"
@@ -137,35 +146,37 @@ function FundCreditCard(props) {
                   </p>
                 </div>
               </div>
-              <div className="col-lg-6 col-12 col-right col p-0">
-                <div className="position-relative">
-                  <Input
-                    type={showCvv ? "text" : "password"}
-                    inputMode="numeric"
-                    className="form-control"
-                    placeholder="CVV"
-                    name="security_code"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    maxength="3"
-                    value={formik.values.security_code}
-                    error={
-                      formik.touched.security_code &&
-                      formik.errors.security_code
-                    }
-                  />
-                  <span
-                    className="eye-icon position-absolute"
-                    style={{ top: "12px", right: "20px" }}
-                  >
-                    {showCvv ? (
-                      <IconEyeOpen onClick={() => setShowCvv((e) => !e)} />
-                    ) : (
-                      <IconEyeClose onClick={() => setShowCvv((e) => !e)} />
-                    )}
-                  </span>
+              {isNewCard && (
+                <div className="col-lg-6 col-12 col-right col p-0">
+                  <div className="position-relative">
+                    <Input
+                      type={showCvv ? "text" : "password"}
+                      inputMode="numeric"
+                      className="form-control"
+                      placeholder="CVV"
+                      name="security_code"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      // maxLength="3"
+                      value={formik.values.security_code}
+                      error={
+                        formik.touched.security_code &&
+                        formik.errors.security_code
+                      }
+                    />
+                    <span
+                      className="eye-icon position-absolute"
+                      style={{ top: "12px", right: "20px" }}
+                    >
+                      {showCvv ? (
+                        <IconEyeOpen onClick={() => setShowCvv((e) => !e)} />
+                      ) : (
+                        <IconEyeClose onClick={() => setShowCvv((e) => !e)} />
+                      )}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             <div className="row">
               <div className="col-12 p-0 amt-with-currency">
@@ -188,6 +199,28 @@ function FundCreditCard(props) {
                 />
               </div>
             </div>
+
+            {/* <div className="row">
+              <div className="col-12 p-0 amt-with-currency">
+                <span>{CURRENCY_SYMBOL}</span>
+                <Input
+                  type="text"
+                  inputMode="decimal"
+                  id="transactionAmount"
+                  className="form-control"
+                  placeholder="Amount"
+                  name="transactionAmount"
+                  maxLength="10"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.transactionAmount}
+                  error={
+                    formik.touched.transactionAmount &&
+                    formik.errors.transactionAmount
+                  }
+                />
+              </div>
+            </div> */}
             <div className="row">
               <div className="col-12 p-0">
                 {addNewCard ? (

@@ -5,6 +5,7 @@ import {
   bankNameSchema,
   bankNumberSchema,
   billingAddressSchema,
+  cardCvvSchema,
   cardExpirySchema,
   cardNumberSchema,
   citySchema,
@@ -19,7 +20,8 @@ import {
 const addCardSchema = yup.object().shape({
   card_number: cardNumberSchema,
   expiry_date: cardExpirySchema,
-  security_code: yup.string(),
+  // security_code: yup.string(),
+  security_code: cardCvvSchema,
   card_holder_first_name: firstNameSchema.required("Please enter first name"),
   card_holder_last_name: lastNameSchema.required("Please enter last name"),
   email: emailSchema,
