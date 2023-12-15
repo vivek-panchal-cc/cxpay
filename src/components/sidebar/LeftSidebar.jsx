@@ -31,7 +31,9 @@ function LeftSidebar() {
   const [submenuPosition, setSubmenuPosition] = useState({ top: 0, left: 0 });
 
   const updateSubMenuPosition = () => {
-    const submenu = document.querySelector(".dashboard-main-links .more-sub-menu");
+    const submenu = document.querySelector(
+      ".dashboard-main-links .more-sub-menu"
+    );
     const moreMenu = document.querySelector(".dashboard-main-links .more-menu");
 
     if (submenu && moreMenu) {
@@ -85,13 +87,19 @@ function LeftSidebar() {
   const shouldRedirectToRestrictedRoute =
     !is_kyc && restrictedRoutes.includes(thisRoute);
 
+  // if (shouldRedirectToRestrictedRoute) {
+  //   useEffect(() => {
+  //     toast.warning("Complete your KYC first", {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //     });
+  //     navigate("/", { replace: true });
+  //   }, []); // Add an empty dependency array to ensure it runs only once
+
+  //   return null; // Prevent further rendering
+  // }
+
   if (shouldRedirectToRestrictedRoute) {
-    useEffect(() => {
-      toast.warning("Complete your KYC first", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      navigate("/", { replace: true });
-    }, []); // Add an empty dependency array to ensure it runs only once
+    navigate("/", { replace: true });
 
     return null; // Prevent further rendering
   }
@@ -205,7 +213,13 @@ function LeftSidebar() {
               <IconMore style={{ stroke: "#F3F3F3" }} />
               <span>More</span>
             </a>
-            <ul className="more-sub-menu" style={{ top: `${submenuPosition.top}px`, left: `${submenuPosition.left}px` }}>
+            <ul
+              className="more-sub-menu"
+              style={{
+                top: `${submenuPosition.top}px`,
+                left: `${submenuPosition.left}px`,
+              }}
+            >
               {cmsPages?.map((page) => (
                 <li
                   key={page.id}
