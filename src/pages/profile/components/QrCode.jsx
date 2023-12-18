@@ -106,9 +106,9 @@ const QrCode = (props) => {
             <WhatsappIcon size={32} round />
           </WhatsappShareButton>
 
-          <FacebookMessengerShareButton appId={appId} url={qrCodeImg}>
+          {/* <FacebookMessengerShareButton appId={appId} url={qrCodeImg}>
             <FacebookMessengerIcon size={32} round />
-          </FacebookMessengerShareButton>
+          </FacebookMessengerShareButton> */}
 
           <EmailShareButton
             url={qrCodeImg}
