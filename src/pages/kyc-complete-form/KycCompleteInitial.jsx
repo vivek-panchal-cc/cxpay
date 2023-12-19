@@ -6,6 +6,9 @@ import { storageRequest } from "helpers/storageRequests";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 
 const KycCompleteInitial = () => {
+  useEffect(() => {
+    storageRequest.removeAuth();
+  })
   const logout = () => {
     storageRequest.removeAuth();
     window.location.href = "/";
