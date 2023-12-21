@@ -203,41 +203,43 @@ function LeftSidebar() {
               </li>
             </>
           )}
-          <li
-            className={`more-menu ${
-              thisRoute.startsWith("more") ? "active" : ""
-            }`}
-            onMouseEnter={updateSubMenuPosition}
-          >
-            <a>
-              <IconMore style={{ stroke: "#F3F3F3" }} />
-              <span>More</span>
-            </a>
-            <ul
-              className="more-sub-menu"
-              style={{
-                top: `${submenuPosition.top}px`,
-                left: `${submenuPosition.left}px`,
-              }}
+          {cmsPages?.length ? (
+            <li
+              className={`more-menu ${
+                thisRoute.startsWith("more") ? "active" : ""
+              }`}
+              onMouseEnter={updateSubMenuPosition}
             >
-              {cmsPages?.map((page) => (
-                <li
-                  key={page.id}
-                  className={`${
-                    thisRoute === `more/${page.slug}` ? "active" : ""
-                  }`}
-                >
-                  <Link
-                    // to={`/more/${page.slug}`}
-                    onClick={() => openCMSPages(page.slug)}
-                    replace
+              <a>
+                <IconMore style={{ stroke: "#F3F3F3" }} />
+                <span>More</span>
+              </a>
+              <ul
+                className="more-sub-menu"
+                style={{
+                  top: `${submenuPosition.top}px`,
+                  left: `${submenuPosition.left}px`,
+                }}
+              >
+                {cmsPages?.map((page) => (
+                  <li
+                    key={page.id}
+                    className={`${
+                      thisRoute === `more/${page.slug}` ? "active" : ""
+                    }`}
                   >
-                    <span>{page.title}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </li>
+                    <Link
+                      // to={`/more/${page.slug}`}
+                      onClick={() => openCMSPages(page.slug)}
+                      replace
+                    >
+                      <span>{page.title}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : null}
         </ul>
         <ul className="dashboard-bottom-links">
           <li className={`${thisRoute === "profile" ? "active" : ""}`}>
