@@ -50,7 +50,8 @@ const isValidFileType = (fileName, fileType) => {
   );
 };
 
-const otpCounterTime = 180;
+// const otpCounterTime = 180;
+const otpCounterTime = 60;
 const FILE_SIZE = 5 * 1048576;
 
 // theme colors
