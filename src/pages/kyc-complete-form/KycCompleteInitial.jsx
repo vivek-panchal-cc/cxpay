@@ -32,7 +32,7 @@ const KycCompleteInitial = () => {
 
   const handleBeforeUnload = (event) => {
     // Cancel the event to prevent the browser from navigating away
-    event.preventDefault();
+    // event.preventDefault();
     // Remove the authentication
     removeAuthentication();
   };
