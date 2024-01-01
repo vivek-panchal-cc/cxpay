@@ -7,8 +7,13 @@ import { fetchUserProfile } from "features/user/userProfileSlice";
 
 const KycCompleteInitial = () => {
   useEffect(() => {
+    removeAuthentication();
+  }, []);
+
+  const removeAuthentication = () => {
     storageRequest.removeAuth();
-  })
+  };
+
   const logout = () => {
     storageRequest.removeAuth();
     window.location.href = "/";
