@@ -7,6 +7,17 @@ import { fetchUserProfile } from "features/user/userProfileSlice";
 
 const KycCompleteInitial = () => {
   useEffect(() => {
+    // Attach the event listener when the component mounts
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      removeAuthentication();
+    };
+  }, []);
+
+  useEffect(() => {
     removeAuthentication();
   }, []);
 
@@ -18,6 +29,14 @@ const KycCompleteInitial = () => {
     storageRequest.removeAuth();
     window.location.href = "/";
   };
+
+  const handleBeforeUnload = (event) => {
+    // Cancel the event to prevent the browser from navigating away
+    event.preventDefault();
+    // Remove the authentication
+    removeAuthentication();
+  };
+
   return (
     <div className="login-signup login-signup-main common-body-bg">
       <div className="container">
