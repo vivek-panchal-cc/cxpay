@@ -8202,13 +8202,15 @@ ul.recent-act-lw-main .act-info-wrap-left {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: 10px;
+  /* margin-top: 10px; */
+  margin-bottom: 0px !important;
 }
 
 .kyc-checked input[type="checkbox"] {
   visibility: hidden;
   width: 0;
   height: 0;
+  margin-left: -5px;
 }
 
 .kyc-checked input:checked ~ label:before {

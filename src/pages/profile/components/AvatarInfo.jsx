@@ -1,5 +1,7 @@
+import KycChecked from "components/notification-bar/kyc-checked/KycChecked";
 import Image from "components/ui/Image";
-import React from "react";
+import React, { useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import { IconMobile, IconPersonalId } from "styles/svgs";
 
 const AvatarInfo = (props) => {
@@ -11,6 +13,10 @@ const AvatarInfo = (props) => {
     profileNumber,
     nationalId,
   } = props;
+  const location = useLocation();
+  const thisRoute = useMemo(() => location.pathname.split("/")[1], [location]);
+  const allowedKYCRoutes = ["profile"];
+  const isProfile = allowedKYCRoutes.includes(thisRoute);
 
   return (
     <div className="profile-top-sec">
@@ -54,6 +60,7 @@ const AvatarInfo = (props) => {
             &nbsp;{nationalId}
           </p>
         )}
+        {profileType !== "agent" && isProfile && <KycChecked />}
       </div>
     </div>
   );

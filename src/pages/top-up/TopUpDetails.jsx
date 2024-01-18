@@ -251,6 +251,7 @@ const TopUpDetails = () => {
           profileName={user_name}
           profileNumber={mobile_number}
           nationalId={national_id}
+          profileType={profile?.user_type}
         />
         <div className="wallet-fund-form-wrap">
           <form onSubmit={formik.handleSubmit}>
