@@ -198,13 +198,15 @@ const WithdrawCard = () => {
                     <tr>
                       <td>Total Amount</td>
                       <td>
-                        <WrapAmount value={paymentDetails?.total} />
+                        {/* <WrapAmount value={paymentDetails?.total} /> */}
+                        <WrapAmount value={Math.max(paymentDetails?.total, 0)} />
                       </td>
                     </tr>
                     <tr>
                       <td></td>
                       <td>
-                        <WrapAmount value={paymentDetails?.total} />
+                        {/* <WrapAmount value={paymentDetails?.total} /> */}
+                        <WrapAmount value={Math.max(paymentDetails?.total, 0)} />
                       </td>
                     </tr>
                   </tbody>
@@ -227,7 +229,7 @@ const WithdrawCard = () => {
                     className={`btn btn-primary ${
                       formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
                     } ${formik.isValid ? "" : "opacity-75"}`}
-                    disabled={formik.isSubmitting}
+                    disabled={formik.isSubmitting || paymentDetails.total <= 0}
                     value="Submit Request"
                   />
                 </div>

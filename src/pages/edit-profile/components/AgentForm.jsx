@@ -134,6 +134,7 @@ function AgentForm(props) {
               <div className="field-half">
                 <Input
                   type="name"
+                  disabled
                   className="form-control"
                   placeholder="First Name"
                   name="first_name"
@@ -146,6 +147,7 @@ function AgentForm(props) {
               <div className="field-half">
                 <Input
                   type="name"
+                  disabled
                   className="form-control"
                   placeholder="Last Name"
                   name="last_name"
@@ -226,6 +228,7 @@ function AgentForm(props) {
                   onBlur={formik.handleBlur}
                   value={formik.values.city}
                   error={formik.touched.city && formik.errors.city}
+                  disabled
                 >
                   <option value={""}>Select City</option>
                   {cityList[formik.values.country]?.map((city) => (

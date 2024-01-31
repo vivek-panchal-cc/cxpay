@@ -65,7 +65,7 @@ function ModalConfirmation(props) {
                     onClick={handleCallback}
                     autoFocus={true}
                   >
-                    confirm
+                    Confirm
                   </button>
                 ) : null}
               </div>

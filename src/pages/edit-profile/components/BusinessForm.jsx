@@ -126,6 +126,7 @@ function Businessform(props) {
             </div>
             <Input
               type="name"
+              disabled
               className="form-control"
               placeholder="Business Name"
               name="company_name"
@@ -194,6 +195,7 @@ function Businessform(props) {
                   onBlur={formik.handleBlur}
                   value={formik.values.city}
                   error={formik.touched.city && formik.errors.city}
+                  disabled
                 >
                   <option value={""}>Select City</option>
                   {cityList[formik.values.country]?.map((city) => (
