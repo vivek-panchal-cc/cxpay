@@ -20,6 +20,10 @@ import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import WrapAmount from "components/wrapper/WrapAmount";
 
+// Track the number of failed attempts
+let failedAttempts = 1;
+let cancelAttempts = 0;
+
 function SendPayment(props) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,6 +45,7 @@ function SendPayment(props) {
   const { wallet, request_id } = sendCreds || [];
 
   const [scrollTop, setScrollTop] = useState(false);
+  const [isScheduling, setIsScheduling] = useState(false);
   const [showOtpPoup, setShowOtpPopup] = useState(false);
   const [showSentPopup, setShowSentPopup] = useState(false);
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
@@ -57,6 +62,9 @@ function SendPayment(props) {
     grandTotal: 0.0,
     total: 0.0,
   });
+  const [scheduledData, setScheduledData] = useState(null);
+  const [attempts, setAttempts] = useState(failedAttempts);
+  const [cancelAttempts, setCancelAttempts] = useState(0);
 
   function convertDateFormat(inputDateStr) {
     // Convert the string to an ISO-like format
@@ -162,6 +170,38 @@ function SendPayment(props) {
     }
   };
 
+  const handleSubmitScheduleOtp = async (otp) => {
+    if (!otp || !mobile_number || !country_code) return;
+    setIsLoading(true);
+    try {
+      const formData = new FormData();
+      for (const key in scheduledData) {
+        formData.append(key, scheduledData[key]);
+      }
+      formData.append("user_otp", otp);
+      const { data } = await apiRequest.createSchedulePayment(formData);
+      if (!data.success) {
+        setAttempts((prevAttempts) => prevAttempts + 1);
+        if (attempts >= 3) {
+          handleCancelPayment();
+          toast.error("Your payment has been declined.");
+          navigate("/send", { replace: true });
+          return false; // Stop execution to prevent further processing
+        }
+        throw data.message;
+      }
+      toast.success(`${data.message}`);
+      setIsScheduling(false);
+      setShowOtpPopup(false);
+      navigate("/view-schedule-payment");
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // For resending the OTP after timeout
   const handleResendOtp = async () => {
     setIsLoading(true);
@@ -178,6 +218,37 @@ function SendPayment(props) {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleResendScheduleOtp = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.resendSchedulePaymentOtp();
+      if (!data.success) throw data.message;
+      toast.success(`${data?.data?.OTP}`);
+      toast.success(data.message);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // New function with the cancel logic
+  const handleCancelRecurringPayment = () => {
+    // Increment cancelAttempts
+    setCancelAttempts((prevAttempts) => prevAttempts + 1);
+
+    // Check if cancelAttempts reaches 3
+    if (cancelAttempts === 2) {
+      handleCancelPayment();
+      toast.error("Your payment has been declined.");
+      navigate("/send", { replace: true });
+      // Reset cancelAttempts after triggering the declined payment
+      setCancelAttempts(0);
+      return;
+    }
+    setShowOtpPopup(false);
   };
 
   // // For deleting the contacts from payment list
@@ -247,9 +318,10 @@ function SendPayment(props) {
     }
     setIsLoading(true);
     setShowScheduleConfirmPopup(false);
+    setIsScheduling(true);
     try {
       const formData = new FormData();
-      const muValues = { ...formik.values, ...scheduleCreds };
+      const muValues = { ...formik.values };
       muValues.schedule_payment = muValues?.wallet?.map(
         ({ specifications, personal_amount, receiver_account_number }) => ({
           specifications,
@@ -264,11 +336,13 @@ function SendPayment(props) {
       delete muValues.wallet;
       for (const key in muValues)
         addObjToFormData(muValues[key], key, formData);
-      const { data } = await apiRequest.createSchedulePayment(formData);
+      const { data } = await apiRequest.walletTransferScheduleOtp(formData);
       if (!data.success) throw data.message;
-      setShowSchedulePopup(false);
+      // Store the formData values in scheduledData
+      setScheduledData(Object.fromEntries(formData));
+      toast.success(`${data?.data?.OTP}`);
       toast.success(`${data.message}`);
-      navigate("/view-schedule-payment");
+      setShowOtpPopup(true);
     } catch (error) {
       if (typeof error === "string") toast.error(error);
     } finally {
@@ -310,13 +384,21 @@ function SendPayment(props) {
         className="otp-verification-modal group_pay_otp_modal"
         show={showOtpPoup}
         allowClickOutSide={true}
-        setShow={setShowOtpPopup}
+        // setShow={setShowOtpPopup}
+        setShow={() => {
+          // Call your new function with the cancel logic
+          handleCancelRecurringPayment();
+        }}
         heading="OTP Verification"
         headingImg="/assets/images/sent-payment-otp-pop.svg"
         subHeading="We have sent you verification code to initiate payment. Enter OTP below"
         validationSchema={sendPaymentOtpSchema}
-        handleSubmitOtp={handleSubmitOtp}
-        handleResendOtp={handleResendOtp}
+        handleSubmitOtp={
+          isScheduling ? handleSubmitScheduleOtp : handleSubmitOtp
+        }
+        handleResendOtp={
+          isScheduling ? handleResendScheduleOtp : handleResendOtp
+        }
       />
       {/* Modal For Money Sent successfully */}
       <ModalAlert
@@ -412,7 +494,7 @@ function SendPayment(props) {
       <form onSubmit={formik.handleSubmit}>
         <div className="one-time-pay-sec one-time-pay-wrap">
           <div className="one-time-pay-sec-inner-sec col-12">
-            {/* <!-- one time payment block starts -->	*/}
+            {/* <!-- one time payment block starts -->  */}
             <div className="payment-blocks-wrap">
               <div className="payment-blocks-inner">
                 {/* <!-- payment-blocks-listing starts --> */}
@@ -506,6 +588,9 @@ function SendPayment(props) {
                   type="submit"
                   className="btn btn-send-payment"
                   disabled={formik.isSubmitting}
+                  onClick={() => {
+                    setIsScheduling(false);
+                  }}
                 >
                   Send
                 </button>

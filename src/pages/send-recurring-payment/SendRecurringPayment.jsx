@@ -2,7 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import ContactPaymentItem from "components/items/ContactPaymentItem";
-import { sendPaymentSchema } from "schemas/sendPaymentSchema";
+import {
+  sendPaymentSchema,
+  sendPaymentOtpSchema,
+} from "schemas/sendPaymentSchema";
 import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
@@ -14,6 +17,11 @@ import WrapAmount from "components/wrapper/WrapAmount";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import ModalPaymentSchedulerRecurring from "components/modals/ModalPaymentSchedulerRecurring";
+import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
+
+// Track the number of failed attempts
+let failedAttempts = 1;
+let cancelAttempts = 0;
 
 function SendRecurringPayment(_props) {
   const navigate = useNavigate();
@@ -21,19 +29,28 @@ function SendRecurringPayment(_props) {
   const formData = location.state?.formData;
   const inputAmountRefs = useRef([]);
   const { setIsLoading } = useContext(LoaderContext);
+  const [showOtpPoup, setShowOtpPopup] = useState(false);
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
   const [showScheduleConfirmPopup, setShowScheduleConfirmPopup] =
     useState(false);
   const [scheduleCreds, setScheduleCreds] = useState(null);
 
-  const { sendCreds, charges, disableEdit, handleSendCreds, prevPathRedirect } =
-    useContext(SendPaymentContext);
+  const {
+    sendCreds,
+    charges,
+    disableEdit,
+    handleSendCreds,
+    prevPathRedirect,
+    handleCancelPayment,
+  } = useContext(SendPaymentContext);
 
   const { mobile_number, country_code } = useSelector(
     (state) => state?.userProfile?.profile
   );
   const { wallet } = sendCreds || [];
-
+  const [recurringData, setRecurringData] = useState(null);
+  const [attempts, setAttempts] = useState(failedAttempts);
+  const [cancelAttempts, setCancelAttempts] = useState(0);
   const [paymentDetails, setPaymentDetails] = useState({
     allCharges: [],
     grandTotal: 0.0,
@@ -127,20 +144,93 @@ function SendRecurringPayment(_props) {
             : formData?.occurrence_count.toString(),
         frequency: formData?.select_frequency_id,
       };
+      delete muValues.wallet;
       for (const key in formattedData)
         addObjToFormData(formattedData[key], key, formDataAppend);
-      const { data } = await apiRequest.createRecurringPayment(formDataAppend);
+
+      const { data } = await apiRequest.walletTransferRecurringOtp(
+        formDataAppend
+      );
       if (!data.success) throw data.message;
-      setShowSchedulePopup(false);
+      // Store the formData values in scheduledData
+      setRecurringData(Object.fromEntries(formDataAppend));
+      toast.success(`${data?.data?.otp}`);
       toast.success(`${data.message}`);
-      delete muValues.wallet;
-      navigate("/view-recurring-payment");
+      setShowOtpPopup(true);
+      // const { data } = await apiRequest.createRecurringPayment(formDataAppend);
+      // if (!data.success) throw data.message;
+      // setShowSchedulePopup(false);
+      // toast.success(`${data.message}`);
+      // delete muValues.wallet;
+      // navigate("/view-recurring-payment");
     } catch (error) {
       if (typeof error === "string") toast.error(error);
     } finally {
       setScheduleCreds(null);
       setIsLoading(false);
     }
+  };
+
+  const handleSubmitRecurringOtp = async (otp) => {
+    if (!otp || !mobile_number || !country_code) return;
+    setIsLoading(true);
+    try {
+      const formData = new FormData();
+      for (const key in recurringData) {
+        formData.append(key, recurringData[key]);
+      }
+      formData.append("user_otp", otp);
+      const { data } = await apiRequest.createRecurringPayment(formData);
+      if (!data.success) {
+        setAttempts((prevAttempts) => prevAttempts + 1);
+        if (attempts >= 3) {
+          handleCancelPayment();
+          toast.error("Your payment has been declined.");
+          navigate("/send", { replace: true });
+          return false; // Stop execution to prevent further processing
+        }
+        throw data.message;
+      }
+      toast.success(`${data.message}`);
+      setShowOtpPopup(false);
+      navigate("/view-recurring-payment");
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleResendRecurringOtp = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.resendRecurringPaymentOtp();
+      if (!data.success) throw data.message;
+      toast.success(`${data?.data?.otp}`);
+      toast.success(data.message);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // New function with the cancel logic
+  const handleCancelRecurringPayment = () => {
+    // Increment cancelAttempts
+    setCancelAttempts((prevAttempts) => prevAttempts + 1);
+
+    // Check if cancelAttempts reaches 3
+    if (cancelAttempts === 2) {
+      handleCancelPayment();
+      toast.error("Your payment has been declined.");
+      navigate("/send", { replace: true });
+      // Reset cancelAttempts after triggering the declined payment
+      setCancelAttempts(0);
+      return;
+    }
+    setShowOtpPopup(false);
   };
 
   // For deleting the contacts from payment list
@@ -215,6 +305,24 @@ function SendRecurringPayment(_props) {
     navigate(prevPathRedirect || "/send", { replace: true });
   return (
     <>
+      <ModalOtpConfirmation
+        id="group_pay_otp_modal"
+        className="otp-verification-modal group_pay_otp_modal"
+        show={showOtpPoup}
+        allowClickOutSide={true}
+        // setShow={setShowOtpPopup}
+        setShow={() => {
+          // Call your new function with the cancel logic
+          handleCancelRecurringPayment();
+        }}
+        heading="OTP Verification"
+        headingImg="/assets/images/sent-payment-otp-pop.svg"
+        subHeading="We have sent you verification code to initiate payment. Enter OTP below"
+        validationSchema={sendPaymentOtpSchema}
+        handleSubmitOtp={handleSubmitRecurringOtp}
+        handleResendOtp={handleResendRecurringOtp}
+      />
+
       <ModalPaymentSchedulerRecurring
         classNameChild="schedule-time-modal"
         show={showSchedulePopup}

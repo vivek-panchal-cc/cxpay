@@ -68,6 +68,8 @@ export const API_ONBOARD_UPDATE_SCHEDULE_PAYMENT = "/update-schedule-payment";
 export const API_ONBOARD_VIEW_SCHEDULE_PAYMENT = "/view-schedule-payment";
 export const API_ONBOARD_GET_ALL_SYSTEM_OPTIONS = "/get-all-system-options";
 export const API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS = "/mark-all-as-read";
+export const API_ONBOARD_WALLET_TRANSFER_SCHEDULE_OTP = "/create-schedule-payment-otp";
+export const API_ONBOARD_RESEND_SCHEDULE_PAYMENT_OTP = "/resend-schedule-payment-otp";
 
 // customer-admin urls
 export const API_ADMIN_CMS_PAGE = "/api/cms-page/details";
@@ -127,6 +129,9 @@ export const API_TRANSACTION_LIST_RECURRING_PAYMENT =
   "/list-recurring-schedule-payment";
 export const API_TRANSACTION_VIEW_RECURRING_PAYMENT =
   "/view-recurring-schedule-payment";
+export const API_TRANSACTION_WALLET_TRANSFER_RECURRING_OTP = "/create-recurring-schedule-payment-otp";
+export const API_TRANSACTION_RESEND_RECURRING_PAYMENT_OTP =
+  "/resend-recurring-schedule-payment-otp";
 
 //Reserved Amount
 export const API_RESERVED_AMOUNT_LIST = "/reserved-amount-list";

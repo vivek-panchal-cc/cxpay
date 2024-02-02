@@ -60,7 +60,8 @@ const AvatarInfo = (props) => {
             &nbsp;{nationalId}
           </p>
         )}
-        {profileType !== "agent" && isProfile && <KycChecked />}
+        {/* {profileType !== "agent" && isProfile && <KycChecked />} */}
+        {isProfile && <KycChecked />}
       </div>
     </div>
   );

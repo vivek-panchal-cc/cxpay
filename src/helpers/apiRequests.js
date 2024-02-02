@@ -76,6 +76,8 @@ const API_viewSchedulePayment = apiUrl.API_ONBOARD_VIEW_SCHEDULE_PAYMENT;
 const API_getAllSystemOptions = apiUrl.API_ONBOARD_GET_ALL_SYSTEM_OPTIONS;
 const API_markAllAsReadNotifications =
   apiUrl.API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS;
+const API_walletTransferScheduleOtp = apiUrl.API_ONBOARD_WALLET_TRANSFER_SCHEDULE_OTP;
+const API_resendSchedulePaymentOtp = apiUrl.API_ONBOARD_RESEND_SCHEDULE_PAYMENT_OTP;
 
 // ADMIN SERVICES
 const API_cmsPage = apiUrl.API_ADMIN_CMS_PAGE;
@@ -87,10 +89,13 @@ const API_initiateManualFundAdd =
   apiUrl.API_TRANSACTION_INITIATE_MANUAL_FUND_ADD;
 const API_getBalance = apiUrl.API_TRANSACTION_GET_BALANCE;
 const API_walletTransferOtp = apiUrl.API_TRANSACTION_WALLET_TRANSFER_OTP;
+const API_walletTransferRecurringOtp = apiUrl.API_TRANSACTION_WALLET_TRANSFER_RECURRING_OTP;
 const API_walletPersonalOtpVerify =
   apiUrl.API_TRANSACTION_WALLET_PERSONAL_OTP_VERIFY;
 const API_resendWalletTransferOtp =
   apiUrl.API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP;
+const API_resendRecurringPaymentOtp =
+  apiUrl.API_TRANSACTION_RESEND_RECURRING_PAYMENT_OTP;
 const API_getCharges = apiUrl.API_TRANSACTION_GET_CHARGES;
 const API_sendPaymentRequest = apiUrl.API_TRANSACTION_SEND_PAYMENT_REQUEST;
 const API_activityList = apiUrl.API_TRANSACTION_ACTIVITY_LIST;
@@ -616,6 +621,23 @@ export const createRecurringPayment = (params) => {
   return axiosTransactionInstance.post(`${API_createRecurringPayment}`, params);
 };
 
+/** POST @wallet-transfer-recurring-otp
+ * @params wallet, fees, amount, group_id
+ */
+ export const walletTransferRecurringOtp = (params) => {
+  return axiosTransactionInstance.post(`${API_walletTransferRecurringOtp}`, params);
+};
+
+/** POST @resend-recurring-payment-otp
+ * @params auth_token
+ */
+ export const resendRecurringPaymentOtp = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_resendRecurringPaymentOtp}`,
+    params
+  );
+};
+
 /** POST @update-recurring-payment
  * @params auth_token, recurring_payment_id
  */
@@ -717,6 +739,23 @@ export const sendPaymentRequest = (params) => {
  */
 export const createSchedulePayment = (params) => {
   return axiosOnboardInstance.post(`${API_createSchedulePayment}`, params);
+};
+
+/** POST @wallet-transfer-schedule-otp
+ * @params wallet, fees, amount, group_id
+ */
+ export const walletTransferScheduleOtp = (params) => {
+  return axiosOnboardInstance.post(`${API_walletTransferScheduleOtp}`, params);
+};
+
+/** POST @resend-schedule-payment-otp
+ * @params auth_token
+ */
+ export const resendSchedulePaymentOtp = (params) => {
+  return axiosOnboardInstance.post(
+    `${API_resendSchedulePaymentOtp}`,
+    params
+  );
 };
 
 /** POST @list-schedule-payment
@@ -954,8 +993,12 @@ export const apiRequest = {
   initiateManualFundAdd,
   getBalance,
   walletTransferOtp,
+  walletTransferScheduleOtp,
+  walletTransferRecurringOtp,
   walletPersonalOtpVerify,
   resendWalletTransferOtp,
+  resendSchedulePaymentOtp,
+  resendRecurringPaymentOtp,
   resendVerifyEmail,
   deactivateAccount,
   deactivateAgentAccount,
