@@ -8,6 +8,7 @@ import { ActivityContext } from "context/activityContext";
 import useActivities from "hooks/useActivities";
 import Input from "components/ui/Input";
 import InputDateRange from "components/ui/InputDateRange";
+import InputDateRangeActivities from "components/ui/InputDateRangeActivities";
 
 const Activities = () => {
   const { handleActivityDetail, reloadList } = useContext(ActivityContext);
@@ -22,8 +23,8 @@ const Activities = () => {
   const [loadingAct, actPagination, activitiesList, reload] = useActivities({
     page: currentPage,
     search: serachText,
-    start_date: filters.startDate ? filters.startDate.toLocaleDateString() : "",
-    end_date: filters.endDate ? filters.endDate.toLocaleDateString() : "",
+    start_date: filters.startDate ? filters.startDate  : "",
+    end_date: filters.endDate ? filters.endDate : "",
   });
 
   useEffect(() => {
@@ -43,14 +44,24 @@ const Activities = () => {
     setActivitiesDateBind(activityDateList);
   }, [activitiesList]);
 
+  const formatDate = (dateObj) => {
+    if (dateObj instanceof Date) {
+      const day = String(dateObj.getDate()).padStart(2, "0");
+      const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const year = dateObj.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+    return null;
+  };
+
   const handleChangeDateFilter = async ({ startDate, endDate }) => {
     if (!startDate || !endDate) return;
-    setFilters({
-      startDate: startDate,
-      endDate: endDate,
-    });
-    setCurrentPage(1);
-    setShowFilter(false);
+
+    const formattedStartDate = formatDate(startDate);
+    const formattedEndDate = formatDate(endDate);
+
+    setFilters({ startDate: formattedStartDate, endDate: formattedEndDate });
+    setShowFilter(false);    
   };
 
   const handleResetFilter = async () => {
@@ -102,7 +113,7 @@ const Activities = () => {
               <IconSearch style={{ stroke: "#0081c5" }} />
             </div>
           </div>
-          <InputDateRange
+          <InputDateRangeActivities
             className="date-filter-calendar"
             onClick={() => {
               setShowFilter(true);
