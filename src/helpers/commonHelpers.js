@@ -141,6 +141,9 @@ function formatDateToDesiredFormat(dateString) {
   if (hours > 12) hours -= 12; // Convert 24-hour format to 12-hour format
   if (hours === 0) hours = 12; // If it's 00 hours, change to 12 (for 12 AM)
 
+  // Add leading zero if necessary
+  hours = String(hours).padStart(2, "0");
+
   return `${day}/${month}/${year} | ${hours}:${minutes} ${period}`;
 }
 

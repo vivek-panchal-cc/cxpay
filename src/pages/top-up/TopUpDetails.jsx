@@ -244,7 +244,7 @@ const TopUpDetails = () => {
   };
 
   return (
-    <div className="profile-inner-sec p-4">
+    <div className="profile-inner-sec p-4 wr-card-form-wrap">
       <div className="profile-left-content col-lg-7 col-12">
         <AvatarInfo
           profileImg={profile_image}
@@ -256,7 +256,7 @@ const TopUpDetails = () => {
         <div className="wallet-fund-form-wrap">
           <form onSubmit={formik.handleSubmit}>
             <div className="row">
-              <div className="col-9 p-0 amt-with-currency">
+              <div className="col-12 p-0 amt-with-currency">
                 <span>{CURRENCY_SYMBOL}</span>
                 <Input
                   id="transfer_amount"
@@ -277,7 +277,7 @@ const TopUpDetails = () => {
               </div>
             </div>
             <div className="row">
-              <div className="col-9 p-0">
+              <div className="col-12 p-0">
                 <InputSelect
                   className="form-select form-control"
                   name="commission_type_id"
@@ -301,7 +301,7 @@ const TopUpDetails = () => {
             </div>
             {!isCashPaymentType() && (
               <div className="row">
-                <div className="col-9 p-0">
+                <div className="col-12 p-0">
                   <Input
                     type="text"
                     inputMode="text"
@@ -319,8 +319,8 @@ const TopUpDetails = () => {
                 </div>
               </div>
             )}
-            <div className="row top-up-fund-row-amt top-up-fund-row-amt-final">
-              <div className="col-9 p-0">
+            <div className="row top-up-fund-row-amt top-up-fund-row-amt-final wbr-final-amt-wrap">
+              {/* <div className="col-12 p-0"> */}
                 <table>
                   <tbody>
                     <tr>
@@ -332,12 +332,13 @@ const TopUpDetails = () => {
                     <tr>
                       <td>Amount</td>
                       <td>
-                        <WrapAmount value={paymentDetails.total} />
+                        {/* <WrapAmount value={paymentDetails.total} /> */}
+                        <WrapAmount value={Math.max(paymentDetails?.total, 0)} />
                       </td>
                     </tr>
                   </tbody>
                 </table>
-              </div>
+              {/* </div> */}
             </div>
 
             <div className="pay-btn-wrap">
@@ -351,7 +352,7 @@ const TopUpDetails = () => {
               <button
                 type="submit"
                 className="btn btn-send-payment"
-                disabled={formik.isSubmitting}
+                disabled={formik.isSubmitting || paymentDetails.total <= 0}
               >
                 Fund
               </button>
