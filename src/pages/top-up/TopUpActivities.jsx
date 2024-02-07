@@ -8,6 +8,7 @@ import InputDateRange from "components/ui/InputDateRange";
 import useTopUpActivities from "hooks/useTopUpActivities";
 import TopUpActivityItem from "components/items/TopUpActivityItem";
 import { TopUpActivityContext } from "context/topUpActivityContext";
+import InputDateRangeActivities from "components/ui/InputDateRangeActivities";
 
 const TopUpActivities = () => {
   const { handleActivityDetail, reloadList } = useContext(TopUpActivityContext);
@@ -23,8 +24,8 @@ const TopUpActivities = () => {
     useTopUpActivities({
       page: currentPage,
       search: serachText,
-      from_date: filters.fromDate ? filters.fromDate.toLocaleDateString() : "",
-      to_date: filters.toDate ? filters.toDate.toLocaleDateString() : "",
+      from_date: filters.fromDate ? filters.fromDate : "",
+      to_date: filters.toDate ? filters.toDate : "",
     });
 
   const mainDivStyle = {
@@ -37,7 +38,7 @@ const TopUpActivities = () => {
   };
 
   const visibility = {
-    visibility: "hidden"
+    visibility: "hidden",
   };
 
   const combinedStyle = { ...mainDivStyle, ...visibility };
@@ -59,11 +60,25 @@ const TopUpActivities = () => {
     setActivitiesDateBind(activityDateList);
   }, [activitiesList]);
 
+  const formatDate = (dateObj) => {
+    if (dateObj instanceof Date) {
+      const day = String(dateObj.getDate()).padStart(2, "0");
+      const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const year = dateObj.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+    return null;
+  };
+
   const handleChangeDateFilter = async ({ startDate, endDate }) => {
     if (!startDate || !endDate) return;
+
+    const formattedStartDate = formatDate(startDate);
+    const formattedEndDate = formatDate(endDate);
+
     setFilters({
-      fromDate: startDate,
-      toDate: endDate,
+      fromDate: formattedStartDate,
+      toDate: formattedEndDate,
     });
     setCurrentPage(1);
     setShowFilter(false);
@@ -118,7 +133,7 @@ const TopUpActivities = () => {
               <IconSearch style={{ stroke: "#0081c5" }} />
             </div>
           </div>
-          <InputDateRange
+          <InputDateRangeActivities
             className="date-filter-calendar"
             onClick={() => {
               setShowFilter(true);
@@ -163,13 +178,22 @@ const TopUpActivities = () => {
                     <thead>
                       <tr>
                         <th className="activity-month">{key}</th>
-                        <th style={combinedStyle} className="topup-table-header">
+                        <th
+                          style={combinedStyle}
+                          className="topup-table-header"
+                        >
                           Customer Amount
                         </th>
-                        <th style={combinedStyle} className="topup-table-header">
+                        <th
+                          style={combinedStyle}
+                          className="topup-table-header"
+                        >
                           Commission
                         </th>
-                        <th style={combinedStyle} className="topup-table-header">
+                        <th
+                          style={combinedStyle}
+                          className="topup-table-header"
+                        >
                           Total Amount
                         </th>
                         <th></th>
