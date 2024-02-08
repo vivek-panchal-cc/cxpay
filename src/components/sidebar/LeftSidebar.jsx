@@ -104,13 +104,17 @@ function LeftSidebar() {
     return null; // Prevent further rendering
   }
 
-  const openCMSPages = async (slug) => {
-    try {
-      const { request } = await apiRequest.getCMSPage(slug);
-      window.open(request.responseURL, "_blank");
-    } catch (error) {
-      console.error("Error fetching cms page:", error);
-    }
+  // const openCMSPages = async (slug) => {
+  //   try {
+  //     const { request } = await apiRequest.getCMSPage(slug);
+  //     window.open(request.responseURL, "_blank");
+  //   } catch (error) {
+  //     console.error("Error fetching cms page:", error);
+  //   }
+  // };
+
+  const openCMSPages = (slug) => {    
+    navigate(`/more/${slug}`);
   };
 
   return (
@@ -225,12 +229,12 @@ function LeftSidebar() {
                   <li
                     key={page.id}
                     className={`${
-                      thisRoute === `more/${page.slug}` ? "active" : ""
+                      location.pathname === `/more/${page.slug}` ? "active" : ""
                     }`}
                   >
                     <Link
-                      // to={`/more/${page.slug}`}
-                      onClick={() => openCMSPages(page.slug)}
+                      to={`/more/${page.slug}`}
+                      // onClick={() => openCMSPages(page.slug)}
                       replace
                     >
                       <span>{page.title}</span>

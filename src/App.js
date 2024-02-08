@@ -57,6 +57,7 @@ import { useDispatch, useSelector } from "react-redux";
 import RecurringPayment from "pages/recurring/RecurringPayment";
 import SendRecurringPayment from "pages/send-recurring-payment/SendRecurringPayment"; 
 import RecurringDetails from "pages/recurring-details/RecurringDetails";
+import CMSContent from "pages/cms-content/cmsContent";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 
 async function loadData() {
@@ -141,6 +142,7 @@ const ProtectedTopUpActivities = withUserProtection(TopUpActivities, AllowedAgen
 
 // user_types = all
 const ProtectedDashboard = withUserProtection(Dashboard, AllowedAllTypes);
+const ProtectedCMSContent = withUserProtection(CMSContent, AllowedAllTypes);
 
 function App() {
   const location = useLocation();
@@ -233,6 +235,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             {/* contacts */}
             <Route path="/" element={<ProtectedDashboard />} />
+            <Route path="/more/:slug" element={<ProtectedCMSContent />} />
             <Route path="/activities" element={<ProtectedActivities />} />
             <Route path="/view-notification" element={<ProtectedViewNotification />} />
             <Route path="/contacts" element={<ProtectedContacts />} />
