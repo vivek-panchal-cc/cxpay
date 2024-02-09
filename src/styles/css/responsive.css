@@ -3473,6 +3473,7 @@
     font-size: 22px;
     line-height: 24px;
     padding-bottom: 8px;
+    word-break: normal;
   }
   .modal-body p {
     font-size: 15px;
@@ -3687,6 +3688,7 @@
   #login_otp_modal .modal-body h3 {
     font-size: 22px;
     line-height: 28px;
+    word-break: normal;
   }
   #already_register_user .modal-header h3 {
     font-size: 25px;
