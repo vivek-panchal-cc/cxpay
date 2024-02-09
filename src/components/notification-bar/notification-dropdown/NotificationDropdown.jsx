@@ -45,7 +45,7 @@ const NotificationDropdown = (props) => {
     try {
       const { error, payload } = await dispatch(fetchMarkAsRead(id));
       if (error) throw payload;
-      toast.success(payload.message);
+      // toast.success(payload.message);
     } catch (error) {
       console.log(error);
     } finally {
