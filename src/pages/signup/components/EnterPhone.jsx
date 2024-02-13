@@ -60,7 +60,7 @@ function EnterPhone(props) {
           country_code: values.country_code,
         }));
         setShowVerifyPhonePopup(true);
-        toast.success(data.data.otp);
+        if (data?.data) toast.success(data.data.otp);
         toast.success(data.message);
       } catch (error) {
         setErrors({

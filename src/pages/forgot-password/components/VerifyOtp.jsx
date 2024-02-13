@@ -79,7 +79,7 @@ function VerifyOtp(props) {
         mobile_number: mobile_number,
       });
       if (!data.success) throw data.message;
-      toast.success(data.data.login_otp);
+      if (data?.data) toast.success(data.data.login_otp);
       toast.success(data.message);
     } catch (error) {
       if (typeof error === "string") {

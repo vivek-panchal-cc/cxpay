@@ -40,7 +40,7 @@ const LoginWithOtp = (props) => {
         if (!data.success) throw data.message;
         setMobileNumber(values.mobile_number);
         setCountryCode(values.country_code);
-        toast.success(data.data.login_otp);
+        if (data?.data) toast.success(data.data.login_otp);
         toast.success(data.message);
         setShowVerifyPhonePopup(true);
       } catch (error) {

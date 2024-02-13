@@ -61,7 +61,7 @@ function VerifyPhone(props) {
         country_code,
       });
       if (!data.success) throw data.message;
-      toast.success(data.data.otp);
+      if (data?.data) toast.success(data.data.otp);
       toast.success(data.message);
     } catch (error) {
       if (typeof error !== "string") return;
