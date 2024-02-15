@@ -4,7 +4,6 @@ import { LoaderContext } from "context/loaderContext";
 import { apiRequest } from "helpers/apiRequests";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import ReactApexChart from "react-apexcharts";
-import { toast } from "react-toastify";
 import { IconShowReservedAmount } from "styles/svgs";
 
 const chartOption = {
