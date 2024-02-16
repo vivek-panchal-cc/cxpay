@@ -135,7 +135,7 @@ function PersonalForm(props) {
                   disabled
                   className="form-control"
                   placeholder="First Name"
-                  name="first_name"
+                  // name="first_name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.first_name}
@@ -148,7 +148,7 @@ function PersonalForm(props) {
                   disabled
                   className="form-control"
                   placeholder="Last Name"
-                  name="last_name"
+                  // name="last_name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.last_name}
@@ -161,7 +161,7 @@ function PersonalForm(props) {
               disabled
               className="form-control"
               placeholder="Personal ID"
-              name="personal_id"
+              // name="personal_id"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.personal_id}
@@ -204,7 +204,7 @@ function PersonalForm(props) {
               <div className="field-half">
                 <InputSelect
                   className="form-select form-control"
-                  name="country"
+                  // name="country"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.country}
@@ -222,7 +222,7 @@ function PersonalForm(props) {
               <div className="field-half">
                 <InputSelect
                   className="form-select form-control"
-                  name="city"
+                  // name="city"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.city}

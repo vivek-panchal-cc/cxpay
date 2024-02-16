@@ -63,7 +63,7 @@ const ContactPaymentItem = forwardRef((props, ref) => {
         <Input
           type="text"
           inputMode="decimal"
-          name={fieldNameAmount}
+          name={disableAmount ? "" : fieldNameAmount}
           value={fieldValueAmount}
           onChange={fieldOnChange}
           onBlur={fieldOnBlur}

@@ -43,6 +43,7 @@ const FundManualTopup = (props) => {
     },
     validationSchema: fundCashCreditSchema,
     onSubmit: async (values, { setErrors, resetForm }) => {
+      if(parseFloat(paymentDetails.total.toFixed(2)) <= 0) return;
       setIsLoading(true);
       try {
         const muValues = { ...values };
@@ -188,7 +189,7 @@ const FundManualTopup = (props) => {
                     className={`btn btn-primary ${
                       formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
                     } ${formik.isValid ? "" : "opacity-75"}`}
-                    disabled={formik.isSubmitting || paymentDetails.total <= 0}
+                    disabled={formik.isSubmitting || parseFloat(paymentDetails.total.toFixed(2)) <= 0}
                   />
                 </div>
               </div>

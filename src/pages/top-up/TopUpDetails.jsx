@@ -109,6 +109,7 @@ const TopUpDetails = () => {
     },
     validationSchema: topUpDetailsSchema,
     onSubmit: async (values, { setErrors, resetForm }) => {
+      if(parseFloat(paymentDetails.total.toFixed(2)) <= 0) return;
       // Check if paymentDetails.total is negative
       // if (paymentDetails.total < 0) {
       //   toast.error("Amount should be greater than commission");
@@ -352,7 +353,7 @@ const TopUpDetails = () => {
               <button
                 type="submit"
                 className="btn btn-send-payment"
-                disabled={formik.isSubmitting || paymentDetails.total <= 0}
+                disabled={formik.isSubmitting || parseFloat(paymentDetails.total.toFixed(2)) <= 0}
               >
                 Fund
               </button>

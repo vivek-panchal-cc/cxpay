@@ -129,7 +129,7 @@ function Businessform(props) {
               disabled
               className="form-control"
               placeholder="Business Name"
-              name="company_name"
+              // name="company_name"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.company_name}
@@ -172,7 +172,7 @@ function Businessform(props) {
               <div className="field-half">
                 <InputSelect
                   className="form-select form-control"
-                  name="country"
+                  // name="country"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.country}
@@ -190,7 +190,7 @@ function Businessform(props) {
               <div className="field-half">
                 <InputSelect
                   className="form-select form-control"
-                  name="city"
+                  // name="city"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.city}

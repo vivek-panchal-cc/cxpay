@@ -64,6 +64,7 @@ const WithdrawCard = () => {
     },
     validationSchema: withdrawCardSchema,
     onSubmit: async (values, { setErrors }) => {
+      if(parseFloat(paymentDetails.total.toFixed(2)) <= 0) return;
       setShowWithdrawConfirm(true);
     },
   });
@@ -229,7 +230,7 @@ const WithdrawCard = () => {
                     className={`btn btn-primary ${
                       formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
                     } ${formik.isValid ? "" : "opacity-75"}`}
-                    disabled={formik.isSubmitting || paymentDetails.total <= 0}
+                    disabled={formik.isSubmitting || parseFloat(paymentDetails.total.toFixed(2)) <= 0}
                     value="Submit Request"
                   />
                 </div>
