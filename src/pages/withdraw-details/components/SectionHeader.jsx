@@ -61,10 +61,10 @@ const SectionHeader = (props) => {
           )}
         </div>
       </div>
-      <div className="wcr-info-2">
+      {/* <div className="wcr-info-2">
         <h4 className="font-16-quick">Specifications</h4>
         <p>{specification}</p>
-      </div>
+      </div> */}
     </>
   );
 };

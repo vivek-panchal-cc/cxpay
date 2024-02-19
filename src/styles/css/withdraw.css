@@ -614,7 +614,7 @@ ul.bank-refund-ul .rcard-info {
   justify-content: center;
 }
 .wr-bank-details-wrapper .wcr-innner-wrap-1 {
-  padding-bottom: 25px;
+  padding-bottom: 0px;
 }
 .wr-bdatail-tbl table td:first-child {
   width: 145px;
