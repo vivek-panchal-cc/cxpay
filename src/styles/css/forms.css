@@ -1,6 +1,6 @@
 /* Forms Related CSS */
 form .form-field .form-control {
-  border: 1px solid var(--blue) !important;
+  border: 1px solid var(--blue);
   border-radius: 18px !important;
   /* filter: drop-shadow(0px 3.76623px 15.6926px rgba(37, 31, 48, 0.2)); */
   filter: drop-shadow(0px 2px 4px rgba(37, 31, 48, 0.2));
@@ -108,4 +108,10 @@ form.verification-code-form .form-field .form-control {
   margin: 0 5px;
   color: var(--dark_blue);
   text-align: center;
+}
+
+.disabled-field {
+  background-color: #d5dbe0 !important;
+  border: 1px solid #d5dbe0 !important;
+  color: #878787 !important;
 }

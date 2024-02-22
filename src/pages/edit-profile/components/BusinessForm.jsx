@@ -127,7 +127,7 @@ function Businessform(props) {
             <Input
               type="name"
               disabled
-              className="form-control"
+              className={`form-control ${formik.values.company_name ? 'disabled-field' : ''}`}
               placeholder="Business Name"
               // name="company_name"
               onChange={formik.handleChange}
@@ -138,7 +138,7 @@ function Businessform(props) {
             <Input
               type="text"
               disabled
-              className="form-control"
+              className={`form-control ${formik.values.mobile_number ? 'disabled-field' : ''}`}
               placeholder="Mobile Number"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -150,7 +150,7 @@ function Businessform(props) {
             <Input
               type="text"
               disabled
-              className="form-control"
+              className={`form-control ${formik.values.email ? 'disabled-field' : ''}`}
               placeholder="Email"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -161,7 +161,7 @@ function Businessform(props) {
             <Input
               type="text"
               className="form-control"
-              placeholder="address"
+              placeholder="Address"
               name="address"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -171,7 +171,7 @@ function Businessform(props) {
             <div className="form-field two-fields">
               <div className="field-half">
                 <InputSelect
-                  className="form-select form-control"
+                  className={`form-select form-control ${formik.values.country ? 'disabled-field' : ''}`}
                   // name="country"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -189,7 +189,7 @@ function Businessform(props) {
               </div>
               <div className="field-half">
                 <InputSelect
-                  className="form-select form-control"
+                  className={`form-select form-control ${formik.values.city ? 'disabled-field' : ''}`}
                   // name="city"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}

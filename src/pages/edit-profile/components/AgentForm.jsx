@@ -135,7 +135,7 @@ function AgentForm(props) {
                 <Input
                   type="name"
                   disabled
-                  className="form-control"
+                  className={`form-control ${formik.values.first_name ? 'disabled-field' : ''}`}
                   placeholder="First Name"
                   // name="first_name"
                   onChange={formik.handleChange}
@@ -148,7 +148,7 @@ function AgentForm(props) {
                 <Input
                   type="name"
                   disabled
-                  className="form-control"
+                  className={`form-control ${formik.values.last_name ? 'disabled-field' : ''}`}
                   placeholder="Last Name"
                   // name="last_name"
                   onChange={formik.handleChange}
@@ -171,7 +171,7 @@ function AgentForm(props) {
             <Input
               type="text"
               disabled
-              className="form-control"
+              className={`form-control ${formik.values.mobile_number ? 'disabled-field' : ''}`}
               placeholder="Mobile Number"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -183,7 +183,7 @@ function AgentForm(props) {
             <Input
               type="text"
               disabled
-              className="form-control"
+              className={`form-control ${formik.values.email ? 'disabled-field' : ''}`}
               placeholder="Email"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -204,7 +204,7 @@ function AgentForm(props) {
             <div className="form-field two-fields">
               <div className="field-half">
                 <InputSelect
-                  className="form-select form-control"
+                  className={`form-select form-control ${formik.values.country ? 'disabled-field' : ''}`}
                   // name="country"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -222,7 +222,7 @@ function AgentForm(props) {
               </div>
               <div className="field-half">
                 <InputSelect
-                  className="form-select form-control"
+                  className={`form-select form-control ${formik.values.city ? 'disabled-field' : ''}`}
                   // name="city"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
