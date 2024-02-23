@@ -78,6 +78,8 @@ const API_markAllAsReadNotifications =
   apiUrl.API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS;
 const API_walletTransferScheduleOtp = apiUrl.API_ONBOARD_WALLET_TRANSFER_SCHEDULE_OTP;
 const API_resendSchedulePaymentOtp = apiUrl.API_ONBOARD_RESEND_SCHEDULE_PAYMENT_OTP;
+const API_createChangeMobileOtp = apiUrl.API_ONBOARD_CREATE_CHANGE_MOBILE_OTP;
+const API_verifyChangeMobileOtp = apiUrl.API_ONBOARD_VERIFY_CHANGE_MOBILE_OTP;
 
 // ADMIN SERVICES
 const API_cmsPage = apiUrl.API_ADMIN_CMS_PAGE;
@@ -758,6 +760,26 @@ export const createSchedulePayment = (params) => {
   );
 };
 
+/** POST @create-change-mobile-otp
+ * @params auth_token
+ */
+ export const createChangeMobileOtp = (params) => {
+  return axiosOnboardInstance.post(
+    `${API_createChangeMobileOtp}`,
+    params
+  );
+};
+
+/** POST @verify-change-mobile-otp
+ * @params auth_token
+ */
+ export const verifyChangeMobileOtp = (params) => {
+  return axiosOnboardInstance.post(
+    `${API_verifyChangeMobileOtp}`,
+    params
+  );
+};
+
 /** POST @list-schedule-payment
  * @params auth_token, start_date, end_date, page
  */
@@ -998,6 +1020,8 @@ export const apiRequest = {
   walletPersonalOtpVerify,
   resendWalletTransferOtp,
   resendSchedulePaymentOtp,
+  createChangeMobileOtp,
+  verifyChangeMobileOtp,
   resendRecurringPaymentOtp,
   resendVerifyEmail,
   deactivateAccount,

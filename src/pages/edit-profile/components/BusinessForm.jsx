@@ -189,13 +189,13 @@ function Businessform(props) {
               </div>
               <div className="field-half">
                 <InputSelect
-                  className={`form-select form-control ${formik.values.city ? 'disabled-field' : ''}`}
-                  // name="city"
+                  className={`form-select form-control ${city ? 'disabled-field' : ''}`}
+                  name={city ? "" : "city"}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.city}
                   error={formik.touched.city && formik.errors.city}
-                  disabled
+                  disabled={city}
                 >
                   <option value={""}>Select City</option>
                   {cityList[formik.values.country]?.map((city) => (

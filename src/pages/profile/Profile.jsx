@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AvatarInfo from "./components/AvatarInfo";
 import ProfileInfo from "./components/ProfileInfo";
 import QrCode from "./components/QrCode";
+import Modal from "components/modals/Modal";
 import "./profile.css";
 import ModalPasswordConfirmation from "components/modals/ModalPasswordConfirmation";
 import { LoaderContext } from "context/loaderContext";
@@ -11,6 +12,12 @@ import {
   fetchDeactivateAccountForAgent,
   fetchUserProfile,
 } from "features/user/userProfileSlice";
+import OtpTypePopup from "components/popups/OtpTypePopup";
+import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
+import { sendPaymentOtpSchema } from "schemas/sendPaymentSchema";
+import NewMobileChange from "pages/new-mobile-change/NewMobileChange";
+import NewMobileModal from "components/modals/NewMobileModal";
+import { apiRequest } from "helpers/apiRequests";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -30,6 +37,10 @@ const Profile = () => {
       : company_name;
 
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [showOtpTypePopup, setShowOtpTypePopup] = useState(false);
+  const [showOtpPopup, setShowOtpPopup] = useState(false);
+  const [showNewMobilePopup, setShowNewMobilePopup] = useState(false);
+  const [details, setDetails] = useState("");
 
   const handleInitiateDeleteAccount = () => {
     setShowConfirmPopup(true);
@@ -90,6 +101,54 @@ const Profile = () => {
     }
   };
 
+  const handleModalOtpConfirmation = (values) => {
+    console.log("values: ", values);
+    if (!values) return;
+    setShowOtpPopup(true);
+    setDetails(values);
+  };
+
+  const handleOtpTypePopup = () => {
+    setShowOtpTypePopup(true);
+  };
+
+  const handleSubmitOtp = async (otp) => {
+    if (!otp) return;
+    setIsLoading(true);
+    setShowOtpPopup(false);
+    try {
+      const formData = new FormData();
+      formData.append("user_mobile_otp", otp);
+      formData.append("verify_number_flag", details.verify_number_flag);
+      formData.append("customer_id", details.customer_id);
+      formData.append("country_code", details.country_code);
+      formData.append("mobile_number", details.mobile_number);
+      const { data } = await apiRequest.verifyChangeMobileOtp(formData);
+      if (!data.success) throw data.message;
+      toast.success(`${data.message}`);
+      setShowNewMobilePopup(true);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = apiRequest.createChangeMobileOtp(details);
+      if (!data.success) throw data.message;
+      if (data?.data) toast.success(data.data.login_otp);
+      toast.success(data.message);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="profile-inner-sec p-4">
       <ModalPasswordConfirmation
@@ -122,6 +181,12 @@ const Profile = () => {
           >
             Delete Account
           </button>
+          &nbsp;
+          {mobile_number && (
+            <button type="button" className="btn" onClick={handleOtpTypePopup}>
+              Change Mobile
+            </button>
+          )}
         </div>
       </div>
       {user_type !== "agent" && (
@@ -129,6 +194,42 @@ const Profile = () => {
           <QrCode qrCodeImg={profile?.qr_code_image} />
         </div>
       )}
+      <Modal
+        id="fund_acc_modal"
+        show={showOtpTypePopup}
+        setShow={setShowOtpTypePopup}
+        className="fund-acc-modal"
+        classNameChild="modal-dialog w-100"
+      >
+        <OtpTypePopup
+          details={profile}
+          setModalShow={setShowOtpTypePopup}
+          handleCallBack={handleModalOtpConfirmation}
+        />
+      </Modal>
+
+      <ModalOtpConfirmation
+        id="group_pay_otp_modal"
+        className="otp-verification-modal group_pay_otp_modal"
+        show={showOtpPopup}
+        allowClickOutSide={true}
+        setShow={setShowOtpPopup}
+        heading="OTP Verification"
+        headingImg="/assets/images/sent-payment-otp-pop.svg"
+        subHeading="We have sent you verification code. Enter OTP below"
+        validationSchema={sendPaymentOtpSchema}
+        handleSubmitOtp={handleSubmitOtp}
+        handleResendOtp={handleResendOtp}
+      />
+
+      <Modal
+        id="fund_acc_modal"
+        show={showNewMobilePopup}
+        className="fund-acc-modal"
+        // classNameChild="modal-dialog w-100"
+      >
+        <NewMobileChange setShow={setShowNewMobilePopup} details={details} />
+      </Modal>
     </div>
   );
 };

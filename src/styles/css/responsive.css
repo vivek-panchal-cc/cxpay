@@ -48,6 +48,11 @@
     margin-top: 10px;
     margin-bottom: 15px;
   }
+  .new-mobile-send-cd-btn .btn,
+  .sign-up-btn .btn {
+    margin-top: 10px;
+    margin-bottom: 0px;
+  }
   .login-signup-02 .login-signup-content-wrap {
     padding: 20px 20px;
   }
@@ -4555,6 +4560,32 @@
     margin: auto;
   }
   .fund-payment-option-wrap a:last-child .fund-payment-option {
+    margin-bottom: 0px;
+  }
+  .otp-option-wrap {
+    /*display: block;*/
+    width: 100%;
+    margin: auto;
+  }
+  .otp-option-wrap .email-option {
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  .otp-option-wrap .sms-option {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  .otp-option-wrap .otp-option {
+    width: 100%;
+    margin-bottom: 0px;
+  }
+  .otp-option-wrap .email-option,
+  .otp-option-wrap .sms-option {
+    display: block;
+    max-width: 130px;
+    margin: auto;
+  }
+  .otp-option-wrap .sms-option .otp-option {
     margin-bottom: 0px;
   }
   /* .login-signup .login-signup-inner {
