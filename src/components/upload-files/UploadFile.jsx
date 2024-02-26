@@ -5,6 +5,7 @@ import styles from "./uploadFile.module.scss";
 
 const UploadFile = (props) => {
   const {
+    label = "",
     name = "",
     files = [],
     onChange = () => {},
@@ -61,7 +62,7 @@ const UploadFile = (props) => {
               <div className="fc-upload-receipt-wrap">
                 <label htmlFor="upload_receipt" className="">
                   <IconUpload stroke={"#0081C5"} />
-                  Upload receipt
+                  {label ? label : "Upload receipt"}
                 </label>
               </div>
               {/* <p className="red">Note: Allowed formats are JPEG, PNG, PDF, JPG</p> */}

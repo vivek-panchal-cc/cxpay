@@ -819,6 +819,10 @@ pointer-events: none;
   padding-top: 24px;
 }
 
+.business-id-field p span{
+  font-size: 12px;
+}
+
 .modal.show {
   display: flex;
   flex-wrap: wrap;

@@ -71,7 +71,10 @@ const BusinessForm = (props) => {
         />
       </div>
       <div className="form-field business-id-field">
-        <p>Business ID</p>
+        <p>
+          Chamber of Commerce{" "}
+          <span className="smaller-note">(not older than 2 months)</span>
+        </p>
         <Input
           type="text"
           className="form-control"

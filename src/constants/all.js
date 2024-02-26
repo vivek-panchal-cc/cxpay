@@ -21,6 +21,11 @@ const validFileExtensions = {
   receipt: ["jpg", "png", "jpeg", "heif", "hevc", "pdf", "tif", "tiff", "webp"],
   pdf: ["pdf"],
 };
+const validDocumentExtensions = {
+  image: ["jpg", "png", "jpeg", "svg", "heif", "hevc"],
+  document: ["jpg", "png", "jpeg", "heif", "hevc", "pdf", "tif", "tiff", "webp"],
+  pdf: ["pdf"],
+};
 
 // Test Functions
 const regexNotContainWhitespace = (testStr) =>
@@ -47,6 +52,13 @@ const isValidFileType = (fileName, fileType) => {
   return (
     fileName &&
     validFileExtensions[fileType].indexOf(fileName.split(".").pop()) > -1
+  );
+};
+
+const isValidDocumentType = (fileName, fileType) => {
+  return (
+    fileName &&
+    validDocumentExtensions[fileType].indexOf(fileName.split(".").pop()) > -1
   );
 };
 
@@ -885,6 +897,7 @@ export {
   regexContainNumber,
   regexContainSpecialCharacter,
   isValidFileType,
+  isValidDocumentType,
   // fileUploadLimit,
   // ~NOT
   regexNotContainWhitespace,
