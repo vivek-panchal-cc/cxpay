@@ -138,7 +138,7 @@ const ModalActivityDetail = (props) => {
             className="btn print-details-btn w-50"
             onClick={() => handleSubmit(details)}
           >
-            Print Details
+            Download Details
           </button>
         );
       default:

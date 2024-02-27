@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import InputOtp from "components/ui/InputOtp";
 import { useFormik } from "formik";
 import { verifyLoginOtpSchema } from "schemas/validationSchema";
@@ -9,10 +9,11 @@ import { toast } from "react-toastify";
 import { otpCounterTime } from "constants/all";
 import { useNavigate } from "react-router-dom";
 import { storageRequest } from "helpers/storageRequests";
+import { LoaderContext } from "context/loaderContext";
 
 function VerifyNewMobileOtp(props) {
   const { mobileNumber, countryCode, customer_id, setShow } = props;
-
+  const { setIsLoading } = useContext(LoaderContext);
   const navigate = useNavigate();
 
   const [counter, setCounter] = useState(otpCounterTime);
@@ -44,7 +45,7 @@ function VerifyNewMobileOtp(props) {
     Math.floor(counter / 60) + ":" + (formattedNumber ? formattedNumber : "00");
   const dispatch = useDispatch();
 
-  const formik = useFormik({
+  const formik = useFormik({    
     initialValues: {
       country_code: countryCode,
       mobile_number: mobileNumber,
@@ -54,6 +55,7 @@ function VerifyNewMobileOtp(props) {
     },
     validationSchema: verifyLoginOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
+      setIsLoading(true);
       try {
         const formData = new FormData();
         formData.append("user_mobile_otp", values.login_otp);
@@ -67,7 +69,11 @@ function VerifyNewMobileOtp(props) {
         storageRequest.removeAuth();
         navigate("/", { replace: true });
       } catch (error) {                
-        if (typeof message === "string") setStatus(message);
+        if (typeof error === "string") toast.error(error);
+        return false;
+      } finally{
+        resetForm();
+        setIsLoading(false);
       }
     },
   });
@@ -77,6 +83,7 @@ function VerifyNewMobileOtp(props) {
     setIsTimerOver(true);
     setCounter(otpCounterTime);
     handleTimeOut();
+    setIsLoading(true);
     try {
       const { data } = await apiRequest.createChangeMobileOtp({
         country_code: countryCode,
@@ -86,7 +93,7 @@ function VerifyNewMobileOtp(props) {
         customer_id: customer_id,
       });
       if (!data.success) throw data.message;
-      if (data?.data) toast.success(data.data.login_otp);
+      if (data?.data) toast.success(data.data.otp);
       toast.success(data.message);
     } catch (error) {
       if (typeof error === "string") {
@@ -94,20 +101,23 @@ function VerifyNewMobileOtp(props) {
         formik.setStatus(error);
         setError(true);
       }
+    } finally{
+      formik?.resetForm();
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="modal-dialog modal-dialog-centered">
       <div className="modal-content">
-        <div className="modal-header">
+        <div className="modal-header pb-0">
           <div className="">
-            <img src="/assets/images/unlock-tick.svg" alt="Unlock" />
+            <img src="/assets/images/sent-payment-otp-pop.svg" alt="Otp" />
           </div>
         </div>
         <div className="modal-body">
           <h3>Verify your Phone Number</h3>
-          <p>Please enter confirmation code</p>
+          <p>We have sent you a verification code to your new mobile number. Enter the OTP below.</p>
           <form className="login-otp-numbers" onSubmit={formik.handleSubmit}>
             <div className="form-field">
               <InputOtp
