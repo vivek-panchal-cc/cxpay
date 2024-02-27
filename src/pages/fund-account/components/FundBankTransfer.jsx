@@ -7,6 +7,7 @@ import { FundContext } from "context/fundContext";
 import { IconAddBackground, IconCard, IconRightArrowBig } from "styles/svgs";
 import { CURRENCY_SYMBOL } from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
+import { useSelector } from "react-redux";
 
 function FundBankTransfer(props) {
   const {
@@ -20,7 +21,8 @@ function FundBankTransfer(props) {
     handleSelectExistingBank,
   } = useContext(FundContext);
   const [addNewBank, setAddNewBank] = useState(false);
-
+  const { profile } = useSelector((state) => state.userProfile);
+  const { admin_approved } = profile || {};
   useEffect(() => {
     if (formik.values.bank_id) setAddNewBank(false);
     else setAddNewBank(true);
@@ -338,25 +340,27 @@ function FundBankTransfer(props) {
                 </table>
               </div>
             </div>
-            <div className="row">
-              <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
-                <div className="btn-wrap">
-                  <Link to="/wallet" replace className="btn outline-btn">
-                    Cancel
-                  </Link>
-                </div>
-                <div className="btn-wrap">
-                  <input
-                    type="submit"
-                    className={`btn btn-primary ${
-                      formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
-                    } ${formik.isValid ? "" : "opacity-75"}`}
-                    disabled={formik.isSubmitting}
-                    value="Fund"
-                  />
+            {admin_approved ? (
+              <div className="row">
+                <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
+                  <div className="btn-wrap">
+                    <Link to="/wallet" replace className="btn outline-btn">
+                      Cancel
+                    </Link>
+                  </div>
+                  <div className="btn-wrap">
+                    <input
+                      type="submit"
+                      className={`btn btn-primary ${
+                        formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                      } ${formik.isValid ? "" : "opacity-75"}`}
+                      disabled={formik.isSubmitting}
+                      value="Fund"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : null}
           </form>
         </div>
       </div>

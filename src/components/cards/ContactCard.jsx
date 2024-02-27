@@ -1,6 +1,7 @@
 import Image from "components/ui/Image";
 import { renameKeys } from "constants/all";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const ContactCard = (props) => {
   const {
@@ -15,6 +16,16 @@ const ContactCard = (props) => {
   } = props;
   const { id, title, imgUrl } = renameKeys(alias, item);
   const isChecked = selectedList.includes(id.toString());
+  const { group_id } = item || "";
+  const { profile } = useSelector((state) => state?.userProfile);
+
+  const disabledCheckedBox = () => {
+    if (profile.admin_approved) {
+      return !(item.admin_approved);
+    } else {
+      return true
+    }
+  }
 
   return (
     <div className={className}>
@@ -26,6 +37,7 @@ const ContactCard = (props) => {
             value={id}
             onChange={handleSelect}
             checked={isChecked}
+            disabled={group_id ? "" : disabledCheckedBox()}
           />
         ) : null}
         <label

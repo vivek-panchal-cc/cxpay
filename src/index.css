@@ -73,6 +73,21 @@ code {
   color: #9d9d9d;
   pointer-events: none;
 }
+.admin-approved-disabled {
+  color: #9d9d9d !important;
+  pointer-events: visible !important;
+  cursor: not-allowed !important;
+}
+.admin-approved-disabled img {
+  opacity: 0.6;
+}
+.contacts-admin-approved-disabled {
+  border: 1px solid #d5dbe0 !important;
+  color: #878787 !important;
+  pointer-events: visible !important;
+  cursor: not-allowed !important;
+  background: #d5dbe0 !important;
+}
 .resend-otp-wrap button {
   cursor: pointer;
   font-weight: 700;

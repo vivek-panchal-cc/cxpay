@@ -39,7 +39,7 @@ function SendPayment(props) {
     prevPathRedirect,
   } = useContext(SendPaymentContext);
 
-  const { mobile_number, country_code } = useSelector(
+  const { mobile_number, country_code, admin_approved } = useSelector(
     (state) => state?.userProfile?.profile
   );
   const { wallet, request_id } = sendCreds || [];
@@ -575,7 +575,7 @@ function SendPayment(props) {
                 </div>
               </div>
             </div>
-            <div className="pay-btn-wrap">
+            {admin_approved ? (<div className="pay-btn-wrap">
               <button
                 type="button"
                 onClick={handleCancelPayment}
@@ -614,7 +614,7 @@ function SendPayment(props) {
                   Schedule Payment
                 </button>
               )} */}
-            </div>
+            </div>) : null}
           </div>
         </div>
       </form>

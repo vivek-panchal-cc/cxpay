@@ -77,14 +77,15 @@ const BusinessForm = (props) => {
         </p>
         <Input
           type="text"
-          className="form-control"
+          className={`form-control ${profile.admin_approved ? 'disabled-field' : ''}`}
           id="business-id"
-          name="business_id"
+          name={profile.admin_approved ? "" : "business_id"}
           placeholder="ID Number"
           value={formik.values.business_id}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.business_id && formik.errors.business_id}
+          disabled={profile.admin_approved}
         />
       </div>
       <div className="form-field">

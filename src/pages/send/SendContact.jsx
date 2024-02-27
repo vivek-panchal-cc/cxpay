@@ -12,6 +12,7 @@ import ModalCreateGroup from "components/modals/ModalCreateGroup";
 import { MAX_GROUP_MEMBERS } from "constants/all";
 import ModalAddContact from "components/modals/ModalAddContact";
 import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
+import { useSelector } from "react-redux";
 
 function SendContact() {
   const [contactsList, setContactsList] = useState([]);
@@ -38,6 +39,9 @@ function SendContact() {
   const [showNewContPop, setShowNewContPop] = useState(false);
   //
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
+
+  const { profile } = useSelector((state) => state.userProfile);
+  const { admin_approved } = profile || {};
 
   const navigate = useNavigate();
   const {
@@ -252,7 +256,7 @@ function SendContact() {
         />
         <ContactsSelection.Footer>
           {isLoadingContacts ? <LoaderSendContactButtons /> : null}
-          {!isLoadingContacts && contactsList.length > 0 ? (
+          {!isLoadingContacts && contactsList.length > 0 && admin_approved ? (
             <>
               {" "}
               <Button
@@ -333,7 +337,7 @@ function SendContact() {
         />
         <ContactsSelection.Footer>
           {isLoadingGroups ? <LoaderSendContactButtons /> : null}
-          {!isLoadingGroups && groupList.length > 0 ? (
+          {!isLoadingGroups && groupList.length > 0 && admin_approved ? (
             <>
               <Button
                 type="button"

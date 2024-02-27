@@ -10,6 +10,7 @@ import useBalance from "hooks/useBalance";
 import useChartData from "hooks/useChartData";
 import BalanceGraph from "components/graph/BalanceGraph";
 import RecentActivities from "components/activity/RecentActivities";
+import { useSelector } from "react-redux";
 
 function Wallet() {
   const { setIsLoading } = useContext(LoaderContext);
@@ -19,6 +20,8 @@ function Wallet() {
   const [activitiesList, setActivitiesList] = useState([]);
   const [loadingBalance, balance] = useBalance();
   const [loadingChart, chartData] = useChartData();
+  const { profile } = useSelector((state) => state.userProfile);
+  const { admin_approved } = profile || {};
 
   const getActivitiesList = async (page = 1, filters = {}) => {
     try {
@@ -83,13 +86,20 @@ function Wallet() {
                 <p> </p>
               </div>
               <div className="wallet-title-btns">
-                <Link
-                  className="wallet-top-1-btn"
-                  onClick={handleFundAccountPopup}
-                >
-                  <img src="/assets/images/fund_svg_wallet.svg" alt="" />
-                  <span>Fund your account</span>
-                </Link>
+                {admin_approved ? (
+                  <Link
+                    className="wallet-top-1-btn"
+                    onClick={handleFundAccountPopup}
+                  >
+                    <img src="/assets/images/fund_svg_wallet.svg" alt="" />
+                    <span>Fund your account</span>
+                  </Link>
+                ) : (
+                  <Link className="wallet-top-1-btn admin-approved-disabled">
+                    <img src="/assets/images/fund_svg_wallet.svg" alt="" />
+                    <span>Fund your account</span>
+                  </Link>
+                )}
                 <Link to="/wallet/link-bank" className="wallet-top-2-btn">
                   <img src="/assets/images/Bank_ic_wallet.svg" alt="" />
                   <span>Link a bank</span>
@@ -131,13 +141,22 @@ function Wallet() {
                 <img src="/assets/images/Bank_ic_wallet.svg" alt="" />
                 <span className="w-100 mw-100">My Bank Accounts</span>
               </Link>
-              <Link
-                to="/wallet/withdrawals-card"
-                className="w-100 d-flex align-items-center"
-              >
-                <img src="/assets/images/Bank_ic_wallet.svg" alt="" />
-                <span className="w-100 mw-100">Withdraw</span>
-              </Link>
+              {admin_approved ? (
+                <Link
+                  to="/wallet/withdrawals-card"
+                  className="w-100 d-flex align-items-center"
+                >
+                  <img src="/assets/images/Bank_ic_wallet.svg" alt="" />
+                  <span className="w-100 mw-100">Withdraw</span>
+                </Link>
+              ) : (
+                <Link                  
+                  className="w-100 d-flex align-items-center admin-approved-disabled"
+                >
+                  <img src="/assets/images/Bank_ic_wallet.svg" alt="" />
+                  <span className="w-100 mw-100">Withdraw</span>
+                </Link>
+              )}
             </div>
             <div className="wallet-card-add-btns">
               <Link

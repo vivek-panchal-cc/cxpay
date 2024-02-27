@@ -7,6 +7,7 @@ import Button from "components/ui/Button";
 import { apiRequest } from "helpers/apiRequests";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import ModalAddContact from "components/modals/ModalAddContact";
+import { useSelector } from "react-redux";
 
 const RequestContact = (props) => {
   const { selectedContacts, handleSelectedContacts, handleSendRequest } =
@@ -22,6 +23,9 @@ const RequestContact = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   // For Add new contacts
   const [showNewContPop, setShowNewContPop] = useState(false);
+
+  const { profile } = useSelector((state) => state.userProfile);
+  const { admin_approved } = profile || {};
 
   const getInviteContactList = async (page = 1, search = "") => {
     setIsLoadingContacts(true);
@@ -135,7 +139,7 @@ const RequestContact = (props) => {
         />
         <ContactsSelection.Footer>
           {isLoadingContacts ? <LoaderSendContactButtons /> : null}
-          {!isLoadingContacts && contactsList.length > 0 ? (
+          {!isLoadingContacts && contactsList.length > 0 && admin_approved ? (
             <Button
               type="button"
               className="btn btn-next ws--btn ms-0"

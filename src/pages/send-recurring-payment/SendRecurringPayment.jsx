@@ -44,7 +44,7 @@ function SendRecurringPayment(_props) {
     handleCancelPayment,
   } = useContext(SendPaymentContext);
 
-  const { mobile_number, country_code } = useSelector(
+  const { mobile_number, country_code, admin_approved } = useSelector(
     (state) => state?.userProfile?.profile
   );
   const { wallet } = sendCreds || [];
@@ -555,7 +555,7 @@ function SendRecurringPayment(_props) {
                 </div>
               </div>
             </div>
-            <div className="pay-btn-wrap">
+            {admin_approved ? (<div className="pay-btn-wrap">
               <button
                 type="button"
                 onClick={() => navigate("/send/recurring-payment")}
@@ -571,7 +571,7 @@ function SendRecurringPayment(_props) {
               >
                 Initiate Recurring
               </button>
-            </div>
+            </div>) : null}
           </div>
         </div>
       </form>

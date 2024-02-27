@@ -188,7 +188,7 @@ const businessInfoSchema = yup.object().shape({
   // .matches(url_regex, "Please enter valid business URL"),
   business_id: yup
     .string()
-    // .required("Please enter personal id")
+    .required("Please enter chamber of commerce")
     .matches(/^\S*$/, "Space is not allowed")
     .max(25, "Business id must not be greater than 25 characters."),
 });

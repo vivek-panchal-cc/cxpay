@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import InputDatePicker from "components/ui/InputDatePicker";
 import ModalDatePicker from "components/modals/ModalDatePicker";
 import ModalConfirmation from "components/modals/ModalConfirmation";
+import { useSelector } from "react-redux";
 
 function RecurringPayment() {
   const { setIsLoading } = useContext(LoaderContext);
@@ -31,7 +32,9 @@ function RecurringPayment() {
   const [loadingBalance, balance] = useBalance();
   const [loadingChart, chartData] = useChartData();
   const [countryList, cities] = useCountriesCities();
-
+  const { admin_approved } = useSelector(
+    (state) => state?.userProfile?.profile
+  );
   const [modalDetails, setModalDetails] = useState({
     show: false,
     message: "",
@@ -459,23 +462,25 @@ function RecurringPayment() {
                         </div>
                       )}
 
-                      <div className="pay-btn-wrap">
-                        <button
-                          type="button"
-                          onClick={() => navigate("/send")}
-                          className="btn btn-cancel-payment"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-send-payment"
-                          disabled={formik.isSubmitting}
-                          onClick={handleScheduleSubmit}
-                        >
-                          Next
-                        </button>
-                      </div>
+                      {admin_approved ? (
+                        <div className="pay-btn-wrap">
+                          <button
+                            type="button"
+                            onClick={() => navigate("/send")}
+                            className="btn btn-cancel-payment"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-send-payment"
+                            disabled={formik.isSubmitting}
+                            onClick={handleScheduleSubmit}
+                          >
+                            Next
+                          </button>
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                 </div>

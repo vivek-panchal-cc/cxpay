@@ -31,6 +31,7 @@ const Profile = () => {
     company_name = "",
     mobile_number,
     is_delete_request,
+    admin_approved,
   } = profile || {};
   const profileName =
     user_type === "personal" || user_type === "agent"
@@ -191,7 +192,7 @@ const Profile = () => {
           </button>
           &nbsp;
           {mobile_number && (
-            <button type="button" className="btn" onClick={handleOtpTypePopup}>
+            <button type="button" className="btn" onClick={handleOtpTypePopup} disabled={!admin_approved}>
               Change Mobile
             </button>
           )}

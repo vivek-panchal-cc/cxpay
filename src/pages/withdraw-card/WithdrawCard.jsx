@@ -17,6 +17,7 @@ import Button from "components/ui/Button";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { LoaderContext } from "context/loaderContext";
 import { SystemOptionsContext } from "context/systemOptionsContext";
+import { useSelector } from "react-redux";
 
 const WithdrawCard = () => {
   const params = useParams();
@@ -43,7 +44,8 @@ const WithdrawCard = () => {
     transaction_id: tid,
     withdrawType: "card",
   });
-
+  const { profile } = useSelector((state) => state.userProfile);
+  const { admin_approved } = profile || {};
   const {
     card_number = "",
     card_expiry_date = "",
@@ -214,7 +216,7 @@ const WithdrawCard = () => {
                 </table>
               </div>
             </div>
-            <div className="row">
+            {admin_approved ? (<div className="row">
               <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
                 <div className="btn-wrap">
                   <Button
@@ -235,7 +237,7 @@ const WithdrawCard = () => {
                   />
                 </div>
               </div>
-            </div>
+            </div>) : null}
           </form>
         </div>
       </div>

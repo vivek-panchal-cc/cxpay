@@ -44,6 +44,8 @@ const WithdrawBank = () => {
     grandTotal: 0.0,
     total: 0.0,
   });
+  const { profile } = useSelector((state) => state.userProfile);
+  const { admin_approved } = profile || {};
   const [banksList] = useCountryBanks();
   const [loadingCharges, charges] = useCharges({
     chargesType: CHARGES_TYPE_WD,
@@ -65,7 +67,7 @@ const WithdrawBank = () => {
     },
     validationSchema: withdrawBankSchema,
     onSubmit: async (values, { setErrors }) => {
-      if(parseFloat(paymentDetails.total.toFixed(2)) <= 0) return;
+      if (parseFloat(paymentDetails.total.toFixed(2)) <= 0) return;
       setShowWithdrawConfirm(true);
     },
   });
@@ -358,43 +360,52 @@ const WithdrawBank = () => {
                         <td>Total Amount</td>
                         <td>
                           {/* <WrapAmount value={paymentDetails?.total} /> */}
-                          <WrapAmount value={Math.max(paymentDetails?.total, 0)} />
+                          <WrapAmount
+                            value={Math.max(paymentDetails?.total, 0)}
+                          />
                         </td>
                       </tr>
                       <tr>
                         <td></td>
                         <td>
                           {/* <WrapAmount value={paymentDetails?.total} /> */}
-                          <WrapAmount value={Math.max(paymentDetails?.total, 0)} />
+                          <WrapAmount
+                            value={Math.max(paymentDetails?.total, 0)}
+                          />
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
-                  <div className="btn-wrap">
-                    <Link
-                      to="/wallet/withdrawals-bank"
-                      className="btn outline-btn"
-                      replace
-                    >
-                      Cancel
-                    </Link>
-                  </div>
-                  <div className="btn-wrap">
-                    <input
-                      type="submit"
-                      className={`btn btn-primary ${
-                        formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
-                      } ${formik.isValid ? "" : "opacity-75"}`}
-                      disabled={formik.isSubmitting || parseFloat(paymentDetails.total.toFixed(2)) <= 0}
-                      value="Submit Request"
-                    />
+              {admin_approved ? (
+                <div className="row">
+                  <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
+                    <div className="btn-wrap">
+                      <Link
+                        to="/wallet/withdrawals-bank"
+                        className="btn outline-btn"
+                        replace
+                      >
+                        Cancel
+                      </Link>
+                    </div>
+                    <div className="btn-wrap">
+                      <input
+                        type="submit"
+                        className={`btn btn-primary ${
+                          formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                        } ${formik.isValid ? "" : "opacity-75"}`}
+                        disabled={
+                          formik.isSubmitting ||
+                          parseFloat(paymentDetails.total.toFixed(2)) <= 0
+                        }
+                        value="Submit Request"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : null}
             </form>
           </div>
         </div>

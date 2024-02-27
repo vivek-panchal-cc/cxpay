@@ -37,7 +37,7 @@ const Dashboard = () => {
     (state) => state.userProfile.profile
   );
   const { profile } = useSelector((state) => state.userProfile);
-  const { user_type } = profile || "";
+  const { user_type, admin_approved } = profile || "";
 
   const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
   const [inviteContactList, setInviteContactList] = useState([]);
@@ -151,7 +151,11 @@ const Dashboard = () => {
   return (
     <>
       {/* Close Fund Account Popup */}
-      <div className={`dashboard-home-container ${user_type === 'agent' ? 'agent' : ''}`}>
+      <div
+        className={`dashboard-home-container ${
+          user_type === "agent" ? "agent" : ""
+        }`}
+      >
         <div className="dashboard-bottom-sec">
           <div className="dashboard-graph-sec">
             {/* Start Graph Section */}
@@ -160,10 +164,16 @@ const Dashboard = () => {
                 <h2>Hello {first_name || company_name},</h2>
                 <p>
                   Welcome to CXpay
-                  {user_type !== "agent" && (
+                  {user_type !== "agent" && admin_approved ? (
                     <Link
                       className="wallet-top-1-btn"
                       onClick={handleFundAccountPopup}
+                    >
+                      <span>+ Add Funds</span>
+                    </Link>
+                  ) : (
+                    <Link
+                      className="wallet-top-1-btn disabled"                      
                     >
                       <span>+ Add Funds</span>
                     </Link>

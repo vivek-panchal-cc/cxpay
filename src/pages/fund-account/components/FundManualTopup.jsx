@@ -15,11 +15,13 @@ import { useNavigate } from "react-router";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import { toast } from "react-toastify";
 import ModalAlert from "components/modals/ModalAlert";
+import { useSelector } from "react-redux";
 
 const FundManualTopup = (props) => {
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
-
+  const { profile } = useSelector((state) => state.userProfile);
+  const { admin_approved } = profile || {};
   const [loadingCharges, charges] = useCharges({
     chargesType: CHARGES_TYPE_MF,
   });
@@ -43,7 +45,7 @@ const FundManualTopup = (props) => {
     },
     validationSchema: fundCashCreditSchema,
     onSubmit: async (values, { setErrors, resetForm }) => {
-      if(parseFloat(paymentDetails.total.toFixed(2)) <= 0) return;
+      if (parseFloat(paymentDetails.total.toFixed(2)) <= 0) return;
       setIsLoading(true);
       try {
         const muValues = { ...values };
@@ -164,7 +166,9 @@ const FundManualTopup = (props) => {
                       <td>Net Payable</td>
                       <td>
                         {/* <WrapAmount value={paymentDetails?.total} /> */}
-                        <WrapAmount value={Math.max(paymentDetails?.total, 0)} />
+                        <WrapAmount
+                          value={Math.max(paymentDetails?.total, 0)}
+                        />
                       </td>
                     </tr>
                   </tbody>
@@ -172,28 +176,33 @@ const FundManualTopup = (props) => {
               </div>
             </div>
 
-            <div className="row">
-              <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
-                <div className="btn-wrap">
-                  <Button
-                    className="btn outline-btn"
-                    onClick={() => navigate(-1)}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-                <div className="btn-wrap">
-                  <input
-                    type="submit"
-                    value="Fund"
-                    className={`btn btn-primary ${
-                      formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
-                    } ${formik.isValid ? "" : "opacity-75"}`}
-                    disabled={formik.isSubmitting || parseFloat(paymentDetails.total.toFixed(2)) <= 0}
-                  />
+            {admin_approved ? (
+              <div className="row">
+                <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
+                  <div className="btn-wrap">
+                    <Button
+                      className="btn outline-btn"
+                      onClick={() => navigate(-1)}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                  <div className="btn-wrap">
+                    <input
+                      type="submit"
+                      value="Fund"
+                      className={`btn btn-primary ${
+                        formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                      } ${formik.isValid ? "" : "opacity-75"}`}
+                      disabled={
+                        formik.isSubmitting ||
+                        parseFloat(paymentDetails.total.toFixed(2)) <= 0
+                      }
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : null}
           </form>
         </div>
       </div>

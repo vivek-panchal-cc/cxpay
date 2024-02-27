@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { IconCardBackground, IconCreditCard } from "styles/svgs";
 import { CURRENCY_SYMBOL, WITHDRAW_STATUS_FILTER_CARD } from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
+import { useSelector } from "react-redux";
 
 const WithdrawCardItem = (props) => {
   const { className = "", itemDetails } = props;
@@ -19,7 +20,8 @@ const WithdrawCardItem = (props) => {
     transaction_id,
   } = itemDetails || {};
   const navigate = useNavigate();
-
+  const { profile } = useSelector((state) => state.userProfile);
+  const { admin_approved } = profile || {};
   const CardIcon = useMemo(() => {
     if (image) return <img src={image} alt="" className="rounded" />;
     else if (color)
@@ -74,7 +76,10 @@ const WithdrawCardItem = (props) => {
         </div>
         <div className="btns-wrap">
           {is_refundable ? (
-            <Button className="wr-withdraw-btn" onClick={handleInitiateRefund}>
+            <Button
+              className={`wr-withdraw-btn ${admin_approved ? "" : "contacts-admin-approved-disabled"}`}
+              onClick={admin_approved ? handleInitiateRefund : null}
+            >
               withdraw
             </Button>
           ) : null}

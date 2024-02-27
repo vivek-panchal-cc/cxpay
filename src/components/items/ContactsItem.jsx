@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import { IconBackgroundStar, IconDelete } from "styles/svgs";
+import { useSelector } from "react-redux";
 
 const ContactsItem = (props) => {
   const {
@@ -11,11 +12,66 @@ const ContactsItem = (props) => {
     handleDeleteContact,
   } = props;
 
+  const { profile } = useSelector((state) => state?.userProfile);
+
   const { handleSendContacts, handleSendRequest } =
     useContext(SendPaymentContext);
 
   const userType =
     contact?.user_type?.charAt(0).toUpperCase() + contact?.user_type?.slice(1);
+
+  const renderButtons = () => {
+    if (profile.admin_approved) {
+      if (contact.admin_approved) {
+        return (
+          <div className="con-listing-btn-wrap">
+            <button
+              className="btn btn-primary con-send-btn"
+              onClick={() => handleSendContacts([contact])}
+            >
+              Send
+            </button>
+            <button
+              className="btn btn-primary con-req-btn"
+              onClick={() => handleSendRequest([contact])}
+            >
+              Request
+            </button>
+          </div>
+        );
+      } else {
+        return (
+          <div className="con-listing-btn-wrap">
+            <button className="btn btn-primary contacts-admin-approved-disabled">
+              Send
+            </button>
+            <button className="btn btn-primary contacts-admin-approved-disabled">
+              Request
+            </button>
+          </div>
+        );
+      }
+    } else {
+      return (
+        <div className="con-listing-btn-wrap">
+          <button className="btn btn-primary contacts-admin-approved-disabled">
+            Send
+          </button>
+          <button className="btn btn-primary contacts-admin-approved-disabled">
+            Request
+          </button>
+        </div>
+      );
+    }
+  };
+
+  const disabledCheckedBox = () => {
+    if (profile.admin_approved) {
+      return !(contact.admin_approved);
+    } else {
+      return true
+    }
+  }
 
   return (
     <li>
@@ -30,6 +86,7 @@ const ContactsItem = (props) => {
             onChange={handleCallback}
             checked={selectedContacts?.includes(contact?.account_number)}
             value={contact?.account_number}
+            disabled={disabledCheckedBox()}
           />
           <label htmlFor={contact?.account_number}></label>
         </div>
@@ -77,20 +134,32 @@ const ContactsItem = (props) => {
             <IconDelete />
           </button>
         </div>
-        <div className="con-listing-btn-wrap">
-          <button
-            className="btn btn-primary con-send-btn"
-            onClick={() => handleSendContacts([contact])}
-          >
-            Send
-          </button>
-          <button
-            className="btn btn-primary con-req-btn"
-            onClick={() => handleSendRequest([contact])}
-          >
-            Request
-          </button>
-        </div>
+        {renderButtons()}
+        {/* {contact.admin_approved ? (
+          <div className="con-listing-btn-wrap">
+            <button
+              className="btn btn-primary con-send-btn"
+              onClick={() => handleSendContacts([contact])}
+            >
+              Send
+            </button>
+            <button
+              className="btn btn-primary con-req-btn"
+              onClick={() => handleSendRequest([contact])}
+            >
+              Request
+            </button>
+          </div>
+        ) : (
+          <div className="con-listing-btn-wrap">
+            <button className="btn btn-primary contacts-admin-approved-disabled">
+              Send
+            </button>
+            <button className="btn btn-primary contacts-admin-approved-disabled">
+              Request
+            </button>
+          </div>
+        )} */}
       </div>
     </li>
   );
