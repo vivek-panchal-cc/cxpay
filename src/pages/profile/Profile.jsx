@@ -18,6 +18,7 @@ import { sendPaymentOtpSchema } from "schemas/sendPaymentSchema";
 import NewMobileChange from "pages/new-mobile-change/NewMobileChange";
 import NewMobileModal from "components/modals/NewMobileModal";
 import { apiRequest } from "helpers/apiRequests";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -100,9 +101,16 @@ const Profile = () => {
       return "Are you sure you want to delete your account? This will permanently erase all your details.";
     }
   };
+ 
+  const getOtpHeading = () => {
+    if (details.verification_via === "sms") {
+      return "We have sent you a verification code to your old mobile number. Enter the OTP below.";
+    } else {
+      return "We have sent you a verification code to your email address. Enter the OTP below.";
+    }
+  };
 
-  const handleModalOtpConfirmation = (values) => {
-    console.log("values: ", values);
+  const handleModalOtpConfirmation = (values) => {    
     if (!values) return;
     setShowOtpPopup(true);
     setDetails(values);
@@ -114,8 +122,7 @@ const Profile = () => {
 
   const handleSubmitOtp = async (otp) => {
     if (!otp) return;
-    setIsLoading(true);
-    setShowOtpPopup(false);
+    setIsLoading(true);    
     try {
       const formData = new FormData();
       formData.append("user_mobile_otp", otp);
@@ -126,6 +133,7 @@ const Profile = () => {
       const { data } = await apiRequest.verifyChangeMobileOtp(formData);
       if (!data.success) throw data.message;
       toast.success(`${data.message}`);
+      setShowOtpPopup(false);
       setShowNewMobilePopup(true);
     } catch (error) {
       if (typeof error === "string") toast.error(error);
@@ -138,9 +146,9 @@ const Profile = () => {
   const handleResendOtp = async () => {
     setIsLoading(true);
     try {
-      const { data } = apiRequest.createChangeMobileOtp(details);
+      const { data } = await apiRequest.createChangeMobileOtp(details);
       if (!data.success) throw data.message;
-      if (data?.data) toast.success(data.data.login_otp);
+      if (data?.data) toast.success(data.data.otp);
       toast.success(data.message);
     } catch (error) {
       if (typeof error === "string") toast.error(error);
@@ -216,7 +224,7 @@ const Profile = () => {
         setShow={setShowOtpPopup}
         heading="OTP Verification"
         headingImg="/assets/images/sent-payment-otp-pop.svg"
-        subHeading="We have sent you verification code. Enter OTP below"
+        subHeading={getOtpHeading()}
         validationSchema={sendPaymentOtpSchema}
         handleSubmitOtp={handleSubmitOtp}
         handleResendOtp={handleResendOtp}
