@@ -9,6 +9,7 @@ import { schedulePaymentSchema } from "schemas/sendPaymentSchema";
 import Input from "components/ui/Input";
 import TimePicker from "components/time-picker/TimePicker";
 import WrapAmount from "components/wrapper/WrapAmount";
+import { useSelector } from "react-redux";
 
 const EditScheduledPayment = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const EditScheduledPayment = () => {
     overall_specification,
   } = upPaymentEntry || {};
 
+  const { admin_approved } = useSelector((state) => state?.userProfile?.profile);
   // const {
   //   contacts = [],
   //   sch_dt,
@@ -163,7 +165,7 @@ const EditScheduledPayment = () => {
                 </div>
               </div>
             </div>
-            <div className="sp-btn-inner-wrap outline-solid-wrap">
+            {admin_approved ? (<div className="sp-btn-inner-wrap outline-solid-wrap">
               <button className="btn outline-btn" onClick={cancelUpdatePayment}>
                 Cancel
               </button>
@@ -175,7 +177,7 @@ const EditScheduledPayment = () => {
               >
                 Update
               </button>
-            </div>
+            </div>) : null}
           </div>
           <div className="sp-cal-wrap d-flex justify-content-center">
             <form onSubmit={formik.handleSubmit}>

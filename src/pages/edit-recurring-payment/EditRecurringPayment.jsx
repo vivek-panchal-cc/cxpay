@@ -12,6 +12,7 @@ import InputSelect from "components/ui/InputSelect";
 import ModalDatePicker from "components/modals/ModalDatePicker";
 import InputNumber from "components/ui/InputNumber";
 import ModalConfirmation from "components/modals/ModalConfirmation";
+import { useSelector } from "react-redux";
 
 const EditRecurringPayment = () => {
   const navigate = useNavigate();
@@ -43,6 +44,9 @@ const EditRecurringPayment = () => {
     set_recurring_flag === "DATE" ? "recurring_end_date" : "occurrences"
   );
   const myInputRef = useRef(null);
+  const { admin_approved } = useSelector(
+    (state) => state?.userProfile?.profile
+  );
 
   useEffect(() => {
     const preventPageScroll = (e) => {
@@ -279,8 +283,7 @@ const EditRecurringPayment = () => {
         await updateRecurringPayment(params);
       } catch (error) {
         console.log(error);
-      }
-      finally{
+      } finally {
         setShowScheduleConfirmPopup(false);
       }
     },
@@ -339,20 +342,25 @@ const EditRecurringPayment = () => {
                 </div>
               </div>
             </div>
-            <div className="sp-btn-inner-wrap outline-solid-wrap">
-              <button className="btn outline-btn" onClick={cancelUpdatePayment}>
-                Cancel
-              </button>
-              <button
-                type="button"
-                className="btn"
-                // onClick={formik.handleSubmit}
-                disabled={formik.isSubmitting}
-                onClick={handleScheduleSubmit}
-              >
-                Update Recurring
-              </button>
-            </div>
+            {admin_approved ? (
+              <div className="sp-btn-inner-wrap outline-solid-wrap">
+                <button
+                  className="btn outline-btn"
+                  onClick={cancelUpdatePayment}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn"
+                  // onClick={formik.handleSubmit}
+                  disabled={formik.isSubmitting}
+                  onClick={handleScheduleSubmit}
+                >
+                  Update Recurring
+                </button>
+              </div>
+            ) : null}
           </div>
           <div className="recurring-sp-cal-wrap d-flex justify-content-center">
             <form onSubmit={formik.handleSubmit}>

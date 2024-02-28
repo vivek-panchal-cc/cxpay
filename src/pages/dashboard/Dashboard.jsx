@@ -172,9 +172,7 @@ const Dashboard = () => {
                       <span>+ Add Funds</span>
                     </Link>
                   ) : (
-                    <Link
-                      className="wallet-top-1-btn disabled"                      
-                    >
+                    <Link className="wallet-top-1-btn disabled">
                       <span>+ Add Funds</span>
                     </Link>
                   )}
@@ -276,18 +274,30 @@ const Dashboard = () => {
               <div className="extra-links-wrap">
                 <ul>
                   <li>
-                    <Link
-                      className="wallet-top-1-btn"
-                      onClick={handleFundAccountPopup}
-                    >
-                      <span className="icon-link-text">
-                        <IconAdd />
-                        Fund Your Account
-                      </span>
-                      <span className="arrow-wrap">
-                        <IconRightArrowBig />
-                      </span>
-                    </Link>
+                    {admin_approved ? (
+                      <Link
+                        className="wallet-top-1-btn"
+                        onClick={handleFundAccountPopup}
+                      >
+                        <span className="icon-link-text">
+                          <IconAdd />
+                          Fund Your Account
+                        </span>
+                        <span className="arrow-wrap">
+                          <IconRightArrowBig />
+                        </span>
+                      </Link>
+                    ) : (
+                      <Link className="wallet-top-1-btn">
+                        <span className="icon-link-text admin-approved-disabled">
+                          <IconAdd />
+                          Fund Your Account
+                        </span>
+                        <span className="arrow-wrap">
+                          <IconRightArrowBig />
+                        </span>
+                      </Link>
+                    )}
                   </li>
                   {/* <li>
                     <Link to="/view-schedule-payment">
@@ -312,15 +322,27 @@ const Dashboard = () => {
                     </Link>
                   </li> */}
                   <li>
-                    <Link to="/view-schedule-payment">
-                      <span className="icon-link-text">
-                        <IconWallet stroke="#363853" />
-                        Payments
-                      </span>
-                      <span className="arrow-wrap">
-                        <IconRightArrowBig />
-                      </span>
-                    </Link>
+                    {admin_approved ? (
+                      <Link to="/view-schedule-payment">
+                        <span className="icon-link-text">
+                          <IconWallet stroke="#363853" />
+                          Payments
+                        </span>
+                        <span className="arrow-wrap">
+                          <IconRightArrowBig />
+                        </span>
+                      </Link>
+                    ) : (
+                      <Link>
+                        <span className="icon-link-text admin-approved-disabled">
+                          <IconWallet stroke="#363853" />
+                          Payments
+                        </span>
+                        <span className="arrow-wrap">
+                          <IconRightArrowBig />
+                        </span>
+                      </Link>
+                    )}
                   </li>
                   <li>
                     <Link to="/send">

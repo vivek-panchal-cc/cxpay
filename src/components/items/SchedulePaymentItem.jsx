@@ -2,6 +2,7 @@ import WrapAmount from "components/wrapper/WrapAmount";
 import { CURRENCY_SYMBOL } from "constants/all";
 import { formatDate } from "helpers/commonHelpers";
 import React, { useMemo } from "react";
+import { useSelector } from "react-redux";
 import { IconBin, IconEdit } from "styles/svgs";
 
 const SchedulePaymentItem = (props) => {
@@ -14,6 +15,7 @@ const SchedulePaymentItem = (props) => {
     amount,
     profileImg = "",
   } = details || {};
+  const { admin_approved } = useSelector((state) => state?.userProfile?.profile);
 
   // const { dtString } = useMemo(() => {
   //   if (!dateTime) return { dtString: "" };
@@ -43,20 +45,22 @@ const SchedulePaymentItem = (props) => {
       </div>
       <div className="right-activity-div">
         <button
-          className="act-edit-wrap rounded"
+          className={`act-edit-wrap rounded ${admin_approved ? "" : "contacts-admin-approved-disabled"}`}
           onClick={() => handleEdit(id)}
           style={{
             background: "#0081C5",
             width: "33px",
             height: "32px",
           }}
+          disabled={!admin_approved}
         >
           <IconEdit style={{ stroke: "#FFF" }} />
         </button>
         <button
-          className="act-del-wrap rounded"
+          className={`act-del-wrap rounded ${admin_approved ? "" : "contacts-admin-approved-disabled"}`}
           onClick={() => handleDelete(id)}
           style={{ background: "#FF3333" }}
+          disabled={!admin_approved}
         >
           <IconBin style={{ stroke: "#F3F3F3" }} />
         </button>
