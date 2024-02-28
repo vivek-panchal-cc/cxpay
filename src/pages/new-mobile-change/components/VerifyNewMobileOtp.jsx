@@ -93,7 +93,7 @@ function VerifyNewMobileOtp(props) {
         customer_id: customer_id,
       });
       if (!data.success) throw data.message;
-      if (data?.data) toast.success(data.data.otp);
+      if (data?.data?.otp) toast.success(data.data.otp);
       toast.success(data.message);
     } catch (error) {
       if (typeof error === "string") {

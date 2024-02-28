@@ -20,6 +20,7 @@ import LoaderActivityProfile from "loaders/LoaderActivityProfile";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { formatDate } from "helpers/commonHelpers";
 import { IconCloseModal } from "styles/svgs";
+import { useSelector } from "react-redux";
 
 const ModalActivityDetail = (props) => {
   const {
@@ -56,6 +57,9 @@ const ModalActivityDetail = (props) => {
 
   const modalRef = useRef(null);
   const profileUrl = image || "/assets/images/single_contact_profile.png";
+  const { admin_approved } = useSelector(
+    (state) => state?.userProfile?.profile
+  );
 
   const {
     iconStatus,
@@ -109,20 +113,38 @@ const ModalActivityDetail = (props) => {
       case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_RECEIVE}_${ACT_STATUS_PENDING}`:
         return (
           <>
-            <button
-              type="button"
-              className="outline-btn w-50 d-block"
-              onClick={() => handleCancel(details)}
-            >
-              Decline
-            </button>
-            <button
-              type="button"
-              className="btn print-details-btn w-50"
-              onClick={() => handleSubmit(details)}
-            >
-              Accept
-            </button>
+            {admin_approved ? (
+              <button
+                type="button"
+                className="outline-btn w-50 d-block"
+                onClick={() => handleCancel(details)}
+              >
+                Decline
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="outline-btn w-50 d-block contacts-admin-approved-disabled"
+              >
+                Decline
+              </button>
+            )}
+            {admin_approved ? (
+              <button
+                type="button"
+                className="btn print-details-btn w-50"
+                onClick={() => handleSubmit(details)}
+              >
+                Accept
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="outline-btn w-50 d-block contacts-admin-approved-disabled"
+              >
+                Accept
+              </button>
+            )}
           </>
         );
       case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_SEND}_${ACT_STATUS_PAID}`:

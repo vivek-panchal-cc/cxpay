@@ -27,7 +27,7 @@ function ForgotPassword() {
           values
         );
         if (!data.success) throw data.message;
-        if (data?.data) toast.success(data.data.login_otp);
+        if (data?.data?.login_otp) toast.success(data.data.login_otp);
         toast.success(data.message);
         setShowOtpPopup(true);
       } catch (error) {

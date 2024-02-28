@@ -117,7 +117,7 @@ function SendPayment(props) {
           addObjToFormData(muValues[key], key, formData);
         const { data } = await apiRequest.walletTransferOtp(formData);
         if (!data.success) throw data.message;
-        if (data?.data) toast.success(`${data?.data?.otp}`);
+        if (data?.data?.otp) toast.success(`${data?.data?.otp}`);
         toast.success(`${data.message}`);
         setShowOtpPopup(true);
       } catch (error) {
@@ -211,7 +211,7 @@ function SendPayment(props) {
         mobile_number,
       });
       if (!data.success) throw data.message;
-      if (data?.data) toast.success(`${data?.data?.login_otp}`);
+      if (data?.data?.login_otp) toast.success(`${data?.data?.login_otp}`);
       toast.success(data.message);
     } catch (error) {
       if (typeof error === "string") toast.error(error);
@@ -225,7 +225,7 @@ function SendPayment(props) {
     try {
       const { data } = await apiRequest.resendSchedulePaymentOtp();
       if (!data.success) throw data.message;
-      if (data?.data) toast.success(`${data?.data?.OTP}`);
+      if (data?.data?.otp) toast.success(`${data?.data?.otp}`);
       toast.success(data.message);
     } catch (error) {
       if (typeof error === "string") toast.error(error);
@@ -340,7 +340,7 @@ function SendPayment(props) {
       if (!data.success) throw data.message;
       // Store the formData values in scheduledData
       setScheduledData(Object.fromEntries(formData));
-      if (data?.data) toast.success(`${data?.data?.OTP}`);
+      if (data?.data?.otp) toast.success(`${data?.data?.otp}`);
       toast.success(`${data.message}`);
       setShowOtpPopup(true);
     } catch (error) {

@@ -44,7 +44,7 @@ const NewMobileChange = (props) => {
         if (!data.success) throw data.message;
         setMobileNumber(values.mobile_number);
         setCountryCode(values.country_code);
-        if (data?.data) toast.success(data.data.otp);
+        if (data?.data?.otp) toast.success(data.data.otp);
         toast.success(data.message);
         setShowVerifyPhonePopup(true);
       } catch (error) {

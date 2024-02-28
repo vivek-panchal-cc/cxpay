@@ -22,7 +22,7 @@ function OtpTypePopup(props) {
     try {
       const { data } = await apiRequest.createChangeMobileOtp(values);      
       if (!data.success) throw data.message;
-      if (data?.data) toast.success(data.data.otp);
+      if (data?.data?.otp) toast.success(data.data.otp);
       toast.success(data.message); 
       setModalShow(false);
       await handleCallBack(values);

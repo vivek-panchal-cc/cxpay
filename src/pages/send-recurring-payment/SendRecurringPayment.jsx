@@ -154,7 +154,7 @@ function SendRecurringPayment(_props) {
       if (!data.success) throw data.message;
       // Store the formData values in scheduledData
       setRecurringData(Object.fromEntries(formDataAppend));
-      if (data?.data) toast.success(`${data?.data?.otp}`);
+      if (data?.data?.otp) toast.success(`${data?.data?.otp}`);
       toast.success(`${data.message}`);
       setShowOtpPopup(true);
       // const { data } = await apiRequest.createRecurringPayment(formDataAppend);
@@ -207,7 +207,7 @@ function SendRecurringPayment(_props) {
     try {
       const { data } = await apiRequest.resendRecurringPaymentOtp();
       if (!data.success) throw data.message;
-      if (data?.data) toast.success(`${data?.data?.otp}`);
+      if (data?.data?.otp) toast.success(`${data?.data?.otp}`);
       toast.success(data.message);
     } catch (error) {
       if (typeof error === "string") toast.error(error);

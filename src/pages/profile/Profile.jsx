@@ -149,7 +149,7 @@ const Profile = () => {
     try {
       const { data } = await apiRequest.createChangeMobileOtp(details);
       if (!data.success) throw data.message;
-      if (data?.data) toast.success(data.data.otp);
+      if (data?.data?.otp) toast.success(data.data.otp);
       toast.success(data.message);
     } catch (error) {
       if (typeof error === "string") toast.error(error);
