@@ -109,9 +109,9 @@ const NewMobileChange = (props) => {
                 </div>
               </div>
               <div className="text-center new-mobile-send-cd-btn">
-                {/* {formik.status ? (
+                {formik.status ? (
                   <p className="text-danger">{formik.status}</p>
-                ) : null} */}
+                ) : null}
                 <input
                   type="submit"
                   className="btn btn-primary"
