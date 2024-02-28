@@ -80,7 +80,7 @@ const BusinessForm = (props) => {
           className={`form-control ${profile.admin_approved ? 'disabled-field' : ''}`}
           id="business-id"
           name={profile.admin_approved ? "" : "business_id"}
-          placeholder="ID Number"
+          placeholder="Chamber of Commerce"
           value={formik.values.business_id}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
