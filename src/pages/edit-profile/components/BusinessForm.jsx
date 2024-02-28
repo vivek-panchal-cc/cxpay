@@ -26,6 +26,7 @@ function Businessform(props) {
     country,
     city,
     profile_image,
+    business_id,
   } = profile;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ function Businessform(props) {
       country_code: country_code,
       country: country || "",
       city: city || "",
+      business_id: business_id || "",
     },
     validationSchema: editProfileBusinessUserSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
@@ -157,7 +159,18 @@ function Businessform(props) {
               value={formik.values.email}
               error={formik.touched.email && formik.errors.email}
               autoComplete={"new-email"}
-            />
+            />            
+            <Input
+              type="text"
+              className={`form-control ${formik.values.business_id ? 'disabled-field' : ''}`}              
+              name="business_id"
+              placeholder="Chamber of Commerce"
+              value={formik.values.business_id}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.business_id && formik.errors.business_id}
+              disabled
+            />      
             <Input
               type="text"
               className="form-control"

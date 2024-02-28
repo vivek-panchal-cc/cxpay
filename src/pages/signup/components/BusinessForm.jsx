@@ -41,6 +41,7 @@ function Businessform(props) {
       country: country_iso || "",
       city: "",
       profile_image: "",
+      business_id: "",
       terms_conditions: false,
     },
     validationSchema: signUpBusinessAccountSchema,
@@ -216,6 +217,16 @@ function Businessform(props) {
                 error={formik.touched.email && formik.errors.email}
                 autoComplete={"new-email"}
               />
+              <Input
+                type="text"
+                className="form-control"
+                name="business_id"
+                placeholder="Chamber of Commerce"
+                value={formik.values.business_id}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.business_id && formik.errors.business_id}                
+              />    
               <Input
                 type="text"
                 className="form-control"

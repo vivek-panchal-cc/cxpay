@@ -55,6 +55,11 @@ const signUpBusinessAccountSchema = yup.object().shape({
   country: countrySchema,
   city: citySchema,
   country_code: yup.string().required("required"),
+  business_id: yup
+    .string()
+    .required("Please enter chamber of commerce")
+    .matches(/^\S*$/, "Space is not allowed")
+    .max(25, "Chamber of commerce must not be greater than 25 characters."),
   terms_conditions: yup.bool().oneOf([true], "*"),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
@@ -116,6 +121,11 @@ const editProfileBusinessUserSchema = yup.object().shape({
   city: citySchema,
   country_code: yup.string().required("required*"),
   profile_image: profileImageSchema,
+  business_id: yup
+    .string()
+    .required("Please enter chamber of commerce")
+    .matches(/^\S*$/, "Space is not allowed")
+    .max(25, "Chamber of commerce must not be greater than 25 characters."),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
@@ -190,7 +200,7 @@ const businessInfoSchema = yup.object().shape({
     .string()
     .required("Please enter chamber of commerce")
     .matches(/^\S*$/, "Space is not allowed")
-    .max(25, "Business id must not be greater than 25 characters."),
+    .max(25, "Chamber of commerce must not be greater than 25 characters."),
 });
 
 const createGroupSchema = yup.object().shape({
