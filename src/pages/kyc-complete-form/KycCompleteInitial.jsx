@@ -46,9 +46,7 @@ const KycCompleteInitial = () => {
               <div className="login-signup-inner">
                 <h4 className="text-center">Welcome to</h4>
                 <div className="login-logo-image text-center">
-                  <a href="/">
-                    <img src={CXPAY_LOGO} alt="login logo img" />
-                  </a>
+                  <img src={CXPAY_LOGO} alt="login logo img" />
                 </div>
 
                 <h5 className="text-center">Complete your KYC first</h5>

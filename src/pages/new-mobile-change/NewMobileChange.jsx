@@ -140,6 +140,7 @@ const NewMobileChange = (props) => {
       >
         <VerifyNewMobileOtp
           setShow={setShowVerifyPhonePopup}
+          setMobileChange={setShow}
           {...{ mobileNumber, countryCode, customer_id }}
         />
       </Modal>

@@ -2,7 +2,7 @@ import React from "react";
 import { IconCalender } from "styles/svgs";
 
 const InputDatePicker = (props) => {
-  const { className = "", onClick = () => {}, date } = props;
+  const { className = "", onClick = () => {}, date, placeholder } = props;
   const randomStr = `${Math.round(Math.random() * 1000)}`;
 
   const convertToDateObject = (dateInput) => {
@@ -32,7 +32,11 @@ const InputDatePicker = (props) => {
   };
 
   const dateObj = convertToDateObject(date);
-  const dateText = dateObj ? dateObj.toLocaleDateString("en-UK") : "DD/MM/YYYY";
+  const dateText = dateObj
+    ? dateObj.toLocaleDateString("en-UK")
+    : placeholder
+    ? placeholder
+    : "DD/MM/YYYY";
 
   return (
     <div className={`${className}`} onClick={onClick}>
@@ -40,7 +44,7 @@ const InputDatePicker = (props) => {
         id={`date${randomStr}`}
         type="text"
         className="form-control-recurring"
-        placeholder="DD/MM/YYYY"
+        placeholder={placeholder ? placeholder : "DD/MM/YYYY"}
         value={`${dateText}`}
         readOnly
       />

@@ -266,7 +266,29 @@ function FundBankTransfer(props) {
                   placeholder="Amount"
                   name="transactionAmount"
                   onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  // onBlur={formik.handleBlur}
+                  onBlur={(e) => {
+                    let value = e.target.value.trim();
+                    // If the input value is empty, set it to '0.00'
+                    if (!value) {
+                      value = "0.00";
+                    } else {
+                      const hasDecimal = value.includes(".");
+                      // If there's no decimal point, add .00
+                      if (!hasDecimal) {
+                        value += ".00";
+                      } else {
+                        // If there's only one digit after the decimal point, add another zero
+                        const parts = value.split(".");
+                        if (parts[1].length === 1) {
+                          value += "0";
+                        }
+                      }
+                    }
+                    // Update the formik values with the formatted value
+                    formik.setFieldValue("transactionAmount", value);
+                    formik.handleBlur(e);
+                  }}
                   value={formik.values.transactionAmount}
                   error={
                     formik.touched.transactionAmount &&

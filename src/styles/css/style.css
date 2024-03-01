@@ -5518,6 +5518,14 @@ input[type="search"]::-webkit-search-cancel-button {
   word-break: break-word;
 }
 
+.kyc-text-danger {
+  font-size: 14px !important;
+  line-height: 20px !important;
+  font-weight: 700 !important;
+  margin-top: 5px;
+  word-break: break-word;
+}
+
 /* 09-03 */
 select.form-control option {
   color: var(--dark_blue);
@@ -6215,6 +6223,15 @@ ul.notification-list-wrap li > div {
 }
 
 .invite-contact-modal .form-control + .text-danger:not(:empty) {
+  text-align: left;
+}
+
+.kyc-text-danger:not(:empty) {
+  font-family: "Comfortaa", sans-serif !important;
+  font-weight: 700 !important;
+}
+
+.invite-contact-modal .form-control + .kyc-text-danger:not(:empty) {
   text-align: left;
 }
 
@@ -7529,6 +7546,15 @@ ul.recent-act-lw-main .act-info-wrap-left {
 }
 
 .date-filter-calendar-recurring {
+  position: relative;
+  overflow: hidden;
+  height: 60px;
+  border-radius: 18px;
+  border: 1px solid #0081c5;
+  box-shadow: 0px 3.7662px 15.6926px 0px rgba(37, 31, 48, 0.2);
+}
+
+.kyc-date-filter {
   position: relative;
   overflow: hidden;
   height: 60px;

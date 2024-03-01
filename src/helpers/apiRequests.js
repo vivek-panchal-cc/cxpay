@@ -20,6 +20,8 @@ const API_updateForgotPassword = apiUrl.API_LOGIN_UPDATE_FORGOT_PASSWORD_OTP;
 const API_resendLoginOtp = apiUrl.API_LOGIN_RESEND_LOGIN_OTP;
 const API_resendForgotPasswordOtp = apiUrl.API_LOGIN_RESEND_FORGOT_PASSWORD_OTP;
 const API_refreshToken = apiUrl.API_LOGIN_REFRESH_TOKEN;
+const API_checkCustomerKyc = apiUrl.API_CHECK_CUSTOMER_KYC;
+const API_updateCustomerKyc = apiUrl.API_UPDATE_CUSTOMER_KYC;
 
 // ONBOARD SERVICES
 const API_verifyMobileNumber = apiUrl.API_ONBOARD_VERIFY_MOBILE_NUMBER;
@@ -221,6 +223,20 @@ export const resendForgotPasswordOtp = (params) => {
  */
 export const refreshToken = (token) => {
   return axiosLoginInstance.post(`${API_refreshToken}`, token);
+};
+
+/** POST @check-customer-kyc API
+ * @params authToken
+ */
+export const checkCustomerKyc = (token) => {
+  return axiosLoginInstance.post(`${API_checkCustomerKyc}`, token);
+};
+
+/** POST @update-customer-kyc API
+ * @params authToken
+ */
+export const updateCustomerKyc = (token) => {
+  return axiosLoginInstance.post(`${API_UPDATE_CUSTOMER_KYC}`, token);
 };
 
 //  -------------------------------------------- ON BOARD ------------------------------------------------------------------------------------------>
@@ -971,6 +987,8 @@ export const apiRequest = {
   cardMarkAsDefault,
   getCountry,
   refreshToken,
+  checkCustomerKyc,
+  updateCustomerKyc,
   resendLoginOtp,
   resendForgotPasswordOtp,
   resendRegisterOtp,

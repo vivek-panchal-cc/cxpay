@@ -13,6 +13,8 @@ export const API_LOGIN_RESEND_LOGIN_OTP = "/login-otp-resend";
 export const API_LOGIN_RESEND_FORGOT_PASSWORD_OTP =
   "/resend-forgot-password-otp";
 export const API_LOGIN_REFRESH_TOKEN = "/refresh-token";
+export const API_CHECK_CUSTOMER_KYC = "check-customer-kyc"
+export const API_UPDATE_CUSTOMER_KYC = "update-customer-kyc"
 
 // customer-onboard urls
 export const API_ONBOARD_VERIFY_MOBILE_NUMBER = "/register-mobile";

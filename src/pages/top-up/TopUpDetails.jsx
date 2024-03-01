@@ -109,7 +109,7 @@ const TopUpDetails = () => {
     },
     validationSchema: topUpDetailsSchema,
     onSubmit: async (values, { setErrors, resetForm }) => {
-      if(parseFloat(paymentDetails.total.toFixed(2)) <= 0) return;
+      if (parseFloat(paymentDetails.total.toFixed(2)) <= 0) return;
       // Check if paymentDetails.total is negative
       // if (paymentDetails.total < 0) {
       //   toast.error("Amount should be greater than commission");
@@ -268,7 +268,29 @@ const TopUpDetails = () => {
                   maxLength="6"
                   placeholder="Amount"
                   onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  // onBlur={formik.handleBlur}
+                  onBlur={(e) => {
+                    let value = e.target.value.trim();
+                    // If the input value is empty, set it to '0.00'
+                    if (!value) {
+                      value = "0.00";
+                    } else {
+                      const hasDecimal = value.includes(".");
+                      // If there's no decimal point, add .00
+                      if (!hasDecimal) {
+                        value += ".00";
+                      } else {
+                        // If there's only one digit after the decimal point, add another zero
+                        const parts = value.split(".");
+                        if (parts[1].length === 1) {
+                          value += "0";
+                        }
+                      }
+                    }
+                    // Update the formik values with the formatted value
+                    formik.setFieldValue("transfer_amount", value);
+                    formik.handleBlur(e);
+                  }}
                   value={formik.values.transfer_amount}
                   error={
                     formik.touched.transfer_amount &&
@@ -322,23 +344,23 @@ const TopUpDetails = () => {
             )}
             <div className="row top-up-fund-row-amt top-up-fund-row-amt-final wbr-final-amt-wrap">
               {/* <div className="col-12 p-0"> */}
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>Commission</td>
-                      <td>
-                        <WrapAmount value={paymentDetails.totalCharges} />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Amount</td>
-                      <td>
-                        {/* <WrapAmount value={paymentDetails.total} /> */}
-                        <WrapAmount value={Math.max(paymentDetails?.total, 0)} />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Commission</td>
+                    <td>
+                      <WrapAmount value={paymentDetails.totalCharges} />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Amount</td>
+                    <td>
+                      {/* <WrapAmount value={paymentDetails.total} /> */}
+                      <WrapAmount value={Math.max(paymentDetails?.total, 0)} />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
               {/* </div> */}
             </div>
 
@@ -353,7 +375,10 @@ const TopUpDetails = () => {
               <button
                 type="submit"
                 className="btn btn-send-payment"
-                disabled={formik.isSubmitting || parseFloat(paymentDetails.total.toFixed(2)) <= 0}
+                disabled={
+                  formik.isSubmitting ||
+                  parseFloat(paymentDetails.total.toFixed(2)) <= 0
+                }
               >
                 Fund
               </button>

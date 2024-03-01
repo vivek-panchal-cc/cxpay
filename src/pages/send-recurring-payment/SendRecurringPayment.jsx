@@ -482,6 +482,7 @@ function SendRecurringPayment(_props) {
                   {wallet?.map((item, index) => {
                     return (
                       <ContactPaymentItem
+                        formik={formik}
                         key={item?.mobile || index}
                         item={item}
                         fallbackImgUrl={

@@ -1,4 +1,4 @@
-import { MAX_GROUP_MEMBERS } from "constants/all";
+import { isValidDocumentType, MAX_GROUP_MEMBERS } from "constants/all";
 import * as yup from "yup";
 import {
   confirmPasswordSchema,
@@ -14,6 +14,9 @@ import {
   otpSchema,
   passwordStrengthSchema,
 } from "./commonSchema";
+
+const FILE_SIZE = 5 * 1048576;
+const FILE_COUNT = 1;
 
 const deleteAccountPassword = yup.object().shape({  
   password: yup.string().required("Password required")  
@@ -217,6 +220,42 @@ const createGroupSchema = yup.object().shape({
     ),
 });
 
+const kycDetailsSchema = yup.object().shape({
+  type: yup
+    .string()    
+    .required("Please enter document type"),
+  number: yup
+    .string()    
+    .required("Please enter document number"),
+  expiry_date: yup.date().required("Expiry date is required").nullable(),
+  document: yup
+    .mixed()
+    .test({
+      message: `Please upload document`,
+      test: (files) => files.length > 0,
+    })
+    .test({
+      message: `Maximum ${FILE_COUNT} files allowed`,
+      test: (files) => files.length <= FILE_COUNT,
+    })
+    .test({
+      message: "File type is not allowed",
+      test: (files) => {
+        for (const file of files)
+          if (!isValidDocumentType(file.name?.toLowerCase(), "document"))
+            return false;
+        return true;
+      },
+    })
+    .test({
+      message: "Document must not exceed 5 mb size.",
+      test: (files) => {
+        for (const file of files) if (file.size > FILE_SIZE) return false;
+        return true;
+      },
+    }),
+});
+
 export {
   LoginSchema,
   enterPhoneSchema,
@@ -238,4 +277,5 @@ export {
   addBusinessUrlSchema,
   businessInfoSchema,
   createGroupSchema,
+  kycDetailsSchema,
 };

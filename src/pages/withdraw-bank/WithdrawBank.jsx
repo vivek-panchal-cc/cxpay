@@ -333,7 +333,28 @@ const WithdrawBank = () => {
                     className="form-control"
                     maxLength="10"
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    onBlur={(e) => {
+                    let value = e.target.value.trim();
+                    // If the input value is empty, set it to '0.00'
+                    if (!value) {
+                      value = "0.00";
+                    } else {
+                      const hasDecimal = value.includes(".");
+                      // If there's no decimal point, add .00
+                      if (!hasDecimal) {
+                        value += ".00";
+                      } else {
+                        // If there's only one digit after the decimal point, add another zero
+                        const parts = value.split(".");
+                        if (parts[1].length === 1) {
+                          value += "0";
+                        }
+                      }
+                    }
+                    // Update the formik values with the formatted value
+                    formik.setFieldValue("amount", value);
+                    formik.handleBlur(e);
+                  }}
                     value={formik.values.amount}
                     error={formik.touched.amount && formik.errors.amount}
                   />
@@ -341,7 +362,7 @@ const WithdrawBank = () => {
               </div>
               <div>
                 It will takes 2 to 4 working days to complete this transaction.
-                For any query, drop a mail on{" "}
+                For any query, drop an email on{" "}
                 <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
               </div>
               <div className="row wbr-final-amt-wrap">

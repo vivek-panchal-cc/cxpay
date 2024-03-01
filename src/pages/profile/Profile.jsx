@@ -22,6 +22,7 @@ import { toast } from "react-toastify";
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const [attempts, setAttempts] = useState(1);
   const { setIsLoading } = useContext(LoaderContext);
   const { profile } = useSelector((state) => state.userProfile);
   const {
@@ -102,7 +103,7 @@ const Profile = () => {
       return "Are you sure you want to delete your account? This will permanently erase all your details.";
     }
   };
- 
+
   const getOtpHeading = () => {
     if (details.verification_via === "sms") {
       return "We have sent you a verification code to your old mobile number. Enter the OTP below.";
@@ -111,7 +112,7 @@ const Profile = () => {
     }
   };
 
-  const handleModalOtpConfirmation = (values) => {    
+  const handleModalOtpConfirmation = (values) => {
     if (!values) return;
     setShowOtpPopup(true);
     setDetails(values);
@@ -123,7 +124,7 @@ const Profile = () => {
 
   const handleSubmitOtp = async (otp) => {
     if (!otp) return;
-    setIsLoading(true);    
+    setIsLoading(true);
     try {
       const formData = new FormData();
       formData.append("user_mobile_otp", otp);
@@ -132,7 +133,16 @@ const Profile = () => {
       formData.append("country_code", details.country_code);
       formData.append("mobile_number", details.mobile_number);
       const { data } = await apiRequest.verifyChangeMobileOtp(formData);
-      if (!data.success) throw data.message;
+      if (!data.success) {
+        setAttempts((prevAttempts) => prevAttempts + 1);
+        if (attempts >= 3) {
+          toast.error("Failed to verify OTP.");
+          setAttempts(1);
+          setShowOtpPopup(false);
+          return false;
+        }
+        throw data.message;
+      }
       toast.success(`${data.message}`);
       setShowOtpPopup(false);
       setShowNewMobilePopup(true);
@@ -192,7 +202,12 @@ const Profile = () => {
           </button>
           &nbsp;
           {mobile_number && (
-            <button type="button" className="btn" onClick={handleOtpTypePopup} disabled={!admin_approved}>
+            <button
+              type="button"
+              className="btn"
+              onClick={handleOtpTypePopup}
+              disabled={!admin_approved}
+            >
               Change Mobile
             </button>
           )}
@@ -234,7 +249,7 @@ const Profile = () => {
       <Modal
         id="fund_acc_modal"
         show={showNewMobilePopup}
-        className="fund-acc-modal"
+        className=""
         // classNameChild="modal-dialog w-100"
       >
         <NewMobileChange setShow={setShowNewMobilePopup} details={details} />

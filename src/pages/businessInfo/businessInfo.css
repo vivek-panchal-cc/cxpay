@@ -11,6 +11,11 @@
   margin-bottom: 0 !important;
   padding-top: 10px !important;
 }
+.kyc-text-danger:not(:empty) {
+  color: #dc3545;
+  margin-bottom: 10px !important;
+  padding-top: 0 !important;
+}
 @media only screen and (max-width: 1199px) {
   .profile-right-sec {
     padding: 30px 30px 30px 30px !important;

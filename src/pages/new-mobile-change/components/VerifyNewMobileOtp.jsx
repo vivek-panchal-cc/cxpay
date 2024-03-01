@@ -12,10 +12,10 @@ import { storageRequest } from "helpers/storageRequests";
 import { LoaderContext } from "context/loaderContext";
 
 function VerifyNewMobileOtp(props) {
-  const { mobileNumber, countryCode, customer_id, setShow } = props;
+  const { mobileNumber, countryCode, customer_id, setShow, setMobileChange } = props;
   const { setIsLoading } = useContext(LoaderContext);
   const navigate = useNavigate();
-
+  const [attempts, setAttempts] = useState(1);
   const [counter, setCounter] = useState(otpCounterTime);
   const [isTimerOver, setIsTimerOver] = useState(true);
   const [error, setError] = useState(false);
@@ -64,7 +64,17 @@ function VerifyNewMobileOtp(props) {
         formData.append("country_code", countryCode);
         formData.append("mobile_number", mobileNumber);
         const { data } = await apiRequest.verifyChangeMobileOtp(formData);
-        if (!data.success) throw data.message;
+        if (!data.success) {
+          setAttempts((prevAttempts) => prevAttempts + 1);
+          if (attempts >= 3) {
+            toast.error("Failed to verify OTP.");
+            setAttempts(1);
+            setShow(false);
+            setMobileChange(false)
+            return false;
+          }
+          throw data.message;
+        }
         toast.success(`${data.message}`);
         storageRequest.removeAuth();
         navigate("/", { replace: true });
@@ -110,7 +120,7 @@ function VerifyNewMobileOtp(props) {
   return (
     <div className="modal-dialog modal-dialog-centered">
       <div className="modal-content">
-        <div className="modal-header pb-0">
+        <div className="modal-header">
           <div className="">
             <img src="/assets/images/sent-payment-otp-pop.svg" alt="Otp" />
           </div>
