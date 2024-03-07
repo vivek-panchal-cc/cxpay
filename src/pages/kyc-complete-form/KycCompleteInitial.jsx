@@ -13,12 +13,16 @@ const KycCompleteInitial = () => {
     // Remove the event listener when the component unmounts
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
-      removeAuthentication();
+      (() => {
+        removeAuthentication();
+      })();
     };
   }, []);
 
   useEffect(() => {
-    removeAuthentication();
+    (() => {
+      removeAuthentication();
+    })();
   }, []);
 
   const removeAuthentication = () => {
@@ -26,7 +30,9 @@ const KycCompleteInitial = () => {
   };
 
   const logout = () => {
-    storageRequest.removeAuth();
+    (() => {
+      removeAuthentication();
+    })();
     window.location.href = "/";
   };
 
@@ -34,7 +40,9 @@ const KycCompleteInitial = () => {
     // Cancel the event to prevent the browser from navigating away
     // event.preventDefault();
     // Remove the authentication
-    removeAuthentication();
+    (() => {
+      removeAuthentication();
+    })();
   };
 
   return (
@@ -44,12 +52,13 @@ const KycCompleteInitial = () => {
           <div className="col-xs-12">
             <div className="login-signup-content-wrap">
               <div className="login-signup-inner">
-                <h4 className="text-center">Welcome to</h4>
+                {/* <h4 className="text-center">Welcome to</h4> */}
+                <div style={{marginBottom: "20px"}}></div>
                 <div className="login-logo-image text-center">
                   <img src={CXPAY_LOGO} alt="login logo img" />
                 </div>
 
-                <h5 className="text-center">Complete your KYC first</h5>
+                <h5 className="text-center mb-0">Complete your KYC</h5>
 
                 <div className="login-other-option">
                   <div className="login-signup-inner login-with-opt-wrap">

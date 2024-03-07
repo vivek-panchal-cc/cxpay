@@ -7,6 +7,7 @@ import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
 import LoaderAddGroupContact from "loaders/LoaderAddGroupContact";
+import { useSelector } from "react-redux";
 
 function ContactListingModal(props) {
   const {
@@ -30,6 +31,7 @@ function ContactListingModal(props) {
   const [searchContactName, setSearchContactName] = useState("");
   const [currentListPage, setCurrentListPage] = useState(1);
   const [listingTotalData, setListingTotalData] = useState(0);
+  const { profile } = useSelector((state) => state?.userProfile);
 
   const getCurrentData = useMemo(() => {
     const tmp = alldata.filter((item) =>
@@ -143,6 +145,14 @@ function ContactListingModal(props) {
     };
   }, [modalRef, setShow, show]);
 
+  const disabledCheckedBox = (ele) => {
+    if (profile.admin_approved) {      
+      return !ele.admin_approved;
+    } else {
+      return true;
+    }
+  };
+
   if (!show) return null;
   return (
     <div
@@ -199,6 +209,7 @@ function ContactListingModal(props) {
                             checked={selectedRemainingContact.includes(
                               ele.account_number
                             )}
+                            disabled={disabledCheckedBox(ele)}
                           />
                           <label htmlFor={ele.account_number}>
                             {ele.member_name}

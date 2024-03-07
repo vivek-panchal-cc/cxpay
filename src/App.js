@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import KycComplete from "pages/kyc-complete-form/KycComplete.jsx";
 import KycCompleteInitial from "pages/kyc-complete-form/KycCompleteInitial.jsx";
 import KycManual from "pages/kyc-complete-form/KycManual";
+import KycManualSecondStep from "pages/kyc-complete-form/Components/KycManualSecondStep";
 import Login from "pages/login/Login.jsx";
 import Signup from "pages/signup/Singup.jsx";
 import LoginWithOtp from "pages/login-with-otp/LoginWithOtp";
@@ -186,6 +187,7 @@ function App() {
           <Route path="/complete-kyc" element={<KycComplete />} />
           <Route path="/complete-kyc-initial" element={<KycCompleteInitial />} />
           <Route path="/kyc-manual" element={<KycManual />} />
+          <Route path="/kyc-manual-second-step" element={<KycManualSecondStep />} />
           <Route path="/signup/:fundtype" element={<SignupFundAccount />} />
           <Route element={<DashboardLayout />}>
             {/* settings */}

@@ -28,6 +28,7 @@ const API_verifyMobileNumber = apiUrl.API_ONBOARD_VERIFY_MOBILE_NUMBER;
 const API_verifyRegisterOtp = apiUrl.API_ONBOARD_VERIFY_REGISTER_OTP;
 const API_getProfile = apiUrl.API_ONBOARD_GET_PROFILE;
 const API_registerUser = apiUrl.API_ONBOARD_REGISTER_USER;
+const API_manualKyc = apiUrl.API_ONBOARD_MANUAL_KYC_PROCESS;
 const API_updateUser = apiUrl.API_ONBOARD_UPDATE_USER;
 const API_linkBank = apiUrl.API_ONBOARD_ADD_BANK;
 const API_updateBank = apiUrl.API_ONBOARD_UPDATE_BANK;
@@ -275,6 +276,13 @@ export const getUserProfile = () => {
  */
 export const registerUser = (params) => {
   return axiosOnboardInstance.post(`${API_registerUser}`, params);
+};
+
+/** POST @manual-kyc API
+ * @params document_type, document_id, expiry_date, image
+ */
+export const manualKyc = (params) => {
+  return axiosOnboardInstance.post(`${API_manualKyc}`, params);
 };
 
 /** POST @update-user API
@@ -975,6 +983,7 @@ export const apiRequest = {
   verifyMobileNumber,
   verifyRegisterOtp,
   registerUser,
+  manualKyc,
   updateUser,
   passwordChange,
   generateForgotPasswordOtpChange,

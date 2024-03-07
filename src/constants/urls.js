@@ -74,6 +74,7 @@ export const API_ONBOARD_WALLET_TRANSFER_SCHEDULE_OTP = "/create-schedule-paymen
 export const API_ONBOARD_RESEND_SCHEDULE_PAYMENT_OTP = "/resend-schedule-payment-otp";
 export const API_ONBOARD_CREATE_CHANGE_MOBILE_OTP = "/create-change-mobile-otp"
 export const API_ONBOARD_VERIFY_CHANGE_MOBILE_OTP = "verify-change-mobile-otp"
+export const API_ONBOARD_MANUAL_KYC_PROCESS = "manual-kyc-process"
 
 // customer-admin urls
 export const API_ADMIN_CMS_PAGE = "/api/cms-page/details";

@@ -74,6 +74,8 @@ const responseErrorInterceptor = (error) => {
     setTimeout(() => {
       window.location.href = "/complete-kyc-initial";
     }, 3000);
+  } else if (errResponse.status === 424) {
+    window.location.href = "/kyc-manual-second-step";
   }
   return Promise.reject(error);
 };

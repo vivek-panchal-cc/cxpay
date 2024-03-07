@@ -221,12 +221,14 @@ const createGroupSchema = yup.object().shape({
 });
 
 const kycDetailsSchema = yup.object().shape({
-  type: yup
+  kyc_document_type: yup
     .string()    
     .required("Please enter document type"),
-  number: yup
+  kyc_document_id: yup
     .string()    
-    .required("Please enter document number"),
+    .required("Please enter document id")
+    .matches(/^\S*$/, "Space is not allowed")
+    .max(25, "Document Id must not be greater than 25 characters."),    
   expiry_date: yup.date().required("Expiry date is required").nullable(),
   document: yup
     .mixed()
