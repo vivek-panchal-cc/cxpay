@@ -9,6 +9,19 @@ function KycManualFirstStep(_props) {
   const { setIsLoading } = useContext(LoaderContext);
   const { signUpCreds } = useContext(SignupContext);
 
+  const removeAuthentication = () => {
+    storageRequest.removeAuth();
+  };
+
+  const handleBeforeUnload = (event) => {
+    // Cancel the event to prevent the browser from navigating away
+    // event.preventDefault();
+    // Remove the authentication
+    (() => {
+      removeAuthentication();
+    })();
+  };
+
   useEffect(() => {
     // Attach the event listener when the component mounts
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -28,24 +41,11 @@ function KycManualFirstStep(_props) {
     })();
   }, []);
 
-  const removeAuthentication = () => {
-    storageRequest.removeAuth();
-  };
-
   const logout = () => {
     (() => {
       removeAuthentication();
     })();
     window.location.href = "/";
-  };
-
-  const handleBeforeUnload = (event) => {
-    // Cancel the event to prevent the browser from navigating away
-    // event.preventDefault();
-    // Remove the authentication
-    (() => {
-      removeAuthentication();
-    })();
   };
 
   return (
