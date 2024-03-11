@@ -6,6 +6,7 @@ import { CXPAY_LOGO } from "constants/all";
 import { storageRequest } from "helpers/storageRequests";
 
 function KycManualFirstStep(_props) {
+  const { message } = _props;
   const { setIsLoading } = useContext(LoaderContext);
   const { signUpCreds } = useContext(SignupContext);
 
@@ -56,9 +57,13 @@ function KycManualFirstStep(_props) {
             <div className="login-logo-image text-center">
               <img src={CXPAY_LOGO} alt="kyc logo img" />
             </div>
-            <h5 className="blue-text text-center px-2">
-              This process will take 2-3 working days.
-            </h5>
+            {message ? (
+              <h5 className="blue-text text-center px-2">{message}</h5>
+            ) : (
+              <h5 className="blue-text text-center px-2">
+                This process will take 2-3 working days.
+              </h5>
+            )}
             <div className="login-other-option">
               <div className="pt-4 login-with-opt-wrap">
                 <button className="btn btn-primary blue-bg" onClick={logout}>

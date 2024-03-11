@@ -6,6 +6,10 @@ import { storageRequest } from "helpers/storageRequests";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 
 const KycCompleteInitial = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const message = searchParams.get("message");
+
   useEffect(() => {
     // Attach the event listener when the component mounts
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -53,13 +57,16 @@ const KycCompleteInitial = () => {
             <div className="login-signup-content-wrap">
               <div className="login-signup-inner">
                 {/* <h4 className="text-center">Welcome to</h4> */}
-                <div style={{marginBottom: "20px"}}></div>
+                <div style={{ marginBottom: "20px" }}></div>
                 <div className="login-logo-image text-center">
                   <img src={CXPAY_LOGO} alt="login logo img" />
                 </div>
 
-                <h5 className="text-center mb-0">Complete your KYC</h5>
-
+                {message ? (
+                  <h5 className="text-center mb-0">{decodeURIComponent(message)}</h5>
+                ) : (
+                  <h5 className="text-center mb-0">Complete your KYC</h5>
+                )}
                 <div className="login-other-option">
                   <div className="login-signup-inner login-with-opt-wrap">
                     <button

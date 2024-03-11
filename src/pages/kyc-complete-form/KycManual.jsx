@@ -25,6 +25,7 @@ function KycManual(props) {
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const [datePicker, setDatePicker] = useState(false);
   const [showKycPopup, setShowKycPopup] = useState(false);
+  const [message, setMessage] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [showPassword, setShowPassword] = useState({
     new: false,
@@ -62,6 +63,7 @@ function KycManual(props) {
         for (const file of values.document) formData.append("image", file);
         const { data } = await apiRequest.manualKyc(formData);
         if (!data.success) throw data.message;        
+        setMessage(data.message);
         setShowKycPopup(true);
         // navigate("/complete-kyc-initial", { replace: true });
       } catch (error) {
@@ -73,10 +75,21 @@ function KycManual(props) {
     },
   });
 
+  const formatDate = (dateObj) => {
+    if (dateObj instanceof Date) {
+      const day = String(dateObj.getDate()).padStart(2, "0");
+      const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const year = dateObj.getFullYear();
+      return `${year}-${month}-${day}`;
+    }
+    return null;
+  };
+
   const handleChangeDateFilter = (date) => {
     if (datePicker) {
-      formik.setFieldValue("expiry_date", date);
-      setStartDate(date);
+      const formattedDate = formatDate(date);      
+      formik.setFieldValue("expiry_date", formattedDate);
+      setStartDate(formattedDate);
     }
     setDatePicker("");
   };
@@ -182,8 +195,8 @@ function KycManual(props) {
         </div>
       </div>
 
-      <Modal id="kyc_step_2_modal" show={showKycPopup} classNameChild="w-0">
-        <KycManualFirstStep setShow={setShowKycPopup} />
+      <Modal id="kyc_step_2_modal" show={showKycPopup} classNameChild="">
+        <KycManualFirstStep setShow={setShowKycPopup} message={message} />
       </Modal>
     </>
   );

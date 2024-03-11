@@ -65,17 +65,24 @@ const responseErrorInterceptor = (error) => {
     storageRequest.removeAuth();
     window.location.href = "/login";
     return Promise.reject(error);
-  } else if (errResponse.status === 423 && !isToastShown) {
+  } else if (
+    (errResponse.status === 423 || errResponse.status === 428) &&
+    !isToastShown
+  ) {
     const token = storageRequest.getAuth();
     if (token) {
       toast.success(errResponse.data.message);
       isToastShown = true;
     }
     setTimeout(() => {
-      window.location.href = "/complete-kyc-initial";
+      window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
+        errResponse.data.message
+      )}`;
     }, 3000);
   } else if (errResponse.status === 424) {
-    window.location.href = "/kyc-manual-second-step";
+    window.location.href = `/kyc-manual-second-step?message=${encodeURIComponent(
+      errResponse.data.message
+    )}`;
   }
   return Promise.reject(error);
 };
