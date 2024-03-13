@@ -57,10 +57,12 @@ import TopUp from "pages/top-up/TopUp";
 import TopUpDetails from "pages/top-up/TopUpDetails";
 import { useDispatch, useSelector } from "react-redux";
 import RecurringPayment from "pages/recurring/RecurringPayment";
-import SendRecurringPayment from "pages/send-recurring-payment/SendRecurringPayment"; 
+import SendRecurringPayment from "pages/send-recurring-payment/SendRecurringPayment";
 import RecurringDetails from "pages/recurring-details/RecurringDetails";
 import CMSContent from "pages/cms-content/cmsContent";
 import { fetchUserProfile } from "features/user/userProfileSlice";
+import CMSPage from "pages/cms-content/CmsPage";
+import { CmsProvider } from "context/cmsContext";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -82,7 +84,7 @@ async function loadData() {
 function withUserProtection(WrappedComponent, allowedUserTypes = []) {
   return function ProtectedComponent(props) {
     const { profile } = useSelector((state) => state.userProfile);
-    const { user_type, is_kyc } = profile || {};    
+    const { user_type, is_kyc } = profile || {};
 
     if (profile && Object.keys(profile).length > 0) {
       if (!is_kyc) {
@@ -109,30 +111,99 @@ const ProtectedLinkBank = withUserProtection(LinkBank, AllowedBusinessPersonal);
 const ProtectedViewCard = withUserProtection(ViewCard, AllowedBusinessPersonal);
 const ProtectedEditCard = withUserProtection(EditCard, AllowedBusinessPersonal);
 const ProtectedBankList = withUserProtection(BankList, AllowedBusinessPersonal);
-const ProtectedFundAccount = withUserProtection(FundAccount, AllowedBusinessPersonal);
-const ProtectedWithdrawalsCard = withUserProtection(WithdrawalsCard, AllowedBusinessPersonal);
-const ProtectedWithdrawalsBank = withUserProtection(WithdrawalsBank, AllowedBusinessPersonal);
-const ProtectedWithdrawCard = withUserProtection(WithdrawCard, AllowedBusinessPersonal);
-const ProtectedWithdrawBank = withUserProtection(WithdrawBank, AllowedBusinessPersonal);
-const ProtectedWithdrawDetails = withUserProtection(WithdrawDetails, AllowedBusinessPersonal);
-const ProtectedActivities = withUserProtection(Activities, AllowedBusinessPersonal);
+const ProtectedFundAccount = withUserProtection(
+  FundAccount,
+  AllowedBusinessPersonal
+);
+const ProtectedWithdrawalsCard = withUserProtection(
+  WithdrawalsCard,
+  AllowedBusinessPersonal
+);
+const ProtectedWithdrawalsBank = withUserProtection(
+  WithdrawalsBank,
+  AllowedBusinessPersonal
+);
+const ProtectedWithdrawCard = withUserProtection(
+  WithdrawCard,
+  AllowedBusinessPersonal
+);
+const ProtectedWithdrawBank = withUserProtection(
+  WithdrawBank,
+  AllowedBusinessPersonal
+);
+const ProtectedWithdrawDetails = withUserProtection(
+  WithdrawDetails,
+  AllowedBusinessPersonal
+);
+const ProtectedActivities = withUserProtection(
+  Activities,
+  AllowedBusinessPersonal
+);
 const ProtectedContacts = withUserProtection(Contacts, AllowedBusinessPersonal);
-const ProtectedContactsInvited = withUserProtection(ContactsInvited, AllowedBusinessPersonal);
-const ProtectedEditGroup = withUserProtection(EditGroup, AllowedBusinessPersonal);
-const ProtectedSendContact = withUserProtection(SendContact, AllowedBusinessPersonal);
-const ProtectedSendPayment = withUserProtection(SendPayment, AllowedBusinessPersonal);
-const ProtectedRequestContact = withUserProtection(RequestContact, AllowedBusinessPersonal);
-const ProtectedRequestPayment = withUserProtection(RequestPayment, AllowedBusinessPersonal);
-const ProtectedViewSchedulePayment = withUserProtection(ViewSchedulePayment, AllowedBusinessPersonal);
-const ProtectedEditScheduledPayment = withUserProtection(EditScheduledPayment, AllowedBusinessPersonal);
-const ProtectedEditProfile = withUserProtection(EditProfile, AllowedBusinessPersonal);
-const ProtectedRecurringPayment = withUserProtection(RecurringPayment, AllowedBusinessPersonal);
-const ProtectedSendRecurringPayment = withUserProtection(SendRecurringPayment, AllowedBusinessPersonal);
-const ProtectedViewRecurringPayment = withUserProtection(ViewRecurringPayment, AllowedBusinessPersonal);
-const ProtectedEditRecurringPayment = withUserProtection(EditRecurringPayment, AllowedBusinessPersonal);
-const ProtectedRecurringDetails = withUserProtection(RecurringDetails, AllowedBusinessPersonal);
-const ProtectedNotification = withUserProtection(Notification, AllowedBusinessPersonal);
-const ProtectedViewNotification = withUserProtection(ViewNotification, AllowedBusinessPersonal);
+const ProtectedContactsInvited = withUserProtection(
+  ContactsInvited,
+  AllowedBusinessPersonal
+);
+const ProtectedEditGroup = withUserProtection(
+  EditGroup,
+  AllowedBusinessPersonal
+);
+const ProtectedSendContact = withUserProtection(
+  SendContact,
+  AllowedBusinessPersonal
+);
+const ProtectedSendPayment = withUserProtection(
+  SendPayment,
+  AllowedBusinessPersonal
+);
+const ProtectedRequestContact = withUserProtection(
+  RequestContact,
+  AllowedBusinessPersonal
+);
+const ProtectedRequestPayment = withUserProtection(
+  RequestPayment,
+  AllowedBusinessPersonal
+);
+const ProtectedViewSchedulePayment = withUserProtection(
+  ViewSchedulePayment,
+  AllowedBusinessPersonal
+);
+const ProtectedEditScheduledPayment = withUserProtection(
+  EditScheduledPayment,
+  AllowedBusinessPersonal
+);
+const ProtectedEditProfile = withUserProtection(
+  EditProfile,
+  AllowedBusinessPersonal
+);
+const ProtectedRecurringPayment = withUserProtection(
+  RecurringPayment,
+  AllowedBusinessPersonal
+);
+const ProtectedSendRecurringPayment = withUserProtection(
+  SendRecurringPayment,
+  AllowedBusinessPersonal
+);
+const ProtectedViewRecurringPayment = withUserProtection(
+  ViewRecurringPayment,
+  AllowedBusinessPersonal
+);
+const ProtectedEditRecurringPayment = withUserProtection(
+  EditRecurringPayment,
+  AllowedBusinessPersonal
+);
+const ProtectedRecurringDetails = withUserProtection(
+  RecurringDetails,
+  AllowedBusinessPersonal
+);
+const ProtectedNotification = withUserProtection(
+  Notification,
+  AllowedBusinessPersonal
+);
+const ProtectedViewNotification = withUserProtection(
+  ViewNotification,
+  AllowedBusinessPersonal
+);
 
 // user_types = business
 const ProtectedBusinessInfo = withUserProtection(BusinessInfo, AllowedBusiness);
@@ -140,11 +211,15 @@ const ProtectedBusinessInfo = withUserProtection(BusinessInfo, AllowedBusiness);
 // user_types = agent
 const ProtectedTopUp = withUserProtection(TopUp, AllowedAgent);
 const ProtectedTopUpDetails = withUserProtection(TopUpDetails, AllowedAgent);
-const ProtectedTopUpActivities = withUserProtection(TopUpActivities, AllowedAgent);
+const ProtectedTopUpActivities = withUserProtection(
+  TopUpActivities,
+  AllowedAgent
+);
 
 // user_types = all
 const ProtectedDashboard = withUserProtection(Dashboard, AllowedAllTypes);
 const ProtectedCMSContent = withUserProtection(CMSContent, AllowedAllTypes);
+const ProtectedCMSPage = withUserProtection(CMSPage, AllowedAllTypes);
 
 function App() {
   const location = useLocation();
@@ -164,6 +239,15 @@ function App() {
   return (
     <>
       <Routes>
+        {/* CMS Pages Route */}
+        <Route
+          path="/cms-page/:slug"
+          element={
+            <CmsProvider>
+              <ProtectedCMSPage />
+            </CmsProvider>
+          }
+        />
         {/* List of Public Routes */}
         <Route element={<PublicLayout />}>
           <Route path="/login" element={<Login />} />
@@ -185,23 +269,38 @@ function App() {
         {/* List of Private Routes */}
         <Route element={<PrivateLayout />}>
           <Route path="/complete-kyc" element={<KycComplete />} />
-          <Route path="/complete-kyc-initial" element={<KycCompleteInitial />} />
+          <Route
+            path="/complete-kyc-initial"
+            element={<KycCompleteInitial />}
+          />
           <Route path="/kyc-manual" element={<KycManual />} />
-          <Route path="/kyc-manual-second-step" element={<KycManualSecondStep />} />
+          <Route
+            path="/kyc-manual-second-step"
+            element={<KycManualSecondStep />}
+          />
           <Route path="/signup/:fundtype" element={<SignupFundAccount />} />
           <Route element={<DashboardLayout />}>
             {/* settings */}
             <Route path="/setting" element={<Setting />} />
             <Route path="/setting/edit-profile" element={<EditProfile />} />
-            <Route path="/setting/notification" element={<ProtectedNotification />} />
+            <Route
+              path="/setting/notification"
+              element={<ProtectedNotification />}
+            />
             <Route
               path="/setting/change-password"
               element={<ChangePassword />}
             />
-            <Route path="/setting/business-info" element={<ProtectedBusinessInfo />} />
+            <Route
+              path="/setting/business-info"
+              element={<ProtectedBusinessInfo />}
+            />
             <Route path="/top-up" element={<ProtectedTopUp />} />
             <Route path="/top-up-details" element={<ProtectedTopUpDetails />} />
-            <Route path="/top-up-activities" element={<ProtectedTopUpActivities />} />
+            <Route
+              path="/top-up-activities"
+              element={<ProtectedTopUpActivities />}
+            />
             {/* wallet */}
             <Route path="/wallet" element={<ProtectedWallet />} />
             <Route path="/wallet/add-card" element={<ProtectedAddCard />} />
@@ -241,7 +340,10 @@ function App() {
             <Route path="/" element={<ProtectedDashboard />} />
             <Route path="/more/:slug" element={<ProtectedCMSContent />} />
             <Route path="/activities" element={<ProtectedActivities />} />
-            <Route path="/view-notification" element={<ProtectedViewNotification />} />
+            <Route
+              path="/view-notification"
+              element={<ProtectedViewNotification />}
+            />
             <Route path="/contacts" element={<ProtectedContacts />} />
             <Route
               path="/contacts-invited"
@@ -250,8 +352,14 @@ function App() {
             <Route path="/edit-group/:id" element={<ProtectedEditGroup />} />
             <Route path="/send" element={<ProtectedSendContact />} />
             <Route path="/send/payment" element={<ProtectedSendPayment />} />
-            <Route path="/send/recurring-payment" element={<ProtectedRecurringPayment />} />
-            <Route path="/send/recurring-payment-send" element={<ProtectedSendRecurringPayment />} />
+            <Route
+              path="/send/recurring-payment"
+              element={<ProtectedRecurringPayment />}
+            />
+            <Route
+              path="/send/recurring-payment-send"
+              element={<ProtectedSendRecurringPayment />}
+            />
             <Route
               path="/view-recurring-payment-details/:id"
               element={<ProtectedRecurringDetails />}
