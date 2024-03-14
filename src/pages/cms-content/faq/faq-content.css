@@ -3,6 +3,12 @@
   border: none;
 }
 
+.accordion-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .accordion-item {
   position: relative;
   cursor: pointer;
@@ -42,14 +48,6 @@
 
 .accordion-content.show {
   display: block;
-}
-
-.accordion-toggle-icon {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  cursor: pointer;
 }
 
 /* Additional styling for the toggle icon */

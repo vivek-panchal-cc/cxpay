@@ -64,6 +64,7 @@ import { fetchUserProfile } from "features/user/userProfileSlice";
 import CMSPage from "pages/cms-content/CmsPage";
 import FaqContent from "pages/cms-content/faq/FaqContent";
 import { CmsProvider } from "context/cmsContext";
+import { FaqProvider } from "context/faqContext";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -341,7 +342,14 @@ function App() {
             {/* contacts */}
             <Route path="/" element={<ProtectedDashboard />} />
             <Route path="/more/:slug" element={<ProtectedCMSContent />} />
-            <Route path="/more/faq" element={<ProtectedFaqContent />} />
+            <Route
+              path="/more/faq"
+              element={
+                <FaqProvider>
+                  <ProtectedFaqContent />
+                </FaqProvider>
+              }
+            />
             <Route path="/activities" element={<ProtectedActivities />} />
             <Route
               path="/view-notification"

@@ -87,6 +87,7 @@ const API_verifyChangeMobileOtp = apiUrl.API_ONBOARD_VERIFY_CHANGE_MOBILE_OTP;
 // ADMIN SERVICES
 const API_cmsPage = apiUrl.API_ADMIN_CMS_PAGE;
 const API_cmsPagesForMore = apiUrl.API_ADMIN_CMS_LIST;
+const API_getFaqList = apiUrl.API_GET_FAQ_LIST;
 
 // TRANSACTION SERVICES
 const API_addFund = apiUrl.API_TRANSACTION_ADD_FUND;
@@ -564,6 +565,13 @@ export const getCMSPage = (slug) => {
  */
 export const getCMSPageLists = () => {
   return axiosAdminInstance.get(`${API_cmsPagesForMore}`);
+};
+
+/** POST @get-faq-list API
+ * @params
+ */
+export const getFaqList = () => {
+  return axiosAdminInstance.get(`${API_getFaqList}`);
 };
 
 /** GET @get-charges
@@ -1055,6 +1063,7 @@ export const apiRequest = {
   deactivateAgentAccount,
   getCMSPage,
   getCMSPageLists,
+  getFaqList,
   sendPaymentRequest,
   createSchedulePayment,
   listSchedulePayment,

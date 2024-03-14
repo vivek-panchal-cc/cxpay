@@ -58,7 +58,9 @@ export { default as IconCloseModal } from "./CloseModal";
 export { default as IconMobile } from "./Mobile";
 export { default as IconPersonalId } from "./PersonalId";
 export { default as IconMore } from "./More";
-export { default as IconPlusFaq } from "./PlusFaq"
+export { default as IconPlusFaq } from "./PlusFaq";
+export { default as IconRejectKyc } from "./RejectKyc";
+export { default as IconMinusFaq } from "./MinusFaq";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";
