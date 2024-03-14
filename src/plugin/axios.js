@@ -47,8 +47,6 @@ const responseInterceptor = async (response) => {
 let isToastShown = false;
 
 const responseErrorInterceptor = (error) => {
-  const { kyc_approved_status, system_option_manual_kyc_status } =
-    error.response.data?.data;
   const errResponse = error.response;
   if (
     errResponse &&
@@ -68,6 +66,8 @@ const responseErrorInterceptor = (error) => {
     (errResponse.status === 423 || errResponse.status === 428) &&
     !isToastShown
   ) {
+    const { kyc_approved_status, system_option_manual_kyc_status } =
+      errResponse.data?.data;
     if (
       (kyc_approved_status?.toLowerCase() === "pending" ||
         kyc_approved_status?.toLowerCase() === "rejected") &&
