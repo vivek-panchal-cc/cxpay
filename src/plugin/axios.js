@@ -47,6 +47,8 @@ const responseInterceptor = async (response) => {
 let isToastShown = false;
 
 const responseErrorInterceptor = (error) => {
+  const { kyc_approved_status, system_option_manual_kyc_status } =
+    error.response.data?.data;
   const errResponse = error.response;
   if (
     errResponse &&
@@ -57,9 +59,6 @@ const responseErrorInterceptor = (error) => {
   ) {
     const token = storageRequest.getAuth();
     if (token) {
-      // toast.success(
-      //   "Your session has expired. Please login again to continue working"
-      // );
       toast.success(errResponse.data.message);
     }
     storageRequest.removeAuth();
@@ -69,16 +68,26 @@ const responseErrorInterceptor = (error) => {
     (errResponse.status === 423 || errResponse.status === 428) &&
     !isToastShown
   ) {
-    const token = storageRequest.getAuth();
-    if (token) {
-      toast.success(errResponse.data.message);
-      isToastShown = true;
-    }
-    setTimeout(() => {
-      window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
+    if (
+      (kyc_approved_status?.toLowerCase() === "pending" ||
+        kyc_approved_status?.toLowerCase() === "rejected") &&
+      system_option_manual_kyc_status?.toLowerCase() === "true"
+    ) {
+      window.location.href = `/kyc-manual-second-step?message=${encodeURIComponent(
         errResponse.data.message
       )}`;
-    }, 3000);
+    } else {
+      const token = storageRequest.getAuth();
+      if (token) {
+        toast.success(errResponse.data.message);
+        isToastShown = true;
+      }
+      setTimeout(() => {
+        window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
+          errResponse.data.message
+        )}`;
+      }, 3000);
+    }
   } else if (errResponse.status === 424) {
     window.location.href = `/kyc-manual-second-step?message=${encodeURIComponent(
       errResponse.data.message
