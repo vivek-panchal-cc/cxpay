@@ -113,7 +113,7 @@ function LeftSidebar() {
   //   }
   // };
 
-  const openCMSPages = (slug) => {    
+  const openCMSPages = (slug) => {
     navigate(`/more/${slug}`);
   };
 
@@ -241,6 +241,11 @@ function LeftSidebar() {
                     </Link>
                   </li>
                 ))}
+                <li className={`${thisRoute === "/more/faq" ? "active" : ""}`}>
+                  <Link to="/more/faq" replace>
+                    <span>FAQ</span>
+                  </Link>
+                </li>
               </ul>
             </li>
           ) : null}

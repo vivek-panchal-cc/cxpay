@@ -62,6 +62,7 @@ import RecurringDetails from "pages/recurring-details/RecurringDetails";
 import CMSContent from "pages/cms-content/cmsContent";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import CMSPage from "pages/cms-content/CmsPage";
+import FaqContent from "pages/cms-content/faq/FaqContent";
 import { CmsProvider } from "context/cmsContext";
 
 async function loadData() {
@@ -220,6 +221,7 @@ const ProtectedTopUpActivities = withUserProtection(
 const ProtectedDashboard = withUserProtection(Dashboard, AllowedAllTypes);
 const ProtectedCMSContent = withUserProtection(CMSContent, AllowedAllTypes);
 const ProtectedCMSPage = withUserProtection(CMSPage, AllowedAllTypes);
+const ProtectedFaqContent = withUserProtection(FaqContent, AllowedAllTypes);
 
 function App() {
   const location = useLocation();
@@ -339,6 +341,7 @@ function App() {
             {/* contacts */}
             <Route path="/" element={<ProtectedDashboard />} />
             <Route path="/more/:slug" element={<ProtectedCMSContent />} />
+            <Route path="/more/faq" element={<ProtectedFaqContent />} />
             <Route path="/activities" element={<ProtectedActivities />} />
             <Route
               path="/view-notification"

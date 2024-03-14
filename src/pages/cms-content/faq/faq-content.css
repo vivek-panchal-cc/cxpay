@@ -1,0 +1,63 @@
+/* FaqContent.css */
+.accordion {
+  border: none;
+}
+
+.accordion-item {
+  position: relative;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s;
+}
+
+.accordion-item:hover {
+  background-color: #f0f0f0;
+}
+
+.accordion-title {
+  font-weight: bold;
+}
+
+.accordion-content {
+  display: none;
+  padding: 10px;
+}
+
+.accordion-item.active {
+  /* Add style for active accordion item */
+  background-color: #f0f0f0; /* Highlight background color */
+}
+
+.accordion-item.active .accordion-title {
+  /* Add style for active accordion title */
+  color: var(--blue); /* Example color */
+}
+
+.accordion-item.active .accordion-content {
+  /* Add style for active accordion content */
+  display: block;
+}
+
+.accordion-content.show {
+  display: block;
+}
+
+.accordion-toggle-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Additional styling for the toggle icon */
+.accordion-toggle-icon:before {
+  content: "";
+  font-size: 18px;
+}
+
+.accordion-toggle-icon.active:before {
+  content: "";
+}
