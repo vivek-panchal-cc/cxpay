@@ -124,9 +124,9 @@ const NewMobileChange = (props) => {
                   Cancel
                 </button>
               </div>
-              <div>
+              {/* <div>
                 <p className="text-danger text-center">Note: You can change your mobile only 2 times in 6 months</p>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>
