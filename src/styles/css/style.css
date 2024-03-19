@@ -8406,7 +8406,11 @@ ul.recent-act-lw-main .act-info-wrap-left {
   font-weight: 400;
 }
 
-.kyc-expiry-date .react-calendar__tile--now {
+.kyc-expiry-date .react-calendar__tile--now {    
+  border-radius: 0.3rem !important;
+}
+
+.kyc-expiry-date .react-calendar__tile--active {
   background: var(--blue) !important;
   color: #fff !important;
   border-radius: 0.3rem !important;
