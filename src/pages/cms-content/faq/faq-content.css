@@ -1,6 +1,7 @@
 /* FaqContent.css */
 .accordion {
   border: none;
+  max-width: 70%;
 }
 
 .accordion-title-wrapper {
@@ -19,7 +20,7 @@
 }
 
 .accordion-item:hover {
-  background-color: #f0f0f0;
+  background-color: #f3f3f3;
 }
 
 .accordion-title {
@@ -33,7 +34,7 @@
 
 .accordion-item.active {
   /* Add style for active accordion item */
-  background-color: #f0f0f0; /* Highlight background color */
+  background-color: #f3f3f3; /* Highlight background color */
 }
 
 .accordion-item.active .accordion-title {
@@ -48,6 +49,18 @@
 
 .accordion-content.show {
   display: block;
+}
+
+.accordion-content.show p{
+  color: #323232;
+}
+
+.accordion-content.show strong{
+  color: #323232;
+}
+
+.accordion-content.show ul li{
+  color: #323232;
 }
 
 /* Additional styling for the toggle icon */

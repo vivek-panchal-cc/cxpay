@@ -12,37 +12,49 @@ const FaqContent = () => {
   };
 
   return (
-    <div className="accordion">
-      <h1>FAQ</h1>
-      {faqList?.map((item, index) => (
-        <div
-          key={index}
-          className={`accordion-item ${activeIndex === index ? "active" : ""}`}
-          onClick={() => toggleAccordion(index)}
-        >
-          <div className="accordion-title-wrapper">
-            <label className="accordion-title">{item.faq_question}</label>
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleAccordion(index);
-              }}
-            >
-              {activeIndex === index ? (
-                <IconMinusFaq className="minus-icon" />
-              ) : (
-                <IconPlusFaq />
-              )}
+    <div className="container-fluid">
+      <div className="row">
+        <div className="contact-sec">
+          <div className="contact-top-sec">
+            <div className="title-content-wrap">
+              <h3>FAQ</h3>
             </div>
           </div>
-          <div
-            className={`accordion-content ${
-              activeIndex === index ? "show" : ""
-            }`}
-            dangerouslySetInnerHTML={{ __html: item.faq_answer }}
-          ></div>
+          <div className="accordion">
+            {faqList?.map((item, index) => (
+              <div
+                key={index}
+                className={`accordion-item ${
+                  activeIndex === index ? "active" : ""
+                }`}
+                onClick={() => toggleAccordion(index)}
+              >
+                <div className="accordion-title-wrapper">
+                  <label className="accordion-title">{item.faq_question}</label>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleAccordion(index);
+                    }}
+                  >
+                    {activeIndex === index ? (
+                      <IconMinusFaq className="minus-icon" />
+                    ) : (
+                      <IconPlusFaq />
+                    )}
+                  </div>
+                </div>
+                <div
+                  className={`accordion-content ${
+                    activeIndex === index ? "show" : ""
+                  }`}
+                  dangerouslySetInnerHTML={{ __html: item.faq_answer }}
+                ></div>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
+      </div>
     </div>
   );
 };
