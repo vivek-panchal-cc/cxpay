@@ -28,7 +28,7 @@ const signUpPersonalAccountSchema = yup.object().shape({
   user_type: yup.string().required(),
   personal_id: yup
     .string()
-    .matches(/^\d*$/, "Enter valid personal id")    
+    .matches(/^\d*$/, "Please only enter numbers.")    
     .max(10, "Maximum limit is 10 digits")
     // .max(100, "Maximum limit exceeded")
     .required("Please enter personal id"),
@@ -40,7 +40,7 @@ const signUpPersonalAccountSchema = yup.object().shape({
   country: countrySchema,
   city: citySchema,
   country_code: yup.string().required("required"),
-  terms_conditions: yup.bool().oneOf([true], "*"),
+  terms_conditions: yup.bool().oneOf([true], "Please accept the terms and conditions before continuing."),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
@@ -63,7 +63,7 @@ const signUpBusinessAccountSchema = yup.object().shape({
     .required("Please enter chamber of commerce")
     .matches(/^\S*$/, "Space is not allowed")
     .max(25, "Chamber of commerce must not be greater than 25 characters."),
-  terms_conditions: yup.bool().oneOf([true], "*"),
+  terms_conditions: yup.bool().oneOf([true], "Please accept the terms and conditions before continuing."),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
@@ -138,7 +138,7 @@ const editProfilePersonalUserSchema = yup.object().shape({
   personal_id: yup
     .string()
     .required("Please enter personal id")
-    .matches(/^\d*$/, "Enter valid personal id")
+    .matches(/^\d*$/, "Please only enter numbers.")
     // .max(100, "Maximum limit is exceeded")    
     .max(10, "Maximum limit is 10 digits"),
   user_type: yup.string().required(),

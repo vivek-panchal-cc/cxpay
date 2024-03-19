@@ -8350,3 +8350,64 @@ ul.recent-act-lw-main .act-info-wrap-left {
 .w-0 {
   width: fit-content !important;
 }
+
+.kyc-expiry-date {
+  width: 100% !important;
+  border: none !important;
+  margin-bottom: 15px !important;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+
+.kyc-expiry-date .react-calendar__navigation__label {
+  font-family: Visby Round CF, sans-serif;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.kyc-expiry-date .react-calendar__tile:enabled:hover {
+  border-radius: 0.3rem !important;
+}
+
+.kyc-expiry-date .react-calendar__tile:disabled {
+  background-color: unset !important;
+  color: #ababab;
+}
+
+.kyc-expiry-date .react-calendar__month-view__days__day--weekend {
+  color: #000;
+}
+
+.kyc-expiry-date .react-calendar__month-view__days__day--neighboringMonth,
+.kyc-expiry-date .react-calendar__decade-view__years__year--neighboringDecade,
+.kyc-expiry-date.react-calendar__century-view__decades__decade--neighboringCentury {
+  color: #ababab !important;
+}
+
+.kyc-expiry-date .react-calendar__month-view__weekdays {
+  color: #000 !important;
+  border-bottom: 1px solid var(--dark_blue) !important;
+}
+
+.kyc-expiry-date .react-calendar__month-view__weekdays div abbr[title] {
+  font-family: Helvetica Neue, helvetica, arial, sans-serif;
+  text-transform: capitalize;
+  font-size: 15px;
+  font-weight: 400;
+  color: #000;
+  text-decoration: none !important;
+  cursor: default;
+}
+
+.kyc-expiry-date .react-calendar__month-view__days button abbr {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.kyc-expiry-date .react-calendar__tile--now {
+  background: var(--blue) !important;
+  color: #fff !important;
+  border-radius: 0.3rem !important;
+}

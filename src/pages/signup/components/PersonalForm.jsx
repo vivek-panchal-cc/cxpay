@@ -59,7 +59,13 @@ function PersonalForm(props) {
         if (!data.success) throw data.message;
         toast.success(data.message);
         storageRequest.setAuth(data.data.token);
-        setSignUpCreds((cs) => ({ ...cs, step: 3 }));
+        setSignUpCreds((cs) => ({
+          ...cs,
+          step: 3,
+          is_kyc: data.data.is_kyc,
+          system_manual_kyc: data.data.system_manual_kyc,
+          kyc_approved_status: data.data.kyc_approved_status,
+        }));
       } catch (error) {
         setErrors({
           email: error?.email?.[0],
@@ -384,8 +390,10 @@ function PersonalForm(props) {
                       <span
                         className="danger"
                         style={{
-                          marginLeft: "8px",
+                          display: "flex",
                           color: "#dc3545",
+                          fontSize: "12px",
+                          lineHeight: "16px",
                         }}
                       >
                         {formik.errors.terms_conditions}

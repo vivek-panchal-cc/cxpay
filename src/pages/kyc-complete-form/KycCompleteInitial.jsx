@@ -1,11 +1,13 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { CXPAY_LOGO } from "constants/all";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { storageRequest } from "helpers/storageRequests";
 import { fetchUserProfile } from "features/user/userProfileSlice";
+import { SystemOptionsContext } from "context/systemOptionsContext";
 
 const KycCompleteInitial = () => {
+  const { SUPPORT_EMAIL } = useContext(SystemOptionsContext);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const message = searchParams.get("message");
@@ -63,7 +65,9 @@ const KycCompleteInitial = () => {
                 </div>
 
                 {message ? (
-                  <h5 className="text-center mb-0">{decodeURIComponent(message)}</h5>
+                  <h5 className="text-center mb-0">
+                    {decodeURIComponent(message)}
+                  </h5>
                 ) : (
                   <h5 className="text-center mb-0">Complete your KYC</h5>
                 )}

@@ -12,6 +12,9 @@ const initialValues = {
   country_iso: "",
   countryList: [],
   cityList: [],
+  is_kyc: "",
+  system_manual_kyc: "",
+  kyc_approved_status: "",
 };
 
 export const SignupContext = React.createContext(initialValues);

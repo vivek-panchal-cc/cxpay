@@ -18,6 +18,8 @@ import UploadFile from "components/upload-files/UploadFile";
 import { addObjToFormData } from "helpers/commonHelpers";
 import Modal from "components/modals/Modal";
 import KycManualFirstStep from "./Components/KycManualFirstStep";
+import { useSelector } from "react-redux";
+import ModalDatePickerKyc from "components/modals/ModalDatePickerKyc";
 
 function KycManual(props) {
   const navigate = useNavigate();
@@ -39,6 +41,8 @@ function KycManual(props) {
     strength: "",
     percent: 0,
   });
+
+  const { is_kyc } = useSelector((state) => state.userProfile?.profile);
 
   const formik = useFormik({
     initialValues: {
@@ -62,7 +66,7 @@ function KycManual(props) {
         }
         for (const file of values.document) formData.append("image", file);
         const { data } = await apiRequest.manualKyc(formData);
-        if (!data.success) throw data.message;        
+        if (!data.success) throw data.message;
         setMessage(data.message);
         setShowKycPopup(true);
         // navigate("/complete-kyc-initial", { replace: true });
@@ -87,7 +91,7 @@ function KycManual(props) {
 
   const handleChangeDateFilter = (date) => {
     if (datePicker) {
-      const formattedDate = formatDate(date);      
+      const formattedDate = formatDate(date);
       formik.setFieldValue("expiry_date", formattedDate);
       setStartDate(formattedDate);
     }
@@ -108,6 +112,7 @@ function KycManual(props) {
   let isLoggedIn = false;
   if (token) isLoggedIn = true;
   if (!isLoggedIn) return <Navigate to="/login" replace />;
+  if (is_kyc) return <Navigate to="/" replace />;
   return (
     <>
       <div className="login-signup common-body-bg">
@@ -131,7 +136,10 @@ function KycManual(props) {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.kyc_document_type}
-                    error={formik.touched.kyc_document_type && formik.errors.kyc_document_type}
+                    error={
+                      formik.touched.kyc_document_type &&
+                      formik.errors.kyc_document_type
+                    }
                   >
                     <option value={""}>Document Type</option>
                     <option value={"passport"}>Passport</option>
@@ -145,7 +153,10 @@ function KycManual(props) {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.kyc_document_id}
-                    error={formik.touched.kyc_document_id && formik.errors.kyc_document_id}
+                    error={
+                      formik.touched.kyc_document_id &&
+                      formik.errors.kyc_document_id
+                    }
                     autoComplete={"new-id"}
                   />
                   <InputDatePicker
@@ -186,12 +197,12 @@ function KycManual(props) {
                   </div>
                 </form>
               </div>
-              <ModalDatePicker
+              <ModalDatePickerKyc
                 minDate={datePicker ? new Date() : ""}
                 show={datePicker}
                 setShow={() => setDatePicker(false)}
                 classNameChild={"schedule-time-modal"}
-                heading="Date"
+                heading="Expiry Date"
                 handleChangeDate={handleChangeDateFilter}
               />
             </div>

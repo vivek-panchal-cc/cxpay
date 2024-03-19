@@ -26,9 +26,21 @@ const Signup = () => {
             return <EnterPhone />;
         }
       case 3:
-        // return <Navigate to={`/signup/${FUND_CARD}`} replace={true} />;
-        // return <Navigate to="/" replace={true} />;
-        return <Navigate to="/kyc-manual" replace={true} />;
+        if (signUpCreds.system_manual_kyc?.toString() === "true") {
+          return <Navigate to="/kyc-manual" replace={true} />;
+        } else {
+          if (
+            signUpCreds.is_kyc?.toString() === "false" &&
+            (signUpCreds.kyc_approved_status === "approved" ||
+              signUpCreds.kyc_approved_status === "pending")
+          ) {
+            return <Navigate to="/complete-kyc-initial" replace={true} />;
+          }
+        }
+
+      // return <Navigate to={`/signup/${FUND_CARD}`} replace={true} />;
+      // return <Navigate to="/" replace={true} />;
+      // return <Navigate to="/kyc-manual" replace={true} />;
       default:
         return <EnterPhone />;
     }
