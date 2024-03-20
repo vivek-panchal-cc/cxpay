@@ -53,7 +53,7 @@ function ModalDatePickerKyc(props) {
             </div>
             <ReactDatePicker
               minDate={props.minDate || new Date()}
-              value={selectedDate}
+              value={selectedDate || new Date()}
               onChange={handleDateChange}
               className="kyc-expiry-date"
               // inline

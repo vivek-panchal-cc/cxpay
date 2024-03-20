@@ -14,6 +14,7 @@ import InputDatePicker from "components/ui/InputDatePicker";
 import ModalDatePicker from "components/modals/ModalDatePicker";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { useSelector } from "react-redux";
+import ModalDatePickerKyc from "components/modals/ModalDatePickerKyc";
 
 function RecurringPayment() {
   const { setIsLoading } = useContext(LoaderContext);
@@ -488,7 +489,7 @@ function RecurringPayment() {
             </div>
           </form>
         </div>
-        <ModalDatePicker
+        <ModalDatePickerKyc
           minDate={activeDatePicker === "start" ? new Date() : startDate}
           show={activeDatePicker !== ""}
           setShow={() => setActiveDatePicker("")}

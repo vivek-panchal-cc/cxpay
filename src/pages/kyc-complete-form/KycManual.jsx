@@ -42,8 +42,6 @@ function KycManual(props) {
     percent: 0,
   });
 
-  const { is_kyc } = useSelector((state) => state.userProfile?.profile);
-
   const formik = useFormik({
     initialValues: {
       kyc_document_type: "",
@@ -112,7 +110,7 @@ function KycManual(props) {
   let isLoggedIn = false;
   if (token) isLoggedIn = true;
   if (!isLoggedIn) return <Navigate to="/login" replace />;
-  if (is_kyc) return <Navigate to="/" replace />;
+  
   return (
     <>
       <div className="login-signup common-body-bg">

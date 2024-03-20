@@ -247,7 +247,7 @@ function LeftSidebar() {
                 }`}
               >
                 <Link to="/more/faq" replace>
-                  <span>FAQ</span>
+                  <span>FAQs</span>
                 </Link>
               </li>
             </ul>

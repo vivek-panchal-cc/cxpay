@@ -8373,7 +8373,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
 
 .kyc-expiry-date .react-calendar__tile:disabled {
   background-color: unset !important;
-  color: #ababab;
+  color: #ababab !important;
 }
 
 .kyc-expiry-date .react-calendar__month-view__days__day--weekend {
@@ -8407,7 +8407,12 @@ ul.recent-act-lw-main .act-info-wrap-left {
 }
 
 .kyc-expiry-date .react-calendar__tile--now {    
+  background-color: #fff !important;
   border-radius: 0.3rem !important;
+}
+
+.kyc-expiry-date .react-calendar__tile--now abbr{    
+  font-weight: 700 !important;
 }
 
 .kyc-expiry-date .react-calendar__tile--active {

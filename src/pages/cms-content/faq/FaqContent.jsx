@@ -17,7 +17,7 @@ const FaqContent = () => {
         <div className="contact-sec">
           <div className="contact-top-sec">
             <div className="title-content-wrap">
-              <h3>FAQ</h3>
+              <h3>FAQs</h3>
             </div>
           </div>
           <div className="accordion">
