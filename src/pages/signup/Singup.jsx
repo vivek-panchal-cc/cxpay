@@ -26,7 +26,10 @@ const Signup = () => {
             return <EnterPhone />;
         }
       case 3:
-        if (signUpCreds.system_manual_kyc?.toString() === "true") {
+        if (
+          signUpCreds.system_manual_kyc?.toString() === "true" &&
+          signUpCreds.kyc_approved_status === "pending"
+        ) {
           return <Navigate to="/kyc-manual" replace={true} />;
         } else {
           if (
@@ -34,6 +37,8 @@ const Signup = () => {
             (signUpCreds.kyc_approved_status === "approved" ||
               signUpCreds.kyc_approved_status === "pending")
           ) {
+            return <Navigate to="/complete-kyc-initial" replace={true} />;
+          } else {
             return <Navigate to="/complete-kyc-initial" replace={true} />;
           }
         }
