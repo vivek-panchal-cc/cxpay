@@ -68,10 +68,17 @@ const responseErrorInterceptor = (error) => {
   ) {
     const { kyc_approved_status, system_option_manual_kyc_status } =
       errResponse.data?.data;
+
+    const isPendingOrRejected =
+      kyc_approved_status?.toLowerCase() === "pending" ||
+      kyc_approved_status?.toLowerCase() === "rejected";
+    const isApproved = kyc_approved_status?.toLowerCase() === "approved";
+    const isManualKycEnabled =
+      system_option_manual_kyc_status?.toLowerCase() === "true";
+
     if (
-      (kyc_approved_status?.toLowerCase() === "pending" ||
-        kyc_approved_status?.toLowerCase() === "rejected") &&
-      system_option_manual_kyc_status?.toLowerCase() === "true"
+      (isPendingOrRejected && isManualKycEnabled) ||
+      (isApproved && isManualKycEnabled)
     ) {
       window.location.href = `/kyc-manual-second-step?message=${encodeURIComponent(
         errResponse.data.message
