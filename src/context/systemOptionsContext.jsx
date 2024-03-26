@@ -11,6 +11,7 @@ export const SystemOptionsContext = createContext({
   BANK_ACCOUNT_NUMBER: "",
   SWIFT_CODE: "",
   SUPPORT_EMAIL: "",
+  MANUAL_KYC: "",
 });
 
 const SystemOptionsProvider = ({ children }) => {

@@ -63,27 +63,15 @@ const responseErrorInterceptor = (error) => {
     window.location.href = "/login";
     return Promise.reject(error);
   } else if (
-    (errResponse.status === 423 || errResponse.status === 428) &&
+    (errResponse.status === 423 || errResponse.status === 424) &&
     !isToastShown
   ) {
-    const { kyc_approved_status, system_option_manual_kyc_status } =
-      errResponse.data?.data;
-
-    const isPendingOrRejected =
-      kyc_approved_status?.toLowerCase() === "pending" ||
-      kyc_approved_status?.toLowerCase() === "rejected";
-    const isApproved = kyc_approved_status?.toLowerCase() === "approved";
-    const isManualKycEnabled =
-      system_option_manual_kyc_status?.toLowerCase() === "true";
-
-    if (
-      (isPendingOrRejected && isManualKycEnabled) ||
-      (isApproved && isManualKycEnabled)
-    ) {
+    const { redirect_to } = errResponse.data?.data;
+    if (redirect_to === "423B" || redirect_to === "424B") {
       window.location.href = `/kyc-manual-second-step?message=${encodeURIComponent(
         errResponse.data.message
       )}`;
-    } else {
+    } else if (redirect_to === "423A" || redirect_to === "424A") {
       const token = storageRequest.getAuth();
       if (token) {
         toast.success(errResponse.data.message);
@@ -95,8 +83,8 @@ const responseErrorInterceptor = (error) => {
         )}`;
       }, 3000);
     }
-  } else if (errResponse.status === 424) {
-    window.location.href = `/kyc-manual-second-step?message=${encodeURIComponent(
+  } else if (errResponse.status === 428) {
+    window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
       errResponse.data.message
     )}`;
   }

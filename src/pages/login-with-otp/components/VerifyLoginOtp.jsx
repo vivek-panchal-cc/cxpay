@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import InputOtp from "components/ui/InputOtp";
 import { useFormik } from "formik";
 import { verifyLoginOtpSchema } from "schemas/validationSchema";
@@ -8,11 +8,14 @@ import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { otpCounterTime } from "constants/all";
 import { useNavigate } from "react-router-dom";
+import { SystemOptionsContext } from "context/systemOptionsContext";
 
 function VerifyLoginOtp(props) {
   const { mobileNumber, countryCode, setShow } = props;
-
+  const { MANUAL_KYC } = useContext(SystemOptionsContext);
   const navigate = useNavigate();
+  const message =
+    "You have almost completed the signup process. While your personal information is being validated, you will receive a confirmation within 2 business days.";
 
   const [counter, setCounter] = useState(otpCounterTime);
   const [isTimerOver, setIsTimerOver] = useState(true);
@@ -54,6 +57,13 @@ function VerifyLoginOtp(props) {
       try {
         const { error, payload } = await dispatch(fetchLoginOtpVerify(values));
         if (error) throw payload;
+        if (MANUAL_KYC === "false") {
+          if (payload.data.kyc_attempt_count >= 3) {
+            window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
+              message
+            )}`;
+          }
+        }
         navigate("/", { replace: true });
       } catch (error) {
         resetForm();

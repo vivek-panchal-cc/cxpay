@@ -11,6 +11,7 @@ import { LoaderContext } from "context/loaderContext";
 import InputSelect from "components/ui/InputSelect";
 import useCountriesCities from "hooks/useCountriesCities";
 import { CXPAY_LOGO } from "constants/all";
+import { SystemOptionsContext } from "context/systemOptionsContext";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,6 +19,9 @@ const Login = () => {
   const { setIsLoading } = useContext(LoaderContext);
   const [showPassword, setShowPassword] = useState(false);
   const [countryList, cities] = useCountriesCities();
+  const { MANUAL_KYC } = useContext(SystemOptionsContext);
+  const message =
+    "You have almost completed the signup process. While your personal information is being validated, you will receive a confirmation within 2 business days.";
 
   useEffect(() => {
     const token = storageRequest.getAuth();
@@ -36,6 +40,13 @@ const Login = () => {
       try {
         const { error, payload } = await dispatch(fetchLogin(values));
         if (error) throw payload;
+        if (MANUAL_KYC === "false") {
+          if (payload.data.kyc_attempt_count >= 3) {
+            window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
+              message
+            )}`;
+          }
+        }
         navigate("/", { replace: true });
       } catch (error) {
         if (typeof error === "string") setStatus(error);

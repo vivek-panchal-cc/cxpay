@@ -44,7 +44,7 @@ function KycManualSecondStep(_props) {
               <div className="login-other-option">
                 <div className="pt-4 login-with-opt-wrap">
                   <Link className="btn btn-primary blue-bg" to="/kyc-manual">
-                    Complete KYC
+                    Process KYC
                   </Link>
                 </div>
               </div>
