@@ -57,13 +57,13 @@ function VerifyLoginOtp(props) {
       try {
         const { error, payload } = await dispatch(fetchLoginOtpVerify(values));
         if (error) throw payload;
-        if (MANUAL_KYC === "false") {
-          if (payload.data.kyc_attempt_count >= 3) {
-            window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
-              message
-            )}`;
-          }
-        }
+        // if (MANUAL_KYC === "false") {
+        //   if (payload.data.kyc_attempt_count >= 3) {
+        //     window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
+        //       message
+        //     )}`;
+        //   }
+        // }
         navigate("/", { replace: true });
       } catch (error) {
         resetForm();

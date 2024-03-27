@@ -16,7 +16,7 @@ const fetchLogin = createAsyncThunk("user/login", async (creds, thunkAPI) => {
     const { data } = await apiRequest.login(creds);
     if (!data.success) throw data.message;
     storageRequest.setAuth(data.data.token);
-    return data;
+    return data.message;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
@@ -29,7 +29,7 @@ const fetchLoginOtpVerify = createAsyncThunk(
       const { data } = await apiRequest.loginOtpVerify(creds);
       if (!data.success) throw data;
       storageRequest.setAuth(data.data.token);
-      return data;
+      return data.message;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

@@ -40,13 +40,13 @@ const Login = () => {
       try {
         const { error, payload } = await dispatch(fetchLogin(values));
         if (error) throw payload;
-        if (MANUAL_KYC === "false") {
-          if (payload.data.kyc_attempt_count >= 3) {
-            window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
-              message
-            )}`;
-          }
-        }
+        // if (MANUAL_KYC === "false") {
+        //   if (payload.data.kyc_attempt_count >= 3) {
+        //     window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
+        //       message
+        //     )}`;
+        //   }
+        // }
         navigate("/", { replace: true });
       } catch (error) {
         if (typeof error === "string") setStatus(error);
