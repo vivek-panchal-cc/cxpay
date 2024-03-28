@@ -128,6 +128,7 @@ const BalanceGraph = (props) => {
   const [reservedDetails, setReservedDetails] = useState([]);
   const [loadingDetails, setLoadingDetails] = useState(false);
   const [showAvailableBalance, setShowAvailableBalance] = useState(false);
+  const [showReservedAmount, setShowReservedAmount] = useState(false);
 
   const { availableBalance, lockBalance } = useMemo(() => {
     const { available, lock } = balance || {};
@@ -243,6 +244,10 @@ const BalanceGraph = (props) => {
     setShowAvailableBalance(!showAvailableBalance);
   };
 
+  const toggleReservedAmount = () => {
+    setShowReservedAmount(!showReservedAmount);
+  };
+
   return (
     <>
       <div
@@ -308,9 +313,38 @@ const BalanceGraph = (props) => {
                       />
                     </span>
                   </h6>
-                  <h2 className="h3 text-black fw-bolder">
-                    <WrapAmount value={lockBalance} />
-                  </h2>
+                  {lockBalance && (
+                    <h2 className="h3 text-black fw-bolder">
+                      {showReservedAmount ? (
+                        <WrapAmount value={lockBalance} />
+                      ) : (
+                        `${CURRENCY_SYMBOL} ${new Array(
+                          (lockBalance + "")?.length
+                        )
+                          ?.fill("*")
+                          ?.join("")}`
+                      )}
+                      <span>
+                        {!showReservedAmount ? ( // Render eye button only if available balance is hidden
+                          <span
+                            className="eye-icon ms-2"
+                            title="Click to view available balance"
+                            onClick={toggleReservedAmount} // Toggle visibility on click
+                          >
+                            <IconBalanceEyeOpen className="h3 mb-1 text-black fw-bolder reserved-amount" />
+                          </span>
+                        ) : (
+                          <span
+                            className="eye-icon ms-2"
+                            title="Click to view available balance"
+                            onClick={toggleReservedAmount} // Toggle visibility on click
+                          >
+                            <IconBalanceEyeClose className="h3 mb-1 text-black fw-bolder reserved-amount" />
+                          </span>
+                        )}
+                      </span>
+                    </h2>
+                  )}
                 </div>
               </>
             ) : null}

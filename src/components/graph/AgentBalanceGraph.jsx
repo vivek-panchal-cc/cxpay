@@ -119,6 +119,7 @@ const AgentBalanceGraph = (props) => {
   const { graphBackgroundImage, balanceDataArr, balance, monthDataArr } = props;
   const [options, setOptions] = useState({ ...chartOption });
   const [showAvailableBalance, setShowAvailableBalance] = useState(false);
+  const [showReservedAmount, setShowReservedAmount] = useState(false);
 
   const { commissionAmount, rechargeAmount } = useMemo(() => {
     const { commission_amount, recharge_amount } = balance || {};
@@ -207,6 +208,10 @@ const AgentBalanceGraph = (props) => {
     setShowAvailableBalance(!showAvailableBalance);
   };
 
+  const toggleReservedAmount = () => {
+    setShowReservedAmount(!showReservedAmount);
+  };
+
   return (
     <div
       className="dashboard-graph-wrap rounded-4"
@@ -262,7 +267,32 @@ const AgentBalanceGraph = (props) => {
                 Recharge Amount
               </h6>
               <h2 className="h3 text-black fw-bolder">
-                <WrapAmount value={rechargeAmount} />
+                {showReservedAmount ? (
+                  <WrapAmount value={rechargeAmount} />
+                ) : (
+                  `${CURRENCY_SYMBOL} ${new Array((rechargeAmount + "")?.length)
+                    ?.fill("*")
+                    ?.join("")}`
+                )}
+                <span>
+                  {!showReservedAmount ? ( // Render eye button only if available balance is hidden
+                    <span
+                      className="eye-icon ms-2"
+                      title="Click to view available balance"
+                      onClick={toggleReservedAmount} // Toggle visibility on click
+                    >
+                      <IconBalanceEyeOpen className="h3 mb-1 text-black fw-bolder reserved-amount" />
+                    </span>
+                  ) : (
+                    <span
+                      className="eye-icon ms-2"
+                      title="Click to view available balance"
+                      onClick={toggleReservedAmount} // Toggle visibility on click
+                    >
+                      <IconBalanceEyeClose className="h3 mb-1 text-black fw-bolder reserved-amount" />
+                    </span>
+                  )}
+                </span>
               </h2>
             </div>
           ) : null}
