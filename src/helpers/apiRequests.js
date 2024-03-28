@@ -237,8 +237,8 @@ export const checkCustomerKyc = (token) => {
 /** POST @update-customer-kyc API
  * @params authToken
  */
-export const updateCustomerKyc = (token) => {
-  return axiosLoginInstance.post(`${API_UPDATE_CUSTOMER_KYC}`, token);
+export const updateCustomerKyc = (params) => {
+  return axiosOnboardInstance.post(`${API_updateCustomerKyc}`, params);
 };
 
 //  -------------------------------------------- ON BOARD ------------------------------------------------------------------------------------------>

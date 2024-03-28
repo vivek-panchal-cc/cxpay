@@ -61,6 +61,8 @@ export { default as IconMore } from "./More";
 export { default as IconPlusFaq } from "./PlusFaq";
 export { default as IconRejectKyc } from "./RejectKyc";
 export { default as IconMinusFaq } from "./MinusFaq";
+export { default as IconBalanceEyeOpen } from "./BalanceEyeOpen";
+export { default as IconBalanceEyeClose } from "./BalanceEyeClose";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";

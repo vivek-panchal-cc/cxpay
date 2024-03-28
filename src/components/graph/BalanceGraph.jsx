@@ -1,10 +1,15 @@
 import ModalReservedAmount from "components/modals/ModalReservedAmount";
 import WrapAmount from "components/wrapper/WrapAmount";
+import { CURRENCY_SYMBOL } from "constants/all";
 import { LoaderContext } from "context/loaderContext";
 import { apiRequest } from "helpers/apiRequests";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import ReactApexChart from "react-apexcharts";
-import { IconShowReservedAmount } from "styles/svgs";
+import {
+  IconBalanceEyeOpen,
+  IconBalanceEyeClose,
+  IconShowReservedAmount,
+} from "styles/svgs";
 
 const chartOption = {
   series: [
@@ -122,6 +127,7 @@ const BalanceGraph = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reservedDetails, setReservedDetails] = useState([]);
   const [loadingDetails, setLoadingDetails] = useState(false);
+  const [showAvailableBalance, setShowAvailableBalance] = useState(false);
 
   const { availableBalance, lockBalance } = useMemo(() => {
     const { available, lock } = balance || {};
@@ -177,7 +183,7 @@ const BalanceGraph = (props) => {
           if (index > maxIndex) maxIndex = index;
           let amount = balanceDataArr[ind];
           // spends[index] = amount?.toFixed(2);
-          if (typeof amount === 'string') {
+          if (typeof amount === "string") {
             amount = parseFloat(amount);
           }
           const validAmount =
@@ -233,6 +239,10 @@ const BalanceGraph = (props) => {
     }
   };
 
+  const toggleAvailableBalance = () => {
+    setShowAvailableBalance(!showAvailableBalance);
+  };
+
   return (
     <>
       <div
@@ -250,9 +260,38 @@ const BalanceGraph = (props) => {
               <h6 className="h6" style={{ color: "#0081c5" }}>
                 Available Balance
               </h6>
-              <h2 className="h3 text-black fw-bolder">
-                <WrapAmount value={availableBalance} />
-              </h2>
+              {availableBalance && (
+                <h2 className="h3 text-black fw-bolder">
+                  {showAvailableBalance ? ( // Check if available balance should be shown
+                    <WrapAmount value={availableBalance} />
+                  ) : (
+                    `${CURRENCY_SYMBOL} ${new Array(
+                      (availableBalance + "")?.length
+                    )
+                      ?.fill("*")
+                      ?.join("")}`
+                  )}
+                  <span>
+                    {!showAvailableBalance ? ( // Render eye button only if available balance is hidden
+                      <span
+                        className="eye-icon ms-2"
+                        title="Click to view available balance"
+                        onClick={toggleAvailableBalance} // Toggle visibility on click
+                      >
+                        <IconBalanceEyeOpen className="h3 mb-1 text-black fw-bolder reserved-amount" />
+                      </span>
+                    ) : (
+                      <span
+                        className="eye-icon ms-2"
+                        title="Click to view available balance"
+                        onClick={toggleAvailableBalance} // Toggle visibility on click
+                      >
+                        <IconBalanceEyeClose className="h3 mb-1 text-black fw-bolder reserved-amount" />
+                      </span>
+                    )}
+                  </span>
+                </h2>
+              )}
             </div>
             {lockBalance ? (
               <>

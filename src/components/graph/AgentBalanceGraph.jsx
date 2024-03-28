@@ -1,7 +1,9 @@
 import WrapAmount from "components/wrapper/WrapAmount";
+import { CURRENCY_SYMBOL } from "constants/all";
 import { LoaderContext } from "context/loaderContext";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import { IconBalanceEyeOpen, IconBalanceEyeClose } from "styles/svgs";
 
 const chartOption = {
   series: [
@@ -116,6 +118,7 @@ const AgentBalanceGraph = (props) => {
   const { isLoading } = useContext(LoaderContext);
   const { graphBackgroundImage, balanceDataArr, balance, monthDataArr } = props;
   const [options, setOptions] = useState({ ...chartOption });
+  const [showAvailableBalance, setShowAvailableBalance] = useState(false);
 
   const { commissionAmount, rechargeAmount } = useMemo(() => {
     const { commission_amount, recharge_amount } = balance || {};
@@ -170,7 +173,7 @@ const AgentBalanceGraph = (props) => {
           if (index > maxIndex) maxIndex = index;
           let amount = balanceDataArr[ind];
           // spends[index] = amount?.toFixed(2);
-          if (typeof amount === 'string') {
+          if (typeof amount === "string") {
             amount = parseFloat(amount);
           }
           const validAmount =
@@ -200,6 +203,10 @@ const AgentBalanceGraph = (props) => {
     }
   }, [balanceDataArr, monthDataArr]);
 
+  const toggleAvailableBalance = () => {
+    setShowAvailableBalance(!showAvailableBalance);
+  };
+
   return (
     <div
       className="dashboard-graph-wrap rounded-4"
@@ -216,9 +223,38 @@ const AgentBalanceGraph = (props) => {
             <h6 className="h6" style={{ color: "#0081c5" }}>
               Commission Amount
             </h6>
-            <h2 className="h3 text-black fw-bolder">
-              <WrapAmount value={commissionAmount} />
-            </h2>
+            {commissionAmount && (
+              <h2 className="h3 text-black fw-bolder">
+                {showAvailableBalance ? ( // Check if available balance should be shown
+                  <WrapAmount value={commissionAmount} />
+                ) : (
+                  `${CURRENCY_SYMBOL} ${new Array(
+                    (commissionAmount + "")?.length
+                  )
+                    ?.fill("*")
+                    ?.join("")}`
+                )}
+                <span>
+                  {!showAvailableBalance ? ( // Render eye button only if available balance is hidden
+                    <span
+                      className="eye-icon ms-2"
+                      title="Click to view available balance"
+                      onClick={toggleAvailableBalance} // Toggle visibility on click
+                    >
+                      <IconBalanceEyeOpen className="h3 mb-1 text-black fw-bolder reserved-amount" />
+                    </span>
+                  ) : (
+                    <span
+                      className="eye-icon ms-2"
+                      title="Click to view available balance"
+                      onClick={toggleAvailableBalance} // Toggle visibility on click
+                    >
+                      <IconBalanceEyeClose className="h3 mb-1 text-black fw-bolder reserved-amount" />
+                    </span>
+                  )}
+                </span>
+              </h2>
+            )}
           </div>
           {rechargeAmount ? (
             <div className="p-4 pb-0">

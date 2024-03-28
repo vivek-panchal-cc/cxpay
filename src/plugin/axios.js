@@ -66,7 +66,8 @@ const responseErrorInterceptor = (error) => {
     (errResponse.status === 423 || errResponse.status === 424) &&
     !isToastShown
   ) {
-    const { redirect_to } = errResponse.data?.data;
+    const { redirect_to, system_option_manual_kyc_status } =
+      errResponse.data?.data;
     if (redirect_to === "423B" || redirect_to === "424B") {
       window.location.href = `/kyc-manual-second-step?message=${encodeURIComponent(
         errResponse.data.message
@@ -82,6 +83,12 @@ const responseErrorInterceptor = (error) => {
           errResponse.data.message
         )}`;
       }, 3000);
+    } else if (redirect_to === "424C") {
+      window.location.href = `/send-mail?message=${encodeURIComponent(
+        errResponse.data.message
+      )}&system_option_manual_kyc_status=${encodeURIComponent(
+        system_option_manual_kyc_status
+      )}`;
     }
   } else if (errResponse.status === 428) {
     window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(

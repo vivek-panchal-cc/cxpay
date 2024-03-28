@@ -15,7 +15,6 @@ export const API_LOGIN_RESEND_FORGOT_PASSWORD_OTP =
 export const API_LOGIN_REFRESH_TOKEN = "/refresh-token";
 export const API_CHECK_CUSTOMER_KYC = "check-customer-kyc"
 export const API_UPDATE_CUSTOMER_KYC = "update-customer-kyc"
-export const API_GET_FAQ_LIST = "/api/faq/get-list"
 
 // customer-onboard urls
 export const API_ONBOARD_VERIFY_MOBILE_NUMBER = "/register-mobile";
@@ -80,6 +79,7 @@ export const API_ONBOARD_MANUAL_KYC_PROCESS = "manual-kyc-process"
 // customer-admin urls
 export const API_ADMIN_CMS_PAGE = "/api/cms-page/details";
 export const API_ADMIN_CMS_LIST = "/api/cms-page/displayed-page-list";
+export const API_GET_FAQ_LIST = "/api/faq/get-list"
 
 // customer-transaction Urls
 export const API_TRANSACTION_ADD_FUND = "/add-fund";

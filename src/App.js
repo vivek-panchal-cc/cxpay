@@ -7,6 +7,7 @@ import KycComplete from "pages/kyc-complete-form/KycComplete.jsx";
 import KycCompleteInitial from "pages/kyc-complete-form/KycCompleteInitial.jsx";
 import KycManual from "pages/kyc-complete-form/KycManual";
 import KycManualSecondStep from "pages/kyc-complete-form/Components/KycManualSecondStep";
+import KycSendMail from "pages/kyc-complete-form/Components/KycSendMail";
 import Login from "pages/login/Login.jsx";
 import Signup from "pages/signup/Singup.jsx";
 import LoginWithOtp from "pages/login-with-otp/LoginWithOtp";
@@ -280,6 +281,10 @@ function App() {
           <Route
             path="/kyc-manual-second-step"
             element={<KycManualSecondStep />}
+          />
+          <Route
+            path="/send-mail"
+            element={<KycSendMail />}
           />
           <Route path="/signup/:fundtype" element={<SignupFundAccount />} />
           <Route element={<DashboardLayout />}>
