@@ -8420,3 +8420,40 @@ ul.recent-act-lw-main .act-info-wrap-left {
   color: #fff !important;
   border-radius: 0.3rem !important;
 }
+
+.kyc-info-right-desc {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-left: 0;
+  margin-right: 0;
+  /* width: 57%; */
+  align-items: center;
+  width: calc(100% - 180px);
+  padding-left: 20px;
+}
+
+.wallet-page .dashboard-notification-kyc-expire{
+  align-content: center;  
+  text-align: center;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.wallet-page .dashboard-notification-kyc-expire label{
+  color: var(--red);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* Prevent label from wrapping */
+  position: relative; /* Position label relative to its container */
+  animation: float-animation 35s linear infinite; /* Apply float animation */
+}
+
+@keyframes float-animation {
+  0% {
+    right: -100%; /* Start position off-screen */
+  }
+  100% {
+    right: 100%; /* End position off-screen */
+  }
+}

@@ -3175,7 +3175,30 @@
     width: 100% !important;
   }
 }
-
+@media only screen and (max-width: 1172px) and (min-width: 1101px) {
+  .wallet-page .dashboard-notification-kyc-expire {
+    width: calc(100% - 130px);    
+  }
+}
+@media only screen and (max-width: 1100px) and (min-width: 991px) {
+  .wallet-page .dashboard-notification-kyc-expire {
+    width: calc(100% - 130px);    
+  }
+  .wallet-page .dashboard-notification-sec {    
+    width: 130px;
+  }
+}
+@media only screen and (max-width: 996px) and (min-width: 991px) {
+  .wallet-page .dashboard-notification-kyc-expire {
+    width: calc(100% - 130px);    
+  }
+}
+@media only screen and (max-width: 991px) and (min-width: 150px) {
+  .wallet-page .dashboard-notification-kyc-expire {
+    width: calc(100% - 130px);    
+    margin-top: -35px;
+  }
+}
 @media only screen and (min-width: 768px) {
   .rese-modal-wrap .act-amt-wrap.mobile-amt {
     display: none;

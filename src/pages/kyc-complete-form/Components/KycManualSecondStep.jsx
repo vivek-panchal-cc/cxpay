@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { SignupContext } from "context/signupContext";
 import { LoaderContext } from "context/loaderContext";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { CXPAY_LOGO } from "constants/all";
 import { storageRequest } from "helpers/storageRequests";
 import { useDispatch } from "react-redux";
@@ -16,6 +16,17 @@ function KycManualSecondStep(_props) {
   const searchParams = new URLSearchParams(location.search);
   const message = searchParams.get("message");
 
+  const redirectManualKyc = (e) => {
+    try {
+      navigate("/kyc-manual", {
+        state: { kycStatus: true },
+      });
+    } catch (error) {
+      if (typeof error === "string") return toast.error(error);
+    } finally {
+    }
+  };
+
   const logout = () => {
     (async () => {
       try {
@@ -27,6 +38,8 @@ function KycManualSecondStep(_props) {
       }
     })();
   };
+
+  if (!message) return <Navigate to="/" replace />;
 
   return (
     <div className="login-signup login-signup-main common-body-bg">
@@ -51,9 +64,13 @@ function KycManualSecondStep(_props) {
               )}
               <div className="login-other-option">
                 <div className="pt-4 login-with-opt-wrap">
-                  <Link className="btn btn-primary blue-bg" to="/kyc-manual">
+                  <button
+                    type="button"
+                    className="btn btn-primary blue-bg"
+                    onClick={redirectManualKyc}
+                  >
                     Process KYC
-                  </Link>
+                  </button>
                 </div>
               </div>
               <div className="pop-cancel-btn text-center">

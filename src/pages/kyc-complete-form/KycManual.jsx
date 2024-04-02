@@ -10,7 +10,7 @@ import InputSelect from "components/ui/InputSelect";
 import { IconEyeClose, IconEyeOpen } from "styles/svgs";
 import { LoaderContext } from "context/loaderContext";
 import { storageRequest } from "helpers/storageRequests";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { CXPAY_LOGO, FILE_SIZE } from "constants/all";
 import InputDatePicker from "components/ui/InputDatePicker";
 import ModalDatePicker from "components/modals/ModalDatePicker";
@@ -22,6 +22,8 @@ import { useSelector } from "react-redux";
 import ModalDatePickerKyc from "components/modals/ModalDatePickerKyc";
 
 function KycManual(props) {
+  const location = useLocation();
+  const { kycStatus } = location?.state || {};
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
@@ -106,11 +108,8 @@ function KycManual(props) {
     inputField.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [formik.isSubmitting]);
 
-  const token = storageRequest.getAuth();
-  let isLoggedIn = false;
-  if (token) isLoggedIn = true;
-  if (!isLoggedIn) return <Navigate to="/login" replace />;
-  
+  if (!kycStatus) return <Navigate to="/" replace />;
+
   return (
     <>
       <div className="login-signup common-body-bg">

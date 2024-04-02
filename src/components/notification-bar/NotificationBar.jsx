@@ -29,6 +29,12 @@ const NotificationBar = (props) => {
 
   return (
     <div className={`dashboard-top-sec no-search-ontop`} ref={navbarRef}>
+      <div className="dashboard-notification-kyc-expire">
+        <label>
+          Hello this is dummy doc where I can get from api and going throug it
+          and let us know how it's look like
+        </label>
+      </div>
       <div className="dashboard-notification-sec gap-4">
         {/* {user_type !== "agent" && <KycChecked />} */}
         {user_type !== "agent" && <NotificationDropdown />}
