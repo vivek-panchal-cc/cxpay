@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const KycChecked = () => {
   const { profile } = useSelector((state) => state.userProfile);
-  const { is_kyc } = profile || "";
+  const { kyc_approved_status = "" } = profile || "";
   const navigate = useNavigate();
 
   const redirectManualKyc = (e) => {
@@ -23,29 +23,27 @@ const KycChecked = () => {
       <div className="form-field kyc-checked">
         <input
           type="checkbox"
-          id="is_kyc"
-          name="is_kyc"
-          checked={is_kyc}
+          id="kyc_approved_status"
+          name="kyc_approved_status"
+          checked={kyc_approved_status === "approved"}
           disabled
         />
         <label>KYC</label>
-        <ul>
+        {/* <ul>
           <li>
             <div className="kyc-info-right-desc">
               <div className="d-flex justify-content-center align-items-center column-gap-3">
-                {/* {!is_email_verify ? ( */}
                 <button
                   type="button"
                   className="badge rounded-pill text-bg-primary border-0 border-primary"
-                  onClick={redirectManualKyc}                  
+                  onClick={redirectManualKyc}
                 >
                   Renew KYC
                 </button>
-                {/* ) : null} */}
               </div>
             </div>
           </li>
-        </ul>
+        </ul> */}
       </div>
     </form>
   );

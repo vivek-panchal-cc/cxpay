@@ -63,6 +63,8 @@ export { default as IconRejectKyc } from "./RejectKyc";
 export { default as IconMinusFaq } from "./MinusFaq";
 export { default as IconBalanceEyeOpen } from "./BalanceEyeOpen";
 export { default as IconBalanceEyeClose } from "./BalanceEyeClose";
+export { default as IconAlert } from "./Alert";
+export { default as IconArrowRight } from "./ArrowRight";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";

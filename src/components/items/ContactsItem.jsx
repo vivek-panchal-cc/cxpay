@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import { IconBackgroundStar, IconDelete } from "styles/svgs";
 import { useSelector } from "react-redux";
+import { LoginContext } from "context/loginContext";
 
 const ContactsItem = (props) => {
   const {
@@ -13,6 +14,8 @@ const ContactsItem = (props) => {
   } = props;
 
   const { profile } = useSelector((state) => state?.userProfile);
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
 
   const { handleSendContacts, handleSendRequest } =
     useContext(SendPaymentContext);
@@ -22,7 +25,10 @@ const ContactsItem = (props) => {
 
   const renderButtons = () => {
     if (profile.admin_approved) {
-      if (contact.admin_approved) {
+      if (
+        contact.admin_approved &&
+        show_renew_section !== "disable_fund_action"
+      ) {
         return (
           <div className="con-listing-btn-wrap">
             <button
@@ -67,11 +73,11 @@ const ContactsItem = (props) => {
 
   const disabledCheckedBox = () => {
     if (profile.admin_approved) {
-      return !(contact.admin_approved);
+      return !contact.admin_approved;
     } else {
-      return true
+      return true;
     }
-  }
+  };
 
   return (
     <li>
@@ -86,7 +92,7 @@ const ContactsItem = (props) => {
             onChange={handleCallback}
             checked={selectedContacts?.includes(contact?.account_number)}
             value={contact?.account_number}
-            disabled={disabledCheckedBox()}
+            disabled={disabledCheckedBox() || show_renew_section === "disable_fund_action"}
           />
           <label htmlFor={contact?.account_number}></label>
         </div>

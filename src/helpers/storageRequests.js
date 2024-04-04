@@ -1,5 +1,6 @@
 const AUTH_KEY = "CXPAY_AUTH";
 const STORAGE_KEY = "CXPAY_SIGNUP_CREDS";
+const LOGIN_STORAGE_KEY = "CXPAY_LOGIN_CREDS";
 
 // LOCAL STORAGE set Auth data
 export const setAuth = (token) => {
@@ -40,6 +41,19 @@ const removeSignupCreds = () => {
   localStorage.removeItem(STORAGE_KEY);
 };
 
+// LOCAL STORAGE get Login creds
+const getLoginCreds = () => {
+  if (!localStorage) return null;
+  const creds = localStorage.getItem(LOGIN_STORAGE_KEY);
+  return JSON.parse(creds);
+};
+
+// LOCAL STORAGE set Login creds
+const setLoginCredsToStorage = (creds) => {
+  if (!localStorage) return null;
+  localStorage.setItem(LOGIN_STORAGE_KEY, JSON.stringify(creds));
+};
+
 export const storageRequest = {
   setAuth,
   getAuth,
@@ -47,4 +61,6 @@ export const storageRequest = {
   getCredsFromtStorage,
   setCredsToStorage,
   removeSignupCreds,
+  getLoginCreds,
+  setLoginCredsToStorage
 };

@@ -17,6 +17,7 @@ import { CURRENCY_SYMBOL } from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
 import Button from "components/ui/Button";
 import { useSelector } from "react-redux";
+import { LoginContext } from "context/loginContext";
 
 function FundCreditCard(props) {
   const navigate = useNavigate();
@@ -33,6 +34,8 @@ function FundCreditCard(props) {
   const [addNewCard, setAddNewCard] = useState(false);
   const { profile } = useSelector((state) => state.userProfile);
   const { admin_approved } = profile || {};
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
 
   useEffect(() => {
     if (formik.values.card_id) setAddNewCard(false);
@@ -311,7 +314,7 @@ function FundCreditCard(props) {
                 </table>
               </div>
             </div>
-            {admin_approved ? (
+            {admin_approved && show_renew_section !== "disable_fund_action" ? (
               <div className="row">
                 <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
                   <div className="btn-wrap">

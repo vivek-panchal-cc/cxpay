@@ -8406,12 +8406,12 @@ ul.recent-act-lw-main .act-info-wrap-left {
   font-weight: 400;
 }
 
-.kyc-expiry-date .react-calendar__tile--now {    
+.kyc-expiry-date .react-calendar__tile--now {
   background-color: #fff !important;
   border-radius: 0.3rem !important;
 }
 
-.kyc-expiry-date .react-calendar__tile--now abbr{    
+.kyc-expiry-date .react-calendar__tile--now abbr {
   font-weight: 700 !important;
 }
 
@@ -8433,27 +8433,44 @@ ul.recent-act-lw-main .act-info-wrap-left {
   padding-left: 20px;
 }
 
-.wallet-page .dashboard-notification-kyc-expire{
-  align-content: center;  
+.wallet-page .dashboard-notification-kyc-expire {
+  align-content: center;
   text-align: center;
   flex-grow: 1;
   overflow: hidden;
 }
 
-.wallet-page .dashboard-notification-kyc-expire label{
-  color: var(--red);
+.wallet-page .dashboard-notification-kyc-expire label {
+  font-size: 14px;
+  color: var(--dark_black);
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap; /* Prevent label from wrapping */
-  position: relative; /* Position label relative to its container */
-  animation: float-animation 35s linear infinite; /* Apply float animation */
+  position: relative;
+  background-color: #feefef;
+  padding: 20px;
+  border-radius: 10px;
+  /* animation: float-animation 35s linear infinite; */
 }
 
-@keyframes float-animation {
+.wallet-page .dashboard-notification-kyc-expire label .kyc-expire-link span {
+  color: var(--blue);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.wallet-page
+  .dashboard-notification-kyc-expire
+  label
+  .kyc-expire-link
+  span:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* @keyframes float-animation {
   0% {
-    right: -100%; /* Start position off-screen */
+    right: -100%;
   }
   100% {
-    right: 100%; /* End position off-screen */
+    right: 100%;
   }
-}
+} */

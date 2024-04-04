@@ -87,13 +87,10 @@ async function loadData() {
 function withUserProtection(WrappedComponent, allowedUserTypes = []) {
   return function ProtectedComponent(props) {
     const { profile } = useSelector((state) => state.userProfile);
-    const { user_type, is_kyc } = profile || {};
+    const { user_type } = profile || {};
 
     if (profile && Object.keys(profile).length > 0) {
-      if (!is_kyc) {
-        console.warn("User has not completed KYC, navigating away");
-        return <Navigate to="/complete-kyc" />;
-      } else if (!allowedUserTypes.includes(user_type)) {
+      if (!allowedUserTypes.includes(user_type)) {
         console.warn("Unauthorized user type detected, navigating away");
         return <Navigate to="/" />;
       }
@@ -272,7 +269,7 @@ function App() {
         </Route>
         {/* List of Private Routes */}
         <Route element={<PrivateLayout />}>
-          <Route path="/complete-kyc" element={<KycComplete />} />
+          <Route path="/complete-kyc-valid" element={<KycComplete />} />
           <Route
             path="/complete-kyc-initial"
             element={<KycCompleteInitial />}
@@ -282,10 +279,7 @@ function App() {
             path="/kyc-manual-second-step"
             element={<KycManualSecondStep />}
           />
-          <Route
-            path="/send-mail"
-            element={<KycSendMail />}
-          />
+          <Route path="/send-mail" element={<KycSendMail />} />
           <Route path="/signup/:fundtype" element={<SignupFundAccount />} />
           <Route element={<DashboardLayout />}>
             {/* settings */}

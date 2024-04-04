@@ -104,6 +104,7 @@ const NOTIFY_PAY_FAIL = "payment_fail";
 const NOTIFY_PAY_COMPLETE = "payment_completed";
 const NOTIFY_CON_REGISTER = "contact_register";
 const NOTIFY_MANUAL_TOPUP = "manual_top_up";
+const NOTIFY_KYC = "kyc";
 
 // Notifications Type Constants
 const notificationType = {
@@ -130,6 +131,10 @@ const notificationType = {
   [NOTIFY_MANUAL_TOPUP]: {
     icon: IconNotifyMoneyRecieved,
     redirect: "/activities",
+  },
+  [NOTIFY_KYC]: {
+    icon: IconNotifyMoneyRecieved,
+    redirect: "/",
   },
   "": {
     icon: "",

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useContext, useEffect, useMemo, useRef } from "react";
 import styles from "./modal.module.scss";
 import {
   ACT_REQUEST_RECEIVE,
@@ -21,6 +21,7 @@ import WrapAmount from "components/wrapper/WrapAmount";
 import { formatDate } from "helpers/commonHelpers";
 import { IconCloseModal } from "styles/svgs";
 import { useSelector } from "react-redux";
+import { LoginContext } from "context/loginContext";
 
 const ModalActivityDetail = (props) => {
   const {
@@ -60,6 +61,8 @@ const ModalActivityDetail = (props) => {
   const { admin_approved } = useSelector(
     (state) => state?.userProfile?.profile
   );
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
 
   const {
     iconStatus,
@@ -113,7 +116,7 @@ const ModalActivityDetail = (props) => {
       case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_RECEIVE}_${ACT_STATUS_PENDING}`:
         return (
           <>
-            {admin_approved ? (
+            {admin_approved && show_renew_section !== "disable_fund_action" ? (
               <button
                 type="button"
                 className="outline-btn w-50 d-block"
@@ -129,7 +132,7 @@ const ModalActivityDetail = (props) => {
                 Decline
               </button>
             )}
-            {admin_approved ? (
+            {admin_approved && show_renew_section !== "disable_fund_action" ? (
               <button
                 type="button"
                 className="btn print-details-btn w-50"

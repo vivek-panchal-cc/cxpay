@@ -23,6 +23,7 @@ import WrapAmount from "components/wrapper/WrapAmount";
 import useAvailableCardBalance from "hooks/useAvailableCardBalance";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { SystemOptionsContext } from "context/systemOptionsContext";
+import { LoginContext } from "context/loginContext";
 
 const WithdrawBank = () => {
   const navigate = useNavigate();
@@ -46,6 +47,8 @@ const WithdrawBank = () => {
   });
   const { profile } = useSelector((state) => state.userProfile);
   const { admin_approved } = profile || {};
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
   const [banksList] = useCountryBanks();
   const [loadingCharges, charges] = useCharges({
     chargesType: CHARGES_TYPE_WD,
@@ -334,27 +337,27 @@ const WithdrawBank = () => {
                     maxLength="10"
                     onChange={formik.handleChange}
                     onBlur={(e) => {
-                    let value = e.target.value.trim();
-                    // If the input value is empty, set it to '0.00'
-                    if (!value) {
-                      value = "0.00";
-                    } else {
-                      const hasDecimal = value.includes(".");
-                      // If there's no decimal point, add .00
-                      if (!hasDecimal) {
-                        value += ".00";
+                      let value = e.target.value.trim();
+                      // If the input value is empty, set it to '0.00'
+                      if (!value) {
+                        value = "0.00";
                       } else {
-                        // If there's only one digit after the decimal point, add another zero
-                        const parts = value.split(".");
-                        if (parts[1].length === 1) {
-                          value += "0";
+                        const hasDecimal = value.includes(".");
+                        // If there's no decimal point, add .00
+                        if (!hasDecimal) {
+                          value += ".00";
+                        } else {
+                          // If there's only one digit after the decimal point, add another zero
+                          const parts = value.split(".");
+                          if (parts[1].length === 1) {
+                            value += "0";
+                          }
                         }
                       }
-                    }
-                    // Update the formik values with the formatted value
-                    formik.setFieldValue("amount", value);
-                    formik.handleBlur(e);
-                  }}
+                      // Update the formik values with the formatted value
+                      formik.setFieldValue("amount", value);
+                      formik.handleBlur(e);
+                    }}
                     value={formik.values.amount}
                     error={formik.touched.amount && formik.errors.amount}
                   />
@@ -399,7 +402,8 @@ const WithdrawBank = () => {
                   </table>
                 </div>
               </div>
-              {admin_approved ? (
+              {admin_approved &&
+              show_renew_section !== "disable_fund_action" ? (
                 <div className="row">
                   <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
                     <div className="btn-wrap">

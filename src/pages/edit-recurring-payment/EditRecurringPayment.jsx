@@ -14,6 +14,7 @@ import InputNumber from "components/ui/InputNumber";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { useSelector } from "react-redux";
 import ModalDatePickerKyc from "components/modals/ModalDatePickerKyc";
+import { LoginContext } from "context/loginContext";
 
 const EditRecurringPayment = () => {
   const navigate = useNavigate();
@@ -48,6 +49,8 @@ const EditRecurringPayment = () => {
   const { admin_approved } = useSelector(
     (state) => state?.userProfile?.profile
   );
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
 
   useEffect(() => {
     const preventPageScroll = (e) => {
@@ -343,7 +346,7 @@ const EditRecurringPayment = () => {
                 </div>
               </div>
             </div>
-            {admin_approved ? (
+            {admin_approved && show_renew_section !== "disable_fund_action" ? (
               <div className="sp-btn-inner-wrap outline-solid-wrap">
                 <button
                   className="btn outline-btn"

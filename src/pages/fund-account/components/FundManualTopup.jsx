@@ -16,12 +16,15 @@ import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import { toast } from "react-toastify";
 import ModalAlert from "components/modals/ModalAlert";
 import { useSelector } from "react-redux";
+import { LoginContext } from "context/loginContext";
 
 const FundManualTopup = (props) => {
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
   const { profile } = useSelector((state) => state.userProfile);
   const { admin_approved } = profile || {};
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
   const [loadingCharges, charges] = useCharges({
     chargesType: CHARGES_TYPE_MF,
   });
@@ -197,7 +200,7 @@ const FundManualTopup = (props) => {
               </div>
             </div>
 
-            {admin_approved ? (
+            {admin_approved && show_renew_section !== "disable_fund_action" ? (
               <div className="row">
                 <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
                   <div className="btn-wrap">

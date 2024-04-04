@@ -20,12 +20,15 @@ import { apiRequest } from "helpers/apiRequests";
 import { LoaderContext } from "context/loaderContext";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { LoginContext } from "context/loginContext";
 
 const WithdrawalsBank = () => {
   const { setIsLoading } = useContext(LoaderContext);
   const navigate = useNavigate();
   const { profile } = useSelector((state) => state.userProfile);
   const { admin_approved } = profile || {};
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [cancelWithdrawId, setCancelWithdrawId] = useState("");
 
@@ -196,7 +199,7 @@ const WithdrawalsBank = () => {
           <Button
             className="btn"
             onClick={bank_withdraw ? handleRequestWithdraw : null}
-            disabled={loadingCardBalance || !bank_withdraw || !admin_approved}
+            disabled={loadingCardBalance || !bank_withdraw || !admin_approved || show_renew_section === "disable_fund_action"}
           >
             <IconPlusLarge fill="#fff" />
             Request Withdraw

@@ -1,6 +1,7 @@
 import WrapAmount from "components/wrapper/WrapAmount";
 import { CURRENCY_SYMBOL } from "constants/all";
-import React, { useMemo } from "react";
+import { LoginContext } from "context/loginContext";
+import React, { useContext, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { IconBin, IconEdit } from "styles/svgs";
@@ -18,8 +19,12 @@ const RecurringPaymentItem = (props) => {
     frequency,
   } = details || {};
 
-  const { admin_approved } = useSelector((state) => state?.userProfile?.profile);
-  
+  const { admin_approved } = useSelector(
+    (state) => state?.userProfile?.profile
+  );
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
+
   const { dtString } = useMemo(() => {
     if (!dateTime) return { dtString: "" };
     const dt = new Date(dateTime);
@@ -40,7 +45,14 @@ const RecurringPaymentItem = (props) => {
   return (
     <li>
       <div className="left-activity-div">
-        <div className="user-thumb-name" onClick={admin_approved ? handleViewDetails : () => {}}>
+        <div
+          className="user-thumb-name"
+          onClick={
+            admin_approved && show_renew_section !== "disable_fund_action"
+              ? handleViewDetails
+              : () => {}
+          }
+        >
           <img src={profileImg} alt="" />
           <span>{name}</span>
         </div>
@@ -52,22 +64,34 @@ const RecurringPaymentItem = (props) => {
       </div>
       <div className="right-activity-div">
         <button
-          className={`act-edit-wrap rounded ${admin_approved ? "" : "contacts-admin-approved-disabled"}`}
+          className={`act-edit-wrap rounded ${
+            admin_approved && show_renew_section !== "disable_fund_action"
+              ? ""
+              : "contacts-admin-approved-disabled"
+          }`}
           onClick={() => handleEdit(id)}
           style={{
             background: "#0081C5",
             width: "33px",
             height: "32px",
           }}
-          disabled={!admin_approved}
+          disabled={
+            !admin_approved || show_renew_section === "disable_fund_action"
+          }
         >
           <IconEdit style={{ stroke: "#FFF" }} />
         </button>
         <button
-          className={`act-del-wrap rounded ${admin_approved ? "" : "contacts-admin-approved-disabled"}`}
+          className={`act-del-wrap rounded ${
+            admin_approved && show_renew_section !== "disable_fund_action"
+              ? ""
+              : "contacts-admin-approved-disabled"
+          }`}
           onClick={() => handleDelete(id)}
           style={{ background: "#FF3333" }}
-          disabled={!admin_approved}
+          disabled={
+            !admin_approved || show_renew_section === "disable_fund_action"
+          }
         >
           <IconBin style={{ stroke: "#F3F3F3" }} />
         </button>

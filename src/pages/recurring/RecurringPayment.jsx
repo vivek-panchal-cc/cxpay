@@ -15,6 +15,7 @@ import ModalDatePicker from "components/modals/ModalDatePicker";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import { useSelector } from "react-redux";
 import ModalDatePickerKyc from "components/modals/ModalDatePickerKyc";
+import { LoginContext } from "context/loginContext";
 
 function RecurringPayment() {
   const { setIsLoading } = useContext(LoaderContext);
@@ -36,6 +37,8 @@ function RecurringPayment() {
   const { admin_approved } = useSelector(
     (state) => state?.userProfile?.profile
   );
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
   const [modalDetails, setModalDetails] = useState({
     show: false,
     message: "",
@@ -463,7 +466,8 @@ function RecurringPayment() {
                         </div>
                       )}
 
-                      {admin_approved ? (
+                      {admin_approved &&
+                      show_renew_section !== "disable_fund_action" ? (
                         <div className="pay-btn-wrap">
                           <button
                             type="button"

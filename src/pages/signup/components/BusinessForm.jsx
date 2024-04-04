@@ -61,7 +61,7 @@ function Businessform(props) {
         setSignUpCreds((cs) => ({
           ...cs,
           step: 3,
-          is_kyc: data.data.is_kyc,
+          // is_kyc: data.data.is_kyc,
           system_manual_kyc: data.data.system_manual_kyc,
           kyc_approved_status: data.data.kyc_approved_status,
         }));

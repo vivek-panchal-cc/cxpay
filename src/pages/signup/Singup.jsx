@@ -33,7 +33,7 @@ const Signup = () => {
           return <Navigate to="/kyc-manual" replace={true} state={{ kycStatus: true }}/>;
         } else {
           if (
-            signUpCreds.is_kyc?.toString() === "false" &&
+            signUpCreds.system_manual_kyc?.toString() === "false" &&
             (signUpCreds.kyc_approved_status === "approved" ||
               signUpCreds.kyc_approved_status === "pending")
           ) {

@@ -19,6 +19,7 @@ import { IconClock } from "styles/svgs";
 import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import WrapAmount from "components/wrapper/WrapAmount";
+import { LoginContext } from "context/loginContext";
 
 // Track the number of failed attempts
 let failedAttempts = 1;
@@ -42,6 +43,8 @@ function SendPayment(props) {
   const { mobile_number, country_code, admin_approved } = useSelector(
     (state) => state?.userProfile?.profile
   );
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
   const { wallet, request_id } = sendCreds || [];
 
   const [scrollTop, setScrollTop] = useState(false);
@@ -576,36 +579,37 @@ function SendPayment(props) {
                 </div>
               </div>
             </div>
-            {admin_approved ? (<div className="pay-btn-wrap">
-              <button
-                type="button"
-                onClick={handleCancelPayment}
-                className="btn btn-cancel-payment"
-              >
-                Cancel
-              </button>
-              {!scheduleDate && (
-                <button
-                  type="submit"
-                  className="btn btn-send-payment"
-                  disabled={formik.isSubmitting}
-                  onClick={() => {
-                    setIsScheduling(false);
-                  }}
-                >
-                  Send
-                </button>
-              )}
-              {scheduleDate && (
+            {admin_approved && show_renew_section !== "disable_fund_action" ? (
+              <div className="pay-btn-wrap">
                 <button
                   type="button"
-                  className="btn btn-send-payment"
-                  onClick={handleScheduleSubmit}
+                  onClick={handleCancelPayment}
+                  className="btn btn-cancel-payment"
                 >
-                  Schedule
+                  Cancel
                 </button>
-              )}
-              {/* {!disableEdit && !request_id && (
+                {!scheduleDate && (
+                  <button
+                    type="submit"
+                    className="btn btn-send-payment"
+                    disabled={formik.isSubmitting}
+                    onClick={() => {
+                      setIsScheduling(false);
+                    }}
+                  >
+                    Send
+                  </button>
+                )}
+                {scheduleDate && (
+                  <button
+                    type="button"
+                    className="btn btn-send-payment"
+                    onClick={handleScheduleSubmit}
+                  >
+                    Schedule
+                  </button>
+                )}
+                {/* {!disableEdit && !request_id && (
                 <button
                   type="button"
                   className="schedule-pay-btn"
@@ -615,7 +619,8 @@ function SendPayment(props) {
                   Schedule Payment
                 </button>
               )} */}
-            </div>) : null}
+              </div>
+            ) : null}
           </div>
         </div>
       </form>

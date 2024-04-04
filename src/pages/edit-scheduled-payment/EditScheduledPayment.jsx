@@ -10,6 +10,7 @@ import Input from "components/ui/Input";
 import TimePicker from "components/time-picker/TimePicker";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { useSelector } from "react-redux";
+import { LoginContext } from "context/loginContext";
 
 const EditScheduledPayment = () => {
   const navigate = useNavigate();
@@ -27,7 +28,12 @@ const EditScheduledPayment = () => {
     overall_specification,
   } = upPaymentEntry || {};
 
-  const { admin_approved } = useSelector((state) => state?.userProfile?.profile);
+  const { admin_approved } = useSelector(
+    (state) => state?.userProfile?.profile
+  );
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
+
   // const {
   //   contacts = [],
   //   sch_dt,
@@ -63,11 +69,15 @@ const EditScheduledPayment = () => {
     sch_total,
   } = useMemo(() => {
     if (!payment_schedule_date) return {};
-    
+
     // Manually parsing the dateTime
-    const [datePart, timePart] = payment_schedule_date.split(' ');
-    const [year, month, day] = datePart.split('-').map(str => parseInt(str, 10));
-    const [hour, minute, second] = timePart.split(':').map(str => parseInt(str, 10));
+    const [datePart, timePart] = payment_schedule_date.split(" ");
+    const [year, month, day] = datePart
+      .split("-")
+      .map((str) => parseInt(str, 10));
+    const [hour, minute, second] = timePart
+      .split(":")
+      .map((str) => parseInt(str, 10));
 
     const sch_dt = new Date(year, month - 1, day, hour, minute, second); // Constructing date object
 
@@ -165,19 +175,24 @@ const EditScheduledPayment = () => {
                 </div>
               </div>
             </div>
-            {admin_approved ? (<div className="sp-btn-inner-wrap outline-solid-wrap">
-              <button className="btn outline-btn" onClick={cancelUpdatePayment}>
-                Cancel
-              </button>
-              <button
-                type="button"
-                className="btn"
-                onClick={formik.handleSubmit}
-                disabled={formik.isSubmitting}
-              >
-                Update
-              </button>
-            </div>) : null}
+            {admin_approved && show_renew_section !== "disable_fund_action" ? (
+              <div className="sp-btn-inner-wrap outline-solid-wrap">
+                <button
+                  className="btn outline-btn"
+                  onClick={cancelUpdatePayment}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={formik.handleSubmit}
+                  disabled={formik.isSubmitting}
+                >
+                  Update
+                </button>
+              </div>
+            ) : null}
           </div>
           <div className="sp-cal-wrap d-flex justify-content-center">
             <form onSubmit={formik.handleSubmit}>

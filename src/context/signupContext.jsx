@@ -12,7 +12,7 @@ const initialValues = {
   country_iso: "",
   countryList: [],
   cityList: [],
-  is_kyc: "",
+  // is_kyc: "",
   system_manual_kyc: "",
   kyc_approved_status: "",
 };

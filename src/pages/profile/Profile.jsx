@@ -19,6 +19,7 @@ import NewMobileChange from "pages/new-mobile-change/NewMobileChange";
 import NewMobileModal from "components/modals/NewMobileModal";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
+import { LoginContext } from "context/loginContext";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,9 @@ const Profile = () => {
     user_type === "personal" || user_type === "agent"
       ? first_name + " " + last_name
       : company_name;
-
+  
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [showOtpTypePopup, setShowOtpTypePopup] = useState(false);
   const [showOtpPopup, setShowOtpPopup] = useState(false);
@@ -206,7 +209,7 @@ const Profile = () => {
               type="button"
               className="btn"
               onClick={handleOtpTypePopup}
-              disabled={!admin_approved}
+              disabled={!admin_approved || show_renew_section === "disable_fund_action"}
             >
               Change Mobile
             </button>

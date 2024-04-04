@@ -1,6 +1,7 @@
 import Image from "components/ui/Image";
 import { renameKeys } from "constants/all";
-import React from "react";
+import { LoginContext } from "context/loginContext";
+import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 
 const ContactCard = (props) => {
@@ -18,9 +19,11 @@ const ContactCard = (props) => {
   const isChecked = selectedList.includes(id.toString());
   const { group_id } = item || "";
   const { profile } = useSelector((state) => state?.userProfile);
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
 
   const disabledCheckedBox = () => {
-    if (profile.admin_approved) {
+    if (profile.admin_approved && show_renew_section !== "disable_fund_action") {
       return !(item.admin_approved);
     } else {
       return true

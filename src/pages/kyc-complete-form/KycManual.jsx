@@ -23,7 +23,7 @@ import ModalDatePickerKyc from "components/modals/ModalDatePickerKyc";
 
 function KycManual(props) {
   const location = useLocation();
-  const { kycStatus } = location?.state || {};
+  const { kycStatus, kycUpdate = "" } = location?.state || {};  
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
@@ -191,6 +191,13 @@ function KycManual(props) {
                       disabled={formik.isSubmitting}
                       value="Submit"
                     />
+                    {kycUpdate && (
+                      <div className="pop-cancel-btn text-center">
+                        <button type="button" onClick={() => navigate(-1)}>
+                          Cancel
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </form>
               </div>

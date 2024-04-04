@@ -12,6 +12,7 @@ import InputSelect from "components/ui/InputSelect";
 import useCountriesCities from "hooks/useCountriesCities";
 import { CXPAY_LOGO } from "constants/all";
 import { SystemOptionsContext } from "context/systemOptionsContext";
+import { LoginContext } from "context/loginContext";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,9 +20,7 @@ const Login = () => {
   const { setIsLoading } = useContext(LoaderContext);
   const [showPassword, setShowPassword] = useState(false);
   const [countryList, cities] = useCountriesCities();
-  const { MANUAL_KYC } = useContext(SystemOptionsContext);
-  const message =
-    "You have almost completed the signup process. While your personal information is being validated, you will receive a confirmation within 2 business days.";
+  const { setLoginCreds } = useContext(LoginContext);
 
   useEffect(() => {
     const token = storageRequest.getAuth();
@@ -40,13 +39,17 @@ const Login = () => {
       try {
         const { error, payload } = await dispatch(fetchLogin(values));
         if (error) throw payload;
-        // if (MANUAL_KYC === "false") {
-        //   if (payload.data.kyc_attempt_count >= 3) {
-        //     window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
-        //       message
-        //     )}`;
-        //   }
-        // }
+        setLoginCreds((ls) => ({
+          ...ls,
+          renew_kyc_status: payload.data.kyc_renew_data?.renew_kyc_status || "",
+          renew_kyc_attempt_count:
+            payload.data.kyc_renew_data?.renew_kyc_attempt_count || "",
+          show_renew_section:
+            payload.data.kyc_renew_data?.show_renew_section || "",
+          show_renew_button:
+            payload.data.kyc_renew_data?.show_renew_button || "",
+          kyc_message: payload.data.kyc_renew_data?.kyc_message || "",
+        }));
         navigate("/", { replace: true });
       } catch (error) {
         if (typeof error === "string") setStatus(error);

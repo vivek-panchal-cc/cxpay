@@ -18,6 +18,7 @@ import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import ModalPaymentSchedulerRecurring from "components/modals/ModalPaymentSchedulerRecurring";
 import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
+import { LoginContext } from "context/loginContext";
 
 // Track the number of failed attempts
 let failedAttempts = 1;
@@ -47,6 +48,8 @@ function SendRecurringPayment(_props) {
   const { mobile_number, country_code, admin_approved } = useSelector(
     (state) => state?.userProfile?.profile
   );
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
   const { wallet } = sendCreds || [];
   const [recurringData, setRecurringData] = useState(null);
   const [attempts, setAttempts] = useState(failedAttempts);
@@ -556,23 +559,25 @@ function SendRecurringPayment(_props) {
                 </div>
               </div>
             </div>
-            {admin_approved ? (<div className="pay-btn-wrap">
-              <button
-                type="button"
-                onClick={() => navigate("/send/recurring-payment")}
-                className="btn btn-cancel-payment"
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                className="btn btn-send-payment"
-                disabled={formik.isSubmitting}
-                onClick={handleConfirmRecurringSubmit}
-              >
-                Initiate Recurring
-              </button>
-            </div>) : null}
+            {admin_approved && show_renew_section !== "disable_fund_action" ? (
+              <div className="pay-btn-wrap">
+                <button
+                  type="button"
+                  onClick={() => navigate("/send/recurring-payment")}
+                  className="btn btn-cancel-payment"
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-send-payment"
+                  disabled={formik.isSubmitting}
+                  onClick={handleConfirmRecurringSubmit}
+                >
+                  Initiate Recurring
+                </button>
+              </div>
+            ) : null}
           </div>
         </div>
       </form>

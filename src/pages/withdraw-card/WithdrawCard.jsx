@@ -18,6 +18,7 @@ import ModalConfirmation from "components/modals/ModalConfirmation";
 import { LoaderContext } from "context/loaderContext";
 import { SystemOptionsContext } from "context/systemOptionsContext";
 import { useSelector } from "react-redux";
+import { LoginContext } from "context/loginContext";
 
 const WithdrawCard = () => {
   const params = useParams();
@@ -46,6 +47,8 @@ const WithdrawCard = () => {
   });
   const { profile } = useSelector((state) => state.userProfile);
   const { admin_approved } = profile || {};
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
   const {
     card_number = "",
     card_expiry_date = "",
@@ -66,7 +69,7 @@ const WithdrawCard = () => {
     },
     validationSchema: withdrawCardSchema,
     onSubmit: async (values, { setErrors }) => {
-      if(parseFloat(paymentDetails.total.toFixed(2)) <= 0) return;
+      if (parseFloat(paymentDetails.total.toFixed(2)) <= 0) return;
       setShowWithdrawConfirm(true);
     },
   });
@@ -223,42 +226,51 @@ const WithdrawCard = () => {
                       <td>Total Amount</td>
                       <td>
                         {/* <WrapAmount value={paymentDetails?.total} /> */}
-                        <WrapAmount value={Math.max(paymentDetails?.total, 0)} />
+                        <WrapAmount
+                          value={Math.max(paymentDetails?.total, 0)}
+                        />
                       </td>
                     </tr>
                     <tr>
                       <td></td>
                       <td>
                         {/* <WrapAmount value={paymentDetails?.total} /> */}
-                        <WrapAmount value={Math.max(paymentDetails?.total, 0)} />
+                        <WrapAmount
+                          value={Math.max(paymentDetails?.total, 0)}
+                        />
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-            {admin_approved ? (<div className="row">
-              <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
-                <div className="btn-wrap">
-                  <Button
-                    className="btn outline-btn"
-                    onClick={() => navigate(-1)}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-                <div className="btn-wrap">
-                  <input
-                    type="submit"
-                    className={`btn btn-primary ${
-                      formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
-                    } ${formik.isValid ? "" : "opacity-75"}`}
-                    disabled={formik.isSubmitting || parseFloat(paymentDetails.total.toFixed(2)) <= 0}
-                    value="Submit Request"
-                  />
+            {admin_approved && show_renew_section !== "disable_fund_action" ? (
+              <div className="row">
+                <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
+                  <div className="btn-wrap">
+                    <Button
+                      className="btn outline-btn"
+                      onClick={() => navigate(-1)}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                  <div className="btn-wrap">
+                    <input
+                      type="submit"
+                      className={`btn btn-primary ${
+                        formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                      } ${formik.isValid ? "" : "opacity-75"}`}
+                      disabled={
+                        formik.isSubmitting ||
+                        parseFloat(paymentDetails.total.toFixed(2)) <= 0
+                      }
+                      value="Submit Request"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>) : null}
+            ) : null}
           </form>
         </div>
       </div>

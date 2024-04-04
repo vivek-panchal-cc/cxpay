@@ -18,6 +18,7 @@ function KycSendMail(_props) {
   const searchParams = new URLSearchParams(location.search);
   const message = searchParams.get("message");
   const manualKycStatus = searchParams.get("system_option_manual_kyc_status");
+  const isCancel = searchParams.get("is_cancel");
 
   const sendMail = async () => {
     setIsLoading(true);
@@ -52,8 +53,8 @@ function KycSendMail(_props) {
     })();
   };
 
-  if(!manualKycStatus) return <Navigate to="/" replace />;
-  
+  if (!manualKycStatus) return <Navigate to="/" replace />;
+
   return (
     <div className="login-signup login-signup-main common-body-bg">
       <div className="container login-signup-01 login-signup-02">
@@ -86,11 +87,19 @@ function KycSendMail(_props) {
                   </button>
                 </div>
               </div>
-              <div className="pop-cancel-btn text-center">
-                <button type="button" onClick={logout}>
-                  Logout
-                </button>
-              </div>
+              {isCancel ? (
+                <div className="pop-cancel-btn text-center">
+                  <button type="button" onClick={() => navigate(-1)}>
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <div className="pop-cancel-btn text-center">
+                  <button type="button" onClick={logout}>
+                    Logout
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

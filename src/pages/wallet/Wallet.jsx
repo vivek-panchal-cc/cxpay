@@ -11,6 +11,7 @@ import useChartData from "hooks/useChartData";
 import BalanceGraph from "components/graph/BalanceGraph";
 import RecentActivities from "components/activity/RecentActivities";
 import { useSelector } from "react-redux";
+import { LoginContext } from "context/loginContext";
 
 function Wallet() {
   const { setIsLoading } = useContext(LoaderContext);
@@ -22,6 +23,8 @@ function Wallet() {
   const [loadingChart, chartData] = useChartData();
   const { profile } = useSelector((state) => state.userProfile);
   const { admin_approved } = profile || {};
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
 
   const getActivitiesList = async (page = 1, filters = {}) => {
     try {
@@ -86,7 +89,8 @@ function Wallet() {
                 <p> </p>
               </div>
               <div className="wallet-title-btns">
-                {admin_approved ? (
+                {admin_approved &&
+                show_renew_section !== "disable_fund_action" ? (
                   <Link
                     className="wallet-top-1-btn"
                     onClick={handleFundAccountPopup}
@@ -141,7 +145,8 @@ function Wallet() {
                 <img src="/assets/images/Bank_ic_wallet.svg" alt="" />
                 <span className="w-100 mw-100">My Bank Accounts</span>
               </Link>
-              {admin_approved ? (
+              {admin_approved &&
+              show_renew_section !== "disable_fund_action" ? (
                 <Link
                   to="/wallet/withdrawals-card"
                   className="w-100 d-flex align-items-center"
@@ -150,9 +155,7 @@ function Wallet() {
                   <span className="w-100 mw-100">Withdraw</span>
                 </Link>
               ) : (
-                <Link                  
-                  className="w-100 d-flex align-items-center admin-approved-disabled"
-                >
+                <Link className="w-100 d-flex align-items-center admin-approved-disabled">
                   <img src="/assets/images/Bank_ic_wallet.svg" alt="" />
                   <span className="w-100 mw-100">Withdraw</span>
                 </Link>

@@ -26,6 +26,7 @@ import "bootstrap/dist/js/bootstrap";
 import { BrowserRouter } from "react-router-dom";
 import LoaderProvider from "context/loaderContext";
 import SystemOptionsProvider from "context/systemOptionsContext";
+import LoginProvider from "context/loginContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -34,7 +35,9 @@ root.render(
       <LoaderProvider>
         <SystemOptionsProvider>
           <BrowserRouter>
-            <App />
+            <LoginProvider>
+              <App />
+            </LoginProvider>
           </BrowserRouter>
         </SystemOptionsProvider>
       </LoaderProvider>

@@ -24,7 +24,7 @@ function LeftSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { profile, isLoading } = useSelector((state) => state.userProfile);
-  const { user_type, is_kyc } = profile || "";
+  const { user_type, kyc_approved_status = "" } = profile || "";
 
   const thisRoute = useMemo(() => location.pathname.split("/")[1], [location]);
 
@@ -85,7 +85,7 @@ function LeftSidebar() {
 
   // Redirect logic for restricted routes
   const shouldRedirectToRestrictedRoute =
-    !is_kyc && restrictedRoutes.includes(thisRoute);
+    kyc_approved_status != "approved" && restrictedRoutes.includes(thisRoute);
 
   // if (shouldRedirectToRestrictedRoute) {
   //   useEffect(() => {
@@ -143,7 +143,7 @@ function LeftSidebar() {
           </li>
           {user_type !== "agent" && (
             <>
-              {is_kyc && (
+              {kyc_approved_status === "approved" && (
                 <li className={`${thisRoute === "send" ? "active" : ""}`}>
                   <Link to="/send" replace>
                     <IconSend style={{ stroke: "#F3F3F3" }} />
@@ -151,7 +151,7 @@ function LeftSidebar() {
                   </Link>
                 </li>
               )}
-              {is_kyc && (
+              {kyc_approved_status === "approved" && (
                 <li className={`${thisRoute === "request" ? "active" : ""}`}>
                   <Link to="/request" replace>
                     <IconRequest />
@@ -165,7 +165,7 @@ function LeftSidebar() {
                   <span>Activities</span>
                 </Link>
               </li>
-              {is_kyc && (
+              {kyc_approved_status === "approved" && (
                 <li className={`${thisRoute === "wallet" ? "active" : ""}`}>
                   <Link to="/wallet" replace>
                     <IconWallet />

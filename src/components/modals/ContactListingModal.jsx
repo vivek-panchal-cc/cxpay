@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
 import LoaderAddGroupContact from "loaders/LoaderAddGroupContact";
 import { useSelector } from "react-redux";
+import { LoginContext } from "context/loginContext";
 
 function ContactListingModal(props) {
   const {
@@ -32,6 +33,8 @@ function ContactListingModal(props) {
   const [currentListPage, setCurrentListPage] = useState(1);
   const [listingTotalData, setListingTotalData] = useState(0);
   const { profile } = useSelector((state) => state?.userProfile);
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
 
   const getCurrentData = useMemo(() => {
     const tmp = alldata.filter((item) =>
@@ -209,7 +212,7 @@ function ContactListingModal(props) {
                             checked={selectedRemainingContact.includes(
                               ele.account_number
                             )}
-                            disabled={disabledCheckedBox(ele)}
+                            disabled={disabledCheckedBox(ele) || show_renew_section === "disable_fund_action"}
                           />
                           <label htmlFor={ele.account_number}>
                             {ele.member_name}
