@@ -25,7 +25,7 @@ const NotificationBar = (props) => {
           state: { kycStatus: true, kycUpdate: "renew" },
         });
       } else if (MANUAL_KYC?.toString() === "false") {
-        navigate("/complete-kyc-valid");
+        navigate("/complete-kyc-valid", { state: { kycValid: true } });
       }
     } catch (error) {
       if (typeof error === "string") return toast.error(error);

@@ -8,6 +8,8 @@ import { fetchUserProfile } from "features/user/userProfileSlice";
 const KycComplete = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { kycValid } = location?.state || {};
   const { profile } = useSelector((state) => state.userProfile);
   const { user_type, kyc_approved_status = "" } = profile || {};
 
@@ -19,6 +21,8 @@ const KycComplete = () => {
 
     fetchAndCheckKyc();
   }, [dispatch]);
+
+  if (!kycValid) return <Navigate to="/" replace />;
 
   return (
     <div className="login-signup login-signup-main common-body-bg">
