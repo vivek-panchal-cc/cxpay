@@ -58,7 +58,7 @@ function VerifyLoginOtp(props) {
         if (error) throw payload;
         setLoginCreds((ls) => ({
           ...ls,
-          renew_kyc_status: payload.data.kyc_renew_data?.renew_kyc_status || "",
+          renew_kyc_approved_status: payload.data.kyc_renew_data?.renew_kyc_approved_status || "",
           renew_kyc_attempt_count:
             payload.data.kyc_renew_data?.renew_kyc_attempt_count || "",
           show_renew_section:

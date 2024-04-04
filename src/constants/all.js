@@ -8,6 +8,7 @@ import {
   IconNotifyMoneyRequest,
   IconNotifyMoneySent,
   IconNotifyMoneySentFailed,
+  IconNotifyKyc,
 } from "styles/svgs";
 
 // Expressions
@@ -133,7 +134,7 @@ const notificationType = {
     redirect: "/activities",
   },
   [NOTIFY_KYC]: {
-    icon: IconNotifyMoneyRecieved,
+    icon: IconNotifyKyc,
     redirect: "/",
   },
   "": {

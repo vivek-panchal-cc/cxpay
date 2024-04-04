@@ -23,8 +23,8 @@ const ContactCard = (props) => {
   const { show_renew_section } = loginCreds;
 
   const disabledCheckedBox = () => {
-    if (profile.admin_approved && show_renew_section !== "disable_fund_action") {
-      return !(item.admin_approved);
+    if (profile.admin_approved) {
+      return !(item.admin_approved) || !(item.kyc_approved);
     } else {
       return true
     }

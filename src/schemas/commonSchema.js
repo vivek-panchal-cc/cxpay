@@ -95,7 +95,8 @@ const mobileSchema = yup
   .string()
   .min(6, "The mobile number must be between 6 and 7 digits")
   .max(7, "The mobile number must be between 6 and 7 digits")
-  .matches(/^\d*$/, "Enter a valid mobile number")
+  // .matches(/^\d*$/, "Enter a valid mobile number")
+  .matches(/^(?!0+$)\d*$/, "Enter a valid mobile number")
   .required("Please enter mobile number");
 
 const firstNameSchema = yup

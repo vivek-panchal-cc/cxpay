@@ -6,7 +6,7 @@ import { CXPAY_LOGO } from "constants/all";
 import { storageRequest } from "helpers/storageRequests";
 
 function KycManualFirstStep(_props) {
-  const { message } = _props;
+  const { message, kycUpdate = "" } = _props;
   const { setIsLoading } = useContext(LoaderContext);
   const { signUpCreds } = useContext(SignupContext);
 
@@ -15,12 +15,10 @@ function KycManualFirstStep(_props) {
   };
 
   const handleBeforeUnload = (event) => {
-    // Cancel the event to prevent the browser from navigating away
-    // event.preventDefault();
-    // Remove the authentication
-    (() => {
+    // Conditionally remove authentication based on kycUpdate prop
+    if (kycUpdate !== "renew") {
       removeAuthentication();
-    })();
+    }
   };
 
   useEffect(() => {
@@ -30,22 +28,22 @@ function KycManualFirstStep(_props) {
     // Remove the event listener when the component unmounts
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
-      (() => {
+      if (kycUpdate !== "renew") {
         removeAuthentication();
-      })();
+      }
     };
   }, []);
 
   useEffect(() => {
-    (() => {
+    if (kycUpdate !== "renew") {
       removeAuthentication();
-    })();
+    }
   }, []);
 
-  const logout = () => {
-    (() => {
+  const handleRedirect = () => {
+    if (kycUpdate !== "renew") {
       removeAuthentication();
-    })();
+    }
     window.location.href = "/";
   };
 
@@ -66,7 +64,10 @@ function KycManualFirstStep(_props) {
             )}
             <div className="login-other-option">
               <div className="pt-4 login-with-opt-wrap">
-                <button className="btn btn-primary blue-bg" onClick={logout}>
+                <button
+                  className="btn btn-primary blue-bg"
+                  onClick={handleRedirect}
+                >
                   Ok
                 </button>
               </div>

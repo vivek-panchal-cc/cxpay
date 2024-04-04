@@ -88,6 +88,11 @@ function withUserProtection(WrappedComponent, allowedUserTypes = []) {
   return function ProtectedComponent(props) {
     const { profile } = useSelector((state) => state.userProfile);
     const { user_type } = profile || {};
+    const loginCreds = storageRequest.getLoginCreds();
+
+    if (!loginCreds) {
+      storageRequest.removeAuth();
+    }
 
     if (profile && Object.keys(profile).length > 0) {
       if (!allowedUserTypes.includes(user_type)) {

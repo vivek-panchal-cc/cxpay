@@ -150,7 +150,7 @@ function ContactListingModal(props) {
 
   const disabledCheckedBox = (ele) => {
     if (profile.admin_approved) {      
-      return !ele.admin_approved;
+      return !ele.admin_approved || !ele.kyc_approved;
     } else {
       return true;
     }
@@ -212,7 +212,7 @@ function ContactListingModal(props) {
                             checked={selectedRemainingContact.includes(
                               ele.account_number
                             )}
-                            disabled={disabledCheckedBox(ele) || show_renew_section === "disable_fund_action"}
+                            disabled={disabledCheckedBox(ele)}
                           />
                           <label htmlFor={ele.account_number}>
                             {ele.member_name}

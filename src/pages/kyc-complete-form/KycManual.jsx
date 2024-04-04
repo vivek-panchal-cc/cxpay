@@ -20,13 +20,15 @@ import Modal from "components/modals/Modal";
 import KycManualFirstStep from "./Components/KycManualFirstStep";
 import { useSelector } from "react-redux";
 import ModalDatePickerKyc from "components/modals/ModalDatePickerKyc";
+import { LoginContext } from "context/loginContext";
 
 function KycManual(props) {
   const location = useLocation();
-  const { kycStatus, kycUpdate = "" } = location?.state || {};  
+  const { kycStatus, kycUpdate = "" } = location?.state || {};
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
+  const { setLoginCreds } = useContext(LoginContext);
   const [datePicker, setDatePicker] = useState(false);
   const [showKycPopup, setShowKycPopup] = useState(false);
   const [message, setMessage] = useState("");
@@ -65,8 +67,20 @@ function KycManual(props) {
           }
         }
         for (const file of values.document) formData.append("image", file);
+        formData.append("is_apply_for_renew", kycUpdate === "renew" ? "true" : "false");
         const { data } = await apiRequest.manualKyc(formData);
         if (!data.success) throw data.message;
+        setLoginCreds((ls) => ({
+          ...ls,
+          renew_kyc_approved_status: data.data.kyc_renew_data?.renew_kyc_approved_status || "",
+          renew_kyc_attempt_count:
+            data.data.kyc_renew_data?.renew_kyc_attempt_count || "",
+          show_renew_section:
+            data.data.kyc_renew_data?.show_renew_section || "",
+          show_renew_button:
+            data.data.kyc_renew_data?.show_renew_button || "",
+          kyc_message: data.data.kyc_renew_data?.kyc_message || "",
+        }));
         setMessage(data.message);
         setShowKycPopup(true);
         // navigate("/complete-kyc-initial", { replace: true });
@@ -215,7 +229,7 @@ function KycManual(props) {
       </div>
 
       <Modal id="kyc_step_2_modal" show={showKycPopup} classNameChild="">
-        <KycManualFirstStep setShow={setShowKycPopup} message={message} />
+        <KycManualFirstStep setShow={setShowKycPopup} message={message} kycUpdate={kycUpdate}/>
       </Modal>
     </>
   );
