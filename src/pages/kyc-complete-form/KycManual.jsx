@@ -77,8 +77,7 @@ function KycManual(props) {
             data.data.kyc_renew_data?.renew_kyc_attempt_count || "",
           show_renew_section:
             data.data.kyc_renew_data?.show_renew_section || "",
-          show_renew_button:
-            data.data.kyc_renew_data?.show_renew_button || "",
+          show_renew_button: Boolean(data.data.kyc_renew_data?.show_renew_button),
           kyc_message: data.data.kyc_renew_data?.kyc_message || "",
         }));
         setMessage(data.message);

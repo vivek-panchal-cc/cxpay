@@ -8,6 +8,7 @@ import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { fetchLogout } from "features/user/userProfileSlice";
+import { LoginContext } from "context/loginContext";
 
 function KycSendMail(_props) {
   const navigate = useNavigate();
@@ -15,11 +16,12 @@ function KycSendMail(_props) {
   const dispatch = useDispatch();
   const { setIsLoading } = useContext(LoaderContext);
   const { signUpCreds } = useContext(SignupContext);
+  const { setLoginCreds } = useContext(LoginContext);
   const searchParams = new URLSearchParams(location.search);
   const message = searchParams.get("message");
-  const manualKycStatus = searchParams.get("system_option_manual_kyc_status");  
-  const isCancel = searchParams.get("is_cancel");  
-  const isRenew = searchParams.get("is_renew");  
+  const manualKycStatus = searchParams.get("system_option_manual_kyc_status");
+  const isCancel = searchParams.get("is_cancel");
+  const isRenew = searchParams.get("is_renew");
 
   const sendMail = async () => {
     setIsLoading(true);
@@ -32,9 +34,19 @@ function KycSendMail(_props) {
         kyc_status: "false",
       };
       const { data } = await apiRequest.updateCustomerKyc(reqParams);
+      console.log("data: ", data);
       if (!data.success) throw data.message;
       toast.success(`${data.message}`);
-      storageRequest.removeAuth();
+      setLoginCreds((ls) => ({
+        ...ls,
+        renew_kyc_approved_status:
+          data.data.kyc_renew_data?.renew_kyc_approved_status || "",
+        renew_kyc_attempt_count:
+          data.data.kyc_renew_data?.renew_kyc_attempt_count || "",
+        show_renew_section: data.data.kyc_renew_data?.show_renew_section || "",
+        show_renew_button: Boolean(data.data.kyc_renew_data?.show_renew_button),
+        kyc_message: data.data.kyc_renew_data?.kyc_message || "",
+      }));
       navigate("/login", { replace: true });
     } catch (error) {
       if (typeof error === "string") toast.error(error);

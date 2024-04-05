@@ -58,13 +58,15 @@ function VerifyLoginOtp(props) {
         if (error) throw payload;
         setLoginCreds((ls) => ({
           ...ls,
-          renew_kyc_approved_status: payload.data.kyc_renew_data?.renew_kyc_approved_status || "",
+          renew_kyc_approved_status:
+            payload.data.kyc_renew_data?.renew_kyc_approved_status || "",
           renew_kyc_attempt_count:
             payload.data.kyc_renew_data?.renew_kyc_attempt_count || "",
           show_renew_section:
             payload.data.kyc_renew_data?.show_renew_section || "",
-          show_renew_button:
-            payload.data.kyc_renew_data?.show_renew_button || "",
+          show_renew_button: Boolean(
+            payload.data.kyc_renew_data?.show_renew_button
+          ),
           kyc_message: payload.data.kyc_renew_data?.kyc_message || "",
         }));
         navigate("/", { replace: true });

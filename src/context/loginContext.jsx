@@ -6,7 +6,7 @@ const initialValues = {
   renew_kyc_approved_status: "",
   renew_kyc_attempt_count: "",  
   show_renew_section: "",
-  show_renew_button: "",    
+  show_renew_button: false,    
 };
 
 export const LoginContext = React.createContext(initialValues);
