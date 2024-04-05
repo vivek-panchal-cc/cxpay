@@ -177,9 +177,11 @@ const Dashboard = () => {
                       <span>+ Add Funds</span>
                     </Link>
                   ) : (
-                    <Link className="wallet-top-1-btn disabled">
-                      <span>+ Add Funds</span>
-                    </Link>
+                    user_type !== "agent" && (
+                      <Link className="wallet-top-1-btn disabled">
+                        <span>+ Add Funds</span>
+                      </Link>
+                    )
                   )}
                 </p>
               </div>

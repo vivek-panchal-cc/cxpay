@@ -11,6 +11,7 @@ import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import { topUpSchema } from "schemas/validationSchema";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import ModalAlert from "components/modals/ModalAlert";
 
 function TopUp() {
   const { setIsLoading } = useContext(LoaderContext);
@@ -78,14 +79,18 @@ function TopUp() {
       try {
         const { data } = await apiRequest.getCustomerDetail({
           mobile_number: mergedMobileNumber,
-        });        
+        });
         if (!data.success) throw data.message;
         toast.success(data.message);
         navigate("/top-up-details", {
           state: { customerDetails: data },
         });
       } catch (error) {
-        if (typeof error === "string") return toast.error(error);
+        // if (typeof error === "string") return toast.error(error);
+        if (typeof error === "string") {
+          setModalDetails({ show: true, message: error || "" });        
+          return;
+        }
         const errorObj = {};
         for (const property in error) errorObj[property] = error[property]?.[0];
         setErrors(errorObj);
@@ -94,6 +99,10 @@ function TopUp() {
       }
     },
   });
+
+  const handleModalCallback = () => {
+    setModalDetails({ show: false, message: "" });    
+  };
 
   return (
     <>
@@ -168,6 +177,15 @@ function TopUp() {
               </div>
             </div>
           </form>
+          <ModalAlert
+            id="manual_fund_initiated"
+            className="fund-sucess-modal"
+            show={modalDetails?.show}
+            heading={modalDetails?.message}
+            headingImg={"/assets/images/top-up-fail.svg"}
+            btnText={"Close"}
+            handleBtnClick={handleModalCallback}
+          />
         </div>
       </div>
     </>
