@@ -38,7 +38,9 @@ const NotificationBar = (props) => {
         kyc_message
       )}&system_option_manual_kyc_status=${encodeURIComponent(
         kycType
-      )}&is_cancel=${encodeURIComponent(true)}`;
+      )}&is_cancel=${encodeURIComponent(true)}&is_renew=${encodeURIComponent(
+        true
+      )}`;
     } catch (error) {
       if (typeof error === "string") return toast.error(error);
     }

@@ -88,7 +88,7 @@ const responseErrorInterceptor = (error) => {
         errResponse.data.message
       )}&system_option_manual_kyc_status=${encodeURIComponent(
         system_option_manual_kyc_status
-      )}`;
+      )}&is_renew=${encodeURIComponent(false)}`;
     }
   } else if (errResponse.status === 428) {
     window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(

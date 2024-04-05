@@ -17,13 +17,15 @@ function KycSendMail(_props) {
   const { signUpCreds } = useContext(SignupContext);
   const searchParams = new URLSearchParams(location.search);
   const message = searchParams.get("message");
-  const manualKycStatus = searchParams.get("system_option_manual_kyc_status");
-  const isCancel = searchParams.get("is_cancel");
+  const manualKycStatus = searchParams.get("system_option_manual_kyc_status");  
+  const isCancel = searchParams.get("is_cancel");  
+  const isRenew = searchParams.get("is_renew");  
 
   const sendMail = async () => {
     setIsLoading(true);
     try {
       const reqParams = {
+        is_apply_for_renew: isRenew,
         kyc_type: manualKycStatus,
         device_type: "web",
         send_email: true,
