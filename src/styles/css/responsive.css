@@ -5312,15 +5312,15 @@
 @media only screen and (max-width: 767px) {
   .wallet-page .dashboard-notification-kyc-expire label {
     width: 100%;
-    font-size: 14px;
+    font-size: 12px;
     /* margin-left: 40px; */
   }
   .wallet-page .dashboard-notification-kyc-expire label a.kyc-expire-link span {
-    font-size: 14px;
+    font-size: 12px;
     display: block !important; /* Set span to block-level element */
   }
   a.kyc-expire-link {
-    display: block;
+    /* display: block; */
   }
 }
 
@@ -5346,22 +5346,22 @@
 
 @media only screen and (min-width: 993px) and (max-width: 1024px) {
   .wallet-page .dashboard-notification-kyc-expire label {
-    font-size: 14px;
+    font-size: 12px;
     margin-left: 30px;
   }
   .wallet-page .dashboard-notification-kyc-expire label a.kyc-expire-link span {
-    font-size: 14px;
+    font-size: 12px;
     display: block !important; /* Set span to block-level element */
   }
 }
 
 @media only screen and (min-width: 1025px) and (max-width: 1172px) {
   .wallet-page .dashboard-notification-kyc-expire label {
-    font-size: 14px;
+    font-size: 13px;
     margin-left: 40px;
   }
   .wallet-page .dashboard-notification-kyc-expire label a.kyc-expire-link span {
-    font-size: 14px;
+    font-size: 13px;
     display: block !important; /* Set span to block-level element */
   }
 }

@@ -6333,7 +6333,7 @@ ul.notification-list-wrap li > div {
   width: 100%;
   border-bottom: 1px solid #eee;
   background: #fff;
-  height: 75px;
+  /* height: 75px; */
 }
 
 .sticky_appear .dashboard-top-sec.no-search-ontop:before {
@@ -6350,7 +6350,8 @@ ul.notification-list-wrap li > div {
   padding-top: 10px;
   padding-bottom: 10px;
   z-index: 9;
-  height: 75px;
+  /* height: 75px; */
+  height: fit-content;
   width: 100%;
   top: 0;
   left: 0;
@@ -8446,7 +8447,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   overflow: hidden;
   position: relative;
   background-color: #feefef;
-  padding: 20px;
+  padding: 15px;
   border-radius: 10px;
   /* animation: float-animation 35s linear infinite; */
 }

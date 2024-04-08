@@ -72,18 +72,12 @@ const NotificationBar = (props) => {
             <IconAlert /> {kyc_message}{" "}
             {show_renew_button ? (
               <a className="kyc-expire-link" onClick={redirectKyc}>
-                <span>
-                  Renew your KYC now
-                  {/* <IconArrowRight fill="#0081c5" /> */}
-                </span>
+                <span>Renew your KYC now</span>
               </a>
             ) : (
               show_renew_section === "renew_limit_exceed" && (
                 <a className="kyc-expire-link" onClick={redirectMail}>
-                  <span>
-                    Send Mail
-                    {/* <IconArrowRight fill="#0081c5" /> */}
-                  </span>
+                  <span>Send Mail</span>
                 </a>
               )
             )}
