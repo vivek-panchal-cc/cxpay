@@ -5308,7 +5308,7 @@
   }
 }
 
-
+/* KYC Renew start */
 @media only screen and (max-width: 767px) {
   .wallet-page .dashboard-notification-kyc-expire label {
     width: 100%;
@@ -5321,15 +5321,6 @@
   }
   a.kyc-expire-link {
     /* display: block; */
-  }
-}
-
-@media only screen and (min-width: 1173px) and (max-width: 1335px) {
-  .wallet-page .dashboard-notification-kyc-expire label {
-    font-size: 12.5px;
-  }
-  .wallet-page .dashboard-notification-kyc-expire label a.kyc-expire-link span {
-    font-size: 12.5px;    
   }
 }
 
@@ -5365,3 +5356,27 @@
     display: block !important; /* Set span to block-level element */
   }
 }
+
+@media only screen and (min-width: 1173px) and (max-width: 1335px) {
+  .wallet-page .dashboard-notification-kyc-expire label {
+    font-size: 12.5px;
+    margin-left: 20px;
+  }
+  .wallet-page .dashboard-notification-kyc-expire label a.kyc-expire-link span {
+    font-size: 12.5px;    
+  }
+  .wallet-page .dashboard-notification-kyc-expire {
+    width: calc(100% - 130px);    
+  }
+}
+
+@media only screen and (min-width: 1336px) {
+  .wallet-page .dashboard-notification-kyc-expire {
+    width: calc(100% - 130px);    
+  }
+  .wallet-page .dashboard-notification-kyc-expire label {    
+    margin-left: 20px;
+  }
+}
+
+/* KYC Renew end */
