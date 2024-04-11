@@ -14,7 +14,7 @@ import { LoaderContext } from "context/loaderContext";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import ModalAlert from "components/modals/ModalAlert";
-import { CURRENCY_SYMBOL } from "constants/all";
+import { CURRENCY_SYMBOL, isAdminApprovedWithRenewCheck } from "constants/all";
 import { IconClock } from "styles/svgs";
 import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
 import ModalConfirmation from "components/modals/ModalConfirmation";
@@ -45,6 +45,10 @@ function SendPayment(props) {
   );
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
   const { wallet, request_id } = sendCreds || [];
 
   const [scrollTop, setScrollTop] = useState(false);
@@ -579,7 +583,7 @@ function SendPayment(props) {
                 </div>
               </div>
             </div>
-            {admin_approved && show_renew_section !== "disable_fund_action" ? (
+            {adminApprovedWithRenewCheck ? (
               <div className="pay-btn-wrap">
                 <button
                   type="button"

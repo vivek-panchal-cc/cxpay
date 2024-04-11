@@ -13,7 +13,7 @@ import {
   IconEyeOpen,
   IconRightArrowBig,
 } from "styles/svgs";
-import { CURRENCY_SYMBOL } from "constants/all";
+import { CURRENCY_SYMBOL, isAdminApprovedWithRenewCheck } from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
 import Button from "components/ui/Button";
 import { useSelector } from "react-redux";
@@ -36,6 +36,10 @@ function FundCreditCard(props) {
   const { admin_approved } = profile || {};
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
 
   useEffect(() => {
     if (formik.values.card_id) setAddNewCard(false);
@@ -314,7 +318,7 @@ function FundCreditCard(props) {
                 </table>
               </div>
             </div>
-            {admin_approved && show_renew_section !== "disable_fund_action" ? (
+            {adminApprovedWithRenewCheck ? (
               <div className="row">
                 <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
                   <div className="btn-wrap">

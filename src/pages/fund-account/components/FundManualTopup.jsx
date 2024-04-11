@@ -5,7 +5,12 @@ import { useFormik } from "formik";
 import { fundCashCreditSchema } from "schemas/fundSchema";
 import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
 import useCharges from "hooks/useCharges";
-import { CHARGES_TYPE_MF, CURRENCY_SYMBOL, FILE_SIZE } from "constants/all";
+import {
+  CHARGES_TYPE_MF,
+  CURRENCY_SYMBOL,
+  FILE_SIZE,
+  isAdminApprovedWithRenewCheck,
+} from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { apiRequest } from "helpers/apiRequests";
 import { LoaderContext } from "context/loaderContext";
@@ -25,6 +30,10 @@ const FundManualTopup = (props) => {
   const { admin_approved } = profile || {};
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
   const [loadingCharges, charges] = useCharges({
     chargesType: CHARGES_TYPE_MF,
   });
@@ -200,7 +209,7 @@ const FundManualTopup = (props) => {
               </div>
             </div>
 
-            {admin_approved && show_renew_section !== "disable_fund_action" ? (
+            {adminApprovedWithRenewCheck ? (
               <div className="row">
                 <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
                   <div className="btn-wrap">

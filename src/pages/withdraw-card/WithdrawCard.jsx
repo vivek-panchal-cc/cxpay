@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
-import { CHARGES_TYPE_WD, CURRENCY_SYMBOL } from "constants/all";
+import {
+  CHARGES_TYPE_WD,
+  CURRENCY_SYMBOL,
+  isAdminApprovedWithRenewCheck,
+} from "constants/all";
 import Input from "components/ui/Input";
 import { useNavigate, useParams } from "react-router-dom";
 import { withdrawCardSchema } from "schemas/walletSchema";
@@ -55,6 +59,10 @@ const WithdrawCard = () => {
     transaction_id = "",
     remaining_amount = "",
   } = useMemo(() => ({ ...details }), [details]);
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -244,7 +252,7 @@ const WithdrawCard = () => {
                 </table>
               </div>
             </div>
-            {admin_approved && show_renew_section !== "disable_fund_action" ? (
+            {adminApprovedWithRenewCheck ? (
               <div className="row">
                 <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
                   <div className="btn-wrap">

@@ -12,11 +12,16 @@ import { useDispatch } from "react-redux";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { LoaderContext } from "context/loaderContext";
 import { LoginContext } from "context/loginContext";
+import { isComponentDisabled } from "constants/all";
 
 const BusinessForm = (props) => {
   const { countryList, profile } = props;
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
+  const disableComponent = isComponentDisabled(
+    profile.admin_approved,
+    show_renew_section
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
@@ -90,10 +95,7 @@ const BusinessForm = (props) => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.business_id && formik.errors.business_id}
-          disabled={
-            profile.admin_approved ||
-            show_renew_section === "disable_fund_action"
-          }
+          disabled={disableComponent}
         />
       </div>
       <div className="form-field">

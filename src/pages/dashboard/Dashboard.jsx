@@ -27,6 +27,7 @@ import {
 import RecentTopUpActivities from "components/top-up/RecentTopUpActivities";
 import AgentBalanceGraph from "components/graph/AgentBalanceGraph";
 import { LoginContext } from "context/loginContext";
+import { isAdminApprovedWithRenewCheck } from "constants/all";
 
 const graphBackgroundImage = "/assets/images/chart-duumy.png";
 
@@ -41,6 +42,10 @@ const Dashboard = () => {
   const { user_type, admin_approved } = profile || "";
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
 
   const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
   const [inviteContactList, setInviteContactList] = useState([]);
@@ -167,9 +172,7 @@ const Dashboard = () => {
                 <h2>Hello {first_name || company_name},</h2>
                 <p>
                   Welcome to CXpay
-                  {user_type !== "agent" &&
-                  admin_approved &&
-                  show_renew_section !== "disable_fund_action" ? (
+                  {user_type !== "agent" && adminApprovedWithRenewCheck ? (
                     <Link
                       className="wallet-top-1-btn"
                       onClick={handleFundAccountPopup}
@@ -281,8 +284,7 @@ const Dashboard = () => {
               <div className="extra-links-wrap">
                 <ul>
                   <li>
-                    {admin_approved &&
-                    show_renew_section !== "disable_fund_action" ? (
+                    {adminApprovedWithRenewCheck ? (
                       <Link
                         className="wallet-top-1-btn"
                         onClick={handleFundAccountPopup}
@@ -330,8 +332,7 @@ const Dashboard = () => {
                     </Link>
                   </li> */}
                   <li>
-                    {admin_approved &&
-                    show_renew_section !== "disable_fund_action" ? (
+                    {adminApprovedWithRenewCheck ? (
                       <Link to="/view-schedule-payment">
                         <span className="icon-link-text">
                           <IconWallet stroke="#363853" />

@@ -14,6 +14,7 @@ import {
   TXN_TYPE_AGENT,
   CURRENCY_SYMBOL,
   activityConsts,
+  isAdminApprovedWithRenewCheck,
 } from "constants/all";
 import LoaderActivityDetail from "loaders/LoaderActivityDetail";
 import LoaderActivityProfile from "loaders/LoaderActivityProfile";
@@ -63,6 +64,10 @@ const ModalActivityDetail = (props) => {
   );
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
 
   const {
     iconStatus,
@@ -116,7 +121,7 @@ const ModalActivityDetail = (props) => {
       case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_RECEIVE}_${ACT_STATUS_PENDING}`:
         return (
           <>
-            {admin_approved && show_renew_section !== "disable_fund_action" ? (
+            {adminApprovedWithRenewCheck ? (
               <button
                 type="button"
                 className="outline-btn w-50 d-block"
@@ -132,7 +137,7 @@ const ModalActivityDetail = (props) => {
                 Decline
               </button>
             )}
-            {admin_approved && show_renew_section !== "disable_fund_action" ? (
+            {adminApprovedWithRenewCheck ? (
               <button
                 type="button"
                 className="btn print-details-btn w-50"

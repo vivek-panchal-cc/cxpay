@@ -12,6 +12,7 @@ import BalanceGraph from "components/graph/BalanceGraph";
 import RecentActivities from "components/activity/RecentActivities";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
+import { isAdminApprovedWithRenewCheck } from "constants/all";
 
 function Wallet() {
   const { setIsLoading } = useContext(LoaderContext);
@@ -25,6 +26,10 @@ function Wallet() {
   const { admin_approved } = profile || {};
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
 
   const getActivitiesList = async (page = 1, filters = {}) => {
     try {
@@ -89,8 +94,7 @@ function Wallet() {
                 <p> </p>
               </div>
               <div className="wallet-title-btns">
-                {admin_approved &&
-                show_renew_section !== "disable_fund_action" ? (
+                {adminApprovedWithRenewCheck ? (
                   <Link
                     className="wallet-top-1-btn"
                     onClick={handleFundAccountPopup}
@@ -145,8 +149,7 @@ function Wallet() {
                 <img src="/assets/images/Bank_ic_wallet.svg" alt="" />
                 <span className="w-100 mw-100">My Bank Accounts</span>
               </Link>
-              {admin_approved &&
-              show_renew_section !== "disable_fund_action" ? (
+              {adminApprovedWithRenewCheck ? (
                 <Link
                   to="/wallet/withdrawals-card"
                   className="w-100 d-flex align-items-center"

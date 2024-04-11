@@ -2,7 +2,11 @@ import React, { useContext, useMemo } from "react";
 import Button from "components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { IconCardBackground, IconCreditCard } from "styles/svgs";
-import { CURRENCY_SYMBOL, WITHDRAW_STATUS_FILTER_CARD } from "constants/all";
+import {
+  CURRENCY_SYMBOL,
+  isAdminApprovedWithRenewCheck,
+  WITHDRAW_STATUS_FILTER_CARD,
+} from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
@@ -25,6 +29,11 @@ const WithdrawCardItem = (props) => {
   const { admin_approved } = profile || {};
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
+
   const CardIcon = useMemo(() => {
     if (image) return <img src={image} alt="" className="rounded" />;
     else if (color)
@@ -81,14 +90,12 @@ const WithdrawCardItem = (props) => {
           {is_refundable ? (
             <Button
               className={`wr-withdraw-btn ${
-                admin_approved && show_renew_section !== "disable_fund_action"
+                adminApprovedWithRenewCheck
                   ? ""
                   : "contacts-admin-approved-disabled"
               }`}
               onClick={
-                admin_approved && show_renew_section !== "disable_fund_action"
-                  ? handleInitiateRefund
-                  : null
+                adminApprovedWithRenewCheck ? handleInitiateRefund : null
               }
             >
               withdraw

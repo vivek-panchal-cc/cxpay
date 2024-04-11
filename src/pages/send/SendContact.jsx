@@ -9,7 +9,10 @@ import { SendPaymentContext } from "context/sendPaymentContext";
 import LoaderSendContactButtons from "loaders/LoaderSendContactButtons";
 import { toast } from "react-toastify";
 import ModalCreateGroup from "components/modals/ModalCreateGroup";
-import { MAX_GROUP_MEMBERS } from "constants/all";
+import {
+  isAdminApprovedWithRenewCheck,
+  MAX_GROUP_MEMBERS,
+} from "constants/all";
 import ModalAddContact from "components/modals/ModalAddContact";
 import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
 import { useSelector } from "react-redux";
@@ -45,6 +48,10 @@ function SendContact() {
   const { admin_approved } = profile || {};
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
 
   const navigate = useNavigate();
   const {
@@ -261,8 +268,7 @@ function SendContact() {
           {isLoadingContacts ? <LoaderSendContactButtons /> : null}
           {!isLoadingContacts &&
           contactsList.length > 0 &&
-          admin_approved &&
-          show_renew_section !== "disable_fund_action" ? (
+          adminApprovedWithRenewCheck ? (
             <>
               {" "}
               <Button
@@ -345,8 +351,7 @@ function SendContact() {
           {isLoadingGroups ? <LoaderSendContactButtons /> : null}
           {!isLoadingGroups &&
           groupList.length > 0 &&
-          admin_approved &&
-          show_renew_section !== "disable_fund_action" ? (
+          adminApprovedWithRenewCheck ? (
             <>
               <Button
                 type="button"

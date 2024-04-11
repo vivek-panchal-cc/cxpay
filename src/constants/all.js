@@ -24,7 +24,17 @@ const validFileExtensions = {
 };
 const validDocumentExtensions = {
   image: ["jpg", "png", "jpeg", "svg", "heif", "hevc"],
-  document: ["jpg", "png", "jpeg", "heif", "hevc", "pdf", "tif", "tiff", "webp"],
+  document: [
+    "jpg",
+    "png",
+    "jpeg",
+    "heif",
+    "hevc",
+    "pdf",
+    "tif",
+    "tiff",
+    "webp",
+  ],
   pdf: ["pdf"],
 };
 
@@ -757,7 +767,7 @@ const activityConsts = {
           textDetailStatus: "Amount Debit Failed",
           desc: "To YYYY",
         },
-      }
+      },
     },
   },
 };
@@ -844,6 +854,22 @@ const WITHDRAW_STATUS_FILTER_BANK = [
   { title: "REJECTED", status: "REJECTED" },
 ];
 
+const isAdminApprovedWithRenewCheck = (admin_approved, show_renew_section) => {
+  return (
+    admin_approved &&
+    show_renew_section !== "disable_fund_action" &&
+    show_renew_section !== "renew_limit_exceed_and_disable"
+  );
+};
+
+const isComponentDisabled = (admin_approved, show_renew_section) => {
+  return (
+    !admin_approved ||
+    show_renew_section === "disable_fund_action" ||
+    show_renew_section === "renew_limit_exceed_and_disable"
+  );
+};
+
 export {
   exp0ContainWhitespace,
   exp0ContainWordPassword,
@@ -909,4 +935,6 @@ export {
   regexNotContainWhitespace,
   regexNotContainWordPassword,
   renameKeys,
+  isAdminApprovedWithRenewCheck,
+  isComponentDisabled,
 };

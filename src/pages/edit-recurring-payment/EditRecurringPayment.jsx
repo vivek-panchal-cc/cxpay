@@ -2,7 +2,11 @@ import React, { useContext, useMemo, useRef, useState, useEffect } from "react";
 import PaymentUserItem from "./components/PaymentUserItem";
 import { RecurringPaymentContext } from "context/recurringPaymentContext";
 import { useNavigate } from "react-router-dom";
-import { CURRENCY_SYMBOL, SCHEDULE_BUFFER } from "constants/all";
+import {
+  CURRENCY_SYMBOL,
+  isAdminApprovedWithRenewCheck,
+  SCHEDULE_BUFFER,
+} from "constants/all";
 import { useFormik } from "formik";
 import { schedulePaymentSchemaRecurringForUpdate } from "schemas/sendPaymentSchema";
 import Input from "components/ui/Input";
@@ -51,6 +55,10 @@ const EditRecurringPayment = () => {
   );
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
 
   useEffect(() => {
     const preventPageScroll = (e) => {
@@ -346,7 +354,7 @@ const EditRecurringPayment = () => {
                 </div>
               </div>
             </div>
-            {admin_approved && show_renew_section !== "disable_fund_action" ? (
+            {adminApprovedWithRenewCheck ? (
               <div className="sp-btn-inner-wrap outline-solid-wrap">
                 <button
                   className="btn outline-btn"

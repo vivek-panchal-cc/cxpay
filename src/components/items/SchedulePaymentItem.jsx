@@ -1,5 +1,9 @@
 import WrapAmount from "components/wrapper/WrapAmount";
-import { CURRENCY_SYMBOL } from "constants/all";
+import {
+  CURRENCY_SYMBOL,
+  isAdminApprovedWithRenewCheck,
+  isComponentDisabled,
+} from "constants/all";
 import { LoginContext } from "context/loginContext";
 import { formatDate } from "helpers/commonHelpers";
 import React, { useContext, useMemo } from "react";
@@ -21,6 +25,14 @@ const SchedulePaymentItem = (props) => {
   );
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
+  const disableComponent = isComponentDisabled(
+    admin_approved,
+    show_renew_section
+  );
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
 
   // const { dtString } = useMemo(() => {
   //   if (!dateTime) return { dtString: "" };
@@ -51,7 +63,7 @@ const SchedulePaymentItem = (props) => {
       <div className="right-activity-div">
         <button
           className={`act-edit-wrap rounded ${
-            admin_approved && show_renew_section !== "disable_fund_action"
+            adminApprovedWithRenewCheck
               ? ""
               : "contacts-admin-approved-disabled"
           }`}
@@ -61,23 +73,19 @@ const SchedulePaymentItem = (props) => {
             width: "33px",
             height: "32px",
           }}
-          disabled={
-            !admin_approved || show_renew_section === "disable_fund_action"
-          }
+          disabled={disableComponent}
         >
           <IconEdit style={{ stroke: "#FFF" }} />
         </button>
         <button
           className={`act-del-wrap rounded ${
-            admin_approved && show_renew_section !== "disable_fund_action"
+            adminApprovedWithRenewCheck
               ? ""
               : "contacts-admin-approved-disabled"
           }`}
           onClick={() => handleDelete(id)}
           style={{ background: "#FF3333" }}
-          disabled={
-            !admin_approved || show_renew_section === "disable_fund_action"
-          }
+          disabled={disableComponent}
         >
           <IconBin style={{ stroke: "#F3F3F3" }} />
         </button>

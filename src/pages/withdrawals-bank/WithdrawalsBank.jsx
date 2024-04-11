@@ -11,6 +11,7 @@ import { IconPlusLarge } from "styles/svgs";
 import useWithdrawBankList from "hooks/useWithdrawBankList";
 import { useNavigate } from "react-router-dom";
 import {
+  isComponentDisabled,
   WITHDRAW_OPTIONS_TABS_LIST,
   WITHDRAW_STATUS_FILTER_BANK,
 } from "constants/all";
@@ -29,6 +30,10 @@ const WithdrawalsBank = () => {
   const { admin_approved } = profile || {};
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
+  const disableComponent = isComponentDisabled(
+    admin_approved,
+    show_renew_section
+  );
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [cancelWithdrawId, setCancelWithdrawId] = useState("");
 
@@ -199,7 +204,7 @@ const WithdrawalsBank = () => {
           <Button
             className="btn"
             onClick={bank_withdraw ? handleRequestWithdraw : null}
-            disabled={loadingCardBalance || !bank_withdraw || !admin_approved || show_renew_section === "disable_fund_action"}
+            disabled={loadingCardBalance || !bank_withdraw || disableComponent}
           >
             <IconPlusLarge fill="#fff" />
             Request Withdraw

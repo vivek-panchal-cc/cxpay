@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CURRENCY_SYMBOL } from "constants/all";
+import { CURRENCY_SYMBOL, isAdminApprovedWithRenewCheck } from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import ModalConfirmation from "components/modals/ModalConfirmation";
@@ -59,6 +59,10 @@ function SendRecurringPayment(_props) {
     grandTotal: 0.0,
     total: 0.0,
   });
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
 
   const convertDateFormat = (dateString) => {
     let dateObj = new Date(dateString);
@@ -559,7 +563,7 @@ function SendRecurringPayment(_props) {
                 </div>
               </div>
             </div>
-            {admin_approved && show_renew_section !== "disable_fund_action" ? (
+            {adminApprovedWithRenewCheck ? (
               <div className="pay-btn-wrap">
                 <button
                   type="button"

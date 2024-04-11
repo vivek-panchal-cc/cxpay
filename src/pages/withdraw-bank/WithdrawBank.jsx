@@ -4,7 +4,11 @@ import { IconAddBackground, IconBank, IconRightArrowBig } from "styles/svgs";
 import { fetchBanksList } from "features/user/userWalletSlice";
 import { LoaderContext } from "context/loaderContext";
 import { useDispatch, useSelector } from "react-redux";
-import { CHARGES_TYPE_WD, CURRENCY_SYMBOL } from "constants/all";
+import {
+  CHARGES_TYPE_WD,
+  CURRENCY_SYMBOL,
+  isAdminApprovedWithRenewCheck,
+} from "constants/all";
 import { dateFormattor, getChargedAmount } from "helpers/commonHelpers";
 import { withdrawBankSchema } from "schemas/walletSchema";
 import { apiRequest } from "helpers/apiRequests";
@@ -53,6 +57,10 @@ const WithdrawBank = () => {
   const [loadingCharges, charges] = useCharges({
     chargesType: CHARGES_TYPE_WD,
   });
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
   const [loadingCardBalance, { remaining_amount, bank_withdraw }] =
     useAvailableCardBalance();
 
@@ -402,8 +410,7 @@ const WithdrawBank = () => {
                   </table>
                 </div>
               </div>
-              {admin_approved &&
-              show_renew_section !== "disable_fund_action" ? (
+              {adminApprovedWithRenewCheck ? (
                 <div className="row">
                   <div className="col-12 p-0 btns-inline wallet-acc-fund-btns">
                     <div className="btn-wrap">
