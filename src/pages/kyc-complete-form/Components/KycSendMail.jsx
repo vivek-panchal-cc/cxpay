@@ -34,7 +34,6 @@ function KycSendMail(_props) {
         kyc_status: "false",
       };
       const { data } = await apiRequest.updateCustomerKyc(reqParams);
-      console.log("data: ", data);
       if (!data.success) throw data.message;
       toast.success(`${data.message}`);
       setLoginCreds((ls) => ({
@@ -47,7 +46,11 @@ function KycSendMail(_props) {
         show_renew_button: Boolean(data.data.kyc_renew_data?.show_renew_button),
         kyc_message: data.data.kyc_renew_data?.kyc_message || "",
       }));
-      navigate("/login", { replace: true });
+      if (isRenew === "true") {
+        navigate("/login", { replace: true });
+      } else {
+        navigate("/logout", { replace: true });
+      }
     } catch (error) {
       if (typeof error === "string") toast.error(error);
     } finally {
@@ -56,14 +59,8 @@ function KycSendMail(_props) {
   };
 
   const logout = () => {
-    (async () => {
-      try {
-        const { error, payload } = await dispatch(fetchLogout());
-        if (error) throw payload;
-        navigate("/login", { replace: true });
-      } catch (error) {
-        navigate("/login", { replace: true });
-      }
+    (() => {
+      navigate("/logout", { replace: true });
     })();
   };
 
