@@ -23,19 +23,12 @@ function KycManualSecondStep(_props) {
       });
     } catch (error) {
       if (typeof error === "string") return toast.error(error);
-    } finally {
     }
   };
 
   const logout = () => {
-    (async () => {
-      try {
-        const { error, payload } = await dispatch(fetchLogout());
-        if (error) throw payload;
-        navigate("/login", { replace: true });
-      } catch (error) {
-        navigate("/login", { replace: true });
-      }
+    (() => {
+      navigate("/logout", { replace: true });
     })();
   };
 
