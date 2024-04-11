@@ -47,7 +47,7 @@ function KycSendMail(_props) {
         kyc_message: data.data.kyc_renew_data?.kyc_message || "",
       }));
       if (isRenew === "true") {
-        navigate("/login", { replace: true });
+        navigate("/", { replace: true });
       } else {
         navigate("/logout", { replace: true });
       }
