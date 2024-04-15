@@ -25,7 +25,12 @@ const ContactsItem = (props) => {
 
   const renderButtons = () => {
     if (profile.admin_approved) {
-      if (contact.admin_approved && contact.kyc_approved) {
+      if (
+        contact.admin_approved &&
+        contact.kyc_approved &&
+        show_renew_section !== "disable_fund_action" &&
+        show_renew_section !== "renew_limit_exceed_and_disable"
+      ) {
         return (
           <div className="con-listing-btn-wrap">
             <button

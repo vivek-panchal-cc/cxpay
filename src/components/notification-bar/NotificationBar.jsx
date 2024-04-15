@@ -72,7 +72,7 @@ const NotificationBar = (props) => {
         show_renew_section: data.data.kyc_renew_data?.show_renew_section || "",
         show_renew_button: Boolean(data.data.kyc_renew_data?.show_renew_button),
         kyc_message: data.data.kyc_renew_data?.kyc_message || "",
-      }));      
+      }));
     } catch (error) {
       if (typeof error === "string") return toast.error(error);
     } finally {
@@ -103,7 +103,8 @@ const NotificationBar = (props) => {
       {show_renew_section && (
         <div className="dashboard-notification-kyc-expire">
           <label>
-            <IconAlert /> {kyc_message}{" "}
+            <IconAlert /> <span className="text-danger">Alert!</span>&nbsp;
+            {kyc_message}{" "}
             {show_renew_button ? (
               <a className="kyc-expire-link" onClick={redirectKyc}>
                 <span>Renew your KYC now</span>

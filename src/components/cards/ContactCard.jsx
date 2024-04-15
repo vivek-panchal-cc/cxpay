@@ -24,11 +24,11 @@ const ContactCard = (props) => {
 
   const disabledCheckedBox = () => {
     if (profile.admin_approved) {
-      return !(item.admin_approved) || !(item.kyc_approved);
+      return !item.admin_approved || !item.kyc_approved;
     } else {
-      return true
+      return true;
     }
-  }
+  };
 
   return (
     <div className={className}>
@@ -40,7 +40,13 @@ const ContactCard = (props) => {
             value={id}
             onChange={handleSelect}
             checked={isChecked}
-            disabled={group_id ? "" : disabledCheckedBox()}
+            disabled={
+              group_id
+                ? ""
+                : disabledCheckedBox() ||
+                  show_renew_section === "disable_fund_action" ||
+                  show_renew_section === "renew_limit_exceed_and_disable"
+            }
           />
         ) : null}
         <label
