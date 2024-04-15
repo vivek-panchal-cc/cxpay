@@ -231,7 +231,7 @@ export const refreshToken = (token) => {
  * @params authToken
  */
 export const checkCustomerKyc = (token) => {
-  return axiosLoginInstance.post(`${API_checkCustomerKyc}`, token);
+  return axiosOnboardInstance.post(`${API_checkCustomerKyc}`, token);
 };
 
 /** POST @update-customer-kyc API

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SignupContext } from "context/signupContext";
 import { LoaderContext } from "context/loaderContext";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -6,21 +6,57 @@ import { CXPAY_LOGO } from "constants/all";
 import { storageRequest } from "helpers/storageRequests";
 import { useDispatch } from "react-redux";
 import { fetchLogout } from "features/user/userProfileSlice";
+import { apiRequest } from "helpers/apiRequests";
+import { SystemOptionsContext } from "context/systemOptionsContext";
 
 function KycManualSecondStep(_props) {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const [customerKycMessage, setCustomerKycMessage] = useState("");
+  const [processKycCheck, setProcessKycCheck] = useState();
   const { setIsLoading } = useContext(LoaderContext);
   const { signUpCreds } = useContext(SignupContext);
   const searchParams = new URLSearchParams(location.search);
   const message = searchParams.get("message");
+  const { MANUAL_KYC } = useContext(SystemOptionsContext);
+  const kycType = MANUAL_KYC?.toString() === "true" ? "MANUAL" : "SYSTEM";
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const { data } = await apiRequest.checkCustomerKyc();
+  //     setProcessKycCheck(data.data.process_kyc);
+  //     setCustomerKycMessage(data.message);
+  //   })();
+  // });
+
+  useEffect(() => {
+    const fetchCustomerKyc = async () => {
+      try {
+        const { data } = await apiRequest.checkCustomerKyc();
+        setProcessKycCheck(data.data.process_kyc);
+        setCustomerKycMessage(data.message);
+      } catch (error) {
+        console.error("Error fetching customer KYC data:", error);
+        // Handle errors if needed
+      }
+    };
+    fetchCustomerKyc();
+  }, []);  
 
   const redirectManualKyc = (e) => {
     try {
-      navigate("/kyc-manual", {
-        state: { kycStatus: true },
-      });
+      if (!processKycCheck) {
+        window.location.href = `/send-mail?message=${encodeURIComponent(
+          customerKycMessage
+        )}&system_option_manual_kyc_status=${encodeURIComponent(
+          kycType
+        )}&is_renew=${encodeURIComponent(false)}`;
+      } else {
+        navigate("/kyc-manual", {
+          state: { kycStatus: true },
+        });
+      }
     } catch (error) {
       if (typeof error === "string") return toast.error(error);
     }
