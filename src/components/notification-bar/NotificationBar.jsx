@@ -57,7 +57,7 @@ const NotificationBar = (props) => {
         is_apply_for_renew: "true",
         kyc_type: kycType,
         device_type: "web",
-        send_email: true,
+        send_email: "true",
         kyc_status: "false",
       };
       const { data } = await apiRequest.updateCustomerKyc(reqParams);

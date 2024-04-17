@@ -30,7 +30,7 @@ function KycSendMail(_props) {
         is_apply_for_renew: isRenew,
         kyc_type: manualKycStatus,
         device_type: "web",
-        send_email: true,
+        send_email: "true",
         kyc_status: "false",
       };
       const { data } = await apiRequest.updateCustomerKyc(reqParams);
