@@ -1842,7 +1842,7 @@
 }
 @media only screen and (max-width: 991px) and (min-width: 768px) {
   .accordion {    
-    max-width: 100%;
+    width: 100%;
   }
   .dashboard-right-sec {
     padding: 50px 35px 50px 50px;
@@ -5283,7 +5283,7 @@
   }
 
   .accordion {    
-    max-width: 100%;
+    width: 100%;
   }
 }
 @media screen and (max-width: 560px) {
@@ -5292,7 +5292,7 @@
     line-height: 15px;
   }
   .accordion {    
-    max-width: 100%;
+    width: 100%;
   }
 }
 @media (max-width: 991px) {
