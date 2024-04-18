@@ -49,7 +49,8 @@ const passwordSchema = yup
 
   const passwordStrengthSchema = yup
   .string()
-  .min(8, "Password should be at least 8 characters")
+  .min(8, "Password must contain 8 to 16 characters")
+  .max(16, "Password must contain 8 to 16 characters")
   .matches(
     /^(?=.*[a-z])/,
     "At least one lowercase character"
@@ -66,6 +67,8 @@ const passwordSchema = yup
     /^(?=.*[@$!%*?&#])/,
     "At least one special character (@, $, !, %, *, ?, &, #)"
   )
+  .matches(exp0ContainWhitespace, "Space is not allowed")
+  .matches(exp0ContainWordPassword, `Word 'password' is not allowed`)
   .required("Password is required");
 
 
