@@ -44,6 +44,12 @@ function ModalPasswordConfirmation(props) {
     };
   }, [modalRef, setShow]);
 
+  useEffect(() => {
+    if (!show) {
+      formik.resetForm();
+    }
+  }, [show, formik]);
+
   if (!show) return null;
   return (
     <div
