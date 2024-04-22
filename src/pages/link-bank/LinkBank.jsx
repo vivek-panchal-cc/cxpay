@@ -80,7 +80,12 @@ const LinkBank = (props) => {
       <div className="wallet-link-bank-bottom">
         <div className="profile-info rm-pl-profile-info">
           <h3>Link a Bank</h3>
-          <Breadcrumb />
+          <ul className="breadcrumb">
+            <li>
+              <Link to="/wallet">Wallet</Link>
+            </li>
+            <li>Link A Bank</li>
+          </ul>
         </div>
         <div className="wallet-bank_link-form-wrap">
           <form

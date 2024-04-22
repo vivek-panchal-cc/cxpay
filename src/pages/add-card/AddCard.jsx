@@ -149,7 +149,12 @@ function AddCard() {
         <div className="settings-inner-sec wallet-ac-is">
           <div className="profile-info">
             <h3>Add a Card</h3>
-            <Breadcrumb />
+            <ul className="breadcrumb">
+              <li>
+                <Link to="/wallet">Wallet</Link>
+              </li>
+              <li>Add A Card</li>
+            </ul>
           </div>
           <div className="row wac-details-wrap">
             <div className="p-0 col-lg-7 col-12 wallet-ac-info-wrap z-0">
@@ -169,22 +174,22 @@ function AddCard() {
           </div>
           <div className="add-wallet-card-form-wrap">
             <form onSubmit={formik.handleSubmit}>
-            <div className="row">
-              <div className="col-12 col p-0">
-                <Input
-                  type="text"
-                  inputMode="numeric"
-                  className="form-control"
-                  placeholder="Card Number"
-                  name="card_number"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.card_number}
-                  error={
-                    formik.touched.card_number && formik.errors.card_number
-                  }
-                />
-              </div>
+              <div className="row">
+                <div className="col-12 col p-0">
+                  <Input
+                    type="text"
+                    inputMode="numeric"
+                    className="form-control"
+                    placeholder="Card Number"
+                    name="card_number"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.card_number}
+                    error={
+                      formik.touched.card_number && formik.errors.card_number
+                    }
+                  />
+                </div>
               </div>
               <div className="row">
                 <div className="col-lg-6 col-12 col-left col p-0">
