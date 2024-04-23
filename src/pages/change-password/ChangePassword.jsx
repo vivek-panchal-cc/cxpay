@@ -26,6 +26,11 @@ function ChangePassword() {
     percent: 0,
   });
 
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  const [isInputOldPasswordFocused, setIsInputOldPasswordFocused] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const [isInputConfirmedFocused, setIsInputConfirmedFocused] = useState(false);
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -85,7 +90,13 @@ function ChangePassword() {
       <div className="settings-note-inner-sec">
         <div className="profile-info">
           <h3>Change Password</h3>
-          <Breadcrumb />
+          {/* <Breadcrumb /> */}
+          <ul className="breadcrumb">
+            <li>
+              <Link to="/setting">Setting</Link>
+            </li>
+            <li>Change Password</li>
+          </ul>
         </div>
         <div className="settings-profile-bottom-info-sec settings-password-bottom-info-sec">
           <div className="tab-content" id="nav-tabContent">
@@ -103,7 +114,10 @@ function ChangePassword() {
                     placeholder="Old Password"
                     name="current_password"
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    onBlur={(e) => {
+                      formik.handleBlur(e); // Pass the event to formik.handleBlur
+                      setIsInputOldPasswordFocused(false);
+                    }}
                     value={formik.values.current_password}
                     error={
                       formik.touched.current_password &&
@@ -112,8 +126,9 @@ function ChangePassword() {
                     autoComplete={"new-password"}
                     onCopy={(e) => e.preventDefault()}
                     onPaste={(e) => e.preventDefault()}
+                    onFocus={() => setIsInputOldPasswordFocused(true)}
                   />
-                  <span className="eye-icon" style={{ top: "24px" }}>
+                  <span className="eye-icon" style={{ top: "24px", right: isSafari && isInputOldPasswordFocused ? "40px" : "" }}>
                     {showPassword.old ? (
                       <IconEyeOpen
                         onClick={() =>
@@ -136,7 +151,10 @@ function ChangePassword() {
                     placeholder="New Password"
                     name="new_password"
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    onBlur={(e) => {
+                      formik.handleBlur(e); // Pass the event to formik.handleBlur
+                      setIsInputFocused(false);
+                    }}
                     value={formik.values.new_password}
                     error={
                       formik.touched.new_password && formik.errors.new_password
@@ -144,8 +162,9 @@ function ChangePassword() {
                     autoComplete={"new-password"}
                     onCopy={(e) => e.preventDefault()}
                     onPaste={(e) => e.preventDefault()}
+                    onFocus={() => setIsInputFocused(true)}
                   />
-                  <span className="eye-icon" style={{ top: "24px" }}>
+                  <span className="eye-icon" style={{ top: "24px", right: isSafari && isInputFocused ? "40px" : "" }}>
                     {showPassword.new ? (
                       <IconEyeOpen
                         onClick={() =>
@@ -196,7 +215,10 @@ function ChangePassword() {
                     placeholder="Confirm Password"
                     name="confirm_password"
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    onBlur={(e) => {
+                      formik.handleBlur(e); // Pass the event to formik.handleBlur
+                      setIsInputConfirmedFocused(false);
+                    }}
                     value={formik.values.confirm_password}
                     error={
                       formik.touched.confirm_password &&
@@ -204,12 +226,13 @@ function ChangePassword() {
                     }
                     onCopy={(e) => e.preventDefault()}
                     onPaste={(e) => e.preventDefault()}
+                    onFocus={() => setIsInputConfirmedFocused(true)}
                   />
                   {formik.touched.confirm_password &&
                   !formik.errors.confirm_password ? (
                     <span
                       className="eye-icon"
-                      style={{ top: "24px", right: "45px" }}
+                      style={{ top: "24px", right: isSafari && isInputConfirmedFocused ? "65px" : "45px" }}
                     >
                       <img
                         className="eye-close"
@@ -218,7 +241,7 @@ function ChangePassword() {
                       />
                     </span>
                   ) : null}
-                  <span className="eye-icon" style={{ top: "24px" }}>
+                  <span className="eye-icon" style={{ top: "24px", right: isSafari && isInputConfirmedFocused ? "40px" : "" }}>
                     {showPassword.confirm ? (
                       <IconEyeOpen
                         onClick={() =>

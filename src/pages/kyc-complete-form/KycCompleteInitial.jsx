@@ -69,7 +69,9 @@ const KycCompleteInitial = () => {
                     {decodeURIComponent(message)}
                   </h5>
                 ) : (
-                  <h5 className="text-center mb-0">Complete your KYC</h5>
+                  <h5 className="text-center mb-0">
+                    Please update your KYC from CX PayMe mobile App.
+                  </h5>
                 )}
                 <div className="login-other-option">
                   <div className="login-signup-inner login-with-opt-wrap">

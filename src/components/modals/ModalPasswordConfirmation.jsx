@@ -20,6 +20,8 @@ function ModalPasswordConfirmation(props) {
   } = props;
   const modalRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -47,6 +49,7 @@ function ModalPasswordConfirmation(props) {
   useEffect(() => {
     if (!show) {
       formik.resetForm();
+      setIsInputFocused(false);
     }
   }, [show, formik]);
 
@@ -77,13 +80,17 @@ function ModalPasswordConfirmation(props) {
                     placeholder="Enter password"
                     name="password"
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    onBlur={(e) => {
+                      formik.handleBlur(e); // Pass the event to formik.handleBlur
+                      setIsInputFocused(false);
+                    }}
                     value={formik.values.password}
                     error={formik.touched.password && formik.errors.password}
                     onCopy={(e) => e.preventDefault()}
                     onPaste={(e) => e.preventDefault()}
+                    onFocus={() => setIsInputFocused(true)}
                   />
-                  <span className="eye-icon" style={{ top: "24px" }}>
+                  <span className="eye-icon" style={{ top: "24px", right: isSafari && isInputFocused ? "40px" : "" }}>
                     {showPassword ? (
                       <IconEyeOpen onClick={() => setShowPassword(false)} />
                     ) : (

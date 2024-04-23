@@ -27,6 +27,9 @@ const Login = () => {
     if (token) navigate("/", { replace: true });
   }, []);
 
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       country_code: "",
@@ -127,13 +130,17 @@ const Login = () => {
                       placeholder="Password"
                       name="password"
                       onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
+                      onBlur={(e) => {
+                        formik.handleBlur(e); // Pass the event to formik.handleBlur
+                        setIsInputFocused(false);
+                      }}
                       value={formik.values.password}
                       error={formik.touched.password && formik.errors.password}
                       onCopy={(e) => e.preventDefault()}
                       onPaste={(e) => e.preventDefault()}
+                      onFocus={() => setIsInputFocused(true)}
                     />
-                    <span className="eye-icon" style={{ top: "12px" }}>
+                    <span className="eye-icon" style={{ top: "12px", right: isSafari && isInputFocused ? "40px" : "" }}>
                       {showPassword ? (
                         <IconEyeOpen
                           onClick={() => setShowPassword((e) => !e)}

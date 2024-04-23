@@ -28,6 +28,10 @@ function PersonalForm(props) {
     percent: 0,
   });
 
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const [isInputConfirmedFocused, setIsInputConfirmedFocused] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       first_name: "",
@@ -264,14 +268,18 @@ function PersonalForm(props) {
                   placeholder="Password"
                   name="password"
                   onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  onBlur={(e) => {
+                    formik.handleBlur(e); // Pass the event to formik.handleBlur
+                    setIsInputFocused(false);
+                  }}
                   value={formik.values.password}
                   error={formik.touched.password && formik.errors.password}
                   autoComplete={"new-password"}
                   onCopy={(e) => e.preventDefault()}
                   onPaste={(e) => e.preventDefault()}
+                  onFocus={() => setIsInputFocused(true)}
                 />
-                <span className="eye-icon" style={{ top: "24px" }}>
+                <span className="eye-icon" style={{ top: "24px", right: isSafari && isInputFocused ? "40px" : "" }}>
                   {showPassword.new ? (
                     <IconEyeOpen
                       onClick={() =>
@@ -321,7 +329,10 @@ function PersonalForm(props) {
                   placeholder="Confirm password"
                   name="confirm_password"
                   onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  onBlur={(e) => {
+                    formik.handleBlur(e); // Pass the event to formik.handleBlur
+                    setIsInputConfirmedFocused(false);
+                  }}
                   value={formik.values.confirm_password}
                   error={
                     formik.touched.confirm_password &&
@@ -329,12 +340,13 @@ function PersonalForm(props) {
                   }
                   onCopy={(e) => e.preventDefault()}
                   onPaste={(e) => e.preventDefault()}
+                  onFocus={() => setIsInputConfirmedFocused(true)}
                 />
                 {formik.touched.confirm_password &&
                 !formik.errors.confirm_password ? (
                   <span
                     className="eye-icon"
-                    style={{ top: "24px", right: "45px" }}
+                    style={{ top: "24px", right: isSafari && isInputConfirmedFocused ? "65px" : "45px" }}
                   >
                     <img
                       className="eye-close"
@@ -343,7 +355,7 @@ function PersonalForm(props) {
                     />
                   </span>
                 ) : null}
-                <span className="eye-icon" style={{ top: "24px" }}>
+                <span className="eye-icon" style={{ top: "24px", right: isSafari && isInputConfirmedFocused ? "40px" : "" }}>
                   {showPassword.confirm ? (
                     <IconEyeOpen
                       onClick={() =>
