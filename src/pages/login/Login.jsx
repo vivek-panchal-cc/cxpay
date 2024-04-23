@@ -140,7 +140,7 @@ const Login = () => {
                       onPaste={(e) => e.preventDefault()}
                       onFocus={() => setIsInputFocused(true)}
                     />
-                    <span className="eye-icon" style={{ top: "12px", right: isSafari && isInputFocused ? "40px" : "" }}>
+                    <span className="eye-icon" style={{ top: "12px", right: isSafari && isInputFocused ? "45px" : "" }}>
                       {showPassword ? (
                         <IconEyeOpen
                           onClick={() => setShowPassword((e) => !e)}

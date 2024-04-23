@@ -115,7 +115,7 @@ function ResetPassword() {
                       onPaste={(e) => e.preventDefault()}
                       onFocus={() => setIsInputFocused(true)}
                     />
-                    <span className="eye-icon" style={{ top: "24px", right: isSafari && isInputFocused ? "40px" : "" }}>
+                    <span className="eye-icon" style={{ top: "24px", right: isSafari && isInputFocused ? "45px" : "" }}>
                       {showPassword.new ? (
                         <IconEyeOpen
                           onClick={() =>
@@ -185,7 +185,7 @@ function ResetPassword() {
                     !formik.errors.confirm_password ? (
                       <span
                         className="eye-icon"
-                        style={{ top: "24px", right: isSafari && isInputConfirmedFocused ? "65px" : "45px" }}
+                        style={{ top: "24px", right: isSafari && isInputConfirmedFocused ? "70px" : "45px" }}
                       >
                         <img
                           className="eye-close"
@@ -194,7 +194,7 @@ function ResetPassword() {
                         />
                       </span>
                     ) : null}
-                    <span className="eye-icon" style={{ top: "24px", right: isSafari && isInputConfirmedFocused ? "40px" : "" }}>
+                    <span className="eye-icon" style={{ top: "24px", right: isSafari && isInputConfirmedFocused ? "45px" : "" }}>
                       {showPassword.confirm ? (
                         <IconEyeOpen
                           onClick={() =>

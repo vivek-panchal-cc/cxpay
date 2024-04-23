@@ -90,7 +90,7 @@ function ModalPasswordConfirmation(props) {
                     onPaste={(e) => e.preventDefault()}
                     onFocus={() => setIsInputFocused(true)}
                   />
-                  <span className="eye-icon" style={{ top: "24px", right: isSafari && isInputFocused ? "40px" : "" }}>
+                  <span className="eye-icon" style={{ top: "24px", right: isSafari && isInputFocused ? "45px" : "" }}>
                     {showPassword ? (
                       <IconEyeOpen onClick={() => setShowPassword(false)} />
                     ) : (
