@@ -7,20 +7,20 @@ import { browserName, fullVersion, timeZone } from "../helpers/headerRequests";
 // define API_URL in env file
 const axiosLoginInstance = axios.create({
   baseURL:
-    process.env.REACT_APP_API_CUSTOMER_LOGIN || "http://3.140.192.108:8081",
+    process.env.REACT_APP_API_CUSTOMER_LOGIN || "http://3.13.181.86:8081",
 });
 const axiosOnboardInstance = axios.create({
   baseURL:
-    process.env.REACT_APP_API_CUSTOMER_ONBOARD || "http://3.140.192.108:8082",
+    process.env.REACT_APP_API_CUSTOMER_ONBOARD || "http://3.13.181.86:8082",
 });
 const axiosTransactionInstance = axios.create({
   baseURL:
     process.env.REACT_APP_API_CUSTOMER_TRANSACTION ||
-    "http://3.140.192.108:8083",
+    "http://3.13.181.86:8083",
 });
 const axiosAdminInstance = axios.create({
   baseURL:
-    process.env.REACT_APP_API_CUSTOMER_ADMIN || "http://3.140.192.108:8084",
+    process.env.REACT_APP_API_CUSTOMER_ADMIN || "http://3.13.181.86:8084",
 });
 
 // Define inteceptors
