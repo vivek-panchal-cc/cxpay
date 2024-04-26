@@ -32,6 +32,7 @@ function FundCreditCard(props) {
 
   const [showCvv, setShowCvv] = useState(false);
   const [addNewCard, setAddNewCard] = useState(false);
+  const { cardsList } = useSelector((state) => state.userWallet);
   const { profile } = useSelector((state) => state.userProfile);
   const { admin_approved } = profile || {};
   const { loginCreds } = useContext(LoginContext);
@@ -282,20 +283,22 @@ function FundCreditCard(props) {
                 )}
               </div>
             </div>
-            <div className="row">
-              <div className="col-12 p-0">
-                <div className="form-field cursor-pointer">
-                  <a
-                    onClick={() => handleSelectExistingCard(true)}
-                    className="form-choose-act-wrap"
-                  >
-                    <IconCard style={{ stroke: "#363853" }} />
-                    <span>Choose from Existing Cards</span>
-                    <IconRightArrowBig style={{ stroke: "#0081C5" }} />
-                  </a>
+            {cardsList && cardsList?.length > 0 && (
+              <div className="row">
+                <div className="col-12 p-0">
+                  <div className="form-field cursor-pointer">
+                    <a
+                      onClick={() => handleSelectExistingCard(true)}
+                      className="form-choose-act-wrap"
+                    >
+                      <IconCard style={{ stroke: "#363853" }} />
+                      <span>Choose from Existing Cards</span>
+                      <IconRightArrowBig style={{ stroke: "#0081C5" }} />
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
             <div className="row wallet-fund-row-amt wallet-fund-row-amt-final">
               <div className="col-12 p-0">
                 <table>
