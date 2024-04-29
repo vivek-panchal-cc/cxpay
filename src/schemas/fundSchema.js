@@ -66,7 +66,8 @@ const fundSchema = yup.object().shape({
   //   .required("Please enter amount"),
   transactionAmount: yup
     .string()
-    .matches(/^(0|[1-9]\d*)?(\.\d+)?$/, "Please enter valid amount")
+    // .matches(/^(0|[1-9]\d*)?(\.\d+)?$/, "Please enter valid amount")
+    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
     .required("Please enter amount"),
   txn_mode: yup.string().required(),
   // Validations For CARD
@@ -94,7 +95,8 @@ const fundSchema = yup.object().shape({
 const fundSchemaWithoutCVV = yup.object().shape({
   transactionAmount: yup
     .string()
-    .matches(/^(0|[1-9]\d*)?(\.\d+)?$/, "Please enter valid amount")
+    // .matches(/^(0|[1-9]\d*)?(\.\d+)?$/, "Please enter valid amount")
+    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
     .required("Please enter amount"),
   txn_mode: yup.string().required(),
   // Validations For CARD

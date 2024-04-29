@@ -13,6 +13,7 @@ import { IconBin, IconEdit } from "styles/svgs";
 const RecurringPaymentItem = (props) => {
   const { details, handleEdit, handleDelete } = props;
   const navigate = useNavigate();
+  const today = new Date();
   const {
     id,
     name = "",
@@ -21,6 +22,7 @@ const RecurringPaymentItem = (props) => {
     amount,
     profileImg = "",
     frequency,
+    startDate = "",
   } = details || {};
 
   const { admin_approved } = useSelector(
@@ -54,6 +56,11 @@ const RecurringPaymentItem = (props) => {
     navigate(`/view-recurring-payment-details/${id}`);
   };
 
+  const isFutureDate = useMemo(() => {
+    const start = new Date(startDate);
+    return start > today;
+  }, [startDate, today]);
+
   return (
     <li>
       <div className="left-activity-div">
@@ -73,7 +80,7 @@ const RecurringPaymentItem = (props) => {
       <div className="right-activity-div">
         <button
           className={`act-edit-wrap rounded ${
-            adminApprovedWithRenewCheck
+            adminApprovedWithRenewCheck && isFutureDate
               ? ""
               : "contacts-admin-approved-disabled"
           }`}
@@ -83,7 +90,7 @@ const RecurringPaymentItem = (props) => {
             width: "33px",
             height: "32px",
           }}
-          disabled={disableComponent}
+          disabled={disableComponent || !isFutureDate}
         >
           <IconEdit style={{ stroke: "#FFF" }} />
         </button>

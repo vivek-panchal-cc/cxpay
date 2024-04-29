@@ -4,14 +4,14 @@ import LoaderWdrawHeader from "loaders/LoaderWdrawHeader";
 import { withdrawConsts } from "constants/all";
 
 const SectionHeader = (props) => {
-  const isLoading = props?.loading;
-
+  const { loading, details } = props;
   const {
     amount = "",
     image = "",
     is_group = "",
     name = "",
-  } = props?.details || {};
+    is_delete = false,
+  } = details || {};
 
   const profileURL =
     is_group.toString() === "1"
@@ -23,7 +23,7 @@ const SectionHeader = (props) => {
   return (
     <>
       <div
-        className="rcr-innner-wrap rcr-innner-wrap-1 d-flex flex-wrap w-100"
+        className="rcr-innner-wrap rcr-innner-wrap-1 pb-0 d-flex flex-wrap w-100"
         // style={{ paddingBottom: "0px" }}
       >
         <div className="rcrc-img-wrap rcr-img-wrap">
@@ -32,7 +32,7 @@ const SectionHeader = (props) => {
           </span>
         </div>
         <div className="rcr-info-main">
-          {isLoading ? (
+          {loading ? (
             <div className="rcr-info-1 d-flex flex-wrap">
               <LoaderWdrawHeader
                 loaderPorps={{ height: 20, width: "100%" }}
@@ -55,6 +55,11 @@ const SectionHeader = (props) => {
             </div>
           )}
         </div>
+        {is_delete && (
+          <div>
+            <p className="text-danger">You have deleted this group.</p>
+          </div>
+        )}
       </div>
     </>
   );

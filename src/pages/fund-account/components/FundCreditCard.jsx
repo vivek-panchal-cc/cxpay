@@ -338,7 +338,10 @@ function FundCreditCard(props) {
                       className={`btn btn-primary ${
                         formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
                       } ${formik.isValid ? "" : "opacity-75"}`}
-                      disabled={formik.isSubmitting}
+                      disabled={
+                        formik.isSubmitting ||
+                        parseFloat(paymentDetails.grandTotal?.toFixed(2)) <= 0
+                      }
                       value="Fund"
                     />
                   </div>
