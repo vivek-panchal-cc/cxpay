@@ -26,6 +26,7 @@ const RecurringDetails = () => {
           recurring_payment_id: id,
         });
         setRecurringDetails(data?.data);
+        if(!data?.data) navigate(`/view-recurring-payment`);
       } catch (error) {
         console.error("Error fetching recurring payment details:", error);
       } finally {
@@ -75,7 +76,7 @@ const RecurringDetails = () => {
           </div>
         </div>
       )}
-      <SectionButtons handleBack={handleBack} />
+      <SectionButtons handleBack={() => navigate(-1)} />
     </div>
   );
 };
