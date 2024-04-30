@@ -108,6 +108,67 @@ const renameKeys = (keysMap, object) =>
     {}
   );
 
+// Recurring Status
+const RECURRING_PENDING = "pending";
+const RECURRING_FAILED = "failed";
+const RECURRING_SUCCESS = "success";
+const RECURRING_PAID = "paid";
+
+const recurringTypeStatus = {
+  [RECURRING_PENDING]: {
+    status: "UPCOMING",
+    styles: {
+      color: "#FF7A00",
+      backgroundColor: "yellow",
+      borderRadius: "15px",
+      fontSize: "12px",
+      textAlign: "center",
+      lineHeight: "24px",
+      width: "89px",
+      height: "revert",
+    },
+  },
+  [RECURRING_FAILED]: {
+    status: "FAILED",
+    styles: {
+      color: "#FF3333",
+      backgroundColor: "lightcoral",
+      borderRadius: "15px",
+      fontSize: "12px",
+      textAlign: "center",
+      lineHeight: "24px",
+      width: "89px",
+      height: "revert",
+    },
+  },
+  [RECURRING_SUCCESS]: {
+    status: "SUCCESS",
+    styles: {
+      color: "#56BE15",
+      backgroundColor: "lightgreen",
+      borderRadius: "15px",
+      fontSize: "12px",
+      textAlign: "center",
+      lineHeight: "24px",
+      width: "89px",
+      height: "revert",
+    },
+  },
+  [RECURRING_PAID]: {
+    status: "SUCCESS",
+    styles: {
+      color: "#56BE16",
+      backgroundColor: "lightgreen",
+      borderRadius: "15px",
+      fontSize: "12px",
+      textAlign: "center",
+      lineHeight: "24px",
+      width: "89px",
+      height: "revert",
+    },
+  },
+};
+
 // Notification types constants
 const NOTIFY_REQUEST = "request";
 const NOTIFY_RECEIVE = "receive";
@@ -967,6 +1028,7 @@ export {
   otpCounterTime,
   url_regex,
   notificationType,
+  recurringTypeStatus,
   activityConsts,
   withdrawConsts,
   THEME_COLORS,
@@ -1010,6 +1072,10 @@ export {
   WITHDRAW_STATUS_FILTER_BANK,
   FILE_SIZE,
   TXN_TYPE_AGENT,
+  RECURRING_PENDING,
+  RECURRING_FAILED,
+  RECURRING_SUCCESS,
+  RECURRING_PAID,
 };
 export {
   regexContainCapitalLetter,

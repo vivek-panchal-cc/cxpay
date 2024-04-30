@@ -18,8 +18,8 @@ import {
 const FILE_SIZE = 5 * 1048576;
 const FILE_COUNT = 1;
 
-const deleteAccountPassword = yup.object().shape({  
-  password: yup.string().required("Password required")  
+const deleteAccountPassword = yup.object().shape({
+  password: yup.string().required("Password required")
 });
 
 const signUpPersonalAccountSchema = yup.object().shape({
@@ -28,7 +28,7 @@ const signUpPersonalAccountSchema = yup.object().shape({
   user_type: yup.string().required(),
   personal_id: yup
     .string()
-    .matches(/^\d*$/, "Please only enter numbers.")    
+    .matches(/^\d*$/, "Please only enter numbers.")
     .max(10, "Maximum limit is 10 digits")
     // .max(100, "Maximum limit exceeded")
     .required("Please enter personal id"),
@@ -139,7 +139,7 @@ const editProfilePersonalUserSchema = yup.object().shape({
     .string()
     .required("Please enter personal id")
     .matches(/^\d*$/, "Please only enter numbers.")
-    // .max(100, "Maximum limit is exceeded")    
+    // .max(100, "Maximum limit is exceeded")
     .max(10, "Maximum limit is 10 digits"),
   user_type: yup.string().required(),
   email: emailSchema,
@@ -178,11 +178,12 @@ const resetPasswordSchema = yup.object().shape({
 });
 
 const addBusinessUrlSchema = yup.object().shape({
-  business_url: yup
-    .string()
-    .required("Please enter business url")
-    // .matches(url_regex, "Please enter valid business URL")
-    .nullable(),
+  // business_url: yup
+  //   .string()
+  //   .required("Please enter business url")
+  //   // .matches(url_regex, "Please enter valid business URL")
+  //   .nullable(),
+  business_url: yup.string(),
 });
 
 const inviteContactSchema = yup.object().shape({
@@ -222,13 +223,13 @@ const createGroupSchema = yup.object().shape({
 
 const kycDetailsSchema = yup.object().shape({
   kyc_document_type: yup
-    .string()    
+    .string()
     .required("Please enter document type"),
   kyc_document_id: yup
-    .string()    
+    .string()
     .required("Please enter document id")
     .matches(/^\S*$/, "Space is not allowed")
-    .max(25, "Document Id must not be greater than 25 characters."),    
+    .max(25, "Document Id must not be greater than 25 characters."),
   expiry_date: yup.date().required("Expiry date is required").nullable(),
   document: yup
     .mixed()

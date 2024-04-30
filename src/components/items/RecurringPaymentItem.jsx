@@ -53,6 +53,7 @@ const RecurringPaymentItem = (props) => {
   }, [dateTime]);
 
   const handleViewDetails = (e) => {
+    e.preventDefault();
     navigate(`/view-recurring-payment-details/${id}`);
   };
 
@@ -62,12 +63,9 @@ const RecurringPaymentItem = (props) => {
   }, [startDate, today]);
 
   return (
-    <li>
+    <li onClick={adminApprovedWithRenewCheck ? handleViewDetails : () => {}}>
       <div className="left-activity-div">
-        <div
-          className="user-thumb-name"
-          onClick={adminApprovedWithRenewCheck ? handleViewDetails : () => {}}
-        >
+        <div className="user-thumb-name">
           <img src={profileImg} alt="" />
           <span>{name}</span>
         </div>
@@ -84,7 +82,10 @@ const RecurringPaymentItem = (props) => {
               ? ""
               : "contacts-admin-approved-disabled"
           }`}
-          onClick={() => handleEdit(id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleEdit(id);
+          }}
           style={{
             background: "#0081C5",
             width: "33px",
@@ -100,7 +101,10 @@ const RecurringPaymentItem = (props) => {
               ? ""
               : "contacts-admin-approved-disabled"
           }`}
-          onClick={() => handleDelete(id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDelete(id);
+          }}
           style={{ background: "#FF3333" }}
           disabled={disableComponent}
         >

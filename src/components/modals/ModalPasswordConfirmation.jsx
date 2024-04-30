@@ -51,7 +51,7 @@ function ModalPasswordConfirmation(props) {
       formik.resetForm();
       setIsInputFocused(false);
     }
-  }, [show, formik]);
+  }, [show]);
 
   if (!show) return null;
   return (

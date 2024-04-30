@@ -1,5 +1,6 @@
-import LoaderDiv from "loaders/LoaderDiv";
 import React from "react";
+import LoaderDiv from "loaders/LoaderDiv";
+import { recurringTypeStatus } from "constants/all";
 
 const SectionRecurringDates = (props) => {
   const isLoading = props?.loading;
@@ -76,31 +77,47 @@ const SectionRecurringDates = (props) => {
             </tr>
           </thead>
           <tbody>
-            {isLoading
-              ? [1, 2, 3, 4, 5]?.map((item) => (
-                  <tr style={tableTr} key={item}>
-                    <td>
-                      <LoaderDiv height="20" width="70%" />
-                    </td>
-                    <td>
-                      <LoaderDiv height="20" width="100%" />
-                    </td>
-                  </tr>
-                ))
-              : recurring_dates?.map((dateEntry, index) => (
-                  <tr style={tableTr} key={index}>
-                    <td>{formatDate(dateEntry.recurring_date)}</td>
-                    <td className="freq-date-rec-td">
-                      <div style={getStatusStyle(dateEntry.status)}>
-                        {dateEntry.status.toLowerCase() === "pending"
-                          ? "UPCOMING"
-                          : dateEntry.status.toLowerCase() === "paid"
-                          ? "SUCCESS"
-                          : dateEntry.status}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+            {isLoading ? (
+              [1, 2, 3, 4, 5]?.map((item) => (
+                <tr style={tableTr} key={item}>
+                  <td>
+                    <LoaderDiv height="20" width="70%" />
+                  </td>
+                  <td>
+                    <LoaderDiv height="20" width="100%" />
+                  </td>
+                </tr>
+              ))
+            ) : recurring_dates?.length === 0 ? (
+              <tr style={{ textAlign: "center", height: "300px" }}>
+                <td colSpan="2">No data found</td>
+              </tr>
+            ) : (
+              recurring_dates?.map((dateEntry, index) => (
+                <tr style={tableTr} key={index}>
+                  <td>{formatDate(dateEntry.recurring_date)}</td>
+                  <td className="freq-date-rec-td">
+                    {/* <div style={getStatusStyle(dateEntry.status)}> */}
+                    <div
+                      style={
+                        recurringTypeStatus[dateEntry?.status.toLowerCase()]
+                          ?.styles
+                      }
+                    >
+                      {
+                        recurringTypeStatus[dateEntry?.status.toLowerCase()]
+                          ?.status
+                      }
+                      {/* {dateEntry.status.toLowerCase() === "pending"
+                        ? "UPCOMING"
+                        : dateEntry.status.toLowerCase() === "paid"
+                        ? "SUCCESS"
+                        : dateEntry.status} */}
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
