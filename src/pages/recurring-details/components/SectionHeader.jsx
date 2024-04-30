@@ -10,7 +10,7 @@ const SectionHeader = (props) => {
     image = "",
     is_group = "",
     name = "",
-    is_delete = false,
+    is_deleted = false,
   } = details || {};
 
   const profileURL =
@@ -55,7 +55,7 @@ const SectionHeader = (props) => {
             </div>
           )}
         </div>
-        {is_delete && (
+        {is_deleted && (
           <div>
             <p className="text-danger">You have deleted this group.</p>
           </div>
