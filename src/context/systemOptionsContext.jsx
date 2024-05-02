@@ -12,6 +12,8 @@ export const SystemOptionsContext = createContext({
   SWIFT_CODE: "",
   SUPPORT_EMAIL: "",
   MANUAL_KYC: "",
+  MOBILE_NUMBER_NOT_CHANGE_DURATION_IN_DAYS: "",
+  CHANGE_MOBILE_NUMBER_ALLOW_COUNT: "",
 });
 
 const SystemOptionsProvider = ({ children }) => {

@@ -1,14 +1,38 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { LoaderContext } from "context/loaderContext";
 import { apiRequest } from "helpers/apiRequests";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { SystemOptionsContext } from "context/systemOptionsContext";
+import { useState } from "react";
 
 function OtpTypePopup(props) {
   const { setModalShow, handleCallBack } = props;
   const { setIsLoading } = useContext(LoaderContext);
   const { profile } = useSelector((state) => state.userProfile);
   const { cust_id = "", country_code = "", mobile_number = "" } = profile || {};
+  const [systemOptions, setSystemOptions] = useState({});
+  const {
+    MOBILE_NUMBER_NOT_CHANGE_DURATION_IN_DAYS,
+    CHANGE_MOBILE_NUMBER_ALLOW_COUNT,
+  } = systemOptions;
+
+  const getSystemOptions = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.getAllSystemOptions();
+      if (!data?.success) throw data?.message;
+      setSystemOptions(data?.data || {});
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getSystemOptions();
+  }, []);
 
   const openOtpModal = async (type) => {
     setIsLoading(true);
@@ -20,10 +44,10 @@ function OtpTypePopup(props) {
       mobile_number: mobile_number,
     };
     try {
-      const { data } = await apiRequest.createChangeMobileOtp(values);      
+      const { data } = await apiRequest.createChangeMobileOtp(values);
       if (!data.success) throw data.message;
       if (data?.data?.otp) toast.success(data.data.otp);
-      toast.success(data.message); 
+      toast.success(data.message);
       setModalShow(false);
       await handleCallBack(values);
     } catch (error) {
@@ -65,6 +89,14 @@ function OtpTypePopup(props) {
               </div>
             </div>
           </div>
+          {CHANGE_MOBILE_NUMBER_ALLOW_COUNT &&
+            MOBILE_NUMBER_NOT_CHANGE_DURATION_IN_DAYS && (
+              <div>
+                <p className="text-danger text-center mt-4">
+                  {`Note: You can change your mobile number ${CHANGE_MOBILE_NUMBER_ALLOW_COUNT} times in ${MOBILE_NUMBER_NOT_CHANGE_DURATION_IN_DAYS} days`}
+                </p>
+              </div>
+            )}
         </div>
       </div>
     </>
