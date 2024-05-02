@@ -103,6 +103,7 @@ export default function EditGroup() {
         <div className="edit-group-top-main text-center">
           <div className="eg-profile-wrap">
             <InputFile
+              id="_upGroup"
               name="group_image"
               onChange={(e) => {
                 if (e.currentTarget.files[0] !== undefined) {
@@ -128,7 +129,7 @@ export default function EditGroup() {
           <h3>Edit Group</h3>
           <p className="eg-add-gi-wrap">
             <label
-              htmlFor="fileInput_upPersonal"
+              htmlFor="fileInput_upGroup"
               className="cursor-pointer"
               style={{ color: "#0081c5" }}
             >
