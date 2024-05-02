@@ -2,6 +2,7 @@ import React from "react";
 import WrapAmount from "components/wrapper/WrapAmount";
 import LoaderWdrawHeader from "loaders/LoaderWdrawHeader";
 import { withdrawConsts } from "constants/all";
+import { IconAlert } from "styles/svgs";
 
 const SectionHeader = (props) => {
   const { loading, details } = props;
@@ -57,7 +58,10 @@ const SectionHeader = (props) => {
         </div>
         {is_deleted && (
           <div>
-            <p className="text-danger">You have deleted this group.</p>
+            <p className="text-danger">
+              <IconAlert height="20px" width="20px" /> You have deleted this
+              group.
+            </p>
           </div>
         )}
       </div>
