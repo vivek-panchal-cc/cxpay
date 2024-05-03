@@ -73,7 +73,7 @@ function Setting() {
         <div className="settings-bottom-info-sec">
           <ul>
             {settingsRedirects?.map((item, index) => (
-              <>
+              <React.Fragment key={index}>
                 {(item?.title === "Business info" &&
                   user_type === "personal") ||
                 (item?.title === "Business info" && user_type === "agent") ||
@@ -88,7 +88,7 @@ function Setting() {
                     {item.link}
                   </li>
                 )}
-              </>
+              </React.Fragment>
             ))}
           </ul>
         </div>

@@ -7460,7 +7460,30 @@ ul.recent-act-lw-main .act-info-wrap-left {
   margin-bottom: 30px !important;
 }
 
+.recurring-occurrence-update {
+  width: 357px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 30px !important;
+}
+
+.flex-recurring-update {
+  display: flex;
+}
+
 .btn-recurring-occurrence,
+.recurring-end-date {
+  border-radius: 16.95px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  /* transition: 0.3s; */
+  outline: none;
+}
+
+.btn-recurring-occurrence-update,
 .recurring-end-date {
   border-radius: 16.95px;
   border: none;
@@ -7475,7 +7498,20 @@ ul.recent-act-lw-main .act-info-wrap-left {
   opacity: 0.8;
 }
 
+.btn-recurring-occurrence-update:hover,
+.recurring-end-date:hover {
+  opacity: 0.8;
+}
+
 .btn-recurring-occurrence {
+  min-width: 204px;
+  height: 39px;
+  padding: 8px 23px;
+  background: #0081c5;
+  color: white;
+}
+
+.btn-recurring-occurrence-update {
   min-width: 204px;
   height: 39px;
   padding: 8px 23px;
@@ -7493,6 +7529,11 @@ ul.recent-act-lw-main .act-info-wrap-left {
 }
 
 .btn-recurring-occurrence-active {
+  background: #0081c5;
+  color: white;
+}
+
+.btn-recurring-occurrence-update-active {
   background: #0081c5;
   color: white;
 }

@@ -233,7 +233,7 @@ const EditRecurringPayment = () => {
       if (activeButton === "occurrences" && values.no_of_occurrence <= 0) {
         errors.no_of_occurrence = "Occurrence must be greater than 0";
       }
-      if (values.recurring_start_date && values.recurring_end_date) {
+      if (values.recurring_start_date && values.recurring_end_date && set_recurring_flag === "DATE") {
         const startDate = new Date(values.recurring_start_date);
         const endDate = new Date(values.recurring_end_date);
         const timeDiff = endDate - startDate;
@@ -354,25 +354,6 @@ const EditRecurringPayment = () => {
                 </div>
               </div>
             </div>
-            {adminApprovedWithRenewCheck ? (
-              <div className="sp-btn-inner-wrap outline-solid-wrap">
-                <button
-                  className="btn outline-btn"
-                  onClick={cancelUpdatePayment}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  className="btn"
-                  // onClick={formik.handleSubmit}
-                  disabled={formik.isSubmitting}
-                  onClick={handleScheduleSubmit}
-                >
-                  Update Recurring
-                </button>
-              </div>
-            ) : null}
           </div>
           <div className="recurring-sp-cal-wrap d-flex justify-content-center">
             <form onSubmit={formik.handleSubmit}>
@@ -446,10 +427,10 @@ const EditRecurringPayment = () => {
                     ))}
                   </div>
 
-                  <div className="recurring-occurrence">
+                  <div className="recurring-occurrence-update">
                     <button
                       type="button"
-                      className={`btn ${
+                      className={`btn w-100 ${
                         activeButton === "occurrences"
                           ? "btn-active"
                           : "btn-inactive"
@@ -461,7 +442,7 @@ const EditRecurringPayment = () => {
                     </button>
                     <button
                       type="button"
-                      className={`btn ${
+                      className={`btn w-100 ${
                         activeButton === "recurring_end_date"
                           ? "btn-active"
                           : "btn-inactive"
@@ -475,7 +456,7 @@ const EditRecurringPayment = () => {
 
                   {activeButton === "occurrences" && (
                     <div className="row">
-                      <div className="col-6 col p-0">
+                      <div className="col p-0">
                         <div className="form-field">
                           <InputNumber
                             ref={myInputRef}
@@ -541,6 +522,25 @@ const EditRecurringPayment = () => {
                       ) : null}
                     </div>
                   )}
+                  {adminApprovedWithRenewCheck ? (
+                    <div className="sp-btn-inner-wrap outline-solid-wrap flex-recurring-update">
+                      <button
+                        type="button"
+                        className="btn w-100 mb-2"
+                        // onClick={formik.handleSubmit}
+                        disabled={formik.isSubmitting}
+                        onClick={handleScheduleSubmit}
+                      >
+                        Update Recurring
+                      </button>
+                      <button
+                        className="btn outline-btn w-100 mb-2"
+                        onClick={cancelUpdatePayment}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : null}
                 </div>
                 {/* <label style={{ color: "#363853", marginBottom: "15px" }}>
                   Specification

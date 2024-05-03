@@ -308,8 +308,15 @@ function SendRecurringPayment(_props) {
     setPaymentDetails(getChargedAmount(charges, amounts));
   }, [formik.values?.wallet, charges]);
 
-  if (!sendCreds?.wallet || sendCreds.wallet.length <= 0)
-    navigate(prevPathRedirect || "/send", { replace: true });
+  useEffect(() => {
+    // Check if the wallet array is empty and navigate accordingly
+    if (!sendCreds?.wallet || sendCreds.wallet.length <= 0) {
+      navigate(prevPathRedirect || "/send", { replace: true });
+    }
+  }, [sendCreds, navigate, prevPathRedirect]);
+
+  // if (!sendCreds?.wallet || sendCreds.wallet.length <= 0)
+  //   navigate(prevPathRedirect || "/send", { replace: true });
   return (
     <>
       <ModalOtpConfirmation

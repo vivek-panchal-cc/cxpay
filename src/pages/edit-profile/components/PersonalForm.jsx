@@ -111,7 +111,7 @@ function PersonalForm(props) {
                 <p>
                   <a href={`mailto:${email}`}>{email}</a>
                 </p>
-                <p className="">
+                <div className="">
                   <label
                     htmlFor="fileInput_upPersonal"
                     className="cursor-pointer"
@@ -121,10 +121,10 @@ function PersonalForm(props) {
                       ? "Change Profile Picture"
                       : "Select Profile Picture"}
                   </label>
-                  <p className="red">
+                  <div className="red">
                     Note: Allowed formats are JPEG, PNG, JPG
-                  </p>
-                </p>
+                  </div>
+                </div>
                 <p className="text-danger">{formik.errors.profile_image}</p>
               </div>
             </div>

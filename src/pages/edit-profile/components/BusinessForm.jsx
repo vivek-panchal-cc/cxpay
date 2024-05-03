@@ -107,7 +107,7 @@ function Businessform(props) {
                 <p>
                   <a href={`mailto:${email}`}>{email}</a>
                 </p>
-                <p className="">
+                <div className="">
                   <label
                     htmlFor="fileInput_upBusiness"
                     className="cursor-pointer"
@@ -118,11 +118,11 @@ function Businessform(props) {
                       : "Select Profile Picture"}
                   </label>
                   {/* {!profile_image && !formik.values.profile_image ? ( */}
-                  <p className="red">
+                  <div className="red">
                     Note: Allowed formats are JPEG, PNG, JPG
-                  </p>
+                  </div>
                   {/* ) : null} */}
-                </p>
+                </div>
                 <p className="text-danger">{formik.errors.profile_image}</p>
               </div>
             </div>
@@ -159,10 +159,10 @@ function Businessform(props) {
               value={formik.values.email}
               error={formik.touched.email && formik.errors.email}
               autoComplete={"new-email"}
-            />            
+            />
             <Input
               type="text"
-              className={`form-control ${formik.values.business_id ? 'disabled-field' : ''}`}              
+              className={`form-control ${formik.values.business_id ? 'disabled-field' : ''}`}
               name="business_id"
               placeholder="Chamber of Commerce"
               value={formik.values.business_id}
@@ -170,7 +170,7 @@ function Businessform(props) {
               onBlur={formik.handleBlur}
               error={formik.touched.business_id && formik.errors.business_id}
               disabled
-            />      
+            />
             <Input
               type="text"
               className="form-control"

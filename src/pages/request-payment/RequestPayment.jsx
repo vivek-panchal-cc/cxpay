@@ -110,8 +110,15 @@ const RequestPayment = () => {
     setPaymentDetails(getChargedAmount([], amounts));
   }, [formik.values?.wallet]);
 
-  if (!requestCreds?.wallet || requestCreds.wallet.length <= 0)
-    navigate(prevPathRedirect || "/request", { replace: true });
+  useEffect(() => {
+    // Check if the wallet array is empty and navigate accordingly
+    if (!requestCreds?.wallet || requestCreds.wallet.length <= 0) {
+      navigate(prevPathRedirect || "/request", { replace: true });
+    }
+  }, [requestCreds, navigate, prevPathRedirect]);
+
+  // if (!requestCreds?.wallet || requestCreds.wallet.length <= 0)
+  //   navigate(prevPathRedirect || "/request", { replace: true });
 
   return (
     <>

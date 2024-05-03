@@ -61,11 +61,11 @@
   .dashboard-link-wrap ul li a {
     padding: 10px 26px;
   }
-  .dashboard-link-wrap .more-sub-menu li a {      
+  .dashboard-link-wrap .more-sub-menu li a {
     padding: 10px 26px;
-  }  
-  .dashboard-link-wrap .more-sub-menu {    
-    max-height: 200px;    
+  }
+  .dashboard-link-wrap .more-sub-menu {
+    max-height: 200px;
   }
   .wallet-page-body .settings-inner-sec .profile-info {
     padding-bottom: 25px;
@@ -318,15 +318,15 @@
     font-size: 13px;
     padding: 7.5px 26px;
   }
-  .dashboard-link-wrap .more-sub-menu li a {    
-    font-size: 13px;  
+  .dashboard-link-wrap .more-sub-menu li a {
+    font-size: 13px;
     padding: 7.5px 26px;
   }
-  .dashboard-link-wrap .more-sub-menu {    
-    max-height: 150px;    
+  .dashboard-link-wrap .more-sub-menu {
+    max-height: 150px;
   }
-  .sidebar-open .dashboard-link-wrap .more-sub-menu {        
-    max-height: 150px;    
+  .sidebar-open .dashboard-link-wrap .more-sub-menu {
+    max-height: 150px;
   }
   /* .dashboard-link-wrap ul li a {
     padding: 7.5px 26px;
@@ -1064,7 +1064,7 @@
   }
   .add-contact-btn-wrap .btn {
     padding: 11px 15px;
-    /* font-size: 14px; 
+    /* font-size: 14px;
     line-height: 24px;*/
     border-radius: 15px !important;
     font-size: 13px;
@@ -1518,6 +1518,9 @@
   .kyc-date-filter{
     height: 47px !important;
   }
+  .date-filter-calendar-recurring{
+    height: 47px !important;
+  }
   .amt-with-currency span {
     top: 11.5px;
   }
@@ -1625,7 +1628,11 @@
     font-size: 12px !important;
   }
 }
-
+@media only screen and (max-width: 990px) and (min-width: 520px) {
+  .flex-recurring-update {
+    display: flex !important;
+  }
+}
 @media only screen and (max-width: 1100px) and (min-width: 992px) {
   .dashboard-right-sec {
     padding-left: 30px;
@@ -1841,7 +1848,7 @@
   }
 }
 @media only screen and (max-width: 991px) and (min-width: 768px) {
-  .accordion {    
+  .accordion {
     width: 100%;
   }
   .dashboard-right-sec {
@@ -2209,6 +2216,9 @@
     padding: 11px 15px !important;
   }
   .kyc-date-filter{
+    height: 47px !important;
+  }
+  .date-filter-calendar-recurring{
     height: 47px !important;
   }
   /*.login-signup-content-wrap {
@@ -3107,8 +3117,9 @@
     width: 100%;
   }
   .sp-btn-inner-wrap {
+    display: block;
     margin-top: 20px;
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
   }
   .sp-details-inner-wrap ul {
     max-height: 300px;
@@ -3177,20 +3188,20 @@
 }
 @media only screen and (max-width: 1172px) and (min-width: 1101px) {
   .wallet-page .dashboard-notification-kyc-expire {
-    width: calc(100% - 130px);    
+    width: calc(100% - 130px);
   }
 }
 @media only screen and (max-width: 1100px) and (min-width: 992px) {
   .wallet-page .dashboard-notification-kyc-expire {
-    width: calc(100% - 130px);    
+    width: calc(100% - 130px);
   }
-  .wallet-page .dashboard-notification-sec {    
+  .wallet-page .dashboard-notification-sec {
     width: 130px;
   }
 }
 @media only screen and (max-width: 996px) and (min-width: 991px) {
   .wallet-page .dashboard-notification-kyc-expire {
-    width: calc(100% - 130px);    
+    width: calc(100% - 130px);
   }
 }
 @media only screen and (max-width: 991px) and (min-width: 150px) {
@@ -3226,6 +3237,10 @@
     font-size: 14px;
   }
   .kyc-date-filter{
+    border-radius: 12px !important;
+    height: 44px !important;
+  }
+  .date-filter-calendar-recurring{
     border-radius: 12px !important;
     height: 44px !important;
   }
@@ -3608,7 +3623,7 @@
   }
   .send-whom-slider .swiper-button-prev {
     right: 35px;
-  } 
+  }
   .send-whom-slider .swiper-horizontal > .swiper-scrollbar,
   .send-whom-slider .swiper-scrollbar.swiper-scrollbar-horizontal {
     width: calc(100% - 65px);
@@ -3876,9 +3891,9 @@
     border-radius: 15px !important;
     line-height: 25px;
   }
-  .qr-share-icon{    
+  .qr-share-icon{
     border-radius: 25px !important;
-    padding: 0px 14px;    
+    padding: 0px 14px;
     height: 45px;
   }
   .profile-info h3 {
@@ -4861,7 +4876,16 @@
     flex-wrap: wrap;
     margin-bottom: 90px !important;
   }
+  .recurring-occurrence-update {
+    width: 100%;
+    flex-wrap: wrap;
+  }
   .recurring-occurrence .btn {
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+  }
+  .recurring-occurrence-update .btn {
     min-width: 100%;
     max-width: 100%;
     width: 100%;
@@ -5171,7 +5195,19 @@
     margin-bottom: 15px;
   }
 
+  .recurring-occurrence-update {
+    flex-direction: row; /* On larger screens, lay them out horizontally */
+    gap: 15px;
+    width: 100%; /* Set to your fixed width for tablets and up */
+    flex-wrap: wrap;
+  }
+
   .btn-recurring-occurrence {
+    min-width: 204px; /* Original width */
+    padding: 8px 23px; /* Original padding */
+  }
+
+  .btn-recurring-occurrence-update {
     min-width: 204px; /* Original width */
     padding: 8px 23px; /* Original padding */
   }
@@ -5282,7 +5318,7 @@
     height: 75%;
   }
 
-  .accordion {    
+  .accordion {
     width: 100%;
   }
 }
@@ -5291,7 +5327,7 @@
     font-size: 10px;
     line-height: 15px;
   }
-  .accordion {    
+  .accordion {
     width: 100%;
   }
 }
@@ -5327,7 +5363,7 @@
 @media only screen and (min-width: 768px) and (max-width: 992px) {
   .wallet-page .dashboard-notification-kyc-expire label {
     width: 100%;
-    font-size: 14px;    
+    font-size: 14px;
   }
   .wallet-page .dashboard-notification-kyc-expire label a.kyc-expire-link span {
     font-size: 14px;
@@ -5363,18 +5399,18 @@
     margin-left: 20px;
   }
   .wallet-page .dashboard-notification-kyc-expire label a.kyc-expire-link span {
-    font-size: 12.5px;    
+    font-size: 12.5px;
   }
   .wallet-page .dashboard-notification-kyc-expire {
-    width: calc(100% - 130px);    
+    width: calc(100% - 130px);
   }
 }
 
 @media only screen and (min-width: 1336px) {
   .wallet-page .dashboard-notification-kyc-expire {
-    width: calc(100% - 130px);    
+    width: calc(100% - 130px);
   }
-  .wallet-page .dashboard-notification-kyc-expire label {    
+  .wallet-page .dashboard-notification-kyc-expire label {
     margin-left: 20px;
   }
 }
