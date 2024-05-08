@@ -66,6 +66,7 @@ export { default as IconBalanceEyeClose } from "./BalanceEyeClose";
 export { default as IconAlert } from "./Alert";
 export { default as IconArrowRight } from "./ArrowRight";
 export { default as IconNotifyKyc } from "./NotifyKyc";
+export { default as IconVerified } from "./Verified";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";

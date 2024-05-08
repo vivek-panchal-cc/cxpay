@@ -4,7 +4,7 @@ import { apiRequest } from "helpers/apiRequests";
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addBusinessUrlSchema } from "schemas/validationSchema";
-import { IconCross, IconEdit, IconSave } from "styles/svgs";
+import { IconCross, IconEdit, IconSave, IconVerified } from "styles/svgs";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
@@ -146,7 +146,9 @@ const ProfileInfo = (props) => {
               >
                 Verify Email
               </button>
-            ) : null}
+            ) : (
+              <IconVerified />
+            )}
           </div>
         </div>
       </li>
