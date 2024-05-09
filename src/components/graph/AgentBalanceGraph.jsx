@@ -99,20 +99,7 @@ const chartOption = {
   },
 };
 
-const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+const months = [];
 
 const AgentBalanceGraph = (props) => {
   const { isLoading } = useContext(LoaderContext);
@@ -133,6 +120,48 @@ const AgentBalanceGraph = (props) => {
         : "";
     return { commissionAmount, rechargeAmount };
   }, [balance]);
+
+  useEffect(() => {
+    // Process monthDataArr and generate sortedMonthValues
+    const formattedMonths = monthDataArr.map(month => {
+      const [monthValue, year] = month.split(' '); // Extracting the month and year parts
+      const monthIndex = new Date(Date.parse(`${monthValue} 1, ${year}`)).getMonth(); // Get the month index (0-11)
+      return { monthValue, year, monthIndex }; // Returning an object with month, year, and monthIndex
+    });
+
+    // Sort the months array chronologically by year and month index
+    formattedMonths.sort((a, b) => {
+      if (a.year === b.year) {
+        return a.monthIndex - b.monthIndex; // If years are the same, compare month indexes
+      }
+      return a.year - b.year; // Otherwise, sort by year
+    });
+
+    // Extract only the month values from the sorted array
+    const sortedMonthValues = formattedMonths.map(month => `${month.monthValue} ${month.year}`);
+
+    // Clear the months array before pushing new values
+    months.length = 0;
+
+    // Push sorted month values to the months array
+    sortedMonthValues.forEach(monthValue => {
+      months.push(monthValue);
+    });
+    if (monthDataArr.length === 1) {
+      const [monthValue, year] = monthDataArr[0].split(' ');
+      const date = new Date(Date.parse(`${monthValue} 1, ${year}`));
+      const prevDate = new Date(date);
+      prevDate.setMonth(prevDate.getMonth() - 1);
+      const nextDate = new Date(date);
+      nextDate.setMonth(nextDate.getMonth() + 1);
+      const prevMonthName = prevDate.toLocaleString('default', { month: 'short' });
+      const nextMonthName = nextDate.toLocaleString('default', { month: 'short' });
+      months.unshift(`${prevMonthName} ${year}`);
+      months.push(`${nextMonthName} ${year}`);
+    }
+
+    // Now you can use sortedMonthValues wherever you need the months to be in order
+  }, [monthDataArr]);
 
   // useEffect(() => {
   //   if (!balanceDataArr && !monthDataArr) return;

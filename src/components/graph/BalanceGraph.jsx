@@ -105,20 +105,7 @@ const chartOption = {
   },
 };
 
-const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+const months = [];
 
 const BalanceGraph = (props) => {
   const { isLoading } = useContext(LoaderContext);
@@ -140,35 +127,55 @@ const BalanceGraph = (props) => {
   }, [balance]);
 
   // useEffect(() => {
-  //   const chartObj = JSON.parse(JSON.stringify(chartOption));
-  //   const tmpObj = { ...chartObj };
-  //   const spends = months.map(() => 0);
-  //   if (monthDataArr && monthDataArr.length > 0) {
-  //     months.map((mon, index) => {
-  //       const ind = monthDataArr.indexOf(mon);
-  //       if (ind > -1) {
-  //         const amount = balanceDataArr[ind];
-  //         spends[index] = amount;
-  //       }
-  //       return mon;
-  //     });
-  //     const dtnow = new Date();
-  //     dtnow.setMonth(dtnow.getMonth() - 2);
-  //     const minx = dtnow.getMonth() + 1;
-  //     dtnow.setMonth(dtnow.getMonth() + 5);
-  //     const maxx = dtnow.getMonth() + 1;
-  //     tmpObj.series[0].data = spends;
-  //     tmpObj.options.xaxis.categories = months;
-  //     tmpObj.options.xaxis.min = minx;
-  //     tmpObj.options.xaxis.max = maxx;
-  //     tmpObj.options.tooltip.custom = chartOption.options.tooltip.custom;
-  //     setOptions({ ...tmpObj });
-  //     return;
-  //   } else {
-  //     setOptions(chartObj);
-  //     return;
-  //   }
-  // }, [balanceDataArr, monthDataArr]);
+  //   months.length = 0; // Clear the months array before pushing new values
+  //   monthDataArr.forEach((month) => {
+  //     const monthValue = month.split("-")[0]; // Extracting the month part
+  //     months.push(monthValue);
+  //   });
+  // }, [monthDataArr]);
+
+  useEffect(() => {
+    // Process monthDataArr and generate sortedMonthValues
+    const formattedMonths = monthDataArr.map(month => {
+      const [monthValue, year] = month.split(' '); // Extracting the month and year parts
+      const monthIndex = new Date(Date.parse(`${monthValue} 1, ${year}`)).getMonth(); // Get the month index (0-11)
+      return { monthValue, year, monthIndex }; // Returning an object with month, year, and monthIndex
+    });
+
+    // Sort the months array chronologically by year and month index
+    formattedMonths.sort((a, b) => {
+      if (a.year === b.year) {
+        return a.monthIndex - b.monthIndex; // If years are the same, compare month indexes
+      }
+      return a.year - b.year; // Otherwise, sort by year
+    });
+
+    // Extract only the month values from the sorted array
+    const sortedMonthValues = formattedMonths.map(month => `${month.monthValue} ${month.year}`);
+
+    // Clear the months array before pushing new values
+    months.length = 0;
+
+    // Push sorted month values to the months array
+    sortedMonthValues.forEach(monthValue => {
+      months.push(monthValue);
+    });
+    if (monthDataArr.length === 1) {
+      const [monthValue, year] = monthDataArr[0].split(' ');
+      const date = new Date(Date.parse(`${monthValue} 1, ${year}`));
+      const prevDate = new Date(date);
+      prevDate.setMonth(prevDate.getMonth() - 1);
+      const nextDate = new Date(date);
+      nextDate.setMonth(nextDate.getMonth() + 1);
+      const prevMonthName = prevDate.toLocaleString('default', { month: 'short' });
+      const nextMonthName = nextDate.toLocaleString('default', { month: 'short' });
+      months.unshift(`${prevMonthName} ${year}`);
+      months.push(`${nextMonthName} ${year}`);
+    }
+
+    // Now you can use sortedMonthValues wherever you need the months to be in order
+  }, [monthDataArr]);
+
 
   useEffect(() => {
     const chartObj = JSON.parse(JSON.stringify(chartOption));
