@@ -19,7 +19,7 @@ const BusinessForm = (props) => {
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
   const disableComponent = isComponentDisabled(
-    profile.admin_approved,
+    !profile.admin_approved,
     show_renew_section
   );
   const dispatch = useDispatch();
@@ -86,10 +86,10 @@ const BusinessForm = (props) => {
         <Input
           type="text"
           className={`form-control ${
-            profile.admin_approved ? "disabled-field" : ""
+            disableComponent ? "disabled-field" : ""
           }`}
           id="business-id"
-          name={profile.admin_approved ? "" : "business_id"}
+          name={disableComponent ? "" : "business_id"}
           placeholder="Chamber of Commerce"
           value={formik.values.business_id}
           onChange={formik.handleChange}
@@ -100,14 +100,15 @@ const BusinessForm = (props) => {
       </div>
       <div className="form-field">
         <InputSelect
-          className="form-select form-control"
-          name="business_country"
+          className={`form-select form-control ${profile?.business_country ? 'disabled-field' : ''}`}
+          name={profile?.business_country ? "" : "business_country"}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.business_country}
           error={
             formik.touched.business_country && formik.errors.business_country
           }
+          disabled={profile?.business_country}
         >
           <option value={""}>Select Country</option>
           {countryList?.map((country) => (
