@@ -166,7 +166,7 @@ const BalanceGraph = (props) => {
       const prevDate = new Date(date);
       prevDate?.setMonth(prevDate?.getMonth() - 1);
       const nextDate = new Date(date);
-      nextDate?.setMonth(nextDate.getMonth() + 1);
+      nextDate?.setMonth(nextDate?.getMonth() + 1);
       const prevMonthName = prevDate?.toLocaleString('default', { month: 'short' });
       const nextMonthName = nextDate?.toLocaleString('default', { month: 'short' });
       months?.unshift(`${prevMonthName} ${year}`);
