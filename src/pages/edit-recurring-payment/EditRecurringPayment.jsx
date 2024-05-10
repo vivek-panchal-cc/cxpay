@@ -326,6 +326,7 @@ const EditRecurringPayment = () => {
                       profileImg={profileURL}
                       amount={item.member_amount}
                       groupAmount={item.amount}
+                      isDeleted={item.is_deleted}
                     />
                   );
                 })}

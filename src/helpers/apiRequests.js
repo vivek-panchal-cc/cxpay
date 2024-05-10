@@ -49,6 +49,7 @@ const API_updateBusinessData = apiUrl.API_ONBOARD_UPDATE_BUSINESS_DATA;
 const API_addContact = apiUrl.API_ONBOARD_ADD_CONTACT;
 const API_contactsList = apiUrl.API_ONBOARD_GET_CONTACT_LIST;
 const API_deleteContact = apiUrl.API_ONBOARD_DELETE_CONTACT;
+const API_checkCustomerPayment = apiUrl.API_ONBOARD_CHECK_CUSTOMER_PAYMENT;
 const API_markAsFavourite = apiUrl.API_ONBOARD_FAV_CONTACT;
 const API_getCustomerNotification =
   apiUrl.API_ONBOARD_GET_CUSTOMER_NOTIFICATION;
@@ -362,6 +363,13 @@ export const contactsList = (params) => {
  */
 export const deleteContact = (params) => {
   return axiosOnboardInstance.post(`${API_deleteContact}`, params);
+};
+
+/** POST @check-customer-payment API
+ * @params mobile array
+ */
+export const checkCustomerPayment = (params) => {
+  return axiosOnboardInstance.post(`${API_checkCustomerPayment}`, params);
 };
 
 /** POST @mark-as-favourite API
@@ -1012,6 +1020,7 @@ export const apiRequest = {
   addContact,
   contactsList,
   deleteContact,
+  checkCustomerPayment,
   markAsFavourite,
   updateBusinessUrl,
   generateNewQrCode,

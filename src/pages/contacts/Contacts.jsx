@@ -3,6 +3,7 @@ import Input from "components/ui/Input";
 import Pagination from "components/pagination/Pagination";
 import { toast } from "react-toastify";
 import ModalConfirmation from "components/modals/ModalConfirmation";
+import ModalDeletedContactConfirmation from "components/modals/ModalDeletedContactConfirmation";
 import { Link } from "react-router-dom";
 import { MAX_GROUP_MEMBERS } from "constants/all";
 import ModalCreateGroup from "components/modals/ModalCreateGroup";
@@ -22,6 +23,12 @@ const Contacts = () => {
     changeFavouriteContact,
     handleSelectedContacts,
     isDisabled,
+    setShowConfirmDeleteContact,
+    showConfirmDeleteContact,
+    isPaymentExistMessage,
+    setShowDeleteContact,
+    showDeleteContact,
+    checkCustomerPayment,
   } = useContext(ContactsContext);
   const [invitetitle, setInviteTitle] = useState("Invite");
   const [show, setShow] = useState(false);
@@ -90,17 +97,19 @@ const Contacts = () => {
     changeFavouriteContact(contact, contacts, setContacts);
   };
 
-  const handleConfirmDeleteSingle = ({ account_number, name }) => {
+  const handleConfirmDeleteSingle = async ({ account_number, name }) => {
     if (!account_number) return;
     setSelectedContacts([account_number]);
     setContactName(name);
-    setShowConfirmDelSingle(true);
+    await checkCustomerPayment([account_number], contacts);
+    // setShowConfirmDelSingle(true);
   };
 
-  const handleConfirmDeleteSelected = () => {
+  const handleConfirmDeleteSelected = async () => {
     if (selectedContacts.length <= 0) return;
-    setShowConfirmDelSelected(true);
-    setShowConfirmDelSelected(true);
+    await checkCustomerPayment(selectedContacts, contacts);
+    // setShowConfirmDelSelected(true);
+    // setShowConfirmDelSelected(true);
   };
 
   const handleDeleteContact = async () => {
@@ -301,15 +310,22 @@ const Contacts = () => {
             </span>
           </>
         }
-        show={showConfirmDelSingle}
-        setShow={setShowConfirmDelSingle}
+        show={showDeleteContact}
+        setShow={setShowDeleteContact}
         handleCallback={handleDeleteContact}
       />
       <ModalConfirmation
         heading={"Delete Contact"}
         subHeading={"Are you sure to remove contacts?"}
-        show={showConfirmDelSelected}
-        setShow={setShowConfirmDelSelected}
+        show={showDeleteContact}
+        setShow={setShowDeleteContact}
+        handleCallback={handleDeleteContact}
+      />
+      <ModalDeletedContactConfirmation
+        heading={"Confirm Delete Contact"}
+        subHeading={isPaymentExistMessage}
+        show={showConfirmDeleteContact}
+        setShow={setShowConfirmDeleteContact}
         handleCallback={handleDeleteContact}
       />
     </div>

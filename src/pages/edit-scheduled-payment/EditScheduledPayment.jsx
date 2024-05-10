@@ -155,6 +155,7 @@ const EditScheduledPayment = () => {
                       name={item.member_name}
                       profileImg={profileURL}
                       amount={item.member_amount}
+                      isDeleted={item.is_deleted}
                     />
                   );
                 })}

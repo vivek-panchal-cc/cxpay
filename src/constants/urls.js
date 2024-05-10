@@ -28,6 +28,7 @@ export const API_ONBOARD_UPDATE_BANK = "/update-bank";
 export const API_ONBOARD_ADD_CONTACT = "/add-contact";
 export const API_ONBOARD_GET_CONTACT_LIST = "/contacts-list";
 export const API_ONBOARD_DELETE_CONTACT = "/delete-contact";
+export const API_ONBOARD_CHECK_CUSTOMER_PAYMENT = "/check-customer-payment";
 export const API_ONBOARD_FAV_CONTACT = "/mark-as-favourite";
 export const API_ONBOARD_GET_COUNTRY = "/get-country";
 export const API_ONBOARD_RESEND_REGISTER_OTP = "/resend-register-otp";

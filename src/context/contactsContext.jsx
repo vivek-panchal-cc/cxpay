@@ -14,6 +14,10 @@ const ContactsProvider = ({ children }) => {
   const [confirmShow, setConfirmShow] = useState(false);
   const [removeConfirmShow, setRemoveConfirmShow] = useState(false);
   const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
+  const [showConfirmDeleteContact, setShowConfirmDeleteContact] =
+    useState(false);
+  const [showDeleteContact, setShowDeleteContact] = useState(false);
+  const [isPaymentExistMessage, setIsPaymentExistMessage] = useState("");
 
   // For changing fav contact in list
   const bindFavouriteContact = (favCon = {}, contacts = []) => {
@@ -53,6 +57,40 @@ const ContactsProvider = ({ children }) => {
   };
 
   // For delete contacts from the list
+  const checkCustomerPayment = async (
+    delContactUniqIds = [],
+    contacts = []
+  ) => {
+    setIsLoading(true);
+    try {
+      const delContacts = [];
+      contacts?.map((con) => {
+        const { account_number, mobile } = con;
+        if (
+          delContactUniqIds.includes(account_number) ||
+          delContactUniqIds.includes(mobile)
+        )
+          delContacts.push({ mobile });
+        return con;
+      });
+      const { data } = await apiRequest.checkCustomerPayment({
+        contacts: delContacts,
+      });
+      if (!data.success) throw data.message;
+      if (data.data.isPaymentExist) {
+        setIsPaymentExistMessage(data.data.message);
+        setShowConfirmDeleteContact(true);
+      } else {
+        setShowDeleteContact(true);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // For delete contacts from the list
   const deleteContact = async (delContactUniqIds = [], contacts = []) => {
     setIsLoading(true);
     try {
@@ -70,6 +108,9 @@ const ContactsProvider = ({ children }) => {
         contacts: delContacts,
       });
       if (!data.success) throw data.message;
+      setIsPaymentExistMessage("");
+      setShowConfirmDeleteContact(false);
+      setShowDeleteContact(false);
       toast.success(data.message);
     } catch (error) {
       console.log(error);
@@ -113,6 +154,7 @@ const ContactsProvider = ({ children }) => {
     <ContactsContext.Provider
       value={{
         deleteContact,
+        checkCustomerPayment,
         changeFavouriteContact,
         confirmShow,
         setConfirmShow,
@@ -122,8 +164,13 @@ const ContactsProvider = ({ children }) => {
         isDisabled,
         deleteGroup,
         deleteGroupData,
+        isPaymentExistMessage,
         showDeleteGroupPopup,
         setShowDeleteGroupPopup,
+        setShowConfirmDeleteContact,
+        showConfirmDeleteContact,
+        setShowDeleteContact,
+        showDeleteContact,
       }}
     >
       {children}

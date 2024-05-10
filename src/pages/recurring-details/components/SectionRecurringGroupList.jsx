@@ -1,6 +1,7 @@
 import WrapAmount from "components/wrapper/WrapAmount";
 import LoaderDiv from "loaders/LoaderDiv";
 import React from "react";
+import { IconDeleteContact } from "styles/svgs";
 
 const SectionRecurringGroupList = (props) => {
   const isLoading = props?.loading;
@@ -42,11 +43,22 @@ const SectionRecurringGroupList = (props) => {
                     (dateEntry) =>
                       dateEntry.member_name ||
                       dateEntry.specification ||
-                      dateEntry.amount
+                      dateEntry.amount ||
+                      dateEntry.is_deleted
                   )
                   ?.map((dateEntry, index) => (
                     <tr key={index}>
-                      <td className="gl-td-1">{dateEntry.member_name}</td>
+                      <td className="gl-td-1">
+                        {dateEntry.member_name}{" "}
+                        {dateEntry.is_deleted && (
+                          <span className="tooltip-container-contact">
+                            <IconDeleteContact />
+                            <div className="tooltip-contact">
+                              Contact is deleted
+                            </div>
+                          </span>
+                        )}
+                      </td>
                       <td className="gl-td-2">{dateEntry.specification}</td>
                       <td className="gl-td-3">
                         <WrapAmount value={dateEntry.amount} />
