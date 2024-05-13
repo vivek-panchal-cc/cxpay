@@ -16,7 +16,8 @@ const ContactsProvider = ({ children }) => {
   const [showDeleteGroupPopup, setShowDeleteGroupPopup] = useState(false);
   const [showConfirmDeleteContact, setShowConfirmDeleteContact] =
     useState(false);
-  const [showDeleteContact, setShowDeleteContact] = useState(false);
+  const [showConfirmDelSingle, setShowConfirmDelSingle] = useState(false);
+  const [showConfirmDelSelected, setShowConfirmDelSelected] = useState(false);
   const [isPaymentExistMessage, setIsPaymentExistMessage] = useState("");
 
   // For changing fav contact in list
@@ -56,7 +57,7 @@ const ContactsProvider = ({ children }) => {
     }
   };
 
-  // For delete contacts from the list
+  // For check customer payments through account_number from the list
   const checkCustomerPayment = async (
     delContactUniqIds = [],
     contacts = []
@@ -70,7 +71,7 @@ const ContactsProvider = ({ children }) => {
           delContactUniqIds.includes(account_number) ||
           delContactUniqIds.includes(mobile)
         )
-          delContacts.push({ mobile });
+          delContacts.push({ account_number });
         return con;
       });
       const { data } = await apiRequest.checkCustomerPayment({
@@ -78,10 +79,12 @@ const ContactsProvider = ({ children }) => {
       });
       if (!data.success) throw data.message;
       if (data.data.isPaymentExist) {
-        setIsPaymentExistMessage(data.data.message);
+        setIsPaymentExistMessage(data.message);
         setShowConfirmDeleteContact(true);
+      } else if(delContactUniqIds?.length >= 2) {
+        setShowConfirmDelSelected(true);
       } else {
-        setShowDeleteContact(true);
+        setShowConfirmDelSingle(true);
       }
     } catch (error) {
       console.log(error);
@@ -109,8 +112,6 @@ const ContactsProvider = ({ children }) => {
       });
       if (!data.success) throw data.message;
       setIsPaymentExistMessage("");
-      setShowConfirmDeleteContact(false);
-      setShowDeleteContact(false);
       toast.success(data.message);
     } catch (error) {
       console.log(error);
@@ -169,8 +170,10 @@ const ContactsProvider = ({ children }) => {
         setShowDeleteGroupPopup,
         setShowConfirmDeleteContact,
         showConfirmDeleteContact,
-        setShowDeleteContact,
-        showDeleteContact,
+        setShowConfirmDelSingle,
+        showConfirmDelSingle,
+        setShowConfirmDelSelected,
+        showConfirmDelSelected
       }}
     >
       {children}

@@ -3,7 +3,6 @@ import Input from "components/ui/Input";
 import Pagination from "components/pagination/Pagination";
 import { toast } from "react-toastify";
 import ModalConfirmation from "components/modals/ModalConfirmation";
-import ModalDeletedContactConfirmation from "components/modals/ModalDeletedContactConfirmation";
 import { Link } from "react-router-dom";
 import { MAX_GROUP_MEMBERS } from "constants/all";
 import ModalCreateGroup from "components/modals/ModalCreateGroup";
@@ -26,9 +25,11 @@ const Contacts = () => {
     setShowConfirmDeleteContact,
     showConfirmDeleteContact,
     isPaymentExistMessage,
-    setShowDeleteContact,
-    showDeleteContact,
     checkCustomerPayment,
+    setShowConfirmDelSingle,
+    showConfirmDelSingle,
+    setShowConfirmDelSelected,
+    showConfirmDelSelected,
   } = useContext(ContactsContext);
   const [invitetitle, setInviteTitle] = useState("Invite");
   const [show, setShow] = useState(false);
@@ -38,8 +39,8 @@ const Contacts = () => {
   const [contactData, setConatctData] = useState([]);
   const [selectedContacts, setSelectedContacts] = useState([]);
 
-  const [showConfirmDelSingle, setShowConfirmDelSingle] = useState(false);
-  const [showConfirmDelSelected, setShowConfirmDelSelected] = useState(false);
+  // const [showConfirmDelSingle, setShowConfirmDelSingle] = useState(false);
+  // const [showConfirmDelSelected, setShowConfirmDelSelected] = useState(false);
 
   const [contactName, setContactName] = useState("");
 
@@ -109,16 +110,27 @@ const Contacts = () => {
     if (selectedContacts.length <= 0) return;
     await checkCustomerPayment(selectedContacts, contacts);
     // setShowConfirmDelSelected(true);
-    // setShowConfirmDelSelected(true);
   };
 
   const handleDeleteContact = async () => {
     await deleteContact(selectedContacts, contacts);
     setSelectedContacts([]);
+    setShowConfirmDeleteContact(false);
     setShowConfirmDelSingle(false);
     setShowConfirmDelSelected(false);
     setContactName("");
     reloadContacts();
+  };
+
+  const handleShowChange = (newValue) => {
+    setShow(newValue);
+    if (!newValue) {
+      setShowConfirmDeleteContact(false);
+      setShowConfirmDelSingle(false);
+      setShowConfirmDelSelected(false);
+      // Clear the selectedContacts state when setShow is updated to false
+      setSelectedContacts([]);
+    }
   };
 
   return (
@@ -187,7 +199,8 @@ const Contacts = () => {
               </div>
               <div className="con-btn-wrap con-remove-btn-wrap">
                 <button
-                  disabled={isDisabled ? isDisabled() : false}
+                  // disabled={isDisabled ? isDisabled() : false}
+                  disabled={selectedContacts.length < 2}
                   className="btn"
                   type="button"
                   value="Remove Contact"
@@ -310,22 +323,22 @@ const Contacts = () => {
             </span>
           </>
         }
-        show={showDeleteContact}
-        setShow={setShowDeleteContact}
+        show={showConfirmDelSingle}
+        setShow={handleShowChange}
         handleCallback={handleDeleteContact}
       />
       <ModalConfirmation
         heading={"Delete Contact"}
         subHeading={"Are you sure to remove contacts?"}
-        show={showDeleteContact}
-        setShow={setShowDeleteContact}
+        show={showConfirmDelSelected}
+        setShow={handleShowChange}
         handleCallback={handleDeleteContact}
       />
-      <ModalDeletedContactConfirmation
+      <ModalConfirmation
         heading={"Confirm Delete Contact"}
         subHeading={isPaymentExistMessage}
         show={showConfirmDeleteContact}
-        setShow={setShowConfirmDeleteContact}
+        setShow={handleShowChange}
         handleCallback={handleDeleteContact}
       />
     </div>
