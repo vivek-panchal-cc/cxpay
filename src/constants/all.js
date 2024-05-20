@@ -172,6 +172,7 @@ const recurringTypeStatus = {
 // Notification types constants
 const NOTIFY_REQUEST = "request";
 const NOTIFY_RECEIVE = "receive";
+const NOTIFY_SENT = "sent";
 const NOTIFY_PAY_FAIL = "payment_fail";
 const NOTIFY_PAY_COMPLETE = "payment_completed";
 const NOTIFY_CON_REGISTER = "contact_register";
@@ -187,6 +188,10 @@ const notificationType = {
   },
   [NOTIFY_RECEIVE]: {
     icon: IconNotifyMoneyRecieved,
+    redirect: "/activities",
+  },
+  [NOTIFY_SENT]: {
+    icon: IconNotifyMoneySent,
     redirect: "/activities",
   },
   [NOTIFY_PAY_FAIL]: {
@@ -1059,6 +1064,7 @@ export {
   ACT_STATUS_SUCCESS,
   NOTIFY_REQUEST,
   NOTIFY_RECEIVE,
+  NOTIFY_SENT,
   NOTIFY_PAY_FAIL,
   NOTIFY_PAY_COMPLETE,
   NOTIFY_CON_REGISTER,
