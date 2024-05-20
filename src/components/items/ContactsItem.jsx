@@ -87,7 +87,7 @@ const ContactsItem = (props) => {
         className={`${contact?.name ? "con-listing-info" : "invited-con-info"}`}
         htmlFor={contact?.account_number}
       >
-        <div className="con-listing-check">
+        <div className={`con-listing-check ${disabledCheckedBox() ? "cursor-not-allowed" : ""}`}>
           <input
             id={contact?.account_number}
             type="checkbox"

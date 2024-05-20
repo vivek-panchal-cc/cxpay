@@ -36,6 +36,14 @@ const ContactCard = (props) => {
         {isSelectable ? (
           <input
             id={`check${id}`}
+            className={`${
+              !group_id &&
+              (disabledCheckedBox() ||
+                show_renew_section === "disable_fund_action" ||
+                show_renew_section === "renew_limit_exceed_and_disable")
+                ? "cursor-not-allowed"
+                : ""
+            }`}
             type={"checkbox"}
             value={id}
             onChange={handleSelect}

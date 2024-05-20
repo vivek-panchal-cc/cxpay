@@ -4767,6 +4767,10 @@ img.img-size {
   background-color: transparent;
 }
 
+.con-listing-check.cursor-not-allowed label:before {
+  cursor: not-allowed;
+}
+
 .con-listing-check label:after {
   content: "";
   left: 5px;

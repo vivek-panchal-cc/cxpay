@@ -393,7 +393,7 @@
   .swiper-slide
   .cb-div
   input[type="checkbox"] {
-  visibility: hidden;
+  /* visibility: hidden; */
   appearance: none;
   width: auto;
   inset: 0;
