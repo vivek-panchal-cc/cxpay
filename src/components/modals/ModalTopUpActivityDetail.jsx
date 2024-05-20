@@ -124,7 +124,7 @@ const ModalTopUpActivityDetail = (props) => {
               ) : (
                 <>
                   <h3>{customer_name}</h3>
-                  <div className={`loan-amount ${classBg}`}>
+                  <div className={`loan-amount cx-bg-gray`}>
                     <p>
                       <WrapAmount
                         value={topup_amount}
