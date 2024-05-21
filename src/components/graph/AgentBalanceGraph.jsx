@@ -107,6 +107,7 @@ const AgentBalanceGraph = (props) => {
   const [options, setOptions] = useState({ ...chartOption });
   const [showAvailableBalance, setShowAvailableBalance] = useState(false);
   const [showReservedAmount, setShowReservedAmount] = useState(false);
+  const [showBalance, setShowBalance] = useState(false);
 
   const { commissionAmount, rechargeAmount } = useMemo(() => {
     const { commission_amount, recharge_amount } = balance || {};
@@ -123,9 +124,11 @@ const AgentBalanceGraph = (props) => {
 
   useEffect(() => {
     // Process monthDataArr and generate sortedMonthValues
-    const formattedMonths = monthDataArr?.map(month => {
-      const [monthValue, year] = month?.split(' '); // Extracting the month and year parts
-      const monthIndex = new Date(Date.parse(`${monthValue} 1, ${year}`))?.getMonth(); // Get the month index (0-11)
+    const formattedMonths = monthDataArr?.map((month) => {
+      const [monthValue, year] = month?.split(" "); // Extracting the month and year parts
+      const monthIndex = new Date(
+        Date.parse(`${monthValue} 1, ${year}`)
+      )?.getMonth(); // Get the month index (0-11)
       return { monthValue, year, monthIndex }; // Returning an object with month, year, and monthIndex
     });
 
@@ -138,24 +141,30 @@ const AgentBalanceGraph = (props) => {
     });
 
     // Extract only the month values from the sorted array
-    const sortedMonthValues = formattedMonths?.map(month => `${month.monthValue} ${month.year}`);
+    const sortedMonthValues = formattedMonths?.map(
+      (month) => `${month.monthValue} ${month.year}`
+    );
 
     // Clear the months array before pushing new values
     months.length = 0;
 
     // Push sorted month values to the months array
-    sortedMonthValues?.forEach(monthValue => {
+    sortedMonthValues?.forEach((monthValue) => {
       months?.push(monthValue);
     });
     if (monthDataArr?.length === 1) {
-      const [monthValue, year] = monthDataArr[0]?.split(' ');
+      const [monthValue, year] = monthDataArr[0]?.split(" ");
       const date = new Date(Date.parse(`${monthValue} 1, ${year}`));
       const prevDate = new Date(date);
       prevDate?.setMonth(prevDate?.getMonth() - 1);
       const nextDate = new Date(date);
       nextDate?.setMonth(nextDate?.getMonth() + 1);
-      const prevMonthName = prevDate?.toLocaleString('default', { month: 'short' });
-      const nextMonthName = nextDate?.toLocaleString('default', { month: 'short' });
+      const prevMonthName = prevDate?.toLocaleString("default", {
+        month: "short",
+      });
+      const nextMonthName = nextDate?.toLocaleString("default", {
+        month: "short",
+      });
       months?.unshift(`${prevMonthName} ${year}`);
       months?.push(`${nextMonthName} ${year}`);
     }
@@ -233,12 +242,16 @@ const AgentBalanceGraph = (props) => {
     }
   }, [balanceDataArr, monthDataArr]);
 
-  const toggleAvailableBalance = () => {
-    setShowAvailableBalance(!showAvailableBalance);
-  };
+  // const toggleAvailableBalance = () => {
+  //   setShowAvailableBalance(!showAvailableBalance);
+  // };
 
-  const toggleReservedAmount = () => {
-    setShowReservedAmount(!showReservedAmount);
+  // const toggleReservedAmount = () => {
+  //   setShowReservedAmount(!showReservedAmount);
+  // };
+
+  const toggleSetBalanceShow = () => {
+    setShowBalance(!showBalance);
   };
 
   return (
@@ -255,11 +268,32 @@ const AgentBalanceGraph = (props) => {
         <div className="d-flex">
           <div className="p-4">
             <h6 className="h6" style={{ color: "#0081c5" }}>
-              Commission Amount
+              Commission Amount&nbsp;
+              {!rechargeAmount ? (
+                <span>
+                  {!showBalance ? ( // Render eye button only if available balance is hidden
+                    <span
+                      className="eye-icon ms-2"
+                      title="Click to view balance"
+                      onClick={toggleSetBalanceShow} // Toggle visibility on click
+                    >
+                      <IconBalanceEyeOpen className="h3 mb-1 text-black fw-bolder reserved-amount" />
+                    </span>
+                  ) : (
+                    <span
+                      className="eye-icon ms-2"
+                      title="Click to view balance"
+                      onClick={toggleSetBalanceShow} // Toggle visibility on click
+                    >
+                      <IconBalanceEyeClose className="h3 mb-1 text-black fw-bolder reserved-amount" />
+                    </span>
+                  )}
+                </span>
+              ) : null}
             </h6>
             {commissionAmount && (
               <h2 className="h3 text-black fw-bolder">
-                {showAvailableBalance ? ( // Check if available balance should be shown
+                {showBalance ? ( // Check if available balance should be shown
                   <WrapAmount value={commissionAmount} />
                 ) : (
                   `${CURRENCY_SYMBOL} ${new Array(
@@ -268,7 +302,7 @@ const AgentBalanceGraph = (props) => {
                     ?.fill("*")
                     ?.join("")}`
                 )}
-                <span>
+                {/* <span>
                   {!showAvailableBalance ? ( // Render eye button only if available balance is hidden
                     <span
                       className="eye-icon ms-2"
@@ -286,18 +320,39 @@ const AgentBalanceGraph = (props) => {
                       <IconBalanceEyeClose className="h3 mb-1 text-black fw-bolder reserved-amount" />
                     </span>
                   )}
-                </span>
+                </span> */}
               </h2>
             )}
           </div>
           {rechargeAmount ? (
             <div className="p-4 pb-0">
               <h6 className="h6" style={{ color: "#0081c5" }}>
-                Recharge Amount
+                Recharge Amount&nbsp;
+                {rechargeAmount ? (
+                  <span>
+                    {!showBalance ? ( // Render eye button only if available balance is hidden
+                      <span
+                        className="eye-icon ms-2"
+                        title="Click to view balance"
+                        onClick={toggleSetBalanceShow} // Toggle visibility on click
+                      >
+                        <IconBalanceEyeOpen className="h3 mb-1 text-black fw-bolder reserved-amount" />
+                      </span>
+                    ) : (
+                      <span
+                        className="eye-icon ms-2"
+                        title="Click to view balance"
+                        onClick={toggleSetBalanceShow} // Toggle visibility on click
+                      >
+                        <IconBalanceEyeClose className="h3 mb-1 text-black fw-bolder reserved-amount" />
+                      </span>
+                    )}
+                  </span>
+                ) : null}
               </h6>
               {rechargeAmount && (
                 <h2 className="h3 text-black fw-bolder">
-                  {showReservedAmount ? (
+                  {showBalance ? (
                     <WrapAmount value={rechargeAmount} />
                   ) : (
                     `${CURRENCY_SYMBOL} ${new Array(
@@ -306,7 +361,7 @@ const AgentBalanceGraph = (props) => {
                       ?.fill("*")
                       ?.join("")}`
                   )}
-                  <span>
+                  {/* <span>
                     {!showReservedAmount ? ( // Render eye button only if available balance is hidden
                       <span
                         className="eye-icon ms-2"
@@ -324,7 +379,7 @@ const AgentBalanceGraph = (props) => {
                         <IconBalanceEyeClose className="h3 mb-1 text-black fw-bolder reserved-amount" />
                       </span>
                     )}
-                  </span>
+                  </span> */}
                 </h2>
               )}
             </div>
