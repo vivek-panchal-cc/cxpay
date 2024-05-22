@@ -89,8 +89,13 @@ function withUserProtection(WrappedComponent, allowedUserTypes = []) {
     const { profile } = useSelector((state) => state.userProfile);
     const { user_type } = profile || {};
     const loginCreds = storageRequest.getLoginCreds();
+    const countryTimeZone = storageRequest.getTimeZone();
 
     if (!loginCreds) {
+      storageRequest.removeAuth();
+    }
+
+    if(!countryTimeZone) {
       storageRequest.removeAuth();
     }
 

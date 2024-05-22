@@ -13,6 +13,7 @@ import useCountriesCities from "hooks/useCountriesCities";
 import { CXPAY_LOGO } from "constants/all";
 import { SystemOptionsContext } from "context/systemOptionsContext";
 import { LoginContext } from "context/loginContext";
+import { TimeZoneContext } from "context/timeZoneContext";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [countryList, cities] = useCountriesCities();
   const { setLoginCreds } = useContext(LoginContext);
+  const { setCountryTimeZone } = useContext(TimeZoneContext);
 
   useEffect(() => {
     const token = storageRequest.getAuth();
@@ -39,6 +41,12 @@ const Login = () => {
     validationSchema: LoginSchema,
     onSubmit: async (values, { resetForm, setErrors, setStatus }) => {
       setIsLoading(true);
+      // Get the selected country's time zone
+      const selectedCountry = countryList.find(
+        (country) => country.phonecode.toString() === values.country_code
+      );
+      const country_time_zone = selectedCountry ? selectedCountry.time_zone : "";
+      setCountryTimeZone({country_time_zone});
       try {
         const { error, payload } = await dispatch(fetchLogin(values));
         if (error) throw payload;

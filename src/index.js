@@ -27,20 +27,23 @@ import { BrowserRouter } from "react-router-dom";
 import LoaderProvider from "context/loaderContext";
 import SystemOptionsProvider from "context/systemOptionsContext";
 import LoginProvider from "context/loginContext";
+import TimeZoneProvider from "context/timeZoneContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-    <Provider store={store}>
-      <LoaderProvider>
-        <SystemOptionsProvider>
-          <BrowserRouter>
-            <LoginProvider>
+  <Provider store={store}>
+    <LoaderProvider>
+      <SystemOptionsProvider>
+        <BrowserRouter>
+          <LoginProvider>
+            <TimeZoneProvider>
               <App />
-            </LoginProvider>
-          </BrowserRouter>
-        </SystemOptionsProvider>
-      </LoaderProvider>
-    </Provider>
+            </TimeZoneProvider>
+          </LoginProvider>
+        </BrowserRouter>
+      </SystemOptionsProvider>
+    </LoaderProvider>
+  </Provider>
   // </React.StrictMode>
 );

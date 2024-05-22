@@ -11,12 +11,14 @@ import InputSelect from "components/ui/InputSelect";
 import { toast } from "react-toastify";
 import { CXPAY_LOGO } from "constants/all";
 import { Link } from "react-router-dom";
+import { TimeZoneContext } from "context/timeZoneContext";
 
 function EnterPhone(props) {
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const [showRegisteredPopup, setShowregisteredPopup] = useState(false);
   const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
   const { countryList } = signUpCreds || {};
+  const { setCountryTimeZone } = useContext(TimeZoneContext);
 
   const handleChangeCountry = (e) => {
     formik.setFieldValue("country_code", e.target.value);
@@ -48,6 +50,14 @@ function EnterPhone(props) {
     },
     validationSchema: enterPhoneSchema,
     onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
+      // Get the selected country's time zone
+      const selectedCountry = countryList.find(
+        (country) => country.phonecode.toString() === values.country_code
+      );
+      const country_time_zone = selectedCountry
+        ? selectedCountry.time_zone
+        : "";
+      setCountryTimeZone({ country_time_zone });
       try {
         const { data } = await apiRequest.verifyMobileNumber(values);
         if (!data.success) throw data.message;

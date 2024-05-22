@@ -15,8 +15,7 @@ const axiosOnboardInstance = axios.create({
 });
 const axiosTransactionInstance = axios.create({
   baseURL:
-    process.env.REACT_APP_API_CUSTOMER_TRANSACTION ||
-    "http://3.13.181.86:8083",
+    process.env.REACT_APP_API_CUSTOMER_TRANSACTION || "http://3.13.181.86:8083",
 });
 const axiosAdminInstance = axios.create({
   baseURL:
@@ -25,10 +24,14 @@ const axiosAdminInstance = axios.create({
 
 // Define inteceptors
 const requestInterceptor = (config) => {
+  const countryTimeZone = storageRequest.getTimeZone();
+  const country_time_zone = countryTimeZone
+    ? countryTimeZone.country_time_zone
+    : null;
   const token = storageRequest.getAuth();
   config.headers["Os-Version"] = `${browserName}/${fullVersion}`;
   config.headers["Device-Type"] = "web";
-  config.headers["User-Timezone"] = timeZone;
+  config.headers["User-Timezone"] = country_time_zone || timeZone;
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 };

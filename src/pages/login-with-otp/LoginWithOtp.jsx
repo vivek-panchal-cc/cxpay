@@ -12,6 +12,7 @@ import { LoaderContext } from "context/loaderContext";
 import InputSelect from "components/ui/InputSelect";
 import useCountriesCities from "hooks/useCountriesCities";
 import { CXPAY_LOGO } from "constants/all";
+import { TimeZoneContext } from "context/timeZoneContext";
 
 const LoginWithOtp = (props) => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const LoginWithOtp = (props) => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [countryCode, setCountryCode] = useState("");
   const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
+  const { setCountryTimeZone } = useContext(TimeZoneContext);
 
   const formik = useFormik({
     initialValues: {
@@ -35,6 +37,14 @@ const LoginWithOtp = (props) => {
     validationSchema: loginWithOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       setIsLoading(true);
+      // Get the selected country's time zone
+      const selectedCountry = countryList.find(
+        (country) => country.phonecode.toString() === values.country_code
+      );
+      const country_time_zone = selectedCountry
+        ? selectedCountry.time_zone
+        : "";
+      setCountryTimeZone({ country_time_zone });
       try {
         const { data } = await apiRequest.loginOtp(values);
         if (!data.success) throw data.message;
