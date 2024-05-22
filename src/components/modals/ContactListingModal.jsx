@@ -203,7 +203,16 @@ function ContactListingModal(props) {
                   {remainingContactListing?.map((ele) => (
                     <li key={"li-" + ele.account_number}>
                       <div className="modal-contact-list-wrap">
-                        <div className="cm-listing-check">
+                        <div
+                          className={`cm-listing-check ${
+                            disabledCheckedBox(ele) ||
+                            show_renew_section === "disable_fund_action" ||
+                            show_renew_section ===
+                              "renew_limit_exceed_and_disable"
+                              ? "cursor-not-allowed"
+                              : ""
+                          }`}
+                        >
                           <input
                             id={ele.account_number}
                             type="checkbox"
