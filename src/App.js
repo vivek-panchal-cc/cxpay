@@ -91,11 +91,7 @@ function withUserProtection(WrappedComponent, allowedUserTypes = []) {
     const loginCreds = storageRequest.getLoginCreds();
     const countryTimeZone = storageRequest.getTimeZone();
 
-    if (!loginCreds) {
-      storageRequest.removeAuth();
-    }
-
-    if(!countryTimeZone) {
+    if (!loginCreds || !countryTimeZone) {
       storageRequest.removeAuth();
     }
 
