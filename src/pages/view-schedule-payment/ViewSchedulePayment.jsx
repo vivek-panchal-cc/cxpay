@@ -117,6 +117,7 @@ const ViewSchedulePayment = () => {
               onClick={() => setShowFilter(true)}
               startDate={filters.startDate}
               endDate={filters.endDate}
+              isSchedule={true}
             />
             <button className="shedule-date-filter" onClick={handleResetFilter}>
               <IconRefresh />
