@@ -16,6 +16,8 @@ import {
 } from "react-share";
 import clipboardCopy from "clipboard-copy";
 import { IconSend } from "styles/svgs";
+import ImageQR from "components/ui/ImageQR";
+import LoaderProfileQr from "loaders/LoaderProfileQr";
 
 const QrCode = (props) => {
   const { setIsLoading } = useContext(LoaderContext);
@@ -24,6 +26,8 @@ const QrCode = (props) => {
   const title = "Check out this QR code!";
   const dispatch = useDispatch();
   const [showShareOptions, setShowShareOptions] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
 
   const handleGenerateQrCode = async () => {
     setIsLoading(true);
@@ -71,13 +75,31 @@ const QrCode = (props) => {
     window.open(`mailto:?subject=${subject}&body=${encodedBody}`, "_self");
   };
 
+  const handleImageLoad = () => {
+    setIsImageLoading(false);
+    setImageError(false);
+  };
+
+  const handleImageError = () => {
+    setIsImageLoading(false);
+    setImageError(true);
+  };
+
   return (
     <div className="profile-qr">
       <div className="profile-qr-inner">
-        {qrCodeImg ? (
-          <Image src={qrCodeImg} alt="QR code image" />
+        {isImageLoading && <LoaderProfileQr height={120} width={120} />}
+        {!imageError ? (
+          <ImageQR
+            src={qrCodeImg || ""}
+            fallbacksrc={"/assets/images/QR_not_found.png"}
+            alt="QR code image"
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+            style={isImageLoading ? { display: "none" } : {}}
+          />
         ) : (
-          <Image src="/assets/images/QR_not_found.png" alt="QR code image" />
+          <div>Failed to load QR</div>
         )}
       </div>
       {/* <p>{qrDescription ?? 'Lorem Ipsum Dolor Stie Amet'}</p> */}
@@ -86,6 +108,7 @@ const QrCode = (props) => {
         onClick={handleGenerateQrCode}
         className="btn qr-btn"
         style={{ marginBottom: "20px" }}
+        disabled={isImageLoading || imageError}
       >
         Refresh QR
       </Button>
@@ -94,6 +117,7 @@ const QrCode = (props) => {
           type="button"
           onClick={() => setShowShareOptions(!showShareOptions)}
           className="btn qr-share-icon"
+          disabled={isImageLoading || imageError}
         >
           <span>
             <IconSend style={{ stroke: "#F3F3F3" }} />
