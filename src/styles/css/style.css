@@ -7176,6 +7176,36 @@ button.shedule-date-filter:hover {
   align-items: center;
 }
 
+.recurring-date-status-common {
+  border-radius: 15px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 24px;
+  width: 89px;
+  height: revert;
+  font-weight: bolder;
+}
+
+.recurring-upcoming {
+  color: #FF7A00;
+  background-color: yellow;
+}
+
+.recurring-success {
+  color: var(--green);
+  background-color: lightgreen;
+}
+
+.recurring-failed {
+  color: #f53334;
+  background-color: #edd1d5;
+}
+
+.recurring-paid {
+  color: var(--green);
+  background-color: lightgreen;
+}
+
 .recurring-sp-details-inner-wrap ul li {
   display: flex;
   flex-wrap: wrap;

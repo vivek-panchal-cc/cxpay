@@ -117,55 +117,19 @@ const RECURRING_PAID = "paid";
 const recurringTypeStatus = {
   [RECURRING_PENDING]: {
     status: "UPCOMING",
-    styles: {
-      color: "#FF7A00",
-      backgroundColor: "yellow",
-      borderRadius: "15px",
-      fontSize: "12px",
-      textAlign: "center",
-      lineHeight: "24px",
-      width: "89px",
-      height: "revert",
-    },
+    className: "recurring-date-status-common recurring-upcoming"
   },
   [RECURRING_FAILED]: {
     status: "FAILED",
-    styles: {
-      color: "#FF3333",
-      backgroundColor: "lightcoral",
-      borderRadius: "15px",
-      fontSize: "12px",
-      textAlign: "center",
-      lineHeight: "24px",
-      width: "89px",
-      height: "revert",
-    },
+    className: "recurring-date-status-common recurring-failed",
   },
   [RECURRING_SUCCESS]: {
     status: "SUCCESS",
-    styles: {
-      color: "#56BE15",
-      backgroundColor: "lightgreen",
-      borderRadius: "15px",
-      fontSize: "12px",
-      textAlign: "center",
-      lineHeight: "24px",
-      width: "89px",
-      height: "revert",
-    },
+    className: "recurring-date-status-common recurring-success",
   },
   [RECURRING_PAID]: {
     status: "SUCCESS",
-    styles: {
-      color: "#56BE16",
-      backgroundColor: "lightgreen",
-      borderRadius: "15px",
-      fontSize: "12px",
-      textAlign: "center",
-      lineHeight: "24px",
-      width: "89px",
-      height: "revert",
-    },
+    className: "recurring-date-status-common recurring-paid",
   },
 };
 
