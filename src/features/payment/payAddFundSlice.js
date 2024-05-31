@@ -102,6 +102,7 @@ const payAddFundSlice = createSlice({
       state.message = message;
       switch (status) {
         case "AUTHORIZED":
+        case "AUTHENTICATION_SUCCESSFUL":
           state.loadingPayment = false;
           state.paymentStatus = "COMPLETED";
           return;
