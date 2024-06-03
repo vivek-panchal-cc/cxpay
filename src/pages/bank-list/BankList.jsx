@@ -26,7 +26,7 @@ const BankList = () => {
       if (!data.success) throw data.message;
       setBankList(data.data?.banks);
     } catch (error) {
-      console.log("error: ", error);
+      console.log(error);
       setBankList([]);
     } finally {
       setIsLoading(false);
@@ -39,7 +39,7 @@ const BankList = () => {
     setPopupError("");
     setSelectedBank(id);
     setShow(true);
-  };  
+  };
 
   // For Deleting bank after confirmation
   const handleDeleteBank = async () => {
@@ -54,7 +54,7 @@ const BankList = () => {
       setShow(false);
     } catch (error) {
       setPopupError(error);
-      console.log("error: ", error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -88,14 +88,14 @@ const BankList = () => {
 
   const handleListItemClick = (e, bankId, idx) => {
     e.preventDefault();
-  
+
     const element = document.getElementById(`bnk_acc_${bankId}_${idx}`);
-    
+
     if(!element) {
       console.error(`Element with ID bnk_acc_${bankId}_${idx} not found.`);
       return;
     }
-    
+
     if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') {
       element.click();
     }

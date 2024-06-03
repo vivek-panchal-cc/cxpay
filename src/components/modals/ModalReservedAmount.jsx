@@ -68,12 +68,12 @@ const ModalReservedAmount = (props) => {
                 cursor: "pointer",
               }}
               onClick={() => setShow(false)}
-            />{" "}            
+            />{" "}
             <h5>Reserved Amount</h5>
             <div className="res-data-wrap">
               {Array.isArray(details) && details.length > 0 ? (
-                details?.map((detail) => (
-                  <React.Fragment key={detail.date}>
+                details?.map((detail, index) => (
+                  <React.Fragment key={`${detail.date}${index}`}>
                     <div className="act-info-wrap-left">
                       <div className="act-user-info-wrap d-flex">
                         <div className="act-user-thumb">
