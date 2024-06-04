@@ -117,7 +117,7 @@ function ModalPasswordConfirmation(props) {
                     disabled={formik.values.password?.length === 0}
                     autoFocus={true}
                   >
-                    confirm
+                    Confirm
                   </button>
                   {/* ) : null} */}
                 </div>
