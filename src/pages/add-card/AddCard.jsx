@@ -182,7 +182,16 @@ function AddCard() {
                     className="form-control"
                     placeholder="Card Number"
                     name="card_number"
-                    onChange={formik.handleChange}
+                    // onChange={formik.handleChange}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\s/g, ''); // Remove spaces
+                      formik.handleChange({
+                        target: {
+                          name: 'card_number',
+                          value: value,
+                        },
+                      });
+                    }}
                     onBlur={formik.handleBlur}
                     value={formik.values.card_number}
                     error={
