@@ -15,7 +15,6 @@ const KycComplete = () => {
 
   useEffect(() => {
     const fetchAndCheckKyc = async () => {
-      // Fetch user profile when the component mounts
       await dispatch(fetchUserProfile());
     };
 
