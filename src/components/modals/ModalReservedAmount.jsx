@@ -139,14 +139,16 @@ const ModalReservedAmount = (props) => {
                           </div>
                           <div className="act-specification-text">
                             <p className={`${detail.transaction_type}`}>
-                              {detail.transaction_type?.toLowerCase() ===
-                              "withdraw" ? (
+                              {["withdraw", "WD"].includes(
+                                detail.transaction_type
+                              ) ? (
                                 <IconManualWithdraw />
                               ) : (
                                 <IconSchedulePayment />
                               )}
-                              {detail.transaction_type?.toLowerCase() ===
-                              "withdraw"
+                              {["withdraw", "WD"].includes(
+                                detail.transaction_type
+                              )
                                 ? "Manual Withdraw"
                                 : "Schedule Payment"}
                             </p>

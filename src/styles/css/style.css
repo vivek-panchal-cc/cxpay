@@ -8189,11 +8189,13 @@ ul.recent-act-lw-main .act-info-wrap-left {
   border-radius: 20px;
   cursor: pointer;
 }
-.rese-modal-wrap p.withdraw {
+.rese-modal-wrap p.withdraw,
+.rese-modal-wrap p.WD {
   background: rgba(0, 129, 197, 0.2);
   color: rgba(147, 110, 227, 1);
 }
-.rese-modal-wrap p.withdraw:hover {
+.rese-modal-wrap p.withdraw:hover,
+.rese-modal-wrap p.WD:hover {
   background: rgba(0, 129, 197, 0.2);
   color: rgba(147, 110, 227, 1);
 }
