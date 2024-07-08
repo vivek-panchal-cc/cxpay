@@ -25,7 +25,7 @@ function TopUpFundedPopup(props) {
             </span>
             <br />
             {/* Funded to {userName} account */}
-            Topup Successful
+            Top Up Successful
           </h3>
           {/* <p>
             Available balance

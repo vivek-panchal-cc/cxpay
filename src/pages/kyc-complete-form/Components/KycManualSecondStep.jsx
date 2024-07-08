@@ -42,7 +42,7 @@ function KycManualSecondStep(_props) {
       }
     };
     fetchCustomerKyc();
-  }, []);  
+  }, []);
 
   const redirectManualKyc = (e) => {
     try {
@@ -88,7 +88,7 @@ function KycManualSecondStep(_props) {
                 </h5>
               ) : (
                 <h5 className="blue-text text-center">
-                  Your Kyc details has not been approved. Please try again.
+                  Your KYC details has not been approved. Please try again.
                 </h5>
               )}
               <div className="login-other-option">

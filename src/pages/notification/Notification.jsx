@@ -101,7 +101,7 @@ const Notification = () => {
                     className="ms-2"
                     style={{ textDecoration: "underline" }}
                   >
-                    Goto Profile
+                    Go to Profile
                   </Link>
                 </div>
               </div>

@@ -208,7 +208,6 @@ const Profile = () => {
           >
             Delete Account
           </button>
-          &nbsp;
           {mobile_number && (
             <button
               type="button"

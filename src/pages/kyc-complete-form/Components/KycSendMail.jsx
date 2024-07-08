@@ -84,7 +84,7 @@ function KycSendMail(_props) {
                 </h5>
               ) : (
                 <h5 className="blue-text text-center">
-                  Your Kyc details has not been approved.
+                  Your KYC details has not been approved.
                 </h5>
               )}
               <div className="login-other-option">

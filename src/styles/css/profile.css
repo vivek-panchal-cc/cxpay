@@ -204,6 +204,12 @@
 }
 
 /* CSS for Delete Account butotn */
+.profile-del-acc-btn {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .profile-del-acc-btn button.btn {
   font-size: 14px;
   line-height: 17px;
