@@ -61,6 +61,7 @@ import RecurringPayment from "pages/recurring/RecurringPayment";
 import SendRecurringPayment from "pages/send-recurring-payment/SendRecurringPayment";
 import RecurringDetails from "pages/recurring-details/RecurringDetails";
 import CMSContent from "pages/cms-content/cmsContent";
+import AppSetting from "pages/app-settings/AppSetting";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import CMSPage from "pages/cms-content/CmsPage";
 import FaqContent from "pages/cms-content/faq/FaqContent";
@@ -302,6 +303,10 @@ function App() {
             <Route
               path="/setting/business-info"
               element={<ProtectedBusinessInfo />}
+            />
+            <Route
+              path="/setting/app-settings"
+              element={<AppSetting />}
             />
             <Route path="/top-up" element={<ProtectedTopUp />} />
             <Route path="/top-up-details" element={<ProtectedTopUpDetails />} />

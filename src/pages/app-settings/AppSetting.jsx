@@ -8,25 +8,21 @@ import { toast } from "react-toastify";
 import LeftArrow from "styles/svgs/LeftArrow";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile } from "features/user/userProfileSlice";
+import LoaderAppSetting from "loaders/LoaderAppSetting";
 
-const Notification = () => {
+const AppSetting = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { is_email_verify = true } = useSelector(
-    (state) => state.userProfile.profile
-  );
-  const { setIsLoading } = useContext(LoaderContext);
+  // const { setIsLoading, isLoading } = useContext(LoaderContext);
+  const [isLoading, setIsLoading] = useState(false);
   const [changeName, setChangeName] = useState("");
+  const [notificationSettings, setNotificationSettings] = useState({});
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: {
-      email_notification: false,
-      whatsapp_notification: false,
-      push_notification: false,
-    },
+    initialValues: notificationSettings,
     onSubmit: async (values, { setStatus, setErrors }) => {
-      setIsLoading(true);
+      // setIsLoading(true);
       try {
         const { data } = await apiRequest.updateCustomerNotification({
           [changeName]: values[changeName].toString(),
@@ -36,12 +32,13 @@ const Notification = () => {
       } catch (error) {
         if (typeof error === "string") toast.error(error);
       } finally {
-        setIsLoading(false);
+        // setIsLoading(false);
+        await dispatch(fetchUserProfile());
       }
     },
   });
 
-  // Onchange of Notification Checkbox
+  // Onchange of AppSettings Checkbox
   const handleChange = async (e) => {
     if (!e.target.name) return;
     setChangeName(e.target.name);
@@ -54,11 +51,12 @@ const Notification = () => {
     (async () => {
       setIsLoading(true);
       try {
-        await dispatch(fetchUserProfile());
+        // await dispatch(fetchUserProfile());
         const { data } = await apiRequest.getCustomerNotification();
         if (!data.success) throw data.message;
         const notification = data.data?.customerNotificationData;
         if (!notification) return;
+        setNotificationSettings(notification);
         await formik.setValues({ ...notification });
       } catch (error) {
         console.log(error);
@@ -68,67 +66,47 @@ const Notification = () => {
     })();
   }, []);
 
+  const capitalize = (str) => {
+    return str
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
+  // Determine the number of skeleton loaders to show
+  const skeletonCount = Object.keys(notificationSettings).length || 2;
+
   return (
     <div className="settings-note-inner-sec settings-vc-sec setting-noti-sec-new">
       <div className="profile-info">
-        <h3>Notification</h3>
+        <h3>App Setting</h3>
         <ul className="breadcrumb">
           <li>
             <Link to="/setting">Setting</Link>
           </li>
-          <li>Notifications</li>
+          <li>App Settings</li>
         </ul>
       </div>
       <div className="settings-notifications-bottom-info-sec">
         <ul>
-          <li>
-            <span className="settings">Email</span>
-            {is_email_verify ? (
-              <InputSwitch
-                name="email_notification"
-                className="form-check-input"
-                labelOffText="OFF"
-                labelOnText="ON"
-                onChange={handleChange}
-                checked={formik.values.email_notification}
-              />
-            ) : (
-              <div className="badge border border-danger-subtle bg-danger-subtle text-wrap m-0 p-2">
-                <div className="text-dark">
-                  Please verify your Email
-                  <Link
-                    to="/profile"
-                    className="ms-2"
-                    style={{ textDecoration: "underline" }}
-                  >
-                    Go to Profile
-                  </Link>
-                </div>
-              </div>
-            )}
-          </li>
-          {/* <li>
-            <span className="settings">Whatsapp</span>
-            <InputSwitch
-              name="whatsapp_notification"
-              className="form-check-input"
-              labelOffText="OFF"
-              labelOnText="ON"
-              onChange={handleChange}
-              checked={formik.values.whatsapp_notification}
-            />
-          </li> */}
-          <li>
-            <span className="settings">Mobile app</span>
-            <InputSwitch
-              name="push_notification"
-              className="form-check-input"
-              labelOffText="OFF"
-              labelOnText="ON"
-              onChange={handleChange}
-              checked={formik.values.push_notification}
-            />
-          </li>
+          {isLoading
+            ? Array.from({ length: skeletonCount }).map((_, index) => (
+                <li key={index} className="p-0">
+                  <LoaderAppSetting />
+                </li>
+              ))
+            : Object.keys(formik.values).map((key) => (
+                <li key={key}>
+                  <span className="settings">{capitalize(key)}</span>
+                  <InputSwitch
+                    name={key}
+                    className="form-check-input"
+                    labelOffText="OFF"
+                    labelOnText="ON"
+                    onChange={handleChange}
+                    checked={formik.values[key]}
+                  />
+                </li>
+              ))}
         </ul>
         <div className="setting-btn-link">
           <button
@@ -145,4 +123,4 @@ const Notification = () => {
   );
 };
 
-export default Notification;
+export default AppSetting;
