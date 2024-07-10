@@ -16,11 +16,11 @@ const AppSetting = () => {
   // const { setIsLoading, isLoading } = useContext(LoaderContext);
   const [isLoading, setIsLoading] = useState(false);
   const [changeName, setChangeName] = useState("");
-  const [notificationSettings, setNotificationSettings] = useState({});
+  const [appSettings, setAppSettings] = useState({});
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: notificationSettings,
+    initialValues: appSettings,
     onSubmit: async (values, { setStatus, setErrors }) => {
       // setIsLoading(true);
       try {
@@ -46,7 +46,7 @@ const AppSetting = () => {
     await formik.submitForm();
   };
 
-  // Getting notification from the API
+  // Getting app settings from the API
   useEffect(() => {
     (async () => {
       setIsLoading(true);
@@ -54,10 +54,10 @@ const AppSetting = () => {
         // await dispatch(fetchUserProfile());
         const { data } = await apiRequest.getCustomerNotification();
         if (!data.success) throw data.message;
-        const notification = data.data?.customerNotificationData;
-        if (!notification) return;
-        setNotificationSettings(notification);
-        await formik.setValues({ ...notification });
+        const settings = data.data?.customerNotificationData;
+        if (!settings) return;
+        setAppSettings(settings);
+        await formik.setValues({ ...settings });
       } catch (error) {
         console.log(error);
       } finally {
@@ -73,7 +73,7 @@ const AppSetting = () => {
   };
 
   // Determine the number of skeleton loaders to show
-  const skeletonCount = Object.keys(notificationSettings).length || 2;
+  const skeletonCount = Object.keys(appSettings).length || 2;
 
   return (
     <div className="settings-note-inner-sec settings-vc-sec setting-noti-sec-new">

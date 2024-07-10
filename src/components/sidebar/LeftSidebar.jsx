@@ -18,6 +18,10 @@ import {
 } from "styles/svgs";
 import { useCms } from "context/cmsContext";
 import { apiRequest } from "helpers/apiRequests";
+import LoaderLogo from "loaders/loader-sidear/LoaderLogo";
+import LoaderMainLink from "loaders/loader-sidear/LoaderMainLink";
+import LoaderBottomLink from "loaders/loader-sidear/LoaderBottomLink";
+import LoaderLeftWrap from "loaders/loader-sidear/LoaderLeftWrap";
 
 function LeftSidebar() {
   const { cmsPages } = useCms();
@@ -67,7 +71,28 @@ function LeftSidebar() {
   }, []);
 
   if (isLoading) {
-    return null;
+    return (
+      <div className="dashboard-left-wrap">
+        {/* <span className="toggle-admin-btn">
+          <LoaderLeftWrap />
+        </span> */}
+        <div className="dashboard-logo-wrap">
+          <LoaderLogo />
+        </div>
+        <div className="dashboard-link-wrap">
+          <ul className="dashboard-main-links">
+            <li>
+              <LoaderMainLink />
+            </li>
+          </ul>
+          <ul className="dashboard-bottom-links">
+            <li>
+              <LoaderBottomLink />
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
   }
 
   const handleToggleClick = () => {

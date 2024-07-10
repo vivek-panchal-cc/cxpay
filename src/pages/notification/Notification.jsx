@@ -22,7 +22,7 @@ const Notification = () => {
     enableReinitialize: true,
     initialValues: {
       email_notification: false,
-      whatsapp_notification: false,
+      // whatsapp_notification: false,
       push_notification: false,
     },
     onSubmit: async (values, { setStatus, setErrors }) => {
