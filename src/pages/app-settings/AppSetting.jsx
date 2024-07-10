@@ -94,7 +94,7 @@ const AppSetting = () => {
                   <LoaderAppSetting />
                 </li>
               ))
-            : Object.keys(formik.values).map((key) => (
+            : Object.keys(formik.values).sort().map((key) => (
                 <li key={key}>
                   <span className="settings">{capitalize(key)}</span>
                   <InputSwitch
