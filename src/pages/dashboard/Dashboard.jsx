@@ -171,7 +171,7 @@ const Dashboard = () => {
               <div className="title-content-wrap">
                 <h2>Hello {first_name || company_name},</h2>
                 <p>
-                  Welcome to CX Pay
+                  Welcome to CX PayMe
                   {user_type !== "agent" && adminApprovedWithRenewCheck ? (
                     <Link
                       className="wallet-top-1-btn"
