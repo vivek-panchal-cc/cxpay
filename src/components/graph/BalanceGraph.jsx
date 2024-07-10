@@ -116,7 +116,7 @@ const BalanceGraph = (props) => {
   const [loadingDetails, setLoadingDetails] = useState(false);
   const [showAvailableBalance, setShowAvailableBalance] = useState(false);
   const [showReservedAmount, setShowReservedAmount] = useState(false);
-  const [showBalance, setShowBalance] = useState(false);
+  const [showBalance, setShowBalance] = useState(true);
 
   const { availableBalance, lockBalance } = useMemo(() => {
     const { available, lock } = balance || {};
