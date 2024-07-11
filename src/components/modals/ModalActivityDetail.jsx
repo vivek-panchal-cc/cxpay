@@ -15,6 +15,7 @@ import {
   CURRENCY_SYMBOL,
   activityConsts,
   isAdminApprovedWithRenewCheck,
+  ACT_STATUS_FAILED,
 } from "constants/all";
 import LoaderActivityDetail from "loaders/LoaderActivityDetail";
 import LoaderActivityProfile from "loaders/LoaderActivityProfile";
@@ -162,6 +163,8 @@ const ModalActivityDetail = (props) => {
       case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_CREDIT}_${ACT_STATUS_REJECTED}`:
       case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_CREDIT}_${ACT_STATUS_PAID}`:
       case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_CREDIT}_${ACT_STATUS_APPROVED}`:
+      case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_DEBIT}_${ACT_STATUS_FAILED}`:
+      case `${ACT_TYPE_TRANSACTION}_${ACT_TRANSACT_CREDIT}_${ACT_STATUS_FAILED}`:
         return (
           <button
             type="button"
