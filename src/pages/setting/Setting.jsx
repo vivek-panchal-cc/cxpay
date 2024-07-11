@@ -59,18 +59,18 @@ const settingsRedirects = [
       </Link>
     ),
   },
-  {
-    icon: <IconSetting style={{ fill: "#ffff" }}/>,
-    title: "App Settings",
-    link: (
-      <Link
-        to={"/setting/app-settings"}
-        className="setting-details-links stretched-link"
-      >
-        <IconRightArrow />
-      </Link>
-    ),
-  },
+  // {
+  //   icon: <IconSetting style={{ fill: "#ffff" }}/>,
+  //   title: "App Settings",
+  //   link: (
+  //     <Link
+  //       to={"/setting/app-settings"}
+  //       className="setting-details-links stretched-link"
+  //     >
+  //       <IconRightArrow />
+  //     </Link>
+  //   ),
+  // },
 ];
 
 function Setting() {

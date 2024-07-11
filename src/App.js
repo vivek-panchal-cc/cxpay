@@ -304,10 +304,10 @@ function App() {
               path="/setting/business-info"
               element={<ProtectedBusinessInfo />}
             />
-            <Route
+            {/* <Route
               path="/setting/app-settings"
               element={<AppSetting />}
-            />
+            /> */}
             <Route path="/top-up" element={<ProtectedTopUp />} />
             <Route path="/top-up-details" element={<ProtectedTopUpDetails />} />
             <Route
