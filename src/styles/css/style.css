@@ -697,7 +697,7 @@ pointer-events: none;
 
 .qr-btn:hover {
   background: var(--dark_blue);
-  color: #fff !important;
+  color: var(--white) !important;
 }
 
 .sidebar-open .dashboard-right-sec {
@@ -7541,16 +7541,16 @@ ul.recent-act-lw-main .act-info-wrap-left {
   min-width: 204px;
   height: 39px;
   padding: 8px 23px;
-  background: #0081c5;
-  color: white;
+  background: var(--blue);
+  color: var(--white);
 }
 
 .btn-recurring-occurrence-update {
   min-width: 204px;
   height: 39px;
   padding: 8px 23px;
-  background: #0081c5;
-  color: white;
+  background: var(--blue);
+  color: var(--white);
 }
 
 .recurring-end-date {
@@ -7558,30 +7558,30 @@ ul.recent-act-lw-main .act-info-wrap-left {
   height: 39px;
   padding: 8px 19px;
   background: #ffffff;
-  color: #0081c5;
-  border: 0.85px solid #0081c5;
+  color: var(--blue);
+  border: 0.85px solid var(--blue);
 }
 
 .btn-recurring-occurrence-active {
-  background: #0081c5;
-  color: white;
+  background: var(--blue);
+  color: var(--white);
 }
 
 .btn-recurring-occurrence-update-active {
-  background: #0081c5;
-  color: white;
+  background: var(--blue);
+  color: var(--white);
 }
 
 .recurring-end-date-active {
-  background: #0081c5;
-  color: white;
+  background: var(--blue);
+  color: var(--white);
 }
 
 .main-wrapper {
   width: 169px;
   height: 40px;
   border-radius: 12px;
-  border: 1px solid #0081c5;
+  border: 1px solid var(--blue);
   box-shadow: 0px 3.76px 15.69px 0px #251f3033;
   display: flex; /* To align the children horizontally */
   align-items: center; /* To center them vertically */
@@ -7597,7 +7597,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   font-size: 20px;
   font-weight: 500;
   line-height: 26px;
-  color: #363853;
+  color: var(--dark_blue);
   text-align: center; /* Center the number */
 }
 
@@ -7628,7 +7628,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   overflow: hidden;
   height: 60px;
   border-radius: 18px;
-  border: 1px solid #0081c5;
+  border: 1px solid var(--blue);
   box-shadow: 0px 3.7662px 15.6926px 0px rgba(37, 31, 48, 0.2);
 }
 
@@ -7637,7 +7637,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   overflow: hidden;
   height: 60px;
   border-radius: 18px;
-  border: 1px solid #0081c5;
+  border: 1px solid var(--blue);
   box-shadow: 0px 3.7662px 15.6926px 0px rgba(37, 31, 48, 0.2);
 }
 
@@ -7665,15 +7665,15 @@ ul.recent-act-lw-main .act-info-wrap-left {
 }
 
 .btn-active {
-  background: #0081c5;
-  color: white;
+  background: var(--blue);
+  color: var(--white);
   border-radius: 50px !important;
 }
 
 .btn-inactive {
   background: #f2f2f2;
-  color: #0081c5;
-  border: 0.85px solid #0081c5;
+  color: var(--blue);
+  border: 0.85px solid var(--blue);
   border-radius: 50px !important;
 }
 
@@ -7710,7 +7710,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
 
 .RecurringScheduleDateWrap p {
   font-size: 14px;
-  color: #363853;
+  color: var(--dark_blue);
   line-height: 20px;
   font-family: "Quicksand", sans-serif;
 }
@@ -8026,15 +8026,15 @@ ul.recent-act-lw-main .act-info-wrap-left {
 }
 
 .btn-freqActive {
-  background: #0081c5;
-  color: white;
+  background: var(--blue);
+  color: var(--white);
   border-radius: 50px !important;
 }
 
 .btn-freqInactive {
   background: #f2f2f2;
-  color: #0081c5;
-  border: 0.85px solid #0081c5;
+  color: var(--blue);
+  border: 0.85px solid var(--blue);
   border-radius: 50px !important;
 }
 
@@ -8217,10 +8217,10 @@ ul.recent-act-lw-main .act-info-wrap-left {
   width: 12px;
 }
 .h3.text-black.fw-bolder.reserved-amount span {
-  color: #0081c5;
+  color: var(--blue);
 }
 .h3.text-black.fw-bolder.reserved-amount:hover {
-  color: #0081c5;
+  color: var(--blue);
   cursor: pointer;
 }
 .rese-modal-wrap .modal-body .act-specification-text {
@@ -8373,7 +8373,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   padding: 0px;
   text-decoration: none;
   display: block;
-  color: white;
+  color: var(--white);
 }
 
 .more-sub-menu li:hover {
@@ -8583,7 +8583,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   width: 120px;
   font-size: 10px;
   background-color: var(--red);
-  color: white;
+  color: var(--white);
   text-align: center;
   border-radius: 6px;
   padding: 5px;
