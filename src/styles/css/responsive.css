@@ -3891,6 +3891,19 @@
     border-radius: 15px !important;
     line-height: 25px;
   }
+  .frequency-buttons {
+    margin-bottom: 25px;
+  }
+  .frequency-buttons .btn,
+  .frequency-buttons .btn-primary,
+  .frequency-buttons .login-btn input[type="submit"] {
+    padding: 10px 30px;
+    font-size: 15px;
+    /* padding: 11px 50px; */
+    min-width: auto;
+    border-radius: 15px !important;
+    line-height: 25px;
+  }
   .qr-share-icon{
     border-radius: 25px !important;
     padding: 0px 14px;
@@ -4874,7 +4887,7 @@
   .recurring-occurrence {
     width: 100%;
     flex-wrap: wrap;
-    margin-bottom: 90px !important;
+    /* margin-bottom: 90px !important; */
   }
   .recurring-occurrence-update {
     width: 100%;
@@ -5190,7 +5203,7 @@
   .recurring-occurrence {
     flex-direction: row; /* On larger screens, lay them out horizontally */
     gap: 15px;
-    width: 357px; /* Set to your fixed width for tablets and up */
+    /* width: 357px; Set to your fixed width for tablets and up */
     height: 39px; /* Fixed height for tablets and up */
     margin-bottom: 15px;
   }
