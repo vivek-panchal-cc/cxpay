@@ -10,10 +10,12 @@ import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
 import { Link } from "react-router-dom";
 import useCountriesCities from "hooks/useCountriesCities";
+import LoaderDiv from "loaders/LoaderDiv";
 
 const ProfileInfo = (props) => {
   const { setIsLoading } = useContext(LoaderContext);
   const [countryList] = useCountriesCities();
+  const [isCountryListLoading, setIsCountryListLoading] = useState(true);
   const { profile } = props;
   const {
     user_type = "personal",
@@ -71,6 +73,12 @@ const ProfileInfo = (props) => {
   useEffect(() => {
     formik.setFieldValue("business_url", business_url);
   }, [business_url]);
+
+  useEffect(() => {
+    if (countryList.length > 0) {
+      setIsCountryListLoading(false);
+    }
+  }, [countryList]);
 
   return (
     <ul>
@@ -166,12 +174,14 @@ const ProfileInfo = (props) => {
         <div className="pi-title-div">Country</div>
         <div className="profile-info-right-desc">
           <p>
-            {
+            {isCountryListLoading ? (
+              <LoaderDiv height="20" width="60%" />
+            ) : (
               countryList?.find(
                 ({ phonecode }) =>
                   phonecode?.toString() === country_code?.toString()
-              )?.country_name
-            }
+              )?.country_name || "-"
+            )}
           </p>
         </div>
       </li>
