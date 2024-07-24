@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { SignupContext } from "context/signupContext";
+import { CXPAY_LOGO } from "constants/all";
+import { Link } from "react-router-dom";
 
 function SelectaccountType(props) {
-  const { signUpCreds, setSignUpCreds } = props;
+  const { setSignUpCreds } = useContext(SignupContext);
   const [userType, setUserType] = useState("personal");
 
   const handleChangeAccountType = (e) => {
@@ -22,7 +25,7 @@ function SelectaccountType(props) {
               <h4 className="text-center">Welcome to</h4>
               <div className="login-logo-image text-center">
                 <a href="/">
-                  <img src="/assets/images/logo-1.png" alt="login logo img" />
+                  <img src={CXPAY_LOGO} alt="login logo img" />
                 </a>
               </div>
               <h5 className="text-center">Signup</h5>
@@ -73,7 +76,7 @@ function SelectaccountType(props) {
                 </div>
               </form>
               <p className="sign-up-text text-center">
-                Already have an account? <a href="/login">Login</a>
+                Already have an account? <Link to="/login">Login</Link>
               </p>
             </div>
           </div>

@@ -1,0 +1,410 @@
+/*settings page css starts*/
+.settings-right-sec {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.settings-inner-sec .profile-info p {
+  color: var(--light-grey);
+}
+
+.settings-inner-sec {
+  width: 100%;
+  max-width: 597px;
+  margin: 0 auto;
+}
+
+.settings-inner-sec .profile-info {
+  padding-left: 0;
+  padding-bottom: 23px;
+}
+
+.settings-bottom-info-sec ul li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 16px 27px 16px 12px;
+  background: #ffffff;
+  box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+
+.settings-bottom-info-sec ul li:not(:last-child) {
+  margin-bottom: 18px;
+}
+
+/*settings notifications page css starts*/
+.settings-notifications-right-sec {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.settings-note-inner-sec {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  max-width: 597px;
+  margin: 0 auto;
+}
+
+.settings-note-inner-sec .profile-info {
+  padding: 0px 0px 23px;
+  width: 100%;
+}
+/* .settings-note-inner-sec .profile-info {
+    padding-bottom: 23px;
+  } */
+.settings-notifications-bottom-info-sec {
+  width: 100%;
+}
+
+.settings-notifications-bottom-info-sec ul li {
+  padding: 18.5px 30px;
+  background-color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  font-family: "Comfortaa", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+  color: var(--dark_blue);
+  justify-content: space-between;
+}
+
+.settings-notifications-bottom-info-sec ul li:not(:last-child) {
+  margin-bottom: 18px;
+}
+
+.settings-notifications-bottom-info-sec .form-switch {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-family: "Comfortaa", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 34px;
+  color: var(--light-grey);
+  padding: 0;
+  position: relative;
+  flex-direction: row-reverse;
+  margin: 0;
+}
+
+.settings-notifications-bottom-info-sec .form-switch .form-check-input {
+  width: 39px;
+  height: 14px;
+  background: var(--gray);
+  border-radius: 10px;
+  border: none;
+  float: none;
+  margin: 0;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.settings-notifications-bottom-info-sec
+  .form-switch
+  .form-check-label
+  + .form-check-label {
+  display: none;
+}
+
+.settings-notifications-bottom-info-sec .form-switch .form-check-label {
+  padding-right: 7px;
+}
+
+.settings-notifications-bottom-info-sec .form-switch .form-check-label::after {
+  position: absolute;
+  content: "";
+  display: block;
+  left: auto;
+  right: 20px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+  transition: all 0.5s ease-in-out;
+}
+
+.settings-notifications-bottom-info-sec .form-switch .form-check-input:checked {
+  background-color: var(--blue);
+}
+
+.settings-notifications-bottom-info-sec
+  .form-switch
+  .form-check-input:checked
+  + label::after {
+  right: 0;
+}
+
+.settings-notifications-bottom-info-sec
+  .form-switch
+  .form-check-input:checked
+  + label
+  + label {
+  display: block;
+  padding-right: 5px;
+}
+
+.settings-notifications-bottom-info-sec
+  .form-switch
+  .form-check-input:checked
+  + label
+  + label::after {
+  display: none;
+}
+
+.settings-notifications-bottom-info-sec
+  .form-switch
+  .form-check-input:checked
+  + label {
+  font-size: 0;
+}
+
+.settings-notifications-bottom-info-sec ul {
+  padding-bottom: 46px;
+}
+
+.settings-notifications-bottom-info-sec .settings {
+  padding-right: 15px;
+}
+
+/* settings edit profile page css starts*/
+.settings-edit-profile-right-sec {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.settings-edit-profile-top-sec {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-bottom: 45px;
+}
+
+.settings-edit-profile-top-sec .upload-profile-image a {
+  margin: 0;
+  font-family: "Comfortaa", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--sky_Blue);
+  letter-spacing: normal;
+}
+
+/*.settings-edit-profile-top-sec .profile-info {
+    padding-top: 27px;
+  }*/
+.settings-edit-profile-inner-sec {
+  width: 100%;
+  max-width: 559px;
+  margin: 0 auto;
+}
+
+.settings-profile-bottom-info-sec .form-field {
+  margin-bottom: 18px;
+}
+
+.settings-edit-profile-top-sec .profile-info p {
+  margin-bottom: 0;
+}
+
+.settings-profile-bottom-info-sec .login-btn .btn {
+  min-width: 183px;
+  font-size: 16px;
+  padding: 16px 25px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.settings-profile-bottom-info-sec .login-btn {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.settings-profile-bottom-info-sec .setting-btn-link {
+  padding-right: 20px;
+}
+
+/*setting password page css starts*/
+.settings-password-right-sec {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.settings-password-bottom-info-sec {
+  width: 100%;
+}
+
+.settings-password-bottom-info-sec .nav-tabs {
+  border: none;
+  padding-bottom: 37px;
+}
+
+.settings-password-bottom-info-sec .nav-tabs .nav-link {
+  position: relative;
+  font-family: "Visby Round CF", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--light-grey);
+  padding: 0 0 12px;
+  border: none;
+}
+
+.settings-password-bottom-info-sec .nav-tabs .nav-link::after {
+  position: absolute;
+  content: "";
+  display: block;
+  left: 0;
+  right: 0;
+  top: auto;
+  bottom: 0;
+  margin: auto;
+  width: 0;
+  height: 3px;
+  background-color: var(--blue);
+  transition: all 0.5s ease-in-out;
+}
+
+.settings-password-bottom-info-sec .nav-tabs .nav-link.active::after,
+.settings-password-bottom-info-sec .nav-tabs .nav-link:hover::after {
+  width: calc(100% - 10px);
+}
+
+.settings-password-bottom-info-sec .nav-tabs .nav-link.active,
+.settings-password-bottom-info-sec .nav-tabs .nav-link:hover {
+  color: var(--dark_blue);
+}
+
+.settings-password-bottom-info-sec .nav-tabs .nav-link:not(:last-child) {
+  margin-right: 68px;
+}
+
+.settings-password-bottom-info-sec .login-btn input[type="submit"] {
+  min-width: 130px;
+}
+
+.settings-password-bottom-info-sec .login-btn {
+  padding-top: 22px;
+}
+
+.settings-password-bottom-info-sec .forgot-pass-btn-wrap input[type="submit"] {
+  min-width: 270px;
+}
+
+.settings-password-right-sec .settings-note-inner-sec {
+  max-width: 559px;
+}
+
+/*20-01-2023*/
+.settings-password-bottom-info-sec
+  .reset-form
+  .forgot-pass-btn-wrap
+  input[type="submit"] {
+  min-width: 213px;
+}
+
+.settings-bottom-info-sec > ul > li {
+  cursor: pointer;
+  position: relative;
+}
+
+.settings-edit-profile-top-sec .profile-info,
+.profile-top-sec .profile-info {
+  width: calc(100% - 122px);
+  word-break: break-all;
+  white-space: normal;
+}
+
+.settings-vc-sec {
+  height: calc(100% - 50px);
+  padding-top: 30px;
+  padding-bottom: 0px;
+}
+
+.settings-vc-sec > .settings-edit-profile-right-sec {
+  height: 100%;
+}
+
+div.settings-note-inner-sec.setting-noti-sec-new {
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.setting-details-links {
+  margin-left: auto;
+  margin-right: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--dark_blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 1px;
+}
+
+.setting-details-links:hover {
+  background-color: var(--blue);
+  border-color: var(--blue);
+}
+
+.setting-details-links:hover svg path {
+  stroke: #fff;
+}
+
+.setting-btn-link a,
+.outline-btn {
+  background-color: #fff;
+  border: 1px solid var(--blue);
+  border-radius: 15px;
+  padding: 13px 22px;
+  font-family: "Visby Round CF", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: var(--blue);
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.setting-btn-link a svg,
+.outline-btn svg {
+  margin-right: 16px;
+}
+
+.setting-btn-link a:hover,
+.outline-btn:hover {
+  background-color: var(--dark_blue);
+  border-color: var(--dark_blue);
+  color: #fff;
+}
+
+.setting-btn-link a:hover svg path,
+.outline-btn:hover svg path {
+  stroke: #fff;
+}

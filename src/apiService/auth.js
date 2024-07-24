@@ -2,8 +2,8 @@ import { axiosInstance } from "plugin/axios.js";
 import { loginUrl, refreshTokenUrl } from "constants/urls.js";
 import { deleteCookie } from "shared/cookies";
 
-var now = new Date();
-var time = now.getTime();
+const now = new Date();
+let time = now.getTime();
 // token will expire after 1 hrs
 time += 1 * 60 * 60 * 1000;
 now.setTime(time);
@@ -11,21 +11,13 @@ now.setTime(time);
 export const loginApi = async (payload) => {
   try {
     let response = await axiosInstance.post(loginUrl, payload);
-    // if (response.data?.data?.token) {
-    //   document.cookie =
-    //     "auth._token.Bearer=" +
-    //     response.data?.data?.token +
-    //     "; expires=" +
-    //     now.toGMTString() +
-    //     "; path=/";
-    // }
-    if (response.data?.data?.user_name) {
-      document.cookie =
-        "auth._token.Bearer=" +
-        response.data?.data?.user_name +
-        "; expires=" +
-        now.toGMTString() +
-        "; path=/";
+    if (response.data?.data?.token) {
+      document.cookie = `auth._token.Bearer=${
+        response.data?.data?.token
+      };expires=${now.toGMTString()};path=/`;
+      document.cookie = `auth._account_number=${
+        response.data?.data?.account_number
+      };expires=${now.toGMTString()};path=/`;
     }
     return response;
   } catch (err) {

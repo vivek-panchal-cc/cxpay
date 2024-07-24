@@ -1,0 +1,137 @@
+.fc-bdetails-dd-wrap {
+  padding: 0px;
+  background-color: #24beef1a;
+  border-radius: 16.5px;
+  cursor: pointer;
+}
+.fc-bdetails-dd-wrap:not(.active) .fc-bdetails-dd-title svg:last-child {
+  transform: rotate(180deg);
+}
+.fc-bdetails-dd-wrap .fc-bdetails-dd-title svg:last-child {
+  margin-left: auto;
+  margin-right: 0;
+}
+.fc-bdetails-dd-wrap .fc-bdetails-dd-title svg:first-child {
+  margin-right: 30px;
+}
+.fc-bdetails-dd-wrap .fc-bdetails-dd-title {
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--dark_blue);
+  font-weight: 700;
+}
+.fc-bdetails-dd-title {
+  display: flex;
+  align-items: center;
+}
+.fc-bdetails-dd-wrap > div {
+  padding-left: 27px;
+  padding-right: 27px;
+}
+.fc-bdetails-dd-wrap .fc-bdetails-dd-title {
+  padding-top: 17px;
+  padding-bottom: 17px;
+  border-top-left-radius: 16.5px;
+  border-top-right-radius: 16.5px;
+}
+.fc-bdetails-dd-wrap .fc-bdetails-dd-content {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: var(--dark_blue);
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 500;
+}
+.fc-bdetails-dd-wrap .fc-bdetails-dd-content tr {
+  vertical-align: top;
+}
+.fc-bdetails-dd-wrap .fc-bdetails-dd-content tr td {
+  color: var(--dark_blue);
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 500;
+  padding: 0px 0px 12px;
+  word-break: break-word;
+}
+.fc-bdetails-dd-wrap .fc-bdetails-dd-content tr td:first-child {
+  padding-right: 15px;
+  min-width: 155px;
+}
+.fund-cash-download-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+.fund-cash-download-wrap li {
+  width: 103px;
+  height: 103px;
+  border-radius: 16px;
+  background-color: #fff;
+  box-shadow: 2px 2px 15px 0px rgb(0 0 0 / 8%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.fc-download-file {
+  align-items: center;
+  display: flex;
+  flex: 1;
+}
+.fund-cash-download-wrap li .fc-del-pdf {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  background-color: #ff3333cc;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--white);
+  padding: 7px 5px;
+  /* margin-bottom: 0;
+    margin-top: auto; */
+}
+.fc-upload-receipt-wrap label {
+  padding: 20px 10px;
+  background-color: rgb(0 129 197 / 10%);
+  width: 100%;
+  text-align: center;
+  border-radius: 20px;
+  border: 2px dashed #0081c5;
+  cursor: pointer;
+  color: var(--dark_blue);
+  font-size: 18px;
+  line-height: 22px;
+}
+.fc-upload-receipt-wrap label svg {
+  margin-right: 20px;
+}
+/* Responsive view */
+@media only screen and (max-width: 991px) {
+  .fc-bdetails-dd-wrap .fc-bdetails-dd-title svg:first-child {
+    margin-right: 13px;
+  }
+  .fc-upload-receipt-wrap label {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .fc-upload-receipt-wrap label svg {
+    margin-right: 15px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .fc-bdetails-dd-wrap .fc-bdetails-dd-content tr {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .fc-bdetails-dd-wrap .fc-bdetails-dd-content tr td {
+    padding-bottom: 7px;
+  }
+}

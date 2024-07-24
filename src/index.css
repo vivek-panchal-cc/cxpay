@@ -1,14 +1,12 @@
+@import url("./styles/css/font-faces.css");
 @import url("./styles/css/style.css");
+@import url("./styles/css/forms.css");
+@import url("./styles/css/dashboard.css");
+@import url("./styles/css/profile.css");
+@import url("./styles/css/settings.css");
+@import url("./styles/css/withdraw.css");
 @import url("./styles/css/responsive.css");
-
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@import url("./styles/css/fund.css");
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -17,7 +15,6 @@ code {
 #root {
   height: 100vh;
 }
-
 .cursor-auto {
   pointer-events: visible !important;
   cursor: auto !important;
@@ -49,4 +46,115 @@ code {
 .cursor-not-allowed {
   pointer-events: visible !important;
   cursor: not-allowed !important;
+}
+.resend-otp-wrap {
+  text-align: center;
+  width: 100%;
+  font-family: "Quicksand", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #5b5b5b;
+  margin-bottom: 25px;
+}
+.resend-otp-wrap span:first-child {
+  color: #ff3333;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.resend-otp-wrap p {
+  padding: 0px !important;
+  margin: 15px 0px 10px;
+  font-size: 18px;
+  line-height: 22px;
+}
+.resend-otp-wrap button.disabled {
+  color: #9d9d9d;
+  pointer-events: none;
+}
+.admin-approved-disabled {
+  color: #9d9d9d !important;
+  pointer-events: visible !important;
+  cursor: not-allowed !important;
+}
+.admin-approved-disabled img {
+  opacity: 0.6;
+}
+.contacts-admin-approved-disabled {
+  border: 1px solid #d5dbe0 !important;
+  color: #878787 !important;
+  pointer-events: visible !important;
+  cursor: not-allowed !important;
+  background: #d5dbe0 !important;
+}
+.resend-otp-wrap button {
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0px;
+  border: none;
+  background-color: transparent;
+  color: #0081c5;
+}
+.resend-otp-wrap button:hover {
+  color: #363853;
+}
+.upload-profile-image .profile-wrap {
+  border-radius: 50% !important;
+}
+.invited-contacts-img {
+  max-width: 33px;
+}
+.invited-con-mail {
+  min-width: 300px;
+}
+.invited-con-info {
+  display: flex;
+  align-items: center;
+}
+.common-body-bg {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.wallet-acc-fund-btns .btn-wrap .btn {
+  line-height: 22px !important;
+}
+.wallet-acc-fund-btns .btn-wrap input.btn {
+  border: 1px solid #363853;
+}
+.wallet-acc-fund-btns .btn-wrap input.btn:hover {
+  border: 1px solid #0080c4;
+}
+
+/* background color classes */
+.cx-bg-blue {
+  background: rgba(0, 129, 197, 0.1);
+}
+.cx-bg-green {
+  background: rgba(85, 190, 21, 0.1);
+}
+.cx-bg-red {
+  background: rgba(255, 51, 51, 0.1);
+}
+.cx-bg-gray {
+  background: rgba(157, 162, 165, 0.1);
+}
+.cx-bg-orange {
+  background: rgba(255, 69, 0, 0.1);
+}
+
+.cx-color-blue {
+  color: #0081c5;
+}
+.cx-color-green {
+  color: #56be15;
+}
+.cx-color-red {
+  color: #ff3333;
+}
+.cx-color-gray {
+  color: #2c2f31;
+}
+.cx-color-orange {
+  color: #ff4500;
 }

@@ -1,19 +1,60 @@
-import React from "react";
+import React, { forwardRef } from "react";
+import styles from "./input.module.scss";
 
-function Input(props) {
-  const { labelname, error } = props;
+const Input = forwardRef((props, ref) => {
+  const { labelname, error, disabled, type, classNameContainer = "" } = props;
+
+  const getType = () => {
+    switch (type) {
+      case "mobile":
+        return "text";
+      case "name":
+        return "text";
+      case "text-uppercase":
+        return "text";
+      default:
+        return type;
+    }
+  };
+
+  const changeElement = (element) => {
+    if (element?.target?.name == "email") {
+      element.currentTarget.value = element.currentTarget.value.trim();
+    }
+    switch (type) {
+      case "mobile":
+        element.currentTarget.value = element.currentTarget.value.trim();
+        return element;
+      case "name":
+        element.currentTarget.value = element.currentTarget.value.trimStart();
+        return element;
+      case "text-uppercase":
+        element.currentTarget.value = element.currentTarget.value.toUpperCase();
+        return element;
+      default:
+        return element;
+    }
+  };
 
   return (
-    <div className="d-flex flex-column form-field">
-      {labelname && (
+    <div className={`d-flex flex-column form-field ${classNameContainer}`}>
+      {labelname ? (
         <label htmlFor="" className="mb-2">
           {labelname}
         </label>
-      )}
-      <input {...props} />
-      <p className="text-danger ps-2">{error}</p>
+      ) : null}
+      <input
+        {...props}
+        type={getType()}
+        onChange={(e) => props?.onChange(changeElement(e))}
+        className={`${styles.number_input} ${props.className} ${
+          disabled ? "cursor-not-allowed" : ""
+        }`}
+        ref={ref}
+      />
+      {error ? <p className="text-danger ps-2">{error}</p> : null}
     </div>
   );
-}
+});
 
 export default Input;
