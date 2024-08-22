@@ -23,7 +23,7 @@ import LoaderMainLink from "loaders/loader-sidear/LoaderMainLink";
 import LoaderBottomLink from "loaders/loader-sidear/LoaderBottomLink";
 import LoaderLeftWrap from "loaders/loader-sidear/LoaderLeftWrap";
 
-function LeftSidebar() {
+function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
   const { cmsPages } = useCms();
   const location = useLocation();
   const navigate = useNavigate();
@@ -70,6 +70,24 @@ function LeftSidebar() {
     };
   }, []);
 
+  const handleToggleClick = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  useEffect(() => {
+    const container = document.querySelector(
+      ".dashboard-page > .container-fluid > .row"
+    );
+
+    if (container) {
+      if (isSidebarOpen) {
+        container.classList.add("sidebar-open");
+      } else {
+        container.classList.remove("sidebar-open");
+      }
+    }
+  }, [isSidebarOpen]);
+
   if (isLoading) {
     return (
       <div className="dashboard-left-wrap">
@@ -94,49 +112,6 @@ function LeftSidebar() {
       </div>
     );
   }
-
-  const handleToggleClick = () => {
-    $(".dashboard-page > .container-fluid > .row").toggleClass("sidebar-open");
-  };
-
-  // List of restricted routes
-  const restrictedRoutes = [
-    "send",
-    "request",
-    "wallet",
-    "view-recurring-payment",
-    "view-schedule-payment",
-  ];
-
-  // Redirect logic for restricted routes
-  const shouldRedirectToRestrictedRoute =
-    kyc_approved_status != "approved" && restrictedRoutes.includes(thisRoute);
-
-  // if (shouldRedirectToRestrictedRoute) {
-  //   useEffect(() => {
-  //     toast.warning("Complete your KYC first", {
-  //       position: toast.POSITION.TOP_RIGHT,
-  //     });
-  //     navigate("/", { replace: true });
-  //   }, []); // Add an empty dependency array to ensure it runs only once
-
-  //   return null; // Prevent further rendering
-  // }
-
-  if (shouldRedirectToRestrictedRoute) {
-    navigate("/", { replace: true });
-
-    return null; // Prevent further rendering
-  }
-
-  // const openCMSPages = async (slug) => {
-  //   try {
-  //     const { request } = await apiRequest.getCMSPage(slug);
-  //     window.open(request.responseURL, "_blank");
-  //   } catch (error) {
-  //     console.error("Error fetching cms page:", error);
-  //   }
-  // };
 
   const openCMSPages = (slug) => {
     navigate(`/more/${slug}`);

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import LeftSidebar from "components/sidebar/LeftSidebar";
 import { Outlet, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -11,10 +11,13 @@ import SendPaymentProvider from "context/sendPaymentContext";
 import ActivityProvider from "context/activityContext";
 import TopUpActivityProvider from "context/topUpActivityContext";
 import { CmsProvider } from "context/cmsContext";
+import $ from "jquery";
 
 function DashboardLayout() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   const { setIsLoading } = useContext(LoaderContext);
   const classNamePage = {
     "/send": "send-page-wrapper",
@@ -35,13 +38,20 @@ function DashboardLayout() {
     })();
   }, []);
 
+  const handleToggleClick = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className="dashboard-page wallet-page">
       <div className="container-fluid">
         <div className="row">
           <div className="col-xs-12 col-lg-3 dashboard-left-sec">
             <CmsProvider>
-              <LeftSidebar />
+              <LeftSidebar
+                isSidebarOpen={isSidebarOpen}
+                setIsSidebarOpen={setIsSidebarOpen}
+              />
             </CmsProvider>
           </div>
           <div
@@ -50,7 +60,7 @@ function DashboardLayout() {
             }`}
           >
             <div className="mobile-toggle">
-              <span className="toggle-admin-btn">
+              <span className="toggle-admin-btn" onClick={handleToggleClick}>
                 <img
                   src="/assets/images/dashaboard-button-toggle.png"
                   alt="button dashboard icon"
