@@ -43,7 +43,7 @@ const InviteContactItem = (props) => {
       </div>
 
       <div className="con-listing-phone">
-        <p>{contact?.mobile}</p>
+        <p>{`+${contact?.mobile}`}</p>
       </div>
 
       <div

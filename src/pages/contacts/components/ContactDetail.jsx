@@ -33,7 +33,7 @@ function ContactDetail(props) {
                 </div>
                 <div>
                   <p className="sub-head">Phone</p>
-                  <p>{data?.mobile_number}</p>
+                  <p>{`+${data?.mobile_number}`}</p>
                 </div>
                 <div className="cm-sucess-msg">Contact Added Successfully</div>
               </div>
