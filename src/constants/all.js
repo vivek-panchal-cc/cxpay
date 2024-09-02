@@ -16,7 +16,7 @@ const exp0ContainWhitespace = /^\S*$/;
 const exp0ContainWordPassword = /^((?!password).)*$/gim;
 const expContainCapitalLetter = /^(?=.*[A-Z])/;
 const expContainNumber = /^(?=.*\d)/;
-const expContainSpecialChar = /^(?=.*[!@#$%^&*])/;
+const expContainSpecialChar = /^(?=.*[!@#$%^&*_])/;
 const validFileExtensions = {
   image: ["jpg", "png", "jpeg", "svg", "heif", "hevc"],
   receipt: ["jpg", "png", "jpeg", "heif", "hevc", "pdf", "tif", "tiff", "webp"],
