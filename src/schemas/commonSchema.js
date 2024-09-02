@@ -64,8 +64,8 @@ const passwordSchema = yup
     "At least one numeric character"
   )
   .matches(
-    /^(?=.*[@$!%*?&#])/,
-    "At least one special character (@, $, !, %, *, ?, &, #)"
+    /^(?=.*[@$!%*?&#_])/,
+    "At least one special character (@, $, !, %, *, ?, &, #, _)"
   )
   .matches(exp0ContainWhitespace, "Space is not allowed")
   .matches(exp0ContainWordPassword, `Word 'password' is not allowed`)
