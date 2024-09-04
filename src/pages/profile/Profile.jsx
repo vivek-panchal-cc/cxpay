@@ -208,7 +208,7 @@ const Profile = () => {
           >
             Delete Account
           </button>
-          {mobile_number && (
+          {/* {mobile_number && (
             <button
               type="button"
               className="btn"
@@ -217,7 +217,7 @@ const Profile = () => {
             >
               Change Mobile
             </button>
-          )}
+          )} */}
         </div>
       </div>
       {user_type !== "agent" && (
