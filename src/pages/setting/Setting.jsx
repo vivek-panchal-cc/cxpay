@@ -1,6 +1,13 @@
-import React from "react";
+import ModalPaymentPin from "components/modals/ModalPaymentPin";
+import { LoaderContext } from "context/loaderContext";
+import { usePinContext } from "context/pinContext";
+import { apiRequest } from "helpers/apiRequests";
+import useForgotPinHandler from "hooks/useForgotPinHandler";
+import React, { useContext } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { sendPaymentPinSchema } from "schemas/sendPaymentSchema";
 import {
   IconInfo,
   IconLock,
@@ -9,6 +16,7 @@ import {
   IconRightArrow,
   IconSetting,
 } from "styles/svgs";
+import ChangePin from "styles/svgs/ChangePin";
 
 const settingsRedirects = [
   {
@@ -29,6 +37,18 @@ const settingsRedirects = [
     link: (
       <Link
         to={"/setting/change-password"}
+        className="setting-details-links stretched-link"
+      >
+        <IconRightArrow />
+      </Link>
+    ),
+  },
+  {
+    icon: <ChangePin />,
+    title: "Change PIN",
+    link: (
+      <Link
+        to={"/setting/change-pin"}
         className="setting-details-links stretched-link"
       >
         <IconRightArrow />
@@ -76,36 +96,84 @@ const settingsRedirects = [
 function Setting() {
   const { profile } = useSelector((state) => state.userProfile);
   const { user_type = "personal" } = profile || {};
+  const { isPinValidated, setIsPinValidated } = usePinContext();
+  const navigate = useNavigate();
+  const { setIsLoading } = useContext(LoaderContext);
+  const [showPinPopup, setShowPinPopup] = React.useState(false);
+  const { handleForgotPin, OtpModal, PinModal } = useForgotPinHandler(setShowPinPopup);
+
+  React.useEffect(() => {
+    if (!isPinValidated) {
+      setShowPinPopup(true);
+      // navigate('/');
+    }
+  }, [isPinValidated]);
+
+  const handleSubmitPin = async (pin) => {
+    if (!pin) return;
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.pinValidate({ user_pin: pin });
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+      setShowPinPopup(false);
+      setIsPinValidated(true);
+      navigate("/setting");
+    } catch (error) {
+      toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="settings-right-sec settings-vc-sec">
-      <div className="settings-inner-sec">
-        <div className="profile-info">
-          <h3>Settings</h3>
+      {isPinValidated && (
+        <div className="settings-inner-sec">
+          <div className="profile-info">
+            <h3>Settings</h3>
+          </div>
+          <div className="settings-bottom-info-sec">
+            <ul>
+              {settingsRedirects?.map((item, index) => (
+                <React.Fragment key={index}>
+                  {(item?.title === "Business info" &&
+                    user_type === "personal") ||
+                  (item?.title === "Business info" && user_type === "agent") ||
+                  (item?.title === "Notifications" && user_type === "agent") ? (
+                    ""
+                  ) : (
+                    <li key={item.title?.trim() || index}>
+                      <div className="icon-wrap">
+                        <span className="icon-settings">{item.icon}</span>
+                        {item.title}
+                      </div>
+                      {item.link}
+                    </li>
+                  )}
+                </React.Fragment>
+              ))}
+            </ul>
+          </div>
         </div>
-        <div className="settings-bottom-info-sec">
-          <ul>
-            {settingsRedirects?.map((item, index) => (
-              <React.Fragment key={index}>
-                {(item?.title === "Business info" &&
-                  user_type === "personal") ||
-                (item?.title === "Business info" && user_type === "agent") ||
-                (item?.title === "Notifications" && user_type === "agent") ? (
-                  ""
-                ) : (
-                  <li key={item.title?.trim() || index}>
-                    <div className="icon-wrap">
-                      <span className="icon-settings">{item.icon}</span>
-                      {item.title}
-                    </div>
-                    {item.link}
-                  </li>
-                )}
-              </React.Fragment>
-            ))}
-          </ul>
-        </div>
-      </div>
+      )}
+      {showPinPopup && (
+        <ModalPaymentPin
+          id="group_pay_otp_modal"
+          className="otp-verification-modal group_pay_otp_modal"
+          show={showPinPopup}
+          allowClickOutSide={true}
+          setShow={setShowPinPopup}
+          heading="5 - Digit PIN Access"
+          headingImg="/assets/images/setupPin.svg"
+          subHeading="Secure your account with 5 - Digit PIN Access"
+          validationSchema={sendPaymentPinSchema}
+          handleSubmitPin={handleSubmitPin}
+          handleForgotPin={handleForgotPin}
+        />
+      )}
+      {OtpModal()}
+      {PinModal()}
     </div>
   );
 }

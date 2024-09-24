@@ -13,6 +13,11 @@ const API_logout = apiUrl.API_LOGIN_LOGOUT;
 const API_loginOtp = apiUrl.API_LOGIN_LOGIN_OTP;
 const API_LoginOtpVerify = apiUrl.API_LOGIN_LOGIN_OTP_VERIFY;
 const API_passwordChange = apiUrl.API_LOGIN_PASSWORD_CHANGE;
+const API_pinChange = apiUrl.API_LOGIN_PIN_CHANGE;
+const API_pinSet = apiUrl.API_LOGIN_PIN_SET;
+const API_pinValidate = apiUrl.API_LOGIN_VALIDATE_PIN;
+const API_forgotPinOtp = apiUrl.API_LOGIN_GENERATE_FORGOT_PIN_OTP;
+const API_verifyPinOtp = apiUrl.API_LOGIN_VERIFY_FORGOT_PIN_OTP;
 const API_generateForgotPasswordOtp =
   apiUrl.API_LOGIN_GENERATE_FORGOT_PASSWORD_OTP;
 const API_verifyForgotPasswordOtp = apiUrl.API_LOGIN_VERIFY_FORGOT_PASSWORD_OTP;
@@ -184,6 +189,26 @@ export const loginOtpVerify = (params) => {
  */
 export const passwordChange = (params) => {
   return axiosLoginInstance.post(`${API_passwordChange}`, params);
+};
+
+export const pinChange = (params) => {
+  return axiosLoginInstance.post(`${API_pinChange}`, params);
+};
+
+export const pinSet = (params) => {
+  return axiosLoginInstance.post(`${API_pinSet}`, params);
+};
+
+export const pinValidate = (params) => {
+  return axiosLoginInstance.post(`${API_pinValidate}`, params);
+};
+
+export const forgotPinOtp = (params) => {
+  return axiosLoginInstance.post(`${API_forgotPinOtp}`, params);
+};
+
+export const verifyPinOtp = (params) => {
+  return axiosLoginInstance.post(`${API_verifyPinOtp}`, params);
 };
 
 /** POST @generate-forgot-password-otp-change API
@@ -1002,6 +1027,11 @@ export const apiRequest = {
   manualKyc,
   updateUser,
   passwordChange,
+  pinChange,
+  pinSet,
+  pinValidate,
+  forgotPinOtp,
+  verifyPinOtp,
   generateForgotPasswordOtpChange,
   verifyForgotPasswordOtp,
   updateForgotPassword,

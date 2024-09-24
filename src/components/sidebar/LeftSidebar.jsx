@@ -1,5 +1,5 @@
 import { CXPAY_SHADOW_LOGO } from "constants/all";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import $ from "jquery";
@@ -22,16 +22,23 @@ import LoaderLogo from "loaders/loader-sidear/LoaderLogo";
 import LoaderMainLink from "loaders/loader-sidear/LoaderMainLink";
 import LoaderBottomLink from "loaders/loader-sidear/LoaderBottomLink";
 import LoaderLeftWrap from "loaders/loader-sidear/LoaderLeftWrap";
+import ModalPaymentPin from "components/modals/ModalPaymentPin";
+import { sendPaymentPinSchema } from "schemas/sendPaymentSchema";
+import { LoaderContext } from "context/loaderContext";
+import { usePinContext } from "context/pinContext";
+import useForgotPinHandler from "hooks/useForgotPinHandler";
 
 function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
   const { cmsPages } = useCms();
   const location = useLocation();
   const navigate = useNavigate();
+  const { setIsLoading } = useContext(LoaderContext);
+  const { setIsPinValidated } = usePinContext();
   const { profile, isLoading } = useSelector((state) => state.userProfile);
   const { user_type, kyc_approved_status = "" } = profile || "";
-
+  const [showPinPopup, setShowPinPopup] = useState(false);
   const thisRoute = useMemo(() => location.pathname.split("/")[1], [location]);
-
+  const { handleForgotPin, OtpModal, PinModal } = useForgotPinHandler(setShowPinPopup);
   const [submenuPosition, setSubmenuPosition] = useState({ top: 0, left: 0 });
 
   const updateSubMenuPosition = () => {
@@ -112,6 +119,29 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
       </div>
     );
   }
+
+  // Function to handle PIN validation
+  const handleSubmitPin = async (pin) => {
+    if (!pin) return;
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.pinValidate({ user_pin: pin });
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+      setShowPinPopup(false);
+      setIsPinValidated(true);
+      navigate("/setting");
+    } catch (error) {
+      toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSettingsClick = (e) => {
+    e.preventDefault();
+    setShowPinPopup(true);
+  };
 
   const openCMSPages = (slug) => {
     navigate(`/more/${slug}`);
@@ -262,10 +292,10 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
             </Link>
           </li>
           <li className={`${thisRoute === "setting" ? "active" : ""}`}>
-            <Link to="/setting" replace>
+            <a href="#" onClick={handleSettingsClick}>
               <IconSetting style={{ fill: "#fff100" }} />
               <span>Settings</span>
-            </Link>
+            </a>
           </li>
           <li>
             <Link to="/logout" replace>
@@ -275,6 +305,23 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
           </li>
         </ul>
       </div>
+      {showPinPopup && (
+        <ModalPaymentPin
+          id="group_pay_otp_modal"
+          className="otp-verification-modal group_pay_otp_modal"
+          show={showPinPopup}
+          allowClickOutSide={true}
+          setShow={setShowPinPopup}
+          heading="5 - Digit PIN Access"
+          headingImg="/assets/images/setupPin.svg"
+          subHeading="Secure your account with 5 - Digit PIN Access"
+          validationSchema={sendPaymentPinSchema}
+          handleSubmitPin={handleSubmitPin}
+          handleForgotPin={handleForgotPin}
+        />
+      )}
+      {OtpModal()}
+      {PinModal()}
     </div>
   );
 }

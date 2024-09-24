@@ -56,6 +56,10 @@ function VerifyLoginOtp(props) {
       try {
         const { error, payload } = await dispatch(fetchLoginOtpVerify(values));
         if (error) throw payload;
+        // if (!payload.data.is_user_pin_set) {
+        //   navigate("/set-pin", { replace: true });
+        //   return;
+        // }
         setLoginCreds((ls) => ({
           ...ls,
           renew_kyc_approved_status:

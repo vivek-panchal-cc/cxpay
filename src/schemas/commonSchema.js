@@ -47,22 +47,13 @@ const passwordSchema = yup
     "Password must contain 8 to 16 characters and contain at least one number, one uppercase & lowercase letter and one special character."
   );
 
-  const passwordStrengthSchema = yup
+const passwordStrengthSchema = yup
   .string()
   .min(8, "Password must contain 8 to 16 characters")
   .max(16, "Password must contain 8 to 16 characters")
-  .matches(
-    /^(?=.*[a-z])/,
-    "At least one lowercase character"
-  )
-  .matches(
-    /^(?=.*[A-Z])/,
-    "At least one uppercase character"
-  )
-  .matches(
-    /^(?=.*[0-9])/,
-    "At least one numeric character"
-  )
+  .matches(/^(?=.*[a-z])/, "At least one lowercase character")
+  .matches(/^(?=.*[A-Z])/, "At least one uppercase character")
+  .matches(/^(?=.*[0-9])/, "At least one numeric character")
   .matches(
     /^(?=.*[@$!%*?&#_])/,
     "At least one special character (@, $, !, %, *, ?, &, #, _)"
@@ -70,7 +61,6 @@ const passwordSchema = yup
   .matches(exp0ContainWhitespace, "Space is not allowed")
   .matches(exp0ContainWordPassword, `Word 'password' is not allowed`)
   .required("Password is required");
-
 
 const confirmPasswordSchema = yup
   .string()
@@ -186,6 +176,58 @@ const otpSchema = yup
   .matches(/^\d*$/, "OTP should be number")
   .required("OTP is required");
 
+const paymentPinSchema = yup
+  .string()
+  .length(5, "PIN length must be 5 digits")
+  .matches(/^\d*$/, "PIN should be number")
+  .required("PIN is required");
+
+const pinSchema = yup
+  .string()
+  .required("PIN is required")
+  .length(5, "PIN length must be 5 digits")
+  .matches(/^\d*$/, "PIN should be number")
+  .test("no-all-zeros", "PIN cannot be all zeros", (value) => {
+    return value !== "00000";
+  })
+  .test(
+    "no-consecutive-numbers",
+    "Consecutive numbers are not allowed",
+    (value) => {
+      // Check for ascending consecutive numbers
+      const isConsecutive = (str) => {
+        for (let i = 1; i < str.length; i++) {
+          if (parseInt(str[i]) !== parseInt(str[i - 1]) + 1) {
+            return false;
+          }
+        }
+        return true;
+      };
+
+      // Check for descending consecutive numbers
+      const isReverseConsecutive = (str) => {
+        for (let i = 1; i < str.length; i++) {
+          if (parseInt(str[i]) !== parseInt(str[i - 1]) - 1) {
+            return false;
+          }
+        }
+        return true;
+      };
+
+      return !isConsecutive(value) && !isReverseConsecutive(value);
+    }
+  );
+
+const confirmPinSchema = yup
+  .string()
+  .required("Please enter confirm pin")
+  .oneOf([yup.ref("pin"), null], "PIN must be matched");
+
+const confirmNewPinSchema = yup
+  .string()
+  .required("Please enter confirm pin")
+  .oneOf([yup.ref("new_pin"), null], "PIN must be matched");
+
 export {
   emailSchema,
   passwordSchema,
@@ -208,4 +250,8 @@ export {
   countrySchema,
   citySchema,
   otpSchema,
+  pinSchema,
+  confirmPinSchema,
+  confirmNewPinSchema,
+  paymentPinSchema,
 };

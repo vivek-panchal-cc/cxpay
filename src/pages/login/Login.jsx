@@ -45,11 +45,17 @@ const Login = () => {
       const selectedCountry = countryList.find(
         (country) => country.phonecode.toString() === values.country_code
       );
-      const country_time_zone = selectedCountry ? selectedCountry.time_zone : "";
-      setCountryTimeZone({country_time_zone});
+      const country_time_zone = selectedCountry
+        ? selectedCountry.time_zone
+        : "";
+      setCountryTimeZone({ country_time_zone });
       try {
         const { error, payload } = await dispatch(fetchLogin(values));
-        if (error) throw payload;
+        if (error) throw payload;        
+        // if (!payload.data.is_user_pin_set) {
+        //   navigate("/pending-pin", { replace: true });
+        //   return;
+        // }
         setLoginCreds((ls) => ({
           ...ls,
           renew_kyc_approved_status:
@@ -148,7 +154,13 @@ const Login = () => {
                       onPaste={(e) => e.preventDefault()}
                       onFocus={() => setIsInputFocused(true)}
                     />
-                    <span className="eye-icon" style={{ top: "12px", right: isSafari && isInputFocused ? "45px" : "" }}>
+                    <span
+                      className="eye-icon"
+                      style={{
+                        top: "12px",
+                        right: isSafari && isInputFocused ? "45px" : "",
+                      }}
+                    >
                       {showPassword ? (
                         <IconEyeOpen
                           onClick={() => setShowPassword((e) => !e)}

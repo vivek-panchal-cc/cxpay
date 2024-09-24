@@ -67,6 +67,10 @@ import CMSPage from "pages/cms-content/CmsPage";
 import FaqContent from "pages/cms-content/faq/FaqContent";
 import { CmsProvider } from "context/cmsContext";
 import { FaqProvider } from "context/faqContext";
+import ChangePin from "pages/change-pin/ChangePin";
+import SetPin from "pages/change-pin/SetPin";
+import ForgotPin from "pages/forgot-pin/ForgotPin";
+import PendingPin from "pages/pending-pin/PendingPin";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -287,6 +291,9 @@ function App() {
             element={<KycManualSecondStep />}
           />
           <Route path="/send-mail" element={<KycSendMail />} />
+          <Route path="/set-pin" element={<SetPin />} />
+          <Route path="/forgot-pin" element={<ForgotPin />} />
+          <Route path="/pending-pin" element={<PendingPin />} />
           <Route path="/signup/:fundtype" element={<SignupFundAccount />} />
           <Route element={<DashboardLayout />}>
             {/* settings */}
@@ -299,6 +306,10 @@ function App() {
             <Route
               path="/setting/change-password"
               element={<ChangePassword />}
+            />
+            <Route
+              path="/setting/change-pin"
+              element={<ChangePin />}
             />
             <Route
               path="/setting/business-info"

@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { otpSchema } from "./commonSchema";
+import { confirmNewPinSchema, confirmPinSchema, otpSchema, paymentPinSchema, pinSchema } from "./commonSchema";
 
 const getYesterDay = () => {
   const today = new Date();
@@ -90,7 +90,24 @@ const sendPaymentOtpSchema = yup.object().shape({
   otp: otpSchema,
 });
 
+const sendPaymentPinSchema = yup.object().shape({
+  pin: paymentPinSchema,
+});
+
+const setPinSchema = yup.object().shape({
+  pin: pinSchema,
+  confirm_pin: confirmPinSchema,
+});
+
+const setNewPinSchema = yup.object().shape({
+  new_pin: pinSchema,
+  confirm_pin: confirmNewPinSchema,
+});
+
 export {
+  setPinSchema,
+  setNewPinSchema,
+  sendPaymentPinSchema,
   sendPaymentSchema,
   sendPaymentOtpSchema,
   sendRequestSchema,

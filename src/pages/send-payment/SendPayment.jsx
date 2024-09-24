@@ -4,6 +4,7 @@ import { SendPaymentContext } from "context/sendPaymentContext";
 import ContactPaymentItem from "components/items/ContactPaymentItem";
 import {
   sendPaymentOtpSchema,
+  sendPaymentPinSchema,
   sendPaymentSchema,
 } from "schemas/sendPaymentSchema";
 import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
@@ -20,6 +21,8 @@ import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { LoginContext } from "context/loginContext";
+import ModalPaymentPin from "components/modals/ModalPaymentPin";
+import useForgotPinHandler from "hooks/useForgotPinHandler";
 
 // Track the number of failed attempts
 let failedAttempts = 1;
@@ -31,6 +34,8 @@ function SendPayment(props) {
   const scheduleDate = location?.state?.scheduleDate;
   const inputAmountRefs = useRef([]);
   const { setIsLoading } = useContext(LoaderContext);
+  const [showPinPopup, setShowPinPopup] = useState(false);
+  const { handleForgotPin, OtpModal, PinModal } = useForgotPinHandler(setShowPinPopup);
   const {
     sendCreds,
     charges,
@@ -50,7 +55,6 @@ function SendPayment(props) {
     show_renew_section
   );
   const { wallet, request_id } = sendCreds || [];
-
   const [scrollTop, setScrollTop] = useState(false);
   const [isScheduling, setIsScheduling] = useState(false);
   const [showOtpPoup, setShowOtpPopup] = useState(false);
@@ -106,34 +110,65 @@ function SendPayment(props) {
     initialValues: sendCreds,
     validationSchema: sendPaymentSchema,
     onSubmit: async (values, { setValues, setErrors }) => {
-      try {
-        if (showOtpPoup || showSentPopup) return;
-        setIsLoading(true);
-        const formData = new FormData();
-        const muValues = { ...values };
-        muValues.wallet = muValues?.wallet?.map(
-          ({ specifications, personal_amount, receiver_account_number }) => ({
-            specifications,
-            personal_amount,
-            receiver_account_number,
-          })
-        );
-        muValues.fees = charges?.length > 0 ? charges : "";
-        muValues.total_amount = paymentDetails.grandTotal;
-        for (const key in muValues)
-          addObjToFormData(muValues[key], key, formData);
-        const { data } = await apiRequest.walletTransferOtp(formData);
-        if (!data.success) throw data.message;
-        if (data?.data?.otp) toast.success(`${data?.data?.otp}`);
-        toast.success(`${data.message}`);
-        setShowOtpPopup(true);
-      } catch (error) {
-        if (typeof error === "string") toast.error(error);
-      } finally {
-        setIsLoading(false);
-      }
+      setShowPinPopup(true);
+      // try {
+      //   if (showOtpPoup || showSentPopup) return;
+      //   setIsLoading(true);
+      //   const formData = new FormData();
+      //   const muValues = { ...values };
+      //   muValues.wallet = muValues?.wallet?.map(
+      //     ({ specifications, personal_amount, receiver_account_number }) => ({
+      //       specifications,
+      //       personal_amount,
+      //       receiver_account_number,
+      //     })
+      //   );
+      //   muValues.fees = charges?.length > 0 ? charges : "";
+      //   muValues.total_amount = paymentDetails.grandTotal;
+      //   for (const key in muValues)
+      //     addObjToFormData(muValues[key], key, formData);
+      //   const { data } = await apiRequest.walletTransferOtp(formData);
+      //   if (!data.success) throw data.message;
+      //   if (data?.data?.otp) toast.success(`${data?.data?.otp}`);
+      //   toast.success(`${data.message}`);
+      //   setShowOtpPopup(true);
+      // } catch (error) {
+      //   if (typeof error === "string") toast.error(error);
+      // } finally {
+      //   setIsLoading(false);
+      // }
     },
   });
+
+  const handleSubmitData = async (pin) => {
+    if (!pin) return;
+    setIsLoading(true);
+    try {
+      if (showOtpPoup || showSentPopup) return;
+      const valuesWithPin = { ...formik.values, pin };
+      const formData = new FormData();
+      const muValues = { ...valuesWithPin };
+      muValues.wallet = muValues?.wallet?.map(
+        ({ specifications, personal_amount, receiver_account_number }) => ({
+          specifications,
+          personal_amount,
+          receiver_account_number,
+        })
+      );
+      muValues.fees = charges?.length > 0 ? charges : "";
+      muValues.total_amount = paymentDetails.grandTotal;
+      for (const key in muValues)
+        addObjToFormData(muValues[key], key, formData);
+      const { data } = await apiRequest.walletTransferOtp(formData);
+      if (!data.success) throw data.message;
+      toast.success(`${data.message}`);
+      setShowPinPopup(false);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // For submitting OTP to API to make payment
   const handleSubmitOtp = async (otp) => {
@@ -392,6 +427,21 @@ function SendPayment(props) {
   //   navigate(prevPathRedirect || "/send", { replace: true });
   return (
     <>
+      <ModalPaymentPin
+        id="group_pay_otp_modal"
+        className="otp-verification-modal group_pay_otp_modal"
+        show={showPinPopup}
+        allowClickOutSide={true}
+        setShow={setShowPinPopup}
+        heading="Enter your 5 - Digit unique PIN"
+        headingImg="/assets/images/setupPin.svg"
+        subHeading=""
+        validationSchema={sendPaymentPinSchema}
+        handleSubmitPin={handleSubmitData}
+        handleForgotPin={handleForgotPin}
+      />
+      {OtpModal()}
+      {PinModal()}
       {/* Modal For OTP confirmation */}
       <ModalOtpConfirmation
         id="group_pay_otp_modal"
