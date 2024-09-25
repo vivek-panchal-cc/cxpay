@@ -112,7 +112,6 @@ const API_resendWalletTransferOtp =
   apiUrl.API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP;
 const API_resendRecurringPaymentOtp =
   apiUrl.API_TRANSACTION_RESEND_RECURRING_PAYMENT_OTP;
-const API_recurringPaymentPin = apiUrl.API_TRANSACTION_RECURRING_PAYMENT_PIN;
 const API_walletTransferPin = apiUrl.API_TRANSACTION_WALLET_TRANSFER_PIN;
 const API_getCharges = apiUrl.API_TRANSACTION_GET_CHARGES;
 const API_sendPaymentRequest = apiUrl.API_TRANSACTION_SEND_PAYMENT_REQUEST;
@@ -156,6 +155,7 @@ const API_deleteRecurringPayment =
   apiUrl.API_TRANSACTION_DELETE_RECURRING_PAYMENT;
 const API_listRecurringPayment = apiUrl.API_TRANSACTION_LIST_RECURRING_PAYMENT;
 const API_viewRecurringPayment = apiUrl.API_TRANSACTION_VIEW_RECURRING_PAYMENT;
+const API_recurringPaymentPin = apiUrl.API_TRANSACTION_RECURRING_PAYMENT_PIN;
 
 //Reserved Amount
 const API_listReservedAmount = apiUrl.API_RESERVED_AMOUNT_LIST;
