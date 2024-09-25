@@ -55,8 +55,8 @@ function PendingPin() {
                   <h3 className="text-center">Set Your Security PIN</h3>
                   <p className="text-center">
                     To enhance your account security, please set a 5-digit PIN.
-                    This PIN will be required for future transactions and
-                    actions in your account.
+                    This PIN will be required for confirming transactions and
+                    other actions in your account.
                   </p>
                   <div className="modal-header">
                     <div className="">
@@ -76,7 +76,7 @@ function PendingPin() {
                     </button>
                   </div>
                   <p className="text-danger text-center mt-3">
-                    Important: Ensure your PIN is memorable and secure.
+                    Important: Ensure your PIN is easy to remember, but secure.
                   </p>
                 </div>
               </div>

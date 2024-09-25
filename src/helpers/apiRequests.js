@@ -77,6 +77,7 @@ const API_getCountryBanks = apiUrl.API_ONBOARD_GET_COUNTRY_BANKS;
 const API_resendVerifyEmail = apiUrl.API_ONBOARD_RESEND_VERIFY_EMAIL;
 const API_deactivateAccount = apiUrl.API_ONBOARD_DEACTIVATE_ACCOUNT;
 const API_deactivateAccountAgent = apiUrl.API_ONBOARD_DEACTIVATE_ACCOUNT_AGENT;
+const API_createPinSchedulePayment = apiUrl.API_ONBOARD_SCHEDULE_PAYMENT_PIN;
 const API_createSchedulePayment = apiUrl.API_ONBOARD_CREATE_SCHEDULE_PAYMENT;
 const API_listSchedulePayment = apiUrl.API_ONBOARD_LIST_SCHEDULE_PAYMENT;
 const API_deleteSchedulePayment = apiUrl.API_ONBOARD_DELETE_SCHEDULE_PAYMENT;
@@ -85,8 +86,10 @@ const API_viewSchedulePayment = apiUrl.API_ONBOARD_VIEW_SCHEDULE_PAYMENT;
 const API_getAllSystemOptions = apiUrl.API_ONBOARD_GET_ALL_SYSTEM_OPTIONS;
 const API_markAllAsReadNotifications =
   apiUrl.API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS;
-const API_walletTransferScheduleOtp = apiUrl.API_ONBOARD_WALLET_TRANSFER_SCHEDULE_OTP;
-const API_resendSchedulePaymentOtp = apiUrl.API_ONBOARD_RESEND_SCHEDULE_PAYMENT_OTP;
+const API_walletTransferScheduleOtp =
+  apiUrl.API_ONBOARD_WALLET_TRANSFER_SCHEDULE_OTP;
+const API_resendSchedulePaymentOtp =
+  apiUrl.API_ONBOARD_RESEND_SCHEDULE_PAYMENT_OTP;
 const API_createChangeMobileOtp = apiUrl.API_ONBOARD_CREATE_CHANGE_MOBILE_OTP;
 const API_verifyChangeMobileOtp = apiUrl.API_ONBOARD_VERIFY_CHANGE_MOBILE_OTP;
 
@@ -101,13 +104,16 @@ const API_initiateManualFundAdd =
   apiUrl.API_TRANSACTION_INITIATE_MANUAL_FUND_ADD;
 const API_getBalance = apiUrl.API_TRANSACTION_GET_BALANCE;
 const API_walletTransferOtp = apiUrl.API_TRANSACTION_WALLET_TRANSFER_OTP;
-const API_walletTransferRecurringOtp = apiUrl.API_TRANSACTION_WALLET_TRANSFER_RECURRING_OTP;
+const API_walletTransferRecurringOtp =
+  apiUrl.API_TRANSACTION_WALLET_TRANSFER_RECURRING_OTP;
 const API_walletPersonalOtpVerify =
   apiUrl.API_TRANSACTION_WALLET_PERSONAL_OTP_VERIFY;
 const API_resendWalletTransferOtp =
   apiUrl.API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP;
 const API_resendRecurringPaymentOtp =
   apiUrl.API_TRANSACTION_RESEND_RECURRING_PAYMENT_OTP;
+const API_recurringPaymentPin = apiUrl.API_TRANSACTION_RECURRING_PAYMENT_PIN;
+const API_walletTransferPin = apiUrl.API_TRANSACTION_WALLET_TRANSFER_PIN;
 const API_getCharges = apiUrl.API_TRANSACTION_GET_CHARGES;
 const API_sendPaymentRequest = apiUrl.API_TRANSACTION_SEND_PAYMENT_REQUEST;
 const API_activityList = apiUrl.API_TRANSACTION_ACTIVITY_LIST;
@@ -691,18 +697,28 @@ export const createRecurringPayment = (params) => {
 /** POST @wallet-transfer-recurring-otp
  * @params wallet, fees, amount, group_id
  */
- export const walletTransferRecurringOtp = (params) => {
-  return axiosTransactionInstance.post(`${API_walletTransferRecurringOtp}`, params);
+export const walletTransferRecurringOtp = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_walletTransferRecurringOtp}`,
+    params
+  );
 };
 
 /** POST @resend-recurring-payment-otp
  * @params auth_token
  */
- export const resendRecurringPaymentOtp = (params) => {
+export const resendRecurringPaymentOtp = (params) => {
   return axiosTransactionInstance.post(
     `${API_resendRecurringPaymentOtp}`,
     params
   );
+};
+
+/** POST @resend-recurring-payment-otp
+ * @params auth_token, user_pin
+ */
+export const recurringPaymentPin = (params) => {
+  return axiosTransactionInstance.post(`${API_recurringPaymentPin}`, params);
 };
 
 /** POST @update-recurring-payment
@@ -774,6 +790,13 @@ export const walletTransferOtp = (params) => {
   return axiosTransactionInstance.post(`${API_walletTransferOtp}`, params);
 };
 
+/** POST @wallet-transfer-otp
+ * @params wallet, fees, total_amount, group_id
+ */
+export const walletTransferPin = (params) => {
+  return axiosTransactionInstance.post(`${API_walletTransferPin}`, params);
+};
+
 /** POST @wallet-personal-otp-verify
  * @params mobile_number, wallet_transfer_otp
  */
@@ -804,6 +827,13 @@ export const sendPaymentRequest = (params) => {
 /** POST @create-schedule-payment
  * @params schedule_payment , total_amount, schedule_date, overall_specification, group_id
  */
+export const createPinSchedulePayment = (params) => {
+  return axiosOnboardInstance.post(`${API_createPinSchedulePayment}`, params);
+};
+
+/** POST @create-schedule-payment
+ * @params schedule_payment , total_amount, schedule_date, overall_specification, group_id
+ */
 export const createSchedulePayment = (params) => {
   return axiosOnboardInstance.post(`${API_createSchedulePayment}`, params);
 };
@@ -811,38 +841,29 @@ export const createSchedulePayment = (params) => {
 /** POST @wallet-transfer-schedule-otp
  * @params wallet, fees, amount, group_id
  */
- export const walletTransferScheduleOtp = (params) => {
+export const walletTransferScheduleOtp = (params) => {
   return axiosOnboardInstance.post(`${API_walletTransferScheduleOtp}`, params);
 };
 
 /** POST @resend-schedule-payment-otp
  * @params auth_token
  */
- export const resendSchedulePaymentOtp = (params) => {
-  return axiosOnboardInstance.post(
-    `${API_resendSchedulePaymentOtp}`,
-    params
-  );
+export const resendSchedulePaymentOtp = (params) => {
+  return axiosOnboardInstance.post(`${API_resendSchedulePaymentOtp}`, params);
 };
 
 /** POST @create-change-mobile-otp
  * @params auth_token
  */
- export const createChangeMobileOtp = (params) => {
-  return axiosOnboardInstance.post(
-    `${API_createChangeMobileOtp}`,
-    params
-  );
+export const createChangeMobileOtp = (params) => {
+  return axiosOnboardInstance.post(`${API_createChangeMobileOtp}`, params);
 };
 
 /** POST @verify-change-mobile-otp
  * @params auth_token
  */
- export const verifyChangeMobileOtp = (params) => {
-  return axiosOnboardInstance.post(
-    `${API_verifyChangeMobileOtp}`,
-    params
-  );
+export const verifyChangeMobileOtp = (params) => {
+  return axiosOnboardInstance.post(`${API_verifyChangeMobileOtp}`, params);
 };
 
 /** POST @list-schedule-payment
@@ -1097,6 +1118,8 @@ export const apiRequest = {
   createChangeMobileOtp,
   verifyChangeMobileOtp,
   resendRecurringPaymentOtp,
+  recurringPaymentPin,
+  walletTransferPin,
   resendVerifyEmail,
   deactivateAccount,
   deactivateAgentAccount,
@@ -1104,6 +1127,7 @@ export const apiRequest = {
   getCMSPageLists,
   getFaqList,
   sendPaymentRequest,
+  createPinSchedulePayment,
   createSchedulePayment,
   listSchedulePayment,
   deleteSchedulePayment,

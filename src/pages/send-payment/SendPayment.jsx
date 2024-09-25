@@ -35,7 +35,8 @@ function SendPayment(props) {
   const inputAmountRefs = useRef([]);
   const { setIsLoading } = useContext(LoaderContext);
   const [showPinPopup, setShowPinPopup] = useState(false);
-  const { handleForgotPin, OtpModal, PinModal } = useForgotPinHandler(setShowPinPopup);
+  const { handleForgotPin, OtpModal, PinModal } =
+    useForgotPinHandler(setShowPinPopup);
   const {
     sendCreds,
     charges,
@@ -145,7 +146,7 @@ function SendPayment(props) {
     setIsLoading(true);
     try {
       if (showOtpPoup || showSentPopup) return;
-      const valuesWithPin = { ...formik.values, pin };
+      const valuesWithPin = { ...formik.values, user_pin: pin };
       const formData = new FormData();
       const muValues = { ...valuesWithPin };
       muValues.wallet = muValues?.wallet?.map(
@@ -159,9 +160,15 @@ function SendPayment(props) {
       muValues.total_amount = paymentDetails.grandTotal;
       for (const key in muValues)
         addObjToFormData(muValues[key], key, formData);
-      const { data } = await apiRequest.walletTransferOtp(formData);
+      const { data } = await apiRequest.walletTransferPin(formData);
       if (!data.success) throw data.message;
-      toast.success(`${data.message}`);
+      // toast.success(`${data.message}`);
+      setSentDetail({
+        heading: "Money Sent",
+        message: data.message,
+        url: "/assets/images/sent-payment-pop.svg",
+      });
+      setShowSentPopup(true);
       setShowPinPopup(false);
     } catch (error) {
       if (typeof error === "string") toast.error(error);
@@ -361,6 +368,7 @@ function SendPayment(props) {
     setIsLoading(true);
     setShowScheduleConfirmPopup(false);
     setIsScheduling(true);
+    setShowPinPopup(true);
     try {
       const formData = new FormData();
       const muValues = { ...formik.values };
@@ -378,17 +386,40 @@ function SendPayment(props) {
       delete muValues.wallet;
       for (const key in muValues)
         addObjToFormData(muValues[key], key, formData);
-      const { data } = await apiRequest.walletTransferScheduleOtp(formData);
-      if (!data.success) throw data.message;
-      // Store the formData values in scheduledData
-      setScheduledData(Object.fromEntries(formData));
-      if (data?.data?.otp) toast.success(`${data?.data?.otp}`);
-      toast.success(`${data.message}`);
-      setShowOtpPopup(true);
+      setScheduledData(formData);
     } catch (error) {
       if (typeof error === "string") toast.error(error);
     } finally {
       setScheduleCreds(null);
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubmitScheduleData = async (pin) => {
+    if (!pin) return;
+    setIsLoading(true);
+    try {
+      const formData = scheduledData;
+      if (formData.has("user_pin")) {
+        formData.delete("user_pin");
+      }
+      formData.append("user_pin", pin);
+      const { data } = await apiRequest.createPinSchedulePayment(formData);
+      if (!data.success) throw data.message;
+      // toast.success(`${data.message}`);
+      setSentDetail({
+        heading: "Money Sent",
+        message: data.message,
+        url: "/assets/images/sent-payment-pop.svg",
+      });
+      setIsScheduling(false);
+      setShowSentPopup(true);
+      setShowPinPopup(false);
+    } catch (error) {
+      if (typeof error === "string") {
+        toast.error(error);
+      }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -437,7 +468,9 @@ function SendPayment(props) {
         headingImg="/assets/images/setupPin.svg"
         subHeading=""
         validationSchema={sendPaymentPinSchema}
-        handleSubmitPin={handleSubmitData}
+        handleSubmitPin={
+          isScheduling ? handleSubmitScheduleData : handleSubmitData
+        }
         handleForgotPin={handleForgotPin}
       />
       {OtpModal()}
