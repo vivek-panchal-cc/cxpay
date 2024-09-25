@@ -69,6 +69,7 @@ export const API_ONBOARD_GET_COUNTRY_BANKS = "/get-country-banks";
 export const API_ONBOARD_RESEND_VERIFY_EMAIL = "/resend-verify-email";
 export const API_ONBOARD_DEACTIVATE_ACCOUNT = "/deactivate-account";
 export const API_ONBOARD_DEACTIVATE_ACCOUNT_AGENT = "/agent-delete";
+export const API_ONBOARD_SCHEDULE_PAYMENT_PIN = "/validate-pin-for-schedule-payment";
 export const API_ONBOARD_CREATE_SCHEDULE_PAYMENT = "/create-schedule-payment";
 export const API_ONBOARD_LIST_SCHEDULE_PAYMENT = "/list-schedule-payment";
 export const API_ONBOARD_DELETE_SCHEDULE_PAYMENT = "/delete-schedule-payment";
@@ -95,9 +96,10 @@ export const API_TRANSACTION_INITIATE_MANUAL_FUND_ADD =
 export const API_TRANSACTION_GET_BALANCE = "/get-balance";
 export const API_TRANSACTION_WALLET_TRANSFER_OTP = "/wallet-transfer-otp";
 export const API_TRANSACTION_WALLET_PERSONAL_OTP_VERIFY =
-  "/wallet-personal-otp-verify";
+"/wallet-personal-otp-verify";
 export const API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP =
-  "/resend-wallet-transfer-otp";
+"/resend-wallet-transfer-otp";
+export const API_TRANSACTION_WALLET_TRANSFER_PIN = "/validate-pin-for-wallet-transfer";
 export const API_TRANSACTION_GET_CHARGES = "/get-charges";
 export const API_TRANSACTION_SEND_PAYMENT_REQUEST = "/send-payment-request";
 export const API_TRANSACTION_ACTIVITY_LIST = "/activity-list";
@@ -144,6 +146,8 @@ export const API_TRANSACTION_VIEW_RECURRING_PAYMENT =
 export const API_TRANSACTION_WALLET_TRANSFER_RECURRING_OTP = "/create-recurring-schedule-payment-otp";
 export const API_TRANSACTION_RESEND_RECURRING_PAYMENT_OTP =
   "/resend-recurring-schedule-payment-otp";
+export const API_TRANSACTION_RECURRING_PAYMENT_PIN =
+  "/validate-pin-for-recurring-payment";
 
 //Reserved Amount
 export const API_RESERVED_AMOUNT_LIST = "/reserved-amount-list";
