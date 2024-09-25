@@ -54,7 +54,7 @@ const useForgotPinHandler = (setShowPinPopup) => {
         mobile_number,
         user_otp: otp,
       });
-      if (!data.success) throw data;
+      if (!data.success) throw data.message;
       toast.success(data.message);
       setShowOtpModal(false);
       setPinModal(true);
