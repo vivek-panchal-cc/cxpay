@@ -12,9 +12,11 @@ const useForgotPinHandler = (setShowPinPopup) => {
   const { setIsLoading } = useContext(LoaderContext);
   const [pinModal, setPinModal] = useState(false);
   const { mobile_number } = useSelector((state) => state?.userProfile?.profile);
+  const [error, setError] = useState("");
 
   const handleForgotPin = async () => {
-    setIsLoading(true);    
+    setError("");
+    setIsLoading(true);
     try {
       const { data } = await apiRequest.forgotPinOtp({
         mobile_number: mobile_number,
@@ -57,10 +59,12 @@ const useForgotPinHandler = (setShowPinPopup) => {
       if (!data.success) throw data.message;
       toast.success(data.message);
       setShowOtpModal(false);
+      setError("");
       setPinModal(true);
       return true;
-    } catch (error) {
-      toast.error(error);
+    } catch (error) {      
+      if (typeof error === "string") setError(error);
+      //   toast.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -96,6 +100,7 @@ const useForgotPinHandler = (setShowPinPopup) => {
       headingImg="/assets/images/sent-payment-otp-pop.svg"
       subHeading="We have sent you verification code to change pin. Enter OTP below"
       validationSchema={sendPaymentOtpSchema}
+      error={error}
       handleSubmitOtp={handleSubmitOtp}
       handleResendOtp={handleResendOtp}
     />
