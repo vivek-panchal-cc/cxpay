@@ -108,6 +108,8 @@ const AgentBalanceGraph = (props) => {
   const [showAvailableBalance, setShowAvailableBalance] = useState(false);
   const [showReservedAmount, setShowReservedAmount] = useState(false);
   const [showBalance, setShowBalance] = useState(true);
+  const [displayedCommissionAmount, setDisplayedCommissionAmount] = useState(0);
+  const [displayedRechargeAmount, setDisplayedRechargeAmount] = useState(0);
 
   const { commissionAmount, rechargeAmount } = useMemo(() => {
     const { commission_amount, recharge_amount } = balance || {};
@@ -121,6 +123,44 @@ const AgentBalanceGraph = (props) => {
         : "";
     return { commissionAmount, rechargeAmount };
   }, [balance]);
+
+  useEffect(() => {
+    const duration = 1000; // Total time for animation (5 seconds)
+    const intervalTime = 50; // Update the balance every 10ms
+    const steps = duration / intervalTime;
+    const increment = commissionAmount / steps;
+
+    let currentCommissionAmount = 0;
+    const interval = setInterval(() => {
+      currentCommissionAmount += increment;
+      if (currentCommissionAmount >= commissionAmount) {
+        currentCommissionAmount = commissionAmount;
+        clearInterval(interval);
+      }
+      setDisplayedCommissionAmount(currentCommissionAmount);
+    }, intervalTime);
+
+    return () => clearInterval(interval);
+  }, [commissionAmount]);
+  
+  useEffect(() => {
+    const duration = 1000; // Total time for animation (5 seconds)
+    const intervalTime = 50; // Update the balance every 10ms
+    const steps = duration / intervalTime;
+    const increment = rechargeAmount / steps;
+
+    let currentRechargeAmount = 0;
+    const interval = setInterval(() => {
+      currentRechargeAmount += increment;
+      if (currentRechargeAmount >= rechargeAmount) {
+        currentRechargeAmount = rechargeAmount;
+        clearInterval(interval);
+      }
+      setDisplayedRechargeAmount(currentRechargeAmount);
+    }, intervalTime);
+
+    return () => clearInterval(interval);
+  }, [rechargeAmount]);
 
   useEffect(() => {
     // Process monthDataArr and generate sortedMonthValues
@@ -294,7 +334,7 @@ const AgentBalanceGraph = (props) => {
             {commissionAmount && (
               <h2 className="h3 text-black fw-bolder">
                 {showBalance ? ( // Check if available balance should be shown
-                  <WrapAmount value={commissionAmount} />
+                  <WrapAmount value={displayedCommissionAmount} />
                 ) : (
                   `${CURRENCY_SYMBOL} ${new Array(
                     (commissionAmount + "")?.length
@@ -353,7 +393,7 @@ const AgentBalanceGraph = (props) => {
               {rechargeAmount && (
                 <h2 className="h3 text-black fw-bolder">
                   {showBalance ? (
-                    <WrapAmount value={rechargeAmount} />
+                    <WrapAmount value={displayedRechargeAmount} />
                   ) : (
                     `${CURRENCY_SYMBOL} ${new Array(
                       (rechargeAmount + "")?.length

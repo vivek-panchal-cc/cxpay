@@ -10,13 +10,16 @@ function PendingPin() {
   const location = useLocation();
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
-  const isPending = searchParams.get("is_pending");
+  // const isPending = searchParams.get("is_pending");
+  const isLegitimateAccess = sessionStorage.getItem("pendingPin") === "true";
 
   useEffect(() => {
-    if (pinInputRef.current) {
+    if (!isLegitimateAccess) {
+      navigate("/", { replace: true });
+    } else if (pinInputRef.current) {
       pinInputRef.current.focus();
     }
-  }, []);
+  }, [isLegitimateAccess, navigate]);
 
   const formik = useFormik({
     initialValues: {
@@ -42,7 +45,7 @@ function PendingPin() {
     navigate("/set-pin", { replace: true, state: { setPin: true } });
   };
 
-  if (!isPending) return <Navigate to="/" replace />;
+  if (!isLegitimateAccess) return <Navigate to="/" replace />;
 
   return (
     <div className="login-signup login-signup-main common-body-bg">

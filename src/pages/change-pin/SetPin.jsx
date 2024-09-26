@@ -33,6 +33,7 @@ function SetPin() {
       try {
         const { data } = await apiRequest.pinSet(values);
         if (!data.success) throw data.message;
+        sessionStorage.removeItem("pendingPin");
         resetForm();
         setModalDetails({
           show: true,

@@ -117,6 +117,8 @@ const BalanceGraph = (props) => {
   const [showAvailableBalance, setShowAvailableBalance] = useState(false);
   const [showReservedAmount, setShowReservedAmount] = useState(false);
   const [showBalance, setShowBalance] = useState(true);
+  const [displayedBalance, setDisplayedBalance] = useState(0);
+  const [displayedReservedBalance, setDisplayedReservedBalance] = useState(0);
 
   const { availableBalance, lockBalance } = useMemo(() => {
     const { available, lock } = balance || {};
@@ -126,6 +128,44 @@ const BalanceGraph = (props) => {
       typeof lock === "number" && lock > 0 ? lock.toFixed(2) : "";
     return { availableBalance, lockBalance };
   }, [balance]);
+
+  useEffect(() => {
+    const duration = 1000; // Total time for animation (5 seconds)
+    const intervalTime = 50; // Update the balance every 10ms
+    const steps = duration / intervalTime;
+    const increment = availableBalance / steps;
+
+    let currentBalance = 0;
+    const interval = setInterval(() => {
+      currentBalance += increment;
+      if (currentBalance >= availableBalance) {
+        currentBalance = availableBalance;
+        clearInterval(interval);
+      }
+      setDisplayedBalance(currentBalance);
+    }, intervalTime);
+
+    return () => clearInterval(interval);
+  }, [availableBalance]);
+  
+  useEffect(() => {
+    const duration = 1000; // Total time for animation (5 seconds)
+    const intervalTime = 50; // Update the balance every 10ms
+    const steps = duration / intervalTime;
+    const increment = lockBalance / steps;
+
+    let currentReservedBalance = 0;
+    const interval = setInterval(() => {
+      currentReservedBalance += increment;
+      if (currentReservedBalance >= lockBalance) {
+        currentReservedBalance = lockBalance;
+        clearInterval(interval);
+      }
+      setDisplayedReservedBalance(currentReservedBalance);
+    }, intervalTime);
+
+    return () => clearInterval(interval);
+  }, [lockBalance]);
 
   // useEffect(() => {
   //   months.length = 0; // Clear the months array before pushing new values
@@ -308,7 +348,7 @@ const BalanceGraph = (props) => {
               {availableBalance && (
                 <h2 className="h3 text-black fw-bolder">
                   {showBalance ? ( // Check if available balance should be shown
-                    <WrapAmount value={availableBalance} />
+                    <WrapAmount value={displayedBalance} />
                   ) : (
                     `${CURRENCY_SYMBOL} ${new Array(
                       (availableBalance + "")?.length
@@ -377,7 +417,7 @@ const BalanceGraph = (props) => {
                   {lockBalance && (
                     <h2 className="h3 text-black fw-bolder">
                       {showBalance ? (
-                        <WrapAmount value={lockBalance} />
+                        <WrapAmount value={displayedReservedBalance} />
                       ) : (
                         `${CURRENCY_SYMBOL} ${new Array(
                           (lockBalance + "")?.length
