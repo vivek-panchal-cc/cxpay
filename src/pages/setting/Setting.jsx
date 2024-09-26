@@ -105,11 +105,15 @@ function Setting() {
     useForgotPinHandler(setShowPinPopup);
 
   React.useEffect(() => {
-    if (!isPinValidated) {
-      setShowPinPopup(true);
-      // navigate('/');
+    if (user_type === "agent") {
+      setIsPinValidated(true);
+      setShowPinPopup(false);
+      return;
     }
-  }, [isPinValidated]);
+    if (!isPinValidated && (user_type === "personal" || user_type === "business")) {
+      setShowPinPopup(true);
+    }
+  }, [isPinValidated, user_type, setIsPinValidated]);
 
   const handleSubmitPin = async (pin) => {
     if (!pin) return;
@@ -143,7 +147,8 @@ function Setting() {
                   {(item?.title === "Business info" &&
                     user_type === "personal") ||
                   (item?.title === "Business info" && user_type === "agent") ||
-                  (item?.title === "Notifications" && user_type === "agent") ? (
+                  (item?.title === "Notifications" && user_type === "agent") ||
+                  (item?.title === "Change PIN" && user_type === "agent") ? (
                     ""
                   ) : (
                     <li key={item.title?.trim() || index}>
@@ -160,7 +165,7 @@ function Setting() {
           </div>
         </div>
       )}
-      {showPinPopup && (
+      {showPinPopup && user_type !== "agent" && (
         <ModalPaymentPin
           id="group_pay_otp_modal"
           className="otp-verification-modal group_pay_otp_modal"

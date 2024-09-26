@@ -18,6 +18,7 @@ const ProfileDropdown = () => {
   const [error, setError] = useState("");
   const { setIsPinValidated } = usePinContext();
   const { profile } = useSelector((state) => state.userProfile);
+  const { user_type } = profile || "";
   const [showDrop, setShowDrop] = useState(false);
   const { setIsLoading } = useContext(LoaderContext);
   const [showPinPopup, setShowPinPopup] = useState(false);
@@ -106,7 +107,7 @@ const ProfileDropdown = () => {
               path={elm.path === "/setting" ? null : elm.path}
               onClick={(e) => {
                 setShowDrop(false);
-                if (elm.path === "/setting") {
+                if (elm.path === "/setting" && user_type !== "agent") {
                   handleSettingsClick(e);
                 } else {
                   navigate(elm.path);

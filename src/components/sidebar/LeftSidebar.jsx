@@ -39,7 +39,8 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
   const { user_type, kyc_approved_status = "" } = profile || "";
   const [showPinPopup, setShowPinPopup] = useState(false);
   const thisRoute = useMemo(() => location.pathname.split("/")[1], [location]);
-  const { handleForgotPin, OtpModal, PinModal } = useForgotPinHandler(setShowPinPopup);
+  const { handleForgotPin, OtpModal, PinModal } =
+    useForgotPinHandler(setShowPinPopup);
   const [submenuPosition, setSubmenuPosition] = useState({ top: 0, left: 0 });
 
   const updateSubMenuPosition = () => {
@@ -143,7 +144,11 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
   const handleSettingsClick = (e) => {
     e.preventDefault();
     setError("");
-    setShowPinPopup(true);
+    if (user_type === "agent") {
+      navigate("/setting");
+    } else {
+      setShowPinPopup(true);
+    }
   };
 
   const openCMSPages = (slug) => {
