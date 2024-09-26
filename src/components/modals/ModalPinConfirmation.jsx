@@ -134,7 +134,10 @@ function ModalPinConfirmation(props) {
                   />
                 </div>
                 <div className="pop-cancel-btn text-center">
-                  <button type="button" onClick={() => setShow(false)}>
+                  <button type="button" onClick={() => {
+                    formik.resetForm();
+                    setShow(false)
+                    }}>
                     Cancel
                   </button>
                 </div>
