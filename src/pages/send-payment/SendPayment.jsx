@@ -56,6 +56,7 @@ function SendPayment(props) {
     show_renew_section
   );
   const { wallet, request_id } = sendCreds || [];
+  const [error, setError] = useState("");
   const [scrollTop, setScrollTop] = useState(false);
   const [isScheduling, setIsScheduling] = useState(false);
   const [showOtpPoup, setShowOtpPopup] = useState(false);
@@ -111,6 +112,7 @@ function SendPayment(props) {
     initialValues: sendCreds,
     validationSchema: sendPaymentSchema,
     onSubmit: async (values, { setValues, setErrors }) => {
+      setError("");
       setShowPinPopup(true);
       // try {
       //   if (showOtpPoup || showSentPopup) return;
@@ -171,7 +173,10 @@ function SendPayment(props) {
       setShowSentPopup(true);
       setShowPinPopup(false);
     } catch (error) {
-      if (typeof error === "string") toast.error(error);
+      if (typeof error === "string") {
+        setError(error);
+        // toast.error(error);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -365,6 +370,7 @@ function SendPayment(props) {
       setShowSchedulePopup(false);
       return;
     }
+    setError("");
     setIsLoading(true);
     setShowScheduleConfirmPopup(false);
     setIsScheduling(true);
@@ -417,7 +423,8 @@ function SendPayment(props) {
       setShowPinPopup(false);
     } catch (error) {
       if (typeof error === "string") {
-        toast.error(error);
+        setError(error);
+        // toast.error(error);
       }
     } finally {
       setIsLoading(false);
@@ -468,6 +475,7 @@ function SendPayment(props) {
         headingImg="/assets/images/setupPin.svg"
         subHeading=""
         validationSchema={sendPaymentPinSchema}
+        error={error}
         handleSubmitPin={
           isScheduling ? handleSubmitScheduleData : handleSubmitData
         }

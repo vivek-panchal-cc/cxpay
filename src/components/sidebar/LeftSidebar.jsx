@@ -32,6 +32,7 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
   const { cmsPages } = useCms();
   const location = useLocation();
   const navigate = useNavigate();
+  const [error, setError] = useState("");
   const { setIsLoading } = useContext(LoaderContext);
   const { setIsPinValidated } = usePinContext();
   const { profile, isLoading } = useSelector((state) => state.userProfile);
@@ -132,7 +133,8 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
       setIsPinValidated(true);
       navigate("/setting");
     } catch (error) {
-      toast.error(error);
+      setError(error);
+      // toast.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -140,6 +142,7 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
 
   const handleSettingsClick = (e) => {
     e.preventDefault();
+    setError("");
     setShowPinPopup(true);
   };
 
@@ -316,6 +319,7 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
           headingImg="/assets/images/setupPin.svg"
           subHeading="Secure your account with 5 - Digit PIN Access"
           validationSchema={sendPaymentPinSchema}
+          error={error}
           handleSubmitPin={handleSubmitPin}
           handleForgotPin={handleForgotPin}
         />

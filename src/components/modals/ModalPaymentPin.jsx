@@ -19,6 +19,7 @@ function ModalPaymentPin(props) {
     validationSchema,
     allowClickOutSide,
     handleForgotPin,
+    error = "",
   } = props;
 
   const modalRef = useRef(null);
@@ -60,7 +61,7 @@ function ModalPaymentPin(props) {
         resetForm();
       } catch (error) {
         resetForm();
-        console.log(error);
+        // console.log(error);
       }
     },
   });
@@ -125,8 +126,8 @@ function ModalPaymentPin(props) {
                   />
                 </div>
                 <div className="popup-btn-wrap">
-                  {formik.status && (
-                    <p className="text-danger">{formik.status}</p>
+                  {error && (
+                    <p className="text-danger">{error}</p>
                   )}
                   <input
                     type="submit"

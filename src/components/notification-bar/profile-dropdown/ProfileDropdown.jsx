@@ -15,6 +15,7 @@ import useForgotPinHandler from "hooks/useForgotPinHandler";
 const ProfileDropdown = () => {
   const dropdownref = useRef(null);
   const navigate = useNavigate();
+  const [error, setError] = useState("");
   const { setIsPinValidated } = usePinContext();
   const { profile } = useSelector((state) => state.userProfile);
   const [showDrop, setShowDrop] = useState(false);
@@ -46,7 +47,8 @@ const ProfileDropdown = () => {
       setIsPinValidated(true);
       navigate("/setting");
     } catch (error) {
-      toast.error(error);
+      setError(error)
+      // toast.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -54,6 +56,7 @@ const ProfileDropdown = () => {
 
   const handleSettingsClick = (e) => {
     e.preventDefault();
+    setError("");
     setShowPinPopup(true);
   };
 
@@ -127,6 +130,7 @@ const ProfileDropdown = () => {
           headingImg="/assets/images/setupPin.svg"
           subHeading="Secure your account with 5 - Digit PIN Access"
           validationSchema={sendPaymentPinSchema}
+          error={error}
           handleSubmitPin={handleSubmitPin}
           handleForgotPin={handleForgotPin}
         />

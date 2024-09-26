@@ -3,7 +3,7 @@ import { LoaderContext } from "context/loaderContext";
 import { usePinContext } from "context/pinContext";
 import { apiRequest } from "helpers/apiRequests";
 import useForgotPinHandler from "hooks/useForgotPinHandler";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -98,9 +98,11 @@ function Setting() {
   const { user_type = "personal" } = profile || {};
   const { isPinValidated, setIsPinValidated } = usePinContext();
   const navigate = useNavigate();
+  const [error, setError] = useState("");
   const { setIsLoading } = useContext(LoaderContext);
   const [showPinPopup, setShowPinPopup] = React.useState(false);
-  const { handleForgotPin, OtpModal, PinModal } = useForgotPinHandler(setShowPinPopup);
+  const { handleForgotPin, OtpModal, PinModal } =
+    useForgotPinHandler(setShowPinPopup);
 
   React.useEffect(() => {
     if (!isPinValidated) {
@@ -120,7 +122,8 @@ function Setting() {
       setIsPinValidated(true);
       navigate("/setting");
     } catch (error) {
-      toast.error(error);
+      setError(error);
+      // toast.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -168,6 +171,7 @@ function Setting() {
           headingImg="/assets/images/setupPin.svg"
           subHeading="Secure your account with 5 - Digit PIN Access"
           validationSchema={sendPaymentPinSchema}
+          error={error}
           handleSubmitPin={handleSubmitPin}
           handleForgotPin={handleForgotPin}
         />

@@ -34,6 +34,7 @@ function SendRecurringPayment(_props) {
   const formData = location.state?.formData;
   const inputAmountRefs = useRef([]);
   const { setIsLoading } = useContext(LoaderContext);
+  const [error, setError] = useState("");
   const [showOtpPoup, setShowOtpPopup] = useState(false);
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
   const [showScheduleConfirmPopup, setShowScheduleConfirmPopup] =
@@ -140,6 +141,7 @@ function SendRecurringPayment(_props) {
     }
     setIsLoading(true);
     setShowScheduleConfirmPopup(false);
+    setError("");
     setShowPinPopup(true);
     try {
       const formDataAppend = new FormData();
@@ -213,7 +215,8 @@ function SendRecurringPayment(_props) {
       setShowPinPopup(false);
     } catch (error) {
       if (typeof error === "string") {
-        toast.error(error);
+        setError(error);
+        // toast.error(error);
       }
     } finally {
       setIsLoading(false);
@@ -371,6 +374,7 @@ function SendRecurringPayment(_props) {
         headingImg="/assets/images/setupPin.svg"
         subHeading=""
         validationSchema={sendPaymentPinSchema}
+        error={error}
         handleSubmitPin={handleSubmitRecurringData}
         handleForgotPin={handleForgotPin}
       />
