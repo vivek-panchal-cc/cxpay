@@ -179,14 +179,14 @@ const otpSchema = yup
 const paymentPinSchema = yup
   .string()
   .length(5, "PIN length must be 5 digits")
-  .matches(/^\d*$/, "PIN should be number")
+  .matches(/^\d*$/, "Please enter your PIN. This field is required")
   .required("PIN is required");
 
   const pinSchema = yup
   .string()
   .required("PIN is required")
   .length(5, "PIN length must be 5 digits")
-  .matches(/^\d*$/, "PIN should be a number")
+  .matches(/^\d*$/, "Please enter your PIN. This field is required")
   .test(
     "no-all-zeros",
     "The PIN cannot be '00000'. Please enter a valid PIN",

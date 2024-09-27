@@ -10,7 +10,7 @@ const pinSchema = yup
   .string()
   .required("PIN is required")
   .length(5, "PIN length must be 5 digits")
-  .matches(/^\d*$/, "PIN should be a number")
+  .matches(/^\d*$/, "Please enter your PIN. This field is required")
   .test(
     "no-all-zeros",
     "The PIN cannot be '00000'. Please enter a valid PIN",
@@ -67,7 +67,7 @@ const pinChangeSchema = yup.object().shape({
   old_pin: yup
     .string()
     .required("Old PIN is required")
-    .matches(/^\d*$/, "PIN should be number")
+    .matches(/^\d*$/, "Please enter your PIN. This field is required")
     .length(5, "Old PIN length must be 5 digits"),
   new_pin: pinSchema,
   confirm_pin: confirmPinSchema,
