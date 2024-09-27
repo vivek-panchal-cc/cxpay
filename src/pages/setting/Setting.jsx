@@ -135,7 +135,7 @@ function Setting() {
 
   return (
     <div className="settings-right-sec settings-vc-sec">
-      {isPinValidated && (
+      {/* {isPinValidated && ( */}
         <div className="settings-inner-sec">
           <div className="profile-info">
             <h3>Settings</h3>
@@ -164,7 +164,7 @@ function Setting() {
             </ul>
           </div>
         </div>
-      )}
+      {/* )} */}
       {showPinPopup && user_type !== "agent" && (
         <ModalPaymentPin
           id="group_pay_otp_modal"

@@ -66,9 +66,20 @@ function ModalPaymentPin(props) {
     },
   });
 
+  // useEffect(() => {
+  //   console.log("Hello")
+  //   formik.resetForm();
+  //   return () => {
+  //     console.log("inmount pin comp.");
+  //   formik.resetForm();
+  //   }
+  // }, []);
+
   const forgotPIN = useCallback(async () => {
     try {
       await handleForgotPin();
+      setShow(false);
+      formik.resetForm()
     } catch (error) {}
   }, [handleForgotPin]);
 
@@ -91,6 +102,7 @@ function ModalPaymentPin(props) {
               }}
               onClick={() => {
                 setShow(false);
+                formik.resetForm();
                 if (window.location.href.includes("setting")) {
                   navigate(-1);
                 }
@@ -126,9 +138,7 @@ function ModalPaymentPin(props) {
                   />
                 </div>
                 <div className="popup-btn-wrap">
-                  {error && (
-                    <p className="text-danger">{error}</p>
-                  )}
+                  {error && <p className="text-danger">{error}</p>}
                   <input
                     type="submit"
                     className={`btn btn-primary ${
