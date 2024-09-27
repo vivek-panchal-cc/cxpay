@@ -110,7 +110,20 @@ function Businessform(props) {
       }));
       setShowPinPopup(false); // Close the modal on success
     } catch (error) {
-      toast.error(error);
+      if (typeof error === "object" && error !== null) {
+        Object.entries(error).forEach(([field, messages]) => {
+          if (Array.isArray(messages)) {
+            // messages.forEach((msg) => toast.error(`${field}: ${msg}`));
+            messages.forEach((msg) => toast.error(`${msg}`));
+          } else {
+            // toast.error(`${field}: ${messages}`);
+            toast.error(`${messages}`);
+          }
+        });
+      } else {
+        toast.error(error);
+      }
+      setShowPinPopup(false);
     } finally {
       setIsLoading(false);
     }

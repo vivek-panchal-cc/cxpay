@@ -71,6 +71,7 @@ import ChangePin from "pages/change-pin/ChangePin";
 import SetPin from "pages/change-pin/SetPin";
 import ForgotPin from "pages/forgot-pin/ForgotPin";
 import PendingPin from "pages/pending-pin/PendingPin";
+import ProtectedRoute from "components/protected-pin-route/ProtectedPin";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -298,19 +299,27 @@ function App() {
           <Route element={<DashboardLayout />}>
             {/* settings */}
             <Route path="/setting" element={<Setting />} />
-            <Route path="/setting/edit-profile" element={<EditProfile />} />
+            <Route
+              path="/setting/edit-profile"
+              element={
+                <ProtectedRoute>
+                  <EditProfile />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/setting/notification"
               element={<ProtectedNotification />}
             />
             <Route
               path="/setting/change-password"
-              element={<ChangePassword />}
+              element={
+                <ProtectedRoute>
+                  <ChangePassword />
+                </ProtectedRoute>
+              }
             />
-            <Route
-              path="/setting/change-pin"
-              element={<ChangePin />}
-            />
+            <Route path="/setting/change-pin" element={<ChangePin />} />
             <Route
               path="/setting/business-info"
               element={<ProtectedBusinessInfo />}
