@@ -61,19 +61,9 @@ function ModalPaymentPin(props) {
         resetForm();
       } catch (error) {
         resetForm();
-        // console.log(error);
       }
     },
   });
-
-  // useEffect(() => {
-  //   console.log("Hello")
-  //   formik.resetForm();
-  //   return () => {
-  //     console.log("inmount pin comp.");
-  //   formik.resetForm();
-  //   }
-  // }, []);
 
   const forgotPIN = useCallback(async () => {
     try {
