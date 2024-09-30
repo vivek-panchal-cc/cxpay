@@ -163,7 +163,7 @@ function SendPayment(props) {
       for (const key in muValues)
         addObjToFormData(muValues[key], key, formData);
       const { data } = await apiRequest.walletTransferPin(formData);
-      if (!data.success) throw data.message;
+      if (!data.success) throw data;
       // toast.success(`${data.message}`);
       setSentDetail({
         heading: "Money Sent",
@@ -173,9 +173,10 @@ function SendPayment(props) {
       setShowSentPopup(true);
       setShowPinPopup(false);
     } catch (error) {
-      if (typeof error === "string") {
-        setError(error);
-        // toast.error(error);
+      setError(error.message);
+      if(error.data.is_suspended){
+        navigate("/logout", { replace: true });
+        toast.error(error.message);
       }
     } finally {
       setIsLoading(false);
@@ -411,7 +412,7 @@ function SendPayment(props) {
       }
       formData.append("user_pin", pin);
       const { data } = await apiRequest.createPinSchedulePayment(formData);
-      if (!data.success) throw data.message;
+      if (!data.success) throw data;
       // toast.success(`${data.message}`);
       setSentDetail({
         heading: "Money Sent",
@@ -422,9 +423,10 @@ function SendPayment(props) {
       setShowSentPopup(true);
       setShowPinPopup(false);
     } catch (error) {
-      if (typeof error === "string") {
-        setError(error);
-        // toast.error(error);
+      setError(error.message);
+      if(error.data.is_suspended){
+        navigate("/logout", { replace: true });
+        toast.error(error.message);
       }
     } finally {
       setIsLoading(false);

@@ -6,16 +6,20 @@ import { LoaderContext } from "context/loaderContext";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import ModalPinConfirmation from "components/modals/ModalPinConfirmation";
+import { useNavigate } from "react-router-dom";
 
 const useForgotPinHandler = (setShowPinPopup) => {
+  const navigate = useNavigate();
   const [showOtpModal, setShowOtpModal] = useState(false);
   const { setIsLoading } = useContext(LoaderContext);
   const [pinModal, setPinModal] = useState(false);
   const { mobile_number } = useSelector((state) => state?.userProfile?.profile);
   const [error, setError] = useState("");
+  const [otpAttempts, setOtpAttempts] = useState(1);
 
   const handleForgotPin = async () => {
     setError("");
+    setOtpAttempts(1);
     setIsLoading(true);
     try {
       const { data } = await apiRequest.forgotPinOtp({
@@ -55,16 +59,27 @@ const useForgotPinHandler = (setShowPinPopup) => {
       const { data } = await apiRequest.verifyPinOtp({
         mobile_number,
         user_otp: otp,
+        otp_attempts: otpAttempts,
       });
-      if (!data.success) throw data.message;
+      if (!data.success) throw data;
       toast.success(data.message);
       setShowOtpModal(false);
       setError("");
       setPinModal(true);
       return true;
     } catch (error) {      
-      if (typeof error === "string") setError(error);
-      //   toast.error(error);
+      setError(error.message);
+      if (error.data?.otp_attempts === "3") {        
+        if (window.location.href.includes("setting")) {          
+          navigate(-1);
+        } else {
+          setShowOtpModal(false);
+          toast.error(error.message);
+          return false;
+        }
+      } else {
+        setOtpAttempts((prevAttempts) => prevAttempts + 1);
+      }
     } finally {
       setIsLoading(false);
     }

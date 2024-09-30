@@ -204,7 +204,7 @@ function SendRecurringPayment(_props) {
       }
       formData.append("user_pin", pin);
       const { data } = await apiRequest.recurringPaymentPin(formData);
-      if (!data.success) throw data.message;
+      if (!data.success) throw data;
       // toast.success(`${data.message}`);
       setSentDetail({
         heading: "Money Sent",
@@ -214,9 +214,10 @@ function SendRecurringPayment(_props) {
       setShowSentPopup(true);
       setShowPinPopup(false);
     } catch (error) {
-      if (typeof error === "string") {
-        setError(error);
-        // toast.error(error);
+      setError(error.message);
+      if(error.data.is_suspended){
+        navigate("/logout", { replace: true });
+        toast.error(error.message);
       }
     } finally {
       setIsLoading(false);

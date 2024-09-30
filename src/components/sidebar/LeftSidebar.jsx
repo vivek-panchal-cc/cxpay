@@ -128,13 +128,17 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
     setIsLoading(true);
     try {
       const { data } = await apiRequest.pinValidate({ user_pin: pin });
-      if (!data.success) throw data.message;
+      if (!data.success) throw data;
       toast.success(data.message);
       setShowPinPopup(false);
       setIsPinValidated(true);
       navigate("/setting");
     } catch (error) {
-      setError(error);
+      setError(error.message);
+      if(error.data.is_suspended){
+        navigate("/logout", { replace: true });
+        toast.error(error.message);
+      }
       // toast.error(error);
     } finally {
       setIsLoading(false);
