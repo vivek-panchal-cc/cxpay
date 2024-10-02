@@ -1,7 +1,7 @@
 import { apiRequest } from "helpers/apiRequests";
 import { useContext, useState } from "react";
 import { sendPaymentOtpSchema, setPinSchema } from "schemas/sendPaymentSchema";
-import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
+import ModalOtpConfirmationForPin from "components/modals/ModalOtpConfirmationForPin";
 import { LoaderContext } from "context/loaderContext";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
@@ -107,7 +107,7 @@ const useForgotPinHandler = (setShowPinPopup) => {
   };
 
   const OtpModal = () => (
-    <ModalOtpConfirmation
+    <ModalOtpConfirmationForPin
       id="group_pay_otp_modal"
       className="otp-verification-modal group_pay_otp_modal"
       show={showOtpModal}

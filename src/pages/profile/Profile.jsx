@@ -13,7 +13,7 @@ import {
   fetchUserProfile,
 } from "features/user/userProfileSlice";
 import OtpTypePopup from "components/popups/OtpTypePopup";
-import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
+import ModalOtpConfirmationForPin from "components/modals/ModalOtpConfirmationForPin";
 import { sendPaymentOtpSchema } from "schemas/sendPaymentSchema";
 import NewMobileChange from "pages/new-mobile-change/NewMobileChange";
 import NewMobileModal from "components/modals/NewMobileModal";
@@ -239,7 +239,7 @@ const Profile = () => {
         />
       </Modal>
 
-      <ModalOtpConfirmation
+      <ModalOtpConfirmationForPin
         id="group_pay_otp_modal"
         className="otp-verification-modal group_pay_otp_modal"
         show={showOtpPopup}
