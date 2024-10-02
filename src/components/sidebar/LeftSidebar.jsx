@@ -28,19 +28,19 @@ import { LoaderContext } from "context/loaderContext";
 import { usePinContext } from "context/pinContext";
 import useForgotPinHandler from "hooks/useForgotPinHandler";
 
-function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
+function LeftSidebar({ isSidebarOpen, setIsSidebarOpen, setShowPinPopup, setError }) {
   const { cmsPages } = useCms();
   const location = useLocation();
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const { setIsLoading } = useContext(LoaderContext);
   const { setIsPinValidated } = usePinContext();
   const { profile, isLoading } = useSelector((state) => state.userProfile);
   const { user_type, kyc_approved_status = "" } = profile || "";
-  const [showPinPopup, setShowPinPopup] = useState(false);
+  // const [showPinPopup, setShowPinPopup] = useState(false);
   const thisRoute = useMemo(() => location.pathname.split("/")[1], [location]);
-  const { handleForgotPin, OtpModal, PinModal } =
-    useForgotPinHandler(setShowPinPopup);
+  // const { handleForgotPin, OtpModal, PinModal } =
+  //   useForgotPinHandler(setShowPinPopup);
   const [submenuPosition, setSubmenuPosition] = useState({ top: 0, left: 0 });
 
   const updateSubMenuPosition = () => {
@@ -123,27 +123,27 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
   }
 
   // Function to handle PIN validation
-  const handleSubmitPin = async (pin) => {
-    if (!pin) return;
-    setIsLoading(true);
-    try {
-      const { data } = await apiRequest.pinValidate({ user_pin: pin });
-      if (!data.success) throw data;
-      toast.success(data.message);
-      setShowPinPopup(false);
-      setIsPinValidated(true);
-      navigate("/setting");
-    } catch (error) {
-      setError(error.message);
-      if(error.data.is_suspended){
-        navigate("/logout", { replace: true });
-        toast.error(error.message);
-      }
-      // toast.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // const handleSubmitPin = async (pin) => {
+  //   if (!pin) return;
+  //   setIsLoading(true);
+  //   try {
+  //     const { data } = await apiRequest.pinValidate({ user_pin: pin });
+  //     if (!data.success) throw data;
+  //     toast.success(data.message);
+  //     setShowPinPopup(false);
+  //     setIsPinValidated(true);
+  //     navigate("/setting");
+  //   } catch (error) {
+  //     setError(error.message);
+  //     if(error.data.is_suspended){
+  //       navigate("/logout", { replace: true });
+  //       toast.error(error.message);
+  //     }
+  //     // toast.error(error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const handleSettingsClick = (e) => {
     e.preventDefault();
@@ -317,7 +317,7 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
           </li>
         </ul>
       </div>
-      {showPinPopup && (
+      {/* {showPinPopup && (
         <ModalPaymentPin
           id="group_pay_otp_modal"
           className="otp-verification-modal group_pay_otp_modal"
@@ -334,7 +334,7 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen }) {
         />
       )}
       {OtpModal()}
-      {PinModal()}
+      {PinModal()} */}
     </div>
   );
 }
