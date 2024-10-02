@@ -29,6 +29,7 @@ import SystemOptionsProvider from "context/systemOptionsContext";
 import LoginProvider from "context/loginContext";
 import TimeZoneProvider from "context/timeZoneContext";
 import { PinProvider } from "context/pinContext";
+import MobilePopup from "components/modals/MobilePopup";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -40,6 +41,7 @@ root.render(
           <LoginProvider>
             <PinProvider>
               <TimeZoneProvider>
+                <MobilePopup />
                 <App />
               </TimeZoneProvider>
             </PinProvider>
