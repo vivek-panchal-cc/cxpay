@@ -69,7 +69,8 @@ const useForgotPinHandler = (setShowPinPopup) => {
       return true;
     } catch (error) {      
       setError(error.message);
-      if (error.data?.otp_attempts === "3") {        
+      const otpAttemptsCount = parseInt(error.data?.otp_attempts, 10);
+      if (otpAttemptsCount >= 3) {        
         if (window.location.href.includes("setting")) {          
           navigate(-1);
           toast.error(error.message);
