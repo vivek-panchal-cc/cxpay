@@ -50,7 +50,7 @@ function SetPin() {
 
   const handleModalCallback = () => {
     setModalDetails({ show: false, message: "" });
-    navigate("/logout", { replace: true });
+    navigate("/", { replace: true });
   };
 
   if (!setPin) return <Navigate to="/" replace />;
