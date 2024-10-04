@@ -17,6 +17,7 @@ import ModalPaymentPin from "components/modals/ModalPaymentPin";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { usePinContext } from "context/pinContext";
+import { sendPaymentPinSchema } from "schemas/sendPaymentSchema";
 
 function DashboardLayout() {
   const { setIsPinValidated } = usePinContext();
@@ -123,6 +124,7 @@ function DashboardLayout() {
             headingImg="/assets/images/setupPin.svg"
             subHeading="Secure your account with 5 - Digit PIN Access"
             error={error}
+            validationSchema={sendPaymentPinSchema}
             handleSubmitPin={handleSubmitPin}
             handleForgotPin={handleForgotPin}
           />

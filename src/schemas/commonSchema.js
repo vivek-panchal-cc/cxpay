@@ -182,7 +182,7 @@ const paymentPinSchema = yup
   .matches(/^\d*$/, "Please enter your PIN. This field is required")
   .required("PIN is required");
 
-  const pinSchema = yup
+const pinSchema = yup
   .string()
   .required("PIN is required")
   .length(5, "PIN length must be 5 digits")
@@ -225,7 +225,6 @@ const paymentPinSchema = yup
 
     return true;
   });
-
 
 const confirmPinSchema = yup
   .string()
