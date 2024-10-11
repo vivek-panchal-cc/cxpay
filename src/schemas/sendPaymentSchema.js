@@ -1,5 +1,11 @@
 import * as yup from "yup";
-import { confirmNewPinSchema, confirmPinSchema, otpSchema, paymentPinSchema, pinSchema } from "./commonSchema";
+import {
+  confirmNewPinSchema,
+  confirmPinSchema,
+  otpSchema,
+  paymentPinSchema,
+  pinSchema,
+} from "./commonSchema";
 
 const getYesterDay = () => {
   const today = new Date();
@@ -23,7 +29,7 @@ const sendPaymentSchema = yup.object().shape({
         .required("Please enter specifications"),
       personal_amount: yup
         .string()
-        .matches(/^[1-9]\d{0,5}(\.\d{1,2})?$/, "Please enter valid amount")
+        .matches(/^[1-9]\d{0,6}(\.\d{1,2})?$/, "Please enter valid amount")
         .required("Please enter amount"),
     })
   ),
@@ -38,7 +44,7 @@ const sendRequestSchema = yup.object().shape({
         .required("Please enter specifications"),
       amount: yup
         .string()
-        .matches(/^[1-9]\d{0,5}(\.\d{1,2})?$/, "Please enter valid amount")
+        .matches(/^[1-9]\d{0,6}(\.\d{1,2})?$/, "Please enter valid amount")
         .required("Please enter amount"),
     })
   ),

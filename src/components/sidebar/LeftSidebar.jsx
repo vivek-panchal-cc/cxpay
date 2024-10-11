@@ -28,7 +28,12 @@ import { LoaderContext } from "context/loaderContext";
 import { usePinContext } from "context/pinContext";
 import useForgotPinHandler from "hooks/useForgotPinHandler";
 
-function LeftSidebar({ isSidebarOpen, setIsSidebarOpen, setShowPinPopup, setError }) {
+function LeftSidebar({
+  isSidebarOpen,
+  setIsSidebarOpen,
+  setShowPinPopup,
+  setError,
+}) {
   const { cmsPages } = useCms();
   const location = useLocation();
   const navigate = useNavigate();
@@ -55,7 +60,28 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen, setShowPinPopup, setErro
 
       setSubmenuPosition({
         top: rect.top,
-        left: screenWidth > 768 ? rect.right : 0,
+        left: screenWidth > 991 ? rect.right : 0,
+      });
+    }
+  };
+
+  const updateBottomSubMenuPosition = () => {
+    const submenu = document.querySelector(
+      ".dashboard-bottom-links .more-sub-menu"
+    );
+    const moreMenu = document.querySelector(
+      ".dashboard-bottom-links .more-menu"
+    );
+
+    if (submenu && moreMenu) {
+      const rect = moreMenu.getBoundingClientRect();
+      const submenuHeight = submenu.offsetHeight;
+      const screenHeight = window.innerHeight;
+      const wouldOverflow = rect.bottom + submenuHeight > screenHeight;
+
+      setSubmenuPosition({
+        top: wouldOverflow ? rect.bottom - submenuHeight : rect.bottom,
+        left: window.innerWidth > 991 ? rect.right : 0,
       });
     }
   };
@@ -67,6 +93,25 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen, setShowPinPopup, setErro
 
     function handleScroll() {
       updateSubMenuPosition();
+    }
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup event listeners
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    function handleResize() {
+      updateBottomSubMenuPosition();
+    }
+
+    function handleScroll() {
+      updateBottomSubMenuPosition();
     }
 
     window.addEventListener("resize", handleResize);
@@ -267,31 +312,33 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen, setShowPinPopup, setErro
                 left: `${submenuPosition.left}px`,
               }}
             >
-              {cmsPages?.map((page) => (
+              <div className="more-sub-menu-scroll">
+                {cmsPages?.map((page) => (
+                  <li
+                    key={page.id}
+                    className={`${
+                      location.pathname === `/more/${page.slug}` ? "active" : ""
+                    }`}
+                  >
+                    <Link
+                      to={`/more/${page.slug}`}
+                      // onClick={() => openCMSPages(page.slug)}
+                      replace
+                    >
+                      <span>{page.title}</span>
+                    </Link>
+                  </li>
+                ))}
                 <li
-                  key={page.id}
                   className={`${
-                    location.pathname === `/more/${page.slug}` ? "active" : ""
+                    location.pathname === `/more/faq` ? "active" : ""
                   }`}
                 >
-                  <Link
-                    to={`/more/${page.slug}`}
-                    // onClick={() => openCMSPages(page.slug)}
-                    replace
-                  >
-                    <span>{page.title}</span>
+                  <Link to="/more/faq" replace>
+                    <span>FAQs</span>
                   </Link>
                 </li>
-              ))}
-              <li
-                className={`${
-                  location.pathname === `/more/faq` ? "active" : ""
-                }`}
-              >
-                <Link to="/more/faq" replace>
-                  <span>FAQs</span>
-                </Link>
-              </li>
+              </div>
             </ul>
           </li>
           {/* ) : null} */}
@@ -309,6 +356,52 @@ function LeftSidebar({ isSidebarOpen, setIsSidebarOpen, setShowPinPopup, setErro
               <span>Settings</span>
             </a>
           </li>
+          {/* <li
+            className={`more-menu ${
+              thisRoute.startsWith("more") ? "active" : ""
+            }`}
+            onMouseEnter={updateBottomSubMenuPosition}
+          >
+            <a>
+              <IconMore style={{ stroke: "#FFF100" }} />
+              <span>More</span>
+            </a>
+            <ul
+              className="more-sub-menu"
+              style={{
+                top: `${submenuPosition.top}px`,
+                left: `${submenuPosition.left}px`,
+              }}
+            >
+              <div className="more-sub-menu-scroll">
+                {cmsPages?.map((page) => (
+                  <li
+                    key={page.id}
+                    className={`${
+                      location.pathname === `/more/${page.slug}` ? "active" : ""
+                    }`}
+                  >
+                    <Link
+                      to={`/more/${page.slug}`}
+                      // onClick={() => openCMSPages(page.slug)}
+                      replace
+                    >
+                      <span>{page.title}</span>
+                    </Link>
+                  </li>
+                ))}
+                <li
+                  className={`${
+                    location.pathname === `/more/faq` ? "active" : ""
+                  }`}
+                >
+                  <Link to="/more/faq" replace>
+                    <span>FAQs</span>
+                  </Link>
+                </li>
+              </div>
+            </ul>
+          </li> */}
           <li>
             <Link to="/logout" replace>
               <IconLogout style={{ stroke: "#FFF100" }} />

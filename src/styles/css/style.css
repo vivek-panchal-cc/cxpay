@@ -583,11 +583,20 @@ pointer-events: none;
   padding-left: 0px;
   width: 150px;
   max-height: 200px;
-  overflow: auto;
+  overflow: hidden;
+}
+
+.sidebar-open .dashboard-link-wrap .more-sub-menu .more-sub-menu-scroll {
+  max-height: 200px;
 }
 
 .dashboard-link-wrap .more-sub-menu {
   padding-left: 0px;
+  max-height: 250px;
+  overflow: hidden;
+}
+
+.dashboard-link-wrap .more-sub-menu .more-sub-menu-scroll {
   max-height: 250px;
   overflow: auto;
 }
@@ -7187,7 +7196,7 @@ button.shedule-date-filter:hover {
 }
 
 .recurring-upcoming {
-  color: #FF7A00;
+  color: #ff7a00;
   background-color: yellow;
 }
 
@@ -8348,6 +8357,14 @@ ul.recent-act-lw-main .act-info-wrap-left {
 }
 
 .dashboard-main-links .more-menu:hover .more-sub-menu {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  margin-top: 0;
+}
+
+.dashboard-bottom-links .more-menu:hover .more-sub-menu {
   display: block;
   position: absolute;
   top: 0;
