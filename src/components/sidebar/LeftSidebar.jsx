@@ -80,7 +80,7 @@ function LeftSidebar({
       const wouldOverflow = rect.bottom + submenuHeight > screenHeight;
 
       setSubmenuPosition({
-        top: wouldOverflow ? rect.bottom - submenuHeight : rect.bottom,
+        top: rect.bottom - submenuHeight,
         left: window.innerWidth > 991 ? rect.right : 0,
       });
     }
@@ -295,7 +295,7 @@ function LeftSidebar({
             </>
           )}
           {/* {cmsPages?.length ? ( */}
-          <li
+          {/* <li
             className={`more-menu ${
               thisRoute.startsWith("more") ? "active" : ""
             }`}
@@ -340,7 +340,7 @@ function LeftSidebar({
                 </li>
               </div>
             </ul>
-          </li>
+          </li> */}
           {/* ) : null} */}
         </ul>
         <ul className="dashboard-bottom-links">
@@ -356,7 +356,7 @@ function LeftSidebar({
               <span>Settings</span>
             </a>
           </li>
-          {/* <li
+          <li
             className={`more-menu ${
               thisRoute.startsWith("more") ? "active" : ""
             }`}
@@ -401,7 +401,7 @@ function LeftSidebar({
                 </li>
               </div>
             </ul>
-          </li> */}
+          </li>
           <li>
             <Link to="/logout" replace>
               <IconLogout style={{ stroke: "#FFF100" }} />

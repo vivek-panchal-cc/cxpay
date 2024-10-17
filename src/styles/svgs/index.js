@@ -68,6 +68,7 @@ export { default as IconArrowRight } from "./ArrowRight";
 export { default as IconNotifyKyc } from "./NotifyKyc";
 export { default as IconVerified } from "./Verified";
 export { default as IconDeleteContact } from "./DeleteContact";
+export { default as IconExport } from "./Export";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";

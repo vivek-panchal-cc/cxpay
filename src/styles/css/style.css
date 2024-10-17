@@ -8617,3 +8617,72 @@ ul.recent-act-lw-main .act-info-wrap-left {
   visibility: visible;
   opacity: 1;
 }
+
+button.export-activities {
+  border: 0px;
+  background-color: var(--blue);
+  border-radius: 8px;
+  padding: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button.export-activities:hover {
+  background-color: var(--dark_blue);
+}
+
+button.export-activities.disabled {
+  pointer-events: none;
+  border: 0px;
+  background-color: var(--gray);
+  border-radius: 8px;
+  padding: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button.export-activities.disabled:hover {
+  background-color: var(--gray);
+}
+
+.tooltip-btn {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-btn .tooltip-text {
+  visibility: hidden;
+  width: 46px;
+  font-size: 10px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  /* padding: 5px 0; */
+  position: absolute;
+  z-index: 1;
+  bottom: -90%; /* Position above the button */
+  left: 100%;
+  margin-left: -40px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip-btn .tooltip-text::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+  rotate: 180deg;
+}
+
+.tooltip-btn:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}

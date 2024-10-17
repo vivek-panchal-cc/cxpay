@@ -141,6 +141,7 @@ const API_agentTopUps = apiUrl.API_TRANSACTION_AGENT_TOP_UPS;
 const API_getTopupPrintDetails = apiUrl.API_TRANSACTION_GET_TOPUP_PRINT_DETAILS;
 const API_getTopupTransactionHistory =
   apiUrl.API_TRANSACTION_GET_TOPUP_TRANSACTION_HISTORY;
+const API_topupTransactionExport = apiUrl.API_AGENT_TRANSACTION_EXPORT;
 const API_getTopupActivityDetails =
   apiUrl.API_TRANSACTION_GET_TOPUP_ACTIVITY_DETAILS;
 const API_getMonthlyRechargeTotal =
@@ -676,6 +677,13 @@ export const getTopUpTransactionHistory = (params) => {
   );
 };
 
+/** GET @topup-transaction-export
+ * @params
+ */
+export const topupTransactionExport = (params) => {
+  return axiosTransactionInstance.post(`${API_topupTransactionExport}`, params);
+};
+
 /** POST @get-topup-activity-details
  * @params auth_token, id
  */
@@ -1105,6 +1113,7 @@ export const apiRequest = {
   agentTopUps,
   getTopUpPrintDetails,
   getTopUpTransactionHistory,
+  topupTransactionExport,
   getTopupActivityDetails,
   getMonthlyRechargeTotal,
   initiateManualFundAdd,

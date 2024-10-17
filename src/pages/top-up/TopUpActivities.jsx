@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { IconCross, IconRefresh, IconSearch } from "styles/svgs";
+import { IconCross, IconExport, IconRefresh, IconSearch } from "styles/svgs";
 import Pagination from "components/pagination/Pagination";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
@@ -8,8 +8,12 @@ import useTopUpActivities from "hooks/useTopUpActivities";
 import TopUpActivityItem from "components/items/TopUpActivityItem";
 import { TopUpActivityContext } from "context/topUpActivityContext";
 import InputDateRangeActivities from "components/ui/InputDateRangeActivities";
+import { LoaderContext } from "context/loaderContext";
+import { apiRequest } from "helpers/apiRequests";
+import { toast } from "react-toastify";
 
 const TopUpActivities = () => {
+  const { setIsLoading } = useContext(LoaderContext);
   const { handleActivityDetail, reloadList } = useContext(TopUpActivityContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [serachText, setSearchText] = useState("");
@@ -91,6 +95,33 @@ const TopUpActivities = () => {
     });
   };
 
+  const handleExportActivities = async () => {
+    setIsLoading(true);
+    let reqParams = {
+      search: serachText,
+      start_date: filters.fromDate,
+      end_date: filters.toDate,
+    };
+    try {
+      const { data } = await apiRequest.topupTransactionExport(reqParams);
+      if (!data.success) throw data.message;
+      if (typeof data.message === "string") toast.success(data.message);
+      const base64csv = data.data;
+      const dtnow = new Date().toISOString();
+      const csvContent = atob(base64csv);
+      const blob = new Blob([csvContent], { type: "text/csv" });
+      const downloadLink = document.createElement("a");
+      const fileName = `Transaction_${dtnow}.csv`;
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = fileName;
+      downloadLink.click();
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -142,6 +173,18 @@ const TopUpActivities = () => {
           />
           <button className="shedule-date-filter" onClick={handleResetFilter}>
             <IconRefresh />
+          </button>
+          <button
+            className={`export-activities ${
+              Object.keys(activitiesDateBind || {}).length <= 0
+                ? "disabled"
+                : ""
+            } tooltip-btn`}
+            disabled={Object.keys(activitiesDateBind || {}).length <= 0}
+            onClick={handleExportActivities}
+          >
+            <IconExport stroke={"#ffff"} />
+            <span className="tooltip-text">Export</span>
           </button>
         </div>
       </div>
