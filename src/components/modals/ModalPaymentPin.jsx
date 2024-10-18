@@ -61,6 +61,7 @@ function ModalPaymentPin(props) {
         resetForm();
       } catch (error) {
         resetForm();
+        setValues({ pin: "" });
       }
     },
   });
@@ -69,7 +70,7 @@ function ModalPaymentPin(props) {
     try {
       await handleForgotPin();
       setShow(false);
-      formik.resetForm()
+      formik.resetForm();
     } catch (error) {}
   }, [handleForgotPin]);
 

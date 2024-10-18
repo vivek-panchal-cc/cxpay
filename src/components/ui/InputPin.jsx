@@ -16,12 +16,21 @@ const InputPin = forwardRef((props, ref) => {
 
   const [inputArr] = useState(Array.from(Array(pinSize).keys()));
   const [pinInputs, setPinInputs] = useState({});
+  const [maskInputs, setMaskInputs] = useState({});
 
   const firstInputRef = useRef(null);
 
   useEffect(() => {
+    // Reset the inputs if the value is empty (error case)
+    if (value === "") {
+      setPinInputs({});
+      setMaskInputs({});
+      return;
+    }
+
     const pins = inputArr.reduce((acc, curr) => {
-      const pinVal = value && value.charAt(curr).trim() ? value.charAt(curr) : "";
+      const pinVal =
+        value && value.charAt(curr).trim() ? value.charAt(curr) : "";
       acc[`pin${curr}`] = pinVal;
       return acc;
     }, {});
@@ -49,6 +58,11 @@ const InputPin = forwardRef((props, ref) => {
       ...cs,
       [e.target.name]: isNext ? tval.toString() : "",
     }));
+    // Set '•' in masked input for each pin
+    setMaskInputs((cs) => ({
+      ...cs,
+      [e.target.name]: isNext ? "•" : "",
+    }));
     e.target?.select();
     isNext && e.target?.nextSibling?.focus();
   };
@@ -61,6 +75,10 @@ const InputPin = forwardRef((props, ref) => {
         const tval = pinInputs[e.target.name];
         const isPrev = tval.trim() ? false : true;
         setPinInputs((cs) => ({
+          ...cs,
+          [e.target.name]: "",
+        }));
+        setMaskInputs((cs) => ({
           ...cs,
           [e.target.name]: "",
         }));
@@ -91,7 +109,7 @@ const InputPin = forwardRef((props, ref) => {
             min={0}
             max={9}
             name={`pin${item}`}
-            value={pinInputs?.[`pin${item}`] || ""}
+            value={maskInputs?.[`pin${item}`] || ""}
             className={`${className}`}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
