@@ -174,18 +174,20 @@ const TopUpActivities = () => {
           <button className="shedule-date-filter" onClick={handleResetFilter}>
             <IconRefresh />
           </button>
-          <button
-            className={`export-activities ${
-              Object.keys(activitiesDateBind || {}).length <= 0
-                ? "disabled"
-                : ""
-            } tooltip-btn`}
-            disabled={Object.keys(activitiesDateBind || {}).length <= 0}
-            onClick={handleExportActivities}
-          >
-            <IconExport stroke={"#ffff"} />
-            <span className="tooltip-text">Export</span>
-          </button>
+          {Object.keys(activitiesDateBind || {}).length > 0 ? (
+            <button
+              className={`export-activities ${
+                Object.keys(activitiesDateBind || {}).length <= 0
+                  ? "disabled"
+                  : ""
+              } tooltip-btn`}
+              disabled={Object.keys(activitiesDateBind || {}).length <= 0}
+              onClick={handleExportActivities}
+            >
+              <IconExport stroke={"#ffff"} />
+              <span className="tooltip-text">Export</span>
+            </button>
+          ) : null}
         </div>
       </div>
       <div className="activity-user-list-wrap">

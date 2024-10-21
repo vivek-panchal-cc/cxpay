@@ -3,20 +3,28 @@ const Export = (props) => (
   <svg
     width={20}
     height={20}
-    viewBox="0 0 24 24"
+    viewBox="0 0 25 26"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
-      d="M12 3C10.9767 3 9.95334 3.11763 8.95043 3.35288C6.17301 4.00437 4.00437 6.17301 3.35288 8.95043C2.88237 10.9563 2.88237 13.0437 3.35288 15.0496C4.00437 17.827 6.17301 19.9956 8.95044 20.6471C10.9563 21.1176 13.0437 21.1176 15.0496 20.6471C17.827 19.9956 19.9956 17.827 20.6471 15.0496C20.8824 14.0466 21 13.0233 21 12"
-      stroke="inherit"
+      d="M13.0439 1.33483V15.3827"
+      stroke="white"
       strokeWidth={1.5}
       strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
-      d="M17 3H21M21 3V7.66667M21 3L15 10"
-      stroke="inherit"
+      d="M9.64185 4.74933L13.0438 1.33333L16.4458 4.74933"
+      stroke="white"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M7.80454 7.67123C3.62787 8.05623 2.11121 9.61957 2.11121 15.8379C2.11121 24.1224 4.80621 24.1224 12.9029 24.1224C20.9995 24.1224 23.6945 24.1224 23.6945 15.8379C23.6945 9.61957 22.1779 8.05623 18.0012 7.67123"
+      stroke="white"
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
