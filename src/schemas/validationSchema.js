@@ -19,7 +19,7 @@ const FILE_SIZE = 5 * 1048576;
 const FILE_COUNT = 1;
 
 const deleteAccountPassword = yup.object().shape({
-  password: yup.string().required("Password required")
+  password: yup.string().required("Password required"),
 });
 
 const signUpPersonalAccountSchema = yup.object().shape({
@@ -40,7 +40,9 @@ const signUpPersonalAccountSchema = yup.object().shape({
   country: countrySchema,
   city: citySchema,
   country_code: yup.string().required("required"),
-  terms_conditions: yup.bool().oneOf([true], "Please accept the terms and conditions before continuing."),
+  terms_conditions: yup
+    .bool()
+    .oneOf([true], "Please accept the terms and conditions before continuing."),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
@@ -63,7 +65,9 @@ const signUpBusinessAccountSchema = yup.object().shape({
     .required("Please enter chamber of commerce")
     .matches(/^\S*$/, "Space is not allowed")
     .max(25, "Chamber of commerce must not be greater than 25 characters."),
-  terms_conditions: yup.bool().oneOf([true], "Please accept the terms and conditions before continuing."),
+  terms_conditions: yup
+    .bool()
+    .oneOf([true], "Please accept the terms and conditions before continuing."),
   // mobile_number: yup.string().required("Mobile number is required"),
 });
 
@@ -186,6 +190,13 @@ const addBusinessUrlSchema = yup.object().shape({
   business_url: yup.string(),
 });
 
+const setQrAmount = yup.object().shape({
+  amount: yup
+    .string()
+    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
+    .required("Please enter amount"),
+});
+
 const inviteContactSchema = yup.object().shape({
   country_code: yup.string().required(""),
   email: emailSchema,
@@ -222,9 +233,7 @@ const createGroupSchema = yup.object().shape({
 });
 
 const kycDetailsSchema = yup.object().shape({
-  kyc_document_type: yup
-    .string()
-    .required("Please enter document type"),
+  kyc_document_type: yup.string().required("Please enter document type"),
   kyc_document_id: yup
     .string()
     .required("Please enter document id")
@@ -278,6 +287,7 @@ export {
   loginWithOtpSchema,
   inviteContactSchema,
   addBusinessUrlSchema,
+  setQrAmount,
   businessInfoSchema,
   createGroupSchema,
   kycDetailsSchema,

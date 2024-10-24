@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useRef } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./modal.module.scss";
 import {
   ACT_REQUEST_RECEIVE,
@@ -16,6 +16,7 @@ import {
   activityConsts,
   isAdminApprovedWithRenewCheck,
   ACT_STATUS_FAILED,
+  TXN_TYPE_WW,
 } from "constants/all";
 import LoaderActivityDetail from "loaders/LoaderActivityDetail";
 import LoaderActivityProfile from "loaders/LoaderActivityProfile";
@@ -59,6 +60,7 @@ const ModalActivityDetail = (props) => {
   } = details || {};
 
   const modalRef = useRef(null);
+  const [payAgain, setPayAgain] = useState(false);
   const profileUrl = image || "/assets/images/single_contact_profile.png";
   const { admin_approved } = useSelector(
     (state) => state?.userProfile?.profile
@@ -179,6 +181,16 @@ const ModalActivityDetail = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (ACT_TRANSACT_DEBIT === request_type && TXN_TYPE_WW === txn_type) {
+      setPayAgain(true);
+    } else {
+      setPayAgain(false); // Optionally reset if conditions don't match
+    }
+  }, [request_type, txn_type]);
+
+  const handlePayAgain = () => {};
+
   if (!show) return;
   return (
     <div className={`modal fade show ${styles.modal} ${className}`} id={id}>
@@ -220,6 +232,17 @@ const ModalActivityDetail = (props) => {
                     </p>
                     <p>{specification}</p>
                   </div>
+                  {/* {payAgain && (
+                    <div className="act-status-wrap mt-3 d-flex justify-content-center">
+                      <button
+                        type="button"
+                        className={`btn btn-blue`}
+                        onClick={handlePayAgain}
+                      >
+                        Pay again
+                      </button>
+                    </div>
+                  )} */}
                   <table>
                     <tbody>
                       <tr>

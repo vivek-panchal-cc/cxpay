@@ -65,7 +65,7 @@
     padding: 10px 26px;
   }
   .dashboard-link-wrap .more-sub-menu {
-    max-height: 200px;
+    max-height: 250px;
   }
   .wallet-page-body .settings-inner-sec .profile-info {
     padding-bottom: 25px;
@@ -323,10 +323,10 @@
     padding: 7.5px 26px;
   }
   .dashboard-link-wrap .more-sub-menu {
-    max-height: 150px;
+    max-height: 250px;
   }
   .sidebar-open .dashboard-link-wrap .more-sub-menu {
-    max-height: 150px;
+    max-height: 250px;
   }
   /* .dashboard-link-wrap ul li a {
     padding: 7.5px 26px;

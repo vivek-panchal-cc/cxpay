@@ -26,6 +26,8 @@ export { default as IconImage } from "./Image";
 export { default as IconCardBackground } from "./CardBackground";
 export { default as IconCancel } from "./Cancel";
 export { default as IconEdit } from "./Edit";
+export { default as IconSetAmountEdit } from "./SetAmountEdit";
+export { default as IconClear } from "./Clear";
 export { default as IconCross } from "./Cross";
 export { default as IconBank } from "./Bank";
 export { default as IconEye } from "./Eye";

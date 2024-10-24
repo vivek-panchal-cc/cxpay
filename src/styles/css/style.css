@@ -587,7 +587,7 @@ pointer-events: none;
 }
 
 .sidebar-open .dashboard-link-wrap .more-sub-menu .more-sub-menu-scroll {
-  max-height: 200px;
+  max-height: 250px;
 }
 
 .dashboard-link-wrap .more-sub-menu {
@@ -8685,4 +8685,23 @@ button.export-activities.disabled:hover {
 .tooltip-btn:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+
+.set-amount-btn {
+  width: 75%;
+  padding: 10px;
+  color: black;
+  font-weight: 700;
+  border-radius: 15px;
+  box-shadow: 0px 12px 20px 10px rgba(0, 0, 0, 0.08);
+  background: var(--white);
+}
+
+.set-amount-btn:hover {
+  background: var(--dark_blue);
+  color: var(--white);
+}
+
+.set-amount-btn:hover svg {
+  stroke: var(--white);
 }

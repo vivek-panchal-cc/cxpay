@@ -117,7 +117,7 @@ const RECURRING_PAID = "paid";
 const recurringTypeStatus = {
   [RECURRING_PENDING]: {
     status: "UPCOMING",
-    className: "recurring-date-status-common recurring-upcoming"
+    className: "recurring-date-status-common recurring-upcoming",
   },
   [RECURRING_FAILED]: {
     status: "FAILED",
@@ -1046,6 +1046,7 @@ export {
   RECURRING_FAILED,
   RECURRING_SUCCESS,
   RECURRING_PAID,
+  TXN_TYPE_WW,
 };
 export {
   regexContainCapitalLetter,
