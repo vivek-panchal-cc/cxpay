@@ -102,8 +102,19 @@ const InputPin = forwardRef((props, ref) => {
         </label>
       ) : null}
       <div className="d-flex">
+        <input
+          type="text"
+          style={{ display: "none" }}
+          autoComplete="username"
+        />
+        <input
+          type="password"
+          style={{ display: "none" }}
+          autoComplete="new-password"
+        />
         {inputArr?.map((item, index) => (
           <input
+            id={`pin-input-${item}`}
             key={item}
             type="text"
             min={0}
@@ -115,6 +126,7 @@ const InputPin = forwardRef((props, ref) => {
             onKeyDown={handleKeyDown}
             onFocus={(e) => e.target.select()}
             inputMode="numeric"
+            autoComplete="one-time-code"
             ref={index === 0 ? firstInputRef : null} // Set the ref for the first input
           />
         ))}

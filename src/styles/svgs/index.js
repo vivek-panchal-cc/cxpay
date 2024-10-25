@@ -87,3 +87,4 @@ export { default as IconActReqDecline } from "./ActReqDecline";
 export { default as IconActReqReceive } from "./ActReqReceive";
 export { default as IconActReqSent } from "./ActReqSent";
 export { default as IconRefresh } from "./Refresh";
+export { default as IconDashboardRefresh } from "./DashboardRefresh";

@@ -113,6 +113,7 @@ const API_resendWalletTransferOtp =
 const API_resendRecurringPaymentOtp =
   apiUrl.API_TRANSACTION_RESEND_RECURRING_PAYMENT_OTP;
 const API_walletTransferPin = apiUrl.API_TRANSACTION_WALLET_TRANSFER_PIN;
+const API_walletTransactionVerify = apiUrl.API_TRANSACTION_VERIFY;
 const API_getCharges = apiUrl.API_TRANSACTION_GET_CHARGES;
 const API_sendPaymentRequest = apiUrl.API_TRANSACTION_SEND_PAYMENT_REQUEST;
 const API_activityList = apiUrl.API_TRANSACTION_ACTIVITY_LIST;
@@ -805,6 +806,16 @@ export const walletTransferPin = (params) => {
   return axiosTransactionInstance.post(`${API_walletTransferPin}`, params);
 };
 
+/** POST @verify-transactions
+ * @params ref_id
+ */
+export const walletTransactionVerify = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_walletTransactionVerify}`,
+    params
+  );
+};
+
 /** POST @wallet-personal-otp-verify
  * @params mobile_number, wallet_transfer_otp
  */
@@ -1129,6 +1140,7 @@ export const apiRequest = {
   resendRecurringPaymentOtp,
   recurringPaymentPin,
   walletTransferPin,
+  walletTransactionVerify,
   resendVerifyEmail,
   deactivateAccount,
   deactivateAgentAccount,

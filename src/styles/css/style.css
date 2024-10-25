@@ -8705,3 +8705,16 @@ button.export-activities.disabled:hover {
 .set-amount-btn:hover svg {
   stroke: var(--white);
 }
+
+.refresh-icon-loading {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

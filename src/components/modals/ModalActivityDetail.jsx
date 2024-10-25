@@ -25,6 +25,10 @@ import { formatDate } from "helpers/commonHelpers";
 import { IconCloseModal } from "styles/svgs";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
+import { LoaderContext } from "context/loaderContext";
+import { apiRequest } from "helpers/apiRequests";
+import { toast } from "react-toastify";
+import { SendPaymentContext } from "context/sendPaymentContext";
 
 const ModalActivityDetail = (props) => {
   const {
@@ -57,6 +61,7 @@ const ModalActivityDetail = (props) => {
     txn_mode,
     fees,
     payment_type,
+    ref_id,
   } = details || {};
 
   const modalRef = useRef(null);
@@ -71,6 +76,8 @@ const ModalActivityDetail = (props) => {
     admin_approved,
     show_renew_section
   );
+  const { setIsLoading } = useContext(LoaderContext);
+  const { handleSendContactsForInstantPay } = useContext(SendPaymentContext);
 
   const {
     iconStatus,
@@ -189,7 +196,32 @@ const ModalActivityDetail = (props) => {
     }
   }, [request_type, txn_type]);
 
-  const handlePayAgain = () => {};
+  const handlePayAgain = async () => {
+    if (!ref_id) return;
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.walletTransactionVerify({
+        ref_id: ref_id,
+      });
+      if (!data.success) throw data.message;
+      const details = data.data;
+      const contact = {
+        name: details.name,
+        profile_image: details.image,
+        specifications: details.specification,
+        personal_amount:
+          typeof details.amount === "number" ? details.amount?.toFixed(2) : "0",
+        receiver_account_number: details.receiver_account_number,
+      };
+      handleSendContactsForInstantPay([contact], ref_id);
+      // toast.success(data.message);
+      setShow(false);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   if (!show) return;
   return (

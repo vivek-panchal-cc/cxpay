@@ -9,6 +9,7 @@ import {
   IconBalanceEyeOpen,
   IconBalanceEyeClose,
   IconShowReservedAmount,
+  IconDashboardRefresh,
 } from "styles/svgs";
 
 const chartOption = {
@@ -108,7 +109,7 @@ const chartOption = {
 const months = [];
 
 const BalanceGraph = (props) => {
-  const { isLoading } = useContext(LoaderContext);
+  const { isLoading, setIsLoading } = useContext(LoaderContext);
   const { graphBackgroundImage, balanceDataArr, balance, monthDataArr } = props;
   const [options, setOptions] = useState({ ...chartOption });
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -147,7 +148,7 @@ const BalanceGraph = (props) => {
 
     return () => clearInterval(interval);
   }, [availableBalance]);
-  
+
   useEffect(() => {
     const duration = 1000; // Total time for animation (5 seconds)
     const intervalTime = 50; // Update the balance every 10ms
@@ -307,6 +308,18 @@ const BalanceGraph = (props) => {
     setShowBalance(!showBalance);
   };
 
+  const handleGetBalance = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.getBalance();
+      if (!data.success) throw data?.message;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <div
@@ -449,6 +462,14 @@ const BalanceGraph = (props) => {
                 </div>
               </>
             ) : null}
+            <div className="p-4 pb-0 flex-grow-1 text-end cursor-pointer">
+              <IconDashboardRefresh
+                className={isLoading ? `refresh-icon-loading` : ""}
+                style={{ marginBottom: "4px" }}
+                stroke="#0081C5"
+                onClick={handleGetBalance}
+              />
+            </div>
           </div>
           <div className="px-2 z-1">
             <div id="chart" className="overflow-hidden">

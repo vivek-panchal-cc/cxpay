@@ -160,6 +160,7 @@ function SendPayment(props) {
       );
       muValues.fees = charges?.length > 0 ? charges : "";
       muValues.total_amount = paymentDetails.grandTotal;
+      if (muValues.ref_id) delete muValues.ref_id;
       for (const key in muValues)
         addObjToFormData(muValues[key], key, formData);
       const { data } = await apiRequest.walletTransferPin(formData);
@@ -174,7 +175,7 @@ function SendPayment(props) {
       setShowPinPopup(false);
     } catch (error) {
       setError(error.message);
-      if(error.data.is_suspended){
+      if (error.data.is_suspended) {
         navigate("/logout", { replace: true });
         toast.error(error.message);
       }
@@ -424,7 +425,7 @@ function SendPayment(props) {
       setShowPinPopup(false);
     } catch (error) {
       setError(error.message);
-      if(error.data.is_suspended){
+      if (error.data.is_suspended) {
         navigate("/logout", { replace: true });
         toast.error(error.message);
       }
@@ -636,7 +637,9 @@ function SendPayment(props) {
                         showDelete={wallet.length > 1 ? true : false}
                         handleDelete={handleDeleteContact}
                         disableSpecification={disableEdit}
-                        disableAmount={disableEdit}
+                        disableAmount={
+                          formik.values.ref_id || disableEdit ? true : false
+                        }
                         ref={(el) => (inputAmountRefs[index] = el)}
                       />
                     );
