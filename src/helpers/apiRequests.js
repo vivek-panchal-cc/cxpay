@@ -43,6 +43,7 @@ const API_updateCard = apiUrl.API_ONBOARD_UPDATE_CARD;
 const API_getCountry = apiUrl.API_ONBOARD_GET_COUNTRY;
 const API_resendRegisterOtp = apiUrl.API_ONBOARD_RESEND_REGISTER_OTP;
 const API_updateBusinessUrl = apiUrl.API_ONBOARD_UPDATE_BUSINESS_URL;
+const API_createCustomQrCode = apiUrl.API_ONBOARD_CUSTOM_QR_CODE;
 const API_generateNewQrCode = apiUrl.API_ONBOARD_GENERATE_QR_CODE;
 const API_cardsList = apiUrl.API_ONBOARD_CARDS_LIST;
 const API_bankList = apiUrl.API_ONBOARD_BANK_LIST;
@@ -424,6 +425,13 @@ export const cardsList = () => {
  */
 export const updateBusinessUrl = (params) => {
   return axiosOnboardInstance.post(`${API_updateBusinessUrl}`, params);
+};
+
+/** POST @create-custom-QRcode
+ * @params QR_amount
+ */
+export const createCustomeQrCode = (params) => {
+  return axiosOnboardInstance.post(`${API_createCustomQrCode}`, params);
 };
 
 /** POST @generate-new-qrcode API
@@ -1093,6 +1101,7 @@ export const apiRequest = {
   checkCustomerPayment,
   markAsFavourite,
   updateBusinessUrl,
+  createCustomeQrCode,
   generateNewQrCode,
   getAllNotifications,
   markAsRead,

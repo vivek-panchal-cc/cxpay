@@ -26,6 +26,7 @@ const QrCode = (props) => {
   const { setIsLoading } = useContext(LoaderContext);
   const [isEditable, setIsEditable] = useState(false);
   const [amount, setAmount] = useState(null);
+  const [customQR, setCustomQR] = useState("");
   const [tempAmount, setTempAmount] = useState("");
   const [showConfirmPopup, setShowConfirmPopup] = useState({
     show: false,
@@ -76,25 +77,32 @@ const QrCode = (props) => {
     },
   });
 
-  const handleSubmitAmount = () => {
-    console.log("Hello");
+  const handleSubmitAmount = async (value) => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.createCustomeQrCode({
+        QR_amount: +value,
+      });
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+      setCustomQR(data.data);
+      setAmount(value);
+      setShowConfirmPopup(false);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleSetAmount = () => {
     setShowConfirmPopup({ show: true, message: "" });
   };
 
-  const handleSaveAmount = () => {
-    if (tempAmount.trim() === "") {
-      toast.error("Please enter a valid amount.");
-      return;
-    }
-    setAmount(tempAmount);
-    setShowConfirmPopup({ show: false, message: "" });
-  };
-
-  const handleClearAmount = () => {
+  const handleClearAmount = async () => {
+    setCustomQR("");
     setAmount(null);
+    // await dispatch(fetchUserProfile());
   };
 
   // const handleShareQrCode = () => {
@@ -143,7 +151,7 @@ const QrCode = (props) => {
           {isImageLoading && <LoaderProfileQr height={120} width={120} />}
           {!imageError ? (
             <ImageQR
-              src={qrCodeImg || ""}
+              src={customQR || qrCodeImg || ""}
               fallbacksrc={"/assets/images/QR_not_found.png"}
               alt="QR code image"
               onLoad={handleImageLoad}
@@ -155,7 +163,7 @@ const QrCode = (props) => {
           )}
         </div>
         {/* Set Amount Section */}
-        {/* {amount === null ? (
+        {amount === null ? (
           <button
             type="button"
             onClick={handleSetAmount}
@@ -168,16 +176,20 @@ const QrCode = (props) => {
           // <div className="amount-display d-flex align-items-center">
           <button
             type="button"
-            className="set-amount-btn border-0 mb-3 d-flex gap-2 justify-content-center"
+            className="set-amount-btn border-0 mb-3 d-flex gap-2 justify-content-center cursor-default"
           >
             <span className="flex-grow-1">
               {CURRENCY_SYMBOL} {amount}
             </span>
 
-            <IconClear stroke={"#363853"} onClick={handleClearAmount} />
+            <IconClear
+              className="cursor-pointer"
+              stroke={"#363853"}
+              onClick={handleClearAmount}
+            />
           </button>
           // </div>
-        )} */}
+        )}
         <Button
           type="button"
           onClick={handleGenerateQrCode}
@@ -187,7 +199,7 @@ const QrCode = (props) => {
         >
           Refresh QR
         </Button>
-        {qrCodeImg && (
+        {(customQR || qrCodeImg) && (
           <Button
             type="button"
             onClick={() => setShowShareOptions(!showShareOptions)}
@@ -201,7 +213,7 @@ const QrCode = (props) => {
         )}
         {showShareOptions && (
           <div className={`share-options ${showShareOptions ? "active" : ""}`}>
-            <WhatsappShareButton url={qrCodeImg} title={title}>
+            <WhatsappShareButton url={customQR || qrCodeImg} title={title}>
               <WhatsappIcon size={32} round />
             </WhatsappShareButton>
 
@@ -210,7 +222,7 @@ const QrCode = (props) => {
           </FacebookMessengerShareButton> */}
 
             <EmailShareButton
-              url={qrCodeImg}
+              url={customQR || qrCodeImg}
               subject={title}
               body={`Here is a QR code you might be interested in:`}
             >
@@ -219,15 +231,17 @@ const QrCode = (props) => {
           </div>
         )}
       </div>
-      <ModalSetAmount
-        id="set-qr-amount"
-        show={showConfirmPopup.show}
-        setShow={setShowConfirmPopup}
-        heading="Set Amount"
-        subHeading="Add an amount to generate QR code"
-        handleCallback={handleSubmitAmount}
-        error={showConfirmPopup.message}
-      ></ModalSetAmount>
+      <div className="payment-blocks-inner">
+        <ModalSetAmount
+          id="set-qr-amount"
+          show={showConfirmPopup.show}
+          setShow={setShowConfirmPopup}
+          heading="Enter Amount"
+          subHeading=""
+          handleCallback={handleSubmitAmount}
+          error={showConfirmPopup.message}
+        ></ModalSetAmount>
+      </div>
     </>
   );
 };

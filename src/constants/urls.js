@@ -38,6 +38,7 @@ export const API_ONBOARD_FAV_CONTACT = "/mark-as-favourite";
 export const API_ONBOARD_GET_COUNTRY = "/get-country";
 export const API_ONBOARD_RESEND_REGISTER_OTP = "/resend-register-otp";
 export const API_ONBOARD_UPDATE_BUSINESS_URL = "/update-business-url";
+export const API_ONBOARD_CUSTOM_QR_CODE = "/create-custom-QRcode";
 export const API_ONBOARD_GENERATE_QR_CODE = "/generate-new-qrcode";
 export const API_ONBOARD_CARDS_LIST = "/cards-list";
 export const API_ONBOARD_BANK_LIST = "/banks-list";

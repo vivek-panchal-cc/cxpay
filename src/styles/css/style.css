@@ -8718,3 +8718,19 @@ button.export-activities.disabled:hover {
     transform: rotate(360deg);
   }
 }
+
+.set-amount .outline-btn {
+  background-color: unset;
+  border: none;
+  padding: 0;
+}
+
+.set-amount .outline-btn:hover {
+  background-color: unset;
+  border-color: unset;
+  color: var(--blue);
+}
+
+.disabled-font-color {
+  color: var(--dark-grey) !important;
+}

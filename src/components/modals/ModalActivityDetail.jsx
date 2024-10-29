@@ -264,7 +264,7 @@ const ModalActivityDetail = (props) => {
                     </p>
                     <p>{specification}</p>
                   </div>
-                  {/* {payAgain && (
+                  {payAgain && (
                     <div className="act-status-wrap mt-3 d-flex justify-content-center">
                       <button
                         type="button"
@@ -274,7 +274,7 @@ const ModalActivityDetail = (props) => {
                         Pay again
                       </button>
                     </div>
-                  )} */}
+                  )}
                   <table>
                     <tbody>
                       <tr>

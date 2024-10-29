@@ -435,6 +435,11 @@ function Businessform(props) {
                     )}
                   </span>
                 </div>
+                <div className="red mb-3" style={{ fontSize: "12px" }}>
+                  Note: Password must contain 8 to 16 characters and contain at
+                  least one number, one uppercase & lowercase letter and one
+                  special character.
+                </div>
                 <div className="terms-conditions-container">
                   <div className="form-field terms-conditions">
                     <input
@@ -448,7 +453,7 @@ function Businessform(props) {
                     <label htmlFor="terms_conditions"></label>
                   </div>
                   <label htmlFor="terms_conditions_1">
-                    I have read and accept the{" "}
+                    Check here to indicate that you have read and agree to the{" "}
                     <span
                       className="hyperlink"
                       onClick={() => openCMSPages("terms-and-conditions")}
