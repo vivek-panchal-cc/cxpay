@@ -163,6 +163,8 @@ function SendPayment(props) {
       if (muValues.ref_id) delete muValues.ref_id;
       for (const key in muValues)
         addObjToFormData(muValues[key], key, formData);
+
+      formData.append("qr_id", null);
       const { data } = await apiRequest.walletTransferPin(formData);
       if (!data.success) throw data;
       // toast.success(`${data.message}`);
