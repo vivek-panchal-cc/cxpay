@@ -78,6 +78,7 @@ function ModalSetAmount(props) {
                       className="form-control"
                       placeholder="0.00"
                       name="amount"
+                      autoFocus={true}
                       autoComplete="off"
                       onChange={(e) => {
                         let value = e.target.value.replace(/[^0-9.]/g, ""); // Allow only numbers and decimals
