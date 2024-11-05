@@ -21,13 +21,38 @@ function ModalSetAmount(props) {
   } = props;
   const modalRef = useRef(null);
 
+  // const formik = useFormik({
+  //   initialValues: {
+  //     amount: "",
+  //   },
+  //   validationSchema: setQrAmount,
+  //   onSubmit: (values) => {
+  //     handleCallback(values.amount);
+  //   },
+  // });
+
   const formik = useFormik({
     initialValues: {
       amount: "",
     },
     validationSchema: setQrAmount,
     onSubmit: (values) => {
-      handleCallback(values.amount);
+      let formattedValue = values.amount;
+
+      // Check if the value has a decimal point
+      if (!formattedValue.includes(".")) {
+        formattedValue += ".00"; // Add .00 if no decimal exists
+      } else {
+        const [integerPart, decimalPart] = formattedValue.split(".");
+
+        if (decimalPart.length === 1) {
+          formattedValue = `${integerPart}.${decimalPart}0`; // Add 0 if only one decimal place exists
+        }
+      }
+
+      // Update the formik value and trigger callback with formatted amount
+      formik.setFieldValue("amount", formattedValue);
+      handleCallback(formattedValue);
     },
   });
 
@@ -109,35 +134,35 @@ function ModalSetAmount(props) {
                           );
                         }
                       }}
-                      onBlur={(e) => {
-                        let value = e.target.value.trim();
+                      // onBlur={(e) => {
+                      //   let value = e.target.value.trim();
 
-                        if (!value || value === ".") {
-                          value = "0.00"; // If the field is empty or just a '.', set it to "0.00"
-                        } else {
-                          const hasDecimal = value.includes(".");
-                          // If there's no decimal point, add ".00"
-                          if (!hasDecimal) {
-                            value += ".00";
-                          } else {
-                            const parts = value.split(".");
-                            if (parts[1].length === 0) {
-                              value += "00"; // Add two zeroes if there are no decimal digits
-                            } else if (parts[1].length === 1) {
-                              value += "0"; // Add one zero if there's only one decimal digit
-                            } else if (parts[1].length > 2) {
-                              value = `${parts[0]}.${parts[1].slice(0, 2)}`; // Limit to two decimal places
-                            }
-                          }
-                        }
-                        formik.setFieldValue("amount", value);
-                        formik.handleBlur(e);
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault(); // Prevent form submission on Enter key
-                        }
-                      }}
+                      //   if (!value || value === ".") {
+                      //     value = "0.00"; // If the field is empty or just a '.', set it to "0.00"
+                      //   } else {
+                      //     const hasDecimal = value.includes(".");
+                      //     // If there's no decimal point, add ".00"
+                      //     if (!hasDecimal) {
+                      //       value += ".00";
+                      //     } else {
+                      //       const parts = value.split(".");
+                      //       if (parts[1].length === 0) {
+                      //         value += "00"; // Add two zeroes if there are no decimal digits
+                      //       } else if (parts[1].length === 1) {
+                      //         value += "0"; // Add one zero if there's only one decimal digit
+                      //       } else if (parts[1].length > 2) {
+                      //         value = `${parts[0]}.${parts[1].slice(0, 2)}`; // Limit to two decimal places
+                      //       }
+                      //     }
+                      //   }
+                      //   formik.setFieldValue("amount", value);
+                      //   formik.handleBlur(e);
+                      // }}
+                      // onKeyDown={(e) => {
+                      //   if (e.key === "Enter") {
+                      //     e.preventDefault(); // Prevent form submission on Enter key
+                      //   }
+                      // }}
                       value={formik.values.amount}
                       error={formik.touched.amount && formik.errors.amount}
                       onCopy={(e) => e.preventDefault()}
