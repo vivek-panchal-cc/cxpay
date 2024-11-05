@@ -21,6 +21,7 @@ import LoaderProfileQr from "loaders/LoaderProfileQr";
 import { CURRENCY_SYMBOL } from "constants/all";
 import { setQrAmount } from "schemas/validationSchema";
 import ModalSetAmount from "components/modals/ModalSetAmount";
+import WrapAmount from "components/wrapper/WrapAmount";
 
 const QrCode = (props) => {
   const { setIsLoading } = useContext(LoaderContext);
@@ -179,7 +180,7 @@ const QrCode = (props) => {
             className="set-amount-btn border-0 mb-3 d-flex gap-2 justify-content-center cursor-default"
           >
             <span className="flex-grow-1">
-              {CURRENCY_SYMBOL} {amount}
+              <WrapAmount value={amount} />
             </span>
 
             <IconClear
