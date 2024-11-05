@@ -47,6 +47,9 @@ function ChangePin() {
       } catch (error) {
         toast.error(error);
         resetForm();
+        if (pinInputRef.current) {
+          pinInputRef.current.focus(); // Focus on the first input when PIN is incorrect
+        }
       } finally {
         setIsLoading(false);
       }

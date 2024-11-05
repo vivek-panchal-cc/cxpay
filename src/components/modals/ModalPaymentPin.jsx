@@ -62,6 +62,9 @@ function ModalPaymentPin(props) {
       } catch (error) {
         resetForm();
         setValues({ pin: "" });
+        if (pinInputRef.current) {
+          pinInputRef.current.focus(); // Focus on the first input when PIN is incorrect
+        }
       }
     },
   });

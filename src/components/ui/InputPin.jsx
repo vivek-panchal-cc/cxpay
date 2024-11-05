@@ -114,7 +114,7 @@ const InputPin = forwardRef((props, ref) => {
         />
         {inputArr?.map((item, index) => (
           <input
-            id={`pin-input-${item}`}
+            id={`pin-input-${item}-${Math.floor(Math.random() * 10000)}`}
             key={item}
             type="text"
             min={0}
