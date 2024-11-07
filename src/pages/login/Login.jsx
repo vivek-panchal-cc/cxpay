@@ -20,7 +20,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const { setIsLoading } = useContext(LoaderContext);
   const [showPassword, setShowPassword] = useState(false);
-  const [countryList, cities] = useCountriesCities();
+  const [countryList, cities] = useCountriesCities(true);
   const { setLoginCreds } = useContext(LoginContext);
   const { setCountryTimeZone } = useContext(TimeZoneContext);
 
@@ -51,7 +51,7 @@ const Login = () => {
       setCountryTimeZone({ country_time_zone });
       try {
         const { error, payload } = await dispatch(fetchLogin(values));
-        if (error) throw payload;        
+        if (error) throw payload;
         // if (!payload.data.is_user_pin_set) {
         //   navigate("/pending-pin", { replace: true });
         //   return;

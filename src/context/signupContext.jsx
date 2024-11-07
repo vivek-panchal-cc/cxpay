@@ -22,7 +22,7 @@ export const SignupContext = React.createContext(initialValues);
 const SignupProvider = ({ children }) => {
   const creds = storageRequest.getCredsFromtStorage();
   const [signUpCreds, setSignUpCreds] = useState(creds || initialValues);
-  const [countries, cities] = useCountriesCities();
+  const [countries, cities] = useCountriesCities(true);
   const signupValues = useMemo(
     () => ({ signUpCreds, setSignUpCreds }),
     [signUpCreds, setSignUpCreds]
