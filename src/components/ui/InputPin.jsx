@@ -17,63 +17,68 @@ const InputPin = forwardRef((props, ref) => {
   const [inputArr] = useState(Array.from(Array(pinSize).keys()));
   const [pinInputs, setPinInputs] = useState({});
   const [maskInputs, setMaskInputs] = useState({});
-
   const firstInputRef = useRef(null);
 
+  // Update pinInputs based on initial `value` prop
   useEffect(() => {
-    // Reset the inputs if the value is empty (error case)
     if (value === "") {
+      // Reset pinInputs and maskInputs if value is empty
       setPinInputs({});
       setMaskInputs({});
-      return;
+    } else if (Object.keys(pinInputs).length === 0) {
+      const initialPins = inputArr.reduce((acc, curr) => {
+        acc[`pin${curr}`] = value.charAt(curr) || "";
+        return acc;
+      }, {});
+      setPinInputs(initialPins);
+      setMaskInputs(
+        inputArr.reduce((acc, curr) => {
+          acc[`pin${curr}`] = initialPins[`pin${curr}`] ? "•" : "";
+          return acc;
+        }, {})
+      );
     }
-
-    const pins = inputArr.reduce((acc, curr) => {
-      const pinVal =
-        value && value.charAt(curr).trim() ? value.charAt(curr) : "";
-      acc[`pin${curr}`] = pinVal;
-      return acc;
-    }, {});
-    setPinInputs(pins);
   }, [value, inputArr]);
 
+  // Trigger onChange only if the pin value has actually changed
   useEffect(() => {
-    const value = inputArr
+    const pinValue = inputArr
       .map((item) => pinInputs[`pin${item}`] || " ")
-      .toString()
-      .replace(/,/g, "");
-    onChange({ target: { name: name, value: value } });
+      .join("");
+    if (pinValue.trim()) {
+      onChange({ target: { name, value: pinValue } });
+    }
   }, [pinInputs, inputArr, name, onChange]);
 
   useEffect(() => {
     if (ref) {
-      ref.current = firstInputRef.current; // Pass the first input's ref to the forwarded ref
+      ref.current = firstInputRef.current;
     }
   }, [ref]);
 
-  const handleChange = (e) => {
-    const tval = parseInt(e.target.value.charAt(0));
-    const isNext = !isNaN(tval);
+  const handleChange = (e, index) => {
+    const newValue = e.target.value.slice(-1);
+    const isNext = Boolean(newValue && index < pinSize - 1);
+
     setPinInputs((cs) => ({
       ...cs,
-      [e.target.name]: isNext ? tval.toString() : "",
+      [e.target.name]: newValue,
     }));
-    // Set '•' in masked input for each pin
+
     setMaskInputs((cs) => ({
       ...cs,
-      [e.target.name]: isNext ? "•" : "",
+      [e.target.name]: newValue ? "•" : "",
     }));
-    e.target?.select();
-    isNext && e.target?.nextSibling?.focus();
+
+    if (isNext) {
+      e.target.nextSibling?.focus();
+    }
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e, index) => {
     switch (e.key) {
       case "Backspace":
         e.preventDefault();
-        e.stopPropagation();
-        const tval = pinInputs[e.target.name];
-        const isPrev = tval.trim() ? false : true;
         setPinInputs((cs) => ({
           ...cs,
           [e.target.name]: "",
@@ -82,56 +87,41 @@ const InputPin = forwardRef((props, ref) => {
           ...cs,
           [e.target.name]: "",
         }));
-        isPrev && e.target?.previousSibling?.focus();
-        return;
+        if (!pinInputs[e.target.name] && index > 0) {
+          e.target.previousSibling?.focus();
+        }
+        break;
       case "Enter":
         e.preventDefault();
-        e.stopPropagation();
         if (handleSubmit && !isSubmitting) handleSubmit();
-        return;
+        break;
       default:
-        return;
+        break;
     }
   };
 
   return (
     <div className={`d-flex flex-column ${styles.otp_input}`}>
-      {labelname ? (
-        <label htmlFor="" className="mb-2">
-          {labelname}
-        </label>
-      ) : null}
+      {labelname && <label className="mb-2">{labelname}</label>}
       <div className="d-flex">
-        <input
-          type="text"
-          style={{ display: "none" }}
-          autoComplete="username"
-        />
-        <input
-          type="password"
-          style={{ display: "none" }}
-          autoComplete="new-password"
-        />
-        {inputArr?.map((item, index) => (
+        {inputArr.map((item, index) => (
           <input
-            id={`pin-input-${item}-${Math.floor(Math.random() * 10000)}`}
+            id={`pin-input-${item}`}
             key={item}
             type="text"
-            min={0}
-            max={9}
             name={`pin${item}`}
-            value={maskInputs?.[`pin${item}`] || ""}
-            className={`${className}`}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
+            value={maskInputs[`pin${item}`] || ""}
+            className={className}
+            onChange={(e) => handleChange(e, index)}
+            onKeyDown={(e) => handleKeyDown(e, index)}
             onFocus={(e) => e.target.select()}
-            inputMode="numeric"
+            ref={index === 0 ? firstInputRef : null}
+            maxLength={1}
             autoComplete="one-time-code"
-            ref={index === 0 ? firstInputRef : null} // Set the ref for the first input
           />
         ))}
       </div>
-      {error ? <p className="text-danger ps-2 p-0">{error}</p> : null}
+      {error && <p className="text-danger ps-2 p-0">{error}</p>}
     </div>
   );
 });
