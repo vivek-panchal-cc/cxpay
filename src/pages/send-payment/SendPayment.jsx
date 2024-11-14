@@ -639,9 +639,7 @@ function SendPayment(props) {
                         showDelete={wallet.length > 1 ? true : false}
                         handleDelete={handleDeleteContact}
                         disableSpecification={disableEdit}
-                        disableAmount={
-                          formik.values.ref_id || disableEdit ? true : false
-                        }
+                        disableAmount={disableEdit}
                         ref={(el) => (inputAmountRefs[index] = el)}
                       />
                     );

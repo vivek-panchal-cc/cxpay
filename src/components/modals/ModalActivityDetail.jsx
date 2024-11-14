@@ -271,7 +271,7 @@ const ModalActivityDetail = (props) => {
                         className={`btn btn-blue`}
                         onClick={handlePayAgain}
                       >
-                        Pay again
+                        Recreate
                       </button>
                     </div>
                   )}
