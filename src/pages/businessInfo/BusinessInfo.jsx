@@ -10,7 +10,7 @@ import useCountriesCities from "hooks/useCountriesCities";
 const BusinessInfo = () => {
   const { profile } = useSelector((state) => state.userProfile);
   // const [countryList, setCountryList] = useState([]);
-  const [countries] = useCountriesCities();
+  const [countries] = useCountriesCities(true);
 
   const getCountries = async () => {
     try {

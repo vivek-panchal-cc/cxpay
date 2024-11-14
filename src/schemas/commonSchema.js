@@ -187,11 +187,21 @@ const pinSchema = yup
   .required("PIN is required")
   .length(5, "PIN length must be 5 digits")
   .matches(/^\d*$/, "Please enter your PIN. This field is required")
-  .test(
-    "no-all-zeros",
-    "The PIN cannot be '00000'. Please enter a valid PIN",
-    (value) => value !== "00000"
-  )
+  // .test(
+  //   "no-all-zeros",
+  //   "The PIN cannot be '00000'. Please enter a valid PIN",
+  //   (value) => value !== "00000"
+  // )
+  .test("no-all-same-digit", function (value) {
+    // Check if the value contains the same digit repeated
+    if (/^(.)\1{4}$/.test(value)) {
+      return this.createError({
+        path: this.path,
+        message: `The PIN cannot be '${value}'. Please enter a valid PIN`,
+      });
+    }
+    return true;
+  })
   .test("no-consecutive-numbers", function (value) {
     if (!value) return true; // Skip validation if no value
 
