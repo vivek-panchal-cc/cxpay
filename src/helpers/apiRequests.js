@@ -41,6 +41,8 @@ const API_addCard = apiUrl.API_ONBOARD_ADD_CARD;
 const API_deleteCard = apiUrl.API_ONBOARD_DELETE_CARD;
 const API_updateCard = apiUrl.API_ONBOARD_UPDATE_CARD;
 const API_getCountry = apiUrl.API_ONBOARD_GET_COUNTRY;
+const API_getBusinessCategory = apiUrl.API_ONBOARD_GET_BUSIINESS_CATEGORY;
+const API_getMerchantList = apiUrl.API_ONBOARD_GET_MERCHANT_LIST;
 const API_resendRegisterOtp = apiUrl.API_ONBOARD_RESEND_REGISTER_OTP;
 const API_updateBusinessUrl = apiUrl.API_ONBOARD_UPDATE_BUSINESS_URL;
 const API_createCustomQrCode = apiUrl.API_ONBOARD_CUSTOM_QR_CODE;
@@ -370,6 +372,20 @@ export const cardMarkAsDefault = (params) => {
  */
 export const getCountry = () => {
   return axiosOnboardInstance.post(`${API_getCountry}`);
+};
+
+/** POST @list-active-business-category API
+ * @params
+ */
+export const getBusinessCategory = () => {
+  return axiosOnboardInstance.post(`${API_getBusinessCategory}`);
+};
+
+/** POST @get-merchant-list API
+ * @params
+ */
+export const getMerchantList = (params) => {
+  return axiosOnboardInstance.post(`${API_getMerchantList}`, params);
 };
 
 /** POST @resend-register-otp API
@@ -1089,6 +1105,8 @@ export const apiRequest = {
   updateCard,
   cardMarkAsDefault,
   getCountry,
+  getBusinessCategory,
+  getMerchantList,
   refreshToken,
   checkCustomerKyc,
   updateCustomerKyc,

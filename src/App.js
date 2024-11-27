@@ -22,6 +22,7 @@ import Wallet from "pages/wallet/Wallet";
 import AddCard from "pages/add-card/AddCard";
 import LinkBank from "pages/link-bank/LinkBank";
 import Contacts from "pages/contacts/Contacts";
+import Merchants from "pages/merchants/Merchants";
 import ContactsInvited from "pages/contacts-invited/ContactsInvited";
 import Logout from "pages/logout/Logout";
 import PublicLayout from "layouts/PublicLayout";
@@ -152,6 +153,10 @@ const ProtectedActivities = withUserProtection(
   AllowedBusinessPersonal
 );
 const ProtectedContacts = withUserProtection(Contacts, AllowedBusinessPersonal);
+const ProtectedMerchants = withUserProtection(
+  Merchants,
+  AllowedBusinessPersonal
+);
 const ProtectedContactsInvited = withUserProtection(
   ContactsInvited,
   AllowedBusinessPersonal
@@ -390,6 +395,7 @@ function App() {
               path="/contacts-invited"
               element={<ProtectedContactsInvited />}
             />
+            <Route path="/merchants" element={<ProtectedMerchants />} />
             <Route path="/edit-group/:id" element={<ProtectedEditGroup />} />
             <Route path="/send" element={<ProtectedSendContact />} />
             <Route path="/send/payment" element={<ProtectedSendPayment />} />

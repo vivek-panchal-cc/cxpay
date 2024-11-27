@@ -71,6 +71,8 @@ export { default as IconNotifyKyc } from "./NotifyKyc";
 export { default as IconVerified } from "./Verified";
 export { default as IconDeleteContact } from "./DeleteContact";
 export { default as IconExport } from "./Export";
+export { default as IconMerchant } from "./Merchant";
+export { default as IconMerchantQR } from "./MerchantQR";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";

@@ -13,8 +13,10 @@ import { LoaderContext } from "context/loaderContext";
 import { storageRequest } from "helpers/storageRequests";
 import { Link } from "react-router-dom";
 import { setPinSchema } from "schemas/sendPaymentSchema";
+import useBusinessCategories from "hooks/useBusinessCategories";
 
 function Businessform(props) {
+  const [categories] = useBusinessCategories();
   const { setIsLoading } = useContext(LoaderContext);
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const [showPassword, setShowPassword] = useState({
@@ -50,6 +52,7 @@ function Businessform(props) {
       profile_image: "",
       business_id: "",
       terms_conditions: false,
+      business_category_id: "",
     },
     validationSchema: signUpBusinessAccountSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
@@ -224,6 +227,24 @@ function Businessform(props) {
                     formik.touched.company_name && formik.errors.company_name
                   }
                 />
+                <InputSelect
+                  className="form-select form-control"
+                  name="business_category_id"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.business_category_id}
+                  error={
+                    formik.touched.business_category_id &&
+                    formik.errors.business_category_id
+                  }
+                >
+                  <option value={""}>Select Business Category</option>
+                  {categories?.map((ct) => (
+                    <option key={ct.id} value={ct.id}>
+                      {ct.name}
+                    </option>
+                  ))}
+                </InputSelect>
                 <Input
                   type="text"
                   inputMode="tel"

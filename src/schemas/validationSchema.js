@@ -69,6 +69,9 @@ const signUpBusinessAccountSchema = yup.object().shape({
     .bool()
     .oneOf([true], "Please accept the terms and conditions before continuing."),
   // mobile_number: yup.string().required("Mobile number is required"),
+  business_category_id: yup
+    .string()
+    .required("Please select business category"),
 });
 
 const enterPhoneSchema = yup.object().shape({
