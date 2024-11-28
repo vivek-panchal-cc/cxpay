@@ -60,19 +60,21 @@ const MerchantQRPopup = (props) => {
                 )}
               </div>
             </div>
-            <div className="share-options active mb-3">
-              <WhatsappShareButton url={qr_code_merchant_image} title={title}>
-                <WhatsappIcon size={32} round />
-              </WhatsappShareButton>
+            {qr_code_merchant_image && (
+              <div className="share-options active mb-3">
+                <WhatsappShareButton url={qr_code_merchant_image} title={title}>
+                  <WhatsappIcon size={32} round />
+                </WhatsappShareButton>
 
-              <EmailShareButton
-                url={qr_code_merchant_image}
-                subject={title}
-                body={`Here is a QR code you might be interested in:`}
-              >
-                <EmailIcon size={32} round />
-              </EmailShareButton>
-            </div>
+                <EmailShareButton
+                  url={qr_code_merchant_image}
+                  subject={title}
+                  body={`Here is a QR code you might be interested in:`}
+                >
+                  <EmailIcon size={32} round />
+                </EmailShareButton>
+              </div>
+            )}
             <label
               className={`${"mer-list-uimg-mh-mw d-flex m-0 p-0 justify-content-center"}`}
             >
