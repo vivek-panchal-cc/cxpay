@@ -227,24 +227,6 @@ function Businessform(props) {
                     formik.touched.company_name && formik.errors.company_name
                   }
                 />
-                <InputSelect
-                  className="form-select form-control"
-                  name="business_category_id"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.business_category_id}
-                  error={
-                    formik.touched.business_category_id &&
-                    formik.errors.business_category_id
-                  }
-                >
-                  <option value={""}>Select Business Category</option>
-                  {categories?.map((ct) => (
-                    <option key={ct.id} value={ct.id}>
-                      {ct.name}
-                    </option>
-                  ))}
-                </InputSelect>
                 <Input
                   type="text"
                   inputMode="tel"
@@ -313,6 +295,24 @@ function Businessform(props) {
                     formik.touched.business_id && formik.errors.business_id
                   }
                 />
+                <InputSelect
+                  className="form-select form-control"
+                  name="business_category_id"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.business_category_id}
+                  error={
+                    formik.touched.business_category_id &&
+                    formik.errors.business_category_id
+                  }
+                >
+                  <option value={""}>Select Business Category</option>
+                  {categories?.map((ct) => (
+                    <option key={ct.id} value={ct.id}>
+                      {ct.name}
+                    </option>
+                  ))}
+                </InputSelect>
                 <Input
                   type="text"
                   className="form-control"

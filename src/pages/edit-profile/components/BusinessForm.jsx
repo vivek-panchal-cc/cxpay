@@ -12,9 +12,12 @@ import InputSelect from "components/ui/InputSelect";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { LoaderContext } from "context/loaderContext";
 import { CURRENCY_SYMBOL } from "constants/all";
+import useBusinessCategories from "hooks/useBusinessCategories";
 
 function Businessform(props) {
   const { countryList, cityList } = props;
+  const [categories] = useBusinessCategories();
+  console.log("categories: ", categories);
   const { profile } = useSelector((state) => state.userProfile);
   const {
     company_name,
@@ -27,6 +30,7 @@ function Businessform(props) {
     city,
     profile_image,
     business_id,
+    business_category_id,
   } = profile;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,6 +49,7 @@ function Businessform(props) {
       country: country || "",
       city: city || "",
       business_id: business_id || "",
+      business_category_id: business_category_id || "",
     },
     validationSchema: editProfileBusinessUserSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
@@ -129,7 +134,9 @@ function Businessform(props) {
             <Input
               type="name"
               disabled
-              className={`form-control ${formik.values.company_name ? 'disabled-field' : ''}`}
+              className={`form-control ${
+                formik.values.company_name ? "disabled-field" : ""
+              }`}
               placeholder="Business Name"
               // name="company_name"
               onChange={formik.handleChange}
@@ -140,7 +147,9 @@ function Businessform(props) {
             <Input
               type="text"
               disabled
-              className={`form-control ${formik.values.mobile_number ? 'disabled-field' : ''}`}
+              className={`form-control ${
+                formik.values.mobile_number ? "disabled-field" : ""
+              }`}
               placeholder="Mobile Number"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -152,7 +161,9 @@ function Businessform(props) {
             <Input
               type="text"
               disabled
-              className={`form-control ${formik.values.email ? 'disabled-field' : ''}`}
+              className={`form-control ${
+                formik.values.email ? "disabled-field" : ""
+              }`}
               placeholder="Email"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -162,7 +173,9 @@ function Businessform(props) {
             />
             <Input
               type="text"
-              className={`form-control ${formik.values.business_id ? 'disabled-field' : ''}`}
+              className={`form-control ${
+                formik.values.business_id ? "disabled-field" : ""
+              }`}
               name="business_id"
               placeholder="Chamber of Commerce"
               value={formik.values.business_id}
@@ -171,6 +184,27 @@ function Businessform(props) {
               error={formik.touched.business_id && formik.errors.business_id}
               disabled
             />
+            <InputSelect
+              className={`form-select form-control ${
+                business_category_id ? "disabled-field" : ""
+              }`}
+              name={business_category_id ? "" : "business_category_id"}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.business_category_id}
+              error={
+                formik.touched.business_category_id &&
+                formik.errors.business_category_id
+              }
+              disabled={business_category_id}
+            >
+              <option value={""}>Select Business Category</option>
+              {categories?.map((ct) => (
+                <option key={ct.id} value={ct.id}>
+                  {ct.name}
+                </option>
+              ))}
+            </InputSelect>
             <Input
               type="text"
               className="form-control"
@@ -184,7 +218,9 @@ function Businessform(props) {
             <div className="form-field two-fields">
               <div className="field-half">
                 <InputSelect
-                  className={`form-select form-control ${formik.values.country ? 'disabled-field' : ''}`}
+                  className={`form-select form-control ${
+                    formik.values.country ? "disabled-field" : ""
+                  }`}
                   // name="country"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -202,7 +238,9 @@ function Businessform(props) {
               </div>
               <div className="field-half">
                 <InputSelect
-                  className={`form-select form-control ${city ? 'disabled-field' : ''}`}
+                  className={`form-select form-control ${
+                    city ? "disabled-field" : ""
+                  }`}
                   name={city ? "" : "city"}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
