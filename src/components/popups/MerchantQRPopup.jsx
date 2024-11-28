@@ -1,12 +1,18 @@
 import ImageQR from "components/ui/ImageQR";
 import LoaderProfileQr from "loaders/LoaderProfileQr";
 import React, { useState } from "react";
+import {
+  EmailIcon,
+  EmailShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
+} from "react-share";
 import { IconCloseModal } from "styles/svgs";
 
 const MerchantQRPopup = (props) => {
   const { setShow, details } = props;
-  const { profile_image, mobile, name } = details || {};
-
+  const { qr_code_merchant_image, profile_image, mobile, name } = details || {};
+  const title = "Check out this QR code!";
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
 
@@ -39,10 +45,10 @@ const MerchantQRPopup = (props) => {
             <h4 className="blue-text text-center">Payment Request</h4>
             <div className="modal-body d-flex justify-content-center">
               <div className="merchant-qr-inner w-auto">
-                {isImageLoading && <LoaderProfileQr height={120} width={120} />}
+                {isImageLoading && <LoaderProfileQr height={200} width={200} />}
                 {!imageError ? (
                   <ImageQR
-                    src={profile_image || ""}
+                    src={qr_code_merchant_image || ""}
                     fallbacksrc={"/assets/images/QR_not_found.png"}
                     alt="QR code image"
                     onLoad={handleImageLoad}
@@ -54,7 +60,22 @@ const MerchantQRPopup = (props) => {
                 )}
               </div>
             </div>
-            <label className={`${"d-flex m-0 p-0 justify-content-center"}`}>
+            <div className="share-options active mb-3">
+              <WhatsappShareButton url={qr_code_merchant_image} title={title}>
+                <WhatsappIcon size={32} round />
+              </WhatsappShareButton>
+
+              <EmailShareButton
+                url={qr_code_merchant_image}
+                subject={title}
+                body={`Here is a QR code you might be interested in:`}
+              >
+                <EmailIcon size={32} round />
+              </EmailShareButton>
+            </div>
+            <label
+              className={`${"mer-list-uimg-mh-mw d-flex m-0 p-0 justify-content-center"}`}
+            >
               <div className="con-list-uimg">
                 <img
                   src={
@@ -62,7 +83,8 @@ const MerchantQRPopup = (props) => {
                       ? profile_image
                       : "/assets/images/single_contact_profile.png"
                   }
-                  className="blue-bg"
+                  className="blue-bg border"
+                  // style={{ border: "1px solid #f3f3f3" }}
                   alt=""
                 />
               </div>

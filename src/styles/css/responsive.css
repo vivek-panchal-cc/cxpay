@@ -391,10 +391,10 @@
     padding: 25px 30px;
     margin-bottom: 33px;
   }
-  .merchant-qr-inner {
+  /* .merchant-qr-inner {
     padding: 25px 30px;
-    margin-bottom: 33px;
-  }
+    margin-bottom: 20px;
+  } */
   .profile-qr p {
     padding-bottom: 30px;
   }
@@ -840,7 +840,7 @@
     max-width: 125px;
   }
   .merchant-qr-inner img {
-    max-width: 200px;
+    max-width: 250px;
   }
   .business-info-right-sec .form-field .form-control {
     padding-top: 13px !important;
@@ -1058,11 +1058,11 @@
   }
   .merchant-qr-inner {
     padding: 20px 20px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     border-radius: 25px;
   }
   .merchant-qr-inner img {
-    max-width: 200px;
+    max-width: 250px;
     height: auto;
   }
   /*20-01-2023*/
@@ -2436,7 +2436,7 @@
     height: auto;
   }
   .merchant-qr-inner img {
-    max-width: 200px;
+    max-width: 250px;
     height: auto;
   }
   .settings-bottom-info-sec ul li {
@@ -5145,6 +5145,13 @@
     min-width: 95px;
     max-width: 65px;
   }
+  .merchant-customer-type.merchant-first-child {
+    margin: 0px 0px 20px 0px;
+  }
+  .merchant-qr-inner img {
+    max-width: 200px;
+    height: auto;
+  }
 }
 @media only screen and (max-width: 480px) {
   /* .profile-inner-sec.p-4 {
@@ -5427,6 +5434,10 @@
     min-width: 45px;
     max-width: 65px;
   }
+  .mer-list-uimg-mh-mw {
+    min-width: 218px;
+    max-width: 200px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -5602,12 +5613,6 @@
 
 @media only screen and (max-width: 1299px) {
   .merchant-customer-type.merchant-last-child {
-    margin: 0px 0px 20px 0px;
-  }
-}
-
-@media only screen and (max-width: 575px) {
-  .merchant-customer-type.merchant-first-child {
     margin: 0px 0px 20px 0px;
   }
 }

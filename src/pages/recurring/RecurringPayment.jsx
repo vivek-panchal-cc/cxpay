@@ -475,7 +475,7 @@ function RecurringPayment() {
                         <div className="pay-btn-wrap">
                           <button
                             type="button"
-                            onClick={() => navigate("/send")}
+                            onClick={() => navigate(-1)}
                             className="btn btn-cancel-payment"
                           >
                             Cancel

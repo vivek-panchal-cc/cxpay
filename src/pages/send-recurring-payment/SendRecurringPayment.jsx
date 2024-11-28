@@ -194,8 +194,8 @@ function SendRecurringPayment(_props) {
     }
   };
 
-  const handleSubmitRecurringData = async(pin) => {
-    if(!pin) return;
+  const handleSubmitRecurringData = async (pin) => {
+    if (!pin) return;
     setIsLoading(true);
     try {
       const formData = recurringData;
@@ -210,19 +210,19 @@ function SendRecurringPayment(_props) {
         heading: "Money Sent",
         message: data.message,
         url: "/assets/images/sent-payment-pop.svg",
-      });      
+      });
       setShowSentPopup(true);
       setShowPinPopup(false);
     } catch (error) {
       setError(error.message);
-      if(error.data.is_suspended){
+      if (error.data.is_suspended) {
         navigate("/logout", { replace: true });
         toast.error(error.message);
       }
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const handleSubmitRecurringOtp = async (otp) => {
     if (!otp || !mobile_number || !country_code) return;
@@ -646,7 +646,7 @@ function SendRecurringPayment(_props) {
               <div className="pay-btn-wrap">
                 <button
                   type="button"
-                  onClick={() => navigate("/send/recurring-payment")}
+                  onClick={() => navigate(-1)}
                   className="btn btn-cancel-payment"
                 >
                   Back
