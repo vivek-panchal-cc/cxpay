@@ -137,6 +137,9 @@ const editProfileBusinessUserSchema = yup.object().shape({
     .matches(/^\S*$/, "Space is not allowed")
     .max(25, "Chamber of commerce must not be greater than 25 characters."),
   // mobile_number: yup.string().required("Mobile number is required"),
+  business_category_id: yup
+    .string()
+    .required("Please select business category"),
 });
 
 const editProfilePersonalUserSchema = yup.object().shape({
