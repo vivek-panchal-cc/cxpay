@@ -13,7 +13,7 @@ import Modal from "components/modals/Modal";
 import MerchantQRPopup from "components/popups/MerchantQRPopup";
 
 const Merchants = () => {
-  const [countryList, cityList] = useCountriesCities();
+  const [countryList, cityList] = useCountriesCities(true);
   const [userData, setUserData] = useState({});
   const [showQR, setShowQR] = useState(false);
   const [categories] = useBusinessCategories();
