@@ -987,6 +987,16 @@ const isComponentDisabled = (admin_approved, show_renew_section) => {
   );
 };
 
+const capitalizeWordByWord = (text) => {
+  if (typeof text !== "string") return "";
+  var separateWord = text.toLowerCase().split(" ");
+  for (var i = 0; i < separateWord.length; i++) {
+    separateWord[i] =
+      separateWord[i].charAt(0).toUpperCase() + separateWord[i].substring(1);
+  }
+  return separateWord.join(" ");
+};
+
 export {
   exp0ContainWhitespace,
   exp0ContainWordPassword,
@@ -1061,4 +1071,5 @@ export {
   renameKeys,
   isAdminApprovedWithRenewCheck,
   isComponentDisabled,
+  capitalizeWordByWord,
 };

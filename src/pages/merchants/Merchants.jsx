@@ -11,6 +11,7 @@ import MerchantsItem from "components/items/MerchantsItem";
 import { useSelector } from "react-redux";
 import Modal from "components/modals/Modal";
 import MerchantQRPopup from "components/popups/MerchantQRPopup";
+import { capitalizeWordByWord } from "constants/all";
 
 const Merchants = () => {
   const [countryList, cityList] = useCountriesCities(true);
@@ -115,7 +116,7 @@ const Merchants = () => {
                     <option value={"all"}>All</option>
                     {categories?.map((ct) => (
                       <option key={ct.id} value={ct.id}>
-                        {ct.name}
+                        {capitalizeWordByWord(ct.name)}
                       </option>
                     ))}
                   </InputSelectSearch>
