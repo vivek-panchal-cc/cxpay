@@ -14,6 +14,7 @@ import { storageRequest } from "helpers/storageRequests";
 import { Link } from "react-router-dom";
 import { setPinSchema } from "schemas/sendPaymentSchema";
 import useBusinessCategories from "hooks/useBusinessCategories";
+import { capitalizeWordByWord } from "constants/all";
 
 function Businessform(props) {
   const [categories] = useBusinessCategories();
@@ -309,7 +310,7 @@ function Businessform(props) {
                   <option value={""}>Select Business Category</option>
                   {categories?.map((ct) => (
                     <option key={ct.id} value={ct.id}>
-                      {ct.name}
+                      {capitalizeWordByWord(ct.name)}
                     </option>
                   ))}
                 </InputSelect>

@@ -11,13 +11,12 @@ import { IconLeftArrow } from "styles/svgs";
 import InputSelect from "components/ui/InputSelect";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { LoaderContext } from "context/loaderContext";
-import { CURRENCY_SYMBOL } from "constants/all";
+import { capitalizeWordByWord, CURRENCY_SYMBOL } from "constants/all";
 import useBusinessCategories from "hooks/useBusinessCategories";
 
 function Businessform(props) {
   const { countryList, cityList } = props;
   const [categories] = useBusinessCategories();
-  console.log("categories: ", categories);
   const { profile } = useSelector((state) => state.userProfile);
   const {
     company_name,
@@ -201,7 +200,7 @@ function Businessform(props) {
               <option value={""}>Select Business Category</option>
               {categories?.map((ct) => (
                 <option key={ct.id} value={ct.id}>
-                  {ct.name}
+                  {capitalizeWordByWord(ct.name)}
                 </option>
               ))}
             </InputSelect>
