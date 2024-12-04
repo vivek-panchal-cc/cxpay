@@ -1,6 +1,8 @@
 import WrapAmount from "components/wrapper/WrapAmount";
 import {
   CURRENCY_SYMBOL,
+  getInitials,
+  getRandomColorClass,
   isAdminApprovedWithRenewCheck,
   isComponentDisabled,
 } from "constants/all";
@@ -66,7 +68,18 @@ const RecurringPaymentItem = (props) => {
     <li onClick={adminApprovedWithRenewCheck ? handleViewDetails : () => {}}>
       <div className="left-activity-div">
         <div className="user-thumb-name">
-          <img src={profileImg} alt="" />
+          {/* <img src={profileImg} alt="" /> */}
+          {profileImg ? (
+            <img src={profileImg} className="blue-bg" alt="" />
+          ) : (
+            <div
+              className={`pt-1 p-0 initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                name
+              )}`}
+            >
+              {getInitials(name)}
+            </div>
+          )}
           <span>{name}</span>
         </div>
         <div className="activity-date-rec">{dtString}</div>

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { SendPaymentContext } from "context/sendPaymentContext";
 import { IconMerchantQR } from "styles/svgs";
 import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
+import { getInitials, getRandomColorClass } from "constants/all";
 
 const MerchantsItem = (props) => {
   const { merchant, selectedMerchants, handleCallback } = props;
@@ -52,7 +53,18 @@ const MerchantsItem = (props) => {
           htmlFor={merchant?.account_number}
         >
           <div className="con-list-uimg">
-            <img
+            {merchant.profile_image ? (
+              <img src={merchant.profile_image} className="blue-bg" alt="" />
+            ) : (
+              <div
+                className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                  merchant?.name
+                )}`}
+              >
+                {getInitials(merchant?.name)}
+              </div>
+            )}
+            {/* <img
               src={
                 merchant?.profile_image
                   ? merchant?.profile_image
@@ -60,10 +72,10 @@ const MerchantsItem = (props) => {
               }
               className="blue-bg"
               alt=""
-            />
+            /> */}
           </div>
           {merchant?.name ? (
-            <div className="mer-list-uname ms-5">{merchant?.name}</div>
+            <div className="mer-list-uname">{merchant?.name}</div>
           ) : (
             merchant?.mobile
           )}

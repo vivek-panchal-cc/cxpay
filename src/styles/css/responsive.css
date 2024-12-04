@@ -674,6 +674,10 @@
   .act-user-content-wrap .user-thumb-name img {
     margin-right: 20px;
   }
+  .act-user-content-wrap .user-thumb-name div {
+    margin-right: 20px;
+    min-width: 48px;
+  }
   .act-user-content-wrap .user-thumb-name {
     min-width: 210px;
     max-width: 210px;
@@ -1335,6 +1339,10 @@
   }
   .act-user-content-wrap .user-thumb-name img {
     margin-right: 15px;
+  }
+  .act-user-content-wrap .user-thumb-name div {
+    margin-right: 15px;
+    min-width: 48px;
   }
   .act-user-content-wrap li div,
   .act-user-content-wrap .seleted-value,

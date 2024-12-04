@@ -1,7 +1,11 @@
 import React from "react";
 import WrapAmount from "components/wrapper/WrapAmount";
 import LoaderWdrawHeader from "loaders/LoaderWdrawHeader";
-import { withdrawConsts } from "constants/all";
+import {
+  getInitials,
+  getRandomColorClass,
+  withdrawConsts,
+} from "constants/all";
 import { IconAlert } from "styles/svgs";
 
 const SectionHeader = (props) => {
@@ -29,7 +33,18 @@ const SectionHeader = (props) => {
       >
         <div className="rcrc-img-wrap rcr-img-wrap">
           <span bg-color="#000" className="user-thumb-name">
-            <img src={profileURL} alt="" />
+            {/* <img src={profileURL} alt="" /> */}
+            {image ? (
+              <img src={image} className="blue-bg" alt="" />
+            ) : (
+              <div
+                className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                  name
+                )}`}
+              >
+                {getInitials(name)}
+              </div>
+            )}
           </span>
         </div>
         <div className="rcr-info-main">

@@ -997,6 +997,40 @@ const capitalizeWordByWord = (text) => {
   return separateWord.join(" ");
 };
 
+// Function to get initials
+const getInitials = (fullName) => {
+  if (!fullName) return "";
+  const nameParts = fullName?.trim()?.split(" ");
+  const initials =
+    nameParts.length > 1
+      ? nameParts[0][0] + nameParts[1][0] // First letters of first and last names
+      : nameParts[0]?.slice(0, 2); // First two letters if only one name
+  return initials.toUpperCase(); // Convert to uppercase
+};
+
+// Function to generate class based on alphabetics range
+const getRandomColorClass = (fullName) => {
+  if (!fullName) return "";
+
+  const firstLetter = fullName?.trim()[0]?.toLowerCase();
+  const alphabetRanges = [
+    { range: ["a", "e"], class: "bg-color-1" },
+    { range: ["f", "j"], class: "bg-color-2" },
+    { range: ["k", "o"], class: "bg-color-3" },
+    { range: ["p", "t"], class: "bg-color-4" },
+    { range: ["u", "z"], class: "bg-color-5" },
+  ];
+
+  for (let i = 0; i < alphabetRanges.length; i++) {
+    const { range, class: colorClass } = alphabetRanges[i];
+    if (firstLetter >= range[0] && firstLetter <= range[1]) {
+      return colorClass;
+    }
+  }
+
+  return "bg-color-1"; // Default to the first color class if no match
+};
+
 export {
   exp0ContainWhitespace,
   exp0ContainWordPassword,
@@ -1072,4 +1106,6 @@ export {
   isAdminApprovedWithRenewCheck,
   isComponentDisabled,
   capitalizeWordByWord,
+  getInitials,
+  getRandomColorClass,
 };

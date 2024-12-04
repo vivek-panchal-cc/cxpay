@@ -1,9 +1,10 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, memo } from "react";
 import Button from "components/ui/Button";
 import Input from "components/ui/Input";
 import Image from "components/ui/Image";
 import Tooltip from "components/tooltips/Tooltip";
 import { CURRENCY_SYMBOL } from "constants/all";
+import { getInitials, getRandomColorClass } from "constants/all";
 
 const ContactPaymentItem = forwardRef((props, ref) => {
   const {
@@ -30,13 +31,29 @@ const ContactPaymentItem = forwardRef((props, ref) => {
     <li>
       <div className="payee-name-img-wrap">
         <div className="payee-img">
-          <Image
+          {/* <Image
             src={imgUrl}
             fallbacksrc={fallbackImgUrl}
             className=""
             style={{ objectPosition: "center", objectFit: "cover" }}
             alt="contact img"
-          />
+          /> */}
+          {imgUrl ? (
+            <Image
+              src={imgUrl}
+              className="blue-bg"
+              style={{ objectPosition: "center", objectFit: "cover" }}
+              alt="contact img"
+            />
+          ) : (
+            <div
+              className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                name
+              )}`}
+            >
+              {getInitials(name)}
+            </div>
+          )}
         </div>
         <div className="payee-name">
           <h4>{name}</h4>

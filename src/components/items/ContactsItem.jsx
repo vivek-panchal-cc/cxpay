@@ -3,6 +3,7 @@ import { SendPaymentContext } from "context/sendPaymentContext";
 import { IconBackgroundStar, IconDelete } from "styles/svgs";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
+import { getInitials, getRandomColorClass } from "constants/all";
 
 const ContactsItem = (props) => {
   const {
@@ -103,7 +104,7 @@ const ContactsItem = (props) => {
           <label htmlFor={contact?.account_number}></label>
         </div>
         <div className="con-list-uimg">
-          <img
+          {/* <img
             src={
               contact?.profile_image
                 ? contact?.profile_image
@@ -111,7 +112,18 @@ const ContactsItem = (props) => {
             }
             className="blue-bg"
             alt=""
-          />
+          /> */}
+          {contact?.profile_image ? (
+            <img src={contact?.profile_image} className="blue-bg" alt="" />
+          ) : (
+            <div
+              className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                contact?.name
+              )}`}
+            >
+              {getInitials(contact?.name)}
+            </div>
+          )}
         </div>
         {contact?.name ? (
           <div className="con-list-uname">{contact?.name}</div>

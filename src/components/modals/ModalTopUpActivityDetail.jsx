@@ -4,6 +4,8 @@ import {
   ACT_TYPE_REQUEST,
   ACT_TYPE_TRANSACTION,
   activityConsts,
+  getInitials,
+  getRandomColorClass,
 } from "constants/all";
 import LoaderActivityDetail from "loaders/LoaderActivityDetail";
 import LoaderActivityProfile from "loaders/LoaderActivityProfile";
@@ -113,8 +115,17 @@ const ModalTopUpActivityDetail = (props) => {
                 />{" "}
                 {loading ? (
                   <LoaderActivityProfile />
+                ) : profile_image ? (
+                  // <img src={profileUrl} alt="User Profile" />
+                  <img src={profile_image} className="blue-bg" alt="" />
                 ) : (
-                  <img src={profileUrl} alt="User Profile" />
+                  <div
+                    className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                      customer_name
+                    )}`}
+                  >
+                    {getInitials(customer_name)}
+                  </div>
                 )}
               </div>
             </div>

@@ -233,7 +233,11 @@ const EditRecurringPayment = () => {
       if (activeButton === "occurrences" && values.no_of_occurrence <= 0) {
         errors.no_of_occurrence = "Occurrence must be greater than 0";
       }
-      if (values.recurring_start_date && values.recurring_end_date && set_recurring_flag === "DATE") {
+      if (
+        values.recurring_start_date &&
+        values.recurring_end_date &&
+        set_recurring_flag === "DATE"
+      ) {
         const startDate = new Date(values.recurring_start_date);
         const endDate = new Date(values.recurring_end_date);
         const timeDiff = endDate - startDate;
@@ -316,9 +320,9 @@ const EditRecurringPayment = () => {
             <div className="recurring-sp-details-inner-wrap">
               <ul>
                 {contacts?.map((item, index) => {
-                  const profileURL = item.member_image
-                    ? item.member_image
-                    : "/assets/images/single_contact_profile.png";
+                  const profileURL = item.member_image;
+                  // ? item.member_image
+                  // : "/assets/images/single_contact_profile.png";
                   return (
                     <PaymentUserItem
                       key={item?.member_amount || index}

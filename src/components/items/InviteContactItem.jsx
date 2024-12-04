@@ -1,3 +1,4 @@
+import { getInitials, getRandomColorClass } from "constants/all";
 import React from "react";
 import { IconBackgroundStar, IconDelete } from "styles/svgs";
 
@@ -26,14 +27,25 @@ const InviteContactItem = (props) => {
           <label htmlFor={contact?.mobile}></label>
         </div>
         <div className="con-list-uimg">
-          <img
+          {/* <img
             src={
               contact?.profile_image
                 ? contact?.profile_image
                 : "../assets/images/user-avatar.png"
             }
             alt=""
-          />
+          /> */}
+          {contact?.profile_image ? (
+            <img src={contact?.profile_image} className="blue-bg" alt="" />
+          ) : (
+            <div
+              className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                contact?.name || contact?.email
+              )}`}
+            >
+              {getInitials(contact?.name || contact?.email)}
+            </div>
+          )}
         </div>
         {contact?.name ? (
           <div className="con-list-uname">{contact?.name}</div>

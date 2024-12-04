@@ -1,4 +1,5 @@
 import ImageQR from "components/ui/ImageQR";
+import { getInitials, getRandomColorClass } from "constants/all";
 import LoaderProfileQr from "loaders/LoaderProfileQr";
 import React, { useState } from "react";
 import {
@@ -78,17 +79,18 @@ const MerchantQRPopup = (props) => {
             <label
               className={`${"mer-list-uimg-mh-mw d-flex m-0 p-0 justify-content-center"}`}
             >
-              <div className="con-list-uimg">
-                <img
-                  src={
-                    profile_image
-                      ? profile_image
-                      : "/assets/images/single_contact_profile.png"
-                  }
-                  className="blue-bg border"
-                  // style={{ border: "1px solid #f3f3f3" }}
-                  alt=""
-                />
+              <div className="con-list-uimg" style={{ minWidth: "45px" }}>
+                {profile_image ? (
+                  <img src={profile_image} className="blue-bg" alt="" />
+                ) : (
+                  <div
+                    className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                      name
+                    )}`}
+                  >
+                    {getInitials(name)}
+                  </div>
+                )}
               </div>
               <div className="d-flex flex-column">
                 <span>

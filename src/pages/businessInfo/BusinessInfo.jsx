@@ -23,7 +23,7 @@ const BusinessInfo = () => {
   };
 
   useEffect(() => {
-    getCountries();
+    // getCountries();
   }, []);
 
   return (

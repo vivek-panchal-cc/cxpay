@@ -17,6 +17,8 @@ import {
   isAdminApprovedWithRenewCheck,
   ACT_STATUS_FAILED,
   TXN_TYPE_WW,
+  getInitials,
+  getRandomColorClass,
 } from "constants/all";
 import LoaderActivityDetail from "loaders/LoaderActivityDetail";
 import LoaderActivityProfile from "loaders/LoaderActivityProfile";
@@ -242,8 +244,17 @@ const ModalActivityDetail = (props) => {
                 />{" "}
                 {loading ? (
                   <LoaderActivityProfile />
+                ) : image ? (
+                  // <img src={profileUrl} alt="User Profile" />
+                  <img src={image} className="blue-bg" alt="" />
                 ) : (
-                  <img src={profileUrl} alt="User Profile" />
+                  <div
+                    className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                      name
+                    )}`}
+                  >
+                    {getInitials(name)}
+                  </div>
                 )}
               </div>
             </div>

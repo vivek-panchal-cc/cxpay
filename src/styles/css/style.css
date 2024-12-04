@@ -2887,6 +2887,14 @@ span.date-cal {
   object-fit: cover;
 }
 
+.act-user-content-wrap .user-thumb-name div {
+  width: 48px;
+  height: 48px;
+  border-radius: 100%;
+  margin-right: 50px;
+  object-fit: cover;
+}
+
 .act-user-content-wrap .user-thumb-name span {
   font-family: "Visby Round CF", sans-serif;
   font-style: normal;
@@ -9013,4 +9021,39 @@ button.export-activities.disabled:hover {
   color: #bdbdbd;
   white-space: normal;
   /* width: calc(100% - 113px); */
+}
+
+.initials-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  padding-top: 4px;
+  text-transform: uppercase;
+}
+
+.bg-color-1 {
+  background-color: #fbe4c1; /* Light orange */
+  color: #c47a0a; /* Dark orange */
+}
+
+.bg-color-2 {
+  background-color: #f4c6c6; /* Light red */
+  color: #a12d2d; /* Dark red */
+}
+
+.bg-color-3 {
+  background-color: #e2d1f2; /* Light purple */
+  color: #5e3d85; /* Dark purple */
+}
+
+.bg-color-4 {
+  background-color: #cfe8fa; /* Light blue */
+  color: #1c6ea4; /* Dark blue */
+}
+
+.bg-color-5 {
+  background-color: #d7f4e3; /* Light green */
+  color: #23784c; /* Dark green */
 }

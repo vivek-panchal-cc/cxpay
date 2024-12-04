@@ -11,6 +11,7 @@ import { sendPaymentPinSchema } from "schemas/sendPaymentSchema";
 import { toast } from "react-toastify";
 import { usePinContext } from "context/pinContext";
 import useForgotPinHandler from "hooks/useForgotPinHandler";
+import { getInitials, getRandomColorClass } from "constants/all";
 
 const ProfileDropdown = () => {
   const dropdownref = useRef(null);
@@ -18,11 +19,12 @@ const ProfileDropdown = () => {
   const [error, setError] = useState("");
   const { setIsPinValidated } = usePinContext();
   const { profile } = useSelector((state) => state.userProfile);
-  const { user_type } = profile || "";
+  const { user_type, company_name, first_name, last_name } = profile || "";
   const [showDrop, setShowDrop] = useState(false);
   const { setIsLoading } = useContext(LoaderContext);
   const [showPinPopup, setShowPinPopup] = useState(false);
-  const { handleForgotPin, OtpModal, PinModal } = useForgotPinHandler(setShowPinPopup);
+  const { handleForgotPin, OtpModal, PinModal } =
+    useForgotPinHandler(setShowPinPopup);
 
   useEffect(() => {
     function handleclickOutside(event) {
@@ -49,7 +51,7 @@ const ProfileDropdown = () => {
       navigate("/setting");
     } catch (error) {
       setError(error.message);
-      if(error.data.is_suspended){
+      if (error.data.is_suspended) {
         navigate("/logout", { replace: true });
         toast.error(error.message);
       }
@@ -87,7 +89,7 @@ const ProfileDropdown = () => {
       <div className="user-image">
         <div className="user-image-wrap" onClick={() => setShowDrop(true)}>
           <span className="h-100 w-100">
-            <Image
+            {/* <Image
               src={profile?.profile_image || ""}
               alt="profile avtars"
               fallbacksrc={
@@ -101,7 +103,27 @@ const ProfileDropdown = () => {
               }
               className="h-100 w-100 object-fit-cover"
               style={{ objectPosition: "center" }}
-            />
+            /> */}
+            {profile?.profile_image ? (
+              <Image
+                src={profile?.profile_image}
+                className="blue-bg h-100 w-100 object-fit-cover"
+                // style={{ objectPosition: "center", objectFit: "cover" }}
+                alt="contact img"
+              />
+            ) : (
+              <div
+                className={`rounded-0 initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                  user_type === "business"
+                    ? company_name
+                    : first_name + " " + last_name
+                )}`}
+              >
+                {user_type === "business"
+                  ? getInitials(company_name)
+                  : getInitials(first_name + " " + last_name)}
+              </div>
+            )}
           </span>
         </div>
         <ul ref={dropdownref} style={{ display: showDrop ? "block" : "none" }}>
