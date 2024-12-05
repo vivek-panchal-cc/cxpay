@@ -38,7 +38,7 @@ const ContactsItem = (props) => {
               className="btn btn-primary con-send-btn"
               onClick={() => handleSendContacts([contact])}
             >
-              Send
+              Proceed to Pay
             </button>
             <button
               className="btn btn-primary con-req-btn"
@@ -52,7 +52,7 @@ const ContactsItem = (props) => {
         return (
           <div className="con-listing-btn-wrap">
             <button className="btn btn-primary contacts-admin-approved-disabled">
-              Send
+              Proceed to Pay
             </button>
             <button className="btn btn-primary contacts-admin-approved-disabled">
               Request
@@ -64,7 +64,7 @@ const ContactsItem = (props) => {
       return (
         <div className="con-listing-btn-wrap">
           <button className="btn btn-primary contacts-admin-approved-disabled">
-            Send
+            Proceed to Pay
           </button>
           <button className="btn btn-primary contacts-admin-approved-disabled">
             Request

@@ -757,8 +757,8 @@ pointer-events: none;
 .merchant-icon-settings {
   width: 39px;
   height: 39px;
-  background: #f3f3f3;
-  box-shadow: 0px 7.3125px 14.625px rgba(0, 0, 0, 0.08);
+  /* background: #f3f3f3;
+  box-shadow: 0px 7.3125px 14.625px rgba(0, 0, 0, 0.08); */
   border-radius: 25%;
   display: flex;
   justify-content: center;
@@ -5050,7 +5050,7 @@ img.img-size {
 }
 
 .mer-listing-info {
-  max-width: 500px;
+  max-width: 300px;
   width: 100%;
   word-break: break-word;
   white-space: normal;
@@ -5072,6 +5072,14 @@ img.img-size {
   width: 100%;
   padding-right: 8px;
   min-width: 200px;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.merchant-listing-category {
+  max-width: 110px;
+  min-width: 110px;
+  width: 100%;
   word-break: break-word;
   white-space: normal;
 }
@@ -6511,8 +6519,8 @@ ul.notification-list-wrap li > div {
   color: #323232;
 }
 
-.merchant-listing-wrap li:hover .con-listing-phone p,
-.merchant-listing-wrap li:hover .con-listing-mail p {
+.merchant-listing-wrap li:hover .merchant-listing-category p,
+.merchant-listing-wrap li:hover .merchant-listing-mail p {
   color: #323232;
 }
 

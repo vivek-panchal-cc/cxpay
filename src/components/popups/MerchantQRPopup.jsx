@@ -12,7 +12,8 @@ import { IconCloseModal } from "styles/svgs";
 
 const MerchantQRPopup = (props) => {
   const { setShow, details } = props;
-  const { qr_code_merchant_image, profile_image, mobile, name } = details || {};
+  const { qr_code_merchant_image, profile_image, mobile, name, email } =
+    details || {};
   const title = "Check out this QR code!";
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
@@ -77,7 +78,7 @@ const MerchantQRPopup = (props) => {
               </div>
             )}
             <label
-              className={`${"mer-list-uimg-mh-mw d-flex m-0 p-0 justify-content-center"}`}
+              className={`${"mer-list-uimg-mh-mw d-flex m-0 p-0 justify-content-center align-items-center"}`}
             >
               <div className="con-list-uimg" style={{ minWidth: "45px" }}>
                 {profile_image ? (
@@ -95,6 +96,16 @@ const MerchantQRPopup = (props) => {
               <div className="d-flex flex-column">
                 <span>
                   {name && <div className="mer-list-uname-qr w-0">{name}</div>}
+                </span>
+                <span>
+                  {email && (
+                    <a
+                      // className="mer-list-uname-qr mobile w-0"
+                      href={`mailto:${email}`}
+                    >
+                      {email}
+                    </a>
+                  )}
                 </span>
                 <span>
                   {mobile && (

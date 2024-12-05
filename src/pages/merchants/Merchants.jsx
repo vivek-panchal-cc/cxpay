@@ -173,7 +173,7 @@ const Merchants = () => {
                     />
                   ))
                 )}
-                {merchants.length <= 0 ? (
+                {!isLoadingMerchants && merchants.length <= 0 ? (
                   <p className="text-center">Merchants not found.</p>
                 ) : null}
               </ul>

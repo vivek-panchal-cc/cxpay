@@ -1,8 +1,12 @@
 import React, { useContext, useState } from "react";
 import { SendPaymentContext } from "context/sendPaymentContext";
-import { IconMerchantQR } from "styles/svgs";
+import { IconQR } from "styles/svgs";
 import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
-import { getInitials, getRandomColorClass } from "constants/all";
+import {
+  capitalizeWordByWord,
+  getInitials,
+  getRandomColorClass,
+} from "constants/all";
 
 const MerchantsItem = (props) => {
   const { merchant, selectedMerchants, handleCallback } = props;
@@ -21,7 +25,7 @@ const MerchantsItem = (props) => {
           className="btn btn-primary merchant-send-btn"
           onClick={() => handleSendContacts([merchant])}
         >
-          Send
+          Proceed to Pay
         </button>
         <button
           className="btn btn-primary merchant-rec-btn"
@@ -80,12 +84,17 @@ const MerchantsItem = (props) => {
             merchant?.mobile
           )}
         </label>
+        {merchant?.category_name && (
+          <div className="merchant-listing-category">
+            <p>{capitalizeWordByWord(merchant?.category_name)}</p>
+          </div>
+        )}
         <div
           className="merchant-icon-wrap"
           onClick={() => handleCallback(merchant)}
         >
           <span className="merchant-listing-second-last-wrap merchant-icon-settings">
-            <IconMerchantQR />
+            <IconQR />
           </span>
         </div>
         <div className="merchant-listing-last-wrap">{renderButtons()}</div>
