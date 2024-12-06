@@ -81,13 +81,7 @@ code {
 .admin-approved-disabled img {
   opacity: 0.6;
 }
-.contacts-admin-approved-disabled {
-  border: 1px solid #d5dbe0 !important;
-  color: #878787 !important;
-  pointer-events: visible !important;
-  cursor: not-allowed !important;
-  background: #d5dbe0 !important;
-}
+.contacts-admin-approved-disabled,
 .merchants-admin-approved-disabled {
   border: 1px solid #d5dbe0 !important;
   color: #878787 !important;
