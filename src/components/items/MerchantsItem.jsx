@@ -7,8 +7,10 @@ import {
   getInitials,
   getRandomColorClass,
 } from "constants/all";
+import { useSelector } from "react-redux";
 
 const MerchantsItem = (props) => {
+  const { profile } = useSelector((state) => state?.userProfile);
   const { merchant, selectedMerchants, handleCallback } = props;
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
   const {
@@ -18,31 +20,46 @@ const MerchantsItem = (props) => {
     handleSelectedContacts,
   } = useContext(SendPaymentContext);
 
+  const renderButton = (label, baseClass, onClick, disabled = false) => {
+    const className = `btn btn-primary ${!disabled ? baseClass : ""} ${
+      disabled ? "merchants-admin-approved-disabled" : ""
+    }`;
+    return (
+      <button
+        className={className.trim()}
+        onClick={disabled ? null : onClick}
+        disabled={disabled}
+      >
+        {label}
+      </button>
+    );
+  };
+
   const renderButtons = () => {
+    const isDisabled = !profile.admin_approved;
     return (
       <div className="merchant-listing-btn-wrap">
-        <button
-          className="btn btn-primary merchant-send-btn"
-          onClick={() => handleSendContacts([merchant])}
-        >
-          Proceed to Pay
-        </button>
-        <button
-          className="btn btn-primary merchant-rec-btn"
-          onClick={() => handleSendRecurringContacts([merchant])}
-        >
-          Recurring
-        </button>
-        <button
-          className="btn btn-primary merchant-sch-btn"
-          //   onClick={() => handleSendContactsSchedule([merchant])}
-          onClick={() => {
+        {renderButton(
+          "Proceed to Pay",
+          "merchant-send-btn",
+          () => handleSendContacts([merchant]),
+          isDisabled
+        )}
+        {renderButton(
+          "Recurring",
+          "merchant-rec-btn",
+          () => handleSendRecurringContacts([merchant]),
+          isDisabled
+        )}
+        {renderButton(
+          "Schedule",
+          "merchant-sch-btn",
+          () => {
             setShowSchedulePopup(true);
             handleSelectedContacts([merchant]);
-          }}
-        >
-          Schedule
-        </button>
+          },
+          isDisabled
+        )}
       </div>
     );
   };

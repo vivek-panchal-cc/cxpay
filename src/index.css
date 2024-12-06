@@ -88,6 +88,13 @@ code {
   cursor: not-allowed !important;
   background: #d5dbe0 !important;
 }
+.merchants-admin-approved-disabled {
+  border: 1px solid #d5dbe0 !important;
+  color: #878787 !important;
+  pointer-events: visible !important;
+  cursor: not-allowed !important;
+  background: #d5dbe0 !important;
+}
 .resend-otp-wrap button {
   cursor: pointer;
   font-weight: 700;
