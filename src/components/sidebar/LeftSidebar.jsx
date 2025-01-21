@@ -28,6 +28,8 @@ import { sendPaymentPinSchema } from "schemas/sendPaymentSchema";
 import { LoaderContext } from "context/loaderContext";
 import { usePinContext } from "context/pinContext";
 import useForgotPinHandler from "hooks/useForgotPinHandler";
+import InputSwitch from "components/ui/InputSwitch";
+import { useOrganizationSwitch } from "context/organizationSwitchContext";
 
 function LeftSidebar({
   isSidebarOpen,
@@ -48,6 +50,7 @@ function LeftSidebar({
   // const { handleForgotPin, OtpModal, PinModal } =
   //   useForgotPinHandler(setShowPinPopup);
   const [submenuPosition, setSubmenuPosition] = useState({ top: 0, left: 0 });
+  const { isToggled, toggle } = useOrganizationSwitch();
 
   const updateSubMenuPosition = () => {
     const submenu = document.querySelector(
@@ -217,6 +220,22 @@ function LeftSidebar({
         <Link to="/" replace>
           <img src={CXPAY_SHADOW_LOGO} alt="dashboard logo" />
         </Link>
+        {/* <div className="organization-toggle">
+          <ul>
+            <li>
+              <label className="form-switch labelToggleOff">OFF</label>
+              <InputSwitch
+                name="switch_organization"
+                className="form-check-input"
+                labelOffText=""
+                labelOnText=""
+                onChange={toggle}
+                checked={isToggled}
+              />
+              <label className="form-switch labelToggleOn">ON</label>
+            </li>
+          </ul>
+        </div> */}
         <Link to="/" className="dashaboard-btn text-capitalize" replace>
           {user_type}
         </Link>

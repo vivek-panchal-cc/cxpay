@@ -1,0 +1,126 @@
+.organization-toggle {
+  width: 100%;
+}
+
+.organization-toggle ul li {
+  padding: 0px 30px 0px 30px;
+  /* background-color: #fff; */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  /* box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
+  border-radius: 20px;
+  font-family: "Comfortaa", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+  color: var(--dark_blue);
+  justify-content: center;
+}
+
+.organization-toggle ul li:not(:last-child) {
+  margin-bottom: 18px;
+}
+
+.organization-toggle .form-switch {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-family: "Comfortaa", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 34px;
+  color: var(--light-grey);
+  padding: 0;
+  position: relative;
+  flex-direction: row-reverse;
+  margin: 0;
+}
+
+.organization-toggle .form-switch .form-check-input {
+  width: 39px;
+  height: 14px;
+  background: var(--gray);
+  border-radius: 10px;
+  border: none;
+  float: none;
+  margin: 0;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.organization-toggle .form-switch .form-check-label + .form-check-label {
+  display: none;
+}
+
+.organization-toggle .form-switch .form-check-label {
+  padding-right: 7px;
+}
+
+.organization-toggle .form-switch .form-check-label::after {
+  position: absolute;
+  content: "";
+  display: block;
+  left: auto;
+  right: 20px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+  transition: all 0.5s ease-in-out;
+}
+
+.organization-toggle .form-switch .form-check-input:checked {
+  background-color: var(--dark_blue);
+}
+
+.organization-toggle .form-switch .form-check-input:checked + label::after {
+  right: 0;
+}
+
+.organization-toggle .form-switch .form-check-input:checked + label + label {
+  display: block;
+  padding-right: 5px;
+}
+
+.organization-toggle
+  .form-switch
+  .form-check-input:checked
+  + label
+  + label::after {
+  display: none;
+}
+
+.organization-toggle .form-switch .form-check-input:checked + label {
+  font-size: 0;
+}
+
+.organization-toggle ul {
+  padding-bottom: 0px;
+}
+
+.organization-toggle .settings {
+  padding-right: 15px;
+}
+
+.organization-toggle .labelToggleOff {
+  color: var(--white);
+  padding-right: 5px;
+}
+
+.organization-toggle .labelToggleOn {
+  color: var(--white);
+  padding-left: 10px;
+}
+
+.sidebar-open .labelToggleOff,
+.sidebar-open .labelToggleOn {
+  display: none;
+}

@@ -2,6 +2,7 @@ const AUTH_KEY = "CXPAY_AUTH";
 const STORAGE_KEY = "CXPAY_SIGNUP_CREDS";
 const LOGIN_STORAGE_KEY = "CXPAY_LOGIN_CREDS";
 const TIMEZONE_STORAGE_KEY = "CXPAY_TIMEZONE_CREDS";
+const ORGANIZATION_KEY = "CXPAY_IS_ORGANIZATION";
 
 // LOCAL STORAGE set Auth data
 export const setAuth = (token) => {
@@ -73,6 +74,22 @@ const removeTimeZone = () => {
   if (localStorage) return localStorage.removeItem(TIMEZONE_STORAGE_KEY);
 };
 
+const getOrgToggle = () => {
+  if (!sessionStorage) return false;
+  const value = sessionStorage.getItem(ORGANIZATION_KEY);
+  return value === "true";
+};
+
+const setOrgToggle = (value) => {
+  if (!sessionStorage) return null;
+  sessionStorage.setItem(ORGANIZATION_KEY, value);
+};
+
+const removeOrgToggle = () => {
+  if (!sessionStorage) return null;
+  sessionStorage.removeItem(ORGANIZATION_KEY);
+};
+
 export const storageRequest = {
   setAuth,
   getAuth,
@@ -85,4 +102,7 @@ export const storageRequest = {
   getTimeZone,
   setTimeZoneStorage,
   removeTimeZone,
+  setOrgToggle,
+  getOrgToggle,
+  removeOrgToggle,
 };

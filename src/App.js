@@ -73,6 +73,8 @@ import SetPin from "pages/change-pin/SetPin";
 import ForgotPin from "pages/forgot-pin/ForgotPin";
 import PendingPin from "pages/pending-pin/PendingPin";
 import ProtectedRoute from "components/protected-pin-route/ProtectedPin";
+import OrgDashboard from "pages/dashboard/OrgDashboard";
+import { useOrganizationSwitch } from "context/organizationSwitchContext";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -242,6 +244,7 @@ const ProtectedFaqContent = withUserProtection(FaqContent, AllowedAllTypes);
 function App() {
   const location = useLocation();
   const dispatch = useDispatch();
+  const { isToggled } = useOrganizationSwitch();
 
   // useEffect(() => {
   //   dispatch(fetchUserProfile());
@@ -314,7 +317,11 @@ function App() {
             />
             <Route
               path="/setting/notification"
-              element={<ProtectedNotification />}
+              element={
+                <ProtectedRoute>
+                  <ProtectedNotification />
+                </ProtectedRoute>
+              }
             />
             <Route
               path="/setting/change-password"
@@ -324,10 +331,21 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/setting/change-pin" element={<ChangePin />} />
+            <Route
+              path="/setting/change-pin"
+              element={
+                <ProtectedRoute>
+                  <ChangePin />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/setting/business-info"
-              element={<ProtectedBusinessInfo />}
+              element={
+                <ProtectedRoute>
+                  <ProtectedBusinessInfo />
+                </ProtectedRoute>
+              }
             />
             {/* <Route
               path="/setting/app-settings"
@@ -376,6 +394,10 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             {/* contacts */}
             <Route path="/" element={<ProtectedDashboard />} />
+            {/* <Route
+              path="/"
+              element={isToggled ? <OrgDashboard /> : <ProtectedDashboard />}
+            /> */}
             <Route path="/more/:slug" element={<ProtectedCMSContent />} />
             <Route
               path="/more/faq"
