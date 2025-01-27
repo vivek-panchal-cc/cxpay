@@ -273,8 +273,8 @@ function App() {
         />
         {/* List of Public Routes */}
         <Route element={<PublicLayout />}>
-          <Route path="/app-install" element={<AppInstall />} />
-          <Route path="/.well-known/:fileName" element={<WellKnown />} />
+          {/* <Route path="/app-install" element={<AppInstall />} />
+          <Route path="/.well-known/:fileName" element={<WellKnown />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/login-with-otp" element={<LoginWithOtp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
