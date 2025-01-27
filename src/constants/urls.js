@@ -36,6 +36,7 @@ export const API_ONBOARD_DELETE_CONTACT = "/delete-contact";
 export const API_ONBOARD_CHECK_CUSTOMER_PAYMENT = "/check-customer-payment";
 export const API_ONBOARD_FAV_CONTACT = "/mark-as-favourite";
 export const API_ONBOARD_GET_COUNTRY = "/get-country";
+export const API_ONBOARD_APP_INSTALL = "/app-install";
 export const API_ONBOARD_GET_BUSIINESS_CATEGORY =
   "/list-active-business-category";
 export const API_ONBOARD_GET_MERCHANT_LIST = "/get-merchant-list";

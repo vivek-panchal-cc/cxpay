@@ -75,6 +75,8 @@ import PendingPin from "pages/pending-pin/PendingPin";
 import ProtectedRoute from "components/protected-pin-route/ProtectedPin";
 import OrgDashboard from "pages/dashboard/OrgDashboard";
 import { useOrganizationSwitch } from "context/organizationSwitchContext";
+import AppInstall from "pages/app-install/AppInstall";
+import WellKnown from "pages/deep-linking/WellKnown";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -271,6 +273,8 @@ function App() {
         />
         {/* List of Public Routes */}
         <Route element={<PublicLayout />}>
+          <Route path="/app-install" element={<AppInstall />} />
+          <Route path="/.well-known/:fileName" element={<WellKnown />} />
           <Route path="/login" element={<Login />} />
           <Route path="/login-with-otp" element={<LoginWithOtp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

@@ -41,6 +41,7 @@ const API_addCard = apiUrl.API_ONBOARD_ADD_CARD;
 const API_deleteCard = apiUrl.API_ONBOARD_DELETE_CARD;
 const API_updateCard = apiUrl.API_ONBOARD_UPDATE_CARD;
 const API_getCountry = apiUrl.API_ONBOARD_GET_COUNTRY;
+const API_appInstall = apiUrl.API_ONBOARD_APP_INSTALL;
 const API_getBusinessCategory = apiUrl.API_ONBOARD_GET_BUSIINESS_CATEGORY;
 const API_getMerchantList = apiUrl.API_ONBOARD_GET_MERCHANT_LIST;
 const API_resendRegisterOtp = apiUrl.API_ONBOARD_RESEND_REGISTER_OTP;
@@ -372,6 +373,13 @@ export const cardMarkAsDefault = (params) => {
  */
 export const getCountry = () => {
   return axiosOnboardInstance.post(`${API_getCountry}`);
+};
+
+/** POST @get-country API
+ * @params
+ */
+export const appInstall = () => {
+  return axiosOnboardInstance.get(`${API_appInstall}`);
 };
 
 /** POST @list-active-business-category API
@@ -1105,6 +1113,7 @@ export const apiRequest = {
   updateCard,
   cardMarkAsDefault,
   getCountry,
+  appInstall,
   getBusinessCategory,
   getMerchantList,
   refreshToken,
