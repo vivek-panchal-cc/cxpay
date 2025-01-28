@@ -201,6 +201,10 @@ const setQrAmount = yup.object().shape({
     .string()
     .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
     .required("Please enter amount"),
+  specification: yup
+    .string()
+    .max(50, "Maximum limit is 50 characters.")
+    .required("Please enter specifications"),
 });
 
 const inviteContactSchema = yup.object().shape({

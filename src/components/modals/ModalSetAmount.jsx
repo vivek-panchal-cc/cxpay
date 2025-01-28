@@ -34,6 +34,7 @@ function ModalSetAmount(props) {
   const formik = useFormik({
     initialValues: {
       amount: "",
+      specification: "",
     },
     validationSchema: setQrAmount,
     onSubmit: (values) => {
@@ -52,7 +53,7 @@ function ModalSetAmount(props) {
 
       // Update the formik value and trigger callback with formatted amount
       formik.setFieldValue("amount", formattedValue);
-      handleCallback(formattedValue);
+      handleCallback(formattedValue, values.specification);
     },
   });
 
@@ -93,7 +94,7 @@ function ModalSetAmount(props) {
                 <p className="text-danger text-center">{error}</p>
               ) : null}
             </div>
-            <div className="modal-body">
+            <div className="">
               <div>{children}</div>
               <div className="d-flex justify-content-center">
                 <form onSubmit={formik.handleSubmit}>
@@ -134,35 +135,6 @@ function ModalSetAmount(props) {
                           );
                         }
                       }}
-                      // onBlur={(e) => {
-                      //   let value = e.target.value.trim();
-
-                      //   if (!value || value === ".") {
-                      //     value = "0.00"; // If the field is empty or just a '.', set it to "0.00"
-                      //   } else {
-                      //     const hasDecimal = value.includes(".");
-                      //     // If there's no decimal point, add ".00"
-                      //     if (!hasDecimal) {
-                      //       value += ".00";
-                      //     } else {
-                      //       const parts = value.split(".");
-                      //       if (parts[1].length === 0) {
-                      //         value += "00"; // Add two zeroes if there are no decimal digits
-                      //       } else if (parts[1].length === 1) {
-                      //         value += "0"; // Add one zero if there's only one decimal digit
-                      //       } else if (parts[1].length > 2) {
-                      //         value = `${parts[0]}.${parts[1].slice(0, 2)}`; // Limit to two decimal places
-                      //       }
-                      //     }
-                      //   }
-                      //   formik.setFieldValue("amount", value);
-                      //   formik.handleBlur(e);
-                      // }}
-                      // onKeyDown={(e) => {
-                      //   if (e.key === "Enter") {
-                      //     e.preventDefault(); // Prevent form submission on Enter key
-                      //   }
-                      // }}
                       value={formik.values.amount}
                       error={formik.touched.amount && formik.errors.amount}
                       onCopy={(e) => e.preventDefault()}
@@ -170,7 +142,23 @@ function ModalSetAmount(props) {
                     />
                     <p className="ip_currancy">{CURRENCY_SYMBOL}</p>
                   </div>
-
+                  <div className="col-12 col p-0">
+                    <div className="form-field">
+                      <Input
+                        type="text"
+                        className="form-control"
+                        placeholder="Specification"
+                        name="specification"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.specification}
+                        error={
+                          formik.touched.specification &&
+                          formik.errors.specification
+                        }
+                      />
+                    </div>
+                  </div>
                   <div className="popup-btn-wrap d-flex align-items-center justify-content-end gap-4 mt-3">
                     <div className="set-amount">
                       <button
@@ -185,13 +173,17 @@ function ModalSetAmount(props) {
                       <button
                         type="submit"
                         className={`outline-btn px-4 py-3 ${
-                          formik.values.amount?.length === 0
+                          formik.values.amount?.length === 0 ||
+                          !formik.values.specification
                             ? "disabled-font-color"
                             : ""
                         }`}
                         style={{ minWidth: "initial" }}
                         // onClick={handleCallback}
-                        disabled={formik.values.amount?.length === 0}
+                        disabled={
+                          formik.values.amount?.length === 0 ||
+                          !formik.values.specification
+                        }
                         autoFocus={true}
                       >
                         OK

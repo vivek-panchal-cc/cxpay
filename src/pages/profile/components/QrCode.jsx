@@ -78,11 +78,12 @@ const QrCode = (props) => {
     },
   });
 
-  const handleSubmitAmount = async (value) => {
+  const handleSubmitAmount = async (value, specification) => {
     setIsLoading(true);
     try {
       const { data } = await apiRequest.createCustomeQrCode({
         QR_amount: +value,
+        QR_specification: specification,
       });
       if (!data.success) throw data.message;
       toast.success(data.message);
