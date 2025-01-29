@@ -6,6 +6,7 @@ import {
   paymentPinSchema,
   pinSchema,
 } from "./commonSchema";
+import { exp0ContainOnlySpace } from "constants/all";
 
 const getYesterDay = () => {
   const today = new Date();
@@ -25,6 +26,7 @@ const sendPaymentSchema = yup.object().shape({
     yup.object().shape({
       specifications: yup
         .string()
+        .matches(exp0ContainOnlySpace, "Space is not allowed")
         .max(50, "Maximum limit is 50 characters.")
         .required("Please enter specifications"),
       personal_amount: yup
@@ -40,6 +42,7 @@ const sendRequestSchema = yup.object().shape({
     yup.object().shape({
       specification: yup
         .string()
+        .matches(exp0ContainOnlySpace, "Space is not allowed")
         .max(50, "Maximum limit is 50 characters.")
         .required("Please enter specifications"),
       amount: yup

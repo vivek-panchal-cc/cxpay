@@ -1,4 +1,8 @@
-import { isValidDocumentType, MAX_GROUP_MEMBERS } from "constants/all";
+import {
+  exp0ContainOnlySpace,
+  isValidDocumentType,
+  MAX_GROUP_MEMBERS,
+} from "constants/all";
 import * as yup from "yup";
 import {
   confirmPasswordSchema,
@@ -203,7 +207,7 @@ const setQrAmount = yup.object().shape({
     .required("Please enter amount"),
   specification: yup
     .string()
-    .matches(/^\S*$/, "Space is not allowed")
+    .matches(exp0ContainOnlySpace, "Space is not allowed")
     .max(50, "Maximum limit is 50 characters.")
     .required("Please enter specifications"),
 });

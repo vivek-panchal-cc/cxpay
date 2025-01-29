@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { isValidFileType } from "constants/all";
+import { exp0ContainOnlySpace, isValidFileType } from "constants/all";
 import {
   addressSchema,
   bankNameSchema,
@@ -84,6 +84,7 @@ const withdrawCardSchema = yup.object().shape({
     .required("Please enter amount"),
   specification: yup
     .string()
+    .matches(exp0ContainOnlySpace, "Space is not allowed")
     .max(50, "Maximum limit is 50 characters.")
     .required("Please enter specifications"),
 });
@@ -100,6 +101,7 @@ const withdrawBankSchema = yup.object().shape({
     .required("Please enter amount"),
   specification: yup
     .string()
+    .matches(exp0ContainOnlySpace, "Space is not allowed")
     .max(50, "Maximum limit is 50 characters.")
     .required("Please enter specifications"),
   // user_date_time: yup.string().required(),

@@ -13,6 +13,7 @@ import {
 
 // Expressions
 const exp0ContainWhitespace = /^\S*$/;
+const exp0ContainOnlySpace = /^(?!\s*$).*/;
 const exp0ContainWordPassword = /^((?!password).)*$/gim;
 const expContainCapitalLetter = /^(?=.*[A-Z])/;
 const expContainNumber = /^(?=.*\d)/;
@@ -41,6 +42,9 @@ const validDocumentExtensions = {
 // Test Functions
 const regexNotContainWhitespace = (testStr) =>
   new RegExp(exp0ContainWhitespace).test(testStr);
+
+const regexContainOnlySpace = (testStr) =>
+  new RegExp(exp0ContainOnlySpace).test(testStr);
 
 const regexNotContainWordPassword = (testStr) =>
   new RegExp(exp0ContainWordPassword).test(testStr);
@@ -1033,6 +1037,7 @@ const getRandomColorClass = (fullName) => {
 
 export {
   exp0ContainWhitespace,
+  exp0ContainOnlySpace,
   exp0ContainWordPassword,
   expContainCapitalLetter,
   expContainNumber,
@@ -1101,6 +1106,7 @@ export {
   // fileUploadLimit,
   // ~NOT
   regexNotContainWhitespace,
+  regexContainOnlySpace,
   regexNotContainWordPassword,
   renameKeys,
   isAdminApprovedWithRenewCheck,

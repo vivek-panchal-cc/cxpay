@@ -14,7 +14,7 @@ import {
   lastNameSchema,
   routingNumberSchema,
 } from "./commonSchema";
-import { isValidFileType } from "constants/all";
+import { exp0ContainOnlySpace, isValidFileType } from "constants/all";
 
 const FILE_SIZE = 5 * 1048576;
 const FILE_COUNT = 3;
@@ -128,6 +128,7 @@ const fundCashCreditSchema = yup.object().shape({
     .required("Please enter amount"),
   specification: yup
     .string()
+    .matches(exp0ContainOnlySpace, "Space is not allowed")
     .max(50, "Maximum limit is 50 characters.")
     .required("Please enter specifications"),
   fees: yup.string(),
@@ -159,4 +160,9 @@ const fundCashCreditSchema = yup.object().shape({
     }),
 });
 
-export { fundSchema, fundSchemaWithoutCVV, fundCashCreditSchema, topUpDetailsSchema };
+export {
+  fundSchema,
+  fundSchemaWithoutCVV,
+  fundCashCreditSchema,
+  topUpDetailsSchema,
+};
