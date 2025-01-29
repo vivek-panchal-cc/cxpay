@@ -55,7 +55,6 @@ function SendRecurringPayment(_props) {
     charges,
     disableEdit,
     handleSendCreds,
-    prevPathRedirect,
     handleCancelPayment,
   } = useContext(SendPaymentContext);
 
@@ -357,9 +356,9 @@ function SendRecurringPayment(_props) {
   useEffect(() => {
     // Check if the wallet array is empty and navigate accordingly
     if (!sendCreds?.wallet || sendCreds.wallet.length <= 0) {
-      navigate(prevPathRedirect || "/send", { replace: true });
+      navigate("/send", { replace: true });
     }
-  }, [sendCreds, navigate, prevPathRedirect]);
+  }, [sendCreds, navigate]);
 
   // if (!sendCreds?.wallet || sendCreds.wallet.length <= 0)
   //   navigate(prevPathRedirect || "/send", { replace: true });
