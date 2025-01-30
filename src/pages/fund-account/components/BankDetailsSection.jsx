@@ -1,6 +1,7 @@
+import { SystemOptionsContext } from "context/systemOptionsContext";
 import useBankDetails from "hooks/useBankDetails";
 import LoaderDiv from "loaders/LoaderDiv";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import {
   IconBank,
   IconDownArrow,
@@ -12,6 +13,8 @@ const BankDetailsSection = (props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [toggle, setToggle] = useState(true);
   const [loading, details] = useBankDetails();
+  const { BANK_NAME, BANK_ACCOUNT_NUMBER, SWIFT_CODE } =
+    useContext(SystemOptionsContext);
   // const {
   //   bank_name = "",
   //   bank_account_number = "",
@@ -83,20 +86,26 @@ const BankDetailsSection = (props) => {
             <tbody>
               <tr>
                 <td>Bank Name : </td>
-                <td>{loading ? showLoader() : bank_name}</td>
+                <td>{loading ? showLoader() : bank_name || BANK_NAME}</td>
               </tr>
               <tr>
                 <td>Account Number : </td>
-                <td>{loading ? showLoader() : account_number}</td>
+                <td>
+                  {loading
+                    ? showLoader()
+                    : account_number || BANK_ACCOUNT_NUMBER}
+                </td>
               </tr>
               <tr>
                 <td>Account Name : </td>
-                <td>{loading ? showLoader() : account_name}</td>
+                <td>{loading ? showLoader() : account_name || SWIFT_CODE}</td>
               </tr>
-              <tr>
-                <td>Country : </td>
-                <td>{loading ? showLoader() : country_name}</td>
-              </tr>
+              {country_name && (
+                <tr>
+                  <td>Country : </td>
+                  <td>{loading ? showLoader() : country_name}</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
