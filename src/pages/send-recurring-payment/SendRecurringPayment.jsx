@@ -7,7 +7,11 @@ import {
   sendPaymentOtpSchema,
   sendPaymentPinSchema,
 } from "schemas/sendPaymentSchema";
-import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
+import {
+  addObjToFormData,
+  getChargedAmount,
+  getChargedCommissionAmount,
+} from "helpers/commonHelpers";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
@@ -150,6 +154,10 @@ function SendRecurringPayment(_props) {
           specification: walletItem.specifications,
           amount: walletItem.personal_amount,
           receiver_account_number: walletItem.receiver_account_number,
+          user_type: walletItem.user_type,
+          fees_deduct_account: walletItem.merchant_fees?.fees_deduct_account,
+          merchant_fees_amount: walletItem.merchant_fees?.merchant_fees,
+          merchant_fees_type: walletItem.merchant_fees?.merchant_fees_type,
         })),
         fees: charges?.length > 0 ? charges : "",
         total: paymentDetails.grandTotal.toString(),
@@ -350,7 +358,9 @@ function SendRecurringPayment(_props) {
         ? parseFloat(item.personal_amount)
         : 0
     );
-    setPaymentDetails(getChargedAmount(charges, amounts));
+    setPaymentDetails(
+      getChargedCommissionAmount(charges, amounts, formik.values.wallet)
+    );
   }, [formik.values?.wallet, charges]);
 
   useEffect(() => {

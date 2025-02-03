@@ -7,7 +7,11 @@ import {
   sendPaymentPinSchema,
   sendPaymentSchema,
 } from "schemas/sendPaymentSchema";
-import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
+import {
+  addObjToFormData,
+  getChargedAmount,
+  getChargedCommissionAmount,
+} from "helpers/commonHelpers";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
@@ -152,10 +156,20 @@ function SendPayment(props) {
       const formData = new FormData();
       const muValues = { ...valuesWithPin };
       muValues.wallet = muValues?.wallet?.map(
-        ({ specifications, personal_amount, receiver_account_number }) => ({
+        ({
           specifications,
           personal_amount,
           receiver_account_number,
+          user_type,
+          merchant_fees,
+        }) => ({
+          specifications,
+          personal_amount,
+          receiver_account_number,
+          user_type,
+          fees_deduct_account: merchant_fees?.fees_deduct_account,
+          merchant_fees_amount: merchant_fees?.merchant_fees,
+          merchant_fees_type: merchant_fees?.merchant_fees_type,
         })
       );
       muValues.fees = charges?.length > 0 ? charges : "";
@@ -383,10 +397,20 @@ function SendPayment(props) {
       const formData = new FormData();
       const muValues = { ...formik.values };
       muValues.schedule_payment = muValues?.wallet?.map(
-        ({ specifications, personal_amount, receiver_account_number }) => ({
+        ({
           specifications,
           personal_amount,
           receiver_account_number,
+          user_type,
+          merchant_fees,
+        }) => ({
+          specifications,
+          personal_amount,
+          receiver_account_number,
+          user_type,
+          fees_deduct_account: merchant_fees?.fees_deduct_account,
+          merchant_fees_amount: merchant_fees?.merchant_fees,
+          merchant_fees_type: merchant_fees?.merchant_fees_type,
         })
       );
       muValues.fees = charges?.length > 0 ? charges : "";
@@ -456,7 +480,9 @@ function SendPayment(props) {
         ? parseFloat(item.personal_amount)
         : 0
     );
-    setPaymentDetails(getChargedAmount(charges, amounts));
+    setPaymentDetails(
+      getChargedCommissionAmount(charges, amounts, formik.values.wallet)
+    );
   }, [formik.values?.wallet, charges]);
 
   useEffect(() => {

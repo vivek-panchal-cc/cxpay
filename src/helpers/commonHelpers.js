@@ -33,6 +33,100 @@ const getChargedAmount = (charges = [], amounts = []) => {
   };
 };
 
+const getChargedCommissionAmount = (
+  charges = [],
+  amounts = [],
+  values = []
+) => {
+  if (!charges || amounts.length <= 0)
+    return { allCharges: [], grandTotal: 0, total: 0 };
+
+  const total = amounts.reduce((prev, curr) => prev + curr, 0);
+  let allCharges = [],
+    totalCharges = 0,
+    grandTotal = total; // Start with the base total
+
+  let chargeDesc = charges.length > 0 ? charges[0].text : "Wallet to wallet";
+
+  // Iterate over the values array (representing user types)
+  values.forEach((item) => {
+    const { user_type, merchant_fees = {} } = item;
+    let chargeAmount = 0;
+
+    switch (user_type) {
+      case "business":
+        // Calculate business charges
+        if (merchant_fees.merchant_fees) {
+          const {
+            merchant_fees_type,
+            fees_deduct_account,
+            merchant_fees: feeAmount,
+          } = merchant_fees;
+          const numericFeeAmount = parseFloat(feeAmount) || 0;
+
+          // Adjust the grandTotal only for "sender" account type
+          if (fees_deduct_account === "sender") {
+            switch (merchant_fees_type) {
+              case "fixed":
+                chargeAmount = total > 0 ? numericFeeAmount : 0;
+                break;
+              case "percentage":
+                chargeAmount = total > 0 ? total * (numericFeeAmount / 100) : 0;
+                break;
+            }
+            grandTotal += chargeAmount;
+          }
+
+          totalCharges += chargeAmount;
+        }
+        break;
+
+      case "personal":
+        // Calculate personal charges (fixed or percentage)
+        charges.forEach(({ type, amount }) => {
+          let thisChargeAmount = 0;
+
+          switch (type) {
+            case "fixed":
+              // Fixed charge: apply amount once
+              thisChargeAmount = total > 0 ? amount : 0;
+              break;
+            case "percentage":
+              // Percentage charge: apply the percentage of total
+              thisChargeAmount = total > 0 ? total * (amount / 100) : 0;
+              break;
+          }
+
+          // Add only to totalCharges for personal user, not grandTotal
+          totalCharges += thisChargeAmount;
+        });
+        break;
+
+      default:
+        break;
+    }
+  });
+
+  // After adding all charges, update grandTotal
+  grandTotal = total + totalCharges;
+
+  // Merging all charges into one entry with "Wallet 2 Wallet Fee" description
+  if (
+    values.some(
+      (item) => item.merchant_fees?.fees_deduct_account !== "receiver"
+    )
+  ) {
+    allCharges.push({ desc: chargeDesc, amount: totalCharges });
+  }
+
+  return {
+    allCharges,
+    totalCharges,
+    total,
+    grandTotal,
+  };
+};
+
 function addObjToFormData(obj, pkey, formData) {
   switch (Object.prototype.toString.call(obj)) {
     case "[object Array]":
@@ -149,6 +243,7 @@ function formatDateToDesiredFormat(dateString) {
 
 export {
   getChargedAmount,
+  getChargedCommissionAmount,
   addObjToFormData,
   timeStampToTimeString,
   dateFormattor,
