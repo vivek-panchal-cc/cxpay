@@ -1120,6 +1120,7 @@ export {
   RECURRING_SUCCESS,
   RECURRING_PAID,
   TXN_TYPE_WW,
+  BUSINESS_PAID,
 };
 export {
   regexContainCapitalLetter,
