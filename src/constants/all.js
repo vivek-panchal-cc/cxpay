@@ -214,6 +214,7 @@ const TXN_TYPE_MF = "MF";
 const TXN_TYPE_DBT = "DBT";
 const TXN_TYPE_WITHDRAW = "withdraw";
 const TXN_TYPE_AGENT = "AGENT TOPUP";
+const BUSINESS_PAID = `${ACT_STATUS_PAID}_business`;
 
 const activityConsts = {
   [ACT_TYPE_REQUEST]: {
@@ -400,7 +401,7 @@ const activityConsts = {
           textDetailStatus: "Amount Credit In Progress",
           desc: "From YYYY",
         },
-        [ACT_STATUS_PAID]: {
+        [ACT_STATUS_PAID || BUSINESS_PAID]: {
           iconStatus: "",
           iconAmount: "+",
           classStatus: "btn-green",
@@ -408,7 +409,10 @@ const activityConsts = {
           classText: "cx-color-green",
           classDetailStatus: "cx-color-green",
           textStatus: "Receive",
-          textDetailStatus: "Amount Credited",
+          textDetailStatus: BUSINESS_PAID
+            ? "Payment Received"
+            : "Amount Credited",
+          // textDetailStatus: "Amount Credited",
           desc: "From YYYY",
         },
         [ACT_STATUS_FAILED]: {
@@ -618,7 +622,7 @@ const activityConsts = {
           textDetailStatus: "Amount Debit Pending",
           desc: "To YYYY",
         },
-        [ACT_STATUS_PAID]: {
+        [ACT_STATUS_PAID || BUSINESS_PAID]: {
           iconStatus: "",
           iconAmount: "-",
           classStatus: "btn-red",
@@ -626,7 +630,7 @@ const activityConsts = {
           classText: "",
           classDetailStatus: "cx-color-red",
           textStatus: "Sent",
-          textDetailStatus: "Amount Debited",
+          textDetailStatus: BUSINESS_PAID ? "Payment Sent" : "Amount Debited",
           desc: "To YYYY",
         },
         [ACT_STATUS_FAILED]: {

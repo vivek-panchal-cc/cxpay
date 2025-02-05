@@ -69,7 +69,7 @@ const ModalActivityDetail = (props) => {
   const modalRef = useRef(null);
   const [payAgain, setPayAgain] = useState(false);
   const profileUrl = image || "/assets/images/single_contact_profile.png";
-  const { admin_approved } = useSelector(
+  const { admin_approved, user_type } = useSelector(
     (state) => state?.userProfile?.profile
   );
   const { loginCreds } = useContext(LoginContext);
