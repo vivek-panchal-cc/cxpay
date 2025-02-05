@@ -214,6 +214,7 @@ const TXN_TYPE_MF = "MF";
 const TXN_TYPE_DBT = "DBT";
 const TXN_TYPE_WITHDRAW = "withdraw";
 const TXN_TYPE_AGENT = "AGENT TOPUP";
+const BUSINESS_PAID = `${ACT_STATUS_PAID}_business`;
 
 const activityConsts = {
   [ACT_TYPE_REQUEST]: {
@@ -409,6 +410,18 @@ const activityConsts = {
           classDetailStatus: "cx-color-green",
           textStatus: "Receive",
           textDetailStatus: "Amount Credited",
+          desc: "From YYYY",
+        },
+        [BUSINESS_PAID]: {
+          iconStatus: "",
+          iconAmount: "+",
+          classStatus: "btn-green",
+          classBg: "cx-bg-green",
+          classText: "cx-color-green",
+          classDetailStatus: "cx-color-green",
+          textStatus: "Receive",
+          textDetailStatus: "Payment Received",
+
           desc: "From YYYY",
         },
         [ACT_STATUS_FAILED]: {
@@ -627,6 +640,17 @@ const activityConsts = {
           classDetailStatus: "cx-color-red",
           textStatus: "Sent",
           textDetailStatus: "Amount Debited",
+          desc: "To YYYY",
+        },
+        [BUSINESS_PAID]: {
+          iconStatus: "",
+          iconAmount: "-",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Sent",
+          textDetailStatus: "Payment Sent",
           desc: "To YYYY",
         },
         [ACT_STATUS_FAILED]: {
@@ -1096,6 +1120,7 @@ export {
   RECURRING_SUCCESS,
   RECURRING_PAID,
   TXN_TYPE_WW,
+  BUSINESS_PAID,
 };
 export {
   regexContainCapitalLetter,

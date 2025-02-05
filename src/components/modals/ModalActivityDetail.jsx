@@ -69,7 +69,7 @@ const ModalActivityDetail = (props) => {
   const modalRef = useRef(null);
   const [payAgain, setPayAgain] = useState(false);
   const profileUrl = image || "/assets/images/single_contact_profile.png";
-  const { admin_approved } = useSelector(
+  const { admin_approved, user_type } = useSelector(
     (state) => state?.userProfile?.profile
   );
   const { loginCreds } = useContext(LoginContext);
@@ -80,6 +80,7 @@ const ModalActivityDetail = (props) => {
   );
   const { setIsLoading } = useContext(LoaderContext);
   const { handleSendContactsForInstantPay } = useContext(SendPaymentContext);
+  const statusKey = user_type === "business" ? `${status}_business` : status;
 
   const {
     iconStatus,
@@ -97,8 +98,9 @@ const ModalActivityDetail = (props) => {
         return activityConsts[activity_type]?.[request_type]?.[status] || {};
       case ACT_TYPE_TRANSACTION:
         return (
-          activityConsts[activity_type]?.[request_type]?.[txn_type]?.[status] ||
-          {}
+          activityConsts[activity_type]?.[request_type]?.[txn_type]?.[
+            statusKey
+          ] || {}
         );
       default:
         return {};
@@ -214,8 +216,6 @@ const ModalActivityDetail = (props) => {
         personal_amount:
           typeof details.amount === "number" ? details.amount?.toFixed(2) : "0",
         receiver_account_number: details.receiver_account_number,
-        user_type: details.user_type,
-        merchant_fees: details.merchant_fees,
       };
       handleSendContactsForInstantPay([contact], ref_id);
       // toast.success(data.message);
