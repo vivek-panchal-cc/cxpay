@@ -46,7 +46,9 @@ const getChargedCommissionAmount = (
     totalCharges = 0,
     grandTotal = total; // Start with the base total
 
-  let chargeDesc = charges.length > 0 ? charges[0].text : "Wallet to wallet";
+  let chargeDesc = values[0].merchant_fees.merchant_fees_title
+    ? values[0].merchant_fees.merchant_fees_title
+    : "Merchant Commission Amount";
 
   // Iterate over the values array (representing user types)
   values.forEach((item) => {
@@ -78,27 +80,37 @@ const getChargedCommissionAmount = (
           }
 
           totalCharges += chargeAmount;
+
+          if (fees_deduct_account !== "receiver") {
+            let data = {
+              desc: chargeDesc,
+              amount: (allCharges[0]?.["amount"] ?? 0) + chargeAmount,
+            };
+            allCharges = [data];
+            // allCharges.push({ desc: chargeDesc, amount: chargeAmount });
+          }
         }
         break;
 
       case "personal":
         // Calculate personal charges (fixed or percentage)
-        charges.forEach(({ type, amount }) => {
+        charges.forEach(({ type, amount, text }) => {
           let thisChargeAmount = 0;
 
           switch (type) {
             case "fixed":
-              // Fixed charge: apply amount once
               thisChargeAmount = total > 0 ? amount : 0;
               break;
             case "percentage":
-              // Percentage charge: apply the percentage of total
               thisChargeAmount = total > 0 ? total * (amount / 100) : 0;
               break;
           }
 
           // Add only to totalCharges for personal user, not grandTotal
           totalCharges += thisChargeAmount;
+
+          // Push each charge separately with its own description
+          allCharges.push({ desc: text, amount: thisChargeAmount });
         });
         break;
 
@@ -109,15 +121,6 @@ const getChargedCommissionAmount = (
 
   // After adding all charges, update grandTotal
   grandTotal = total + totalCharges;
-
-  // Merging all charges into one entry with "Wallet 2 Wallet Fee" description
-  if (
-    values.some(
-      (item) => item.merchant_fees?.fees_deduct_account !== "receiver"
-    )
-  ) {
-    allCharges.push({ desc: chargeDesc, amount: totalCharges });
-  }
 
   return {
     allCharges,
