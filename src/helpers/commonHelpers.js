@@ -41,23 +41,21 @@ const getChargedCommissionAmount = (
   if (!charges || amounts.length <= 0)
     return { allCharges: [], grandTotal: 0, total: 0 };
 
-  const total = amounts.reduce((prev, curr) => prev + curr, 0);
-  let allCharges = [],
-    totalCharges = 0,
-    grandTotal = total; // Start with the base total
+  let chargeMap = new Map(); // Store merged charges
+  let grandTotal = 0;
+  let totalCharges = 0;
+  let total = amounts.reduce((prev, curr) => prev + curr, 0); // Compute total upfront
+  let individualTotals = [];
 
-  let chargeDesc = values[0].merchant_fees.merchant_fees_title
-    ? values[0].merchant_fees.merchant_fees_title
-    : "Merchant Commission Amount";
-
-  // Iterate over the values array (representing user types)
-  values.forEach((item) => {
+  values.forEach((item, index) => {
     const { user_type, merchant_fees = {} } = item;
     let chargeAmount = 0;
+    let individualTotal = amounts[index] || 0; // Use individual amount per account
+    let chargeDesc =
+      merchant_fees.merchant_fees_title || "Merchant Commission Amount";
 
     switch (user_type) {
       case "business":
-        // Calculate business charges
         if (merchant_fees.merchant_fees) {
           const {
             merchant_fees_type,
@@ -66,66 +64,82 @@ const getChargedCommissionAmount = (
           } = merchant_fees;
           const numericFeeAmount = parseFloat(feeAmount) || 0;
 
-          // Adjust the grandTotal only for "sender" account type
           if (fees_deduct_account === "sender") {
             switch (merchant_fees_type) {
               case "fixed":
-                chargeAmount = total > 0 ? numericFeeAmount : 0;
+                chargeAmount = individualTotal > 0 ? numericFeeAmount : 0;
                 break;
               case "percentage":
-                chargeAmount = total > 0 ? total * (numericFeeAmount / 100) : 0;
+                chargeAmount =
+                  individualTotal > 0
+                    ? individualTotal * (numericFeeAmount / 100)
+                    : 0;
                 break;
             }
-            grandTotal += chargeAmount;
-          }
+            individualTotal += chargeAmount; // Apply charge per account
+            totalCharges += chargeAmount;
 
-          totalCharges += chargeAmount;
-
-          if (fees_deduct_account !== "receiver") {
-            let data = {
-              desc: chargeDesc,
-              amount: (allCharges[0]?.["amount"] ?? 0) + chargeAmount,
-            };
-            allCharges = [data];
-            // allCharges.push({ desc: chargeDesc, amount: chargeAmount });
+            // Merge charges in the map
+            if (chargeMap.has(chargeDesc)) {
+              chargeMap.set(
+                chargeDesc,
+                chargeMap.get(chargeDesc) + chargeAmount
+              );
+            } else {
+              chargeMap.set(chargeDesc, chargeAmount);
+            }
+          } else if (fees_deduct_account === "receiver") {
+            // Charge applies but should not be displayed
+            totalCharges += chargeAmount;
+            individualTotal += chargeAmount;
           }
         }
         break;
 
       case "personal":
-        // Calculate personal charges (fixed or percentage)
         charges.forEach(({ type, amount, text }) => {
           let thisChargeAmount = 0;
 
           switch (type) {
             case "fixed":
-              thisChargeAmount = total > 0 ? amount : 0;
+              thisChargeAmount = individualTotal > 0 ? amount : 0;
               break;
             case "percentage":
-              thisChargeAmount = total > 0 ? total * (amount / 100) : 0;
+              thisChargeAmount =
+                individualTotal > 0 ? individualTotal * (amount / 100) : 0;
               break;
           }
 
-          // Add only to totalCharges for personal user, not grandTotal
           totalCharges += thisChargeAmount;
+          individualTotal += thisChargeAmount;
 
-          // Push each charge separately with its own description
-          allCharges.push({ desc: text, amount: thisChargeAmount });
+          // Merge charges in the map
+          if (chargeMap.has(text)) {
+            chargeMap.set(text, chargeMap.get(text) + thisChargeAmount);
+          } else {
+            chargeMap.set(text, thisChargeAmount);
+          }
         });
         break;
 
       default:
         break;
     }
+
+    individualTotals.push(individualTotal); // Store total per account
+    grandTotal += individualTotal; // Sum up all individual totals
   });
 
-  // After adding all charges, update grandTotal
-  grandTotal = total + totalCharges;
+  // Convert chargeMap to an array for final result
+  let allCharges = Array.from(chargeMap, ([desc, amount]) => ({
+    desc,
+    amount,
+  }));
 
   return {
     allCharges,
     totalCharges,
-    total,
+    total, // Returning total like in old code
     grandTotal,
   };
 };
