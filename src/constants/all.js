@@ -401,7 +401,7 @@ const activityConsts = {
           textDetailStatus: "Amount Credit In Progress",
           desc: "From YYYY",
         },
-        [ACT_STATUS_PAID || BUSINESS_PAID]: {
+        [ACT_STATUS_PAID]: {
           iconStatus: "",
           iconAmount: "+",
           classStatus: "btn-green",
@@ -409,10 +409,19 @@ const activityConsts = {
           classText: "cx-color-green",
           classDetailStatus: "cx-color-green",
           textStatus: "Receive",
-          textDetailStatus: BUSINESS_PAID
-            ? "Payment Received"
-            : "Amount Credited",
-          // textDetailStatus: "Amount Credited",
+          textDetailStatus: "Amount Credited",
+          desc: "From YYYY",
+        },
+        [BUSINESS_PAID]: {
+          iconStatus: "",
+          iconAmount: "+",
+          classStatus: "btn-green",
+          classBg: "cx-bg-green",
+          classText: "cx-color-green",
+          classDetailStatus: "cx-color-green",
+          textStatus: "Receive",
+          textDetailStatus: "Payment Received",
+
           desc: "From YYYY",
         },
         [ACT_STATUS_FAILED]: {
@@ -622,7 +631,7 @@ const activityConsts = {
           textDetailStatus: "Amount Debit Pending",
           desc: "To YYYY",
         },
-        [ACT_STATUS_PAID || BUSINESS_PAID]: {
+        [ACT_STATUS_PAID]: {
           iconStatus: "",
           iconAmount: "-",
           classStatus: "btn-red",
@@ -630,7 +639,18 @@ const activityConsts = {
           classText: "",
           classDetailStatus: "cx-color-red",
           textStatus: "Sent",
-          textDetailStatus: BUSINESS_PAID ? "Payment Sent" : "Amount Debited",
+          textDetailStatus: "Amount Debited",
+          desc: "To YYYY",
+        },
+        [BUSINESS_PAID]: {
+          iconStatus: "",
+          iconAmount: "-",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Sent",
+          textDetailStatus: "Payment Sent",
           desc: "To YYYY",
         },
         [ACT_STATUS_FAILED]: {

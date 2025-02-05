@@ -80,6 +80,7 @@ const ModalActivityDetail = (props) => {
   );
   const { setIsLoading } = useContext(LoaderContext);
   const { handleSendContactsForInstantPay } = useContext(SendPaymentContext);
+  const statusKey = user_type === "business" ? `${status}_business` : status;
 
   const {
     iconStatus,
@@ -97,8 +98,9 @@ const ModalActivityDetail = (props) => {
         return activityConsts[activity_type]?.[request_type]?.[status] || {};
       case ACT_TYPE_TRANSACTION:
         return (
-          activityConsts[activity_type]?.[request_type]?.[txn_type]?.[status] ||
-          {}
+          activityConsts[activity_type]?.[request_type]?.[txn_type]?.[
+            statusKey
+          ] || {}
         );
       default:
         return {};
