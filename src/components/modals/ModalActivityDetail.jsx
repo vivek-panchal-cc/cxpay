@@ -223,6 +223,8 @@ const ModalActivityDetail = (props) => {
         personal_amount:
           typeof details.amount === "number" ? details.amount?.toFixed(2) : "0",
         receiver_account_number: details.receiver_account_number,
+        user_type: details.user_type,
+        merchant_fees: details.merchant_fees,
       };
       handleSendContactsForInstantPay([contact], ref_id);
       // toast.success(data.message);
