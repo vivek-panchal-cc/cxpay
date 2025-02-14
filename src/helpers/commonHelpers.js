@@ -61,8 +61,10 @@ const getChargedCommissionAmount = (
             merchant_fees_type,
             fees_deduct_account,
             merchant_fees: feeAmount,
+            merchant_fees_capacity
           } = merchant_fees;
           const numericFeeAmount = parseFloat(feeAmount) || 0;
+          const numericMerchantFeesCapacity = parseFloat(merchant_fees_capacity) || individualTotal * (numericFeeAmount / 100);
 
           if (fees_deduct_account === "sender") {
             switch (merchant_fees_type) {
@@ -72,7 +74,7 @@ const getChargedCommissionAmount = (
               case "percentage":
                 chargeAmount =
                   individualTotal > 0
-                    ? individualTotal * (numericFeeAmount / 100)
+                    ? Math.min(individualTotal * (numericFeeAmount / 100), numericMerchantFeesCapacity)
                     : 0;
                 break;
             }

@@ -158,6 +158,7 @@ function SendRecurringPayment(_props) {
           fees_deduct_account: walletItem.merchant_fees?.fees_deduct_account,
           merchant_fees_amount: walletItem.merchant_fees?.merchant_fees,
           merchant_fees_type: walletItem.merchant_fees?.merchant_fees_type,
+          merchant_fees_capacity: walletItem.merchant_fees?.merchant_fees_capacity || 0.00,
         })),
         fees: charges?.length > 0 ? charges : "",
         total: paymentDetails.grandTotal.toString(),

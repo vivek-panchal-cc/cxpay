@@ -170,6 +170,7 @@ function SendPayment(props) {
           fees_deduct_account: merchant_fees?.fees_deduct_account,
           merchant_fees_amount: merchant_fees?.merchant_fees,
           merchant_fees_type: merchant_fees?.merchant_fees_type,
+          merchant_fees_capacity: merchant_fees?.merchant_fees_capacity || 0.00,
         })
       );
       muValues.fees = charges?.length > 0 ? charges : "";
@@ -411,6 +412,7 @@ function SendPayment(props) {
           fees_deduct_account: merchant_fees?.fees_deduct_account,
           merchant_fees_amount: merchant_fees?.merchant_fees,
           merchant_fees_type: merchant_fees?.merchant_fees_type,
+          merchant_fees_capacity: merchant_fees?.merchant_fees_capacity || 0.00,
         })
       );
       muValues.fees = charges?.length > 0 ? charges : "";
