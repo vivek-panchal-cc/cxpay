@@ -110,7 +110,7 @@ const months = [];
 
 const BalanceGraph = (props) => {
   const { isLoading, setIsLoading } = useContext(LoaderContext);
-  const { graphBackgroundImage, balanceDataArr, balance, monthDataArr } = props;
+  const { graphBackgroundImage, balanceDataArr, balance, monthDataArr, getBalance } = props;
   const [options, setOptions] = useState({ ...chartOption });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reservedDetails, setReservedDetails] = useState([]);
@@ -311,8 +311,7 @@ const BalanceGraph = (props) => {
   const handleGetBalance = async () => {
     setIsLoading(true);
     try {
-      const { data } = await apiRequest.getBalance();
-      if (!data.success) throw data?.message;
+      await getBalance();
     } catch (error) {
       console.log(error);
     } finally {

@@ -108,7 +108,7 @@ const months = [];
 
 const AgentBalanceGraph = (props) => {
   const { isLoading, setIsLoading } = useContext(LoaderContext);
-  const { graphBackgroundImage, balanceDataArr, balance, monthDataArr } = props;
+  const { graphBackgroundImage, balanceDataArr, balance, monthDataArr, getRecharge } = props;
   const [options, setOptions] = useState({ ...chartOption });
   const [showAvailableBalance, setShowAvailableBalance] = useState(false);
   const [showReservedAmount, setShowReservedAmount] = useState(false);
@@ -302,8 +302,7 @@ const AgentBalanceGraph = (props) => {
   const handleGetRechargeTotal = async () => {
     setIsLoading(true);
     try {
-      const { data } = await apiRequest.getMonthlyRechargeTotal();
-      if (!data.success) throw data?.message;
+      await getRecharge();
     } catch (error) {
       console.log(error);
     } finally {

@@ -57,8 +57,8 @@ const Dashboard = () => {
   const [cardsList, setCardsList] = useState([]);
   const [slideCard, setSlideCard] = useState({});
 
-  const [loadingBalance, balance] = useBalance();
-  const [loadingTopUpBalance, topUpBalance] = useTopUpBalance();
+  const [loadingBalance, balance, getBalance] = useBalance();
+  const [loadingTopUpBalance, topUpBalance, getRecharge] = useTopUpBalance();
   const [loadingChart, chartData] = useChartData();
   const [loadingAct, actPagination, activitiesList, reload] = useActivities({});
   const [loadingTopUp, actTopUpPagination, topUpActivitiesList, topUpReload] =
@@ -194,6 +194,7 @@ const Dashboard = () => {
                   balance={balance}
                   balanceDataArr={chartData.balanceArr}
                   monthDataArr={chartData.monthArr}
+                  getBalance={getBalance}
                 />
               ) : (
                 <AgentBalanceGraph
@@ -201,6 +202,7 @@ const Dashboard = () => {
                   balance={topUpBalance}
                   balanceDataArr={chartData.balanceArr}
                   monthDataArr={chartData.monthArr}
+                  getRecharge={getRecharge}
                 />
               )}
             </div>

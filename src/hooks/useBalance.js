@@ -29,7 +29,7 @@ const useBalance = () => {
     getBalance();
   }, []);
 
-  return [loading, balance];
+  return [loading, balance, getBalance];
 };
 
 export default useBalance;
