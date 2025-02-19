@@ -208,7 +208,8 @@ const setQrAmount = yup.object().shape({
   specification: yup
     .string()
     .matches(exp0ContainOnlySpace, "Space is not allowed")
-    .matches(/^[^,]*$/, "Commas are not allowed")
+    // .matches(/^[^,]*$/, "Commas are not allowed")
+    .matches(/^[a-zA-Z0-9 -]*$/, "Special characters are not allowed")
     .max(50, "Maximum limit is 50 characters.")
     .required("Please enter specifications"),
 });
