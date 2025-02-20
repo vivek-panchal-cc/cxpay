@@ -164,7 +164,7 @@ function Wallet() {
                 </Link>
               )}
             </div>
-            <div className="wallet-card-add-btns">
+            <div className="wallet-card-add-btns mb-4">
               <Link
                 to="/wallet/add-card"
                 className="w-100 d-flex align-items-center"
@@ -178,6 +178,15 @@ function Wallet() {
               >
                 <img src="/assets/images/View_cards_btn.svg" alt="" />
                 <span>View Cards</span>
+              </Link>
+            </div>
+            <div className="wallet-card-add-btns mb-4">
+              <Link
+                to="/wallet/merchant-fees-report"
+                className="w-100 d-flex align-items-center"
+              >
+                <img src="/assets/images/Add_card_btn.svg" alt="" />
+                Merchant Fees Report
               </Link>
             </div>
           </div>

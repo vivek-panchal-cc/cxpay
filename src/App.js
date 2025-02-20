@@ -77,6 +77,7 @@ import OrgDashboard from "pages/dashboard/OrgDashboard";
 import { useOrganizationSwitch } from "context/organizationSwitchContext";
 import AppInstall from "pages/app-install/AppInstall";
 import WellKnown from "pages/deep-linking/WellKnown";
+import MerchantFeesReport from "pages/merchant-fees-report/MerchantFeesReport";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -159,6 +160,10 @@ const ProtectedActivities = withUserProtection(
 const ProtectedContacts = withUserProtection(Contacts, AllowedBusinessPersonal);
 const ProtectedMerchants = withUserProtection(
   Merchants,
+  AllowedBusinessPersonal
+);
+const ProtectedMerchantFeesReport = withUserProtection(
+  MerchantFeesReport,
   AllowedBusinessPersonal
 );
 const ProtectedContactsInvited = withUserProtection(
@@ -422,6 +427,10 @@ function App() {
               element={<ProtectedContactsInvited />}
             />
             <Route path="/merchants" element={<ProtectedMerchants />} />
+            <Route
+              path="/wallet/merchant-fees-report"
+              element={<ProtectedMerchantFeesReport />}
+            />
             <Route path="/edit-group/:id" element={<ProtectedEditGroup />} />
             <Route path="/send" element={<ProtectedSendContact />} />
             <Route path="/send/payment" element={<ProtectedSendPayment />} />
