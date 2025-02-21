@@ -1,54 +1,62 @@
 import React, { useContext, useEffect, useState } from "react";
-import { IconCross, IconRefresh, IconSearch } from "styles/svgs";
+import { IconCross, IconExport, IconRefresh, IconSearch } from "styles/svgs";
 import Pagination from "components/pagination/Pagination";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
-import { ActivityContext } from "context/activityContext";
 import Input from "components/ui/Input";
 import InputDateRangeActivities from "components/ui/InputDateRangeActivities";
 import MerchantFeesItem from "components/items/MerchantFeesItem";
 import useMerchantFees from "hooks/useMerchantFees";
+import { MerchantReportsContext } from "context/merchantReportsContext";
+import { apiRequest } from "helpers/apiRequests";
+import { LoaderContext } from "context/loaderContext";
+import { toast } from "react-toastify";
 
 const MerchantFeesReport = () => {
-  const { handleActivityDetail, reloadList } = useContext(ActivityContext);
+  const { setIsLoading } = useContext(LoaderContext);
+  const { handleMerchantReportDetails, reloadList } = useContext(
+    MerchantReportsContext
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [serachText, setSearchText] = useState("");
-  const [activitiesDateBind, setActivitiesDateBind] = useState({});
+  const [reportsDateBind, setReportsDateBind] = useState({});
   const [showFilter, setShowFilter] = useState(false);
   const [filters, setFilters] = useState({
     startDate: "",
     endDate: "",
   });
-  const [loadingAct, actPagination, activitiesList, reload] = useMerchantFees({
+  const [loadingAct, actPagination, reportList, reload] = useMerchantFees({
     page: currentPage,
     search: serachText,
-    start_date: filters.startDate ? filters.startDate : "",
-    end_date: filters.endDate ? filters.endDate : "",
+    from_date: filters.startDate ? filters.startDate : "",
+    to_date: filters.endDate ? filters.endDate : "",
   });
 
   useEffect(() => {
-    if (!activitiesList) return;
-    const activityDateList = {};
-    activitiesList?.map((item) => {
-      const { date } = item || {};
-      // const [dd, mm, yr] = date?.split("/") || [];
-      const [yr, mm, dd] = date?.split(" ")[0].split("-") || [];
+    if (!reportList || reportList.length === 0) {
+      setReportsDateBind({});
+      return;
+    }
+    const merchantReportDateList = {};
+    reportList?.map((item) => {
+      const { created_at } = item || {};
+      const [yr, mm, dd] = created_at?.split(" ")[0].split("-") || [];
       if (!dd || !mm || !yr) return false;
       const dt = new Date(`${yr}-${mm}-${dd}`);
       const month = dt.toLocaleDateString("default", { month: "long" });
-      const dtList = activityDateList[`${month} ${yr}`] || [];
-      activityDateList[`${month} ${yr}`] = [...dtList, item];
+      const dtList = merchantReportDateList[`${month} ${yr}`] || [];
+      merchantReportDateList[`${month} ${yr}`] = [...dtList, item];
       return item;
     });
-    setActivitiesDateBind(activityDateList);
-  }, [activitiesList]);
+    setReportsDateBind(merchantReportDateList);
+  }, [reportList]);
 
   const formatDate = (dateObj) => {
     if (dateObj instanceof Date) {
       const day = String(dateObj.getDate()).padStart(2, "0");
       const month = String(dateObj.getMonth() + 1).padStart(2, "0");
       const year = dateObj.getFullYear();
-      return `${day}/${month}/${year}`;
+      return `${month}/${day}/${year}`;
     }
     return null;
   };
@@ -71,11 +79,38 @@ const MerchantFeesReport = () => {
     });
   };
 
+  const handleExportMerchantReports = async () => {
+    setIsLoading(true);
+    let reqParams = {
+      search: serachText,
+      from_date: filters.startDate,
+      to_date: filters.endDate,
+    };
+    try {
+      const { data } = await apiRequest.exportMerchantReports(reqParams);
+      if (!data.success) throw data.message;
+      if (typeof data.message === "string") toast.success(data.message);
+      const base64csv = data.data;
+      const dtnow = new Date().toISOString();
+      const csvContent = atob(base64csv);
+      const blob = new Blob([csvContent], { type: "text/csv" });
+      const downloadLink = document.createElement("a");
+      const fileName = `MERCHANT_REPORTS_${dtnow}.csv`;
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = fileName;
+      downloadLink.click();
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  const handleSearchActivity = (elm) => {
+  const handleSearchReport = (elm) => {
     setCurrentPage(1);
     setSearchText(elm.target.value);
   };
@@ -88,7 +123,7 @@ const MerchantFeesReport = () => {
     <div className="activities-sec">
       <div className="col-12 send-payment-ttile-wrap sdp-main-new-1 justify-content-between">
         <div className="title-content-wrap send-pay-title-sec w-auto">
-          <h3>Merchant Fees Report</h3>
+          <h3>Merchant Report</h3>
           <p></p>
         </div>
         <div className="schedule-pay-sd-wrap gap-4 flex-wrap w-auto">
@@ -106,7 +141,7 @@ const MerchantFeesReport = () => {
               name="search_field"
               placeholder="Search..."
               value={serachText}
-              onChange={handleSearchActivity}
+              onChange={handleSearchReport}
             />
             <div className="search-btn">
               <IconSearch style={{ stroke: "#0081c5" }} />
@@ -123,6 +158,18 @@ const MerchantFeesReport = () => {
           <button className="shedule-date-filter" onClick={handleResetFilter}>
             <IconRefresh />
           </button>
+          {Object.keys(reportsDateBind || {}).length > 0 ? (
+            <button
+              className={`export-activities ${
+                Object.keys(reportsDateBind || {}).length <= 0 ? "disabled" : ""
+              } tooltip-btn`}
+              disabled={Object.keys(reportsDateBind || {}).length <= 0}
+              onClick={handleExportMerchantReports}
+            >
+              <IconExport stroke={"#ffff"} />
+              <span className="tooltip-text">Export</span>
+            </button>
+          ) : null}
         </div>
       </div>
       <div className="activity-user-list-wrap">
@@ -133,16 +180,16 @@ const MerchantFeesReport = () => {
             ))}
           </div>
         ) : (
-          Object.keys(activitiesDateBind)?.map((key) => (
+          Object.keys(reportsDateBind)?.map((key) => (
             <div key={key}>
               <div className="activity-month">{key}</div>
               <ul className="activity-lw-main">
-                {activitiesDateBind[key]?.map((activity, index) => {
+                {reportsDateBind[key]?.map((report, index) => {
                   return (
                     <MerchantFeesItem
-                      key={activity?.id || index}
-                      activityDetails={activity}
-                      handleClick={handleActivityDetail}
+                      key={report?.ref_id || index}
+                      reportDetails={report}
+                      handleClick={handleMerchantReportDetails}
                     />
                   );
                 })}
@@ -152,7 +199,7 @@ const MerchantFeesReport = () => {
         )}
       </div>
       {!loadingAct
-        ? Object.keys(activitiesDateBind || {}).length <= 0 && (
+        ? Object.keys(reportsDateBind || {}).length <= 0 && (
             <div className="text-center py-4">
               <p className="fs-5">Merchant fees report not found.</p>
             </div>

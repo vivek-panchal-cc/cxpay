@@ -151,6 +151,9 @@ const API_getTopupActivityDetails =
   apiUrl.API_TRANSACTION_GET_TOPUP_ACTIVITY_DETAILS;
 const API_getMonthlyRechargeTotal =
   apiUrl.API_TRANSACTION_MONTHLY_RECHARGE_TOTAL;
+const API_merchantReports = apiUrl.API_TRANSACTION_MERCHANT_REPORTS;
+const API_exportMerchantReports =
+  apiUrl.API_TRANSACTION_EXPORT_MERCHANT_REPORTS;
 
 //Recurring
 const API_createRecurringPayment =
@@ -394,6 +397,20 @@ export const getBusinessCategory = () => {
  */
 export const getMerchantList = (params) => {
   return axiosOnboardInstance.post(`${API_getMerchantList}`, params);
+};
+
+/** POST @merchant-reports
+ * @params auth_token, start_date, end_date, page
+ */
+export const merchantReports = (params) => {
+  return axiosTransactionInstance.post(`${API_merchantReports}`, params);
+};
+
+/** GET @merchant-reports-export
+ * @params
+ */
+export const exportMerchantReports = (params) => {
+  return axiosTransactionInstance.post(`${API_exportMerchantReports}`, params);
 };
 
 /** POST @resend-register-otp API
@@ -1116,6 +1133,8 @@ export const apiRequest = {
   appInstall,
   getBusinessCategory,
   getMerchantList,
+  merchantReports,
+  exportMerchantReports,
   refreshToken,
   checkCustomerKyc,
   updateCustomerKyc,

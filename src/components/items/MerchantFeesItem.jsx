@@ -1,104 +1,49 @@
-import React, { useMemo } from "react";
-import {
-  ACT_TYPE_REQUEST,
-  ACT_TYPE_TRANSACTION,
-  CURRENCY_SYMBOL,
-  activityConsts,
-} from "constants/all";
+import React from "react";
+import { CURRENCY_SYMBOL } from "constants/all";
 import { IconEyeOpen } from "styles/svgs";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { formatDate } from "helpers/commonHelpers";
 import { getInitials, getRandomColorClass } from "constants/all";
 
 const MerchantFeesItem = (props) => {
-  const { activityDetails, handleClick } = props || {};
-  const {
-    id,
-    account_number,
-    specification,
-    amount,
-    status,
-    name,
-    request_type,
-    txn_type,
-    user_type,
-    activity_type,
-    reference_id,
-    date,
-    profile_image,
-  } = activityDetails || {};
+  const { reportDetails, handleClick } = props || {};
+  const { sname, ref_id, amount, narration, profile_image, created_at } =
+    reportDetails || {};
 
-  const profileUrl =
-    profile_image || "/assets/images/single_contact_profile.png";
-  const altAmount = typeof amount === "number" ? amount?.toFixed(2) : "";
-
-  const {
-    iconStatus = "",
-    iconAmount = "",
-    classStatus = "",
-    classText = "",
-    textStatus = "",
-    description = "",
-  } = useMemo(() => {
-    if (!activity_type) return {};
-    let details = {};
-    switch (activity_type) {
-      case ACT_TYPE_REQUEST:
-        details = activityConsts[activity_type]?.[request_type]?.[status];
-        break;
-      case ACT_TYPE_TRANSACTION:
-        details =
-          activityConsts[activity_type]?.[request_type]?.[txn_type]?.[status];
-        break;
-      default:
-        return {};
-    }
-    const { desc = "" } = details || {};
-    const aDesc =
-      desc?.replace(/XXXX/g, altAmount).replace(/YYYY/, name) || specification;
-    return Object.assign({ ...details }, { description: aDesc });
-  }, [activity_type, request_type, status]);
+  const altAmount =
+    typeof amount === "number" || "string" ? parseFloat(amount) : "";
 
   return (
-    <li onClick={() => handleClick({ id, activity_type, reference_id })}>
+    <li onClick={() => handleClick(reportDetails)}>
       <div className="act-info-wrap-left">
         <div className="act-user-info-wrap d-flex">
           <div className="act-user-thumb">
-            {/* <img src={profileUrl} alt="" /> */}
             {profile_image ? (
               <img src={profile_image} className="blue-bg" alt="" />
             ) : (
               <div
                 className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
-                  name
+                  sname
                 )}`}
               >
-                {getInitials(name)}
+                {getInitials(sname)}
               </div>
             )}
           </div>
           <div className="act-user-in">
-            <h2>{name || specification}</h2>
-            <p>{formatDate(date)}</p>
+            <h2>{sname}</h2>
+            <p>{formatDate(created_at)}</p>
           </div>
         </div>
         <div className="act-specification-text">
-          <p>{description}</p>
+          <p>{ref_id}</p>
         </div>
         <div className="act-amt-status-wrap d-flex">
-          <div className="act-status-wrap">
-            <button type="button" className={`btn ${classStatus}`}>
-              {textStatus}
-              {iconStatus}
-            </button>
+          <div className="act-specification-text">
+            <p>{narration}</p>
           </div>
-          <div className={`act-amt-wrap text-end ${classText}`}>
-            <WrapAmount
-              value={altAmount}
-              prefix={`${CURRENCY_SYMBOL} ${
-                iconAmount === "-" ? "" : iconAmount
-              }`}
-            />
+          <div className={`act-amt-wrap text-end`}>
+            <WrapAmount value={altAmount} prefix={`${CURRENCY_SYMBOL} `} />
           </div>
         </div>
       </div>

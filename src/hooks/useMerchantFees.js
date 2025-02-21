@@ -4,11 +4,11 @@ import { apiRequest } from "helpers/apiRequests";
 const useMerchantFees = ({
   page = 1,
   search = "",
-  start_date = "",
-  end_date = "",
+  from_date = "",
+  to_date = "",
 }) => {
   const [loading, setLoading] = useState(false);
-  const [listActivities, setListActivities] = useState([]);
+  const [reportList, setReportList] = useState([]);
   const [pagination, setPagination] = useState({});
   const [reloadFlag, setReloadFlag] = useState(false);
 
@@ -19,25 +19,25 @@ const useMerchantFees = ({
   const retrieveListActivities = async (
     page = 1,
     search = "",
-    start_date = "",
-    end_date = ""
+    from_date = "",
+    to_date = ""
   ) => {
     setLoading(true);
     try {
-      const { data } = await apiRequest.activityList({
+      const { data } = await apiRequest.merchantReports({
         page,
         search,
-        start_date,
-        end_date,
+        from_date,
+        to_date,
       });
       if (!data.success) throw data.message;
-      const { transactions, pagination } = data.data || {};
-      setListActivities(transactions);
+      const { transaction, pagination } = data.data || {};
+      setReportList(transaction);
       setPagination(pagination);
     } catch (error) {
       console.log(error);
       if (typeof error === "string") {
-        setListActivities([]);
+        setReportList([]);
         setPagination({});
       }
     } finally {
@@ -47,16 +47,16 @@ const useMerchantFees = ({
 
   useEffect(() => {
     if (search === "") {
-      retrieveListActivities(page, search, start_date, end_date);
+      retrieveListActivities(page, search, from_date, to_date);
       return;
     }
     const timeOut = setTimeout(() => {
-      retrieveListActivities(page, search, start_date, end_date);
+      retrieveListActivities(page, search, from_date, to_date);
     }, 1000);
     return () => clearTimeout(timeOut);
-  }, [page, search?.trim(), start_date, end_date, reloadFlag]);
+  }, [page, search?.trim(), from_date, to_date, reloadFlag]);
 
-  return [loading, pagination, listActivities, reload];
+  return [loading, pagination, reportList, reload];
 };
 
 export default useMerchantFees;

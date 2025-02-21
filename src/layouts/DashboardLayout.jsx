@@ -18,6 +18,7 @@ import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { usePinContext } from "context/pinContext";
 import { sendPaymentPinSchema } from "schemas/sendPaymentSchema";
+import MerchantReportsProvider from "context/merchantReportsContext";
 
 function DashboardLayout() {
   const { setIsPinValidated } = usePinContext();
@@ -104,10 +105,12 @@ function DashboardLayout() {
             <ContactsProvider>
               <SendPaymentProvider>
                 <ActivityProvider>
-                  <TopUpActivityProvider>
-                    <NotificationBar />
-                    <Outlet />
-                  </TopUpActivityProvider>
+                  <MerchantReportsProvider>
+                    <TopUpActivityProvider>
+                      <NotificationBar />
+                      <Outlet />
+                    </TopUpActivityProvider>
+                  </MerchantReportsProvider>
                 </ActivityProvider>
               </SendPaymentProvider>
             </ContactsProvider>

@@ -117,6 +117,9 @@ export const API_TRANSACTION_GET_ACTIVITY_DETAILS = "/get-activity-details";
 export const API_TRANSACTION_CHANGE_REQUEST_STATUS = "/change-request-status";
 export const API_TRANSACTION_GET_CHART_DATA = "/get-chart-data";
 export const API_TRANSACTION_GET_PRINT_DETAILS = "/get-print-details";
+export const API_TRANSACTION_MERCHANT_REPORTS = "/get-merchant-fees-report";
+export const API_TRANSACTION_EXPORT_MERCHANT_REPORTS =
+  "/export-merchant-fees-report";
 
 export const API_TRANSACTION_BANK_WITHDRAW_LIST = "/bank-withdraw-list";
 export const API_TRANSACTION_BANK_WITHDRAW_DETAILS = "/bank-withdraw-detail";

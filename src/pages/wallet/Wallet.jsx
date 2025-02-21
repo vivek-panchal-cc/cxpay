@@ -185,8 +185,8 @@ function Wallet() {
                 to="/wallet/merchant-fees-report"
                 className="w-100 d-flex align-items-center"
               >
-                <img src="/assets/images/Add_card_btn.svg" alt="" />
-                Merchant Fees Report
+                <img src="/assets/images/merchant_report_logo.svg" alt="" />
+                Merchant Reports
               </Link>
             </div>
           </div>

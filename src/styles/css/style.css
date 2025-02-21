@@ -8050,6 +8050,10 @@ ul.recent-act-lw-main .act-info-wrap-left {
   width: 140px;
 }
 
+.merchant-reports.rcr-transition-info-1 table td:first-child {
+  width: 100%;
+}
+
 .rcr-transition-info-2 table td:first-child {
   width: 150px;
 }
