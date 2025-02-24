@@ -112,7 +112,7 @@ const ModalMerchantDetailReports = (props) => {
                       <tbody>
                         <tr style={tableTr}>
                           <td className="pb-3">Mobile Number</td>
-                          <td>{mobile_number}</td>
+                          <td>{`+${mobile_number}`}</td>
                         </tr>
 
                         <tr style={tableTr}>
