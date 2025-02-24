@@ -164,7 +164,7 @@ const ProtectedMerchants = withUserProtection(
 );
 const ProtectedMerchantFeesReport = withUserProtection(
   MerchantFeesReport,
-  AllowedBusinessPersonal
+  AllowedBusiness
 );
 const ProtectedContactsInvited = withUserProtection(
   ContactsInvited,

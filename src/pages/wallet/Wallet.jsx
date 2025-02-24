@@ -23,7 +23,7 @@ function Wallet() {
   const [loadingBalance, balance] = useBalance();
   const [loadingChart, chartData] = useChartData();
   const { profile } = useSelector((state) => state.userProfile);
-  const { admin_approved } = profile || {};
+  const { admin_approved, user_type } = profile || {};
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
   const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
@@ -180,15 +180,17 @@ function Wallet() {
                 <span>View Cards</span>
               </Link>
             </div>
-            <div className="wallet-card-add-btns mb-4">
-              <Link
-                to="/wallet/merchant-fees-report"
-                className="w-100 d-flex align-items-center"
-              >
-                <img src="/assets/images/merchant_report_logo.svg" alt="" />
-                Merchant Reports
-              </Link>
-            </div>
+            {user_type === "business" && (
+              <div className="wallet-card-add-btns mb-4">
+                <Link
+                  to="/wallet/merchant-fees-report"
+                  className="w-100 d-flex align-items-center"
+                >
+                  <img src="/assets/images/merchant_report_logo.svg" alt="" />
+                  Merchant Reports
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
