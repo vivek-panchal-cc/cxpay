@@ -89,7 +89,7 @@ const ModalMerchantDetailReports = (props) => {
                     <table>
                       <tbody>
                         <tr style={tableTr}>
-                          <td className="pb-3">Reference ID</td>
+                          <td className="pb-3">Transaction ID</td>
                           <td>{ref_id}</td>
                         </tr>
                         <tr style={tableTr}>
@@ -99,7 +99,7 @@ const ModalMerchantDetailReports = (props) => {
                           </td>
                         </tr>
                         <tr style={tableTr}>
-                          <td className="pb-3">Transaction Wise Cap Amount</td>
+                          <td className="pb-3">Transaction Cap</td>
                           <td>
                             <WrapAmount value={merchant_fees_capacity} />
                           </td>
