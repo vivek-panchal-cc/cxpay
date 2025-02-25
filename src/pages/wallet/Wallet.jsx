@@ -187,7 +187,7 @@ function Wallet() {
                   className="w-100 d-flex align-items-center"
                 >
                   <img src="/assets/images/merchant_report_logo.svg" alt="" />
-                  Merchant Reports
+                  Merchant Fees Report
                 </Link>
               </div>
             )}
