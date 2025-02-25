@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import { usePinContext } from "context/pinContext";
 import { sendPaymentPinSchema } from "schemas/sendPaymentSchema";
 import MerchantReportsProvider from "context/merchantReportsContext";
+import NotificationDetailsProvider from "context/notificationsContext";
 
 function DashboardLayout() {
   const { setIsPinValidated } = usePinContext();
@@ -107,8 +108,10 @@ function DashboardLayout() {
                 <ActivityProvider>
                   <MerchantReportsProvider>
                     <TopUpActivityProvider>
-                      <NotificationBar />
-                      <Outlet />
+                      <NotificationDetailsProvider>
+                        <NotificationBar />
+                        <Outlet />
+                      </NotificationDetailsProvider>
                     </TopUpActivityProvider>
                   </MerchantReportsProvider>
                 </ActivityProvider>

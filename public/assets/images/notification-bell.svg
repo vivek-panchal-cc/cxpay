@@ -1,0 +1,11 @@
+<svg width="80" height="71" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- New Bell Icon Shape -->
+    <path d="M50 15C38 15 30 25 30 35V55C30 63 23 70 15 72C13 73 12 75 12 77V80C12 82 14 85 17 85H83C86 85 88 82 88 80V77C88 75 87 73 85 72C77 70 70 63 70 55V35C70 25 62 15 50 15Z" 
+        stroke="#363853" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M42 88C42 91 45 94 50 94C55 94 58 91 58 88" 
+        stroke="#363853" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Green Circle with Checkmark -->
+    <circle cx="80" cy="78" r="12" fill="#93E06F"/>
+    <path d="M75 78L79 82L85 73" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

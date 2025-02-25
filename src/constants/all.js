@@ -9,6 +9,7 @@ import {
   IconNotifyMoneySent,
   IconNotifyMoneySentFailed,
   IconNotifyKyc,
+  IconNotifyNotification,
 } from "styles/svgs";
 
 // Expressions
@@ -147,6 +148,7 @@ const NOTIFY_CON_REGISTER = "contact_register";
 const NOTIFY_MANUAL_TOPUP = "manual_top_up";
 const NOTIFY_KYC = "kyc";
 const NOTIFY_DBT = "direct_top_up";
+const NOTIFY_PUSH_NOTIFICATION = "push_notification";
 
 // Notifications Type Constants
 const notificationType = {
@@ -185,6 +187,10 @@ const notificationType = {
   [NOTIFY_DBT]: {
     icon: IconNotifyMoneyRecieved,
     redirect: "/activities",
+  },
+  [NOTIFY_PUSH_NOTIFICATION]: {
+    icon: IconNotifyNotification,
+    redirect: "/",
   },
   "": {
     icon: "",
