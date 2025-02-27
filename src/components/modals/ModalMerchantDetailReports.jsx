@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from "react";
 import styles from "./modal.module.scss";
 import { getInitials, getRandomColorClass } from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
-import { formatDateToDesiredFormat } from "helpers/commonHelpers";
-import { IconCloseModal } from "styles/svgs";
+import { formatDate } from "helpers/commonHelpers";
 
 const ModalMerchantDetailReports = (props) => {
   const tableTr = {
@@ -49,15 +48,6 @@ const ModalMerchantDetailReports = (props) => {
         >
           <div className="modal-content">
             <div className="modal-body">
-              {/* <IconCloseModal
-                style={{
-                  position: "absolute",
-                  top: "40px",
-                  right: "40px",
-                  cursor: "pointer",
-                }}
-                onClick={() => setShow(false)}
-              />{" "} */}
               <>
                 <div className="rcr-innner-wrap rcr-innner-wrap-1 pb-0 d-flex flex-wrap w-100 align-items-center">
                   <div className="rcrc-img-wrap rcr-img-wrap d-flex align-items-center">
@@ -124,7 +114,7 @@ const ModalMerchantDetailReports = (props) => {
 
                         <tr style={tableTr}>
                           <td className="pb-3">Transaction Date</td>
-                          <td>{formatDateToDesiredFormat(created_at)}</td>
+                          <td>{formatDate(created_at)}</td>
                         </tr>
                       </tbody>
                     </table>
