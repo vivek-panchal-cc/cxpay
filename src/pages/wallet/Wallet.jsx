@@ -20,7 +20,7 @@ function Wallet() {
   const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
   const [slideCard, setSlideCard] = useState({});
   const [activitiesList, setActivitiesList] = useState([]);
-  const [loadingBalance, balance] = useBalance();
+  const [loadingBalance, balance, getBalance] = useBalance();
   const [loadingChart, chartData] = useChartData();
   const { profile } = useSelector((state) => state.userProfile);
   const { admin_approved, user_type } = profile || {};
@@ -121,6 +121,7 @@ function Wallet() {
               balanceDataArr={chartData.balanceArr}
               balance={balance}
               monthDataArr={chartData.monthArr}
+              getBalance={getBalance}
             />
           </div>
           <RecentActivities activitiesList={activitiesList} />
