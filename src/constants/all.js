@@ -1032,14 +1032,29 @@ const capitalizeWordByWord = (text) => {
 };
 
 // Function to get initials
+// const getInitials = (fullName) => {
+//   if (!fullName) return "";
+//   const nameParts = fullName?.trim()?.split(" ");
+//   const initials =
+//     nameParts.length > 1
+//       ? nameParts[0][0] + nameParts[1][0] // First letters of first and last names
+//       : nameParts[0]?.slice(0, 2); // First two letters if only one name
+//   return initials.toUpperCase(); // Convert to uppercase
+// };
+
 const getInitials = (fullName) => {
   if (!fullName) return "";
-  const nameParts = fullName?.trim()?.split(" ");
-  const initials =
-    nameParts.length > 1
-      ? nameParts[0][0] + nameParts[1][0] // First letters of first and last names
-      : nameParts[0]?.slice(0, 2); // First two letters if only one name
-  return initials.toUpperCase(); // Convert to uppercase
+  // Remove special characters except spaces and split words
+  const nameParts = fullName
+    .replace(/[^a-zA-Z\s]/g, "") // Remove special characters except spaces
+    .trim()
+    .split(/\s+/); // Split by spaces
+  // If at least two valid words exist, take first letters
+  if (nameParts.length > 1) {
+    return (nameParts[0][0] + nameParts[1][0]).toUpperCase();
+  }
+  // Otherwise, take the first two letters of the first valid word
+  return nameParts[0]?.slice(0, 2).toUpperCase() || "";
 };
 
 // Function to generate class based on alphabetics range
