@@ -261,6 +261,15 @@ const activityConsts = {
         textStatus: "Request Sent",
         desc: "Requested money from YYYY",
       },
+      [ACT_STATUS_FAILED]: {
+        iconStatus: "",
+        iconAmount: "",
+        classStatus: "btn-red",
+        classBg: "cx-bg-red",
+        classText: "cx-color-red",
+        textStatus: "Failed",
+        desc: "Requested money From YYYY",
+      },
     },
     [ACT_REQUEST_RECEIVE]: {
       [ACT_STATUS_PENDING]: {
