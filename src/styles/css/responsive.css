@@ -82,6 +82,9 @@
   .wallet-link-bank-bottom {
     padding-top: 40px;
   }
+  .saving-jar-add-bottom {
+    padding-top: 40px;
+  }
   /* .dashboard-right-sec {
     padding-top: 30px;
   } */
@@ -235,6 +238,9 @@
   }
 }
 @media only screen and (max-height: 650px) {
+  /* .saving-jar-add-bottom {
+    padding-top: 30px;
+  } */
   .wallet_bank_link_right .wallet-link-bank-bottom {
     padding-top: 30px;
   }

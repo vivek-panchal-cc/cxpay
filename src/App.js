@@ -78,6 +78,13 @@ import { useOrganizationSwitch } from "context/organizationSwitchContext";
 import AppInstall from "pages/app-install/AppInstall";
 import WellKnown from "pages/deep-linking/WellKnown";
 import MerchantFeesReport from "pages/merchant-fees-report/MerchantFeesReport";
+import ViewSharedJars from "pages/view-jars/ViewSharedJars";
+import ViewOwnJars from "pages/view-jars/ViewOwnJars";
+import ViewInvitedJars from "pages/view-jars/ViewInvitedJars";
+import SavingsJarOwnLayout from "layouts/SavingsJarOwnLayout";
+import SavingsJarSharedLayout from "layouts/SavingsJarSharedLayout";
+import SavingsJarInvitedLayout from "layouts/SavingsJarInvitedLayout";
+import CreateJar from "pages/create-jar/CreateJar";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -228,6 +235,22 @@ const ProtectedNotification = withUserProtection(
 );
 const ProtectedViewNotification = withUserProtection(
   ViewNotification,
+  AllowedBusinessPersonal
+);
+const ProtectedSharedJars = withUserProtection(
+  ViewSharedJars,
+  AllowedBusinessPersonal
+);
+const ProtectedOwnJars = withUserProtection(
+  ViewOwnJars,
+  AllowedBusinessPersonal
+);
+const ProtectedInvitedJars = withUserProtection(
+  ViewInvitedJars,
+  AllowedBusinessPersonal
+);
+const ProtectedCreateJar = withUserProtection(
+  CreateJar,
   AllowedBusinessPersonal
 );
 
@@ -471,6 +494,20 @@ function App() {
                 element={<ProtectedEditRecurringPayment />}
               />
             </Route>
+            {/* Savings Jar */}
+            <Route element={<SavingsJarOwnLayout />}>
+              <Route path="/jars/own" element={<ProtectedOwnJars />} />
+            </Route>
+            <Route element={<SavingsJarSharedLayout />}>
+              <Route path="/jars/shared" element={<ProtectedSharedJars />} />
+            </Route>
+            <Route element={<SavingsJarInvitedLayout />}>
+              <Route path="/jars/invited" element={<ProtectedInvitedJars />} />
+            </Route>
+            <Route
+              path="/jars/own/create-jar"
+              element={<ProtectedCreateJar />}
+            />
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Route>

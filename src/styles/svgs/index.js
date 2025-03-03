@@ -75,6 +75,8 @@ export { default as IconMerchant } from "./Merchant";
 export { default as IconMerchantQR } from "./MerchantQR";
 export { default as IconQR } from "./QR";
 export { default as IconNotifyNotification } from "./NotifyNotification";
+export { default as IconJar } from "./Jars";
+export { default as IconJarAdd } from "./JarAdd";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";

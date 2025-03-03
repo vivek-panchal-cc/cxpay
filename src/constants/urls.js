@@ -167,6 +167,10 @@ export const API_TRANSACTION_RECURRING_PAYMENT_PIN =
 //Reserved Amount
 export const API_RESERVED_AMOUNT_LIST = "/reserved-amount-list";
 
+//Saving Jars
+export const API_GET_SAVING_JAR_ICONS = "/get-saving-jar-icons";
+export const API_GET_SAVING_JAR_CATEGORIES = "/get-saving-jar-category";
+
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =
   process.env.REACT_APP_API_CYBERSOURCE_ORIGIN_URL ||

@@ -8,6 +8,7 @@ import {
   IconActivity,
   IconContact,
   IconHome,
+  IconJar,
   IconLogout,
   IconMerchant,
   IconMore,
@@ -290,6 +291,12 @@ function LeftSidebar({
                 <Link to="/contacts" replace>
                   <IconContact style={{ stroke: "#F3F3F3" }} />
                   <span>Contacts</span>
+                </Link>
+              </li>
+              <li className={`${thisRoute === "jars" ? "active" : ""}`}>
+                <Link to="/jars/own" replace>
+                  <IconJar />
+                  <span>Jars</span>
                 </Link>
               </li>
               <li className={`${thisRoute === "merchants" ? "active" : ""}`}>

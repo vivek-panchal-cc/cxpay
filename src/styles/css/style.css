@@ -3662,6 +3662,11 @@ margin-bottom:0px;
   margin: auto;
 }
 
+.saving-jar-add-bottom {
+  max-width: 500px;
+  margin: auto;
+}
+
 .wallet-bank_link-form-wrap .radio-wrap {
   max-width: 100%;
   margin-bottom: 70px;
@@ -3703,6 +3708,10 @@ margin-bottom:0px;
 .wallet_bank_link_right .wallet-link-bank-bottom {
   padding-top: 130px;
 }
+
+/* .saving-jar-add-bottom {
+  padding-top: 130px;
+} */
 
 /* Wallet Fund Bank Account */
 .wallet-cb-wrap {
@@ -7898,11 +7907,11 @@ ul.recent-act-lw-main .act-info-wrap-left {
 
 .form-control-recurring {
   font-family: "Comfortaa", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: 0;
   text-align: left;
-  color: #000;
+  color: var(--dark_blue);
   border: none;
   outline: none;
   padding-left: 18px;
@@ -9068,4 +9077,19 @@ button.export-activities.disabled:hover {
 .bg-color-5 {
   background-color: #d7f4e3; /* Light green */
   color: #23784c; /* Dark green */
+}
+
+/* saving jar */
+.saving-jar {
+  display: flex;
+  align-items: center;
+}
+
+.saving-jar a {
+  border-radius: 16px;
+  background: #fff;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+  color: var(--blue);
 }

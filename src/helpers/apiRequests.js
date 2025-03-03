@@ -169,6 +169,10 @@ const API_recurringPaymentPin = apiUrl.API_TRANSACTION_RECURRING_PAYMENT_PIN;
 //Reserved Amount
 const API_listReservedAmount = apiUrl.API_RESERVED_AMOUNT_LIST;
 
+//Saving Jars
+const API_savingJarIcons = apiUrl.API_GET_SAVING_JAR_ICONS;
+const API_savingJarCategories = apiUrl.API_GET_SAVING_JAR_CATEGORIES;
+
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
 /** POST @login API
@@ -1104,6 +1108,21 @@ export const checkEnrollment = (params) => {
   return axiosTransactionInstance.post(`${"/check-enrollment"}`, params);
 };
 
+//Saving Jars
+/** POST
+ * @params token
+ */
+export const getSavingJarIcons = (params) => {
+  return axiosTransactionInstance.post(`${API_savingJarIcons}`, params);
+};
+
+/** POST
+ * @params token
+ */
+export const getSavingJarCategories = (params) => {
+  return axiosTransactionInstance.post(`${API_savingJarCategories}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -1236,4 +1255,6 @@ export const apiRequest = {
   deleteRecurringPayment,
   viewRecurringPayment,
   listReservedAmount,
+  getSavingJarIcons,
+  getSavingJarCategories,
 };

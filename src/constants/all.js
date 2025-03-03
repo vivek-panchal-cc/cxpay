@@ -999,6 +999,12 @@ const PAYMENT_OPTIONS_TABS_LIST = [
   { title: "Recurring Payments", url: "/view-recurring-payment" },
 ];
 
+const JAR_OPTIONS_TABS_LIST = [
+  { title: "Own", url: "/jars/own" },
+  { title: "Shared", url: "/jars/shared" },
+  { title: "Invited", url: "/jars/invited" },
+];
+
 // Withdraw status filters list for card transactions
 const WITHDRAW_STATUS_FILTER_CARD = [
   { title: "Refundable", status: "ENABLE" },
@@ -1141,6 +1147,7 @@ export {
   CHARGES_TYPE_MF,
   WITHDRAW_OPTIONS_TABS_LIST,
   PAYMENT_OPTIONS_TABS_LIST,
+  JAR_OPTIONS_TABS_LIST,
   WITHDRAW_STATUS_FILTER_CARD,
   WITHDRAW_STATUS_FILTER_BANK,
   FILE_SIZE,
