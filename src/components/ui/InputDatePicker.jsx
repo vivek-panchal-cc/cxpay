@@ -43,7 +43,9 @@ const InputDatePicker = (props) => {
       <input
         id={`date${randomStr}`}
         type="text"
-        className="form-control-recurring"
+        className={`${
+          dateObj ? "dark_blue" : "light_gray"
+        } form-control-recurring`}
         placeholder={placeholder ? placeholder : "DD/MM/YYYY"}
         value={`${dateText}`}
         readOnly

@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LoaderContext } from "./loaderContext";
 import { apiRequest } from "helpers/apiRequests";
 import useRecurringPayments from "hooks/useRecurringPayments";
@@ -9,11 +9,15 @@ export const SavingJarOwnContext = React.createContext({});
 
 const SavingJarOwnProvider = ({ children }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [prevPathRedirect, setPrevPathRedirect] = useState(null);
+  const [prevPath, setPrevPath] = useState();
   const { isLoading, setIsLoading } = useContext(LoaderContext);
   const [upPaymentEntry, setUpPaymentEntry] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [createdJarData, setCreatedJarData] = useState([]);
 
   const [loadingPayments, pagination, listPayments, reloadRecurringPayments] =
     useRecurringPayments({
@@ -79,18 +83,33 @@ const SavingJarOwnProvider = ({ children }) => {
     }
   };
 
-  const cancelUpdatePayment = () => {
+  const handleCreatedJarData = (data) => {
+    if (!data) return;
+    setCreatedJarData(data);
+  };
+
+  const cancelOwnJarPayment = () => {
+    setCreatedJarData([]);
     setUpPaymentEntry(null);
     setCurrentPage(1);
     setStartDate("");
     setEndDate("");
-    navigate("/view-recurring-payment", { replace: true });
   };
 
   const resetDateFilter = () => {
     setStartDate("");
     setEndDate("");
   };
+
+  useEffect(() => {
+    const path = location.pathname;
+    setPrevPathRedirect(prevPath);
+    const flag =
+      (prevPath?.includes("/send") && !path.includes("/send")) ||
+      (prevPath?.includes("/request") && !path.includes("/request"));
+    if (flag) cancelOwnJarPayment();
+    setPrevPath(path);
+  }, [location.pathname]);
 
   return (
     <SavingJarOwnContext.Provider
@@ -105,7 +124,10 @@ const SavingJarOwnProvider = ({ children }) => {
         deleteRecurringPayment,
         handleSelectPaymentEntry,
         updateRecurringPayment,
-        cancelUpdatePayment,
+        cancelOwnJarPayment,
+        handleCreatedJarData,
+        createdJarData,
+        prevPathRedirect,
       }}
     >
       {children}

@@ -1,0 +1,132 @@
+import React from "react";
+import Select from "react-select";
+
+const SingleValue = ({ data }) => (
+  <div className="d-flex align-items-center">
+    <img
+      src={data.url}
+      alt="Selected Icon"
+      width="24"
+      height="24"
+      className="me-2"
+    />
+  </div>
+);
+
+function InputIconSelect({
+  labelname,
+  error,
+  disabled,
+  options = [],
+  useReactSelect,
+  className,
+  customStyles,
+  placeholder,
+  ...props
+}) {
+  // Default custom styles for react-select
+  const customDropdownStyles = {
+    control: (base) => ({
+      ...base,
+      minHeight: "45px",
+      borderRadius: "18px",
+      border: "1px solid #0081c5",
+      backgroundColor: "#fff",
+      fontSize: "14px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      paddingLeft: "5px", // Pushes the content to the start
+    }),
+    singleValue: (base) => ({
+      ...base,
+      display: "flex",
+      alignItems: "center",
+    }),
+    option: (base, { isSelected }) => ({
+      ...base,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      width: "50px", // Set a fixed width for grid layout
+      height: "50px",
+      borderRadius: "8px",
+      cursor: "pointer",
+      backgroundColor: isSelected ? "transparent" : "#fff",
+      border: isSelected ? "1px solid #0081c5" : "1px solid #fff",
+      color: isSelected ? "#fff" : "#212529",
+      ":hover": {
+        backgroundColor: "transparent",
+        border: "1px solid #0081c5",
+      },
+    }),
+    menu: (base) => ({
+      ...base,
+      borderRadius: "8px",
+      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+      zIndex: 9999,
+      display: "flex",
+      flexWrap: "wrap", // Allow multiple items in a row
+    }),
+    menuList: (base) => ({
+      ...base,
+      display: "flex",
+      flexWrap: "wrap", // Enables multi-row layout
+      overflowY: "auto", // Enables scrolling
+      scrollbarWidth: "thin", // Firefox
+      scrollbarColor: "#f0f0f0", // Scrollbar color for Firefox
+    }),
+    placeholder: (base) => ({
+      ...base,
+      // padding: "14px",
+      fontSize: "16px",
+      fontWeight: 500,
+      fontFamily: `"Comfortaa", sans-serif`,
+      color: "#bdbdbd",
+    }),
+  };
+
+  return (
+    <div className={`d-flex flex-column form-field`}>
+      {labelname && <label className="mb-2">{labelname}</label>}
+
+      {useReactSelect ? (
+        <Select
+          {...props}
+          options={options}
+          isDisabled={disabled}
+          isSearchable={false}
+          styles={customStyles || customDropdownStyles} // Use custom styles if provided
+          classNamePrefix="jar-icon-input"
+          placeholder={placeholder || "Select an option"}
+          value={
+            options.find((option) => option.value === props.value?.id) || null
+          }
+          // components={{ SingleValue }}
+        />
+      ) : (
+        <select
+          {...props}
+          className={`${className} ${disabled ? "cursor-not-allowed" : ""}`}
+        >
+          <option value="" disabled>
+            {placeholder || "Select an option"}
+          </option>
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      )}
+
+      {error && <p className="text-danger ps-2">{error}</p>}
+    </div>
+  );
+}
+
+export default InputIconSelect;

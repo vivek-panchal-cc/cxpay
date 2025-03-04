@@ -1603,6 +1603,9 @@
   }
 }
 @media only screen and (max-width: 1366px) and (min-width: 992px) {
+  .jar-icon-input__control {
+    padding: 0px 10px !important;
+  }
   .business-info-right-sec {
     padding: 40px 0px 20px 20px !important;
   }
@@ -2333,6 +2336,9 @@
   }
 }
 @media only screen and (max-width: 991px) {
+  .jar-icon-input__control {
+    padding: 0px 10px !important;
+  }
   .logo-image img {
     max-width: 250px;
   }
@@ -3386,6 +3392,10 @@
   }
 }
 @media only screen and (max-width: 767px) {
+  .jar-icon-input__control {
+    padding: 0px 10px !important;
+    border-radius: 12px !important;
+  }
   .logo-content-wrap h4 {
     font-size: 23px;
     line-height: 30px;

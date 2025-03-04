@@ -29,6 +29,9 @@
 .dark_black {
   color: var(--dark_black);
 }
+.light_gray {
+  color: var(--light-grey) !important;
+}
 .font-600 {
   font-weight: 600;
 }
@@ -7917,6 +7920,7 @@ ul.recent-act-lw-main .act-info-wrap-left {
   padding-left: 18px;
   width: 100%;
   height: 100%;
+  cursor: pointer;
   /* padding-top: 17px; */
 }
 
@@ -9092,4 +9096,94 @@ button.export-activities.disabled:hover {
   font-size: 16px;
   line-height: 18px;
   color: var(--blue);
+}
+
+.css-x9w43i-control:hover {
+  border-color: var(--blue) !important;
+}
+
+.css-1wy0on6 {
+  display: none !important;
+}
+
+/* Target the wrapper div */
+.jar-icon-input__control {
+  width: 100%;
+  padding: 10px;
+  border-radius: 18px;
+}
+
+/* Target the input field */
+.jar-icon-input__control input {
+  font-size: 16px;
+  color: #333;
+}
+
+.jar-payment-selection {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.jar-payment-selection input[type="checkbox"] {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.jar-payment-selection label {
+  padding-left: 45px;
+  font-family: "Quicksand", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--dark_blue);
+}
+
+.jar-payment-selection label:before {
+  border: 1px solid var(--dark_blue);
+  content: "";
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: transparent;
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  left: 0;
+  cursor: pointer;
+}
+
+.jar-payment-selection label:after {
+  content: "";
+  left: 11px;
+  width: 5px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  top: -4.5px;
+  opacity: 0;
+  visibility: hidden;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.jar-payment-selection input:checked ~ label:before {
+  border-color: #93e06f;
+  background-color: #93e06f;
+}
+
+.jar-payment-selection input:checked ~ label:after {
+  opacity: 1;
+  visibility: visible;
 }
