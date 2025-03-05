@@ -8,7 +8,16 @@ import TimePicker from "components/time-picker/TimePicker";
 import { SCHEDULE_BUFFER } from "constants/all";
 
 const ModalPaymentScheduler = (props) => {
-  const { id, show, setShow, className, classNameChild, handleSubmit } = props;
+  const {
+    id,
+    show,
+    setShow,
+    className,
+    classNameChild,
+    handleSubmit,
+    data = "",
+  } = props;
+  const targetDate = data.target_date;
   const modalRef = useRef(null);
 
   const formik = useFormik({
@@ -60,6 +69,12 @@ const ModalPaymentScheduler = (props) => {
     formik?.resetForm();
   }, [show]);
 
+  const parseTargetDate = (dateString) => {
+    if (!dateString) return null;
+    const [day, month, year] = dateString.split("-"); // Split "07-03-2025" into [07, 03, 2025]
+    return new Date(`${year}-${month}-${day}`); // Convert to "2025-03-07"
+  };
+
   if (!show) return null;
   return (
     <div
@@ -81,6 +96,7 @@ const ModalPaymentScheduler = (props) => {
                     selected={formik.values.date}
                     onChange={handleDateChange}
                     minDate={new Date()}
+                    maxDate={targetDate ? parseTargetDate(targetDate) : null}
                     inline
                   />
                   {formik.touched.date && formik.errors.date ? (

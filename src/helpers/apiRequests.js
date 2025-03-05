@@ -172,6 +172,10 @@ const API_listReservedAmount = apiUrl.API_RESERVED_AMOUNT_LIST;
 //Saving Jars
 const API_savingJarIcons = apiUrl.API_GET_SAVING_JAR_ICONS;
 const API_savingJarCategories = apiUrl.API_GET_SAVING_JAR_CATEGORIES;
+const API_getRemainingContacts = apiUrl.API_GET_REMAINING_CONTACTS_SAVING;
+const API_createTransactionJar = apiUrl.API_TRANSACTION_JAR_CREATE_WW;
+const API_createTransactionJarSchedule =
+  apiUrl.API_TRANSACTION_JAR_CREATE_WW_SCHEDULE;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -1123,6 +1127,33 @@ export const getSavingJarCategories = (params) => {
   return axiosTransactionInstance.post(`${API_savingJarCategories}`, params);
 };
 
+/** POST
+ * @params token
+ */
+export const getRemainingContacts = (params) => {
+  return axiosTransactionInstance.post(`${API_getRemainingContacts}`, params);
+};
+
+/** POST
+ * @params token
+ * @params values
+ */
+export const createTransactionJar = (params) => {
+  return axiosTransactionInstance.post(`${API_createTransactionJar}`, params);
+};
+
+/** POST
+ * @params token
+ * @params schedule_date
+ * @params values
+ */
+export const createTransactionJarSchedule = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_createTransactionJarSchedule}`,
+    params
+  );
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -1257,4 +1288,7 @@ export const apiRequest = {
   listReservedAmount,
   getSavingJarIcons,
   getSavingJarCategories,
+  getRemainingContacts,
+  createTransactionJar,
+  createTransactionJarSchedule,
 };

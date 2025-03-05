@@ -1,11 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./modal.module.scss";
-import {
-  IconClock,
-  IconCloseModal,
-  IconInstantPay,
-  IconSyncAlt,
-} from "styles/svgs";
+import { IconClock, IconInstantPay, IconSyncAlt } from "styles/svgs";
 
 function ModalJarPaymentSelect({
   id,
@@ -14,6 +9,9 @@ function ModalJarPaymentSelect({
   show,
   setShow,
   handleCallback,
+  handleSchedulePayment,
+  handleInstantPayment,
+  handleRecurringPayment,
 }) {
   const modalRef = useRef(null);
   const [selectedOption, setSelectedOption] = useState(1);
@@ -56,10 +54,16 @@ function ModalJarPaymentSelect({
   const handlePayement = () => {
     switch (selectedOption) {
       case 1:
+        handleInstantPayment();
+        setSelectedOption(1);
         break;
       case 2:
+        handleSchedulePayment();
+        setSelectedOption(1);
         break;
       case 3:
+        handleRecurringPayment();
+        setSelectedOption(1);
         break;
       default:
         break;

@@ -169,7 +169,14 @@ export const API_RESERVED_AMOUNT_LIST = "/reserved-amount-list";
 
 //Saving Jars
 export const API_GET_SAVING_JAR_ICONS = "/get-saving-jar-icons";
-export const API_GET_SAVING_JAR_CATEGORIES = "/get-saving-jar-category";
+export const API_GET_SAVING_JAR_CATEGORIES = "/list-active-saving-jar-category";
+export const API_GET_REMAINING_CONTACTS_SAVING =
+  "/get-remaining-contact-for-saving-jar";
+export const API_TRANSACTION_JAR_CREATE_WW =
+  "/create-saving-jar-with-wallet-transfer";
+("/get-remaining-contact-for-saving-jar");
+export const API_TRANSACTION_JAR_CREATE_WW_SCHEDULE =
+  "/create-saving-jar-with-schedule-payment";
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =

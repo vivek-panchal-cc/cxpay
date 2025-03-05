@@ -18,13 +18,13 @@ function JarMemberListingModal(props) {
     show,
     setShow,
     handleCallback,
-    groupId,
+    jarId,
     selectedItem,
     selectedFullItem,
-    alldata,
+    selectedMembers,
   } = props;
   const modalRef = useRef(null);
-  const { setIsLoading } = useContext(LoaderContext);
+  useContext(LoaderContext);
   const [loadingContacts, setLoadingContacts] = useState(false);
   const [remainingContactListing, setRemainingContactListing] = useState([]);
   const [selectedRemainingContact, setSelectedRemainingContact] = useState([]);
@@ -35,13 +35,6 @@ function JarMemberListingModal(props) {
   const { profile } = useSelector((state) => state?.userProfile);
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
-
-  const getCurrentData = useMemo(() => {
-    const tmp = alldata?.filter((item) =>
-      selectedRemainingContact.includes(item.account_number)
-    );
-    return tmp?.map((item) => item.member_mobile_number);
-  }, [alldata, selectedRemainingContact]);
 
   const searchContactData = (e) => {
     setSearchContactName(e.target.value);
@@ -56,77 +49,72 @@ function JarMemberListingModal(props) {
   };
 
   const submitContactData = () => {
-    if (remainingContactListing.length > 0) {
-      let difference = selectedRemainingContact?.filter(
-        (x) => !getCurrentData.includes(x)
-      );
-      let selectedFullArrayDifference = selectedFullContactArray?.filter(
-        (item) => difference.includes(item.account_number)
-      );
-      if (difference.length === 0) {
-        toast.warning("Please select atleast one contact");
-        return false;
-      }
-      selectedFullItem(selectedFullArrayDifference);
-      selectedItem(selectedRemainingContact);
-      handleCallback(false);
+    if (selectedFullContactArray.length === 0) {
+      toast.warning("Please select atleast one contact");
+      return false;
     }
+    selectedFullItem([...selectedFullContactArray]);
+    selectedItem([...selectedRemainingContact]);
+    handleCallback(false);
   };
 
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
     const checked = e.target.checked;
     const value = e.target.value;
-    let selectedArray = [];
+    let updatedSelectedContacts = [...selectedRemainingContact];
+
     if (checked) {
-      selectedArray = [...selectedRemainingContact, value];
+      updatedSelectedContacts.push(value);
     } else {
-      selectedArray = selectedRemainingContact?.filter((elm) => elm !== value);
+      updatedSelectedContacts = updatedSelectedContacts.filter(
+        (item) => item !== value
+      );
     }
-    const fullArray = remainingContactListing?.filter((item) =>
-      selectedArray.includes(item.account_number)
+
+    const fullSelectedContacts = remainingContactListing.filter((item) =>
+      updatedSelectedContacts.includes(item.account_number)
     );
-    setSelectedRemainingContact(selectedArray);
-    setSelectedFullContactArray(fullArray);
+
+    setSelectedRemainingContact(updatedSelectedContacts);
+    setSelectedFullContactArray(fullSelectedContacts);
   };
+
   const onScroll = (e) => {
     const bottom =
       e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-    if (bottom) {
-      if (currentListPage * 10 < listingTotalData) {
-        setCurrentListPage(currentListPage + 1);
-        retriveRemainingContact(currentListPage + 1, searchContactName);
-      }
+    if (bottom && currentListPage * 10 < listingTotalData) {
+      setCurrentListPage((prev) => prev + 1);
+      retriveRemainingContact(currentListPage + 1, searchContactName);
     }
   };
 
   const retriveRemainingContact = async (page, searchText) => {
     try {
       setLoadingContacts(true);
-      const { data } = await apiRequest.getRemainingGroupContact({
-        group_id: groupId,
+      const { data } = await apiRequest.getRemainingContacts({
+        jar_id: jarId || null,
         page: page,
         search: searchText,
       });
       if (!data.success) throw data.message;
+
       setListingTotalData(data.data.pagination.total);
-      let filterData = [];
-      data.data.remain_contacts.forEach((item) => {
-        let findElement = 0;
-        alldata.forEach((elm) => {
-          if (item.member_email === elm.member_email) {
-            findElement = 1;
-          }
-        });
-        if (findElement === 0) {
-          filterData.push(item);
+
+      setRemainingContactListing((prevContacts) => {
+        if (page === 1) {
+          return data.data.remain_contacts; // Reset list on new search
         }
+
+        // Merge new contacts while preventing duplicates
+        const newContacts = data.data.remain_contacts.filter(
+          (newItem) =>
+            !prevContacts.some(
+              (prevItem) => prevItem.account_number === newItem.account_number
+            )
+        );
+
+        return [...prevContacts, ...newContacts];
       });
-      if (page === 1) {
-        setRemainingContactListing(filterData);
-      } else {
-        const allData2 = remainingContactListing.concat(filterData);
-        setRemainingContactListing(allData2);
-      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -148,6 +136,22 @@ function JarMemberListingModal(props) {
     };
   }, [modalRef, setShow, show]);
 
+  useEffect(() => {
+    if (selectedMembers) {
+      // Keep only the selected members that are still in jarMembers
+      const updatedSelectedContacts = selectedRemainingContact.filter((item) =>
+        selectedMembers.some((member) => member.account_number === item)
+      );
+
+      const updatedFullContacts = remainingContactListing.filter((item) =>
+        updatedSelectedContacts.includes(item.account_number)
+      );
+
+      setSelectedRemainingContact(updatedSelectedContacts);
+      setSelectedFullContactArray(updatedFullContacts);
+    }
+  }, [selectedMembers, remainingContactListing]);
+
   const disabledCheckedBox = (ele) => {
     if (profile.admin_approved) {
       return !ele.admin_approved || !ele.kyc_approved;
@@ -167,7 +171,7 @@ function JarMemberListingModal(props) {
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-body">
-              <h1 className="text-center mb-4">Add Contacts</h1>
+              <h1 className="text-center mb-4">Add Members</h1>
               <div className="con-md-search-wrap gap-3 justify-content-center">
                 <div className="form-field search-field ms-0">
                   <div

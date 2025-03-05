@@ -18,6 +18,7 @@ const SavingJarOwnProvider = ({ children }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [createdJarData, setCreatedJarData] = useState([]);
+  const [sendCreds, setSendCreds] = useState({ wallet: [] });
 
   const [loadingPayments, pagination, listPayments, reloadRecurringPayments] =
     useRecurringPayments({
@@ -25,6 +26,60 @@ const SavingJarOwnProvider = ({ children }) => {
       from_date: startDate,
       to_date: endDate,
     });
+
+  const handleSendJarSchedule = (schedule_date = null) => {
+    if (!createdJarData) return;
+    const tmpCreds = {
+      wallet: {
+        ...createdJarData,
+        schedule_date,
+        deposite_amount: "",
+        specifications: "",
+      },
+    };
+    setSendCreds(tmpCreds);
+    navigate("/jars/own/send", { state: { scheduleDate: schedule_date } });
+  };
+
+  const handleInstantPayment = () => {
+    if (!createdJarData) return;
+    const tmpCreds = {
+      wallet: {
+        ...createdJarData,
+        deposite_amount: "",
+        specifications: "",
+      },
+    };
+    setSendCreds(tmpCreds);
+    navigate("/jars/own/send");
+  };
+
+  const handleRecurringPayment = () => {
+    if (!createdJarData) return;
+    const tmpCreds = {
+      wallet: {
+        ...createdJarData,
+        deposite_amount: "",
+        specifications: "",
+      },
+    };
+    setSendCreds(tmpCreds);
+    navigate("/jars/own/recurring-send");
+  };
+
+  const handleRecurringSendPayment = (data) => {
+    if (!data || !createdJarData) return;
+    const tmpCreds = {
+      wallet: {
+        ...data,
+        ...createdJarData,
+        deposite_amount: "",
+        specifications: "",
+      },
+    };
+    setSendCreds(tmpCreds);
+    navigate("/jars/own/recurring-send-payment");
+  };
 
   const handleDateFilter = (stDate, edDate) => {
     if (!stDate || !edDate) return;
@@ -94,6 +149,7 @@ const SavingJarOwnProvider = ({ children }) => {
     setCurrentPage(1);
     setStartDate("");
     setEndDate("");
+    setSendCreds({ wallet: [] });
   };
 
   const resetDateFilter = () => {
@@ -104,9 +160,7 @@ const SavingJarOwnProvider = ({ children }) => {
   useEffect(() => {
     const path = location.pathname;
     setPrevPathRedirect(prevPath);
-    const flag =
-      (prevPath?.includes("/send") && !path.includes("/send")) ||
-      (prevPath?.includes("/request") && !path.includes("/request"));
+    const flag = prevPath?.includes("/jars/own") && !path.includes("/jars/own");
     if (flag) cancelOwnJarPayment();
     setPrevPath(path);
   }, [location.pathname]);
@@ -128,6 +182,11 @@ const SavingJarOwnProvider = ({ children }) => {
         handleCreatedJarData,
         createdJarData,
         prevPathRedirect,
+        sendCreds,
+        handleSendJarSchedule,
+        handleInstantPayment,
+        handleRecurringPayment,
+        handleRecurringSendPayment,
       }}
     >
       {children}

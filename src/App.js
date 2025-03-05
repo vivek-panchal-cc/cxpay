@@ -82,6 +82,9 @@ import ViewSharedJars from "pages/view-jars/ViewSharedJars";
 import ViewOwnJars from "pages/view-jars/ViewOwnJars";
 import ViewInvitedJars from "pages/view-jars/ViewInvitedJars";
 import CreateJar from "pages/create-jar/CreateJar";
+import JarSend from "pages/jar-send/JarSend";
+import JarRecurringSend from "pages/jar-send/JarRecurringSend";
+import JarRecurringSendPayment from "pages/jar-send/JarRecurringSendPayment";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -248,6 +251,15 @@ const ProtectedInvitedJars = withUserProtection(
 );
 const ProtectedCreateJar = withUserProtection(
   CreateJar,
+  AllowedBusinessPersonal
+);
+const ProtectedJarSend = withUserProtection(JarSend, AllowedBusinessPersonal);
+const ProtectedJarRecurringSend = withUserProtection(
+  JarRecurringSend,
+  AllowedBusinessPersonal
+);
+const ProtectedJarRecurringSendPayment = withUserProtection(
+  JarRecurringSendPayment,
   AllowedBusinessPersonal
 );
 
@@ -497,6 +509,15 @@ function App() {
             <Route
               path="/jars/own/create-jar"
               element={<ProtectedCreateJar />}
+            />
+            <Route path="/jars/own/send" element={<ProtectedJarSend />} />
+            <Route
+              path="/jars/own/recurring-send"
+              element={<ProtectedJarRecurringSend />}
+            />
+            <Route
+              path="/jars/own/recurring-send-payment"
+              element={<ProtectedJarRecurringSendPayment />}
             />
             <Route path="/jars/shared" element={<ProtectedSharedJars />} />
             <Route path="/jars/invited" element={<ProtectedInvitedJars />} />

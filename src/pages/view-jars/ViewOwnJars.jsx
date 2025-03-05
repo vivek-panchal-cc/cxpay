@@ -5,10 +5,16 @@ import Pagination from "components/pagination/Pagination";
 import TabsPaymentOptions from "components/tabs/TabsPaymentOptions";
 import Input from "components/ui/Input";
 import InputDateRangeRecurring from "components/ui/InputDateRangeRecurring";
-import { JAR_OPTIONS_TABS_LIST } from "constants/all";
+import {
+  isAdminApprovedWithRenewCheck,
+  isComponentDisabled,
+  JAR_OPTIONS_TABS_LIST,
+} from "constants/all";
+import { LoginContext } from "context/loginContext";
 import { RecurringPaymentContext } from "context/recurringPaymentContext";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
 import React, { useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IconCross, IconJarAdd, IconRefresh, IconSearch } from "styles/svgs";
 
@@ -33,6 +39,16 @@ const ViewOwnJars = () => {
     endDate: "",
   });
 
+  const { admin_approved } = useSelector(
+    (state) => state?.userProfile?.profile
+  );
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
+
   const formatDate = (dateObj) => {
     if (dateObj instanceof Date) {
       const day = String(dateObj.getDate()).padStart(2, "0");
@@ -53,16 +69,6 @@ const ViewOwnJars = () => {
     setShowFilter(false);
     handleDateFilter(formattedStartDate, formattedEndDate);
   };
-
-  // const handleChangeDateFilter = async ({ startDate, endDate }) => {
-  //   if (!startDate || !endDate) return;
-  //   setFilters({ startDate: startDate, endDate: endDate });
-  //   setShowFilter(false);
-  //   handleDateFilter(
-  //     startDate.toLocaleDateString(),
-  //     endDate.toLocaleDateString()
-  //   );
-  // };
 
   const handleDeletePayment = async (spid) => {
     if (!spid) return;
@@ -132,11 +138,13 @@ const ViewOwnJars = () => {
           <button className="shedule-date-filter" onClick={handleResetFilter}>
             <IconRefresh />
           </button>
-          <Link to="/jars/own/create-jar" replace>
-            <span className="button shedule-date-filter rounded-4">
-              <img src="/assets/images/Add_card_btn.svg" alt="" />
-            </span>
-          </Link>
+          {adminApprovedWithRenewCheck && (
+            <Link to="/jars/own/create-jar" replace>
+              <span className="button shedule-date-filter rounded-4">
+                <img src="/assets/images/Add_card_btn.svg" alt="" />
+              </span>
+            </Link>
+          )}
         </div>
 
         <div className="activity-user-list-wrap">

@@ -1,11 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import Input from "components/ui/Input";
-import { useFormik } from "formik";
+import { replace, useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { addJarSchema } from "schemas/jarSchema";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import InputIconSelect from "components/ui/InputIconSelect";
-import { capitalizeWordByWord, CURRENCY_SYMBOL } from "constants/all";
+import {
+  capitalizeWordByWord,
+  CURRENCY_SYMBOL,
+  getInitials,
+  getRandomColorClass,
+  isAdminApprovedWithRenewCheck,
+} from "constants/all";
 import ModalDatePickerKyc from "components/modals/ModalDatePickerKyc";
 import InputDatePicker from "components/ui/InputDatePicker";
 import JarMemberListingModal from "components/modals/JarMemberListingModal";
@@ -14,6 +20,9 @@ import useJarCategories from "hooks/useJarCategories";
 import InputSelect from "components/ui/InputSelect";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import ModalJarPaymentSelect from "components/modals/ModalJarPaymentSelect";
+import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
+import { useSelector } from "react-redux";
+import { LoginContext } from "context/loginContext";
 
 const CreateJar = (props) => {
   const navigate = useNavigate();
@@ -22,8 +31,26 @@ const CreateJar = (props) => {
   const [datePicker, setDatePicker] = useState(false);
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const { handleCreatedJarData, cancelOwnJarPayment } =
-    useContext(SavingJarOwnContext);
+  const [showModalScheduler, setShowModalScheduler] = useState(false);
+  const [jarMembers, setJarMembers] = useState([]);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const {
+    handleCreatedJarData,
+    cancelOwnJarPayment,
+    handleSendJarSchedule,
+    handleInstantPayment,
+    handleRecurringPayment,
+    createdJarData,
+  } = useContext(SavingJarOwnContext);
+  const { admin_approved } = useSelector(
+    (state) => state?.userProfile?.profile
+  );
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -33,19 +60,23 @@ const CreateJar = (props) => {
       target_date: "",
       jar_category_id: "",
       jar_icon: null,
+      members: [],
     },
     validationSchema: addJarSchema,
     onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
       const formattedDate = formatDate(new Date(values.target_date)); // Ensure dd-mm-yyyy format
       let jarIconFilename = "";
+      let jarIconUrl = "";
       const selectedIcon = jarIcon.find((icon) => icon.id === values.jar_icon);
       if (selectedIcon) {
         jarIconFilename = selectedIcon.icon_name;
+        jarIconUrl = selectedIcon.url;
       }
       const requestData = {
         ...values,
         target_date: formattedDate,
         jar_icon: jarIconFilename || values.jar_icon,
+        jar_url: jarIconUrl,
       };
       handleCreatedJarData(requestData);
       setShowAddMemberPopup(false);
@@ -87,6 +118,22 @@ const CreateJar = (props) => {
     if (cancelOwnJarPayment) cancelOwnJarPayment();
   };
 
+  const handleSchedulePayment = () => {
+    setShowPaymentModal(false);
+    setShowModalScheduler(true);
+  };
+
+  const handleRemoveMember = (memberToRemove) => {
+    const updatedMembers = jarMembers.filter(
+      (member) => member.account_number !== memberToRemove.account_number
+    );
+    setJarMembers(updatedMembers); // Update state
+    formik.setFieldValue(
+      "members",
+      updatedMembers.map((member) => member.account_number) // Extract only IDs
+    );
+  };
+
   // For making input scroll into view on validation error
   useEffect(() => {
     const { errors } = formik;
@@ -96,6 +143,8 @@ const CreateJar = (props) => {
     if (!inputField) return;
     inputField.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [formik.isSubmitting]);
+
+  if (!adminApprovedWithRenewCheck) navigate("/jars/own", { replace: true });
 
   return (
     <div className="saving-jar-add-bottom">
@@ -271,6 +320,51 @@ const CreateJar = (props) => {
             </div>
           </div>
 
+          {jarMembers?.length > 0 && (
+            <div className="avatar-list">
+              {jarMembers.map((member, index) => (
+                <div
+                  key={index}
+                  className="avatar-item"
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  <div className="act-user-thumb">
+                    {/* {hoveredIndex === index && ( */}
+                    <div
+                      className="remove-icon"
+                      onClick={() => handleRemoveMember(member)}
+                    >
+                      <a className="eg-close-btn" style={{ right: "11px" }}>
+                        <img
+                          src="/assets/images/cross-red.svg"
+                          alt=""
+                          style={{ width: "24px", height: "24px" }}
+                        />
+                      </a>
+                    </div>
+                    {/* )} */}
+                    {member.member_profile_image ? (
+                      <img
+                        src={member.member_profile_image}
+                        className="blue-bg"
+                        alt=""
+                      />
+                    ) : (
+                      <div
+                        className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                          member.member_name
+                        )}`}
+                      >
+                        {getInitials(member.member_name)}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
           <div className="add-contact-btn-wrap">
             <button
               type="button"
@@ -280,6 +374,10 @@ const CreateJar = (props) => {
               Add Jar Members
             </button>
           </div>
+
+          {formik.errors.members && formik.touched.members && (
+            <div className="text-danger ps-2">{formik.errors.members}</div>
+          )}
 
           <div className="row">
             <div className="col-12 p-0 btns-inline">
@@ -319,11 +417,10 @@ const CreateJar = (props) => {
         setShow={setShowAddMemberPopup}
         handleCallback={() => setShowAddMemberPopup(false)}
         className={`con-list-pop`}
-        // groupId={groupId}
-        selectedItem={(item) => selectedItems(item)}
-        // alldata={contactsList}
-        selectedFullItem={(item) => setData([...contactsList, ...item])}
-        // getItem={getItem}
+        jarId={""}
+        selectedItem={(items) => formik.setFieldValue("members", items)}
+        selectedFullItem={(item) => setJarMembers([...item])}
+        selectedMembers={jarMembers}
       />
 
       <ModalJarPaymentSelect
@@ -332,6 +429,17 @@ const CreateJar = (props) => {
         setShow={setShowPaymentModal}
         handleCallback={cancelPayment}
         className={`con-list-pop`}
+        handleSchedulePayment={handleSchedulePayment}
+        handleInstantPayment={handleInstantPayment}
+        handleRecurringPayment={handleRecurringPayment}
+      />
+
+      <ModalPaymentScheduler
+        classNameChild="schedule-time-modal"
+        show={showModalScheduler}
+        setShow={setShowModalScheduler}
+        handleSubmit={handleSendJarSchedule}
+        data={createdJarData}
       />
     </div>
   );
