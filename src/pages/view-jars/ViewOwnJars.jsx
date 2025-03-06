@@ -1,43 +1,39 @@
-import RecurringPaymentItem from "components/items/RecurringPaymentItem";
 import ModalConfirmation from "components/modals/ModalConfirmation";
-import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
-import Pagination from "components/pagination/Pagination";
 import TabsPaymentOptions from "components/tabs/TabsPaymentOptions";
 import Input from "components/ui/Input";
-import InputDateRangeRecurring from "components/ui/InputDateRangeRecurring";
 import {
   isAdminApprovedWithRenewCheck,
-  isComponentDisabled,
   JAR_OPTIONS_TABS_LIST,
 } from "constants/all";
+import OwnJarListItem from "components/items/OwnJarListItem";
 import { LoginContext } from "context/loginContext";
-import { RecurringPaymentContext } from "context/recurringPaymentContext";
+import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { IconCross, IconJarAdd, IconRefresh, IconSearch } from "styles/svgs";
+import { IconCross, IconSearch } from "styles/svgs";
 
 const ViewOwnJars = () => {
-  const [showFilter, setShowFilter] = useState(false);
   const {
     pagination,
-    listPayments,
-    loadingPayments,
-    resetDateFilter,
+    reloadOwnJar,
+    activeJarList,
+    inactiveJarList,
+    loadingOwnJar,
+    searchName,
+    handleSearchName,
+    resetSearchName,
     handleDateFilter,
     setCurrentPage,
     deleteRecurringPayment,
     handleSelectPaymentEntry,
-  } = useContext(RecurringPaymentContext);
+  } = useContext(SavingJarOwnContext);
 
   const [deletPaymentId, setDeletPaymentId] = useState(null);
-  const [paymentsDateBind, setPaymentsDateBind] = useState({});
+  const [activeJars, setActiveJars] = useState([]);
+  const [inactiveJars, setInactiveJars] = useState([]);
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
-  const [filters, setFilters] = useState({
-    startDate: "",
-    endDate: "",
-  });
 
   const { admin_approved } = useSelector(
     (state) => state?.userProfile?.profile
@@ -48,27 +44,6 @@ const ViewOwnJars = () => {
     admin_approved,
     show_renew_section
   );
-
-  const formatDate = (dateObj) => {
-    if (dateObj instanceof Date) {
-      const day = String(dateObj.getDate()).padStart(2, "0");
-      const month = String(dateObj.getMonth() + 1).padStart(2, "0");
-      const year = dateObj.getFullYear();
-      return `${day}/${month}/${year}`;
-    }
-    return null;
-  };
-
-  const handleChangeDateFilter = async ({ startDate, endDate }) => {
-    if (!startDate || !endDate) return;
-
-    const formattedStartDate = formatDate(startDate);
-    const formattedEndDate = formatDate(endDate);
-
-    setFilters({ startDate: formattedStartDate, endDate: formattedEndDate });
-    setShowFilter(false);
-    handleDateFilter(formattedStartDate, formattedEndDate);
-  };
 
   const handleDeletePayment = async (spid) => {
     if (!spid) return;
@@ -82,26 +57,16 @@ const ViewOwnJars = () => {
     setDeletPaymentId(null);
   };
 
-  const handleResetFilter = async () => {
-    setFilters({
-      startDate: "",
-      endDate: "",
-    });
-    resetDateFilter();
-  };
+  useEffect(() => {
+    (async () => {
+      await reloadOwnJar(); // Fetch data when the component mounts
+    })();
+  }, []);
 
   useEffect(() => {
-    if (!listPayments) return;
-    const paymentDateList = {};
-    listPayments?.map((item) => {
-      const dt = new Date(item?.date);
-      const month = dt.toLocaleDateString("default", { month: "long" });
-      const dtList = paymentDateList[`${month} ${dt.getFullYear()}`] || [];
-      paymentDateList[`${month} ${dt.getFullYear()}`] = [...dtList, item];
-      return item;
-    });
-    setPaymentsDateBind(paymentDateList);
-  }, [listPayments]);
+    setActiveJars(activeJarList);
+    setInactiveJars(inactiveJarList);
+  }, [activeJarList, inactiveJarList]);
 
   return (
     <>
@@ -118,8 +83,8 @@ const ViewOwnJars = () => {
           <div className="form-field search-field">
             <div
               className="clearsearchbox"
-              // style={{ opacity: serachText ? 1 : 0 }}
-              // onClick={() => setSearchText("")}
+              style={{ opacity: searchName ? 1 : 0 }}
+              onClick={() => resetSearchName()}
             >
               <IconCross />
             </div>
@@ -128,16 +93,16 @@ const ViewOwnJars = () => {
               className="form-control js-searchBox-input"
               name="search_field"
               placeholder="Search..."
-              // value={serachText}
-              // onChange={handleSearchActivity}
+              value={searchName}
+              onChange={(e) => handleSearchName(e.target.value)}
             />
             <div className="search-btn">
               <IconSearch style={{ stroke: "#0081c5" }} />
             </div>
           </div>
-          <button className="shedule-date-filter" onClick={handleResetFilter}>
+          {/* <button className="shedule-date-filter" onClick={handleResetFilter}>
             <IconRefresh />
-          </button>
+          </button> */}
           {adminApprovedWithRenewCheck && (
             <Link to="/jars/own/create-jar" replace>
               <span className="button shedule-date-filter rounded-4">
@@ -148,71 +113,58 @@ const ViewOwnJars = () => {
         </div>
 
         <div className="activity-user-list-wrap">
-          {loadingPayments ? (
+          {loadingOwnJar ? (
             <div className="pt-4">
               {[1, 2, 3, 4, 5, 6, 7].map((item) => (
                 <LoaderActivityItem key={item} />
               ))}
             </div>
           ) : (
-            Object.keys(paymentsDateBind)?.map((key) => (
-              <div key={key}>
-                <div className="activity-month">{key}</div>
-                <ul className="act-user-content-wrap">
-                  {paymentsDateBind[key]?.map((item) => {
-                    const totalAmount = item?.amount + item?.fees_total;
-                    const profileURL = item?.image;
-                    // item.is_group.toString() === "1"
-                    //   ? item.image ||
-                    //     "/assets/images/group_contact_profile.png"
-                    //   : item.image ||
-                    //     "/assets/images/single_contact_profile.png";
-                    return (
-                      <RecurringPaymentItem
-                        key={item.id}
-                        details={{
-                          id: item.id,
-                          name: item.name,
-                          dateTime: item?.date,
-                          description: item?.overall_specification,
-                          amount: totalAmount,
-                          profileImg: profileURL,
-                          frequency: item?.frequency,
-                          startDate: item?.recurring_start_date,
-                        }}
+            <>
+              {/* Active Jars */}
+              {activeJars?.length > 0 && (
+                <div>
+                  <div className="activity-month fs-5">Active</div>
+                  <ul className="act-user-content-wrap">
+                    {activeJars.map((item, index) => (
+                      <OwnJarListItem
+                        key={item.jar_id || index}
+                        details={item}
                         handleEdit={handleSelectPaymentEntry}
                         handleDelete={handleDeletePayment}
                       />
-                    );
-                  })}
-                </ul>
-              </div>
-            ))
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Inactive Jars */}
+              {inactiveJars?.length > 0 && (
+                <div>
+                  <div className="activity-month fs-5">In Active</div>
+                  <ul className="act-user-content-wrap">
+                    {inactiveJars.map((item, index) => (
+                      <OwnJarListItem
+                        key={item.jar_id || index}
+                        details={item}
+                        handleEdit={handleSelectPaymentEntry}
+                        handleDelete={handleDeletePayment}
+                      />
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
           )}
         </div>
-        {!loadingPayments && Object.keys(paymentsDateBind || {}).length <= 0 ? (
+        {!loadingOwnJar &&
+        Object.keys(activeJars || {}).length <= 0 &&
+        Object.keys(inactiveJars || {}).length <= 0 ? (
           <div className="text-center py-4">
-            <p className="fs-5">Recurring payments not found.</p>
+            <p className="fs-5">Own saving jar not found.</p>
           </div>
         ) : null}
-        {!loadingPayments && pagination && pagination.total > 10 ? (
-          <Pagination
-            active={pagination?.current_page}
-            size={pagination?.last_page}
-            siblingCount={2}
-            onClickHandler={setCurrentPage}
-          />
-        ) : null}
       </div>
-      <ModalDateRangePicker
-        show={showFilter}
-        setShow={setShowFilter}
-        classNameChild={"schedule-time-modal"}
-        heading="Date Filter"
-        startDate={filters.startDate}
-        endDate={filters.endDate}
-        handleChangeDateRange={handleChangeDateFilter}
-      />
       <ModalConfirmation
         id="delete-group-member-popup"
         show={showConfirmPopup}

@@ -176,6 +176,11 @@ const API_getRemainingContacts = apiUrl.API_GET_REMAINING_CONTACTS_SAVING;
 const API_createTransactionJar = apiUrl.API_TRANSACTION_JAR_CREATE_WW;
 const API_createTransactionJarSchedule =
   apiUrl.API_TRANSACTION_JAR_CREATE_WW_SCHEDULE;
+const API_createTransactionJarRecurring =
+  apiUrl.API_TRANSACTION_JAR_CREATE_WW_RECURRING;
+const API_getUserOwnSavingJar = apiUrl.API_TRANSACTION_USER_OWN_SAVING_JAR;
+const API_getUserSharedSavingJar =
+  apiUrl.API_TRANSACTION_USER_SHARED_SAVING_JAR;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -1154,6 +1159,34 @@ export const createTransactionJarSchedule = (params) => {
   );
 };
 
+/** POST
+ * @params token
+ * @params schedule_date
+ * @params start_date
+ * @params end_date
+ * @params values
+ */
+export const createTransactionJarRecurring = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_createTransactionJarRecurring}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ */
+export const getUserOwnSavingJar = (params) => {
+  return axiosTransactionInstance.post(`${API_getUserOwnSavingJar}`, params);
+};
+
+/** POST
+ * @params token
+ */
+export const getUserSharedSavingJar = (params) => {
+  return axiosTransactionInstance.post(`${API_getUserSharedSavingJar}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -1291,4 +1324,7 @@ export const apiRequest = {
   getRemainingContacts,
   createTransactionJar,
   createTransactionJarSchedule,
+  createTransactionJarRecurring,
+  getUserOwnSavingJar,
+  getUserSharedSavingJar,
 };

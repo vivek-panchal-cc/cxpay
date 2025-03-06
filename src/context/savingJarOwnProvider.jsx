@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LoaderContext } from "./loaderContext";
 import { apiRequest } from "helpers/apiRequests";
-import useRecurringPayments from "hooks/useRecurringPayments";
+import useOwnJar from "hooks/useOwnJar";
 
 export const SavingJarOwnContext = React.createContext({});
 
@@ -12,19 +12,18 @@ const SavingJarOwnProvider = ({ children }) => {
   const location = useLocation();
   const [prevPathRedirect, setPrevPathRedirect] = useState(null);
   const [prevPath, setPrevPath] = useState();
-  const { isLoading, setIsLoading } = useContext(LoaderContext);
+  const { setIsLoading } = useContext(LoaderContext);
   const [upPaymentEntry, setUpPaymentEntry] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [startDate, setStartDate] = useState("");
+  const [searchName, setSearchName] = useState("");
   const [endDate, setEndDate] = useState("");
   const [createdJarData, setCreatedJarData] = useState([]);
   const [sendCreds, setSendCreds] = useState({ wallet: [] });
 
-  const [loadingPayments, pagination, listPayments, reloadRecurringPayments] =
-    useRecurringPayments({
-      page: currentPage,
-      from_date: startDate,
-      to_date: endDate,
+  const [loadingOwnJar, activeJarList, inactiveJarList, reloadOwnJar] =
+    useOwnJar({
+      search_name: searchName,
     });
 
   const handleSendJarSchedule = (schedule_date = null) => {
@@ -95,7 +94,7 @@ const SavingJarOwnProvider = ({ children }) => {
       });
       if (!data.success) throw data.message;
       toast.success(data.message);
-      reloadRecurringPayments();
+      reloadOwnJar();
     } catch (error) {
       if (typeof error === "string") toast.error(error);
       console.log(error);
@@ -128,7 +127,7 @@ const SavingJarOwnProvider = ({ children }) => {
       const { data } = await apiRequest.updateRecurringPayment(params);
       if (!data.success) throw data.message;
       toast.success(data.message);
-      await reloadRecurringPayments();
+      await reloadOwnJar();
       navigate("/view-recurring-payment", { replace: true });
     } catch (error) {
       if (typeof error === "string") toast.error(error);
@@ -148,13 +147,24 @@ const SavingJarOwnProvider = ({ children }) => {
     setUpPaymentEntry(null);
     setCurrentPage(1);
     setStartDate("");
+    setSearchName("");
     setEndDate("");
     setSendCreds({ wallet: [] });
   };
 
   const resetDateFilter = () => {
     setStartDate("");
+    setSearchName("");
     setEndDate("");
+  };
+
+  const handleSearchName = (data) => {
+    if (!data) return;
+    setSearchName(data);
+  };
+
+  const resetSearchName = () => {
+    setSearchName("");
   };
 
   useEffect(() => {
@@ -168,10 +178,14 @@ const SavingJarOwnProvider = ({ children }) => {
   return (
     <SavingJarOwnContext.Provider
       value={{
-        pagination,
-        listPayments,
+        reloadOwnJar,
+        activeJarList,
+        inactiveJarList,
         upPaymentEntry,
-        loadingPayments,
+        loadingOwnJar,
+        searchName,
+        resetSearchName,
+        handleSearchName,
         resetDateFilter,
         handleDateFilter,
         setCurrentPage,

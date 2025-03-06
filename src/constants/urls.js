@@ -174,9 +174,14 @@ export const API_GET_REMAINING_CONTACTS_SAVING =
   "/get-remaining-contact-for-saving-jar";
 export const API_TRANSACTION_JAR_CREATE_WW =
   "/create-saving-jar-with-wallet-transfer";
-("/get-remaining-contact-for-saving-jar");
 export const API_TRANSACTION_JAR_CREATE_WW_SCHEDULE =
   "/create-saving-jar-with-schedule-payment";
+export const API_TRANSACTION_JAR_CREATE_WW_RECURRING =
+  "/create-saving-jar-with-recurring-payment";
+export const API_TRANSACTION_USER_OWN_SAVING_JAR =
+  "/get-user-own-saving-jar-list";
+export const API_TRANSACTION_USER_SHARED_SAVING_JAR =
+  "/get-user-shared-saving-jar-list";
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =

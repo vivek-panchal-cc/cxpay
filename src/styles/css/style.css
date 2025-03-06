@@ -4376,6 +4376,20 @@ cursor:pointer;
   object-fit: cover;
 }
 
+.jar-con-list-uimg {
+  width: 48px;
+  height: 38px;
+  border-radius: 50%;
+  margin-right: 30px;
+}
+
+.jar-con-list-uimg img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 ul::-webkit-scrollbar {
   width: 3px;
   height: 3px;
@@ -9235,4 +9249,82 @@ button.export-activities.disabled:hover {
 
 .avatar-item:hover .remove-icon {
   opacity: 1; /* Show when hovering */
+}
+
+.jar-avatar-group {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 5px;
+}
+
+.jar-avatar-item {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  /* border: 2px solid #fff; */
+}
+
+.jar-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.jar-more-members {
+  background-color: #333;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.jar-deposited-amount {
+  font-family: Quicksand;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  text-transform: capitalize;
+  color: var(--dark_blue);
+}
+
+.jar-deposited-amount .jar-targeted-amount {
+  font-family: Visby Round CF;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: bottom;
+  text-transform: capitalize;
+  color: #bdbdbd;
+}
+
+.jar-con-listing {
+  display: grid !important;
+  grid-template-columns: auto auto;
+  align-items: center !important;
+  gap: 10px;
+  /* flex-basis: 30%; */
+  min-width: 250px;
+}
+
+.jar-progress-bar-container {
+  width: 150px !important;
+  height: 5px;
+  background: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  grid-column: span 2;
+}
+
+.jar-progress-bar-container .jar-progress-bar {
+  height: 100%;
+  transition: width 0.5s ease-in-out;
+  min-width: 5px;
 }

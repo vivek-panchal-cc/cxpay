@@ -551,6 +551,9 @@
   .con-list-uimg {
     margin-right: 18px;
   }
+  .jar-con-list-uimg {
+    margin-right: 18px;
+  }
   .con-listing-info .con-list-uname {
     width: calc(100% - 101px);
     font-size: 15px;
@@ -807,6 +810,9 @@
 }
 @media only screen and (max-width: 1299px) {
   .con-list-uimg {
+    margin-right: 15px;
+  }
+  .jar-con-list-uimg {
     margin-right: 15px;
   }
   .con-listing-info .con-list-uname {
@@ -1369,6 +1375,11 @@
     margin-right: 15px;
     width: 45px;
     height: 45px;
+  }
+  .jar-con-list-uimg {
+    margin-right: 15px;
+    width: 45px;
+    height: 35px;
   }
   .con-listing-info .con-list-uname {
     width: calc(100% - 95px);

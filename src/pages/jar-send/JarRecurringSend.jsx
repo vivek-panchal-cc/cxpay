@@ -218,8 +218,14 @@ function JarRecurringSend() {
   };
 
   const handleCancel = () => {
-    navigate("/jars/own", { replace: true });
+    navigate("/jars/own/create-jar", { replace: true });
     cancelOwnJarPayment();
+  };
+
+  const parseTargetDate = (dateString) => {
+    if (!dateString) return null;
+    const [day, month, year] = dateString.split("-"); // Split "07-03-2025" into [07, 03, 2025]
+    return new Date(`${year}-${month}-${day}`); // Convert to "2025-03-07"
   };
 
   useEffect(() => {
@@ -392,6 +398,9 @@ function JarRecurringSend() {
           classNameChild={"schedule-time-modal"}
           heading="Date Filter"
           handleChangeDate={handleChangeDateFilter}
+          maxDate={
+            wallet.target_date ? parseTargetDate(wallet.target_date) : null
+          }
         />
         <ModalConfirmation
           id="delete-group-member-popup"

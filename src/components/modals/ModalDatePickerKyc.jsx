@@ -12,6 +12,7 @@ function ModalDatePickerKyc(props) {
     setShow,
     heading,
     handleChangeDate,
+    maxDate,
   } = props;
 
   const modalRef = useRef(null);
@@ -56,6 +57,7 @@ function ModalDatePickerKyc(props) {
               value={selectedDate || new Date()}
               onChange={handleDateChange}
               className="kyc-expiry-date"
+              maxDate={maxDate || null}
               // inline
             />
             <div className="popup-btn-wrap d-flex align-items-center justify-content-center gap-4">

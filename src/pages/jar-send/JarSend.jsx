@@ -278,8 +278,8 @@ function JarSend(props) {
           <p>Please insert the amount of money you want to add into the Jar</p>
         </div>
       </div>
-      {scheduleDate && (
-        <div className="RecurringScheduleDateWrap">
+      <div className="RecurringScheduleDateWrap">
+        {scheduleDate && (
           <div className="RSDaterange rs_cm_div">
             <div className="rssvg_wrap">
               <IconScheduledDate />
@@ -294,8 +294,21 @@ function JarSend(props) {
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+        {wallet?.target_date && (
+          <div className="RSOccurances rs_cm_div">
+            <div className="rssvg_wrap">
+              <IconScheduledDate />
+            </div>
+            <p>
+              Target Date
+              <br />
+              <b>{wallet?.target_date.replace(/-/g, "/")}</b>
+            </p>
+          </div>
+        )}
+      </div>
+
       {/* <!-- payment block form starts -->  */}
       <form onSubmit={formik.handleSubmit}>
         <div className="one-time-pay-sec one-time-pay-wrap">

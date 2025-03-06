@@ -375,9 +375,9 @@ const CreateJar = (props) => {
             </button>
           </div>
 
-          {formik.errors.members && formik.touched.members && (
+          {/* {formik.errors.members && formik.touched.members && (
             <div className="text-danger ps-2">{formik.errors.members}</div>
-          )}
+          )} */}
 
           <div className="row">
             <div className="col-12 p-0 btns-inline">
