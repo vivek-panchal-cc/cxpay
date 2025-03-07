@@ -82,6 +82,7 @@ export { default as IconInstantPay } from "./InstantPay";
 export { default as IconScheduledDate } from "./ScheduledDate";
 export { default as IconOccurrence } from "./Occurrence";
 export { default as IconFrequency } from "./Frequency";
+export { default as IconJarCreate } from "./JarCreate";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";

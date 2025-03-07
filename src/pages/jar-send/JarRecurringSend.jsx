@@ -40,6 +40,7 @@ function JarRecurringSend() {
     prevPathRedirect,
     cancelOwnJarPayment,
     handleRecurringSendPayment,
+    handleRecurringPaymentForAddAmountToPay,
   } = useContext(SavingJarOwnContext);
   const { wallet } = sendCreds || [];
 
@@ -178,10 +179,17 @@ function JarRecurringSend() {
     onSubmit: async (values, { setErrors }) => {
       setIsLoading(true);
       try {
-        handleRecurringSendPayment({
-          ...formik.values,
-          schedule_date: new Date().toISOString().split("T")[0], // Adds current date in YYYY-MM-DD format
-        });
+        if (wallet.jar_id) {
+          handleRecurringPaymentForAddAmountToPay({
+            ...formik.values,
+            schedule_date: new Date().toISOString().split("T")[0], // Adds current date in YYYY-MM-DD format
+          });
+        } else {
+          handleRecurringSendPayment({
+            ...formik.values,
+            schedule_date: new Date().toISOString().split("T")[0], // Adds current date in YYYY-MM-DD format
+          });
+        }
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
         const errorObj = {};
@@ -203,10 +211,17 @@ function JarRecurringSend() {
 
     setIsLoading(true);
     try {
-      handleRecurringSendPayment({
-        ...formik.values,
-        schedule_date: new Date().toISOString().split("T")[0], // Adds current date in YYYY-MM-DD format
-      });
+      if (wallet.jar_id) {
+        handleRecurringPaymentForAddAmountToPay({
+          ...formik.values,
+          schedule_date: new Date().toISOString().split("T")[0], // Adds current date in YYYY-MM-DD format
+        });
+      } else {
+        handleRecurringSendPayment({
+          ...formik.values,
+          schedule_date: new Date().toISOString().split("T")[0], // Adds current date in YYYY-MM-DD format
+        });
+      }
     } catch (error) {
       if (typeof error === "string") return toast.error(error);
       const errorObj = {};

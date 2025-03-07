@@ -53,6 +53,7 @@ function JarSend(props) {
   const { sendCreds, prevPathRedirect, cancelOwnJarPayment } =
     useContext(SavingJarOwnContext);
   const { wallet } = sendCreds || [];
+  console.log("wallet: ", wallet);
 
   function convertDateFormat(inputDateStr) {
     // Convert the string to an ISO-like format
@@ -100,14 +101,29 @@ function JarSend(props) {
       const valuesWithPin = { ...formik.values.wallet, user_pin: pin };
       const muValues = { ...valuesWithPin };
       if (muValues.jar_url) delete muValues.jar_url;
-      const { data } = await apiRequest.createTransactionJar(muValues);
-      if (!data.success) throw data;
-      // toast.success(`${data.message}`);
-      setSentDetail({
-        heading: "Money Sent",
-        message: data.message,
-        url: "/assets/images/sent-payment-pop.svg",
-      });
+      if (muValues.jar_id) {
+        const requestData = {
+          jar_id: muValues.jar_id,
+          specifications: muValues.specifications,
+          deposite_amount: muValues.deposite_amount,
+          user_pin: muValues.user_pin,
+        };
+        const { data } = await apiRequest.addAmountToSavingJarWW(requestData);
+        if (!data.success) throw data;
+        setSentDetail({
+          heading: "Money Sent",
+          message: data.message,
+          url: "/assets/images/sent-payment-pop.svg",
+        });
+      } else {
+        const { data } = await apiRequest.createTransactionJar(muValues);
+        if (!data.success) throw data;
+        setSentDetail({
+          heading: "Money Sent",
+          message: data.message,
+          url: "/assets/images/sent-payment-pop.svg",
+        });
+      }
       setShowSentPopup(true);
       setShowPinPopup(false);
     } catch (error) {
@@ -184,19 +200,40 @@ function JarSend(props) {
     if (!pin) return;
     setIsLoading(true);
     try {
-      let requestParams = {
-        ...scheduledData,
-        user_pin: pin,
-      };
-      const { data } = await apiRequest.createTransactionJarSchedule(
-        requestParams
-      );
-      if (!data.success) throw data;
-      setSentDetail({
-        heading: "Money Sent",
-        message: data.message,
-        url: "/assets/images/sent-payment-pop.svg",
-      });
+      if (scheduledData.jar_id) {
+        console.log("scheduledData: ", scheduledData);
+        const requestData = {
+          jar_id: scheduledData.jar_id,
+          specifications: scheduledData.specifications,
+          deposite_amount: scheduledData.deposite_amount,
+          schedule_date: scheduledData.schedule_date,
+          user_pin: pin,
+        };
+        const { data } = await apiRequest.addAmountToSavingJarSchedule(
+          requestData
+        );
+        if (!data.success) throw data;
+        setSentDetail({
+          heading: "Money Sent",
+          message: data.message,
+          url: "/assets/images/sent-payment-pop.svg",
+        });
+      } else {
+        console.log("scheduledData: ", scheduledData);
+        let requestParams = {
+          ...scheduledData,
+          user_pin: pin,
+        };
+        const { data } = await apiRequest.createTransactionJarSchedule(
+          requestParams
+        );
+        if (!data.success) throw data;
+        setSentDetail({
+          heading: "Money Sent",
+          message: data.message,
+          url: "/assets/images/sent-payment-pop.svg",
+        });
+      }
       setIsScheduling(false);
       setShowSentPopup(true);
       setShowPinPopup(false);

@@ -182,6 +182,15 @@ export const API_TRANSACTION_USER_OWN_SAVING_JAR =
   "/get-user-own-saving-jar-list";
 export const API_TRANSACTION_USER_SHARED_SAVING_JAR =
   "/get-user-shared-saving-jar-list";
+export const API_TRANSACTION_USER_INVITED_SAVING_JAR =
+  "/get-user-invited-saving-jar-list";
+export const API_TRANSACTION_ADD_AMOUNT_WW =
+  "/add-amount-saving-jar-with-wallet-transfer";
+export const API_TRANSACTION_ADD_AMOUNT_SCHEDULE =
+  "/add-amount-saving-jar-with-schedule-payment";
+export const API_TRANSACTION_ADD_AMOUNT_RECURRING =
+  "/add-amount-saving-jar-with-recurring-payment";
+export const API_TRANSACTION_GET_SAVING_JAR_DETAILS = "/get-saving-jar-details";
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =

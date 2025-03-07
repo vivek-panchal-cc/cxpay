@@ -125,14 +125,37 @@ function JarRecurringSendPayment(_props) {
       const muValues = { ...requestData };
       if (muValues.jar_url) delete muValues.jar_url;
       if (muValues.occurrence_count) delete muValues.occurrence_count;
-      const { data } = await apiRequest.createTransactionJarRecurring(muValues);
-      if (!data.success) throw data;
-      // toast.success(`${data.message}`);
-      setSentDetail({
-        heading: "Money Sent",
-        message: data.message,
-        url: "/assets/images/sent-payment-pop.svg",
-      });
+      if (muValues.jar_id) {
+        let requestData = {
+          jar_id: muValues.jar_id,
+          deposite_amount: muValues.deposite_amount,
+          specifications: muValues.specifications,
+          schedule_date: muValues.schedule_date,
+          recurring_start_date: muValues.recurring_start_date,
+          recurring_end_date: muValues.recurring_end_date,
+          frequency: muValues.frequency,
+          user_pin: muValues.user_pin,
+        };
+        const { data } = await apiRequest.addAmountToSavingJarRecurring(
+          requestData
+        );
+        if (!data.success) throw data;
+        setSentDetail({
+          heading: "Money Sent",
+          message: data.message,
+          url: "/assets/images/sent-payment-pop.svg",
+        });
+      } else {
+        const { data } = await apiRequest.createTransactionJarRecurring(
+          muValues
+        );
+        if (!data.success) throw data;
+        setSentDetail({
+          heading: "Money Sent",
+          message: data.message,
+          url: "/assets/images/sent-payment-pop.svg",
+        });
+      }
       setShowSentPopup(true);
       setShowPinPopup(false);
     } catch (error) {

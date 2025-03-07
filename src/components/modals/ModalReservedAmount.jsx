@@ -161,15 +161,19 @@ const ModalReservedAmount = (props) => {
                               {["withdraw", "WD"].includes(
                                 detail.transaction_type
                               ) ? (
-                                <IconManualWithdraw />
+                                <>
+                                  <IconManualWithdraw /> Manual Withdraw
+                                </>
+                              ) : detail.transaction_type ===
+                                "saving_jar_schedule_payment" ? (
+                                <>
+                                  <IconSchedulePayment /> Jar Schedule Payment
+                                </>
                               ) : (
-                                <IconSchedulePayment />
+                                <>
+                                  <IconSchedulePayment /> Schedule Payment
+                                </>
                               )}
-                              {["withdraw", "WD"].includes(
-                                detail.transaction_type
-                              )
-                                ? "Manual Withdraw"
-                                : "Schedule Payment"}
                             </p>
                           </div>
                         </>

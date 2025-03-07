@@ -11,25 +11,23 @@ import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { IconCross, IconSearch } from "styles/svgs";
-import { SavingJarSharedContext } from "context/savingJarSharedProvider";
 
 const ViewSharedJar = () => {
   const {
     pagination,
-    reloadOwnJar,
-    activeJarList,
-    inactiveJarList,
-    loadingOwnJar,
-    searchName,
-    handleSearchName,
-    resetSearchName,
+    reloadSharedJar,
+    activeSharedJarList,
+    inactiveSharedJarList,
+    loadingSharedJar,
+    searchSharedName,
+    handleSearchSharedName,
+    resetSearchSharedName,
     handleDateFilter,
     setCurrentPage,
     deleteRecurringPayment,
     handleSelectPaymentEntry,
-  } = useContext(SavingJarSharedContext);
+  } = useContext(SavingJarOwnContext);
 
   const [deletPaymentId, setDeletPaymentId] = useState(null);
   const [activeJars, setActiveJars] = useState([]);
@@ -60,14 +58,14 @@ const ViewSharedJar = () => {
 
   useEffect(() => {
     (async () => {
-      await reloadOwnJar(); // Fetch data when the component mounts
+      await reloadSharedJar(); // Fetch data when the component mounts
     })();
   }, []);
 
   useEffect(() => {
-    setActiveJars(activeJarList);
-    setInactiveJars(inactiveJarList);
-  }, [activeJarList, inactiveJarList]);
+    setActiveJars(activeSharedJarList);
+    setInactiveJars(inactiveSharedJarList);
+  }, [activeSharedJarList, inactiveSharedJarList]);
 
   return (
     <>
@@ -84,8 +82,8 @@ const ViewSharedJar = () => {
           <div className="form-field search-field">
             <div
               className="clearsearchbox"
-              style={{ opacity: searchName ? 1 : 0 }}
-              onClick={() => resetSearchName()}
+              style={{ opacity: searchSharedName ? 1 : 0 }}
+              onClick={() => resetSearchSharedName()}
             >
               <IconCross />
             </div>
@@ -94,8 +92,8 @@ const ViewSharedJar = () => {
               className="form-control js-searchBox-input"
               name="search_field"
               placeholder="Search..."
-              value={searchName}
-              onChange={(e) => handleSearchName(e.target.value)}
+              value={searchSharedName}
+              onChange={(e) => handleSearchSharedName(e.target.value)}
             />
             <div className="search-btn">
               <IconSearch style={{ stroke: "#0081c5" }} />
@@ -104,7 +102,7 @@ const ViewSharedJar = () => {
         </div>
 
         <div className="activity-user-list-wrap">
-          {loadingOwnJar ? (
+          {loadingSharedJar ? (
             <div className="pt-4">
               {[1, 2, 3, 4, 5, 6, 7].map((item) => (
                 <LoaderActivityItem key={item} />
@@ -123,6 +121,7 @@ const ViewSharedJar = () => {
                         details={item}
                         handleEdit={handleSelectPaymentEntry}
                         handleDelete={handleDeletePayment}
+                        tabList={"shared"}
                       />
                     ))}
                   </ul>
@@ -140,6 +139,7 @@ const ViewSharedJar = () => {
                         details={item}
                         handleEdit={handleSelectPaymentEntry}
                         handleDelete={handleDeletePayment}
+                        tabList={"shared"}
                       />
                     ))}
                   </ul>
@@ -148,7 +148,7 @@ const ViewSharedJar = () => {
             </>
           )}
         </div>
-        {!loadingOwnJar &&
+        {!loadingSharedJar &&
         Object.keys(activeJars || {}).length <= 0 &&
         Object.keys(inactiveJars || {}).length <= 0 ? (
           <div className="text-center py-4">

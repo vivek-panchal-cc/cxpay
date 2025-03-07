@@ -131,7 +131,7 @@ const ViewOwnJars = () => {
                         key={item.jar_id || index}
                         details={item}
                         handleEdit={handleSelectPaymentEntry}
-                        handleDelete={handleDeletePayment}
+                        tabList={"own"}
                       />
                     ))}
                   </ul>
@@ -148,7 +148,7 @@ const ViewOwnJars = () => {
                         key={item.jar_id || index}
                         details={item}
                         handleEdit={handleSelectPaymentEntry}
-                        handleDelete={handleDeletePayment}
+                        tabList={"own"}
                       />
                     ))}
                   </ul>

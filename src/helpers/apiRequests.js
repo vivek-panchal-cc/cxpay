@@ -181,6 +181,14 @@ const API_createTransactionJarRecurring =
 const API_getUserOwnSavingJar = apiUrl.API_TRANSACTION_USER_OWN_SAVING_JAR;
 const API_getUserSharedSavingJar =
   apiUrl.API_TRANSACTION_USER_SHARED_SAVING_JAR;
+const API_getUserSharedInvitedJar =
+  apiUrl.API_TRANSACTION_USER_INVITED_SAVING_JAR;
+const API_addAmountToSavingJarWW = apiUrl.API_TRANSACTION_ADD_AMOUNT_WW;
+const API_addAmountToSavingJarSchedule =
+  apiUrl.API_TRANSACTION_ADD_AMOUNT_SCHEDULE;
+const API_addAmountToSavingJarRecurring =
+  apiUrl.API_TRANSACTION_ADD_AMOUNT_RECURRING;
+const API_getSavingJarDetails = apiUrl.API_TRANSACTION_GET_SAVING_JAR_DETAILS;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -1187,6 +1195,54 @@ export const getUserSharedSavingJar = (params) => {
   return axiosTransactionInstance.post(`${API_getUserSharedSavingJar}`, params);
 };
 
+/** POST
+ * @params token
+ */
+export const getUserSharedInvitedJar = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_getUserSharedInvitedJar}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const addAmountToSavingJarWW = (params) => {
+  return axiosTransactionInstance.post(`${API_addAmountToSavingJarWW}`, params);
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const addAmountToSavingJarSchedule = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_addAmountToSavingJarSchedule}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const addAmountToSavingJarRecurring = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_addAmountToSavingJarRecurring}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const getSavingJarDetails = (params) => {
+  return axiosTransactionInstance.post(`${API_getSavingJarDetails}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -1327,4 +1383,9 @@ export const apiRequest = {
   createTransactionJarRecurring,
   getUserOwnSavingJar,
   getUserSharedSavingJar,
+  getUserSharedInvitedJar,
+  addAmountToSavingJarWW,
+  addAmountToSavingJarSchedule,
+  addAmountToSavingJarRecurring,
+  getSavingJarDetails,
 };

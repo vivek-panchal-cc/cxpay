@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { LoaderContext } from "./loaderContext";
 import { apiRequest } from "helpers/apiRequests";
 import useOwnJar from "hooks/useOwnJar";
+import useSharedJar from "hooks/useSharedJar";
+import useInvitedJar from "hooks/useInvitedJar";
 
 export const SavingJarOwnContext = React.createContext({});
 
@@ -13,10 +15,12 @@ const SavingJarOwnProvider = ({ children }) => {
   const [prevPathRedirect, setPrevPathRedirect] = useState(null);
   const [prevPath, setPrevPath] = useState();
   const { setIsLoading } = useContext(LoaderContext);
-  const [upPaymentEntry, setUpPaymentEntry] = useState(null);
+  const [savingJarDetails, setSavingJarDetails] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [startDate, setStartDate] = useState("");
   const [searchName, setSearchName] = useState("");
+  const [searchSharedName, setSearchSharedName] = useState("");
+  const [searchInvitedName, setSearchInvitedName] = useState("");
   const [endDate, setEndDate] = useState("");
   const [createdJarData, setCreatedJarData] = useState([]);
   const [sendCreds, setSendCreds] = useState({ wallet: [] });
@@ -25,6 +29,24 @@ const SavingJarOwnProvider = ({ children }) => {
     useOwnJar({
       search_name: searchName,
     });
+
+  const [
+    loadingSharedJar,
+    activeSharedJarList,
+    inactiveSharedJarList,
+    reloadSharedJar,
+  ] = useSharedJar({
+    search_name: searchSharedName,
+  });
+
+  const [
+    loadingInvitedJar,
+    activeInvitedJarList,
+    inactiveInvitedJarList,
+    reloadInvitedJar,
+  ] = useInvitedJar({
+    search_name: searchInvitedName,
+  });
 
   const handleSendJarSchedule = (schedule_date = null) => {
     if (!createdJarData) return;
@@ -80,6 +102,71 @@ const SavingJarOwnProvider = ({ children }) => {
     navigate("/jars/own/recurring-send-payment");
   };
 
+  const handleInstantPaymentForAddAmount = (details = null) => {
+    if (!details) return;
+    const newTargetAmount =
+      parseFloat(details.target_amount) - parseFloat(details.deposite_amount);
+    const tmpCreds = {
+      wallet: {
+        ...details,
+        deposite_amount: "",
+        specifications: "",
+        target_amount: newTargetAmount || details.target_amount,
+      },
+    };
+    setSendCreds(tmpCreds);
+    navigate("/jars/own/send");
+  };
+
+  const handleSendJarScheduleForAddAmount = (schedule_date = null) => {
+    if (!createdJarData) return;
+    const newTargetAmount =
+      parseFloat(createdJarData.target_amount) -
+      parseFloat(createdJarData.deposite_amount);
+    const tmpCreds = {
+      wallet: {
+        ...createdJarData,
+        schedule_date,
+        deposite_amount: "",
+        specifications: "",
+        target_amount: newTargetAmount || createdJarData.target_amount,
+      },
+    };
+    setSendCreds(tmpCreds);
+    navigate("/jars/own/send", { state: { scheduleDate: schedule_date } });
+  };
+
+  const handleRecurringPaymentForAddAmount = (details = null) => {
+    if (!details) return;
+    const tmpCreds = {
+      wallet: {
+        ...details,
+        deposite_amount: "",
+        specifications: "",
+      },
+    };
+    setSendCreds(tmpCreds);
+    navigate("/jars/own/recurring-send");
+  };
+
+  const handleRecurringPaymentForAddAmountToPay = (data) => {
+    if (!data || !createdJarData) return;
+    const newTargetAmount =
+      parseFloat(createdJarData.target_amount) -
+      parseFloat(createdJarData.deposite_amount);
+    const tmpCreds = {
+      wallet: {
+        ...data,
+        ...createdJarData,
+        deposite_amount: "",
+        specifications: "",
+        target_amount: newTargetAmount || createdJarData.target_amount,
+      },
+    };
+    setSendCreds(tmpCreds);
+    navigate("/jars/own/recurring-send-payment");
+  };
+
   const handleDateFilter = (stDate, edDate) => {
     if (!stDate || !edDate) return;
     setStartDate(stDate);
@@ -111,7 +198,7 @@ const SavingJarOwnProvider = ({ children }) => {
         recurring_payment_id: paymentEntryId,
       });
       if (!data.success) throw data.message;
-      setUpPaymentEntry(data.data);
+      setSavingJarDetails(data.data);
       navigate("/view-recurring-payment/update");
     } catch (error) {
       if (typeof error === "string") toast.error(error);
@@ -144,10 +231,12 @@ const SavingJarOwnProvider = ({ children }) => {
 
   const cancelOwnJarPayment = () => {
     setCreatedJarData([]);
-    setUpPaymentEntry(null);
+    setSavingJarDetails(null);
     setCurrentPage(1);
     setStartDate("");
     setSearchName("");
+    setSearchSharedName("");
+    setSearchInvitedName("");
     setEndDate("");
     setSendCreds({ wallet: [] });
   };
@@ -155,16 +244,33 @@ const SavingJarOwnProvider = ({ children }) => {
   const resetDateFilter = () => {
     setStartDate("");
     setSearchName("");
+    setSearchSharedName("");
+    setSearchInvitedName("");
     setEndDate("");
   };
 
   const handleSearchName = (data) => {
-    if (!data) return;
     setSearchName(data);
   };
 
   const resetSearchName = () => {
     setSearchName("");
+  };
+
+  const handleSearchSharedName = (data) => {
+    setSearchSharedName(data);
+  };
+
+  const resetSearchSharedName = () => {
+    setSearchSharedName("");
+  };
+
+  const handleSearchInvitedName = (data) => {
+    setSearchInvitedName(data);
+  };
+
+  const resetSearchInvitedName = () => {
+    setSearchInvitedName("");
   };
 
   useEffect(() => {
@@ -181,11 +287,27 @@ const SavingJarOwnProvider = ({ children }) => {
         reloadOwnJar,
         activeJarList,
         inactiveJarList,
-        upPaymentEntry,
         loadingOwnJar,
         searchName,
         resetSearchName,
         handleSearchName,
+
+        loadingSharedJar,
+        activeSharedJarList,
+        inactiveSharedJarList,
+        reloadSharedJar,
+        searchSharedName,
+        resetSearchSharedName,
+        handleSearchSharedName,
+
+        loadingInvitedJar,
+        activeInvitedJarList,
+        inactiveInvitedJarList,
+        reloadInvitedJar,
+        searchInvitedName,
+        resetSearchInvitedName,
+        handleSearchInvitedName,
+
         resetDateFilter,
         handleDateFilter,
         setCurrentPage,
@@ -201,6 +323,11 @@ const SavingJarOwnProvider = ({ children }) => {
         handleInstantPayment,
         handleRecurringPayment,
         handleRecurringSendPayment,
+        handleInstantPaymentForAddAmount,
+        handleSendJarScheduleForAddAmount,
+        handleRecurringPaymentForAddAmount,
+        handleRecurringPaymentForAddAmountToPay,
+        savingJarDetails,
       }}
     >
       {children}
