@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LoaderContext } from "./loaderContext";
-import { apiRequest } from "helpers/apiRequests";
 import useOwnJar from "hooks/useOwnJar";
 import useSharedJar from "hooks/useSharedJar";
 import useInvitedJar from "hooks/useInvitedJar";
@@ -24,6 +22,7 @@ const SavingJarOwnProvider = ({ children }) => {
   const [endDate, setEndDate] = useState("");
   const [createdJarData, setCreatedJarData] = useState([]);
   const [sendCreds, setSendCreds] = useState({ wallet: [] });
+  const [editJar, setEditJar] = useState({ editWallet: [] });
 
   const [loadingOwnJar, activeJarList, inactiveJarList, reloadOwnJar] =
     useOwnJar({
@@ -167,61 +166,13 @@ const SavingJarOwnProvider = ({ children }) => {
     navigate("/jars/own/recurring-send-payment");
   };
 
-  const handleDateFilter = (stDate, edDate) => {
-    if (!stDate || !edDate) return;
-    setStartDate(stDate);
-    setEndDate(edDate);
-  };
-
-  const deleteRecurringPayment = async (spid) => {
-    setIsLoading(true);
-    try {
-      const { data } = await apiRequest.deleteRecurringPayment({
-        recurring_payment_id: spid,
-      });
-      if (!data.success) throw data.message;
-      toast.success(data.message);
-      reloadOwnJar();
-    } catch (error) {
-      if (typeof error === "string") toast.error(error);
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleSelectPaymentEntry = async (paymentEntryId) => {
-    if (!paymentEntryId) return;
-    setIsLoading(true);
-    try {
-      const { data } = await apiRequest.viewRecurringPayment({
-        recurring_payment_id: paymentEntryId,
-      });
-      if (!data.success) throw data.message;
-      setSavingJarDetails(data.data);
-      navigate("/view-recurring-payment/update");
-    } catch (error) {
-      if (typeof error === "string") toast.error(error);
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const updateRecurringPayment = async (params) => {
-    setIsLoading(true);
-    try {
-      const { data } = await apiRequest.updateRecurringPayment(params);
-      if (!data.success) throw data.message;
-      toast.success(data.message);
-      await reloadOwnJar();
-      navigate("/view-recurring-payment", { replace: true });
-    } catch (error) {
-      if (typeof error === "string") toast.error(error);
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleEditJarData = (data) => {
+    if (!data) return;
+    const tmpEditData = {
+      editWallet: data,
+    };
+    setEditJar(tmpEditData);
+    navigate("/jars/own/edit-jar");
   };
 
   const handleCreatedJarData = (data) => {
@@ -239,14 +190,7 @@ const SavingJarOwnProvider = ({ children }) => {
     setSearchInvitedName("");
     setEndDate("");
     setSendCreds({ wallet: [] });
-  };
-
-  const resetDateFilter = () => {
-    setStartDate("");
-    setSearchName("");
-    setSearchSharedName("");
-    setSearchInvitedName("");
-    setEndDate("");
+    setEditJar({ editWallet: [] });
   };
 
   const handleSearchName = (data) => {
@@ -308,12 +252,10 @@ const SavingJarOwnProvider = ({ children }) => {
         resetSearchInvitedName,
         handleSearchInvitedName,
 
-        resetDateFilter,
-        handleDateFilter,
+        handleEditJarData,
+        editJar,
+
         setCurrentPage,
-        deleteRecurringPayment,
-        handleSelectPaymentEntry,
-        updateRecurringPayment,
         cancelOwnJarPayment,
         handleCreatedJarData,
         createdJarData,

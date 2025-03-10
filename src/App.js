@@ -86,6 +86,7 @@ import JarSend from "pages/jar-send/JarSend";
 import JarRecurringSend from "pages/jar-send/JarRecurringSend";
 import JarRecurringSendPayment from "pages/jar-send/JarRecurringSendPayment";
 import JarDetails from "pages/view-jars/JarDetails";
+import EditJar from "pages/edit-jar/EditJar";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -254,6 +255,7 @@ const ProtectedCreateJar = withUserProtection(
   CreateJar,
   AllowedBusinessPersonal
 );
+const ProtectedEditJar = withUserProtection(EditJar, AllowedBusinessPersonal);
 const ProtectedJarSend = withUserProtection(JarSend, AllowedBusinessPersonal);
 const ProtectedJarRecurringSend = withUserProtection(
   JarRecurringSend,
@@ -520,6 +522,7 @@ function App() {
               path="/jars/own/create-jar"
               element={<ProtectedCreateJar />}
             />
+            <Route path="/jars/own/edit-jar" element={<ProtectedEditJar />} />
             <Route path="/jars/own/send" element={<ProtectedJarSend />} />
             <Route
               path="/jars/own/recurring-send"

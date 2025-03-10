@@ -13,6 +13,17 @@ const addJarSchema = yup.object().shape({
   // members: yup.array().min(1, "Add atleast one member"),
 });
 
+const editJarSchema = yup.object().shape({
+  jar_name: yup.string().required("Jar name is required"),
+  target_amount: yup
+    .string()
+    .matches(/^[1-9]\d{0,6}(\.\d{1,2})?$/, "Please enter valid target amount")
+    .required("Please enter target amount"),
+  target_date: yup.date().required("Target date is required").nullable(),
+  jar_category_id: yup.string().required("Jar category is required"),
+  jar_icon: yup.string().required("Please select jar category icon"),
+});
+
 // const jarCreateSchema = yup.object().shape({
 //   wallet: yup.object().shape({
 //     specifications: yup
@@ -54,4 +65,4 @@ const jarRecurringSchema = yup.object().shape({
   frequency: yup.string().required("Please select frequency"),
 });
 
-export { addJarSchema, jarCreateSchema, jarRecurringSchema };
+export { addJarSchema, editJarSchema, jarCreateSchema, jarRecurringSchema };

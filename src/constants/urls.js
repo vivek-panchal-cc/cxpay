@@ -191,6 +191,8 @@ export const API_TRANSACTION_ADD_AMOUNT_SCHEDULE =
 export const API_TRANSACTION_ADD_AMOUNT_RECURRING =
   "/add-amount-saving-jar-with-recurring-payment";
 export const API_TRANSACTION_GET_SAVING_JAR_DETAILS = "/get-saving-jar-details";
+export const API_TRANSACTION_UPDATE_SAVING_JAR_DETAILS =
+  "/update-saving-jar-details";
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =

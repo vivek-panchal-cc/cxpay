@@ -189,6 +189,8 @@ const API_addAmountToSavingJarSchedule =
 const API_addAmountToSavingJarRecurring =
   apiUrl.API_TRANSACTION_ADD_AMOUNT_RECURRING;
 const API_getSavingJarDetails = apiUrl.API_TRANSACTION_GET_SAVING_JAR_DETAILS;
+const API_updateSavingJarDetails =
+  apiUrl.API_TRANSACTION_UPDATE_SAVING_JAR_DETAILS;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -1243,6 +1245,14 @@ export const getSavingJarDetails = (params) => {
   return axiosTransactionInstance.post(`${API_getSavingJarDetails}`, params);
 };
 
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const updateSavingJarDetails = (params) => {
+  return axiosTransactionInstance.post(`${API_updateSavingJarDetails}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -1388,4 +1398,5 @@ export const apiRequest = {
   addAmountToSavingJarSchedule,
   addAmountToSavingJarRecurring,
   getSavingJarDetails,
+  updateSavingJarDetails,
 };

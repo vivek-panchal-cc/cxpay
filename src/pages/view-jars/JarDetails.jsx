@@ -5,7 +5,6 @@ import Modal from "components/modals/Modal";
 import FundYourAccountPopup from "components/popups/FundYourAccountPopup";
 import { apiRequest } from "helpers/apiRequests";
 import { LoaderContext } from "context/loaderContext";
-import BalanceGraph from "components/graph/BalanceGraph";
 import CardList from "components/card-list/CardList";
 import ContactsSelection from "components/contacts-selection/ContactsSelection";
 import ContactCard from "components/cards/ContactCard";
@@ -24,8 +23,6 @@ import {
   IconSend,
   IconWallet,
 } from "styles/svgs";
-import RecentTopUpActivities from "components/top-up/RecentTopUpActivities";
-import AgentBalanceGraph from "components/graph/AgentBalanceGraph";
 import { LoginContext } from "context/loginContext";
 import { isAdminApprovedWithRenewCheck } from "constants/all";
 import SavingJarProgress from "components/graph/SavingJarProgress";
@@ -56,6 +53,7 @@ const JarDetails = () => {
   const [totalInvitedData, setTotalInvitedData] = useState(0);
   const [searchContactText, setSearchContactText] = useState("");
   const [isLoadingContacts, setIsLoadingContacts] = useState(true);
+  const [graphLoading, setGraphLoading] = useState(false);
 
   const [cardsList, setCardsList] = useState([]);
   const [slideCard, setSlideCard] = useState({});
@@ -72,7 +70,7 @@ const JarDetails = () => {
   const [savingJarDetails, setSavingJarDetails] = useState([null]);
 
   useEffect(() => {
-    setIsLoading(true);
+    setGraphLoading(true);
     const fetchSavingJarDetails = async () => {
       try {
         const { data } = await apiRequest.getSavingJarDetails({
@@ -84,7 +82,7 @@ const JarDetails = () => {
         navigate(-1);
         console.error("Error fetching recurring payment details:", error);
       } finally {
-        setIsLoading(false);
+        setGraphLoading(false);
       }
     };
     fetchSavingJarDetails();
@@ -189,46 +187,24 @@ const JarDetails = () => {
       >
         <div className="dashboard-bottom-sec">
           <div className="dashboard-graph-sec">
-            {/* Start Graph Section */}
             <div className="graph-title-content-wrap">
-              {user_type !== "agent" ? (
-                <SavingJarProgress
-                  graphBackgroundImage={graphBackgroundImage}
-                  balance={balance}
-                  balanceDataArr={chartData.balanceArr}
-                  monthDataArr={chartData.monthArr}
-                  getBalance={getBalance}
-                  savingJarDetails={savingJarDetails}
-                />
-              ) : (
-                <AgentBalanceGraph
-                  graphBackgroundImage={graphBackgroundImage}
-                  balance={topUpBalance}
-                  balanceDataArr={chartData.balanceArr}
-                  monthDataArr={chartData.monthArr}
-                  getRecharge={getRecharge}
-                />
-              )}
+              <SavingJarProgress
+                graphBackgroundImage={graphBackgroundImage}
+                balance={balance}
+                balanceDataArr={chartData.balanceArr}
+                monthDataArr={chartData.monthArr}
+                getBalance={getBalance}
+                savingJarDetails={savingJarDetails}
+                graphLoading={graphLoading}
+              />
             </div>
-            {/* Recent Activity */}
-            {user_type !== "agent" ? (
-              <RecentActivities
-                loading={loadingAct}
-                activitiesList={
-                  activitiesList ? activitiesList.slice(0, 5) : []
-                }
-              />
-            ) : (
-              <RecentTopUpActivities
-                loading={loadingTopUp}
-                activitiesList={
-                  topUpActivitiesList ? topUpActivitiesList.slice(0, 5) : []
-                }
-              />
-            )}
+            {/* <RecentActivities
+              loading={loadingAct}
+              activitiesList={activitiesList ? activitiesList.slice(0, 5) : []}
+            /> */}
           </div>
           {/*   <!-- JarDetails card section starts --> */}
-          {user_type !== "agent" && (
+          {/* {user_type !== "agent" && (
             <div className="dashboard-card-links-sec">
               <div className="dashboard-card-sec mb-0">
                 <div className="title-content-wrap">
@@ -248,7 +224,6 @@ const JarDetails = () => {
                   svgHeight="130"
                 />
               </div>
-              {/* <!-- JarDetails recent contacts section starts --> */}
               <div className="dashboard-recent-contact-sec">
                 <div className="recent-contact-sec">
                   <ContactsSelection className="col-12">
@@ -285,8 +260,6 @@ const JarDetails = () => {
                   </ContactsSelection>
                 </div>
               </div>
-              {/* <!-- JarDetails extra links section starts -->	  */}
-
               <div className="extra-links-wrap">
                 <ul>
                   <li>
@@ -315,28 +288,6 @@ const JarDetails = () => {
                       </Link>
                     )}
                   </li>
-                  {/* <li>
-                    <Link to="/view-schedule-payment">
-                      <span className="icon-link-text">
-                        <IconWallet stroke="#363853" />
-                        Scheduled Payments
-                      </span>
-                      <span className="arrow-wrap">
-                        <IconRightArrowBig />
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/view-recurring-payment">
-                      <span className="icon-link-text">
-                        <IconWallet stroke="#363853" />
-                        Recurring Payments
-                      </span>
-                      <span className="arrow-wrap">
-                        <IconRightArrowBig />
-                      </span>
-                    </Link>
-                  </li> */}
                   <li>
                     {adminApprovedWithRenewCheck ? (
                       <Link to="/view-schedule-payment">
@@ -398,10 +349,8 @@ const JarDetails = () => {
                   </li>
                 </ul>
               </div>
-
-              {/* <!-- JarDetails extra links section close -->  */}
             </div>
-          )}
+          )} */}
         </div>
         {/* Fund Account Popup */}
         <Modal

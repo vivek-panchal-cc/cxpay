@@ -75,10 +75,17 @@ const OwnJarListItem = (props) => {
       return (
         <div className="con-listing-btn-wrap">
           {details?.deposite_amount === details?.target_amount ? (
-            renderButton("Redeem Fund", () => {}, "", {
-              minWidth: "150px",
-              marginRight: "0px",
-            })
+            renderButton(
+              "Redeem Fund",
+              (e) => {
+                e.stopPropagation();
+              },
+              "",
+              {
+                minWidth: "150px",
+                marginRight: "0px",
+              }
+            )
           ) : (
             <>
               {renderButton(
@@ -127,12 +134,26 @@ const OwnJarListItem = (props) => {
       return (
         <div className="con-listing-btn-wrap">
           <>
-            {renderButton("Decline", () => {}, "con-req-btn", {
-              minWidth: "150px",
-            })}
-            {renderButton("Accept", () => {}, "", {
-              minWidth: "150px",
-            })}
+            {renderButton(
+              "Decline",
+              (e) => {
+                e.stopPropagation();
+              },
+              "con-req-btn",
+              {
+                minWidth: "150px",
+              }
+            )}
+            {renderButton(
+              "Accept",
+              (e) => {
+                e.stopPropagation();
+              },
+              "",
+              {
+                minWidth: "150px",
+              }
+            )}
           </>
         </div>
       );
@@ -146,8 +167,8 @@ const OwnJarListItem = (props) => {
 
   return (
     <>
-      <li onClick={handleViewDetails}>
-        <label className={`con-listing-info`}>
+      <li onClick={tabList === "invited" ? null : handleViewDetails}>
+        <label className={`con-listing-info`} style={{ cursor: "pointer" }}>
           <div className="jar-con-list-uimg">
             {details?.jar_icon ? (
               <img src={details?.jar_icon} className="blue-bg" alt="" />

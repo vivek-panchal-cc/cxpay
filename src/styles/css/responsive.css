@@ -1362,6 +1362,10 @@
     font-size: 14px;
     line-height: 20px;
   }
+  .jar-details .initials-circle {
+    font-size: 14px;
+    line-height: 20px;
+  }
   /* .act-user-content-wrap .left-activity-div {
     margin-right: 0px;
   } */
@@ -5764,11 +5768,6 @@
     padding: 15px;
   }
 
-  .jar-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
   .jar-balance {
     flex-direction: column;
     align-items: flex-start;
@@ -5779,13 +5778,13 @@
     align-items: flex-start;
   }
 
-  .jar-actions {
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-  }
-
   .progress-bar {
     width: 100%;
+  }
+}
+
+@media (max-width: 375px) {
+  .jar-actions span {
+    display: none;
   }
 }

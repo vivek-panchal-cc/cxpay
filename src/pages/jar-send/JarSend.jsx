@@ -53,7 +53,6 @@ function JarSend(props) {
   const { sendCreds, prevPathRedirect, cancelOwnJarPayment } =
     useContext(SavingJarOwnContext);
   const { wallet } = sendCreds || [];
-  console.log("wallet: ", wallet);
 
   function convertDateFormat(inputDateStr) {
     // Convert the string to an ISO-like format
@@ -111,7 +110,7 @@ function JarSend(props) {
         const { data } = await apiRequest.addAmountToSavingJarWW(requestData);
         if (!data.success) throw data;
         setSentDetail({
-          heading: "Money Sent",
+          heading: "Jar Created",
           message: data.message,
           url: "/assets/images/sent-payment-pop.svg",
         });
@@ -119,7 +118,7 @@ function JarSend(props) {
         const { data } = await apiRequest.createTransactionJar(muValues);
         if (!data.success) throw data;
         setSentDetail({
-          heading: "Money Sent",
+          heading: "Jar Created",
           message: data.message,
           url: "/assets/images/sent-payment-pop.svg",
         });
@@ -201,7 +200,6 @@ function JarSend(props) {
     setIsLoading(true);
     try {
       if (scheduledData.jar_id) {
-        console.log("scheduledData: ", scheduledData);
         const requestData = {
           jar_id: scheduledData.jar_id,
           specifications: scheduledData.specifications,
@@ -214,12 +212,11 @@ function JarSend(props) {
         );
         if (!data.success) throw data;
         setSentDetail({
-          heading: "Money Sent",
+          heading: "Jar Created",
           message: data.message,
           url: "/assets/images/sent-payment-pop.svg",
         });
       } else {
-        console.log("scheduledData: ", scheduledData);
         let requestParams = {
           ...scheduledData,
           user_pin: pin,
@@ -229,7 +226,7 @@ function JarSend(props) {
         );
         if (!data.success) throw data;
         setSentDetail({
-          heading: "Money Sent",
+          heading: "Jar Created",
           message: data.message,
           url: "/assets/images/sent-payment-pop.svg",
         });
@@ -288,7 +285,7 @@ function JarSend(props) {
       {OtpModal()}
       {PinModal()}
 
-      {/* Modal For Money Sent successfully */}
+      {/* Modal For Jar Created successfully */}
       <ModalAlert
         id="money_sent_modal"
         className="money-sent-modal"

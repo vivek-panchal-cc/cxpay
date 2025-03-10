@@ -9350,13 +9350,15 @@ button.export-activities.disabled:hover {
 .jar-header {
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
+  align-items: center; /* Ensure vertical alignment */
+  width: 100%;
 }
 
 .jar-details {
   display: flex;
   /* align-items: center; */
   gap: 10px;
+  flex-grow: 1;
 }
 
 .jar-icon {
@@ -9367,32 +9369,25 @@ button.export-activities.disabled:hover {
   object-fit: cover;
 }
 
-.initials-circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  background: #ffffff30;
-}
-
 .jar-name {
   font-size: 18px;
   font-weight: bold;
   margin: 0;
+  line-height: normal !important;
+  color: var(--white) !important;
 }
 
 .jar-category {
   font-size: 12px;
   opacity: 0.8;
   margin: 0;
+  color: var(--white) !important;
 }
 
 .jar-settings {
   font-size: 20px;
   cursor: pointer;
+  margin-left: auto;
 }
 
 .jar-balance {
@@ -9406,16 +9401,17 @@ button.export-activities.disabled:hover {
 .jar-amount {
   font-weight: bold;
   margin: 0;
+  color: var(--white) !important;
 }
 
 .jar-target {
   font-size: 14px;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .progress-section {
-  display: flex;
-  align-items: center;
+  /* display: flex;
+  align-items: center; */
   justify-content: space-between;
   margin-top: 10px;
 }
@@ -9423,16 +9419,16 @@ button.export-activities.disabled:hover {
 .progress-bar {
   flex-grow: 1;
   height: 5px;
-  background: #fff;
+  background: #7b5baf;
   border-radius: 10px;
   margin-right: 10px;
   position: relative;
-  width: 100px;
+  width: 100%;
 }
 
 .progress-fill {
   height: 100%;
-  background: #0081c5;
+  background: var(--white);
   border-radius: 10px;
 }
 
@@ -9447,7 +9443,9 @@ button.export-activities.disabled:hover {
 .jar-date {
   display: flex;
   align-items: center;
-  font-size: 12px;
+  justify-content: end;
+  margin-top: 15px;
+  font-size: 14px;
   gap: 5px;
   opacity: 0.8;
 }
@@ -9455,29 +9453,21 @@ button.export-activities.disabled:hover {
 .jar-actions {
   display: flex;
   justify-content: space-around;
-  background: white;
-  border-radius: 12px;
-  padding: 10px;
-  margin-top: 10px;
+  background: #936ee31a;
+  border-radius: 0px 0px 12px 12px;
+  padding: 30px 0 20px 0;
+  margin-top: -10px;
   color: black;
 }
 
 .action-button {
   display: flex;
-  flex-direction: column;
+  flex-direction: inherit;
   align-items: center;
   font-size: 14px;
   cursor: pointer;
 }
 
-.share-jar {
-  color: #47c1bf;
-}
-
-.transfer-wallet {
-  color: #0081c5;
-}
-
-.fund-transfer {
-  color: #a279e4;
+.action-button span {
+  margin-left: 10px;
 }
