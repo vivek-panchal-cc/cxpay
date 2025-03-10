@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Modal from "components/modals/Modal";
 import FundYourAccountPopup from "components/popups/FundYourAccountPopup";
@@ -26,15 +26,15 @@ import {
 import { LoginContext } from "context/loginContext";
 import { isAdminApprovedWithRenewCheck } from "constants/all";
 import SavingJarProgress from "components/graph/SavingJarProgress";
+import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 
 const graphBackgroundImage = "/assets/images/chart-duumy.png";
 
 const JarDetails = () => {
   const navigate = useNavigate();
-  const params = useParams();
-  const { id } = params || {};
   const { setIsLoading } = useContext(LoaderContext);
   const { handleSendContacts } = useContext(SendPaymentContext);
+  const { jarId } = useContext(SavingJarOwnContext);
   const { first_name, company_name } = useSelector(
     (state) => state.userProfile.profile
   );
@@ -74,7 +74,7 @@ const JarDetails = () => {
     const fetchSavingJarDetails = async () => {
       try {
         const { data } = await apiRequest.getSavingJarDetails({
-          jar_id: id,
+          jar_id: jarId,
         });
         if (!data.success) throw data.message;
         setSavingJarDetails(data?.data);
@@ -86,7 +86,7 @@ const JarDetails = () => {
       }
     };
     fetchSavingJarDetails();
-  }, [id]);
+  }, [jarId]);
 
   // handle selected contacts
   const handleSelectContact = (e) => {
@@ -176,6 +176,8 @@ const JarDetails = () => {
   const handleFundAccountPopup = () => {
     setShowFundAccountPopup(true);
   };
+
+  if (!jarId) navigate("/jars/own", { replace: true });
 
   return (
     <>

@@ -23,6 +23,7 @@ const SavingJarOwnProvider = ({ children }) => {
   const [createdJarData, setCreatedJarData] = useState([]);
   const [sendCreds, setSendCreds] = useState({ wallet: [] });
   const [editJar, setEditJar] = useState({ editWallet: [] });
+  const [jarId, setJarId] = useState(null);
 
   const [loadingOwnJar, activeJarList, inactiveJarList, reloadOwnJar] =
     useOwnJar({
@@ -191,6 +192,7 @@ const SavingJarOwnProvider = ({ children }) => {
     setEndDate("");
     setSendCreds({ wallet: [] });
     setEditJar({ editWallet: [] });
+    setJarId(null);
   };
 
   const handleSearchName = (data) => {
@@ -215,6 +217,11 @@ const SavingJarOwnProvider = ({ children }) => {
 
   const resetSearchInvitedName = () => {
     setSearchInvitedName("");
+  };
+
+  const handleStoreJarId = (id) => {
+    if (!id) return;
+    setJarId(id);
   };
 
   useEffect(() => {
@@ -252,6 +259,8 @@ const SavingJarOwnProvider = ({ children }) => {
         resetSearchInvitedName,
         handleSearchInvitedName,
 
+        handleStoreJarId,
+        jarId,
         handleEditJarData,
         editJar,
 

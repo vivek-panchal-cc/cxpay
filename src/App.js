@@ -514,7 +514,7 @@ function App() {
             {/* Savings Jar */}
 
             <Route
-              path="/jars/own/jar-details/:id"
+              path="/jars/own/jar-details"
               element={<ProtectedJarDetails />}
             />
             <Route path="/jars/own" element={<ProtectedOwnJars />} />

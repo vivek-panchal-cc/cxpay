@@ -18,6 +18,7 @@ const OwnJarListItem = (props) => {
   const {
     handleCreatedJarData,
     createdJarData,
+    handleStoreJarId,
     handleInstantPaymentForAddAmount,
     handleSendJarScheduleForAddAmount,
     handleRecurringPaymentForAddAmount,
@@ -160,9 +161,10 @@ const OwnJarListItem = (props) => {
     }
   };
 
-  const handleViewDetails = (e) => {
+  const handleViewDetails = async (e) => {
     e.preventDefault();
-    navigate(`/jars/own/jar-details/${details.jar_id}`);
+    await handleStoreJarId(details.jar_id);
+    navigate(`/jars/own/jar-details`);
   };
 
   return (

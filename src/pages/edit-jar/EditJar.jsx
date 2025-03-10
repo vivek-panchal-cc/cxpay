@@ -22,7 +22,7 @@ const EditJar = () => {
   const [jarCategory] = useJarCategories();
   const [datePicker, setDatePicker] = useState(false);
   const { setIsLoading } = useContext(LoaderContext);
-  const { cancelOwnJarPayment, editJar, prevPathRedirect } =
+  const { cancelOwnJarPayment, editJar, prevPathRedirect, handleStoreJarId } =
     useContext(SavingJarOwnContext);
   const { editWallet } = editJar || [];
   const {
@@ -42,7 +42,7 @@ const EditJar = () => {
       jar_name: jar_name || "",
       target_amount: target_amount || "",
       target_date: target_date || "",
-      jar_category_id: jar_category_name || "",
+      jar_category_id: jar_category_id || "",
       jar_icon: jar_icon || null,
     },
     validationSchema: editJarSchema,
@@ -69,7 +69,8 @@ const EditJar = () => {
         if (!data.success) throw data.message;
         toast.success(data.message);
         if (cancelOwnJarPayment) cancelOwnJarPayment();
-        navigate(`/jars/own/jar-details/${id}`, { replace: true });
+        await handleStoreJarId(id);
+        navigate(`/jars/own/jar-details`, { replace: true });
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
       } finally {
@@ -96,9 +97,10 @@ const EditJar = () => {
     setDatePicker("");
   };
 
-  const handleGoBack = () => {
-    navigate(-1);
-    if (cancelOwnJarPayment) cancelOwnJarPayment();
+  const handleGoBack = async () => {
+    if (cancelOwnJarPayment) await cancelOwnJarPayment();
+    await handleStoreJarId(id);
+    navigate(`/jars/own/jar-details`);
   };
 
   // For making input scroll into view on validation error
