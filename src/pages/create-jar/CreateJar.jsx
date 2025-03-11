@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Input from "components/ui/Input";
 import { replace, useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { addJarSchema } from "schemas/jarSchema";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import InputIconSelect from "components/ui/InputIconSelect";
@@ -144,7 +144,7 @@ const CreateJar = (props) => {
     inputField.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [formik.isSubmitting]);
 
-  if (!adminApprovedWithRenewCheck) navigate("/jars/own", { replace: true });
+  if (!adminApprovedWithRenewCheck) return <Navigate to="/jars/own" replace />;
 
   return (
     <div className="saving-jar-add-bottom">

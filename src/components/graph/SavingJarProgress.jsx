@@ -45,7 +45,7 @@ const SavingJarProgress = (props) => {
         {graphLoading ? (
           <LoaderJarDashboard
             backgroundColor="#a279e4"
-            height="200"
+            height="189"
             width="100%"
           />
         ) : (

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Modal from "components/modals/Modal";
 import FundYourAccountPopup from "components/popups/FundYourAccountPopup";
@@ -80,7 +80,6 @@ const JarDetails = () => {
         setSavingJarDetails(data?.data);
       } catch (error) {
         navigate(-1);
-        console.error("Error fetching recurring payment details:", error);
       } finally {
         setGraphLoading(false);
       }
@@ -177,182 +176,75 @@ const JarDetails = () => {
     setShowFundAccountPopup(true);
   };
 
-  if (!jarId) navigate("/jars/own", { replace: true });
+  if (!jarId) return <Navigate to="/jars/own" replace />;
 
   return (
     <>
       {/* Close Fund Account Popup */}
       <div
-        className={`dashboard-home-container ${
+        className={`jar-dashboard-home-container ${
           user_type === "agent" ? "agent" : ""
         }`}
       >
-        <div className="dashboard-bottom-sec">
-          <div className="dashboard-graph-sec">
+        <div className="jar-dashboard-bottom-sec">
+          <div className="jar-dashboard-graph-sec">
             <div className="graph-title-content-wrap">
               <SavingJarProgress
-                graphBackgroundImage={graphBackgroundImage}
-                balance={balance}
-                balanceDataArr={chartData.balanceArr}
-                monthDataArr={chartData.monthArr}
-                getBalance={getBalance}
                 savingJarDetails={savingJarDetails}
                 graphLoading={graphLoading}
               />
             </div>
-            {/* <RecentActivities
+            {/* <div className="jar-dashboard-recent-contact-sec">
+              <div className="recent-contact-sec">
+                <ContactsSelection className="col-12">
+                  <ContactsSelection.Header
+                    className=""
+                    heading="Recent Contact"
+                    subHeading=""
+                    searchValue={searchContactText}
+                    handleSearch={handleSearchContact}
+                    clearSearch={handleResetContactData}
+                  />
+                  <ContactsSelection.Body
+                    isLoading={isLoadingContacts}
+                    classNameContainer="send-group-slider"
+                    contacts={inviteContactList}
+                    selectedContacts={[]}
+                    handleSelectedItems={handleSelectContact}
+                    handleReachEnd={handleReachEndContacts}
+                    fullWidth={false}
+                    emptyListMsg="Contacts not found"
+                    ListItemComponent={ContactCard}
+                    ListItemComponentProps={{
+                      fullWidth: false,
+                      isSelectable: true,
+                      fallbackImgUrl:
+                        "assets/images/single_contact_profile.png",
+                    }}
+                    ListItemComponentAlias={{
+                      account_number: "id",
+                      name: "title",
+                      profile_image: "imgUrl",
+                    }}
+                  />
+                </ContactsSelection>
+              </div>
+            </div>
+            <RecentActivities
               loading={loadingAct}
               activitiesList={activitiesList ? activitiesList.slice(0, 5) : []}
             /> */}
           </div>
-          {/*   <!-- JarDetails card section starts --> */}
-          {/* {user_type !== "agent" && (
-            <div className="dashboard-card-links-sec">
-              <div className="dashboard-card-sec mb-0">
-                <div className="title-content-wrap">
-                  <h3>My Cards</h3>
-                  <p>
-                    {cardsList.length} Cards
-                    <Link to="/wallet/add-card">
-                      <span>+ Add Card</span>
-                    </Link>
-                  </p>
-                </div>
-                <CardList
-                  cardsList={cardsList}
-                  getCurrentSlideCard={handleGetCurrentSlideCard}
-                  walletSlider={false}
-                  svgWidth="300"
-                  svgHeight="130"
-                />
-              </div>
-              <div className="dashboard-recent-contact-sec">
-                <div className="recent-contact-sec">
-                  <ContactsSelection className="col-12">
-                    <ContactsSelection.Header
-                      className=""
-                      heading="Recent Contact"
-                      subHeading=""
-                      searchValue={searchContactText}
-                      handleSearch={handleSearchContact}
-                      clearSearch={handleResetContactData}
-                    />
-                    <ContactsSelection.Body
-                      isLoading={isLoadingContacts}
-                      classNameContainer="send-group-slider"
-                      contacts={inviteContactList}
-                      selectedContacts={[]}
-                      handleSelectedItems={handleSelectContact}
-                      handleReachEnd={handleReachEndContacts}
-                      fullWidth={false}
-                      emptyListMsg="Contacts not found"
-                      ListItemComponent={ContactCard}
-                      ListItemComponentProps={{
-                        fullWidth: false,
-                        isSelectable: true,
-                        fallbackImgUrl:
-                          "assets/images/single_contact_profile.png",
-                      }}
-                      ListItemComponentAlias={{
-                        account_number: "id",
-                        name: "title",
-                        profile_image: "imgUrl",
-                      }}
-                    />
-                  </ContactsSelection>
-                </div>
-              </div>
-              <div className="extra-links-wrap">
-                <ul>
-                  <li>
-                    {adminApprovedWithRenewCheck ? (
-                      <Link
-                        className="wallet-top-1-btn"
-                        onClick={handleFundAccountPopup}
-                      >
-                        <span className="icon-link-text">
-                          <IconAdd />
-                          Fund Your Account
-                        </span>
-                        <span className="arrow-wrap">
-                          <IconRightArrowBig />
-                        </span>
-                      </Link>
-                    ) : (
-                      <Link className="wallet-top-1-btn">
-                        <span className="icon-link-text admin-approved-disabled">
-                          <IconAdd />
-                          Fund Your Account
-                        </span>
-                        <span className="arrow-wrap">
-                          <IconRightArrowBig />
-                        </span>
-                      </Link>
-                    )}
-                  </li>
-                  <li>
-                    {adminApprovedWithRenewCheck ? (
-                      <Link to="/view-schedule-payment">
-                        <span className="icon-link-text">
-                          <IconWallet stroke="#363853" />
-                          Payments
-                        </span>
-                        <span className="arrow-wrap">
-                          <IconRightArrowBig />
-                        </span>
-                      </Link>
-                    ) : (
-                      <Link>
-                        <span className="icon-link-text admin-approved-disabled">
-                          <IconWallet stroke="#363853" />
-                          Payments
-                        </span>
-                        <span className="arrow-wrap">
-                          <IconRightArrowBig />
-                        </span>
-                      </Link>
-                    )}
-                  </li>
-                  <li>
-                    <Link to="/send">
-                      <span className="icon-link-text">
-                        <IconSend style={{ stroke: "#363853" }} />
-                        Send
-                      </span>
-                      <span className="arrow-wrap">
-                        <IconRightArrowBig />
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <a
-                      className="cursor-pointer"
-                      onClick={() => setShowNewContPop(true)}
-                    >
-                      <span className="icon-link-text">
-                        <IconAdd />
-                        Add a Contact
-                      </span>
-                      <span className="arrow-wrap">
-                        <IconRightArrowBig />
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <Link to="/send">
-                      <span className="icon-link-text">
-                        <IconMessage />
-                        Group Payment
-                      </span>
-                      <span className="arrow-wrap">
-                        <IconRightArrowBig />
-                      </span>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          )} */}
+          <div className="jar-dashboard-card-links-sec">
+            {/* <RecentActivities
+              loading={loadingAct}
+              activitiesList={activitiesList ? activitiesList.slice(0, 5) : []}
+            />
+            <RecentActivities
+              loading={loadingAct}
+              activitiesList={activitiesList ? activitiesList.slice(0, 5) : []}
+            /> */}
+          </div>
         </div>
         {/* Fund Account Popup */}
         <Modal

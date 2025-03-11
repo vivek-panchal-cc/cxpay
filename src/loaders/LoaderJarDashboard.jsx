@@ -6,8 +6,10 @@ const LoaderJarDashboard = (props) => {
     <ContentLoader
       height={props?.height}
       width={"100%"}
-      {...props}
       style={{ borderRadius: "12px" }}
+      foregroundColor="#7a59af"
+      speed={2}
+      {...props}
     >
       <rect
         rx={props?.rx || "5"}

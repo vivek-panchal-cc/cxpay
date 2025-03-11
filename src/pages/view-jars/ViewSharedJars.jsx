@@ -78,7 +78,7 @@ const ViewSharedJar = () => {
               {/* Active Jars */}
               {activeJars?.length > 0 && (
                 <div>
-                  <div className="activity-month fs-5">Active</div>
+                  <div className="activity-month fs-5 p-0">Active</div>
                   <ul className="act-user-content-wrap">
                     {activeJars.map((item, index) => (
                       <OwnJarListItem
@@ -94,7 +94,7 @@ const ViewSharedJar = () => {
               {/* Inactive Jars */}
               {inactiveJars?.length > 0 && (
                 <div>
-                  <div className="activity-month fs-5">In Active</div>
+                  <div className="activity-month fs-5 p-0">In Active</div>
                   <ul className="act-user-content-wrap">
                     {inactiveJars.map((item, index) => (
                       <OwnJarListItem
