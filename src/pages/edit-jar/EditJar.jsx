@@ -5,7 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { editJarSchema } from "schemas/jarSchema";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import InputIconSelect from "components/ui/InputIconSelect";
-import { capitalizeWordByWord, CURRENCY_SYMBOL } from "constants/all";
+import {
+  capitalizeWordByWord,
+  CURRENCY_SYMBOL,
+  isAdminApprovedWithRenewCheck,
+} from "constants/all";
 import ModalDatePickerKyc from "components/modals/ModalDatePickerKyc";
 import InputDatePicker from "components/ui/InputDatePicker";
 import useJarIcons from "hooks/useJarIcons";
@@ -15,9 +19,19 @@ import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { apiRequest } from "helpers/apiRequests";
 import { LoaderContext } from "context/loaderContext";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { LoginContext } from "context/loginContext";
 
 const EditJar = () => {
   const navigate = useNavigate();
+  const { profile } = useSelector((state) => state.userProfile);
+  const { admin_approved } = profile || {};
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
   const [jarIcon] = useJarIcons();
   const [jarCategory] = useJarCategories();
   const [datePicker, setDatePicker] = useState(false);
@@ -293,27 +307,29 @@ const EditJar = () => {
             </div>
           </div>
 
-          <div className="row">
-            <div className="col-12 p-0 btns-inline">
-              <div className="setting-btn-link btn-wrap">
-                <button
-                  type="button"
-                  onClick={handleGoBack}
-                  className="outline-btn w-100 text-center d-block"
-                >
-                  Cancel
-                </button>
-              </div>
-              <div className="btn-wrap">
-                <input
-                  type="submit"
-                  className="btn btn-primary"
-                  value="Update"
-                  disabled={formik.isSubmitting}
-                />
+          {adminApprovedWithRenewCheck ? (
+            <div className="row">
+              <div className="col-12 p-0 btns-inline">
+                <div className="setting-btn-link btn-wrap">
+                  <button
+                    type="button"
+                    onClick={handleGoBack}
+                    className="outline-btn w-100 text-center d-block"
+                  >
+                    Cancel
+                  </button>
+                </div>
+                <div className="btn-wrap">
+                  <input
+                    type="submit"
+                    className="btn btn-primary"
+                    value="Update"
+                    disabled={formik.isSubmitting}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
         </form>
       </div>
       <ModalDatePickerKyc

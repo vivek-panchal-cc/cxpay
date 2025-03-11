@@ -4,15 +4,26 @@ import {
   capitalizeWordByWord,
   getInitials,
   getRandomColorClass,
+  isAdminApprovedWithRenewCheck,
 } from "constants/all";
 import LoaderJarDashboard from "loaders/LoaderJarDashboard";
 import { Link } from "react-router-dom";
 import { IconJarCreate, IconJarCalendar } from "styles/svgs";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
+import { useSelector } from "react-redux";
+import { LoginContext } from "context/loginContext";
 
 const SavingJarProgress = (props) => {
   const { savingJarDetails, graphLoading } = props;
   const { handleEditJarData } = useContext(SavingJarOwnContext);
+  const { profile } = useSelector((state) => state.userProfile);
+  const { admin_approved } = profile || {};
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
 
   const handleJarEdit = async () => {
     if (handleJarEdit) await handleEditJarData(savingJarDetails);
@@ -63,7 +74,12 @@ const SavingJarProgress = (props) => {
                     {capitalizeWordByWord(savingJarDetails?.jar_category_name)}
                   </p>
                 </div>
-                <div className="jar-settings" onClick={handleJarEdit}>
+                <div
+                  className={`jar-settings ${
+                    adminApprovedWithRenewCheck ? "" : "admin-approved-disabled"
+                  }`}
+                  onClick={adminApprovedWithRenewCheck ? handleJarEdit : null}
+                >
                   <IconJarCreate />
                 </div>
               </div>

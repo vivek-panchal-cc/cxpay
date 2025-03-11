@@ -10,6 +10,7 @@ import {
   IconNotifyMoneySentFailed,
   IconNotifyKyc,
   IconNotifyNotification,
+  IconNotifyJar,
 } from "styles/svgs";
 
 // Expressions
@@ -149,6 +150,7 @@ const NOTIFY_MANUAL_TOPUP = "manual_top_up";
 const NOTIFY_KYC = "kyc";
 const NOTIFY_DBT = "direct_top_up";
 const NOTIFY_PUSH_NOTIFICATION = "push_notification";
+const NOTIFY_SAVING_JAR_PAYMENT = "saving_jar_payment_done";
 
 // Notifications Type Constants
 const notificationType = {
@@ -191,6 +193,10 @@ const notificationType = {
   [NOTIFY_PUSH_NOTIFICATION]: {
     icon: IconNotifyNotification,
     redirect: "/",
+  },
+  [NOTIFY_SAVING_JAR_PAYMENT]: {
+    icon: IconNotifyJar,
+    redirect: "/jars/own",
   },
   "": {
     icon: "",

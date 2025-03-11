@@ -20,9 +20,7 @@ import { usePinContext } from "context/pinContext";
 import { sendPaymentPinSchema } from "schemas/sendPaymentSchema";
 import MerchantReportsProvider from "context/merchantReportsContext";
 import NotificationDetailsProvider from "context/notificationsContext";
-import SavingJarInvitedProvider from "context/savingJarInvitedProvider";
 import SavingJarOwnProvider from "context/savingJarOwnProvider";
-import SavingJarSharedProvider from "context/savingJarSharedProvider";
 
 function DashboardLayout() {
   const { setIsPinValidated } = usePinContext();
@@ -113,12 +111,8 @@ function DashboardLayout() {
                     <TopUpActivityProvider>
                       <NotificationDetailsProvider>
                         <SavingJarOwnProvider>
-                          <SavingJarSharedProvider>
-                            <SavingJarInvitedProvider>
-                              <NotificationBar />
-                              <Outlet />
-                            </SavingJarInvitedProvider>
-                          </SavingJarSharedProvider>
+                          <NotificationBar />
+                          <Outlet />
                         </SavingJarOwnProvider>
                       </NotificationDetailsProvider>
                     </TopUpActivityProvider>

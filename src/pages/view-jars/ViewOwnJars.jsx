@@ -16,7 +16,6 @@ import { IconCross, IconSearch } from "styles/svgs";
 
 const ViewOwnJars = () => {
   const {
-    pagination,
     reloadOwnJar,
     activeJarList,
     inactiveJarList,
@@ -24,16 +23,11 @@ const ViewOwnJars = () => {
     searchName,
     handleSearchName,
     resetSearchName,
-    handleDateFilter,
-    setCurrentPage,
     deleteRecurringPayment,
-    handleSelectPaymentEntry,
   } = useContext(SavingJarOwnContext);
 
-  const [deletPaymentId, setDeletPaymentId] = useState(null);
   const [activeJars, setActiveJars] = useState([]);
   const [inactiveJars, setInactiveJars] = useState([]);
-  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
 
   const { admin_approved } = useSelector(
     (state) => state?.userProfile?.profile
@@ -44,18 +38,6 @@ const ViewOwnJars = () => {
     admin_approved,
     show_renew_section
   );
-
-  const handleDeletePayment = async (spid) => {
-    if (!spid) return;
-    setDeletPaymentId(spid);
-    setShowConfirmPopup(true);
-  };
-
-  const confirmDeletePayment = async () => {
-    setShowConfirmPopup(false);
-    await deleteRecurringPayment(deletPaymentId);
-    setDeletPaymentId(null);
-  };
 
   useEffect(() => {
     (async () => {
@@ -130,7 +112,6 @@ const ViewOwnJars = () => {
                       <OwnJarListItem
                         key={item.jar_id || index}
                         details={item}
-                        handleEdit={handleSelectPaymentEntry}
                         tabList={"own"}
                       />
                     ))}
@@ -147,7 +128,6 @@ const ViewOwnJars = () => {
                       <OwnJarListItem
                         key={item.jar_id || index}
                         details={item}
-                        handleEdit={handleSelectPaymentEntry}
                         tabList={"own"}
                       />
                     ))}
@@ -165,14 +145,6 @@ const ViewOwnJars = () => {
           </div>
         ) : null}
       </div>
-      <ModalConfirmation
-        id="delete-group-member-popup"
-        show={showConfirmPopup}
-        setShow={setShowConfirmPopup}
-        heading={"Delete Transaction"}
-        subHeading={"Are you sure you want to delete this transaction?"}
-        handleCallback={confirmDeletePayment}
-      />
     </>
   );
 };

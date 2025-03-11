@@ -9443,7 +9443,7 @@ button.export-activities.disabled:hover {
 .jar-date {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
   margin-top: 15px;
   font-size: 14px;
   gap: 5px;

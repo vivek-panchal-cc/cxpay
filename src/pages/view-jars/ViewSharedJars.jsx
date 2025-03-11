@@ -1,21 +1,14 @@
-import ModalConfirmation from "components/modals/ModalConfirmation";
 import TabsPaymentOptions from "components/tabs/TabsPaymentOptions";
 import Input from "components/ui/Input";
-import {
-  isAdminApprovedWithRenewCheck,
-  JAR_OPTIONS_TABS_LIST,
-} from "constants/all";
+import { JAR_OPTIONS_TABS_LIST } from "constants/all";
 import OwnJarListItem from "components/items/OwnJarListItem";
-import { LoginContext } from "context/loginContext";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
 import React, { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { IconCross, IconSearch } from "styles/svgs";
 
 const ViewSharedJar = () => {
   const {
-    pagination,
     reloadSharedJar,
     activeSharedJarList,
     inactiveSharedJarList,
@@ -23,38 +16,10 @@ const ViewSharedJar = () => {
     searchSharedName,
     handleSearchSharedName,
     resetSearchSharedName,
-    handleDateFilter,
-    setCurrentPage,
-    deleteRecurringPayment,
-    handleSelectPaymentEntry,
   } = useContext(SavingJarOwnContext);
 
-  const [deletPaymentId, setDeletPaymentId] = useState(null);
   const [activeJars, setActiveJars] = useState([]);
   const [inactiveJars, setInactiveJars] = useState([]);
-  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
-
-  const { admin_approved } = useSelector(
-    (state) => state?.userProfile?.profile
-  );
-  const { loginCreds } = useContext(LoginContext);
-  const { show_renew_section } = loginCreds;
-  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
-    admin_approved,
-    show_renew_section
-  );
-
-  const handleDeletePayment = async (spid) => {
-    if (!spid) return;
-    setDeletPaymentId(spid);
-    setShowConfirmPopup(true);
-  };
-
-  const confirmDeletePayment = async () => {
-    setShowConfirmPopup(false);
-    await deleteRecurringPayment(deletPaymentId);
-    setDeletPaymentId(null);
-  };
 
   useEffect(() => {
     (async () => {
@@ -119,8 +84,6 @@ const ViewSharedJar = () => {
                       <OwnJarListItem
                         key={item.jar_id || index}
                         details={item}
-                        handleEdit={handleSelectPaymentEntry}
-                        handleDelete={handleDeletePayment}
                         tabList={"shared"}
                       />
                     ))}
@@ -137,8 +100,6 @@ const ViewSharedJar = () => {
                       <OwnJarListItem
                         key={item.jar_id || index}
                         details={item}
-                        handleEdit={handleSelectPaymentEntry}
-                        handleDelete={handleDeletePayment}
                         tabList={"shared"}
                       />
                     ))}
@@ -156,14 +117,6 @@ const ViewSharedJar = () => {
           </div>
         ) : null}
       </div>
-      <ModalConfirmation
-        id="delete-group-member-popup"
-        show={showConfirmPopup}
-        setShow={setShowConfirmPopup}
-        heading={"Delete Transaction"}
-        subHeading={"Are you sure you want to delete this transaction?"}
-        handleCallback={confirmDeletePayment}
-      />
     </>
   );
 };
