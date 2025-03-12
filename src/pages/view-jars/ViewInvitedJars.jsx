@@ -85,6 +85,7 @@ const ViewInvitedJar = () => {
                         key={item.jar_id || index}
                         details={item}
                         tabList={"invited"}
+                        active={true}
                       />
                     ))}
                   </ul>
@@ -101,6 +102,7 @@ const ViewInvitedJar = () => {
                         key={item.jar_id || index}
                         details={item}
                         tabList={"invited"}
+                        active={false}
                       />
                     ))}
                   </ul>

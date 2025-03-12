@@ -85,6 +85,7 @@ const ViewSharedJar = () => {
                         key={item.jar_id || index}
                         details={item}
                         tabList={"shared"}
+                        active={true}
                       />
                     ))}
                   </ul>
@@ -101,6 +102,7 @@ const ViewSharedJar = () => {
                         key={item.jar_id || index}
                         details={item}
                         tabList={"shared"}
+                        active={false}
                       />
                     ))}
                   </ul>

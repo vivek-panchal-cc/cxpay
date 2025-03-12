@@ -13,7 +13,7 @@ import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
 
 const OwnJarListItem = (props) => {
-  const { details, tabList } = props;
+  const { details, tabList, active = false } = props;
   const navigate = useNavigate();
   const {
     handleCreatedJarData,
@@ -72,7 +72,7 @@ const OwnJarListItem = (props) => {
       </button>
     );
 
-    if (tabList === "own") {
+    if (tabList === "own" && active) {
       return (
         <div className="con-listing-btn-wrap">
           {details?.deposite_amount === details?.target_amount ? (
@@ -113,7 +113,7 @@ const OwnJarListItem = (props) => {
         </div>
       );
     }
-    if (tabList === "shared") {
+    if (tabList === "shared" && active) {
       return (
         <div className="con-listing-btn-wrap">
           {renderButton(
@@ -131,7 +131,7 @@ const OwnJarListItem = (props) => {
         </div>
       );
     }
-    if (tabList === "invited") {
+    if (tabList === "invited" && active) {
       return (
         <div className="con-listing-btn-wrap">
           <>

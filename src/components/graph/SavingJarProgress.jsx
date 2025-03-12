@@ -15,6 +15,15 @@ import { LoginContext } from "context/loginContext";
 
 const SavingJarProgress = (props) => {
   const { savingJarDetails, graphLoading } = props;
+  const {
+    jar_icon,
+    jar_name,
+    jar_category_name,
+    deposite_amount,
+    target_amount,
+    target_date,
+    status,
+  } = savingJarDetails;
   const { handleEditJarData } = useContext(SavingJarOwnContext);
   const { profile } = useSelector((state) => state.userProfile);
   const { admin_approved } = profile || {};
@@ -52,46 +61,46 @@ const SavingJarProgress = (props) => {
           <div className="jar-card">
             <div className="jar-header">
               <div className="jar-details">
-                {savingJarDetails?.jar_icon ? (
-                  <img
-                    src={savingJarDetails?.jar_icon}
-                    className="jar-icon"
-                    alt="Jar Icon"
-                  />
+                {jar_icon ? (
+                  <img src={jar_icon} className="jar-icon" alt="Jar Icon" />
                 ) : (
                   <div
                     className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
-                      savingJarDetails?.jar_name
+                      jar_name
                     )}`}
                     style={{ width: "40px", height: "40px" }}
                   >
-                    {getInitials(savingJarDetails?.jar_name)}
+                    {getInitials(jar_name)}
                   </div>
                 )}
                 <div>
-                  <h5 className="jar-name">{savingJarDetails?.jar_name}</h5>
+                  <h5 className="jar-name">{jar_name}</h5>
                   <p className="jar-category">
-                    {capitalizeWordByWord(savingJarDetails?.jar_category_name)}
+                    {capitalizeWordByWord(jar_category_name)}
                   </p>
                 </div>
-                <div
-                  className={`jar-settings ${
-                    adminApprovedWithRenewCheck ? "" : "admin-approved-disabled"
-                  }`}
-                  onClick={adminApprovedWithRenewCheck ? handleJarEdit : null}
-                >
-                  <IconJarCreate />
-                </div>
+                {status && (
+                  <div
+                    className={`jar-settings ${
+                      adminApprovedWithRenewCheck
+                        ? ""
+                        : "admin-approved-disabled"
+                    }`}
+                    onClick={adminApprovedWithRenewCheck ? handleJarEdit : null}
+                  >
+                    <IconJarCreate />
+                  </div>
+                )}
               </div>
             </div>
 
             <div className="jar-balance">
               <h2 className="jar-amount">
-                <WrapAmount value={savingJarDetails?.deposite_amount} />
+                <WrapAmount value={deposite_amount} />
               </h2>
               <span className="jar-target">
                 {"/"}&nbsp;
-                <WrapAmount value={savingJarDetails?.target_amount} />
+                <WrapAmount value={target_amount} />
               </span>
             </div>
 
@@ -101,37 +110,36 @@ const SavingJarProgress = (props) => {
                   className="progress-fill"
                   style={{
                     width: `${
-                      ((savingJarDetails?.deposite_amount || 500) /
-                        (savingJarDetails?.target_amount || 2000)) *
-                      100
+                      ((deposite_amount || 500) / (target_amount || 2000)) * 100
                     }%`,
                   }}
                 />
               </div>
               <span className="jar-date">
                 <IconJarCalendar className="calendar-icon" />
-                {savingJarDetails?.target_date &&
-                  savingJarDetails.target_date.split("-").reverse().join("/")}
+                {target_date && target_date.split("-").reverse().join("/")}
               </span>
             </div>
           </div>
         )}
-        <div className="jar-actions">
-          <Link className="action-button">
-            <img src="/assets/images/jar_share.svg" alt="" />
-            <span>Share Jar</span>
-          </Link>
+        {status && (
+          <div className="jar-actions">
+            <Link className="action-button">
+              <img src="/assets/images/jar_share.svg" alt="" />
+              <span>Share Jar</span>
+            </Link>
 
-          <Link className="action-button">
-            <img src="/assets/images/jar_transfer_to_wallet.svg" alt="" />
-            <span>Transfer to Wallet</span>
-          </Link>
+            <Link className="action-button">
+              <img src="/assets/images/jar_transfer_to_wallet.svg" alt="" />
+              <span>Transfer to Wallet</span>
+            </Link>
 
-          <Link className="action-button">
-            <img src="/assets/images/jar_fund_transfer.svg" alt="" />
-            <span>Fund Transfer</span>
-          </Link>
-        </div>
+            <Link className="action-button">
+              <img src="/assets/images/jar_fund_transfer.svg" alt="" />
+              <span>Fund Transfer</span>
+            </Link>
+          </div>
+        )}
       </div>
     </>
   );

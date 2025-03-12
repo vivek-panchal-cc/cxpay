@@ -113,6 +113,7 @@ const ViewOwnJars = () => {
                         key={item.jar_id || index}
                         details={item}
                         tabList={"own"}
+                        active={true}
                       />
                     ))}
                   </ul>
@@ -129,6 +130,7 @@ const ViewOwnJars = () => {
                         key={item.jar_id || index}
                         details={item}
                         tabList={"own"}
+                        active={false}
                       />
                     ))}
                   </ul>
