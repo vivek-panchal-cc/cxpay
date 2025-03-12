@@ -295,7 +295,7 @@ function JarSend(props) {
       />
       <div className="col-12 send-payment-ttile-wrap">
         <div className="title-content-wrap send-pay-title-sec">
-          <h3>{`Transfer One-Time Payment to ${wallet.jar_name} Jar`}</h3>
+          <h3>{`Transfer One-Time Payment to Jar`}</h3>
           <p>Please insert the amount of money you want to add into the Jar</p>
         </div>
       </div>

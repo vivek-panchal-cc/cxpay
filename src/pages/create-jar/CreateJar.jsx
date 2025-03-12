@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import Input from "components/ui/Input";
 import { replace, useFormik } from "formik";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { addJarSchema } from "schemas/jarSchema";
-import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import InputIconSelect from "components/ui/InputIconSelect";
 import {
   capitalizeWordByWord,
@@ -151,7 +150,10 @@ const CreateJar = (props) => {
       <div className="rm-pl-profile-info">
         <h3>Create Jar</h3>
         <ul className="breadcrumb">
-          <Breadcrumb skipIndexes={[1]} />
+          <li>
+            <Link to="/jars/own">Jars</Link>
+          </li>
+          <li>Create Jar</li>
         </ul>
         <p className="mb-4">Please fill below details to create Jar</p>
       </div>

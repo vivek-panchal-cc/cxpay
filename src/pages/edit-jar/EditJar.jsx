@@ -3,7 +3,6 @@ import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { editJarSchema } from "schemas/jarSchema";
-import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import InputIconSelect from "components/ui/InputIconSelect";
 import {
   capitalizeWordByWord,
@@ -139,7 +138,12 @@ const EditJar = () => {
       <div className="rm-pl-profile-info">
         <h3>Update Jar</h3>
         <ul className="breadcrumb">
-          <Breadcrumb skipIndexes={[1]} />
+          <li>
+            <span className="cursor-pointer" onClick={handleGoBack}>
+              Jars
+            </span>
+          </li>
+          <li>Edit Jar</li>
         </ul>
         <p className="mb-4">Please fill below details to update Jar</p>
       </div>

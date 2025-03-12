@@ -118,44 +118,38 @@ function JarRecurringSendPayment(_props) {
     if (!pin) return;
     setIsLoading(true);
     try {
-      const requestData = {
+      const { jar_id, jar_url, occurrence_count, ...requestData } = {
         ...recurringData,
         user_pin: pin,
       };
-      const muValues = { ...requestData };
-      if (muValues.jar_url) delete muValues.jar_url;
-      if (muValues.occurrence_count) delete muValues.occurrence_count;
-      if (muValues.jar_id) {
-        let requestData = {
-          jar_id: muValues.jar_id,
-          deposite_amount: muValues.deposite_amount,
-          specifications: muValues.specifications,
-          schedule_date: muValues.schedule_date,
-          recurring_start_date: muValues.recurring_start_date,
-          recurring_end_date: muValues.recurring_end_date,
-          frequency: muValues.frequency,
-          user_pin: muValues.user_pin,
-        };
-        const { data } = await apiRequest.addAmountToSavingJarRecurring(
-          requestData
-        );
-        if (!data.success) throw data;
-        setSentDetail({
-          heading: "Money Sent",
-          message: data.message,
-          url: "/assets/images/sent-payment-pop.svg",
-        });
-      } else {
-        const { data } = await apiRequest.createTransactionJarRecurring(
-          muValues
-        );
-        if (!data.success) throw data;
-        setSentDetail({
-          heading: "Money Sent",
-          message: data.message,
-          url: "/assets/images/sent-payment-pop.svg",
-        });
-      }
+      if (jar_url) delete requestData.jar_url;
+      if (occurrence_count) delete requestData.occurrence_count;
+
+      const apiMethod = jar_id
+        ? apiRequest.addAmountToSavingJarRecurring
+        : apiRequest.createTransactionJarRecurring;
+
+      const payload = jar_id
+        ? {
+            jar_id,
+            deposite_amount: requestData.deposite_amount,
+            specifications: requestData.specifications,
+            schedule_date: requestData.schedule_date,
+            recurring_start_date: requestData.recurring_start_date,
+            recurring_end_date: requestData.recurring_end_date,
+            frequency: requestData.frequency,
+            user_pin: requestData.user_pin,
+          }
+        : requestData;
+
+      const { data } = await apiMethod(payload);
+      if (!data.success) throw data;
+      setSentDetail({
+        heading: "Money Sent",
+        message: data.message,
+        url: "/assets/images/sent-payment-pop.svg",
+      });
+
       setShowSentPopup(true);
       setShowPinPopup(false);
     } catch (error) {
@@ -262,7 +256,8 @@ function JarRecurringSendPayment(_props) {
               ? "Group Recurring Payment"
               : "Recurring Payment"}
           </h3>
-          <Breadcrumb skipIndexes={[2]} />
+          <p>Please insert the amount of money you want to add into the Jar</p>
+          {/* <Breadcrumb skipIndexes={[2]} /> */}
         </div>
       </div>
       {/* <!-- payment block form starts -->  */}

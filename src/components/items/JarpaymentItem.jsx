@@ -56,7 +56,9 @@ const JarPaymentItem = forwardRef((props, ref) => {
           )}
         </div>
         <div className="payee-name">
-          <h4>{jar_name}</h4>
+          <h4 className="jar-name-word-ellipsis" title={jar_name}>
+            {jar_name}
+          </h4>
         </div>
       </div>
       <div className="specification-input form-field">

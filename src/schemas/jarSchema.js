@@ -2,7 +2,10 @@ import { exp0ContainOnlySpace } from "constants/all";
 import * as yup from "yup";
 
 const addJarSchema = yup.object().shape({
-  jar_name: yup.string().required("Jar name is required"),
+  jar_name: yup
+    .string()
+    .required("Jar name is required")
+    .max(100, "Maximum limit is 100 characters."),
   target_amount: yup
     .string()
     .matches(/^[1-9]\d{0,6}(\.\d{1,2})?$/, "Please enter valid target amount")
@@ -14,7 +17,10 @@ const addJarSchema = yup.object().shape({
 });
 
 const editJarSchema = yup.object().shape({
-  jar_name: yup.string().required("Jar name is required"),
+  jar_name: yup
+    .string()
+    .required("Jar name is required")
+    .max(100, "Maximum limit is 100 characters."),
   target_amount: yup
     .string()
     .matches(/^[1-9]\d{0,6}(\.\d{1,2})?$/, "Please enter valid target amount")

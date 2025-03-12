@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import InputNumber from "components/ui/InputNumber";
 import { LoaderContext } from "context/loaderContext";
-import Breadcrumb from "components/breadcrumb/Breadcrumb";
-import { recurringSchema } from "schemas/validationSchema";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import InputDatePicker from "components/ui/InputDatePicker";
@@ -179,17 +177,12 @@ function JarRecurringSend() {
     onSubmit: async (values, { setErrors }) => {
       setIsLoading(true);
       try {
-        if (wallet.jar_id) {
-          handleRecurringPaymentForAddAmountToPay({
-            ...formik.values,
-            schedule_date: new Date().toISOString().split("T")[0], // Adds current date in YYYY-MM-DD format
-          });
-        } else {
-          handleRecurringSendPayment({
-            ...formik.values,
-            schedule_date: new Date().toISOString().split("T")[0], // Adds current date in YYYY-MM-DD format
-          });
-        }
+        const scheduleDate = new Date().toISOString().split("T")[0]; // Current date in YYYY-MM-DD format
+        const requestData = { ...formik.values, schedule_date: scheduleDate };
+
+        wallet.jar_id
+          ? handleRecurringPaymentForAddAmountToPay(requestData)
+          : handleRecurringSendPayment(requestData);
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
         const errorObj = {};
@@ -257,10 +250,17 @@ function JarRecurringSend() {
   return (
     <>
       <div className="settings-inner-sec wallet-ac-is">
-        <div className="profile-info">
-          <h3>Recurring Schedule Payment</h3>
-          <Breadcrumb skipIndexes={[2]} />
-        </div>
+        {/* <div className="profile-info"> */}
+        <h3>Recurring Schedule Payment</h3>
+        <ul className="breadcrumb">
+          <li>
+            <span className="cursor-pointer" onClick={handleCancel}>
+              Jars
+            </span>
+          </li>
+          <li>Recurring Send</li>
+        </ul>
+        {/* </div> */}
         <div className="wallet-fund-form-wrap">
           <form onSubmit={formik.handleSubmit}>
             <div className="bg-white-A700 flex flex-col font-visbyroundcf items-center justify-end mx-auto md:pr-10 pr-11 sm:pr-5 w-full">

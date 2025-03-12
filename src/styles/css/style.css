@@ -9471,3 +9471,14 @@ button.export-activities.disabled:hover {
 .action-button span {
   margin-left: 10px;
 }
+
+.jar-name-word-ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  max-width: 100%;
+  word-break: break-word;
+}
