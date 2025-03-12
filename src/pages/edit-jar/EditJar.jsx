@@ -40,24 +40,25 @@ const EditJar = () => {
     useContext(SavingJarOwnContext);
   const { editWallet } = editJar || [];
   const {
-    id,
+    jar_id,
     jar_name,
     target_date,
     target_amount,
     jar_category_id,
     jar_category_name,
     jar_icon,
+    jar_icon_id,
   } = editWallet;
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      jar_id: id,
+      jar_id: jar_id,
       jar_name: jar_name || "",
       target_amount: target_amount || "",
       target_date: target_date || "",
       jar_category_id: jar_category_id || "",
-      jar_icon: jar_icon || null,
+      jar_icon: jar_icon_id || null,
     },
     validationSchema: editJarSchema,
     onSubmit: async (values) => {
@@ -83,7 +84,7 @@ const EditJar = () => {
         if (!data.success) throw data.message;
         toast.success(data.message);
         if (cancelOwnJarPayment) cancelOwnJarPayment();
-        await handleStoreJarId(id);
+        await handleStoreJarId(jar_id);
         navigate(`/jars/own/jar-details`, { replace: true });
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
@@ -113,7 +114,7 @@ const EditJar = () => {
 
   const handleGoBack = async () => {
     if (cancelOwnJarPayment) await cancelOwnJarPayment();
-    await handleStoreJarId(id);
+    await handleStoreJarId(jar_id);
     navigate(`/jars/own/jar-details`);
   };
 

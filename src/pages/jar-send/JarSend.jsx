@@ -99,30 +99,27 @@ function JarSend(props) {
       if (showSentPopup) return;
       const valuesWithPin = { ...formik.values.wallet, user_pin: pin };
       const muValues = { ...valuesWithPin };
-      if (muValues.jar_url) delete muValues.jar_url;
-      if (muValues.jar_id) {
-        const requestData = {
-          jar_id: muValues.jar_id,
-          specifications: muValues.specifications,
-          deposite_amount: muValues.deposite_amount,
-          user_pin: muValues.user_pin,
-        };
-        const { data } = await apiRequest.addAmountToSavingJarWW(requestData);
-        if (!data.success) throw data;
-        setSentDetail({
-          heading: "Jar Created",
-          message: data.message,
-          url: "/assets/images/sent-payment-pop.svg",
-        });
-      } else {
-        const { data } = await apiRequest.createTransactionJar(muValues);
-        if (!data.success) throw data;
-        setSentDetail({
-          heading: "Jar Created",
-          message: data.message,
-          url: "/assets/images/sent-payment-pop.svg",
-        });
-      }
+      ["jar_url"].forEach((key) => delete muValues[key]); // Remove unwanted properties
+      const requestData = muValues.jar_id
+        ? {
+            jar_id: muValues.jar_id,
+            specifications: muValues.specifications,
+            deposite_amount: muValues.deposite_amount,
+            user_pin: muValues.user_pin,
+          }
+        : muValues;
+
+      const apiMethod = muValues.jar_id
+        ? apiRequest.addAmountToSavingJarWW
+        : apiRequest.createTransactionJar;
+
+      const { data } = await apiMethod(requestData);
+      if (!data.success) throw data;
+      setSentDetail({
+        heading: "Jar Created",
+        message: data.message,
+        url: "/assets/images/sent-payment-pop.svg",
+      });
       setShowSentPopup(true);
       setShowPinPopup(false);
     } catch (error) {
@@ -199,38 +196,28 @@ function JarSend(props) {
     if (!pin) return;
     setIsLoading(true);
     try {
-      if (scheduledData.jar_id) {
-        const requestData = {
-          jar_id: scheduledData.jar_id,
-          specifications: scheduledData.specifications,
-          deposite_amount: scheduledData.deposite_amount,
-          schedule_date: scheduledData.schedule_date,
-          user_pin: pin,
-        };
-        const { data } = await apiRequest.addAmountToSavingJarSchedule(
-          requestData
-        );
-        if (!data.success) throw data;
-        setSentDetail({
-          heading: "Jar Created",
-          message: data.message,
-          url: "/assets/images/sent-payment-pop.svg",
-        });
-      } else {
-        let requestParams = {
-          ...scheduledData,
-          user_pin: pin,
-        };
-        const { data } = await apiRequest.createTransactionJarSchedule(
-          requestParams
-        );
-        if (!data.success) throw data;
-        setSentDetail({
-          heading: "Jar Created",
-          message: data.message,
-          url: "/assets/images/sent-payment-pop.svg",
-        });
-      }
+      const requestData = scheduledData.jar_id
+        ? {
+            jar_id: scheduledData.jar_id,
+            specifications: scheduledData.specifications,
+            deposite_amount: scheduledData.deposite_amount,
+            schedule_date: scheduledData.schedule_date,
+            user_pin: pin,
+          }
+        : { ...scheduledData, user_pin: pin };
+
+      const apiMethod = scheduledData.jar_id
+        ? apiRequest.addAmountToSavingJarSchedule
+        : apiRequest.createTransactionJarSchedule;
+
+      const { data } = await apiMethod(requestData);
+      if (!data.success) throw data;
+      setSentDetail({
+        heading: "Jar Created",
+        message: data.message,
+        url: "/assets/images/sent-payment-pop.svg",
+      });
+
       setIsScheduling(false);
       setShowSentPopup(true);
       setShowPinPopup(false);
