@@ -73,9 +73,21 @@ const OwnJarListItem = (props) => {
     );
 
     if (tabList === "own" && active) {
+      const isSameOrPastDate = (dateStr) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const formattedDateStr = dateStr.split("-").reverse().join("-");
+        const targetDate = new Date(formattedDateStr);
+        targetDate.setHours(0, 0, 0, 0);
+        return targetDate < today;
+      };
+
+      const isTargetDateExpired =
+        details?.target_date && isSameOrPastDate(details.target_date);
+      const isAmountEqual = details?.deposite_amount === details?.target_amount;
       return (
         <div className="con-listing-btn-wrap">
-          {details?.deposite_amount === details?.target_amount ? (
+          {isAmountEqual || isTargetDateExpired ? (
             renderButton(
               "Redeem Fund",
               (e) => {

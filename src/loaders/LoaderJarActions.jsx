@@ -1,6 +1,6 @@
 import ContentLoader from "react-content-loader";
 
-const LoaderJarActionsSkeleton = () => {
+const LoaderJarActions = () => {
   return (
     <ContentLoader
       speed={2}
@@ -16,4 +16,4 @@ const LoaderJarActionsSkeleton = () => {
   );
 };
 
-export default LoaderJarActionsSkeleton;
+export default LoaderJarActions;

@@ -46,10 +46,8 @@ const CreateJar = (props) => {
   );
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
-  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
-    admin_approved,
-    show_renew_section
-  );
+  const adminApprovedWithRenewCheck =
+    isAdminApprovedWithRenewCheck(admin_approved, show_renew_section) !== false;
 
   const formik = useFormik({
     enableReinitialize: true,

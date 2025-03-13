@@ -12,7 +12,7 @@ import { IconJarCreate, IconJarCalendar } from "styles/svgs";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
-import LoaderJarActionsSkeleton from "loaders/LoaderJarActionsSkeleton";
+import LoaderJarActions from "loaders/LoaderJarActions";
 
 const SavingJarProgress = (props) => {
   const { savingJarDetails, graphLoading } = props;
@@ -39,6 +39,19 @@ const SavingJarProgress = (props) => {
     if (handleJarEdit) await handleEditJarData(savingJarDetails);
   };
 
+  const isSameOrPastDate = (dateStr) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to 00:00:00
+
+    const targetDate = new Date(dateStr);
+    targetDate.setHours(0, 0, 0, 0); // Reset time to 00:00:00
+
+    return targetDate < today;
+  };
+
+  const isTargetDateExpired = target_date && isSameOrPastDate(target_date);
+  const isAmountEqual = target_amount === deposite_amount;
+  const isTrue = isTargetDateExpired || isAmountEqual;
   return (
     <>
       {/* <div
@@ -80,7 +93,7 @@ const SavingJarProgress = (props) => {
                     {capitalizeWordByWord(jar_category_name)}
                   </p>
                 </div>
-                {status && (
+                {status && adminApprovedWithRenewCheck && (
                   <div
                     className={`jar-settings ${
                       adminApprovedWithRenewCheck
@@ -123,26 +136,35 @@ const SavingJarProgress = (props) => {
             </div>
           </div>
         )}
-        {status && (
+        {status && adminApprovedWithRenewCheck && (
           <div className="jar-actions">
             {graphLoading ? (
-              [1, 2, 3].map((item) => <LoaderJarActionsSkeleton key={item} />)
+              [1, 2, 3].map((item) => <LoaderJarActions key={item} />)
             ) : (
               <>
-                <Link className="action-button">
-                  <img src="/assets/images/jar_share.svg" alt="" />
-                  <span>Share Jar</span>
-                </Link>
+                {!isTrue && (
+                  <Link className="action-button">
+                    <img src="/assets/images/jar_share.svg" alt="" />
+                    <span>Share Jar</span>
+                  </Link>
+                )}
 
-                <Link className="action-button">
-                  <img src="/assets/images/jar_transfer_to_wallet.svg" alt="" />
-                  <span>Transfer to Wallet</span>
-                </Link>
+                {isTrue && (
+                  <Link className="action-button">
+                    <img
+                      src="/assets/images/jar_transfer_to_wallet.svg"
+                      alt=""
+                    />
+                    <span>Transfer to Wallet</span>
+                  </Link>
+                )}
 
-                <Link className="action-button">
-                  <img src="/assets/images/jar_fund_transfer.svg" alt="" />
-                  <span>Fund Transfer</span>
-                </Link>
+                {!isTrue && (
+                  <Link className="action-button">
+                    <img src="/assets/images/jar_fund_transfer.svg" alt="" />
+                    <span>Fund Transfer</span>
+                  </Link>
+                )}
               </>
             )}
           </div>
