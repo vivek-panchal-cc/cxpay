@@ -12,6 +12,7 @@ import { IconJarCreate, IconJarCalendar } from "styles/svgs";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
+import LoaderJarActionsSkeleton from "loaders/LoaderJarActionsSkeleton";
 
 const SavingJarProgress = (props) => {
   const { savingJarDetails, graphLoading } = props;
@@ -22,7 +23,7 @@ const SavingJarProgress = (props) => {
     deposite_amount,
     target_amount,
     target_date,
-    status,
+    status = true,
   } = savingJarDetails;
   const { handleEditJarData } = useContext(SavingJarOwnContext);
   const { profile } = useSelector((state) => state.userProfile);
@@ -124,20 +125,26 @@ const SavingJarProgress = (props) => {
         )}
         {status && (
           <div className="jar-actions">
-            <Link className="action-button">
-              <img src="/assets/images/jar_share.svg" alt="" />
-              <span>Share Jar</span>
-            </Link>
+            {graphLoading ? (
+              [1, 2, 3].map((item) => <LoaderJarActionsSkeleton key={item} />)
+            ) : (
+              <>
+                <Link className="action-button">
+                  <img src="/assets/images/jar_share.svg" alt="" />
+                  <span>Share Jar</span>
+                </Link>
 
-            <Link className="action-button">
-              <img src="/assets/images/jar_transfer_to_wallet.svg" alt="" />
-              <span>Transfer to Wallet</span>
-            </Link>
+                <Link className="action-button">
+                  <img src="/assets/images/jar_transfer_to_wallet.svg" alt="" />
+                  <span>Transfer to Wallet</span>
+                </Link>
 
-            <Link className="action-button">
-              <img src="/assets/images/jar_fund_transfer.svg" alt="" />
-              <span>Fund Transfer</span>
-            </Link>
+                <Link className="action-button">
+                  <img src="/assets/images/jar_fund_transfer.svg" alt="" />
+                  <span>Fund Transfer</span>
+                </Link>
+              </>
+            )}
           </div>
         )}
       </div>
