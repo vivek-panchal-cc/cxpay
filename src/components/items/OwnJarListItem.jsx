@@ -11,6 +11,8 @@ import ModalJarPaymentSelect from "components/modals/ModalJarPaymentSelect";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
+import ModalConfirmation from "components/modals/ModalConfirmation";
+import JarMemberListingModal from "components/modals/JarMemberListingModal";
 
 const OwnJarListItem = (props) => {
   const { details, tabList, active = false } = props;
@@ -19,12 +21,19 @@ const OwnJarListItem = (props) => {
     handleCreatedJarData,
     createdJarData,
     handleStoreJarId,
+    handleTabList,
     handleInstantPaymentForAddAmount,
     handleSendJarScheduleForAddAmount,
     handleRecurringPaymentForAddAmount,
+    confirmAcceptOrDeclineTransaction,
+    addJarMembers,
   } = useContext(SavingJarOwnContext);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showModalScheduler, setShowModalScheduler] = useState(false);
+  const [acceptRejectValue, setAcceptRejectValue] = useState(null);
+  const [popup, setPopup] = useState(false);
+  const [jarMembers, setJarMembers] = useState([]);
+  const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
 
   const { admin_approved } = useSelector(
     (state) => state?.userProfile?.profile
@@ -51,6 +60,35 @@ const OwnJarListItem = (props) => {
     setShowPaymentModal(false);
   };
 
+  const handleAcceptOrRejectDetails = (value) => {
+    setAcceptRejectValue(value);
+    setPopup(true);
+  };
+
+  const handleCallbackTransaction = async () => {
+    setPopup(false);
+    await confirmAcceptOrDeclineTransaction(acceptRejectValue, details.jar_id);
+    setAcceptRejectValue(null);
+  };
+
+  const showAddMemberPopupData = () => {
+    setShowAddMemberPopup(true);
+  };
+
+  const handleSelectMembers = async (item) => {
+    setJarMembers([...item]);
+    if (addJarMembers) await addJarMembers(details.jar_id, item);
+  };
+
+  const isSameOrPastDate = (dateStr) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const formattedDateStr = dateStr.split("-").reverse().join("-");
+    const targetDate = new Date(formattedDateStr);
+    targetDate.setHours(0, 0, 0, 0);
+    return targetDate < today;
+  };
+
   const renderButtons = () => {
     const isFundActionDisabled =
       show_renew_section === "disable_fund_action" ||
@@ -72,19 +110,11 @@ const OwnJarListItem = (props) => {
       </button>
     );
 
-    if (tabList === "own" && active) {
-      const isSameOrPastDate = (dateStr) => {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const formattedDateStr = dateStr.split("-").reverse().join("-");
-        const targetDate = new Date(formattedDateStr);
-        targetDate.setHours(0, 0, 0, 0);
-        return targetDate < today;
-      };
+    const isTargetDateExpired =
+      details?.target_date && isSameOrPastDate(details.target_date);
+    const isAmountEqual = details?.deposite_amount === details?.target_amount;
 
-      const isTargetDateExpired =
-        details?.target_date && isSameOrPastDate(details.target_date);
-      const isAmountEqual = details?.deposite_amount === details?.target_amount;
+    if (tabList === "own" && active) {
       return (
         <div className="con-listing-btn-wrap">
           {isAmountEqual || isTargetDateExpired ? (
@@ -105,7 +135,7 @@ const OwnJarListItem = (props) => {
                 "Share Jar",
                 (e) => {
                   e.stopPropagation();
-                  // handleSendRequest([contact]);
+                  showAddMemberPopupData();
                 },
                 "con-req-btn"
               )}
@@ -128,18 +158,20 @@ const OwnJarListItem = (props) => {
     if (tabList === "shared" && active) {
       return (
         <div className="con-listing-btn-wrap">
-          {renderButton(
-            "Add Fund",
-            (e) => {
-              e.stopPropagation();
-              setShowPaymentModal(true);
-            },
-            "",
-            {
-              minWidth: "150px",
-              marginRight: "0px",
-            }
-          )}
+          {!isAmountEqual && !isTargetDateExpired
+            ? renderButton(
+                "Add Fund",
+                (e) => {
+                  e.stopPropagation();
+                  setShowPaymentModal(true);
+                },
+                "",
+                {
+                  minWidth: "150px",
+                  marginRight: "0px",
+                }
+              )
+            : null}
         </div>
       );
     }
@@ -151,6 +183,7 @@ const OwnJarListItem = (props) => {
               "Decline",
               (e) => {
                 e.stopPropagation();
+                handleAcceptOrRejectDetails(0);
               },
               "con-req-btn",
               {
@@ -161,6 +194,7 @@ const OwnJarListItem = (props) => {
               "Accept",
               (e) => {
                 e.stopPropagation();
+                handleAcceptOrRejectDetails(1);
               },
               "",
               {
@@ -176,6 +210,7 @@ const OwnJarListItem = (props) => {
   const handleViewDetails = async (e) => {
     e.preventDefault();
     await handleStoreJarId(details.jar_id);
+    await handleTabList(tabList);
     navigate(`/jars/own/jar-details`);
   };
 
@@ -293,6 +328,29 @@ const OwnJarListItem = (props) => {
         setShow={setShowModalScheduler}
         handleSubmit={handleSendJarScheduleForAddAmount}
         data={createdJarData}
+      />
+      <ModalConfirmation
+        id="delete-group-member-popup"
+        show={popup}
+        setShow={setPopup}
+        heading={
+          acceptRejectValue ? "Accept Transaction" : "Decline Transaction"
+        }
+        subHeading={`Are you sure you want to ${
+          acceptRejectValue ? "accept" : "decline"
+        } this transaction?`}
+        handleCallback={handleCallbackTransaction}
+      />
+      <JarMemberListingModal
+        id="jar-delete-group-popup"
+        show={showAddMemberPopup}
+        setShow={setShowAddMemberPopup}
+        handleCallback={() => setShowAddMemberPopup(false)}
+        className={`con-list-pop`}
+        jarId={details.jar_id}
+        selectedItem={() => {}}
+        selectedFullItem={handleSelectMembers}
+        selectedMembers={jarMembers}
       />
     </>
   );

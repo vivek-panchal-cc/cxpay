@@ -4,6 +4,8 @@ import { LoaderContext } from "./loaderContext";
 import useOwnJar from "hooks/useOwnJar";
 import useSharedJar from "hooks/useSharedJar";
 import useInvitedJar from "hooks/useInvitedJar";
+import { apiRequest } from "helpers/apiRequests";
+import { toast } from "react-toastify";
 
 export const SavingJarOwnContext = React.createContext({});
 
@@ -23,6 +25,7 @@ const SavingJarOwnProvider = ({ children }) => {
   const [createdJarData, setCreatedJarData] = useState([]);
   const [sendCreds, setSendCreds] = useState({ wallet: [] });
   const [editJar, setEditJar] = useState({ editWallet: [] });
+  const [tabName, setTabName] = useState("own");
   const [jarId, setJarId] = useState(null);
 
   const [loadingOwnJar, activeJarList, inactiveJarList, reloadOwnJar] =
@@ -193,6 +196,7 @@ const SavingJarOwnProvider = ({ children }) => {
     setSendCreds({ wallet: [] });
     setEditJar({ editWallet: [] });
     setJarId(null);
+    setTabName("own");
   };
 
   const handleSearchName = (data) => {
@@ -220,6 +224,70 @@ const SavingJarOwnProvider = ({ children }) => {
   };
 
   const handleStoreJarId = (id) => {
+    if (!id) return;
+    setJarId(id);
+  };
+
+  const handleTabList = (value) => {
+    if (!value) return;
+    setTabName(value);
+  };
+
+  const confirmAcceptOrDeclineTransaction = async (value, jar_id) => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.acceptRejectSavingJarDetails({
+        jar_id: jar_id,
+        request_accept: value,
+      });
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+      reloadInvitedJar();
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const addJarMembers = async (id, data) => {
+    setIsLoading(true);
+    const members = data.map((member) => member.account_number);
+    try {
+      const { data } = await apiRequest.addMemberInSavingJar({
+        jar_id: id,
+        members,
+      });
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+      reloadOwnJar();
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteMember = async (id, acc_number) => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.removeMemberInSavingJar({
+        jar_id: id,
+        member_account_number: acc_number,
+      });
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleShowAllMemberList = (id) => {
     if (!id) return;
     setJarId(id);
   };
@@ -261,6 +329,8 @@ const SavingJarOwnProvider = ({ children }) => {
 
         handleStoreJarId,
         jarId,
+        handleTabList,
+        tabName,
         handleEditJarData,
         editJar,
 
@@ -279,6 +349,10 @@ const SavingJarOwnProvider = ({ children }) => {
         handleRecurringPaymentForAddAmount,
         handleRecurringPaymentForAddAmountToPay,
         savingJarDetails,
+        confirmAcceptOrDeclineTransaction,
+        addJarMembers,
+        handleDeleteMember,
+        handleShowAllMemberList,
       }}
     >
       {children}

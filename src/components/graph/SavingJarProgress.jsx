@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import WrapAmount from "components/wrapper/WrapAmount";
 import {
   capitalizeWordByWord,
@@ -13,10 +13,12 @@ import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
 import LoaderJarActions from "loaders/LoaderJarActions";
+import JarMemberListingModal from "components/modals/JarMemberListingModal";
 
 const SavingJarProgress = (props) => {
-  const { savingJarDetails, graphLoading } = props;
+  const { savingJarDetails, tabName, graphLoading, getJarMemberList } = props;
   const {
+    jar_id,
     jar_icon,
     jar_name,
     jar_category_name,
@@ -25,7 +27,7 @@ const SavingJarProgress = (props) => {
     target_date,
     status = true,
   } = savingJarDetails;
-  const { handleEditJarData } = useContext(SavingJarOwnContext);
+  const { handleEditJarData, addJarMembers } = useContext(SavingJarOwnContext);
   const { profile } = useSelector((state) => state.userProfile);
   const { admin_approved } = profile || {};
   const { loginCreds } = useContext(LoginContext);
@@ -34,9 +36,21 @@ const SavingJarProgress = (props) => {
     admin_approved,
     show_renew_section
   );
+  const [jarMembers, setJarMembers] = useState([]);
+  const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
 
   const handleJarEdit = async () => {
     if (handleJarEdit) await handleEditJarData(savingJarDetails);
+  };
+
+  const showAddMemberPopupData = () => {
+    setShowAddMemberPopup(true);
+  };
+
+  const handleSelectMembers = async (item) => {
+    setJarMembers([...item]);
+    if (addJarMembers) await addJarMembers(jar_id, item);
+    getJarMemberList(jar_id, "");
   };
 
   const isSameOrPastDate = (dateStr) => {
@@ -123,9 +137,7 @@ const SavingJarProgress = (props) => {
                 <div
                   className="progress-fill"
                   style={{
-                    width: `${
-                      ((deposite_amount || 500) / (target_amount || 2000)) * 100
-                    }%`,
+                    width: `${(deposite_amount / target_amount) * 100}%`,
                   }}
                 />
               </div>
@@ -136,20 +148,23 @@ const SavingJarProgress = (props) => {
             </div>
           </div>
         )}
-        {status && adminApprovedWithRenewCheck && (
+        {adminApprovedWithRenewCheck && (
           <div className="jar-actions">
             {graphLoading ? (
               [1, 2, 3].map((item) => <LoaderJarActions key={item} />)
             ) : (
               <>
-                {!isTrue && (
-                  <Link className="action-button">
+                {!isTrue && tabName === "own" && status && (
+                  <a
+                    className="action-button"
+                    onClick={() => showAddMemberPopupData()}
+                  >
                     <img src="/assets/images/jar_share.svg" alt="" />
                     <span>Share Jar</span>
-                  </Link>
+                  </a>
                 )}
 
-                {isTrue && (
+                {(isTrue || !status) && (
                   <Link className="action-button">
                     <img
                       src="/assets/images/jar_transfer_to_wallet.svg"
@@ -159,7 +174,7 @@ const SavingJarProgress = (props) => {
                   </Link>
                 )}
 
-                {!isTrue && (
+                {!isTrue && status && (
                   <Link className="action-button">
                     <img src="/assets/images/jar_fund_transfer.svg" alt="" />
                     <span>Fund Transfer</span>
@@ -170,6 +185,17 @@ const SavingJarProgress = (props) => {
           </div>
         )}
       </div>
+      <JarMemberListingModal
+        id="jar-delete-group-popup"
+        show={showAddMemberPopup}
+        setShow={setShowAddMemberPopup}
+        handleCallback={() => setShowAddMemberPopup(false)}
+        className={`con-list-pop`}
+        jarId={jar_id}
+        selectedItem={() => {}}
+        selectedFullItem={handleSelectMembers}
+        selectedMembers={jarMembers}
+      />
     </>
   );
 };

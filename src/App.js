@@ -87,6 +87,8 @@ import JarRecurringSend from "pages/jar-send/JarRecurringSend";
 import JarRecurringSendPayment from "pages/jar-send/JarRecurringSendPayment";
 import JarDetails from "pages/view-jars/JarDetails";
 import EditJar from "pages/edit-jar/EditJar";
+import JarMembersList from "components/items/JarMembersItem";
+import JarMembers from "pages/jar-members/JarMembers";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -265,9 +267,12 @@ const ProtectedJarRecurringSendPayment = withUserProtection(
   JarRecurringSendPayment,
   AllowedBusinessPersonal
 );
-
 const ProtectedJarDetails = withUserProtection(
   JarDetails,
+  AllowedBusinessPersonal
+);
+const ProtectedMembers = withUserProtection(
+  JarMembers,
   AllowedBusinessPersonal
 );
 
@@ -534,6 +539,10 @@ function App() {
             />
             <Route path="/jars/shared" element={<ProtectedSharedJars />} />
             <Route path="/jars/invited" element={<ProtectedInvitedJars />} />
+            <Route
+              path="/jars/own/members-list"
+              element={<ProtectedMembers />}
+            />
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Route>

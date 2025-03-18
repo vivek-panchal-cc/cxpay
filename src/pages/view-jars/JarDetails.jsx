@@ -27,6 +27,8 @@ import { LoginContext } from "context/loginContext";
 import { isAdminApprovedWithRenewCheck } from "constants/all";
 import SavingJarProgress from "components/graph/SavingJarProgress";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
+import JarMembersSelection from "components/jar-members-selection/JarMembersSelection";
+import JarMemberCard from "components/cards/JarMemberCard";
 
 const graphBackgroundImage = "/assets/images/chart-duumy.png";
 
@@ -34,7 +36,8 @@ const JarDetails = () => {
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
   const { handleSendContacts } = useContext(SendPaymentContext);
-  const { jarId } = useContext(SavingJarOwnContext);
+  const { jarId, tabName, handleShowAllMemberList } =
+    useContext(SavingJarOwnContext);
   const { first_name, company_name } = useSelector(
     (state) => state.userProfile.profile
   );
@@ -48,11 +51,11 @@ const JarDetails = () => {
   );
 
   const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
-  const [inviteContactList, setInviteContactList] = useState([]);
+  const [jarMemberList, setJarMemberList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalInvitedData, setTotalInvitedData] = useState(0);
   const [searchContactText, setSearchContactText] = useState("");
-  const [isLoadingContacts, setIsLoadingContacts] = useState(true);
+  const [isLoadingMember, setIsLoadingMembers] = useState(true);
   const [graphLoading, setGraphLoading] = useState(false);
 
   const [cardsList, setCardsList] = useState([]);
@@ -91,21 +94,19 @@ const JarDetails = () => {
   const handleSelectContact = (e) => {
     const value = e?.currentTarget?.value;
     if (!value) return;
-    const contact = inviteContactList.find(
-      (con) => con.account_number === value
-    );
+    const contact = jarMemberList.find((con) => con.account_number === value);
     if (contact) handleSendContacts([contact]);
   };
 
   // Debouncing for contacts
   useEffect(() => {
     if (searchContactText === "") {
-      getInviteContactList(1, searchContactText);
+      getJarMemberList(jarId, searchContactText);
       return;
     }
     const timeOut = setTimeout(() => {
       setCurrentPage(1);
-      getInviteContactList(1, searchContactText);
+      getJarMemberList(jarId, searchContactText);
     }, 1000);
     return () => clearTimeout(timeOut);
   }, [searchContactText.toString().trim()]);
@@ -123,7 +124,7 @@ const JarDetails = () => {
   const handleReachEndContacts = async () => {
     if (currentPage * 10 < totalInvitedData) {
       setCurrentPage((cp) => cp + 1);
-      await getInviteContactList(currentPage + 1, searchContactText);
+      await getJarMemberList(jarId, searchContactText);
     }
   };
 
@@ -146,29 +147,22 @@ const JarDetails = () => {
   };
 
   // get invite contact list
-  const getInviteContactList = async (page = 1, search = "") => {
-    setIsLoadingContacts(true);
+  const getJarMemberList = async (jarId, search = "") => {
+    setIsLoadingMembers(true);
     try {
-      let param = { page: page, search: search };
-      const { data } = await apiRequest.getInviteContactList(param);
+      let param = { jar_id: jarId, search_name: search };
+      const { data } = await apiRequest.getSavingJarMemberList(param);
       if (!data.success) throw data.message;
-      setTotalInvitedData(data.data.pagination.total);
-      if (page === 1) {
-        setInviteContactList(data.data.app_contacts);
-      } else {
-        const allData = inviteContactList.concat(data.data.app_contacts);
-        setInviteContactList(allData);
-      }
-      setIsLoadingContacts(false);
+      setJarMemberList(data.data);
+      setIsLoadingMembers(false);
     } catch (error) {
-      setTotalInvitedData(0);
-      setInviteContactList([]);
-      setIsLoadingContacts(false);
+      setJarMemberList([]);
+      setIsLoadingMembers(false);
     }
   };
 
   useEffect(() => {
-    getInviteContactList(currentPage, "");
+    getJarMemberList(jarId, "");
     getCardsList();
   }, []);
 
@@ -176,45 +170,51 @@ const JarDetails = () => {
     setShowFundAccountPopup(true);
   };
 
+  const handleShowAll = async (e) => {
+    e.preventDefault();
+    await handleShowAllMemberList(jarId);
+    navigate(`/jars/own/members-list`);
+  };
+
   if (!jarId) return <Navigate to="/jars/own" replace />;
 
   return (
     <>
       {/* Close Fund Account Popup */}
-      <div
-        className={`jar-dashboard-home-container ${
-          user_type === "agent" ? "agent" : ""
-        }`}
-      >
+      <div className={`jar-dashboard-home-container`}>
         <div className="jar-dashboard-bottom-sec">
           <div className="jar-dashboard-graph-sec">
             <div className="graph-title-content-wrap">
               <SavingJarProgress
                 savingJarDetails={savingJarDetails}
+                tabName={tabName}
                 graphLoading={graphLoading}
+                getJarMemberList={getJarMemberList}
               />
             </div>
-            {/* <div className="jar-dashboard-recent-contact-sec">
+            <div className="jar-dashboard-recent-contact-sec">
               <div className="recent-contact-sec">
-                <ContactsSelection className="col-12">
-                  <ContactsSelection.Header
+                <JarMembersSelection className="col-12">
+                  <JarMembersSelection.Header
+                    members={jarMemberList.slice(0, 5)}
                     className=""
-                    heading="Recent Contact"
+                    heading="Recent Member"
                     subHeading=""
                     searchValue={searchContactText}
                     handleSearch={handleSearchContact}
                     clearSearch={handleResetContactData}
+                    handleShowAll={handleShowAll}
                   />
-                  <ContactsSelection.Body
-                    isLoading={isLoadingContacts}
+                  <JarMembersSelection.Body
+                    isLoading={isLoadingMember}
                     classNameContainer="send-group-slider"
-                    contacts={inviteContactList}
+                    members={jarMemberList.slice(0, 5)}
                     selectedContacts={[]}
-                    handleSelectedItems={handleSelectContact}
-                    handleReachEnd={handleReachEndContacts}
+                    handleSelectedItems={() => {}}
+                    handleReachEnd={() => {}}
                     fullWidth={false}
-                    emptyListMsg="Contacts not found"
-                    ListItemComponent={ContactCard}
+                    emptyListMsg="Member not found"
+                    ListItemComponent={JarMemberCard}
                     ListItemComponentProps={{
                       fullWidth: false,
                       isSelectable: true,
@@ -225,12 +225,13 @@ const JarDetails = () => {
                       account_number: "id",
                       name: "title",
                       profile_image: "imgUrl",
+                      member_name: "name",
                     }}
                   />
-                </ContactsSelection>
+                </JarMembersSelection>
               </div>
             </div>
-            <RecentActivities
+            {/* <RecentActivities
               loading={loadingAct}
               activitiesList={activitiesList ? activitiesList.slice(0, 5) : []}
             /> */}

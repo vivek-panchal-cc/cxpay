@@ -9334,7 +9334,7 @@ button.export-activities.disabled:hover {
 .jar-progress-bar-container .jar-progress-bar {
   height: 100%;
   transition: width 0.5s ease-in-out;
-  min-width: 5px;
+  /* min-width: 5px; */
 }
 
 .jar-card {
@@ -9481,4 +9481,15 @@ button.export-activities.disabled:hover {
   white-space: normal;
   max-width: 100%;
   word-break: break-word;
+}
+
+#jar-delete-group-popup ul li {
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+}
+
+#jar-delete-group-popup ul li div {
+  display: block;
 }

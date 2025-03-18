@@ -31,7 +31,7 @@ const EditJar = () => {
     admin_approved,
     show_renew_section
   );
-  const [jarIcon] = useJarIcons();
+  const [jarIcon, jarIconLoading] = useJarIcons();
   const [jarCategory] = useJarCategories();
   const [datePicker, setDatePicker] = useState(false);
   const { setIsLoading } = useContext(LoaderContext);
@@ -319,7 +319,10 @@ const EditJar = () => {
                   <button
                     type="button"
                     onClick={handleGoBack}
-                    className="outline-btn w-100 text-center d-block"
+                    className={`outline-btn w-100 text-center d-block ${
+                      jarIconLoading ? "cursor-not-allowed" : ""
+                    }`}
+                    disabled={jarIconLoading}
                   >
                     Cancel
                   </button>
@@ -327,9 +330,11 @@ const EditJar = () => {
                 <div className="btn-wrap">
                   <input
                     type="submit"
-                    className="btn btn-primary"
+                    className={`btn btn-primary ${
+                      jarIconLoading ? "cursor-not-allowed" : ""
+                    }`}
                     value="Update"
-                    disabled={formik.isSubmitting}
+                    disabled={formik.isSubmitting || jarIconLoading}
                   />
                 </div>
               </div>

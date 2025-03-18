@@ -191,6 +191,14 @@ const API_addAmountToSavingJarRecurring =
 const API_getSavingJarDetails = apiUrl.API_TRANSACTION_GET_SAVING_JAR_DETAILS;
 const API_updateSavingJarDetails =
   apiUrl.API_TRANSACTION_UPDATE_SAVING_JAR_DETAILS;
+const API_acceptRejectSavingJarDetails =
+  apiUrl.API_TRANSACTION_ACCEPT_REJECT_SAVING_JAR_DETAILS;
+const API_addMemberInSavingJar =
+  apiUrl.API_TRANSACTION_ADD_MEMBER_IN_SAVING_JAR;
+const API_removeMemberInSavingJar =
+  apiUrl.API_TRANSACTION_REMOVE_MEMBER_IN_SAVING_JAR;
+const API_getSavingJarMemberList =
+  apiUrl.API_TRANSACTION_SAVING_JAR_MEMBER_LIST;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -1253,6 +1261,45 @@ export const updateSavingJarDetails = (params) => {
   return axiosTransactionInstance.post(`${API_updateSavingJarDetails}`, params);
 };
 
+/** POST
+ * @params token
+ * @params jar_id
+ * @params request_accept : 0 || 1
+ */
+export const acceptRejectSavingJarDetails = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_acceptRejectSavingJarDetails}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const addMemberInSavingJar = (params) => {
+  return axiosTransactionInstance.post(`${API_addMemberInSavingJar}`, params);
+};
+
+/** POST
+ * @params token
+ * @params member_account_number
+ */
+export const removeMemberInSavingJar = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_removeMemberInSavingJar}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params search_name
+ */
+export const getSavingJarMemberList = (params) => {
+  return axiosTransactionInstance.post(`${API_getSavingJarMemberList}`, params);
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -1399,4 +1446,8 @@ export const apiRequest = {
   addAmountToSavingJarRecurring,
   getSavingJarDetails,
   updateSavingJarDetails,
+  acceptRejectSavingJarDetails,
+  addMemberInSavingJar,
+  removeMemberInSavingJar,
+  getSavingJarMemberList,
 };
