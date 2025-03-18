@@ -9493,3 +9493,11 @@ button.export-activities.disabled:hover {
 #jar-delete-group-popup ul li div {
   display: block;
 }
+
+.jar-member-display-text {
+  max-width: 300px;
+  min-width: 300px;
+  width: 100%;
+  word-break: break-word;
+  white-space: normal;
+}

@@ -16,7 +16,7 @@ const JarMemberCard = (props) => {
     fallbackImgUrl,
     className = "",
   } = props;
-  const { id, imgUrl, name } = renameKeys(alias, item);
+  const { id, imgUrl, title } = renameKeys(alias, item);
   const isChecked = selectedList.includes(id.toString());
 
   return (
@@ -44,15 +44,15 @@ const JarMemberCard = (props) => {
           ) : (
             <div
               className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
-                name
+                title
               )}`}
             >
-              {getInitials(name)}
+              {getInitials(title)}
             </div>
           )}
         </label>
       </div>
-      <div className="contact-name">{name}</div>
+      <div className="contact-name">{title}</div>
     </div>
   );
 };

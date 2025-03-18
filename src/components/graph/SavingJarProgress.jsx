@@ -7,15 +7,18 @@ import {
   isAdminApprovedWithRenewCheck,
 } from "constants/all";
 import LoaderJarDashboard from "loaders/LoaderJarDashboard";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IconJarCreate, IconJarCalendar } from "styles/svgs";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
 import LoaderJarActions from "loaders/LoaderJarActions";
 import JarMemberListingModal from "components/modals/JarMemberListingModal";
+import ModalJarPaymentSelect from "components/modals/ModalJarPaymentSelect";
+import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
 
 const SavingJarProgress = (props) => {
+  const navigate = useNavigate();
   const { savingJarDetails, tabName, graphLoading, getJarMemberList } = props;
   const {
     jar_id,
@@ -27,7 +30,16 @@ const SavingJarProgress = (props) => {
     target_date,
     status = true,
   } = savingJarDetails;
-  const { handleEditJarData, addJarMembers } = useContext(SavingJarOwnContext);
+  const {
+    handleEditJarData,
+    addJarMembers,
+    handleSetShowTransferToWalletPopup,
+    handleCreatedJarData,
+    handleInstantPaymentForAddAmount,
+    handleRecurringPaymentForAddAmount,
+    createdJarData,
+    handleSendJarScheduleForAddAmount,
+  } = useContext(SavingJarOwnContext);
   const { profile } = useSelector((state) => state.userProfile);
   const { admin_approved } = profile || {};
   const { loginCreds } = useContext(LoginContext);
@@ -38,6 +50,8 @@ const SavingJarProgress = (props) => {
   );
   const [jarMembers, setJarMembers] = useState([]);
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showModalScheduler, setShowModalScheduler] = useState(false);
 
   const handleJarEdit = async () => {
     if (handleJarEdit) await handleEditJarData(savingJarDetails);
@@ -51,6 +65,51 @@ const SavingJarProgress = (props) => {
     setJarMembers([...item]);
     if (addJarMembers) await addJarMembers(jar_id, item);
     getJarMemberList(jar_id, "");
+  };
+
+  const handleInstantPaymentSend = () => {
+    if (handleInstantPaymentForAddAmount)
+      handleInstantPaymentForAddAmount({
+        ...savingJarDetails,
+        target_date: savingJarDetails.target_date
+          .split("-")
+          .reverse()
+          .join("-"),
+      });
+    setShowPaymentModal(false);
+  };
+
+  const handleSchedulePayment = () => {
+    if (handleCreatedJarData)
+      handleCreatedJarData({
+        ...savingJarDetails,
+        target_date: savingJarDetails.target_date
+          .split("-")
+          .reverse()
+          .join("-"),
+      });
+    setShowPaymentModal(false);
+    setShowModalScheduler(true);
+  };
+
+  const handleRecurringPayment = () => {
+    if (handleCreatedJarData)
+      handleCreatedJarData({
+        ...savingJarDetails,
+        target_date: savingJarDetails.target_date
+          .split("-")
+          .reverse()
+          .join("-"),
+      });
+    if (handleRecurringPaymentForAddAmount)
+      handleRecurringPaymentForAddAmount({
+        ...savingJarDetails,
+        target_date: savingJarDetails.target_date
+          .split("-")
+          .reverse()
+          .join("-"),
+      });
+    setShowPaymentModal(false);
   };
 
   const isSameOrPastDate = (dateStr) => {
@@ -148,42 +207,53 @@ const SavingJarProgress = (props) => {
             </div>
           </div>
         )}
-        {adminApprovedWithRenewCheck && (
-          <div className="jar-actions">
-            {graphLoading ? (
-              [1, 2, 3].map((item) => <LoaderJarActions key={item} />)
-            ) : (
-              <>
-                {!isTrue && tabName === "own" && status && (
-                  <a
-                    className="action-button"
-                    onClick={() => showAddMemberPopupData()}
-                  >
-                    <img src="/assets/images/jar_share.svg" alt="" />
-                    <span>Share Jar</span>
-                  </a>
-                )}
+        {status &&
+          adminApprovedWithRenewCheck &&
+          (graphLoading ||
+            (!isTrue && tabName === "own") ||
+            (isTrue && tabName === "own") ||
+            !isTrue) && (
+            <div className="jar-actions">
+              {graphLoading ? (
+                [1, 2, 3].map((item) => <LoaderJarActions key={item} />)
+              ) : (
+                <>
+                  {!isTrue && tabName === "own" && (
+                    <a
+                      className="action-button"
+                      onClick={() => showAddMemberPopupData()}
+                    >
+                      <img src="/assets/images/jar_share.svg" alt="" />
+                      <span>Share Jar</span>
+                    </a>
+                  )}
 
-                {(isTrue || !status) && (
-                  <Link className="action-button">
-                    <img
-                      src="/assets/images/jar_transfer_to_wallet.svg"
-                      alt=""
-                    />
-                    <span>Transfer to Wallet</span>
-                  </Link>
-                )}
+                  {isTrue && tabName === "own" && (
+                    <a
+                      className="action-button"
+                      onClick={() => handleSetShowTransferToWalletPopup(jar_id)}
+                    >
+                      <img
+                        src="/assets/images/jar_transfer_to_wallet.svg"
+                        alt=""
+                      />
+                      <span>Transfer to Wallet</span>
+                    </a>
+                  )}
 
-                {!isTrue && status && (
-                  <Link className="action-button">
-                    <img src="/assets/images/jar_fund_transfer.svg" alt="" />
-                    <span>Fund Transfer</span>
-                  </Link>
-                )}
-              </>
-            )}
-          </div>
-        )}
+                  {!isTrue && (
+                    <a
+                      className="action-button"
+                      onClick={() => setShowPaymentModal(true)}
+                    >
+                      <img src="/assets/images/jar_fund_transfer.svg" alt="" />
+                      <span>Fund Transfer</span>
+                    </a>
+                  )}
+                </>
+              )}
+            </div>
+          )}
       </div>
       <JarMemberListingModal
         id="jar-delete-group-popup"
@@ -195,6 +265,23 @@ const SavingJarProgress = (props) => {
         selectedItem={() => {}}
         selectedFullItem={handleSelectMembers}
         selectedMembers={jarMembers}
+      />
+      <ModalPaymentScheduler
+        classNameChild="schedule-time-modal"
+        show={showModalScheduler}
+        setShow={setShowModalScheduler}
+        handleSubmit={handleSendJarScheduleForAddAmount}
+        data={createdJarData}
+      />
+      <ModalJarPaymentSelect
+        id="delete-group-popup"
+        show={showPaymentModal}
+        setShow={setShowPaymentModal}
+        handleCallback={() => setShowPaymentModal(false)}
+        className={`con-list-pop`}
+        handleSchedulePayment={handleSchedulePayment}
+        handleInstantPayment={handleInstantPaymentSend}
+        handleRecurringPayment={handleRecurringPayment}
       />
     </>
   );

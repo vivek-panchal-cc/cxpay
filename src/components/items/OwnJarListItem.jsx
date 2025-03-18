@@ -27,6 +27,7 @@ const OwnJarListItem = (props) => {
     handleRecurringPaymentForAddAmount,
     confirmAcceptOrDeclineTransaction,
     addJarMembers,
+    handleSetShowTransferToWalletPopup,
   } = useContext(SavingJarOwnContext);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showModalScheduler, setShowModalScheduler] = useState(false);
@@ -122,6 +123,7 @@ const OwnJarListItem = (props) => {
               "Redeem Fund",
               (e) => {
                 e.stopPropagation();
+                handleSetShowTransferToWalletPopup(details.jar_id);
               },
               "",
               {

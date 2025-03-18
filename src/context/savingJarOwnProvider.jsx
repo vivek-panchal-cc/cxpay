@@ -6,6 +6,7 @@ import useSharedJar from "hooks/useSharedJar";
 import useInvitedJar from "hooks/useInvitedJar";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
+import ModalJarTransferWallet from "components/modals/ModalJarTransferWallet";
 
 export const SavingJarOwnContext = React.createContext({});
 
@@ -27,6 +28,8 @@ const SavingJarOwnProvider = ({ children }) => {
   const [editJar, setEditJar] = useState({ editWallet: [] });
   const [tabName, setTabName] = useState("own");
   const [jarId, setJarId] = useState(null);
+  const [showTransferToWalletPopup, setShowTransferToWalletPopup] =
+    useState(false);
 
   const [loadingOwnJar, activeJarList, inactiveJarList, reloadOwnJar] =
     useOwnJar({
@@ -270,6 +273,36 @@ const SavingJarOwnProvider = ({ children }) => {
     }
   };
 
+  const handleSetShowTransferToWalletPopup = (id) => {
+    if (!id) return;
+    setJarId(id);
+    setShowTransferToWalletPopup(true);
+  };
+
+  const handleCallbackTransferToWallet = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.transferSavingJarAmountToWallet({
+        jar_id: jarId,
+      });
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+      setJarId(null);
+      if (tabName === "shared") {
+        navigate(`/jars/shared`, { replace: true });
+        reloadSharedJar();
+      } else {
+        navigate(`/jars/own`, { replace: true });
+        reloadOwnJar();
+      }
+    } finally {
+      setIsLoading(false);
+      setShowTransferToWalletPopup(false);
+    }
+  };
+
   const handleDeleteMember = async (id, acc_number) => {
     setIsLoading(true);
     try {
@@ -353,9 +386,20 @@ const SavingJarOwnProvider = ({ children }) => {
         addJarMembers,
         handleDeleteMember,
         handleShowAllMemberList,
+        handleCallbackTransferToWallet,
+        handleSetShowTransferToWalletPopup,
       }}
     >
       {children}
+      <ModalJarTransferWallet
+        id="delete-group-member-popup"
+        show={showTransferToWalletPopup}
+        setShow={setShowTransferToWalletPopup}
+        headingImg={"/assets/images/jar-transfer-to-wallet.svg"}
+        heading={"Do you really want to transfer to wallet?"}
+        subHeading={""}
+        handleCallback={handleCallbackTransferToWallet}
+      />
     </SavingJarOwnContext.Provider>
   );
 };

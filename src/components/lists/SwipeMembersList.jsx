@@ -119,7 +119,7 @@ const SwipeMembersList = (props) => {
       >
         <div className={`swiper-wrapper ${className}`}>
           {swiperList?.map((item, index) => {
-            const ukey = item.group_id || item.account_number || index;
+            const ukey = index || item.group_id || item.account_number;
             return (
               <SwiperSlide key={ukey}>
                 <ListItemComponent

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { IconBin, IconQR } from "styles/svgs";
+import { IconBin } from "styles/svgs";
 import {
-  capitalizeWordByWord,
+  CURRENCY_SYMBOL,
   getInitials,
   getRandomColorClass,
   isAdminApprovedWithRenewCheck,
@@ -11,14 +11,20 @@ import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
 
 const JarMembersItem = (props) => {
-  const { member, handleCallback, handleDeleteMember, tabName } = props;
+  const { member, handleDeleteMember, tabName, flags } = props;
+  const { is_owner, jar_status } = flags;
+
   const {
     account_number,
-    member_name,
+    name,
     mobile_number,
     profile_image,
     request_accept,
     user_type,
+    is_deletable,
+    display_text,
+    total_amount,
+    display_amount,
   } = member;
 
   const { admin_approved } = useSelector(
@@ -39,7 +45,7 @@ const JarMembersItem = (props) => {
     <>
       <li>
         <label
-          className={`${member_name ? "mer-listing-info" : "invited-con-info"}`}
+          className={`${name ? "mer-listing-info" : "invited-con-info"}`}
           htmlFor={account_number}
         >
           <div className="con-list-uimg">
@@ -48,38 +54,32 @@ const JarMembersItem = (props) => {
             ) : (
               <div
                 className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
-                  member_name
+                  name
                 )}`}
               >
-                {getInitials(member_name)}
+                {getInitials(name)}
               </div>
             )}
           </div>
-          {member_name ? (
-            <div className="mer-list-uname">{member_name}</div>
-          ) : (
-            mobile_number
-          )}
+          {name ? <div className="mer-list-uname">{name}</div> : mobile_number}
         </label>
-
-        <div className="merchant-listing-category">
-          <p>{capitalizeWordByWord(user_type)}</p>
+        <div className="jar-member-display-text">
+          <p>{display_text}</p>
         </div>
-
         <div
-          className="merchant-icon-wrap"
-          onClick={() => handleCallback(member)}
+          className="d-flex"
+          style={{ minWidth: "200px", maxWidth: "200px" }}
         >
-          <span className="merchant-listing-second-last-wrap merchant-icon-settings">
-            <IconQR />
-          </span>
+          <div className={`act-amt-wrap text-end cx-color-green`}>
+            {display_amount}
+          </div>
         </div>
-        {tabName === "own" && (
+        {tabName === "own" && is_owner && jar_status && (
           <div className="merchant-listing-last-wrap">
             <div className="right-activity-div w-0">
               <button
                 className={`act-del-wrap ${
-                  adminApprovedWithRenewCheck
+                  adminApprovedWithRenewCheck || is_deletable
                     ? ""
                     : "contacts-admin-approved-disabled"
                 }`}
@@ -88,7 +88,7 @@ const JarMembersItem = (props) => {
                   handleDeleteMember(account_number);
                 }}
                 style={{ background: "#FF3333", borderRadius: "50px" }}
-                disabled={disableComponent}
+                disabled={disableComponent || !is_deletable}
               >
                 <IconBin style={{ stroke: "#F3F3F3" }} />
               </button>

@@ -92,7 +92,7 @@ JarMembersSelection.Body = (props) => {
           ListItemComponentAlias={ListItemComponentAlias}
         />
       ) : (
-        <div className="loading">
+        <div className="tab-inner-wrap text-center">
           <p className="loading-data">{emptyListMsg}</p>
         </div>
       )}

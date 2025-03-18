@@ -89,6 +89,7 @@ import JarDetails from "pages/view-jars/JarDetails";
 import EditJar from "pages/edit-jar/EditJar";
 import JarMembersList from "components/items/JarMembersItem";
 import JarMembers from "pages/jar-members/JarMembers";
+import JarActivities from "pages/jar-activities/JarActivities";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -273,6 +274,11 @@ const ProtectedJarDetails = withUserProtection(
 );
 const ProtectedMembers = withUserProtection(
   JarMembers,
+  AllowedBusinessPersonal
+);
+
+const ProtectedJarActivities = withUserProtection(
+  JarActivities,
   AllowedBusinessPersonal
 );
 
@@ -542,6 +548,10 @@ function App() {
             <Route
               path="/jars/own/members-list"
               element={<ProtectedMembers />}
+            />
+            <Route
+              path="/jars/own/jar-activities-list"
+              element={<ProtectedJarActivities />}
             />
           </Route>
           <Route path="/logout" element={<Logout />} />

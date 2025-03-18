@@ -200,7 +200,7 @@ function JarRecurringSendPayment(_props) {
   };
 
   const handleCancel = () => {
-    navigate("/jars/own/create-jar", { replace: true });
+    navigate("/jars/own", { replace: true });
     cancelOwnJarPayment();
   };
 

@@ -29,6 +29,8 @@ import SavingJarProgress from "components/graph/SavingJarProgress";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import JarMembersSelection from "components/jar-members-selection/JarMembersSelection";
 import JarMemberCard from "components/cards/JarMemberCard";
+import useJarActivityList from "hooks/useJarActivityList";
+import RecentJarActivities from "components/jar-activity/RecentJarActivities";
 
 const graphBackgroundImage = "/assets/images/chart-duumy.png";
 
@@ -49,24 +51,14 @@ const JarDetails = () => {
     admin_approved,
     show_renew_section
   );
-
   const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
   const [jarMemberList, setJarMemberList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalInvitedData, setTotalInvitedData] = useState(0);
   const [searchContactText, setSearchContactText] = useState("");
   const [isLoadingMember, setIsLoadingMembers] = useState(true);
   const [graphLoading, setGraphLoading] = useState(false);
 
-  const [cardsList, setCardsList] = useState([]);
-  const [slideCard, setSlideCard] = useState({});
-
-  const [loadingBalance, balance, getBalance] = useBalance();
-  const [loadingTopUpBalance, topUpBalance, getRecharge] = useTopUpBalance();
-  const [loadingChart, chartData] = useChartData();
-  const [loadingAct, actPagination, activitiesList, reload] = useActivities({});
-  const [loadingTopUp, actTopUpPagination, topUpActivitiesList, topUpReload] =
-    useTopUpActivities({});
+  const [loadingJarAct, paginationActJar, jarActivityList, reloadJarAct] =
+    useJarActivityList({ jar_id: jarId });
 
   // For adding new Contact
   const [showNewContPop, setShowNewContPop] = useState(false);
@@ -90,14 +82,6 @@ const JarDetails = () => {
     fetchSavingJarDetails();
   }, [jarId]);
 
-  // handle selected contacts
-  const handleSelectContact = (e) => {
-    const value = e?.currentTarget?.value;
-    if (!value) return;
-    const contact = jarMemberList.find((con) => con.account_number === value);
-    if (contact) handleSendContacts([contact]);
-  };
-
   // Debouncing for contacts
   useEffect(() => {
     if (searchContactText === "") {
@@ -105,7 +89,6 @@ const JarDetails = () => {
       return;
     }
     const timeOut = setTimeout(() => {
-      setCurrentPage(1);
       getJarMemberList(jarId, searchContactText);
     }, 1000);
     return () => clearTimeout(timeOut);
@@ -113,37 +96,11 @@ const JarDetails = () => {
 
   const handleResetContactData = () => {
     setSearchContactText("");
-    setCurrentPage(1);
   };
 
   // For searching the contacts with name given in search bar
   const handleSearchContact = (e) => {
     setSearchContactText(e.target.value);
-  };
-
-  const handleReachEndContacts = async () => {
-    if (currentPage * 10 < totalInvitedData) {
-      setCurrentPage((cp) => cp + 1);
-      await getJarMemberList(jarId, searchContactText);
-    }
-  };
-
-  const getCardsList = async () => {
-    setIsLoading(true);
-    try {
-      const { data } = await apiRequest.cardsList();
-      if (!data.success) throw data.message;
-      setCardsList(data.data.cards);
-    } catch (error) {
-      setCardsList([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleGetCurrentSlideCard = (card) => {
-    if (!card) return;
-    setSlideCard(card);
   };
 
   // get invite contact list
@@ -153,7 +110,7 @@ const JarDetails = () => {
       let param = { jar_id: jarId, search_name: search };
       const { data } = await apiRequest.getSavingJarMemberList(param);
       if (!data.success) throw data.message;
-      setJarMemberList(data.data);
+      setJarMemberList(data.data.members);
       setIsLoadingMembers(false);
     } catch (error) {
       setJarMemberList([]);
@@ -163,7 +120,6 @@ const JarDetails = () => {
 
   useEffect(() => {
     getJarMemberList(jarId, "");
-    getCardsList();
   }, []);
 
   const handleFundAccountPopup = () => {
@@ -174,6 +130,12 @@ const JarDetails = () => {
     e.preventDefault();
     await handleShowAllMemberList(jarId);
     navigate(`/jars/own/members-list`);
+  };
+
+  const handleShowAllActivities = async (e) => {
+    e.preventDefault();
+    await handleShowAllMemberList(jarId);
+    navigate(`/jars/own/jar-activities-list`);
   };
 
   if (!jarId) return <Navigate to="/jars/own" replace />;
@@ -196,7 +158,7 @@ const JarDetails = () => {
               <div className="recent-contact-sec">
                 <JarMembersSelection className="col-12">
                   <JarMembersSelection.Header
-                    members={jarMemberList.slice(0, 5)}
+                    members={jarMemberList?.slice(0, 5)}
                     className=""
                     heading="Recent Member"
                     subHeading=""
@@ -208,7 +170,7 @@ const JarDetails = () => {
                   <JarMembersSelection.Body
                     isLoading={isLoadingMember}
                     classNameContainer="send-group-slider"
-                    members={jarMemberList.slice(0, 5)}
+                    members={jarMemberList ? jarMemberList?.slice(0, 5) : []}
                     selectedContacts={[]}
                     handleSelectedItems={() => {}}
                     handleReachEnd={() => {}}
@@ -231,10 +193,13 @@ const JarDetails = () => {
                 </JarMembersSelection>
               </div>
             </div>
-            {/* <RecentActivities
-              loading={loadingAct}
-              activitiesList={activitiesList ? activitiesList.slice(0, 5) : []}
-            /> */}
+            <RecentJarActivities
+              loading={loadingJarAct}
+              jarActivityList={
+                jarActivityList ? jarActivityList?.slice(0, 5) : []
+              }
+              handleShowAll={handleShowAllActivities}
+            />
           </div>
           <div className="jar-dashboard-card-links-sec">
             {/* <RecentActivities

@@ -201,6 +201,10 @@ export const API_TRANSACTION_REMOVE_MEMBER_IN_SAVING_JAR =
   "/remove-member-from-saving-jar";
 export const API_TRANSACTION_SAVING_JAR_MEMBER_LIST =
   "/get-saving-jar-member-list";
+export const API_TRANSACTION_SAVING_JAR_ACTIVITY_LIST =
+  "/get-saving-jar-activity-list";
+export const API_TRANSACTION_SAVING_JAR_AMOUNT_TO_WALLET_TRANSFER =
+  "/transfer-saving-jar-amount-to-wallet";
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =

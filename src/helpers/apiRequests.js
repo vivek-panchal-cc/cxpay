@@ -199,6 +199,10 @@ const API_removeMemberInSavingJar =
   apiUrl.API_TRANSACTION_REMOVE_MEMBER_IN_SAVING_JAR;
 const API_getSavingJarMemberList =
   apiUrl.API_TRANSACTION_SAVING_JAR_MEMBER_LIST;
+const API_getSavingJarActivityList =
+  apiUrl.API_TRANSACTION_SAVING_JAR_ACTIVITY_LIST;
+const API_transferSavingJarAmountToWallet =
+  apiUrl.API_TRANSACTION_SAVING_JAR_AMOUNT_TO_WALLET_TRANSFER;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -1300,6 +1304,27 @@ export const getSavingJarMemberList = (params) => {
   return axiosTransactionInstance.post(`${API_getSavingJarMemberList}`, params);
 };
 
+/** POST
+ * @params token
+ * @params search_name
+ */
+export const getSavingJarActivityList = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_getSavingJarActivityList}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ */
+export const transferSavingJarAmountToWallet = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_transferSavingJarAmountToWallet}`,
+    params
+  );
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -1450,4 +1475,6 @@ export const apiRequest = {
   addMemberInSavingJar,
   removeMemberInSavingJar,
   getSavingJarMemberList,
+  getSavingJarActivityList,
+  transferSavingJarAmountToWallet,
 };
