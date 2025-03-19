@@ -5,7 +5,7 @@ import {
   CURRENCY_SYMBOL,
   activityConsts,
 } from "constants/all";
-import { IconEyeOpen } from "styles/svgs";
+import { IconEdit } from "styles/svgs";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { getInitials, getRandomColorClass } from "constants/all";
 
@@ -26,6 +26,7 @@ const JarSchedulePayItem = (props) => {
     date,
     profile_image,
     created_at,
+    payment_schedule_date,
   } = activityDetails || {};
 
   const altAmount =
@@ -75,7 +76,7 @@ const JarSchedulePayItem = (props) => {
   };
 
   return (
-    <li onClick={() => handleClick({ id, activity_type, reference_id })}>
+    <li onClick={() => handleClick({ id })}>
       <div className="act-info-wrap-left justify-content-between">
         <div className="align-items-center d-flex">
           <div className="act-user-thumb">
@@ -95,12 +96,14 @@ const JarSchedulePayItem = (props) => {
           <div className="act-user-in">
             <h2>{name}</h2>
             <span className="jar-recent-sch-pay-date">
-              {formatDate(created_at)}
+              {formatDate(payment_schedule_date)}
             </span>
           </div>
         </div>
         <div>
-          <span className="jar-sch-pay-date">{formatDate(created_at)}</span>
+          <span className="jar-sch-pay-date">
+            {formatDate(payment_schedule_date)}
+          </span>
         </div>
         <div className="d-flex">
           <div className={`act-amt-wrap text-end cx-color-green`}>
@@ -115,8 +118,19 @@ const JarSchedulePayItem = (props) => {
       </div>
       <div className="act-mv-wrap">
         <div className="act-edit-btn">
-          <button>
-            <IconEyeOpen />
+          <button
+            className={`act-edit-wrap rounded `}
+            // onClick={(e) => {
+            //   e.stopPropagation();
+            // }}
+            style={{
+              background: "#0081C5",
+              width: "33px",
+              height: "32px",
+            }}
+            // disabled={disableComponent || !isFutureDate}
+          >
+            <IconEdit style={{ stroke: "#FFF" }} />
           </button>
         </div>
       </div>

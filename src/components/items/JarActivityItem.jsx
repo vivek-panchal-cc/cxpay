@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 import {
-  ACT_TYPE_REQUEST,
-  ACT_TYPE_TRANSACTION,
   CURRENCY_SYMBOL,
-  activityConsts,
+  JAR_FUND_ADD,
+  JAR_FUND_WITHDRAW,
+  JAR_MEMBER_ADD,
+  jarActvityConsts,
 } from "constants/all";
-import { IconEyeOpen } from "styles/svgs";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { getInitials, getRandomColorClass } from "constants/all";
 
@@ -13,19 +13,15 @@ const JarActivityItem = (props) => {
   const { activityDetails, handleClick } = props || {};
   const {
     id,
-    account_number,
     specification,
     amount,
     status,
     name,
-    request_type,
-    txn_type,
-    user_type,
     activity_type,
     reference_id,
-    date,
     profile_image,
     created_at,
+    type,
   } = activityDetails || {};
 
   const altAmount =
@@ -41,15 +37,17 @@ const JarActivityItem = (props) => {
     textStatus = "",
     description = "",
   } = useMemo(() => {
-    if (!activity_type) return {};
+    if (!type) return {};
     let details = {};
-    switch (activity_type) {
-      case ACT_TYPE_REQUEST:
-        details = activityConsts[activity_type]?.[request_type]?.[status];
+    switch (type) {
+      case JAR_FUND_ADD:
+        details = jarActvityConsts[type]?.[status];
         break;
-      case ACT_TYPE_TRANSACTION:
-        details =
-          activityConsts[activity_type]?.[request_type]?.[txn_type]?.[status];
+      case JAR_FUND_WITHDRAW:
+        details = jarActvityConsts[type]?.[status];
+        break;
+      case JAR_MEMBER_ADD:
+        details = jarActvityConsts[type]?.[status];
         break;
       default:
         return {};
@@ -57,8 +55,8 @@ const JarActivityItem = (props) => {
     const { desc = "" } = details || {};
     const aDesc =
       desc?.replace(/XXXX/g, altAmount).replace(/YYYY/, name) || specification;
-    return Object.assign({ ...details }, { description: aDesc });
-  }, [activity_type, request_type, status]);
+    return Object.assign({ ...details }, { description: desc });
+  }, [type, status]);
 
   const formatDate = (dateObj) => {
     if (!(dateObj instanceof Date)) {
@@ -105,16 +103,18 @@ const JarActivityItem = (props) => {
         </div>
         <div
           className="d-flex justify-content-end"
-          style={{ minWidth: "100px" }}
+          style={{ minWidth: "150px" }}
         >
-          <div className={`act-amt-wrap text-end cx-color-green`}>
-            <WrapAmount
-              value={altAmount}
-              prefix={`${CURRENCY_SYMBOL} ${
-                iconAmount === "-" ? "" : iconAmount
-              }`}
-            />
-          </div>
+          {altAmount > 0 ? (
+            <div className={`act-amt-wrap text-end ${classText}`}>
+              <WrapAmount
+                value={altAmount}
+                prefix={`${iconAmount} ${CURRENCY_SYMBOL} `}
+              />
+            </div>
+          ) : (
+            <span className={`${classText}`}>{description}</span>
+          )}
         </div>
       </div>
       {/* <div className="act-mv-wrap">

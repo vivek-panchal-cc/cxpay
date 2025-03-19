@@ -88,7 +88,7 @@ const JarRecurringPayment = () => {
     <div className="activities-sec">
       <div className="col-12 send-payment-ttile-wrap sdp-main-new-1 justify-content-between">
         <div className="title-content-wrap send-pay-title-sec w-auto">
-          <h3>Jar Scheduled Payments</h3>
+          <h3>Jar Recurring Payments</h3>
           <p></p>
         </div>
         <div className="schedule-pay-sd-wrap gap-4 flex-wrap w-auto">

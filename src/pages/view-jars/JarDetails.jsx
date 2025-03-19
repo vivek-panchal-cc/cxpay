@@ -41,7 +41,6 @@ const graphBackgroundImage = "/assets/images/chart-duumy.png";
 const JarDetails = () => {
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
-  const [loadingAct, actPagination, activitiesList, reload] = useActivities({});
   const { handleSendContacts } = useContext(SendPaymentContext);
   const { jarId, tabName, handleShowAllMemberList } =
     useContext(SavingJarOwnContext);
@@ -137,10 +136,20 @@ const JarDetails = () => {
     }
   };
 
-  const handleReload = () => {
-    reloadJarAct();
-    reloadSchedulePay();
-    reloadRecurringPay();
+  const handleReload = (value) => {
+    switch (value) {
+      case 2:
+        reloadJarAct();
+        break;
+      case 3:
+        reloadSchedulePay();
+        break;
+      case 4:
+        reloadRecurringPay();
+        break;
+      default:
+        return;
+    }
   };
 
   // useEffect(() => {

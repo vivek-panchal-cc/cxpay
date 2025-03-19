@@ -13,8 +13,8 @@ import JarSchedulePayItem from "components/items/JarSchedulePayItem";
 import useJarSchedulePayList from "hooks/useJarSchedulePayList";
 
 const JarSchedulePayment = () => {
-  const { handleActivityDetail, reloadList } = useContext(ActivityContext);
-  const { jarId } = useContext(SavingJarOwnContext);
+  const { jarId, handleScheduledPaymentDetails } =
+    useContext(SavingJarOwnContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [serachText, setSearchText] = useState("");
   const [activitiesDateBind, setActivitiesDateBind] = useState({});
@@ -140,7 +140,7 @@ const JarSchedulePayment = () => {
                     <JarSchedulePayItem
                       key={activity?.id || index}
                       activityDetails={activity}
-                      handleClick={() => {}}
+                      handleClick={handleScheduledPaymentDetails}
                     />
                   );
                 })}

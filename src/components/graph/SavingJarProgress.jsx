@@ -71,7 +71,7 @@ const SavingJarProgress = (props) => {
     setJarMembers([...item]);
     if (addJarMembers) await addJarMembers(jar_id, item);
     getJarMemberList(jar_id, "");
-    reloadJarAct();
+    reloadJarAct(1);
   };
 
   const handleInstantPaymentSend = () => {
@@ -84,6 +84,7 @@ const SavingJarProgress = (props) => {
           .join("-"),
       });
     setShowPaymentModal(false);
+    reloadJarAct(2);
   };
 
   const handleSchedulePayment = () => {
@@ -97,6 +98,7 @@ const SavingJarProgress = (props) => {
       });
     setShowPaymentModal(false);
     setShowModalScheduler(true);
+    reloadJarAct(3);
   };
 
   const handleRecurringPayment = () => {
@@ -117,6 +119,7 @@ const SavingJarProgress = (props) => {
           .join("-"),
       });
     setShowPaymentModal(false);
+    reloadJarAct(4);
   };
 
   const isSameOrPastDate = (dateStr) => {
@@ -244,7 +247,7 @@ const SavingJarProgress = (props) => {
                         src="/assets/images/jar_transfer_to_wallet.svg"
                         alt=""
                       />
-                      <span>Transfer to Wallet</span>
+                      <span>Redeem Fund</span>
                     </a>
                   )}
 

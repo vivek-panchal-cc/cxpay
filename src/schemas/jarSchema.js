@@ -1,6 +1,19 @@
 import { exp0ContainOnlySpace } from "constants/all";
 import * as yup from "yup";
 
+const getYesterDay = () => {
+  const today = new Date();
+  today.setDate(today.getDate() - 1);
+  return today;
+};
+
+const compareDateTime = (tmSel, dtSel) => {
+  const tmNow = new Date().getTime();
+  const tmSch = new Date(`${dtSel.toDateString()} ${tmSel}`).getTime();
+  const tmBuffer = tmNow + 1000 * 60 * 5;
+  return tmSch <= tmBuffer ? false : true;
+};
+
 const addJarSchema = yup.object().shape({
   jar_name: yup
     .string()
@@ -71,4 +84,25 @@ const jarRecurringSchema = yup.object().shape({
   frequency: yup.string().required("Please select frequency"),
 });
 
-export { addJarSchema, editJarSchema, jarCreateSchema, jarRecurringSchema };
+const jarSchedulePaymentSchema = yup.object().shape({
+  date: yup
+    .date()
+    .min(getYesterDay(), "Date cannot be in the past")
+    .required("Date is required"),
+  time: yup
+    .string()
+    .test(
+      "time_test",
+      "You can schedule your payment 5 minutes from now",
+      (value, context) => compareDateTime(value, context.parent.date)
+    )
+    .required("Time is required"),
+});
+
+export {
+  addJarSchema,
+  editJarSchema,
+  jarCreateSchema,
+  jarRecurringSchema,
+  jarSchedulePaymentSchema,
+};

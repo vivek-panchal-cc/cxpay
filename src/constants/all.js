@@ -209,6 +209,59 @@ const notificationType = {
   },
 };
 
+const JAR_FUND_ADD = "SAVING JAR FUND ADD";
+const JAR_FUND_WITHDRAW = "SAVING JAR FUND WITHDRAW";
+const JAR_MEMBER_ADD = "SAVING JAR MEMBER ADD";
+const JAR_PAID = "PAID";
+const JAR_WITHDRAW = "WITHDRAW";
+const JAR_APPROVED = "APPROVED";
+const JAR_REJECTED = "REJECTED";
+
+const jarActvityConsts = {
+  [JAR_FUND_ADD]: {
+    [JAR_PAID]: {
+      iconStatus: "",
+      iconAmount: "+",
+      classStatus: "btn-blue",
+      classBg: "cx-bg-blue",
+      classText: "cx-color-green",
+      textStatus: "Request Sent",
+      desc: "",
+    },
+  },
+  [JAR_FUND_WITHDRAW]: {
+    [JAR_WITHDRAW]: {
+      iconStatus: "",
+      iconAmount: "",
+      classStatus: "btn-red",
+      classBg: "cx-bg-red",
+      classText: "cx-color-red",
+      textStatus: "Request Declined",
+      desc: "",
+    },
+  },
+  [JAR_MEMBER_ADD]: {
+    [JAR_APPROVED]: {
+      iconStatus: "",
+      iconAmount: "",
+      classStatus: "btn-blue",
+      classBg: "cx-bg-blue",
+      classText: "cx-color-green",
+      textStatus: "",
+      desc: "Request Accepted",
+    },
+    [JAR_REJECTED]: {
+      iconStatus: "",
+      iconAmount: "",
+      classStatus: "btn-red",
+      classBg: "cx-bg-red",
+      classText: "cx-color-red",
+      textStatus: "",
+      desc: "Request Declined",
+    },
+  },
+};
+
 const ACT_TYPE_REQUEST = "request";
 const ACT_TYPE_TRANSACTION = "transaction";
 const ACT_REQUEST_SEND = "send";
@@ -1119,6 +1172,7 @@ export {
   notificationType,
   recurringTypeStatus,
   activityConsts,
+  jarActvityConsts,
   withdrawConsts,
   THEME_COLORS,
   CURRENCY_SYMBOL,
@@ -1169,6 +1223,13 @@ export {
   RECURRING_PAID,
   TXN_TYPE_WW,
   BUSINESS_PAID,
+  JAR_FUND_ADD,
+  JAR_FUND_WITHDRAW,
+  JAR_MEMBER_ADD,
+  JAR_PAID,
+  JAR_WITHDRAW,
+  JAR_APPROVED,
+  JAR_REJECTED,
 };
 export {
   regexContainCapitalLetter,

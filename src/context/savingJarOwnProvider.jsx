@@ -28,6 +28,7 @@ const SavingJarOwnProvider = ({ children }) => {
   const [editJar, setEditJar] = useState({ editWallet: [] });
   const [tabName, setTabName] = useState("own");
   const [jarId, setJarId] = useState(null);
+  const [scheduledPaymentDetails, setScheduledPaymentDetails] = useState({});
   const [showTransferToWalletPopup, setShowTransferToWalletPopup] =
     useState(false);
 
@@ -325,6 +326,40 @@ const SavingJarOwnProvider = ({ children }) => {
     setJarId(id);
   };
 
+  const handleScheduledPaymentDetails = async ({ id }) => {
+    if (!id) return;
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.transferListSavingJarSchedulePayment({
+        jar_id: jarId,
+        payment_id: id,
+      });
+      if (!data.success) throw data.message;
+      const details = data.data.transactions[0];
+      setScheduledPaymentDetails({ ...details, jarId });
+      navigate("/jars/own/jar-schedule-pay-list/update", { replace: true });
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const updateJarScheduledPayment = async (params) => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.updateSavingJarSchedulePayment(params);
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+      navigate("/jars/own/jar-schedule-pay-list", { replace: true });
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     const path = location.pathname;
     setPrevPathRedirect(prevPath);
@@ -388,6 +423,10 @@ const SavingJarOwnProvider = ({ children }) => {
         handleShowAllMemberList,
         handleCallbackTransferToWallet,
         handleSetShowTransferToWalletPopup,
+        handleScheduledPaymentDetails,
+        scheduledPaymentDetails,
+        updateJarScheduledPayment,
+        setScheduledPaymentDetails,
       }}
     >
       {children}
