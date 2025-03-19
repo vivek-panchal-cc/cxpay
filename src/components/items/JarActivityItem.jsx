@@ -113,7 +113,7 @@ const JarActivityItem = (props) => {
               />
             </div>
           ) : (
-            <span className={`${classText}`}>{description}</span>
+            <span className={`font-bold ${classText}`}>{description}</span>
           )}
         </div>
       </div>

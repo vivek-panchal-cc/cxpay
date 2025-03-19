@@ -232,7 +232,7 @@ const jarActvityConsts = {
   [JAR_FUND_WITHDRAW]: {
     [JAR_WITHDRAW]: {
       iconStatus: "",
-      iconAmount: "",
+      iconAmount: "-",
       classStatus: "btn-red",
       classBg: "cx-bg-red",
       classText: "cx-color-red",
