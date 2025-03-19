@@ -248,7 +248,7 @@ const jarActvityConsts = {
       classBg: "cx-bg-blue",
       classText: "cx-color-green",
       textStatus: "",
-      desc: "Request Accepted",
+      desc: "Invitation Accepted",
     },
     [JAR_REJECTED]: {
       iconStatus: "",
@@ -257,7 +257,7 @@ const jarActvityConsts = {
       classBg: "cx-bg-red",
       classText: "cx-color-red",
       textStatus: "",
-      desc: "Request Declined",
+      desc: "Invitation Declined",
     },
   },
 };
