@@ -198,7 +198,7 @@ const SavingJarOwnProvider = ({ children }) => {
     setEndDate("");
     setSendCreds({ wallet: [] });
     setEditJar({ editWallet: [] });
-    setJarId(null);
+    // setJarId(null);
     setTabName("own");
   };
 

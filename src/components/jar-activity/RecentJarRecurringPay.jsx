@@ -1,22 +1,19 @@
-import JarActivityList from "components/lists/JarActivityList";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import JarSchedulePayList from "components/lists/JarSchedulePayList";
+import JarRecurringPayList from "components/lists/JarRecurringPayList";
 
-const RecentJarActivities = (props) => {
-  const { loading, jarActivityList = [], handleShowAll } = props;
+const RecentJarRecurringPay = (props) => {
+  const { loading, jarRecurringPayList = [], handleShowAll } = props;
   const navigate = useNavigate();
-
-  const handleViewAllActivity = () => {
-    navigate("/activities");
-  };
 
   return (
     <div className="dashboard-recent-activity-sec">
       <div className="recent-activity-sec d-flex justify-content-between">
         <div className="title-content-wrap">
-          <h3>Jar Activity</h3>
+          <h3>Recurring Payment</h3>
         </div>
-        {jarActivityList?.length > 0 && (
+        {jarRecurringPayList?.length > 0 && (
           <a className="action-button" onClick={handleShowAll}>
             Show All
           </a>
@@ -29,30 +26,17 @@ const RecentJarActivities = (props) => {
           <div className="tab-content" id="nav-tabContent">
             {/* <!-- History tab content starts --> */}
             <div className="tab-pane fade show active" id="nav-home">
-              <JarActivityList
+              <JarRecurringPayList
                 classNameList="recent-act-lw-main"
                 loading={loading}
-                jarActivityList={jarActivityList}
+                jarRecurringPayList={jarRecurringPayList}
               />
-              {/* {jarActivityList && jarActivityList.length > 0 ? (
-                <div className="view-history-btn">
-                  <button
-                    className="btn"
-                    type="button"
-                    onClick={handleViewAllActivity}
-                  >
-                    View all history
-                  </button>
-                </div>
-              ) : null} */}
             </div>
           </div>
         </div>
       </div>
-      {/* </div> */}
-      {/* <!-- recent activity section close-->*/}
     </div>
   );
 };
 
-export default RecentJarActivities;
+export default RecentJarRecurringPay;

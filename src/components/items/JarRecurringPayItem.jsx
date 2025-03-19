@@ -9,7 +9,7 @@ import { IconEyeOpen } from "styles/svgs";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { getInitials, getRandomColorClass } from "constants/all";
 
-const JarActivityItem = (props) => {
+const JarRecurringPayItem = (props) => {
   const { activityDetails, handleClick } = props || {};
   const {
     id,
@@ -77,10 +77,7 @@ const JarActivityItem = (props) => {
   return (
     <li onClick={() => handleClick({ id, activity_type, reference_id })}>
       <div className="act-info-wrap-left justify-content-between">
-        <div
-          className="align-items-center d-flex"
-          style={{ minWidth: "250px" }}
-        >
+        <div className="align-items-center d-flex">
           <div className="act-user-thumb">
             {/* <img src={profileUrl} alt="" /> */}
             {profile_image ? (
@@ -97,16 +94,15 @@ const JarActivityItem = (props) => {
           </div>
           <div className="act-user-in">
             <h2>{name}</h2>
-            {/* <p>{formatDate(txn_completed_at)}</p> */}
+            <span className="jar-recent-sch-pay-date">
+              {formatDate(created_at)}
+            </span>
           </div>
         </div>
-        <div style={{ minWidth: "130px" }}>
-          <span style={{ alignItems: "start" }}>{formatDate(created_at)}</span>
+        <div>
+          <span className="jar-sch-pay-date">{formatDate(created_at)}</span>
         </div>
-        <div
-          className="d-flex justify-content-end"
-          style={{ minWidth: "100px" }}
-        >
+        <div className="d-flex">
           <div className={`act-amt-wrap text-end cx-color-green`}>
             <WrapAmount
               value={altAmount}
@@ -117,15 +113,15 @@ const JarActivityItem = (props) => {
           </div>
         </div>
       </div>
-      {/* <div className="act-mv-wrap">
+      <div className="act-mv-wrap">
         <div className="act-edit-btn">
           <button>
             <IconEyeOpen />
           </button>
         </div>
-      </div> */}
+      </div>
     </li>
   );
 };
 
-export default JarActivityItem;
+export default JarRecurringPayItem;

@@ -9,8 +9,10 @@ import JarActivityItem from "components/items/JarActivityItem";
 import useJarActivityList from "hooks/useJarActivityList";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { Navigate } from "react-router-dom";
+import JarSchedulePayItem from "components/items/JarSchedulePayItem";
+import useJarSchedulePayList from "hooks/useJarSchedulePayList";
 
-const JarActivities = () => {
+const JarSchedulePayment = () => {
   const { handleActivityDetail, reloadList } = useContext(ActivityContext);
   const { jarId } = useContext(SavingJarOwnContext);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,7 +24,7 @@ const JarActivities = () => {
     endDate: "",
   });
   const [loadingAct, actPagination, activitiesList, reload] =
-    useJarActivityList({
+    useJarSchedulePayList({
       page: currentPage,
       jar_id: jarId,
       search_name: serachText,
@@ -84,7 +86,7 @@ const JarActivities = () => {
     <div className="activities-sec">
       <div className="col-12 send-payment-ttile-wrap sdp-main-new-1 justify-content-between">
         <div className="title-content-wrap send-pay-title-sec w-auto">
-          <h3>Jar Activities</h3>
+          <h3>Jar Scheduled Payments</h3>
           <p></p>
         </div>
         <div className="schedule-pay-sd-wrap gap-4 flex-wrap w-auto">
@@ -132,10 +134,10 @@ const JarActivities = () => {
           Object.keys(activitiesDateBind)?.map((key) => (
             <div key={key}>
               <div className="activity-month">{key}</div>
-              <ul className="activity-lw-main">
+              <ul className="activity-lw-main jar-sch-pay-list">
                 {activitiesDateBind[key]?.map((activity, index) => {
                   return (
-                    <JarActivityItem
+                    <JarSchedulePayItem
                       key={activity?.id || index}
                       activityDetails={activity}
                       handleClick={() => {}}
@@ -150,7 +152,7 @@ const JarActivities = () => {
       {!loadingAct
         ? Object.keys(activitiesDateBind || {}).length <= 0 && (
             <div className="text-center py-5">
-              <p className="fs-5">Jar activities not found.</p>
+              <p className="fs-5">Jar scheduled payments not found.</p>
             </div>
           )
         : null}
@@ -175,4 +177,4 @@ const JarActivities = () => {
   );
 };
 
-export default JarActivities;
+export default JarSchedulePayment;

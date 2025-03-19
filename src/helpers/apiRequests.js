@@ -203,6 +203,10 @@ const API_getSavingJarActivityList =
   apiUrl.API_TRANSACTION_SAVING_JAR_ACTIVITY_LIST;
 const API_transferSavingJarAmountToWallet =
   apiUrl.API_TRANSACTION_SAVING_JAR_AMOUNT_TO_WALLET_TRANSFER;
+const API_transferListSavingJarSchedulePayment =
+  apiUrl.API_TRANSACTION_LIST_SAVING_JAR_SCHEDULE_PAYMENT;
+const API_transferListSavingJarRecurringPayment =
+  apiUrl.API_TRANSACTION_LIST_SAVING_JAR_RECURRING_PAYMENT;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -1325,6 +1329,28 @@ export const transferSavingJarAmountToWallet = (params) => {
   );
 };
 
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const transferListSavingJarSchedulePayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_transferListSavingJarSchedulePayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const transferListSavingJarRecurringPayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_transferListSavingJarRecurringPayment}`,
+    params
+  );
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -1477,4 +1503,6 @@ export const apiRequest = {
   getSavingJarMemberList,
   getSavingJarActivityList,
   transferSavingJarAmountToWallet,
+  transferListSavingJarSchedulePayment,
+  transferListSavingJarRecurringPayment,
 };

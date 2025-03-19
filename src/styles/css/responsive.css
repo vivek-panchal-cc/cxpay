@@ -952,12 +952,12 @@
   }
   .jar-dashboard-home-container .jar-dashboard-card-links-sec,
   .jar-dashboard-home-container .jar-dashboard-notification-sec {
-    width: 50%;
+    width: 40%;
     padding-left: 20px;
   }
   .jar-dashboard-home-container .jar-dashboard-graph-sec,
   .jar-dashboard-home-container .jar-dashboard-search-wrap {
-    width: calc(100% - 50%);
+    width: calc(100% - 40%);
   }
   .slider-card-common .card-holder-nm,
   .slider-card-common .card-num-date p:first-child {
@@ -1591,11 +1591,11 @@
   }
   .jar-dashboard-home-container .jar-dashboard-card-links-sec,
   .jar-dashboard-home-container .jar-dashboard-notification-sec {
-    width: 50%;
+    width: 40%;
   }
   .jar-dashboard-home-container .jar-dashboard-graph-sec,
   .jar-dashboard-home-container .jar-dashboard-search-wrap {
-    width: calc(100% - 50%);
+    width: calc(100% - 40%);
   }
   /* .extra-links-wrap ul li a {
     padding: 10px 9px;
@@ -2036,11 +2036,11 @@
   }
   .jar-dashboard-home-container .jar-dashboard-card-links-sec,
   .jar-dashboard-home-container .jar-dashboard-notification-sec {
-    width: 50%;
+    width: 40%;
   }
   .jar-dashboard-home-container .jar-dashboard-graph-sec,
   .jar-dashboard-home-container .jar-dashboard-search-wrap {
-    width: calc(100% - 50%);
+    width: calc(100% - 40%);
   }
   .extra-links-wrap ul li a {
     padding: 10px 9px;
@@ -2532,6 +2532,10 @@
   }
 }
 @media only screen and (max-width: 991px) {
+  .jar-rec-sch-pay-list {
+    min-height: auto;
+    padding-bottom: 20px;
+  }
   .jar-icon-input__control {
     padding: 0px 10px !important;
   }
@@ -6185,12 +6189,12 @@
 @media only screen and (min-width: 1300px) and (max-width: 1650px) {
   .jar-dashboard-home-container .jar-dashboard-card-links-sec,
   .jar-dashboard-home-container .jar-dashboard-notification-sec {
-    width: 50%;
+    width: 40%;
     padding-left: 20px;
   }
   .jar-dashboard-home-container .jar-dashboard-graph-sec,
   .jar-dashboard-home-container .jar-dashboard-search-wrap {
-    width: calc(100% - 50%);
+    width: calc(100% - 40%);
   }
 }
 

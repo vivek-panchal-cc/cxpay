@@ -205,6 +205,10 @@ export const API_TRANSACTION_SAVING_JAR_ACTIVITY_LIST =
   "/get-saving-jar-activity-list";
 export const API_TRANSACTION_SAVING_JAR_AMOUNT_TO_WALLET_TRANSFER =
   "/transfer-saving-jar-amount-to-wallet";
+export const API_TRANSACTION_LIST_SAVING_JAR_SCHEDULE_PAYMENT =
+  "/list-saving-jar-schedule-payment";
+export const API_TRANSACTION_LIST_SAVING_JAR_RECURRING_PAYMENT =
+  "/list-saving-jar-recurring-payment";
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =

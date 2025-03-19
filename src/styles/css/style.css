@@ -7314,6 +7314,14 @@ ul.recent-act-lw-main .act-mv-wrap {
   display: none;
 }
 
+ul.recent-act-lw-main .jar-sch-pay-date {
+  display: none;
+}
+
+ul.jar-sch-pay-list .jar-recent-sch-pay-date {
+  display: none;
+}
+
 /* Schedule Send */
 .send-page-wrapper .send-top-sec .send-top-right-sec .add-contact-btn-wrap {
   margin-left: 15px;
@@ -9500,4 +9508,8 @@ button.export-activities.disabled:hover {
   width: 100%;
   word-break: break-word;
   white-space: normal;
+}
+
+.jar-rec-sch-pay-list {
+  min-height: 360px;
 }

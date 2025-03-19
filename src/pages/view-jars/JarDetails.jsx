@@ -31,12 +31,17 @@ import JarMembersSelection from "components/jar-members-selection/JarMembersSele
 import JarMemberCard from "components/cards/JarMemberCard";
 import useJarActivityList from "hooks/useJarActivityList";
 import RecentJarActivities from "components/jar-activity/RecentJarActivities";
+import useJarSchedulePayList from "hooks/useJarSchedulePayList";
+import RecentJarSchedulePay from "components/jar-activity/RecentJarSchedulePay";
+import useJarRecurringPayList from "hooks/useJarRecurringPayList";
+import RecentJarRecurringPay from "components/jar-activity/RecentJarRecurringPay";
 
 const graphBackgroundImage = "/assets/images/chart-duumy.png";
 
 const JarDetails = () => {
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
+  const [loadingAct, actPagination, activitiesList, reload] = useActivities({});
   const { handleSendContacts } = useContext(SendPaymentContext);
   const { jarId, tabName, handleShowAllMemberList } =
     useContext(SavingJarOwnContext);
@@ -59,6 +64,20 @@ const JarDetails = () => {
 
   const [loadingJarAct, paginationActJar, jarActivityList, reloadJarAct] =
     useJarActivityList({ jar_id: jarId });
+
+  const [
+    loadingSchedulePay,
+    paginationSchedulePay,
+    jarSchedulePayList,
+    reloadSchedulePay,
+  ] = useJarSchedulePayList({ jar_id: jarId });
+
+  const [
+    loadingRecurringPay,
+    paginationRecurringPay,
+    jarRecurringPayList,
+    reloadRecurringPay,
+  ] = useJarRecurringPayList({ jar_id: jarId });
 
   // For adding new Contact
   const [showNewContPop, setShowNewContPop] = useState(false);
@@ -118,9 +137,15 @@ const JarDetails = () => {
     }
   };
 
-  useEffect(() => {
-    getJarMemberList(jarId, "");
-  }, []);
+  const handleReload = () => {
+    reloadJarAct();
+    reloadSchedulePay();
+    reloadRecurringPay();
+  };
+
+  // useEffect(() => {
+  //   getJarMemberList(jarId, "");
+  // }, []);
 
   const handleFundAccountPopup = () => {
     setShowFundAccountPopup(true);
@@ -138,6 +163,18 @@ const JarDetails = () => {
     navigate(`/jars/own/jar-activities-list`);
   };
 
+  const handleShowAllSchedulePayments = async (e) => {
+    e.preventDefault();
+    await handleShowAllMemberList(jarId);
+    navigate(`/jars/own/jar-schedule-pay-list`);
+  };
+
+  const handleShowAllRecurringPayments = async (e) => {
+    e.preventDefault();
+    await handleShowAllMemberList(jarId);
+    navigate(`/jars/own/jar-recurring-pay-list`);
+  };
+
   if (!jarId) return <Navigate to="/jars/own" replace />;
 
   return (
@@ -147,11 +184,23 @@ const JarDetails = () => {
         <div className="jar-dashboard-bottom-sec">
           <div className="jar-dashboard-graph-sec">
             <div className="graph-title-content-wrap">
+              <div className="title-content-wrap">
+                <h2>Jar Dashboard</h2>
+                <ul className="breadcrumb">
+                  <li>
+                    <Link to={`/jars/${tabName === "own" ? "own" : "shared"}`}>
+                      Jars
+                    </Link>
+                  </li>
+                  <li>Jar Dashboard</li>
+                </ul>
+              </div>
               <SavingJarProgress
                 savingJarDetails={savingJarDetails}
                 tabName={tabName}
                 graphLoading={graphLoading}
                 getJarMemberList={getJarMemberList}
+                reloadJarAct={handleReload}
               />
             </div>
             <div className="jar-dashboard-recent-contact-sec">
@@ -160,7 +209,7 @@ const JarDetails = () => {
                   <JarMembersSelection.Header
                     members={jarMemberList?.slice(0, 5)}
                     className=""
-                    heading="Recent Member"
+                    heading="Member(s)"
                     subHeading=""
                     searchValue={searchContactText}
                     handleSearch={handleSearchContact}
@@ -202,14 +251,20 @@ const JarDetails = () => {
             />
           </div>
           <div className="jar-dashboard-card-links-sec">
-            {/* <RecentActivities
-              loading={loadingAct}
-              activitiesList={activitiesList ? activitiesList.slice(0, 5) : []}
+            <RecentJarSchedulePay
+              loading={loadingSchedulePay}
+              jarSchedulePayList={
+                jarSchedulePayList ? jarSchedulePayList?.slice(0, 5) : []
+              }
+              handleShowAll={handleShowAllSchedulePayments}
             />
-            <RecentActivities
-              loading={loadingAct}
-              activitiesList={activitiesList ? activitiesList.slice(0, 5) : []}
-            /> */}
+            <RecentJarRecurringPay
+              loading={loadingSchedulePay}
+              jarRecurringPayList={
+                jarRecurringPayList ? jarRecurringPayList?.slice(0, 5) : []
+              }
+              handleShowAll={handleShowAllRecurringPayments}
+            />
           </div>
         </div>
         {/* Fund Account Popup */}

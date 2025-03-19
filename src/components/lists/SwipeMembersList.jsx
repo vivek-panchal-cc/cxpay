@@ -95,7 +95,7 @@ const SwipeMembersList = (props) => {
           style={{ inset: "0" }}
         >
           <div className={`d-inline-flex column-gap-2 pt-2`}>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) =>
+            {[1, 2, 3, 4, 5].map((item) =>
               fullWidth ? (
                 <LoaderSendContact key={item} />
               ) : (

@@ -19,7 +19,13 @@ import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
 
 const SavingJarProgress = (props) => {
   const navigate = useNavigate();
-  const { savingJarDetails, tabName, graphLoading, getJarMemberList } = props;
+  const {
+    savingJarDetails,
+    tabName,
+    graphLoading,
+    getJarMemberList,
+    reloadJarAct,
+  } = props;
   const {
     jar_id,
     jar_icon,
@@ -65,6 +71,7 @@ const SavingJarProgress = (props) => {
     setJarMembers([...item]);
     if (addJarMembers) await addJarMembers(jar_id, item);
     getJarMemberList(jar_id, "");
+    reloadJarAct();
   };
 
   const handleInstantPaymentSend = () => {
@@ -166,7 +173,7 @@ const SavingJarProgress = (props) => {
                     {capitalizeWordByWord(jar_category_name)}
                   </p>
                 </div>
-                {status && adminApprovedWithRenewCheck && (
+                {status && adminApprovedWithRenewCheck && tabName === "own" && (
                   <div
                     className={`jar-settings ${
                       adminApprovedWithRenewCheck

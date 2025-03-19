@@ -70,7 +70,10 @@ const JarMembersItem = (props) => {
           className="d-flex"
           style={{ minWidth: "200px", maxWidth: "200px" }}
         >
-          <div className={`act-amt-wrap text-end cx-color-green`}>
+          <div
+            style={{ textTransform: "unset" }}
+            className={`act-amt-wrap text-end cx-color-green`}
+          >
             {display_amount}
           </div>
         </div>

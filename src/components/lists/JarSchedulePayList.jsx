@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import LoaderRecentActivityItem from "loaders/LoaderRecentActivityItem";
-import JarActivityItem from "components/items/JarActivityItem";
+import JarSchedulePayItem from "components/items/JarSchedulePayItem";
 
-const JarActivityList = (props) => {
-  const { classNameList = "", loading, jarActivityList } = props;
+const JarSchedulePayList = (props) => {
+  const { classNameList = "", loading, jarSchedulePayList } = props;
   const [activitiesDateBind, setActivitiesDateBind] = useState({});
 
   useEffect(() => {
-    if (!jarActivityList || jarActivityList.length <= 0) return;
+    if (!jarSchedulePayList || jarSchedulePayList.length <= 0) return;
     const activityDateList = {};
-    jarActivityList?.map((item) => {
+    jarSchedulePayList?.map((item) => {
       const { created_at } = item || {};
       // const [dd, mm, yr] = date?.split("/") || [];
       const [yr, mm, dd] = created_at?.split(" ")[0].split("-") || [];
@@ -21,7 +21,7 @@ const JarActivityList = (props) => {
       return item;
     });
     setActivitiesDateBind(activityDateList);
-  }, [jarActivityList]);
+  }, [jarSchedulePayList]);
 
   return (
     <div className="tab-inner-wrap">
@@ -33,13 +33,13 @@ const JarActivityList = (props) => {
           ))}
         </div>
       ) : (
-        jarActivityList?.length > 0 && (
+        jarSchedulePayList?.length > 0 && (
           <div className="tab-content-block-part">
             {/* <p>{key}</p> */}
             <ul className={`activity-lw-main ${classNameList}`}>
-              {jarActivityList.map((activity, index) => {
+              {jarSchedulePayList.map((activity, index) => {
                 return (
-                  <JarActivityItem
+                  <JarSchedulePayItem
                     key={activity?.id || index}
                     activityDetails={activity}
                     handleClick={() => {}}
@@ -51,9 +51,9 @@ const JarActivityList = (props) => {
         )
       )}
       {!loading
-        ? Object.keys(jarActivityList || {}).length <= 0 && (
+        ? Object.keys(jarSchedulePayList || {}).length <= 0 && (
             <div className="text-center">
-              <p className="loading-data">Jar activities not found</p>
+              <p className="loading-data">Jar schedule payment not found</p>
             </div>
           )
         : null}
@@ -61,4 +61,4 @@ const JarActivityList = (props) => {
   );
 };
 
-export default JarActivityList;
+export default JarSchedulePayList;

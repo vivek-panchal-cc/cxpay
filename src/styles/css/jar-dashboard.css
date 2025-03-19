@@ -167,22 +167,22 @@
 }
 
 .jar-dashboard-home-container .jar-dashboard-graph-sec {
-  width: calc(100% - 50%);
+  width: calc(100% - 40%);
   padding-right: 40px;
 }
 
 .jar-dashboard-home-container .jar-dashboard-card-links-sec {
-  width: 50%;
+  width: 40%;
   padding-left: 35px;
 }
 
 .jar-dashboard-home-container .jar-dashboard-search-wrap {
-  width: calc(100% - 50%);
+  width: calc(100% - 40%);
   padding-right: 40px;
 }
 
 .jar-dashboard-home-container .jar-dashboard-notification-sec {
-  width: 50%;
+  width: 40%;
   padding-left: 35px;
 }
 

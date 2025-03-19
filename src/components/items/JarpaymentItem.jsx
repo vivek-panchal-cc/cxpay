@@ -24,7 +24,8 @@ const JarPaymentItem = forwardRef((props, ref) => {
     disableSpecification,
     disableAmount,
   } = props;
-  const { jar_name, jar_url: imgUrl } = item;
+  const { jar_name, jar_url, jar_icon } = item;
+  const imgUrl = jar_url || jar_icon;
   const isDisable = disableSpecification && disableAmount;
 
   return (
