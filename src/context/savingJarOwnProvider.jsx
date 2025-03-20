@@ -29,6 +29,9 @@ const SavingJarOwnProvider = ({ children }) => {
   const [tabName, setTabName] = useState("own");
   const [jarId, setJarId] = useState(null);
   const [scheduledPaymentDetails, setScheduledPaymentDetails] = useState({});
+  const [recurringPaymentDetails, setRecurringPaymentDetails] = useState({});
+  const [recurringPaymentDetailsId, setRecurringPaymentDetailsId] =
+    useState(null);
   const [showTransferToWalletPopup, setShowTransferToWalletPopup] =
     useState(false);
 
@@ -354,7 +357,47 @@ const SavingJarOwnProvider = ({ children }) => {
       navigate("/jars/own/jar-schedule-pay-list", { replace: true });
     } catch (error) {
       if (typeof error === "string") toast.error(error);
-      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleRecurringPaymentDetails = async ({ id }) => {
+    if (!id) return;
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.dateListSavingJarRecurringPayment({
+        jar_recurring_payment_id: id,
+      });
+      if (!data.success) throw data.message;
+      const details = data.data;
+      setRecurringPaymentDetails({ ...details, jarId });
+      navigate("/jars/own/jar-recurring-pay-list/update", { replace: true });
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const jarRecurringPaymentDetailsId = (id) => {
+    if (!id) return;
+    setRecurringPaymentDetailsId(id);
+  };
+
+  const updateJarRecurringPayment = async (params) => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.updateSavingJarRecurringPayment(params);
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+      navigate("/jars/own/jar-recurring-pay-list", { replace: true });
+    } catch (error) {
+      if (typeof error === "string") return toast.error(error);
+      if (error?.recurring_start_date?.[0])
+        return toast.error(error?.recurring_start_date?.[0]);
+      if (error?.recurring_end_date?.[0])
+        return toast.error(error?.recurring_end_date?.[0]);
     } finally {
       setIsLoading(false);
     }
@@ -427,6 +470,13 @@ const SavingJarOwnProvider = ({ children }) => {
         scheduledPaymentDetails,
         updateJarScheduledPayment,
         setScheduledPaymentDetails,
+        handleRecurringPaymentDetails,
+        setRecurringPaymentDetails,
+        recurringPaymentDetails,
+        jarRecurringPaymentDetailsId,
+        setRecurringPaymentDetailsId,
+        recurringPaymentDetailsId,
+        updateJarRecurringPayment,
       }}
     >
       {children}

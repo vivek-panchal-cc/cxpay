@@ -201,7 +201,7 @@ const JarDetails = () => {
                       Jars
                     </Link>
                   </li>
-                  <li>Jar Dashboard</li>
+                  <li>Dashboard</li>
                 </ul>
               </div>
               <SavingJarProgress
@@ -267,13 +267,15 @@ const JarDetails = () => {
               }
               handleShowAll={handleShowAllSchedulePayments}
             />
-            <RecentJarRecurringPay
-              loading={loadingSchedulePay}
-              jarRecurringPayList={
-                jarRecurringPayList ? jarRecurringPayList?.slice(0, 5) : []
-              }
-              handleShowAll={handleShowAllRecurringPayments}
-            />
+            {tabName === "own" && (
+              <RecentJarRecurringPay
+                loading={loadingSchedulePay}
+                jarRecurringPayList={
+                  jarRecurringPayList ? jarRecurringPayList?.slice(0, 5) : []
+                }
+                handleShowAll={handleShowAllRecurringPayments}
+              />
+            )}
           </div>
         </div>
         {/* Fund Account Popup */}

@@ -226,6 +226,7 @@ function JarRecurringSend() {
   };
 
   const handleCancel = () => {
+    if (wallet.jar_id) return navigate("/jars/own", { replace: true });
     navigate("/jars/own/create-jar", { replace: true });
     cancelOwnJarPayment();
   };

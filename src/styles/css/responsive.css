@@ -3601,6 +3601,9 @@
   .recurring-sp-details-main-wrap > div {
     width: 100%;
   }
+  .jar-recurring-sp-details-main-wrap > div {
+    width: 100%;
+  }
   .sp-btn-inner-wrap {
     display: block;
     margin-top: 20px;
@@ -3616,6 +3619,12 @@
     max-height: 300px;
   }
   .recurring-sp-details-inner-wrap li {
+    padding: 10px 15px;
+  }
+  .jar-recurring-sp-details-inner-wrap ul {
+    max-height: 300px;
+  }
+  .jar-recurring-sp-details-inner-wrap li {
     padding: 10px 15px;
   }
   .sp-top-sec .title-content-wrap p {
@@ -4456,6 +4465,19 @@
   .frequency-buttons .btn,
   .frequency-buttons .btn-primary,
   .frequency-buttons .login-btn input[type="submit"] {
+    padding: 10px 30px;
+    font-size: 15px;
+    /* padding: 11px 50px; */
+    min-width: auto;
+    border-radius: 15px !important;
+    line-height: 25px;
+  }
+  .jar-frequency-buttons {
+    margin-bottom: 25px;
+  }
+  .jar-frequency-buttons .btn,
+  .jar-frequency-buttons .btn-primary,
+  .jar-frequency-buttons .login-btn input[type="submit"] {
     padding: 10px 30px;
     font-size: 15px;
     /* padding: 11px 50px; */
@@ -5407,6 +5429,12 @@
   .recurring-sp-details-inner-wrap ul {
     padding-right: 10px;
   }
+  .jar-recurring-sp-details-inner-wrap li {
+    padding: 10px;
+  }
+  .jar-recurring-sp-details-inner-wrap ul {
+    padding-right: 10px;
+  }
   .sp-total-amt span {
     margin-right: 10px;
   }
@@ -5501,6 +5529,9 @@
     padding: 20px 20px 0px;
   }
   .frequency-buttons .btn {
+    min-width: 100%;
+  }
+  .jar-frequency-buttons .btn {
     min-width: 100%;
   }
   .recurring-occurrence {

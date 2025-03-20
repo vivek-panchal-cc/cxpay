@@ -7501,6 +7501,12 @@ button.shedule-date-filter:hover {
   align-items: center;
 }
 
+.jar-recurring-sp-details-inner-wrap ul li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .sp-details-inner-wrap .sp-user-wrap {
   display: flex;
   align-items: center;
@@ -7508,6 +7514,12 @@ button.shedule-date-filter:hover {
 }
 
 .recurring-sp-details-inner-wrap .sp-user-wrap {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 120px);
+}
+
+.jar-recurring-sp-details-inner-wrap .sp-user-wrap {
   display: flex;
   align-items: center;
   width: calc(100% - 120px);
@@ -7547,6 +7559,12 @@ button.shedule-date-filter:hover {
 }
 
 .recurring-sp-details-inner-wrap .sp-amt {
+  padding-left: 10px;
+  width: 120px;
+  text-align: right;
+}
+
+.jar-recurring-sp-details-inner-wrap .sp-amt {
   padding-left: 10px;
   width: 120px;
   text-align: right;
@@ -7600,6 +7618,30 @@ button.shedule-date-filter:hover {
 }
 
 .recurring-sp-details-inner-wrap li:hover {
+  background-color: #fff;
+  /* box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* .jar-recurring-sp-details-inner-wrap {
+  width: calc(100% + 15px);
+  margin-left: -15px;
+} */
+
+.jar-recurring-sp-details-inner-wrap ul {
+  max-height: 500px;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.jar-recurring-sp-details-inner-wrap li {
+  padding: 15px;
+  cursor: pointer;
+  border-radius: 15px;
+  transition: all 0.5s ease-in-out;
+}
+
+.jar-recurring-sp-details-inner-wrap li:hover {
   background-color: #fff;
   /* box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08);
@@ -8030,6 +8072,10 @@ ul.recent-act-lw-main .act-info-wrap-left {
   display: flex;
   flex-wrap: wrap;
 }
+.jar-recurring-sp-details-main-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
 
 .rcr-divider-wrap {
   height: 2px;
@@ -8316,6 +8362,17 @@ ul.recent-act-lw-main .act-info-wrap-left {
 }
 .frequency-buttons .btn {
   padding: 15px 20px;
+  min-width: 140px;
+}
+
+.jar-frequency-buttons {
+  gap: 10px;
+  display: flex;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+.jar-frequency-buttons .btn {
+  padding: 10px 20px;
   min-width: 140px;
 }
 

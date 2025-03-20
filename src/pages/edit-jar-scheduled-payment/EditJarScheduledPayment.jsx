@@ -1,18 +1,10 @@
 import React, { useContext, useMemo } from "react";
 import PaymentUserItem from "./components/PaymentUserItem";
-import { ScheduledPaymentContext } from "context/scheduledPaymentContext";
-import { useNavigate } from "react-router-dom";
-import {
-  CURRENCY_SYMBOL,
-  isAdminApprovedWithRenewCheck,
-  SCHEDULE_BUFFER,
-} from "constants/all";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { isAdminApprovedWithRenewCheck, SCHEDULE_BUFFER } from "constants/all";
 import { useFormik } from "formik";
 import ReactDatePicker from "react-datepicker";
-import { schedulePaymentSchema } from "schemas/sendPaymentSchema";
-import Input from "components/ui/Input";
 import TimePicker from "components/time-picker/TimePicker";
-import WrapAmount from "components/wrapper/WrapAmount";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
@@ -20,8 +12,6 @@ import { jarSchedulePaymentSchema } from "schemas/jarSchema";
 
 const EditJarScheduledPayment = () => {
   const navigate = useNavigate();
-  const { upPaymentEntry, updateScheduledPayment, cancelUpdatePayment } =
-    useContext(ScheduledPaymentContext);
   const {
     scheduledPaymentDetails,
     updateJarScheduledPayment,
@@ -37,7 +27,6 @@ const EditJarScheduledPayment = () => {
     payload,
     fees_total,
     payment_schedule_date,
-    overall_specification,
   } = scheduledPaymentDetails || {};
 
   const { admin_approved } = useSelector(
@@ -89,7 +78,7 @@ const EditJarScheduledPayment = () => {
       time: sch_tm || "",
     },
     validationSchema: jarSchedulePaymentSchema,
-    onSubmit: async (values, { setErrors, setValues, setStatus }) => {
+    onSubmit: async (values) => {
       const { date, time } = values;
       const dt = new Date(`${date.toDateString()} ${time}`);
       const dts = dt.toLocaleDateString("en-CA");
@@ -112,19 +101,26 @@ const EditJarScheduledPayment = () => {
     navigate("/jars/own/jar-schedule-pay-list");
   };
 
-  if (!scheduledPaymentDetails) navigate("/jars/own/jar-schedule-pay-list");
+  if (!scheduledPaymentDetails.jarId)
+    return <Navigate to="/jars/own" replace />;
   return (
     <>
       <div className="schedulepayment-sec" style={{ marginBottom: "200px" }}>
         <div className="sp-top-sec">
           <div className="title-content-wrap common-title-wrap">
-            <h3>Update Jar Schedule Payment</h3>
+            <h2>Update Jar Schedule Payment</h2>
+            <ul className="breadcrumb">
+              <li>
+                <Link to={`/jars/own/jar-schedule-pay-list`}>Jars</Link>
+              </li>
+              <li>Update</li>
+            </ul>
             {/* <p>Please select Payment date</p> */}
           </div>
         </div>
-        <div className="sp-details-main-wrap">
-          <div className="sp-details-left-wrap">
-            <div className="sp-details-inner-wrap ">
+        <div className="sp-details-main-wrap justify-content-center">
+          <div className="sp-details-left-wrap d-flex flex-wrap justify-content-center p-0">
+            <div className="sp-details-inner-wrap ml-0">
               <ul>
                 {contacts?.map((item, index) => {
                   const profileURL = item.member_image;
@@ -142,14 +138,57 @@ const EditJarScheduledPayment = () => {
                 })}
               </ul>
             </div>
+            <div className="sp-cal-wrap d-flex justify-content-center w-100">
+              <form onSubmit={formik.handleSubmit}>
+                <div className="common-dr-picker">
+                  <ReactDatePicker
+                    className=""
+                    selected={formik.values.date}
+                    onChange={(date) => formik.setFieldValue("date", date)}
+                    minDate={new Date()}
+                    inline
+                  />
+                  {formik.touched.date && formik.errors.date ? (
+                    <p className="text-danger pb-0">{formik.errors.date}</p>
+                  ) : null}
+                </div>
+                <h1 className="text-center">
+                  {formik.values.date
+                    .toLocaleDateString("en-IN", {
+                      dateStyle: "medium",
+                    })
+                    .replace(/-/g, " ")}
+                </h1>
+                <div className="row">
+                  <div className="col-12 col p-0">
+                    <div className="form-field">
+                      <TimePicker
+                        classNameInput="w-full form-control"
+                        minutesSelection="quater"
+                        bufferTime={SCHEDULE_BUFFER}
+                        selecteDate={formik.values.date}
+                        selectedTime={sch_tm}
+                        onChange={(time) => formik.setFieldValue("time", time)}
+                      />
+                      {formik.touched.time && formik.errors.time ? (
+                        <p className="text-danger pb-0">{formik.errors.time}</p>
+                      ) : null}
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
             {adminApprovedWithRenewCheck ? (
-              <div className="sp-btn-inner-wrap outline-solid-wrap">
-                <button className="btn outline-btn" onClick={handleCancel}>
+              <div className="sp-btn-inner-wrap outline-solid-wrap flex-recurring-update">
+                <button
+                  className="btn outline-btn w-100 mb-2"
+                  onClick={handleCancel}
+                >
                   Cancel
                 </button>
                 <button
                   type="button"
-                  className="btn"
+                  className="btn w-100 mb-2"
                   onClick={formik.handleSubmit}
                   disabled={formik.isSubmitting}
                 >
@@ -157,46 +196,6 @@ const EditJarScheduledPayment = () => {
                 </button>
               </div>
             ) : null}
-          </div>
-          <div className="sp-cal-wrap d-flex justify-content-center">
-            <form onSubmit={formik.handleSubmit}>
-              <div className="common-dr-picker">
-                <ReactDatePicker
-                  className=""
-                  selected={formik.values.date}
-                  onChange={(date) => formik.setFieldValue("date", date)}
-                  minDate={new Date()}
-                  inline
-                />
-                {formik.touched.date && formik.errors.date ? (
-                  <p className="text-danger pb-0">{formik.errors.date}</p>
-                ) : null}
-              </div>
-              <h1 className="text-center">
-                {formik.values.date
-                  .toLocaleDateString("en-IN", {
-                    dateStyle: "medium",
-                  })
-                  .replace(/-/g, " ")}
-              </h1>
-              <div className="row">
-                <div className="col-12 col p-0">
-                  <div className="form-field">
-                    <TimePicker
-                      classNameInput="w-full form-control"
-                      minutesSelection="quater"
-                      bufferTime={SCHEDULE_BUFFER}
-                      selecteDate={formik.values.date}
-                      selectedTime={sch_tm}
-                      onChange={(time) => formik.setFieldValue("time", time)}
-                    />
-                    {formik.touched.time && formik.errors.time ? (
-                      <p className="text-danger pb-0">{formik.errors.time}</p>
-                    ) : null}
-                  </div>
-                </div>
-              </div>
-            </form>
           </div>
         </div>
       </div>

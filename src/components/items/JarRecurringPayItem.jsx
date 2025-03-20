@@ -1,16 +1,20 @@
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import {
   ACT_TYPE_REQUEST,
   ACT_TYPE_TRANSACTION,
   CURRENCY_SYMBOL,
   activityConsts,
 } from "constants/all";
-import { IconEyeOpen } from "styles/svgs";
+import { IconEdit } from "styles/svgs";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { getInitials, getRandomColorClass } from "constants/all";
+import { SavingJarOwnContext } from "context/savingJarOwnProvider";
+import { useNavigate } from "react-router-dom";
 
 const JarRecurringPayItem = (props) => {
+  const navigate = useNavigate();
   const { activityDetails, handleClick } = props || {};
+  const { jarRecurringPaymentDetailsId } = useContext(SavingJarOwnContext);
   const {
     id,
     account_number,
@@ -74,8 +78,16 @@ const JarRecurringPayItem = (props) => {
     return null;
   };
 
+  const handleViewDetails = async (e) => {
+    e.preventDefault();
+    if (jarRecurringPaymentDetailsId) await jarRecurringPaymentDetailsId(id);
+    navigate(
+      `/jars/own/jar-recurring-pay-list/view-jar-recurring-payment-details`
+    );
+  };
+
   return (
-    <li onClick={() => handleClick({ id, activity_type, reference_id })}>
+    <li onClick={handleViewDetails}>
       <div className="act-info-wrap-left justify-content-between">
         <div className="align-items-center d-flex">
           <div className="act-user-thumb">
@@ -115,8 +127,20 @@ const JarRecurringPayItem = (props) => {
       </div>
       <div className="act-mv-wrap">
         <div className="act-edit-btn">
-          <button>
-            <IconEyeOpen />
+          <button
+            className={`act-edit-wrap rounded `}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClick({ id });
+            }}
+            style={{
+              background: "#0081C5",
+              width: "33px",
+              height: "32px",
+            }}
+            // disabled={disableComponent || !isFutureDate}
+          >
+            <IconEdit style={{ stroke: "#FFF" }} />
           </button>
         </div>
       </div>

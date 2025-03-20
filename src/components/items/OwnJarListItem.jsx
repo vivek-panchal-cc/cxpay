@@ -145,6 +145,7 @@ const OwnJarListItem = (props) => {
                 "Add Fund",
                 (e) => {
                   e.stopPropagation();
+                  handleTabList(tabList);
                   setShowPaymentModal(true);
                 },
                 "",
@@ -165,6 +166,7 @@ const OwnJarListItem = (props) => {
                 "Add Fund",
                 (e) => {
                   e.stopPropagation();
+                  handleTabList(tabList);
                   setShowPaymentModal(true);
                 },
                 "",

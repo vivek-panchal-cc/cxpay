@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import Input from "components/ui/Input";
 import { IconAddJarMember, IconCross, IconSearch } from "styles/svgs";
 import LoaderMerchant from "loaders/LoaderMerchant";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import JarMemberListingModal from "components/modals/JarMemberListingModal";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import JarMembersItem from "components/items/JarMembersItem";
@@ -60,6 +60,12 @@ const JarMembers = () => {
             <div className="merchant-top-sec">
               <div className="title-content-wrap">
                 <h3>Jar Members</h3>
+                <ul className="breadcrumb">
+                  <li>
+                    <Link to={`/jars/own/jar-details`}>Jars</Link>
+                  </li>
+                  <li>Members</li>
+                </ul>
               </div>
             </div>
             <div className="schedule-pay-sd-wrap gap-4 w-auto saving-jar">

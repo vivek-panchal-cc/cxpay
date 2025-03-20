@@ -211,6 +211,10 @@ export const API_TRANSACTION_LIST_SAVING_JAR_RECURRING_PAYMENT =
   "/list-saving-jar-recurring-payment";
 export const API_TRANSACTION_UPDATE_SAVING_JAR_SCHEDULE_PAYMENT =
   "/update-saving-jar-schedule-payment-details";
+export const API_TRANSACTION_SAVING_JAR_RECURRING_PAYMENT_DATE =
+  "/list-saving-jar-recurring-payment-date";
+export const API_TRANSACTION_UPDATE_SAVING_JAR_RECURRING_PAYMENT =
+  "update-saving-jar-recurring-payment-details";
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =

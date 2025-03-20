@@ -92,6 +92,8 @@ import JarActivities from "pages/jar-activities/JarActivities";
 import JarSchedulePayment from "pages/jar-schedule-payment/JarSchedulePayment";
 import JarRecurringPayment from "pages/jar-recurring-payment/JarRecurringPayment";
 import EditJarScheduledPayment from "pages/edit-jar-scheduled-payment/EditJarScheduledPayment";
+import EditJarRecurringPayment from "pages/edit-jar-recurring-payment/EditJarRecurringPayment";
+import JarRecurringDetails from "pages/jar-recurring-details/JarRecurringDetails";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -296,6 +298,15 @@ const ProtectedJarRecurringPayment = withUserProtection(
 
 const ProtectedEditJarScheduledPayment = withUserProtection(
   EditJarScheduledPayment,
+  AllowedBusinessPersonal
+);
+
+const ProtectedEditJarRecurringPayment = withUserProtection(
+  EditJarRecurringPayment,
+  AllowedBusinessPersonal
+);
+const ProtectedJarRecurringDetails = withUserProtection(
+  JarRecurringDetails,
   AllowedBusinessPersonal
 );
 
@@ -578,10 +589,17 @@ function App() {
               path="/jars/own/jar-recurring-pay-list"
               element={<ProtectedJarRecurringPayment />}
             />
-
             <Route
               path="/jars/own/jar-schedule-pay-list/update"
               element={<ProtectedEditJarScheduledPayment />}
+            />
+            <Route
+              path="/jars/own/jar-recurring-pay-list/update"
+              element={<ProtectedEditJarRecurringPayment />}
+            />
+            <Route
+              path="/jars/own/jar-recurring-pay-list/view-jar-recurring-payment-details"
+              element={<ProtectedJarRecurringDetails />}
             />
           </Route>
           <Route path="/logout" element={<Logout />} />

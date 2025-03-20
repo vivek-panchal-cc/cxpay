@@ -113,7 +113,12 @@ const JarActivityItem = (props) => {
               />
             </div>
           ) : (
-            <span className={`font-bold ${classText}`}>{description}</span>
+            <span
+              style={{ textTransform: "unset" }}
+              className={`act-amt-wrap ${classText}`}
+            >
+              {description}
+            </span>
           )}
         </div>
       </div>

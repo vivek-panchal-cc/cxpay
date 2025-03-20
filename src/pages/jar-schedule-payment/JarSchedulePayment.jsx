@@ -8,7 +8,7 @@ import Input from "components/ui/Input";
 import JarActivityItem from "components/items/JarActivityItem";
 import useJarActivityList from "hooks/useJarActivityList";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import JarSchedulePayItem from "components/items/JarSchedulePayItem";
 import useJarSchedulePayList from "hooks/useJarSchedulePayList";
 
@@ -87,6 +87,12 @@ const JarSchedulePayment = () => {
       <div className="col-12 send-payment-ttile-wrap sdp-main-new-1 justify-content-between">
         <div className="title-content-wrap send-pay-title-sec w-auto">
           <h3>Jar Scheduled Payments</h3>
+          <ul className="breadcrumb">
+            <li>
+              <Link to={`/jars/own/jar-details`}>Jars</Link>
+            </li>
+            <li>Scheduled Payment</li>
+          </ul>
           <p></p>
         </div>
         <div className="schedule-pay-sd-wrap gap-4 flex-wrap w-auto">

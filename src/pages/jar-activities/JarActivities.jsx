@@ -8,7 +8,7 @@ import Input from "components/ui/Input";
 import JarActivityItem from "components/items/JarActivityItem";
 import useJarActivityList from "hooks/useJarActivityList";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const JarActivities = () => {
   const { handleActivityDetail, reloadList } = useContext(ActivityContext);
@@ -84,7 +84,13 @@ const JarActivities = () => {
     <div className="activities-sec">
       <div className="col-12 send-payment-ttile-wrap sdp-main-new-1 justify-content-between">
         <div className="title-content-wrap send-pay-title-sec w-auto">
-          <h3>Jar Activities</h3>
+          <h2>Jar Activities</h2>
+          <ul className="breadcrumb">
+            <li>
+              <Link to={`/jars/own/jar-details`}>Jars</Link>
+            </li>
+            <li>Activities</li>
+          </ul>
           <p></p>
         </div>
         <div className="schedule-pay-sd-wrap gap-4 flex-wrap w-auto">

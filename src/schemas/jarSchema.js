@@ -99,10 +99,20 @@ const jarSchedulePaymentSchema = yup.object().shape({
     .required("Time is required"),
 });
 
+const jarRecurringForUpdate = yup.object().shape({
+  recurring_start_date: yup
+    .date()
+    .required("Start date is required")
+    .nullable(),
+  recurring_end_date: yup.date().required("End date is required").nullable(),
+  frequency: yup.string().required("Please select frequency"),
+});
+
 export {
   addJarSchema,
   editJarSchema,
   jarCreateSchema,
   jarRecurringSchema,
   jarSchedulePaymentSchema,
+  jarRecurringForUpdate,
 };

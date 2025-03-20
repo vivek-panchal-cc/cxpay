@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import styles from "./modal.module.scss";
 import { IconClock, IconInstantPay, IconSyncAlt } from "styles/svgs";
+import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 
 function ModalJarPaymentSelect({
   id,
@@ -15,6 +16,7 @@ function ModalJarPaymentSelect({
 }) {
   const modalRef = useRef(null);
   const [selectedOption, setSelectedOption] = useState(1);
+  const { tabName } = useContext(SavingJarOwnContext);
 
   const paymentOptions = [
     {
@@ -29,12 +31,16 @@ function ModalJarPaymentSelect({
       title: "Schedule Payment",
       color: "#936EE3", // Purple
     },
-    {
-      id: 3,
-      icon: <IconSyncAlt />,
-      title: "Recurring Payment",
-      color: "#0081C5", // Blue
-    },
+    ...(tabName === "own"
+      ? [
+          {
+            id: 3,
+            icon: <IconSyncAlt />,
+            title: "Recurring Payment",
+            color: "#0081C5", // Blue
+          },
+        ]
+      : []),
   ];
 
   useEffect(() => {

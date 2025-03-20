@@ -3,20 +3,15 @@ import { IconCross, IconSearch } from "styles/svgs";
 import Pagination from "components/pagination/Pagination";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
-import { ActivityContext } from "context/activityContext";
 import Input from "components/ui/Input";
-import JarActivityItem from "components/items/JarActivityItem";
-import useJarActivityList from "hooks/useJarActivityList";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
-import { Navigate } from "react-router-dom";
-import JarSchedulePayItem from "components/items/JarSchedulePayItem";
-import useJarSchedulePayList from "hooks/useJarSchedulePayList";
+import { Link, Navigate } from "react-router-dom";
 import JarRecurringPayItem from "components/items/JarRecurringPayItem";
 import useJarRecurringPayList from "hooks/useJarRecurringPayList";
 
 const JarRecurringPayment = () => {
-  const { handleActivityDetail, reloadList } = useContext(ActivityContext);
-  const { jarId } = useContext(SavingJarOwnContext);
+  const { jarId, handleRecurringPaymentDetails } =
+    useContext(SavingJarOwnContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [serachText, setSearchText] = useState("");
   const [activitiesDateBind, setActivitiesDateBind] = useState({});
@@ -89,6 +84,12 @@ const JarRecurringPayment = () => {
       <div className="col-12 send-payment-ttile-wrap sdp-main-new-1 justify-content-between">
         <div className="title-content-wrap send-pay-title-sec w-auto">
           <h3>Jar Recurring Payments</h3>
+          <ul className="breadcrumb">
+            <li>
+              <Link to={`/jars/own/jar-details`}>Jars</Link>
+            </li>
+            <li>Recurring Payment</li>
+          </ul>
           <p></p>
         </div>
         <div className="schedule-pay-sd-wrap gap-4 flex-wrap w-auto">
@@ -142,7 +143,7 @@ const JarRecurringPayment = () => {
                     <JarRecurringPayItem
                       key={activity?.id || index}
                       activityDetails={activity}
-                      handleClick={() => {}}
+                      handleClick={handleRecurringPaymentDetails}
                     />
                   );
                 })}
