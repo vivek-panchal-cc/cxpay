@@ -77,7 +77,7 @@ const JarActivityItem = (props) => {
       <div className="act-info-wrap-left justify-content-between">
         <div
           className="align-items-center d-flex"
-          style={{ minWidth: "250px" }}
+          style={{ minWidth: "250px", maxWidth: "250px" }}
         >
           <div className="act-user-thumb">
             {/* <img src={profileUrl} alt="" /> */}
@@ -98,13 +98,10 @@ const JarActivityItem = (props) => {
             {/* <p>{formatDate(txn_completed_at)}</p> */}
           </div>
         </div>
-        <div style={{ minWidth: "130px" }}>
+        <div>
           <span style={{ alignItems: "start" }}>{formatDate(created_at)}</span>
         </div>
-        <div
-          className="d-flex justify-content-end"
-          style={{ minWidth: "150px" }}
-        >
+        <div className="jar-act-pay-rec d-flex justify-content-end">
           {altAmount > 0 ? (
             <div className={`act-amt-wrap text-end ${classText}`}>
               <WrapAmount

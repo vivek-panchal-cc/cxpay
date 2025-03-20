@@ -240,8 +240,16 @@ const SavingJarProgress = (props) => {
 
                   {isTrue && tabName === "own" && (
                     <a
-                      className="action-button"
-                      onClick={() => handleSetShowTransferToWalletPopup(jar_id)}
+                      className={`${
+                        deposite_amount <= 0
+                          ? "action-button jar-action-button-disabled"
+                          : "action-button"
+                      }`}
+                      onClick={() =>
+                        deposite_amount <= 0
+                          ? null
+                          : handleSetShowTransferToWalletPopup(jar_id)
+                      }
                     >
                       <img
                         src="/assets/images/jar_transfer_to_wallet.svg"

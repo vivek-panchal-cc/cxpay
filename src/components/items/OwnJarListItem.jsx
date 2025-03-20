@@ -101,11 +101,18 @@ const OwnJarListItem = (props) => {
         isDisabled ? "contacts-admin-approved-disabled" : extraClass
       }`.trim();
 
-    const renderButton = (label, onClick, extraClass = "", style = {}) => (
+    const renderButton = (
+      label,
+      onClick,
+      extraClass = "",
+      style = {},
+      disabled = false
+    ) => (
       <button
         className={getButtonClass(extraClass)}
         style={style}
         onClick={isDisabled ? undefined : onClick}
+        disabled={disabled}
       >
         {label}
       </button>
@@ -116,6 +123,7 @@ const OwnJarListItem = (props) => {
     const isAmountEqual = details?.deposite_amount === details?.target_amount;
 
     if (tabList === "own" && active) {
+      const isRedeemDisabled = details?.deposite_amount <= 0;
       return (
         <div className="con-listing-btn-wrap">
           {isAmountEqual || isTargetDateExpired ? (
@@ -125,11 +133,12 @@ const OwnJarListItem = (props) => {
                 e.stopPropagation();
                 handleSetShowTransferToWalletPopup(details.jar_id);
               },
-              "",
+              isRedeemDisabled ? "contacts-admin-approved-disabled" : "",
               {
                 minWidth: "150px",
                 marginRight: "0px",
-              }
+              },
+              isRedeemDisabled
             )
           ) : (
             <>

@@ -91,6 +91,11 @@ code {
   cursor: not-allowed !important;
   background: #d5dbe0 !important;
 }
+.jar-action-button-disabled {
+  color: #878787 !important;
+  pointer-events: visible !important;
+  cursor: not-allowed !important;
+}
 .resend-otp-wrap button {
   cursor: pointer;
   font-weight: 700;

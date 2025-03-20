@@ -36,7 +36,7 @@ const JarActivityList = (props) => {
         jarActivityList?.length > 0 && (
           <div className="tab-content-block-part">
             {/* <p>{key}</p> */}
-            <ul className={`activity-lw-main ${classNameList}`}>
+            <ul className={`activity-lw-main overflow-auto ${classNameList}`}>
               {jarActivityList.map((activity, index) => {
                 return (
                   <JarActivityItem

@@ -4,12 +4,16 @@ import {
   ACT_TYPE_TRANSACTION,
   CURRENCY_SYMBOL,
   activityConsts,
+  isAdminApprovedWithRenewCheck,
+  isComponentDisabled,
 } from "constants/all";
 import { IconEdit } from "styles/svgs";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { getInitials, getRandomColorClass } from "constants/all";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { LoginContext } from "context/loginContext";
 
 const JarRecurringPayItem = (props) => {
   const navigate = useNavigate();
@@ -30,12 +34,34 @@ const JarRecurringPayItem = (props) => {
     date,
     profile_image,
     created_at,
+    recurring_start_date = "",
   } = activityDetails || {};
+
+  const { admin_approved } = useSelector(
+    (state) => state?.userProfile?.profile
+  );
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
+
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
+
+  const disableComponent = isComponentDisabled(
+    admin_approved,
+    show_renew_section
+  );
 
   const altAmount =
     typeof amount === "string"
       ? parseFloat(amount)?.toFixed(2)
       : amount?.toFixed(2);
+
+  const isFutureDate = useMemo(() => {
+    const start = new Date(recurring_start_date);
+    return start > new Date();
+  }, [recurring_start_date, new Date()]);
 
   const {
     iconStatus = "",
@@ -87,9 +113,12 @@ const JarRecurringPayItem = (props) => {
   };
 
   return (
-    <li onClick={handleViewDetails}>
+    <li onClick={adminApprovedWithRenewCheck ? handleViewDetails : () => {}}>
       <div className="act-info-wrap-left justify-content-between">
-        <div className="align-items-center d-flex">
+        <div
+          className="align-items-center d-flex"
+          style={{ maxWidth: "250px", minWidth: "250px" }}
+        >
           <div className="act-user-thumb">
             {/* <img src={profileUrl} alt="" /> */}
             {profile_image ? (
@@ -114,7 +143,7 @@ const JarRecurringPayItem = (props) => {
         <div>
           <span className="jar-sch-pay-date">{formatDate(created_at)}</span>
         </div>
-        <div className="d-flex">
+        <div className="jar-rec-pay-rec d-flex justify-content-end">
           <div className={`act-amt-wrap text-end cx-color-green`}>
             <WrapAmount
               value={altAmount}
@@ -128,7 +157,11 @@ const JarRecurringPayItem = (props) => {
       <div className="act-mv-wrap">
         <div className="act-edit-btn">
           <button
-            className={`act-edit-wrap rounded `}
+            className={`act-edit-wrap rounded ${
+              adminApprovedWithRenewCheck && isFutureDate
+                ? ""
+                : "contacts-admin-approved-disabled"
+            }`}
             onClick={(e) => {
               e.stopPropagation();
               handleClick({ id });
@@ -138,7 +171,7 @@ const JarRecurringPayItem = (props) => {
               width: "33px",
               height: "32px",
             }}
-            // disabled={disableComponent || !isFutureDate}
+            disabled={disableComponent || !isFutureDate}
           >
             <IconEdit style={{ stroke: "#FFF" }} />
           </button>

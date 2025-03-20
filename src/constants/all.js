@@ -282,6 +282,8 @@ const TXN_TYPE_WW = "WW";
 const TXN_TYPE_WD = "WD";
 const TXN_TYPE_MF = "MF";
 const TXN_TYPE_DBT = "DBT";
+const TXN_TYPE_SJ = "SJ";
+const TXN_TYPE_JR_WITHDRAW = "WITHDRAW";
 const TXN_TYPE_WITHDRAW = "withdraw";
 const TXN_TYPE_AGENT = "AGENT TOPUP";
 const BUSINESS_PAID = `${ACT_STATUS_PAID}_business`;
@@ -696,6 +698,19 @@ const activityConsts = {
           desc: "From YYYY",
         },
       },
+      [TXN_TYPE_SJ]: {
+        [ACT_STATUS_PAID]: {
+          iconStatus: "",
+          iconAmount: "",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "cx-color-red",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Jar Transfer",
+          textDetailStatus: "Jar Transfer",
+          desc: "From YYYY",
+        },
+      },
     },
     [ACT_TRANSACT_DEBIT]: {
       [TXN_TYPE_WW]: {
@@ -920,6 +935,19 @@ const activityConsts = {
           textStatus: "Refund Failed",
           textDetailStatus: "Refund Failed",
           desc: "You refunded",
+        },
+      },
+      [TXN_TYPE_SJ]: {
+        [TXN_TYPE_JR_WITHDRAW]: {
+          iconStatus: "",
+          iconAmount: "+",
+          classStatus: "btn-green",
+          classBg: "cx-bg-green",
+          classText: "cx-color-green",
+          classDetailStatus: "cx-color-green",
+          textStatus: "Jar Withdraw",
+          textDetailStatus: "Jar Withdraw",
+          desc: "Withdrawal initiated",
         },
       },
       [TXN_TYPE_AGENT]: {
@@ -1230,6 +1258,7 @@ export {
   JAR_WITHDRAW,
   JAR_APPROVED,
   JAR_REJECTED,
+  TXN_TYPE_SJ,
 };
 export {
   regexContainCapitalLetter,

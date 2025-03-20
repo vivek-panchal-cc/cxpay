@@ -9570,3 +9570,19 @@ button.export-activities.disabled:hover {
 .jar-rec-sch-pay-list {
   min-height: 360px;
 }
+
+ul.recent-act-lw-main .act-info-wrap-left .jar-rec-pay-rec {
+  min-width: 0;
+}
+
+ul .act-info-wrap-left .jar-rec-pay-rec {
+  min-width: 150px;
+}
+
+ul.recent-act-lw-main .act-info-wrap-left .jar-act-pay-rec {
+  min-width: 200px;
+}
+
+ul .act-info-wrap-left .jar-act-pay-rec {
+  min-width: 200px;
+}

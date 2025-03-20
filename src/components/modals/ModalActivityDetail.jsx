@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./modal.module.scss";
 import {
+  TXN_TYPE_SJ,
   ACT_REQUEST_RECEIVE,
   ACT_REQUEST_SEND,
   ACT_STATUS_APPROVED,
@@ -128,6 +129,16 @@ const ModalActivityDetail = (props) => {
   }, [modalRef, setShow]);
 
   const getActivityActions = () => {
+    if (
+      activity_type === ACT_TYPE_TRANSACTION &&
+      (request_type === ACT_TRANSACT_CREDIT ||
+        request_type === ACT_TRANSACT_DEBIT) &&
+      status === ACT_STATUS_PAID &&
+      txn_type === TXN_TYPE_SJ
+    ) {
+      return null;
+    }
+
     switch (`${activity_type}_${request_type}_${status}`) {
       case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_SEND}_${ACT_STATUS_PENDING}`:
         return (

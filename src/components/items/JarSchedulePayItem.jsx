@@ -78,7 +78,10 @@ const JarSchedulePayItem = (props) => {
   return (
     <li onClick={() => handleClick({ id })}>
       <div className="act-info-wrap-left justify-content-between">
-        <div className="align-items-center d-flex">
+        <div
+          className="align-items-center d-flex"
+          style={{ minWidth: "250px", maxWidth: "250px" }}
+        >
           <div className="act-user-thumb">
             {/* <img src={profileUrl} alt="" /> */}
             {profile_image ? (
@@ -105,7 +108,7 @@ const JarSchedulePayItem = (props) => {
             {formatDate(payment_schedule_date)}
           </span>
         </div>
-        <div className="d-flex">
+        <div className="jar-rec-pay-rec d-flex justify-content-end">
           <div className={`act-amt-wrap text-end cx-color-green`}>
             <WrapAmount
               value={altAmount}
