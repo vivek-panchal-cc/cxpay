@@ -82,7 +82,7 @@ const JarMembersItem = (props) => {
             <div className="right-activity-div w-0">
               <button
                 className={`act-del-wrap ${
-                  adminApprovedWithRenewCheck || is_deletable
+                  adminApprovedWithRenewCheck && is_deletable
                     ? ""
                     : "contacts-admin-approved-disabled"
                 }`}

@@ -92,7 +92,9 @@ const JarDetails = () => {
         if (!data.success) throw data.message;
         setSavingJarDetails(data?.data);
       } catch (error) {
-        navigate(-1);
+        navigate(`/jars/${tabName || "own"}`, {
+          replace: true,
+        });
       } finally {
         setGraphLoading(false);
       }
