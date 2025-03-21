@@ -120,10 +120,11 @@ const OwnJarListItem = (props) => {
 
     const isTargetDateExpired =
       details?.target_date && isSameOrPastDate(details.target_date);
-    const isAmountEqual = details?.deposite_amount >= details?.target_amount;
+    const isAmountEqual =
+      Number(details?.deposite_amount) >= Number(details?.target_amount);
 
     if (tabList === "own" && active) {
-      const isRedeemDisabled = details?.deposite_amount <= 0;
+      const isRedeemDisabled = Number(details?.deposite_amount) <= 0;
       return (
         <div className="con-listing-btn-wrap">
           {isAmountEqual || isTargetDateExpired ? (

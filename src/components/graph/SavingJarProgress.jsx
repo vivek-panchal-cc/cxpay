@@ -133,7 +133,7 @@ const SavingJarProgress = (props) => {
   };
 
   const isTargetDateExpired = target_date && isSameOrPastDate(target_date);
-  const isAmountEqual = deposite_amount >= target_amount;
+  const isAmountEqual = Number(deposite_amount) >= Number(target_amount);
   const isTrue = isTargetDateExpired || isAmountEqual;
   return (
     <>
