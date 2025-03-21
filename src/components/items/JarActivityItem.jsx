@@ -106,7 +106,7 @@ const JarActivityItem = (props) => {
             <div className={`act-amt-wrap text-end ${classText}`}>
               <WrapAmount
                 value={altAmount}
-                prefix={`${iconAmount} ${CURRENCY_SYMBOL} `}
+                prefix={`${CURRENCY_SYMBOL} ${iconAmount}`}
               />
             </div>
           ) : (
