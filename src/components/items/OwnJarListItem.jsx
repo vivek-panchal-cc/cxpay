@@ -120,7 +120,7 @@ const OwnJarListItem = (props) => {
 
     const isTargetDateExpired =
       details?.target_date && isSameOrPastDate(details.target_date);
-    const isAmountEqual = details?.deposite_amount === details?.target_amount;
+    const isAmountEqual = details?.deposite_amount >= details?.target_amount;
 
     if (tabList === "own" && active) {
       const isRedeemDisabled = details?.deposite_amount <= 0;
