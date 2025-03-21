@@ -31,11 +31,13 @@ const SavingJarProgress = (props) => {
     jar_icon,
     jar_name,
     jar_category_name,
-    deposite_amount,
-    target_amount,
+    deposite_amount: raw_deposite_amount,
+    target_amount: raw_target_amount,
     target_date,
     status = true,
   } = savingJarDetails;
+  const deposite_amount = Number(raw_deposite_amount);
+  const target_amount = Number(raw_target_amount);
   const {
     handleEditJarData,
     addJarMembers,
@@ -133,7 +135,7 @@ const SavingJarProgress = (props) => {
   };
 
   const isTargetDateExpired = target_date && isSameOrPastDate(target_date);
-  const isAmountEqual = Number(deposite_amount) >= Number(target_amount);
+  const isAmountEqual = deposite_amount >= target_amount;
   const isTrue = isTargetDateExpired || isAmountEqual;
   return (
     <>
