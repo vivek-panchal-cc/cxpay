@@ -241,24 +241,44 @@ const SavingJarProgress = (props) => {
                   )}
 
                   {isTrue && tabName === "own" && (
-                    <a
-                      className={`${
-                        deposite_amount <= 0
-                          ? "action-button jar-action-button-disabled"
-                          : "action-button"
-                      }`}
-                      onClick={() =>
-                        deposite_amount <= 0
-                          ? null
-                          : handleSetShowTransferToWalletPopup(jar_id)
-                      }
-                    >
-                      <img
-                        src="/assets/images/jar_transfer_to_wallet.svg"
-                        alt=""
-                      />
-                      <span>Redeem Fund</span>
-                    </a>
+                    <>
+                      <a
+                        className={`${
+                          deposite_amount <= 0
+                            ? "action-button jar-action-button-disabled"
+                            : "action-button"
+                        }`}
+                        onClick={() =>
+                          deposite_amount <= 0
+                            ? null
+                            : handleSetShowTransferToWalletPopup(jar_id)
+                        }
+                      >
+                        <img
+                          src="/assets/images/jar_transfer_to_wallet.svg"
+                          alt=""
+                        />
+                        <span>Redeem Fund</span>
+                      </a>
+                      <a
+                        className={`${
+                          deposite_amount <= 0
+                            ? "action-button jar-action-button-disabled"
+                            : "action-button"
+                        }`}
+                        onClick={() =>
+                          deposite_amount <= 0
+                            ? null
+                            : setShowPaymentModal(true)
+                        }
+                      >
+                        <img
+                          src="/assets/images/jar_fund_transfer.svg"
+                          alt=""
+                        />
+                        <span>Add Fund</span>
+                      </a>
+                    </>
                   )}
 
                   {!isTrue && (
@@ -267,7 +287,7 @@ const SavingJarProgress = (props) => {
                       onClick={() => setShowPaymentModal(true)}
                     >
                       <img src="/assets/images/jar_fund_transfer.svg" alt="" />
-                      <span>Fund Transfer</span>
+                      <span>Add Fund</span>
                     </a>
                   )}
                 </>

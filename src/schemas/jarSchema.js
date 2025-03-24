@@ -67,12 +67,12 @@ const jarCreateSchema = yup.object().shape({
     deposite_amount: yup
       .string()
       .matches(/^[1-9]\d{0,6}(\.\d{1,2})?$/, "Please enter valid amount")
-      .required("Please enter amount")
-      .test("max-target-amount", "Exceeds target amount", function (value) {
-        const wallet = this.parent || {}; // Ensure parent exists
-        if (!wallet.target_amount) return true; // Skip validation if target_amount is missing
-        return parseFloat(value) <= parseFloat(wallet.target_amount);
-      }),
+      .required("Please enter amount"),
+    // .test("max-target-amount", "Exceeds target amount", function (value) {
+    //   const wallet = this.parent || {};
+    //   if (!wallet.target_amount) return true;
+    //   return parseFloat(value) <= parseFloat(wallet.target_amount);
+    // }),
   }),
 });
 

@@ -128,19 +128,33 @@ const OwnJarListItem = (props) => {
       return (
         <div className="con-listing-btn-wrap">
           {isAmountEqual || isTargetDateExpired ? (
-            renderButton(
-              "Redeem Fund",
-              (e) => {
-                e.stopPropagation();
-                handleSetShowTransferToWalletPopup(details.jar_id);
-              },
-              isRedeemDisabled ? "contacts-admin-approved-disabled" : "",
-              {
-                minWidth: "150px",
-                marginRight: "0px",
-              },
-              isRedeemDisabled
-            )
+            <>
+              {renderButton(
+                "Redeem Fund",
+                (e) => {
+                  e.stopPropagation();
+                  handleSetShowTransferToWalletPopup(details.jar_id);
+                },
+                isRedeemDisabled ? "contacts-admin-approved-disabled" : "",
+                {
+                  minWidth: "150px",
+                },
+                isRedeemDisabled
+              )}
+              {renderButton(
+                "Add Fund",
+                (e) => {
+                  e.stopPropagation();
+                  handleTabList(tabList);
+                  setShowPaymentModal(true);
+                },
+                isRedeemDisabled ? "contacts-admin-approved-disabled" : "",
+                {
+                  minWidth: "150px",
+                },
+                isRedeemDisabled
+              )}
+            </>
           ) : (
             <>
               {renderButton(
@@ -149,7 +163,10 @@ const OwnJarListItem = (props) => {
                   e.stopPropagation();
                   showAddMemberPopupData();
                 },
-                "con-req-btn"
+                "con-req-btn",
+                {
+                  minWidth: "150px",
+                }
               )}
               {renderButton(
                 "Add Fund",
@@ -321,7 +338,7 @@ const OwnJarListItem = (props) => {
 
         <div
           className="cont-listing-last-wrap"
-          style={{ minWidth: "280px", justifyContent: "right" }}
+          style={{ minWidth: "350px", justifyContent: "right" }}
         >
           {renderButtons()}
         </div>
