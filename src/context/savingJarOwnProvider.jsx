@@ -203,7 +203,7 @@ const SavingJarOwnProvider = ({ children }) => {
     setSendCreds({ wallet: [] });
     setEditJar({ editWallet: [] });
     // setJarId(null);
-    setTabName("own");
+    // setTabName("own");
   };
 
   const handleSearchName = (data) => {
