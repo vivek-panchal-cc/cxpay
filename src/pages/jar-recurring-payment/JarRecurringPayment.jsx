@@ -5,12 +5,13 @@ import LoaderActivityItem from "loaders/LoaderActivityItem";
 import ModalDateRangePicker from "components/modals/ModalDateRangePicker";
 import Input from "components/ui/Input";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import JarRecurringPayItem from "components/items/JarRecurringPayItem";
 import useJarRecurringPayList from "hooks/useJarRecurringPayList";
 
 const JarRecurringPayment = () => {
-  const { jarId, handleRecurringPaymentDetails } =
+  const navigate = useNavigate();
+  const { jarId, handleRecurringPaymentDetails, jarRecurringPaymentDetailsId } =
     useContext(SavingJarOwnContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [serachText, setSearchText] = useState("");
@@ -71,6 +72,13 @@ const JarRecurringPayment = () => {
   const handleSearchActivity = (elm) => {
     setCurrentPage(1);
     setSearchText(elm.target.value);
+  };
+
+  const handleViewDetails = async (id) => {
+    if (jarRecurringPaymentDetailsId) await jarRecurringPaymentDetailsId(id);
+    navigate(
+      `/jars/own/jar-recurring-pay-list/view-jar-recurring-payment-details`
+    );
   };
 
   // useEffect(() => {
@@ -144,6 +152,7 @@ const JarRecurringPayment = () => {
                       key={activity?.id || index}
                       activityDetails={activity}
                       handleClick={handleRecurringPaymentDetails}
+                      handleViewDetails={handleViewDetails}
                     />
                   );
                 })}

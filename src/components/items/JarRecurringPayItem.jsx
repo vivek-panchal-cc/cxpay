@@ -17,7 +17,7 @@ import { LoginContext } from "context/loginContext";
 
 const JarRecurringPayItem = (props) => {
   const navigate = useNavigate();
-  const { activityDetails, handleClick } = props || {};
+  const { activityDetails, handleClick, handleViewDetails } = props || {};
   const { jarRecurringPaymentDetailsId } = useContext(SavingJarOwnContext);
   const {
     id,
@@ -104,16 +104,20 @@ const JarRecurringPayItem = (props) => {
     return null;
   };
 
-  const handleViewDetails = async (e) => {
-    e.preventDefault();
-    if (jarRecurringPaymentDetailsId) await jarRecurringPaymentDetailsId(id);
-    navigate(
-      `/jars/own/jar-recurring-pay-list/view-jar-recurring-payment-details`
-    );
-  };
+  // const handleViewDetails = async (e) => {
+  //   e.preventDefault();
+  //   if (jarRecurringPaymentDetailsId) await jarRecurringPaymentDetailsId(id);
+  //   navigate(
+  //     `/jars/own/jar-recurring-pay-list/view-jar-recurring-payment-details`
+  //   );
+  // };
 
   return (
-    <li onClick={adminApprovedWithRenewCheck ? handleViewDetails : () => {}}>
+    <li
+      onClick={
+        adminApprovedWithRenewCheck ? () => handleViewDetails({ id }) : () => {}
+      }
+    >
       <div className="act-info-wrap-left justify-content-between">
         <div
           className="align-items-center d-flex"
