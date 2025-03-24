@@ -10,7 +10,11 @@ const RecentJarSchedulePay = (props) => {
     <div className="dashboard-recent-activity-sec jar-rec-sch-pay-list">
       <div className="recent-activity-sec d-flex justify-content-between">
         <div className="title-content-wrap">
-          <h3>Scheduled Payment</h3>
+          <h3>
+            {jarSchedulePayList?.length > 1
+              ? "Scheduled Payments"
+              : "Scheduled Payment"}
+          </h3>
         </div>
         {jarSchedulePayList?.length > 0 && (
           <a className="action-button" onClick={handleShowAll}>

@@ -86,12 +86,20 @@ const JarSchedulePayment = () => {
     <div className="activities-sec">
       <div className="col-12 send-payment-ttile-wrap sdp-main-new-1 justify-content-between">
         <div className="title-content-wrap send-pay-title-sec w-auto">
-          <h3>Jar Scheduled Payments</h3>
+          <h3>
+            {activitiesList?.length > 1
+              ? "Jar Scheduled Payments"
+              : "Jar Scheduled Payment"}
+          </h3>
           <ul className="breadcrumb">
             <li>
               <Link to={`/jars/own/jar-details`}>Jars</Link>
             </li>
-            <li>Scheduled Payment</li>
+            <li>
+              {activitiesList?.length > 1
+                ? "Scheduled Payments"
+                : "Scheduled Payment"}
+            </li>
           </ul>
           <p></p>
         </div>

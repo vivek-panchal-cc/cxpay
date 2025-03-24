@@ -84,12 +84,14 @@ const JarActivities = () => {
     <div className="activities-sec">
       <div className="col-12 send-payment-ttile-wrap sdp-main-new-1 justify-content-between">
         <div className="title-content-wrap send-pay-title-sec w-auto">
-          <h2>Jar Activities</h2>
+          <h2>
+            {activitiesList?.length > 1 ? "Jar Activities" : "Jar Activity"}
+          </h2>
           <ul className="breadcrumb">
             <li>
               <Link to={`/jars/own/jar-details`}>Jars</Link>
             </li>
-            <li>Activities</li>
+            <li>{activitiesList?.length > 1 ? "Activities" : "Activity"}</li>
           </ul>
           <p></p>
         </div>

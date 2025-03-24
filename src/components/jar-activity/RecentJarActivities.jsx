@@ -14,7 +14,9 @@ const RecentJarActivities = (props) => {
     <div className="dashboard-recent-activity-sec">
       <div className="recent-activity-sec d-flex justify-content-between">
         <div className="title-content-wrap">
-          <h3>Jar Activity</h3>
+          <h3>{`${
+            jarActivityList?.length > 1 ? "Jar Activities" : "Jar Activity"
+          }`}</h3>
         </div>
         {jarActivityList?.length > 0 && (
           <a className="action-button" onClick={handleShowAll}>

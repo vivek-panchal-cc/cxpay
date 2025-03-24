@@ -11,7 +11,11 @@ const RecentJarRecurringPay = (props) => {
     <div className="dashboard-recent-activity-sec">
       <div className="recent-activity-sec d-flex justify-content-between">
         <div className="title-content-wrap">
-          <h3>Recurring Payment</h3>
+          <h3>
+            {jarRecurringPayList?.length > 1
+              ? "Recurring Payments"
+              : "Recurring Payment"}
+          </h3>
         </div>
         {jarRecurringPayList?.length > 0 && (
           <a className="action-button" onClick={handleShowAll}>

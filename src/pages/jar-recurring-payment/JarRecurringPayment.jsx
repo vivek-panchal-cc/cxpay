@@ -91,12 +91,20 @@ const JarRecurringPayment = () => {
     <div className="activities-sec">
       <div className="col-12 send-payment-ttile-wrap sdp-main-new-1 justify-content-between">
         <div className="title-content-wrap send-pay-title-sec w-auto">
-          <h3>Jar Recurring Payments</h3>
+          <h3>
+            {activitiesList?.length > 1
+              ? "Jar Recurring Payments"
+              : "Jar Recurring Payment"}
+          </h3>
           <ul className="breadcrumb">
             <li>
               <Link to={`/jars/own/jar-details`}>Jars</Link>
             </li>
-            <li>Recurring Payment</li>
+            <li>
+              {activitiesList?.length > 1
+                ? "Recurring Payments"
+                : "Recurring Payment"}
+            </li>
           </ul>
           <p></p>
         </div>

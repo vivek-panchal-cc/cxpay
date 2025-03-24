@@ -59,12 +59,18 @@ const JarMembers = () => {
           <div className="merchant-sec">
             <div className="merchant-top-sec">
               <div className="title-content-wrap">
-                <h3>Jar Members</h3>
+                <h3>
+                  {memberList?.members?.length > 1
+                    ? "Jar Members"
+                    : "Jar Member"}
+                </h3>
                 <ul className="breadcrumb">
                   <li>
                     <Link to={`/jars/own/jar-details`}>Jars</Link>
                   </li>
-                  <li>Members</li>
+                  <li>
+                    {memberList?.members?.length > 1 ? "Members" : "Member"}
+                  </li>
                 </ul>
               </div>
             </div>

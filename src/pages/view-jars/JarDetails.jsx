@@ -220,7 +220,9 @@ const JarDetails = () => {
                   <JarMembersSelection.Header
                     members={jarMemberList?.slice(0, 5)}
                     className=""
-                    heading="Member(s)"
+                    heading={`${
+                      jarMemberList?.length > 1 ? "Members" : "Member"
+                    }`}
                     subHeading=""
                     searchValue={searchContactText}
                     handleSearch={handleSearchContact}
