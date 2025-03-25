@@ -369,9 +369,7 @@ const OwnJarListItem = (props) => {
         id="delete-group-member-popup"
         show={popup}
         setShow={setPopup}
-        heading={
-          acceptRejectValue ? "Accept Invitation" : "Decline  Invitation"
-        }
+        heading={acceptRejectValue ? "Accept Invitation" : "Decline Invitation"}
         subHeading={
           <span
             className=""
