@@ -42,7 +42,7 @@ const JarPaymentItem = forwardRef((props, ref) => {
           {imgUrl ? (
             <Image
               src={imgUrl}
-              className="blue-bg"
+              className=""
               style={{ objectPosition: "center", objectFit: "cover" }}
               alt="contact img"
             />

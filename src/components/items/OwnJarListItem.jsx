@@ -148,11 +148,10 @@ const OwnJarListItem = (props) => {
                   handleTabList(tabList);
                   setShowPaymentModal(true);
                 },
-                isRedeemDisabled ? "contacts-admin-approved-disabled" : "",
+                "",
                 {
                   minWidth: "150px",
-                },
-                isRedeemDisabled
+                }
               )}
             </>
           ) : (
@@ -188,21 +187,21 @@ const OwnJarListItem = (props) => {
     if (tabList === "shared" && active) {
       return (
         <div className="con-listing-btn-wrap">
-          {!isAmountEqual && !isTargetDateExpired
-            ? renderButton(
-                "Add Fund",
-                (e) => {
-                  e.stopPropagation();
-                  handleTabList(tabList);
-                  setShowPaymentModal(true);
-                },
-                "",
-                {
-                  minWidth: "150px",
-                  marginRight: "0px",
-                }
-              )
-            : null}
+          {/* {!isAmountEqual && !isTargetDateExpired ? */}
+          {renderButton(
+            "Add Fund",
+            (e) => {
+              e.stopPropagation();
+              handleTabList(tabList);
+              setShowPaymentModal(true);
+            },
+            "",
+            {
+              minWidth: "150px",
+              marginRight: "0px",
+            }
+          )}
+          {/* : null} */}
         </div>
       );
     }
@@ -365,11 +364,20 @@ const OwnJarListItem = (props) => {
         show={popup}
         setShow={setPopup}
         heading={
-          acceptRejectValue ? "Accept Transaction" : "Decline Transaction"
+          acceptRejectValue ? "Accept Invitation" : "Decline  Invitation"
         }
-        subHeading={`Are you sure you want to ${
-          acceptRejectValue ? "accept" : "decline"
-        } this transaction?`}
+        subHeading={
+          <span
+            className=""
+            style={{ whiteSpace: "normal", wordWrap: "break-word" }}
+          >
+            Are you sure you want to {acceptRejectValue ? "accept" : "decline"}{" "}
+            this invitation?
+            {acceptRejectValue
+              ? "You'll be added to the jar once confirmed."
+              : ""}
+          </span>
+        }
         handleCallback={handleCallbackTransaction}
       />
       <JarMemberListingModal

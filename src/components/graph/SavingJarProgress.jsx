@@ -222,6 +222,7 @@ const SavingJarProgress = (props) => {
         {status &&
           adminApprovedWithRenewCheck &&
           (graphLoading ||
+            tabName === "shared" ||
             (!isTrue && tabName === "own") ||
             (isTrue && tabName === "own") ||
             !isTrue) && (
@@ -261,16 +262,8 @@ const SavingJarProgress = (props) => {
                         <span>Redeem Fund</span>
                       </a>
                       <a
-                        className={`${
-                          deposite_amount <= 0
-                            ? "action-button jar-action-button-disabled"
-                            : "action-button"
-                        }`}
-                        onClick={() =>
-                          deposite_amount <= 0
-                            ? null
-                            : setShowPaymentModal(true)
-                        }
+                        className="action-button"
+                        onClick={() => setShowPaymentModal(true)}
                       >
                         <img
                           src="/assets/images/jar_fund_transfer.svg"
@@ -281,7 +274,7 @@ const SavingJarProgress = (props) => {
                     </>
                   )}
 
-                  {!isTrue && (
+                  {(!isTrue || tabName === "shared") && (
                     <a
                       className="action-button"
                       onClick={() => setShowPaymentModal(true)}
