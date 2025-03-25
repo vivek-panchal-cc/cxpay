@@ -4,7 +4,7 @@ import {
   getRandomColorClass,
 } from "constants/all";
 import { LoginContext } from "context/loginContext";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ModalJarPaymentSelect from "components/modals/ModalJarPaymentSelect";
@@ -41,6 +41,12 @@ const OwnJarListItem = (props) => {
   );
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
+
+  useEffect(() => {
+    (async () => {
+      await handleTabList(tabList);
+    })();
+  }, [tabList]);
 
   const handleInstantPaymentSend = () => {
     if (handleInstantPaymentForAddAmount)
