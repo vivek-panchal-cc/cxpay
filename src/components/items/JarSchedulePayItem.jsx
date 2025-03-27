@@ -5,12 +5,12 @@ import {
   CURRENCY_SYMBOL,
   activityConsts,
 } from "constants/all";
-import { IconEdit } from "styles/svgs";
+import { IconBin, IconEdit } from "styles/svgs";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { getInitials, getRandomColorClass } from "constants/all";
 
 const JarSchedulePayItem = (props) => {
-  const { activityDetails, handleClick } = props || {};
+  const { activityDetails, handleClick, handleDelete } = props || {};
   const {
     id,
     account_number,
@@ -76,7 +76,7 @@ const JarSchedulePayItem = (props) => {
   };
 
   return (
-    <li onClick={() => handleClick({ id })}>
+    <li>
       <div className="act-info-wrap-left justify-content-between">
         <div
           className="align-items-center d-flex"
@@ -119,22 +119,34 @@ const JarSchedulePayItem = (props) => {
           </div>
         </div>
       </div>
-      <div className="act-mv-wrap">
+      <div className="jar-act-mv-wrap">
         <div className="act-edit-btn">
-          <button
-            className={`act-edit-wrap rounded `}
-            // onClick={(e) => {
-            //   e.stopPropagation();
-            // }}
-            style={{
-              background: "#0081C5",
-              width: "33px",
-              height: "32px",
-            }}
-            // disabled={disableComponent || !isFutureDate}
-          >
-            <IconEdit style={{ stroke: "#FFF" }} />
-          </button>
+          <div className="d-flex right-activity-div">
+            <button
+              className={`act-edit-wrap rounded `}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleClick({ id });
+              }}
+              style={{
+                background: "#0081C5",
+                width: "33px",
+                height: "32px",
+              }}
+            >
+              <IconEdit style={{ stroke: "#FFF" }} />
+            </button>
+            <button
+              className={`act-del-wrap rounded`}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDelete({ id });
+              }}
+              style={{ background: "#FF3333" }}
+            >
+              <IconBin style={{ stroke: "#F3F3F3" }} />
+            </button>
+          </div>
         </div>
       </div>
     </li>

@@ -43,6 +43,7 @@ const JarSchedulePayList = (props) => {
                     key={activity?.id || index}
                     activityDetails={activity}
                     handleClick={() => {}}
+                    handleDelete={() => {}}
                   />
                 );
               })}

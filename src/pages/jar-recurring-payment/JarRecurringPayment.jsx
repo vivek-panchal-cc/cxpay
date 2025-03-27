@@ -8,11 +8,16 @@ import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import JarRecurringPayItem from "components/items/JarRecurringPayItem";
 import useJarRecurringPayList from "hooks/useJarRecurringPayList";
+import ModalConfirmation from "components/modals/ModalConfirmation";
 
 const JarRecurringPayment = () => {
   const navigate = useNavigate();
-  const { jarId, handleRecurringPaymentDetails, jarRecurringPaymentDetailsId } =
-    useContext(SavingJarOwnContext);
+  const {
+    jarId,
+    handleRecurringPaymentDetails,
+    jarRecurringPaymentDetailsId,
+    deleteRecurringItem,
+  } = useContext(SavingJarOwnContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [serachText, setSearchText] = useState("");
   const [activitiesDateBind, setActivitiesDateBind] = useState({});
@@ -21,6 +26,8 @@ const JarRecurringPayment = () => {
     startDate: "",
     endDate: "",
   });
+  const [deletePopup, setDeletePopup] = useState(false);
+  const [recurringItemId, setRecurringItemId] = useState(null);
   const [loadingAct, actPagination, activitiesList, reload] =
     useJarRecurringPayList({
       page: currentPage,
@@ -79,6 +86,20 @@ const JarRecurringPayment = () => {
     navigate(
       `/jars/own/jar-recurring-pay-list/view-jar-recurring-payment-details`
     );
+  };
+
+  const handleRecurringDeleteItem = async ({ id }) => {
+    if (!id) return;
+    setRecurringItemId(id);
+    setDeletePopup(true);
+  };
+
+  const handleCallbackDeleteTransaction = async () => {
+    if (!recurringItemId) return;
+    setDeletePopup(false);
+    if (deleteRecurringItem) await deleteRecurringItem(recurringItemId);
+    setRecurringItemId(null);
+    reload();
   };
 
   // useEffect(() => {
@@ -161,6 +182,7 @@ const JarRecurringPayment = () => {
                       activityDetails={activity}
                       handleClick={handleRecurringPaymentDetails}
                       handleViewDetails={handleViewDetails}
+                      handleDelete={handleRecurringDeleteItem}
                     />
                   );
                 })}
@@ -192,6 +214,21 @@ const JarRecurringPayment = () => {
         startDate={filters.startDate}
         endDate={filters.endDate}
         handleChangeDateRange={handleChangeDateFilter}
+      />
+      <ModalConfirmation
+        id="delete-group-member-popup"
+        show={deletePopup}
+        setShow={setDeletePopup}
+        heading={"Delete Transaction"}
+        subHeading={
+          <span
+            className=""
+            style={{ whiteSpace: "normal", wordWrap: "break-word" }}
+          >
+            Are you sure you want to delete this transaction?
+          </span>
+        }
+        handleCallback={handleCallbackDeleteTransaction}
       />
     </div>
   );

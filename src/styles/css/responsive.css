@@ -4793,6 +4793,9 @@
   .act-specification-text {
     display: none;
   }
+  .jar-act-mv-wrap {
+    display: none;
+  }
   .act-amt-wrap {
     margin-bottom: 5px;
     padding-left: 0px;

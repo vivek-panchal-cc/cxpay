@@ -179,7 +179,10 @@ const EditJarScheduledPayment = () => {
               </form>
             </div>
             {adminApprovedWithRenewCheck ? (
-              <div className="sp-btn-inner-wrap outline-solid-wrap flex-recurring-update">
+              <div
+                className="sp-btn-inner-wrap outline-solid-wrap flex-recurring-update justify-content-center w-100"
+                style={{ maxWidth: "450px" }}
+              >
                 <button
                   className="btn outline-btn w-100 mb-2"
                   onClick={handleCancel}

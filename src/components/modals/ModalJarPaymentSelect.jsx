@@ -22,7 +22,7 @@ function ModalJarPaymentSelect({
     {
       id: 1,
       icon: <IconInstantPay />,
-      title: "Instant Pay",
+      title: "One Time Payment",
       color: "#93E06F", // Green
     },
     {

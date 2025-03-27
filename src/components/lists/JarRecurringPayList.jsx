@@ -45,6 +45,7 @@ const JarRecurringPayList = (props) => {
                     activityDetails={activity}
                     handleClick={() => {}}
                     handleViewDetails={() => {}}
+                    handleDelete={() => {}}
                   />
                 );
               })}

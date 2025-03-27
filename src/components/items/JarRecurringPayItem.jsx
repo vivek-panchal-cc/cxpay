@@ -7,7 +7,7 @@ import {
   isAdminApprovedWithRenewCheck,
   isComponentDisabled,
 } from "constants/all";
-import { IconEdit } from "styles/svgs";
+import { IconBin, IconEdit } from "styles/svgs";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { getInitials, getRandomColorClass } from "constants/all";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
@@ -17,7 +17,8 @@ import { LoginContext } from "context/loginContext";
 
 const JarRecurringPayItem = (props) => {
   const navigate = useNavigate();
-  const { activityDetails, handleClick, handleViewDetails } = props || {};
+  const { activityDetails, handleClick, handleViewDetails, handleDelete } =
+    props || {};
   const { jarRecurringPaymentDetailsId } = useContext(SavingJarOwnContext);
   const {
     id,
@@ -158,27 +159,44 @@ const JarRecurringPayItem = (props) => {
           </div>
         </div>
       </div>
-      <div className="act-mv-wrap">
+      <div className="jar-act-mv-wrap">
         <div className="act-edit-btn">
-          <button
-            className={`act-edit-wrap rounded ${
-              adminApprovedWithRenewCheck && isFutureDate
-                ? ""
-                : "contacts-admin-approved-disabled"
-            }`}
-            onClick={(e) => {
-              e.stopPropagation();
-              handleClick({ id });
-            }}
-            style={{
-              background: "#0081C5",
-              width: "33px",
-              height: "32px",
-            }}
-            disabled={disableComponent || !isFutureDate}
-          >
-            <IconEdit style={{ stroke: "#FFF" }} />
-          </button>
+          <div className="d-flex right-activity-div">
+            <button
+              className={`act-edit-wrap rounded ${
+                adminApprovedWithRenewCheck && isFutureDate
+                  ? ""
+                  : "contacts-admin-approved-disabled"
+              }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleClick({ id });
+              }}
+              style={{
+                background: "#0081C5",
+                width: "33px",
+                height: "32px",
+              }}
+              disabled={disableComponent || !isFutureDate}
+            >
+              <IconEdit style={{ stroke: "#FFF" }} />
+            </button>
+            <button
+              className={`act-del-wrap rounded ${
+                adminApprovedWithRenewCheck
+                  ? ""
+                  : "contacts-admin-approved-disabled"
+              }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDelete({ id });
+              }}
+              style={{ background: "#FF3333" }}
+              // disabled={disableComponent}
+            >
+              <IconBin style={{ stroke: "#F3F3F3" }} />
+            </button>
+          </div>
         </div>
       </div>
     </li>

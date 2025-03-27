@@ -403,6 +403,36 @@ const SavingJarOwnProvider = ({ children }) => {
     }
   };
 
+  const deleteScheduleItem = async (id) => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.deleteSavingJarSchedulePayment({
+        schedule_payment_id: id,
+      });
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+    } catch (error) {
+      if (typeof error === "string") return toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const deleteRecurringItem = async (id) => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.deleteSavingJarRecurringPayment({
+        recurring_payment_id: id,
+      });
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+    } catch (error) {
+      if (typeof error === "string") return toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     const path = location.pathname;
     setPrevPathRedirect(prevPath);
@@ -477,6 +507,8 @@ const SavingJarOwnProvider = ({ children }) => {
         setRecurringPaymentDetailsId,
         recurringPaymentDetailsId,
         updateJarRecurringPayment,
+        deleteScheduleItem,
+        deleteRecurringItem,
       }}
     >
       {children}

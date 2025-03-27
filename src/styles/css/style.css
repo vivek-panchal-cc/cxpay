@@ -7240,6 +7240,9 @@ button.btn.btn-orange:hover {
 .act-mv-wrap {
   width: 32px;
 }
+.jar-act-mv-wrap {
+  width: 75px;
+}
 
 .act-amt-status-wrap {
   justify-content: space-between;
@@ -7311,6 +7314,10 @@ ul.recent-act-lw-main .act-user-in {
 }
 
 ul.recent-act-lw-main .act-mv-wrap {
+  display: none;
+}
+
+ul.recent-act-lw-main .jar-act-mv-wrap {
   display: none;
 }
 

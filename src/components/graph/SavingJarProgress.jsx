@@ -8,7 +8,7 @@ import {
 } from "constants/all";
 import LoaderJarDashboard from "loaders/LoaderJarDashboard";
 import { Link, useNavigate } from "react-router-dom";
-import { IconJarCreate, IconJarCalendar } from "styles/svgs";
+import { IconJarCreate, IconJarCalendar, IconGear } from "styles/svgs";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
@@ -187,7 +187,8 @@ const SavingJarProgress = (props) => {
                     }`}
                     onClick={adminApprovedWithRenewCheck ? handleJarEdit : null}
                   >
-                    <IconJarCreate />
+                    {/* <IconJarCreate /> */}
+                    <IconGear fill="#fff" />
                   </div>
                 )}
               </div>

@@ -11,9 +11,10 @@ import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { Link, Navigate } from "react-router-dom";
 import JarSchedulePayItem from "components/items/JarSchedulePayItem";
 import useJarSchedulePayList from "hooks/useJarSchedulePayList";
+import ModalConfirmation from "components/modals/ModalConfirmation";
 
 const JarSchedulePayment = () => {
-  const { jarId, handleScheduledPaymentDetails } =
+  const { jarId, handleScheduledPaymentDetails, deleteScheduleItem } =
     useContext(SavingJarOwnContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [serachText, setSearchText] = useState("");
@@ -23,6 +24,8 @@ const JarSchedulePayment = () => {
     startDate: "",
     endDate: "",
   });
+  const [deletePopup, setDeletePopup] = useState(false);
+  const [scheduledItemId, setScheduledItemId] = useState(null);
   const [loadingAct, actPagination, activitiesList, reload] =
     useJarSchedulePayList({
       page: currentPage,
@@ -74,6 +77,20 @@ const JarSchedulePayment = () => {
   const handleSearchActivity = (elm) => {
     setCurrentPage(1);
     setSearchText(elm.target.value);
+  };
+
+  const handleScheduleDeleteItem = async ({ id }) => {
+    if (!id) return;
+    setScheduledItemId(id);
+    setDeletePopup(true);
+  };
+
+  const handleCallbackDeleteTransaction = async () => {
+    if (!scheduledItemId) return;
+    setDeletePopup(false);
+    if (deleteScheduleItem) await deleteScheduleItem(scheduledItemId);
+    setScheduledItemId(null);
+    reload();
   };
 
   // useEffect(() => {
@@ -155,6 +172,7 @@ const JarSchedulePayment = () => {
                       key={activity?.id || index}
                       activityDetails={activity}
                       handleClick={handleScheduledPaymentDetails}
+                      handleDelete={handleScheduleDeleteItem}
                     />
                   );
                 })}
@@ -186,6 +204,21 @@ const JarSchedulePayment = () => {
         startDate={filters.startDate}
         endDate={filters.endDate}
         handleChangeDateRange={handleChangeDateFilter}
+      />
+      <ModalConfirmation
+        id="delete-group-member-popup"
+        show={deletePopup}
+        setShow={setDeletePopup}
+        heading={"Delete Transaction"}
+        subHeading={
+          <span
+            className=""
+            style={{ whiteSpace: "normal", wordWrap: "break-word" }}
+          >
+            Are you sure you want to delete this transaction?
+          </span>
+        }
+        handleCallback={handleCallbackDeleteTransaction}
       />
     </div>
   );

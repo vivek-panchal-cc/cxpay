@@ -376,7 +376,7 @@ const OwnJarListItem = (props) => {
             style={{ whiteSpace: "normal", wordWrap: "break-word" }}
           >
             Are you sure you want to {acceptRejectValue ? "accept" : "decline"}{" "}
-            this invitation?
+            this invitation?{" "}
             {acceptRejectValue
               ? "You'll be added to the jar once confirmed."
               : ""}

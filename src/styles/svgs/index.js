@@ -86,6 +86,7 @@ export { default as IconJarCreate } from "./JarCreate";
 export { default as IconJarCalendar } from "./JarCalendar";
 export { default as IconNotifyJar } from "./NotifyJar";
 export { default as IconAddJarMember } from "./AddJarMember";
+export { default as IconGear } from "./Gear";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";
