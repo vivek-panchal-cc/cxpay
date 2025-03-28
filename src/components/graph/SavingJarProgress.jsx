@@ -35,9 +35,14 @@ const SavingJarProgress = (props) => {
     target_amount: raw_target_amount,
     target_date,
     status = true,
+    reserve_amount: raw_reserve_amount,
+    card_bg_color,
+    card_scroll_color,
+    card_button_bg_color,
   } = savingJarDetails;
   const deposite_amount = Number(raw_deposite_amount);
   const target_amount = Number(raw_target_amount);
+  const reserve_amount = Number(raw_reserve_amount);
   const {
     handleEditJarData,
     addJarMembers,
@@ -152,12 +157,15 @@ const SavingJarProgress = (props) => {
         {/* <div className="d-flex"> */}
         {graphLoading ? (
           <LoaderJarDashboard
-            backgroundColor="#a279e4"
+            backgroundColor={card_bg_color || "#a279e4"}
             height="189"
             width="100%"
           />
         ) : (
-          <div className="jar-card">
+          <div
+            className="jar-card"
+            style={{ background: card_bg_color || "#a279e4" }}
+          >
             <div className="jar-header">
               <div className="jar-details">
                 {jar_icon ? (
@@ -205,7 +213,10 @@ const SavingJarProgress = (props) => {
             </div>
 
             <div className="progress-section">
-              <div className="progress-bar">
+              <div
+                className="progress-bar"
+                style={{ background: card_scroll_color || "#7b5baf" }}
+              >
                 <div
                   className="progress-fill"
                   style={{
@@ -214,8 +225,18 @@ const SavingJarProgress = (props) => {
                 />
               </div>
               <span className="jar-date">
-                <IconJarCalendar className="calendar-icon" />
-                {target_date && target_date.split("-").reverse().join("/")}
+                {reserve_amount ? (
+                  <span className="reserve-amount">
+                    Reserved Amount:&nbsp;
+                    <WrapAmount value={reserve_amount} />
+                  </span>
+                ) : (
+                  <span></span>
+                )}
+                <span className="date-container">
+                  <IconJarCalendar className="calendar-icon" />
+                  {target_date && target_date.split("-").reverse().join("/")}
+                </span>
               </span>
             </div>
           </div>
@@ -227,7 +248,10 @@ const SavingJarProgress = (props) => {
             (!isTrue && tabName === "own") ||
             (isTrue && tabName === "own") ||
             !isTrue) && (
-            <div className="jar-actions">
+            <div
+              className="jar-actions"
+              style={{ background: card_button_bg_color || "#936ee31a" }}
+            >
               {graphLoading ? (
                 [1, 2, 3].map((item) => <LoaderJarActions key={item} />)
               ) : (

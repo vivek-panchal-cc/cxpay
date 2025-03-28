@@ -9410,7 +9410,7 @@ button.export-activities.disabled:hover {
 }
 
 .jar-card {
-  background: #a279e4;
+  /* background: #a279e4; */
   border-radius: 12px;
   padding: 20px;
   color: white;
@@ -9491,7 +9491,7 @@ button.export-activities.disabled:hover {
 .progress-bar {
   flex-grow: 1;
   height: 5px;
-  background: #7b5baf;
+  /* background: #7b5baf; */
   border-radius: 10px;
   margin-right: 10px;
   position: relative;
@@ -9515,17 +9515,34 @@ button.export-activities.disabled:hover {
 .jar-date {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 15px;
   font-size: 14px;
   gap: 5px;
   opacity: 0.8;
+  width: 100%;
+}
+
+.jar-date .reserve-amount {
+  font-size: 14px;
+  margin: 0;
+  color: var(--white) !important;
+}
+
+.jar-date .reserve-amount span {
+  font-weight: bolder;
+}
+
+.date-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .jar-actions {
   display: flex;
   justify-content: space-around;
-  background: #936ee31a;
+  /* background: #936ee31a; */
   border-radius: 0px 0px 12px 12px;
   padding: 30px 10px 20px 10px;
   margin-top: -10px;
