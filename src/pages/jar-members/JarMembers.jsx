@@ -147,7 +147,7 @@ const JarMembers = () => {
                     />
                   ))
                 )}
-                {!isLoadingMembers && memberList?.length <= 0 ? (
+                {!isLoadingMembers && !memberList.members ? (
                   <div className="text-center py-5">
                     <p className="fs-5">Member not found</p>
                   </div>
