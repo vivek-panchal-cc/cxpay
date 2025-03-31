@@ -291,6 +291,8 @@ const SavingJarOwnProvider = ({ children }) => {
       });
       if (!data.success) throw data.message;
       toast.success(data.message);
+      navigate(`/jars/own`, { replace: true });
+      reloadOwnJar();
     } catch (error) {
       if (typeof error === "string") toast.error(error);
       setJarId(null);
