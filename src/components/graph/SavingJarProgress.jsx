@@ -157,7 +157,9 @@ const SavingJarProgress = (props) => {
         {/* <div className="d-flex"> */}
         {graphLoading ? (
           <LoaderJarDashboard
-            backgroundColor={card_bg_color || "#a279e4"}
+            // backgroundColor={card_bg_color || "#a279e4"}
+            backgroundColor={"#c4c4c4" || card_bg_color}
+            foregroundColor={"#ecebeb" || "#7a59af"}
             height="189"
             width="100%"
           />
@@ -250,7 +252,8 @@ const SavingJarProgress = (props) => {
             !isTrue) && (
             <div
               className="jar-actions"
-              style={{ background: card_button_bg_color || "#936ee31a" }}
+              // style={{ background: card_button_bg_color || "#936ee31a" }}
+              style={{ background: card_button_bg_color || "#e3e1e1" }}
             >
               {graphLoading ? (
                 [1, 2, 3].map((item) => <LoaderJarActions key={item} />)
