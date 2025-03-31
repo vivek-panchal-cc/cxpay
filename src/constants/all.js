@@ -1068,7 +1068,7 @@ const withdrawConsts = {
 };
 
 // Currency Symbol
-const CURRENCY_SYMBOL = "ANG";
+const CURRENCY_SYMBOL = "XCG";
 
 // Buffer Time for schedule
 const SCHEDULE_BUFFER = 5;
