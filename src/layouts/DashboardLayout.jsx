@@ -21,6 +21,7 @@ import { sendPaymentPinSchema } from "schemas/sendPaymentSchema";
 import MerchantReportsProvider from "context/merchantReportsContext";
 import NotificationDetailsProvider from "context/notificationsContext";
 import SavingJarOwnProvider from "context/savingJarOwnProvider";
+import InitialPopup from "components/modals/InitialPopup";
 
 function DashboardLayout() {
   const { setIsPinValidated } = usePinContext();
@@ -112,6 +113,7 @@ function DashboardLayout() {
                       <NotificationDetailsProvider>
                         <SavingJarOwnProvider>
                           <NotificationBar />
+                          <InitialPopup />
                           <Outlet />
                         </SavingJarOwnProvider>
                       </NotificationDetailsProvider>
