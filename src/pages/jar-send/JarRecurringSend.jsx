@@ -414,9 +414,9 @@ function JarRecurringSend() {
           classNameChild={"schedule-time-modal"}
           heading="Date Filter"
           handleChangeDate={handleChangeDateFilter}
-          maxDate={
-            wallet.target_date ? parseTargetDate(wallet.target_date) : null
-          }
+          // maxDate={
+          //   wallet.target_date ? parseTargetDate(wallet.target_date) : null
+          // }
         />
         <ModalConfirmation
           id="delete-group-member-popup"
