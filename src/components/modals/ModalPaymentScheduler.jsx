@@ -96,7 +96,7 @@ const ModalPaymentScheduler = (props) => {
                     selected={formik.values.date}
                     onChange={handleDateChange}
                     minDate={new Date()}
-                    maxDate={targetDate ? parseTargetDate(targetDate) : null}
+                    // maxDate={targetDate ? parseTargetDate(targetDate) : null}
                     inline
                   />
                   {formik.touched.date && formik.errors.date ? (
