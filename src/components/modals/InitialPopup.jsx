@@ -67,7 +67,7 @@ function InitialPopup(props) {
     setLoginCreds((ls) => ({ ...ls, show_popup: false }));
   };
 
-  if (!initialPopup) return null;
+  if (!initialPopup || !popup_message.trim()) return null;
 
   return (
     <div
