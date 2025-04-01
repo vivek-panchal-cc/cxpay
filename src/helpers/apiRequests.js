@@ -27,6 +27,7 @@ const API_resendForgotPasswordOtp = apiUrl.API_LOGIN_RESEND_FORGOT_PASSWORD_OTP;
 const API_refreshToken = apiUrl.API_LOGIN_REFRESH_TOKEN;
 const API_checkCustomerKyc = apiUrl.API_CHECK_CUSTOMER_KYC;
 const API_updateCustomerKyc = apiUrl.API_UPDATE_CUSTOMER_KYC;
+const API_acknowledgementPopup = apiUrl.API_ACKNOWLEDGEMENT_POPUP;
 
 // ONBOARD SERVICES
 const API_verifyMobileNumber = apiUrl.API_ONBOARD_VERIFY_MOBILE_NUMBER;
@@ -329,6 +330,13 @@ export const checkCustomerKyc = (token) => {
  */
 export const updateCustomerKyc = (params) => {
   return axiosOnboardInstance.post(`${API_updateCustomerKyc}`, params);
+};
+
+/** POST API
+ * @params authToken
+ */
+export const acknowledgementPopup = (params) => {
+  return axiosLoginInstance.post(`${API_acknowledgementPopup}`, params);
 };
 
 //  -------------------------------------------- ON BOARD ------------------------------------------------------------------------------------------>
@@ -1450,6 +1458,7 @@ export const apiRequest = {
   refreshToken,
   checkCustomerKyc,
   updateCustomerKyc,
+  acknowledgementPopup,
   resendLoginOtp,
   resendForgotPasswordOtp,
   resendRegisterOtp,

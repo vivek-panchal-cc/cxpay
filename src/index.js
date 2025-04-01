@@ -31,6 +31,7 @@ import TimeZoneProvider from "context/timeZoneContext";
 import { PinProvider } from "context/pinContext";
 import MobilePopup from "components/modals/MobilePopup";
 import { OrganizationSwitchProvider } from "context/organizationSwitchContext";
+import InitialPopup from "components/modals/InitialPopup";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -44,6 +45,7 @@ root.render(
               <PinProvider>
                 <TimeZoneProvider>
                   <MobilePopup />
+                  <InitialPopup />
                   <App />
                 </TimeZoneProvider>
               </PinProvider>
