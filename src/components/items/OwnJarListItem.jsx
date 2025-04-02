@@ -143,7 +143,7 @@ const OwnJarListItem = (props) => {
                 },
                 isRedeemDisabled ? "contacts-admin-approved-disabled" : "",
                 {
-                  minWidth: "150px",
+                  minWidth: "190px",
                 },
                 isRedeemDisabled
               )}
@@ -170,7 +170,7 @@ const OwnJarListItem = (props) => {
                 },
                 "con-req-btn",
                 {
-                  minWidth: "150px",
+                  minWidth: "190px",
                 }
               )}
               {renderButton(
