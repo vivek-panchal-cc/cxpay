@@ -163,7 +163,7 @@ const OwnJarListItem = (props) => {
           ) : (
             <>
               {renderButton(
-                "Share Jar",
+                "Share Sub-account",
                 (e) => {
                   e.stopPropagation();
                   showAddMemberPopupData();
@@ -378,7 +378,7 @@ const OwnJarListItem = (props) => {
             Are you sure you want to {acceptRejectValue ? "accept" : "decline"}{" "}
             this invitation?{" "}
             {acceptRejectValue
-              ? "You'll be added to the jar once confirmed."
+              ? "You'll be added to the sub-account once confirmed."
               : ""}
           </span>
         }

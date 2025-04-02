@@ -170,7 +170,7 @@ const API_recurringPaymentPin = apiUrl.API_TRANSACTION_RECURRING_PAYMENT_PIN;
 //Reserved Amount
 const API_listReservedAmount = apiUrl.API_RESERVED_AMOUNT_LIST;
 
-//Saving Jars
+//Sub-accounts
 const API_savingJarIcons = apiUrl.API_GET_SAVING_JAR_ICONS;
 const API_savingJarCategories = apiUrl.API_GET_SAVING_JAR_CATEGORIES;
 const API_getRemainingContacts = apiUrl.API_GET_REMAINING_CONTACTS_SAVING;
@@ -1161,7 +1161,7 @@ export const checkEnrollment = (params) => {
   return axiosTransactionInstance.post(`${"/check-enrollment"}`, params);
 };
 
-//Saving Jars
+//Sub-accounts
 /** POST
  * @params token
  */

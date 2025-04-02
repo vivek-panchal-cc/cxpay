@@ -17,30 +17,30 @@ const compareDateTime = (tmSel, dtSel) => {
 const addJarSchema = yup.object().shape({
   jar_name: yup
     .string()
-    .required("Jar name is required")
+    .required("Sub-account name is required")
     .max(100, "Maximum limit is 100 characters."),
   target_amount: yup
     .string()
     .matches(/^[1-9]\d{0,6}(\.\d{1,2})?$/, "Please enter valid target amount")
     .required("Please enter target amount"),
   target_date: yup.date().required("Target date is required").nullable(),
-  jar_category_id: yup.string().required("Jar category is required"),
-  jar_icon: yup.string().required("Please select jar category icon"),
+  jar_category_id: yup.string().required("Sub-account category is required"),
+  jar_icon: yup.string().required("Please select sub-account category icon"),
   // members: yup.array().min(1, "Add atleast one member"),
 });
 
 const editJarSchema = yup.object().shape({
   jar_name: yup
     .string()
-    .required("Jar name is required")
+    .required("Sub-account name is required")
     .max(100, "Maximum limit is 100 characters."),
   target_amount: yup
     .string()
     .matches(/^[1-9]\d{0,6}(\.\d{1,2})?$/, "Please enter valid target amount")
     .required("Please enter target amount"),
   target_date: yup.date().required("Target date is required").nullable(),
-  jar_category_id: yup.string().required("Jar category is required"),
-  jar_icon: yup.string().required("Please select jar category icon"),
+  jar_category_id: yup.string().required("Sub-account category is required"),
+  jar_icon: yup.string().required("Please select sub-account category icon"),
 });
 
 // const jarCreateSchema = yup.object().shape({

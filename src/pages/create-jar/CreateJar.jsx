@@ -146,14 +146,14 @@ const CreateJar = (props) => {
   return (
     <div className="saving-jar-add-bottom">
       <div className="rm-pl-profile-info">
-        <h3>Create Jar</h3>
+        <h3>Create Sub-account</h3>
         <ul className="breadcrumb">
           <li>
-            <Link to="/jars/own">Jars</Link>
+            <Link to="/jars/own">Sub-accounts</Link>
           </li>
-          <li>Create Jar</li>
+          <li>Create Sub-account</li>
         </ul>
-        <p className="mb-4">Please fill below details to create Jar</p>
+        <p className="mb-4">Please fill below details to create Sub-account</p>
       </div>
       <div className="wallet-bank_link-form-wrap">
         <form
@@ -167,7 +167,7 @@ const CreateJar = (props) => {
                 type="text"
                 inputMode="numeric"
                 className="form-control"
-                placeholder="Jar Name"
+                placeholder="Sub-account Name"
                 name="jar_name"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -290,19 +290,19 @@ const CreateJar = (props) => {
                 classNamePrefix="jar-icon-input"
                 name="jar_icon"
                 useReactSelect={true} // Enable react-select
-                placeholder="Jar Category Icon"
+                placeholder="Sub-account Category Icon"
                 options={jarIcon.map((icon) => ({
                   value: icon.id,
                   label: (
                     <div className="d-flex flex-column align-items-center">
                       <img
                         src={icon.url}
-                        alt={`Jar ${icon.id}`}
+                        alt={`Sub-account ${icon.id}`}
                         width="30"
                         height="30"
                         className="mb-1"
                       />
-                      {/* Jar {icon.id} */}
+                      {/* Sub-account {icon.id} */}
                     </div>
                   ),
                   url: icon.url,
@@ -371,7 +371,7 @@ const CreateJar = (props) => {
               onClick={showAddMemberPopupData}
               className="btn add-contact-btn w-100"
             >
-              Add Jar Members
+              Add Sub-account Members
             </button>
           </div>
 

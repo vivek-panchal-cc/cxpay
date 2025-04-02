@@ -136,16 +136,16 @@ const EditJar = () => {
   return (
     <div className="saving-jar-add-bottom">
       <div className="rm-pl-profile-info">
-        <h3>Update Jar</h3>
+        <h3>Update Sub-account</h3>
         <ul className="breadcrumb">
           <li>
             <span className="cursor-pointer" onClick={handleGoBack}>
-              Jars
+              Sub-accounts
             </span>
           </li>
-          <li>Edit Jar</li>
+          <li>Edit Sub-account</li>
         </ul>
-        <p className="mb-4">Please fill below details to update Jar</p>
+        <p className="mb-4">Please fill below details to update Sub-account</p>
       </div>
       <div className="wallet-bank_link-form-wrap">
         <form
@@ -159,7 +159,7 @@ const EditJar = () => {
                 type="text"
                 inputMode="numeric"
                 className="form-control"
-                placeholder="Jar Name"
+                placeholder="Sub-account Name"
                 name="jar_name"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -282,19 +282,19 @@ const EditJar = () => {
                 classNamePrefix="jar-icon-input"
                 name="jar_icon"
                 useReactSelect={true} // Enable react-select
-                placeholder="Jar Category Icon"
+                placeholder="Sub-account Category Icon"
                 options={jarIcon.map((icon) => ({
                   value: icon.id,
                   label: (
                     <div className="d-flex flex-column align-items-center">
                       <img
                         src={icon.url}
-                        alt={`Jar ${icon.id}`}
+                        alt={`Sub-account ${icon.id}`}
                         width="30"
                         height="30"
                         className="mb-1"
                       />
-                      {/* Jar {icon.id} */}
+                      {/* Sub-account {icon.id} */}
                     </div>
                   ),
                   url: icon.url,

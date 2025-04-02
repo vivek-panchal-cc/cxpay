@@ -53,7 +53,7 @@ const JarActivityList = (props) => {
       {!loading
         ? Object.keys(jarActivityList || {}).length <= 0 && (
             <div className="text-center">
-              <p className="loading-data">Jar activities not found</p>
+              <p className="loading-data">Sub-account activities not found</p>
             </div>
           )
         : null}

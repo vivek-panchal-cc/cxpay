@@ -85,11 +85,13 @@ const JarActivities = () => {
       <div className="col-12 send-payment-ttile-wrap sdp-main-new-1 justify-content-between">
         <div className="title-content-wrap send-pay-title-sec w-auto">
           <h2>
-            {activitiesList?.length > 1 ? "Jar Activities" : "Jar Activity"}
+            {activitiesList?.length > 1
+              ? "Sub-account Activities"
+              : "Sub-account Activity"}
           </h2>
           <ul className="breadcrumb">
             <li>
-              <Link to={`/jars/own/jar-details`}>Jars</Link>
+              <Link to={`/jars/own/jar-details`}>Sub-accounts</Link>
             </li>
             <li>{activitiesList?.length > 1 ? "Activities" : "Activity"}</li>
           </ul>
@@ -158,7 +160,7 @@ const JarActivities = () => {
       {!loadingAct
         ? Object.keys(activitiesDateBind || {}).length <= 0 && (
             <div className="text-center py-5">
-              <p className="fs-5">Jar activities not found.</p>
+              <p className="fs-5">Sub-account activities not found.</p>
             </div>
           )
         : null}

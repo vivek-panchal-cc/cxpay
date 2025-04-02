@@ -42,7 +42,7 @@ function ModalJarTransferWallet(props) {
           <div className="modal-content">
             <div className="modal-header flex-column">
               <div className="code-lock-icon">
-                <img src={headingImg} alt="jar img" />
+                <img src={headingImg} alt="sub-account img" />
               </div>
             </div>
             <div className="modal-body">

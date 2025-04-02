@@ -37,10 +37,10 @@ const JarRecurringDetails = () => {
   return (
     <div className="walllet-refund-wrapper wallet-refund-details-wrappper wr-bank-details-wrapper">
       <div className="wr-title-wrap">
-        <h3>Jar Recurring Payment Details</h3>
+        <h3>Sub-account Recurring Payment Details</h3>
         <ul className="breadcrumb">
           <li>
-            <Link to={`/jars/own/jar-recurring-pay-list`}>Jars</Link>
+            <Link to={`/jars/own/jar-recurring-pay-list`}>Sub-accounts</Link>
           </li>
           <li>Recurring Payment Details</li>
         </ul>

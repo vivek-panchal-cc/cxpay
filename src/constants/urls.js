@@ -168,7 +168,7 @@ export const API_TRANSACTION_RECURRING_PAYMENT_PIN =
 //Reserved Amount
 export const API_RESERVED_AMOUNT_LIST = "/reserved-amount-list";
 
-//Saving Jars
+//Sub-accounts
 export const API_GET_SAVING_JAR_ICONS = "/get-saving-jar-icons";
 export const API_GET_SAVING_JAR_CATEGORIES = "/list-active-saving-jar-category";
 export const API_GET_REMAINING_CONTACTS_SAVING =

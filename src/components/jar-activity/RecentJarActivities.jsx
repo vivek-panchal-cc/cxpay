@@ -15,7 +15,9 @@ const RecentJarActivities = (props) => {
       <div className="recent-activity-sec d-flex justify-content-between">
         <div className="title-content-wrap">
           <h3>{`${
-            jarActivityList?.length > 1 ? "Jar Activities" : "Jar Activity"
+            jarActivityList?.length > 1
+              ? "Sub-account Activities"
+              : "Sub-account Activity"
           }`}</h3>
         </div>
         {jarActivityList?.length > 0 && (

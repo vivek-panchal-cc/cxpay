@@ -256,7 +256,7 @@ function JarRecurringSend() {
         <ul className="breadcrumb">
           <li>
             <span className="cursor-pointer" onClick={handleCancel}>
-              Jars
+              Sub-accounts
             </span>
           </li>
           <li>Recurring Send</li>

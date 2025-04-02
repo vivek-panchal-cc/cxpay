@@ -11,6 +11,8 @@ import {
   IconNotifyKyc,
   IconNotifyNotification,
   IconNotifyJar,
+  IconManualWithdraw,
+  IconSchedulePayment,
 } from "styles/svgs";
 
 // Expressions
@@ -206,6 +208,39 @@ const notificationType = {
   "": {
     icon: "",
     redirect: "/wallet",
+  },
+};
+
+const RES_WITHDRAW_SCH = "withdraw";
+const RES_WD_SCH = "WD";
+const RES_SAVING_JAR_SCH = "saving_jar_schedule_payment";
+const RES_SCH_PAY = "schedule_payment";
+
+const reservedAmountType = {
+  [RES_WITHDRAW_SCH]: {
+    icon: <IconManualWithdraw />,
+    label: "Manual Withdraw",
+    classText: "withdraw",
+  },
+  [RES_WD_SCH]: {
+    icon: <IconManualWithdraw />,
+    label: "Manual Withdraw",
+    classText: "WD",
+  },
+  [RES_SAVING_JAR_SCH]: {
+    icon: "",
+    label: "Sub-account Schedule Payment",
+    classText: "saving_jar_schedule_payment",
+  },
+  [RES_SCH_PAY]: {
+    icon: <IconSchedulePayment />,
+    label: "Schedule Payment",
+    classText: "schedule_payment",
+  },
+  "": {
+    icon: <IconSchedulePayment />,
+    label: "Payment",
+    classText: "schedule_payment",
   },
 };
 
@@ -706,8 +741,8 @@ const activityConsts = {
           classBg: "cx-bg-red",
           classText: "cx-color-red",
           classDetailStatus: "cx-color-red",
-          textStatus: "Jar Transfer",
-          textDetailStatus: "Jar Transfer",
+          textStatus: "Sub-account Transfer",
+          textDetailStatus: "Sub-account Transfer",
           desc: "From YYYY",
         },
       },
@@ -945,8 +980,8 @@ const activityConsts = {
           classBg: "cx-bg-green",
           classText: "cx-color-green",
           classDetailStatus: "cx-color-green",
-          textStatus: "Jar Withdraw",
-          textDetailStatus: "Jar Withdraw",
+          textStatus: "Sub-account Withdraw",
+          textDetailStatus: "Sub-account Withdraw",
           desc: "Withdrawal initiated",
         },
       },
@@ -1198,6 +1233,7 @@ export {
   otpCounterTime,
   url_regex,
   notificationType,
+  reservedAmountType,
   recurringTypeStatus,
   activityConsts,
   jarActvityConsts,

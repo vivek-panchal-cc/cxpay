@@ -258,7 +258,10 @@ function JarRecurringSendPayment(_props) {
               ? "Group Recurring Payment"
               : "Recurring Payment"}
           </h3>
-          <p>Please insert the amount of money you want to add into the Jar</p>
+          <p>
+            Please insert the amount of money you want to add into the
+            Sub-account
+          </p>
           {/* <Breadcrumb skipIndexes={[2]} /> */}
         </div>
       </div>

@@ -61,12 +61,12 @@ const JarMembers = () => {
               <div className="title-content-wrap">
                 <h3>
                   {memberList?.members?.length > 1
-                    ? "Jar Members"
-                    : "Jar Member"}
+                    ? "Sub-account Members"
+                    : "Sub-account Member"}
                 </h3>
                 <ul className="breadcrumb">
                   <li>
-                    <Link to={`/jars/own/jar-details`}>Jars</Link>
+                    <Link to={`/jars/own/jar-details`}>Sub-accounts</Link>
                   </li>
                   <li>
                     {memberList?.members?.length > 1 ? "Members" : "Member"}

@@ -108,10 +108,10 @@ const EditJarScheduledPayment = () => {
       <div className="schedulepayment-sec" style={{ marginBottom: "200px" }}>
         <div className="sp-top-sec">
           <div className="title-content-wrap common-title-wrap">
-            <h2>Update Jar Schedule Payment</h2>
+            <h2>Update Sub-account Schedule Payment</h2>
             <ul className="breadcrumb">
               <li>
-                <Link to={`/jars/own/jar-schedule-pay-list`}>Jars</Link>
+                <Link to={`/jars/own/jar-schedule-pay-list`}>Sub-accounts</Link>
               </li>
               <li>Update</li>
             </ul>

@@ -116,7 +116,7 @@ function JarSend(props) {
       const { data } = await apiMethod(requestData);
       if (!data.success) throw data;
       setSentDetail({
-        heading: "Jar Created",
+        heading: "Sub-account Created",
         message: data.message,
         url: "/assets/images/sent-payment-pop.svg",
       });
@@ -213,7 +213,7 @@ function JarSend(props) {
       const { data } = await apiMethod(requestData);
       if (!data.success) throw data;
       setSentDetail({
-        heading: "Jar Created",
+        heading: "Sub-account Created",
         message: data.message,
         url: "/assets/images/sent-payment-pop.svg",
       });
@@ -272,7 +272,7 @@ function JarSend(props) {
       {OtpModal()}
       {PinModal()}
 
-      {/* Modal For Jar Created successfully */}
+      {/* Modal For Sub-account Created successfully */}
       <ModalAlert
         id="money_sent_modal"
         className="money-sent-modal"
@@ -295,8 +295,11 @@ function JarSend(props) {
       />
       <div className="col-12 send-payment-ttile-wrap">
         <div className="title-content-wrap send-pay-title-sec">
-          <h3>{`Transfer One-Time Payment to Jar`}</h3>
-          <p>Please insert the amount of money you want to add into the Jar</p>
+          <h3>{`Transfer One-Time Payment to Sub-account`}</h3>
+          <p>
+            Please insert the amount of money you want to add into the
+            Sub-account
+          </p>
         </div>
       </div>
       <div className="RecurringScheduleDateWrap">

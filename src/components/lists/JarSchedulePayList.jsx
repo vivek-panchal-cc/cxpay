@@ -54,7 +54,9 @@ const JarSchedulePayList = (props) => {
       {!loading
         ? Object.keys(jarSchedulePayList || {}).length <= 0 && (
             <div className="text-center">
-              <p className="loading-data">Jar schedule payment not found</p>
+              <p className="loading-data">
+                Sub-account schedule payment not found
+              </p>
             </div>
           )
         : null}

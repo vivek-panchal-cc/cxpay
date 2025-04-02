@@ -56,7 +56,9 @@ const JarRecurringPayList = (props) => {
       {!loading
         ? Object.keys(jarRecurringPayList || {}).length <= 0 && (
             <div className="text-center">
-              <p className="loading-data">Jar recurring payment not found</p>
+              <p className="loading-data">
+                Sub-account recurring payment not found
+              </p>
             </div>
           )
         : null}

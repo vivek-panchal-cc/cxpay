@@ -105,12 +105,12 @@ const JarSchedulePayment = () => {
         <div className="title-content-wrap send-pay-title-sec w-auto">
           <h3>
             {activitiesList?.length > 1
-              ? "Jar Scheduled Payments"
-              : "Jar Scheduled Payment"}
+              ? "Sub-account Scheduled Payments"
+              : "Sub-account Scheduled Payment"}
           </h3>
           <ul className="breadcrumb">
             <li>
-              <Link to={`/jars/own/jar-details`}>Jars</Link>
+              <Link to={`/jars/own/jar-details`}>Sub-accounts</Link>
             </li>
             <li>
               {activitiesList?.length > 1
@@ -184,7 +184,7 @@ const JarSchedulePayment = () => {
       {!loadingAct
         ? Object.keys(activitiesDateBind || {}).length <= 0 && (
             <div className="text-center py-5">
-              <p className="fs-5">Jar scheduled payments not found.</p>
+              <p className="fs-5">Sub-account scheduled payments not found.</p>
             </div>
           )
         : null}

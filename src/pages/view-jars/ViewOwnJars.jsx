@@ -54,7 +54,7 @@ const ViewOwnJars = () => {
     <>
       <div className="activities-sec">
         <div className="wr-title-wrap">
-          <h3>My Jars</h3>
+          <h3>My Sub-accounts</h3>
           {/* <p>Please select payment date</p> */}
         </div>
         <TabsPaymentOptions
@@ -103,7 +103,7 @@ const ViewOwnJars = () => {
             </div>
           ) : (
             <>
-              {/* Active Jars */}
+              {/* Active Sub-accounts */}
               {activeJars?.length > 0 && (
                 <div>
                   <div className="activity-month fs-5 p-0">Active</div>
@@ -120,7 +120,7 @@ const ViewOwnJars = () => {
                 </div>
               )}
 
-              {/* Inactive Jars */}
+              {/* Inactive Sub-accounts */}
               {inactiveJars?.length > 0 && (
                 <div>
                   <div className="activity-month fs-5 p-0">In Active</div>
@@ -143,7 +143,7 @@ const ViewOwnJars = () => {
         Object.keys(activeJars || {}).length <= 0 &&
         Object.keys(inactiveJars || {}).length <= 0 ? (
           <div className="text-center py-4">
-            <p className="fs-5">Own saving jar not found.</p>
+            <p className="fs-5">Own sub-account not found.</p>
           </div>
         ) : null}
       </div>

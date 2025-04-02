@@ -196,11 +196,11 @@ const JarDetails = () => {
           <div className="jar-dashboard-graph-sec">
             <div className="graph-title-content-wrap">
               <div className="title-content-wrap">
-                <h2>Jar Dashboard</h2>
+                <h2>Sub-account Dashboard</h2>
                 <ul className="breadcrumb">
                   <li>
                     <Link to={`/jars/${tabName === "own" ? "own" : "shared"}`}>
-                      Jars
+                      Sub-accounts
                     </Link>
                   </li>
                   <li>Dashboard</li>

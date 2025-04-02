@@ -267,10 +267,12 @@ const EditJarRecurringPayment = () => {
       <div className="schedulepayment-sec">
         <div className="sp-top-sec" style={{ paddingTop: "20px" }}>
           <div className="title-content-wrap common-title-wrap">
-            <h3>Update Jar Recurring Payment</h3>
+            <h3>Update Sub-account Recurring Payment</h3>
             <ul className="breadcrumb">
               <li>
-                <Link to={`/jars/own/jar-recurring-pay-list`}>Jars</Link>
+                <Link to={`/jars/own/jar-recurring-pay-list`}>
+                  Sub-accounts
+                </Link>
               </li>
               <li>Update</li>
             </ul>

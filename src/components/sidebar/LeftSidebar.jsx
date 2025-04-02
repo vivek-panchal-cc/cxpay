@@ -296,7 +296,7 @@ function LeftSidebar({
               <li className={`${thisRoute === "jars" ? "active" : ""}`}>
                 <Link to="/jars/own" replace>
                   <IconJar />
-                  <span>Jars</span>
+                  <span>Sub-accounts</span>
                 </Link>
               </li>
               <li className={`${thisRoute === "merchants" ? "active" : ""}`}>

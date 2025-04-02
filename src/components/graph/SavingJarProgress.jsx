@@ -171,7 +171,11 @@ const SavingJarProgress = (props) => {
             <div className="jar-header">
               <div className="jar-details">
                 {jar_icon ? (
-                  <img src={jar_icon} className="jar-icon" alt="Jar Icon" />
+                  <img
+                    src={jar_icon}
+                    className="jar-icon"
+                    alt="Sub-account Icon"
+                  />
                 ) : (
                   <div
                     className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
@@ -265,7 +269,7 @@ const SavingJarProgress = (props) => {
                       onClick={() => showAddMemberPopupData()}
                     >
                       <img src="/assets/images/jar_share.svg" alt="" />
-                      <span>Share Jar</span>
+                      <span>Share Sub-account</span>
                     </a>
                   )}
 

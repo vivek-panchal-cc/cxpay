@@ -550,7 +550,7 @@ function App() {
                 element={<ProtectedEditRecurringPayment />}
               />
             </Route>
-            {/* Savings Jar */}
+            {/* Sub-account */}
 
             <Route
               path="/jars/own/jar-details"
