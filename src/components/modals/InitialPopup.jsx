@@ -87,11 +87,11 @@ function InitialPopup(props) {
               }}
               onClick={handleFlagManage}
             />{" "}
-            <div className="modal-header">
+            {/* <div className="modal-header">
               <div className="login-logo-image text-center mb-0">
                 <img src={CXPAY_LOGO} alt="cxpayme img" />
               </div>
-            </div>
+            </div> */}
             {/* <h3 className="text-center">{heading}</h3> */}
             <div className="modal-body">
               <form className="login-otp-numbers">
@@ -105,7 +105,7 @@ function InitialPopup(props) {
                     onClick={handleBtnClick}
                   >
                     {" "}
-                    Understand{" "}
+                    Got it{" "}
                   </button>
                 </div>
               </form>
