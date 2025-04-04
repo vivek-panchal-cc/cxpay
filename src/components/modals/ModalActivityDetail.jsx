@@ -63,6 +63,7 @@ const ModalActivityDetail = (props) => {
     comment,
     txn_mode,
     fees,
+    net_amount,
     payment_type,
     ref_id,
   } = details || {};
@@ -310,6 +311,35 @@ const ModalActivityDetail = (props) => {
                   )}
                   <table>
                     <tbody>
+                      {txn_type === TXN_TYPE_WW &&
+                        (request_type === ACT_TRANSACT_CREDIT ||
+                          request_type === ACT_TRANSACT_DEBIT) &&
+                        fees > 0 && (
+                          <tr>
+                            <td>Fees</td>
+                            <td>
+                              <WrapAmount
+                                value={fees}
+                                prefix={`${CURRENCY_SYMBOL} `}
+                              />
+                            </td>
+                          </tr>
+                        )}
+                      {txn_type === TXN_TYPE_WW &&
+                        (request_type === ACT_TRANSACT_CREDIT ||
+                          request_type === ACT_TRANSACT_DEBIT) &&
+                        fees > 0 && (
+                          <tr>
+                            <td>Net Amount</td>
+                            <td>
+                              <WrapAmount
+                                value={net_amount}
+                                prefix={`${CURRENCY_SYMBOL} `}
+                              />
+                            </td>
+                          </tr>
+                        )}
+
                       <tr>
                         <td>Date</td>
                         <td>{formatDate(date)}</td>
@@ -329,17 +359,6 @@ const ModalActivityDetail = (props) => {
                           </span>
                         </td>
                       </tr>
-                      {/* {fees > 0 && (
-                        <tr>
-                          <td>Fees</td>
-                          <td>
-                            <WrapAmount
-                              value={fees}
-                              prefix={`${CURRENCY_SYMBOL} `}
-                            />
-                          </td>
-                        </tr>
-                      )} */}
                       {txn_type === TXN_TYPE_AGENT && txn_mode && (
                         <tr>
                           <td>Payment Type</td>
