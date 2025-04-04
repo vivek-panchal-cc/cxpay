@@ -13,6 +13,7 @@ const useInvitedJar = ({ search_name = "" }) => {
 
   const retrieveInvitedJarList = async (search_name = "") => {
     setLoading(true);
+    let error = null;
     try {
       const { data } = await apiRequest.getUserSharedInvitedJar({
         search_name,
@@ -21,12 +22,19 @@ const useInvitedJar = ({ search_name = "" }) => {
       const { active_jars, inactive_jars } = data.data || {};
       setActiveJars(active_jars);
       setInActiveJars(inactive_jars);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      error = err;
+      if (error?.code === "ERR_CANCELED") {
+        setLoading(true);
+        return;
+      }
+      // console.log(error);
       setActiveJars([]);
       setInActiveJars([]);
     } finally {
-      setLoading(false);
+      if (error?.code !== "ERR_CANCELED") {
+        setLoading(false);
+      }
     }
   };
 

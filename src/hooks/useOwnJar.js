@@ -13,6 +13,7 @@ const useOwnJar = ({ search_name = "" }) => {
 
   const retrieveOwnJarList = async (search_name = "") => {
     setLoading(true);
+    let error = null;
     try {
       const { data } = await apiRequest.getUserOwnSavingJar({
         search_name,
@@ -21,12 +22,19 @@ const useOwnJar = ({ search_name = "" }) => {
       const { active_jars, inactive_jars } = data.data || {};
       setActiveJars(active_jars);
       setInActiveJars(inactive_jars);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      error = err;
+      if (error?.code === "ERR_CANCELED") {
+        setLoading(true);
+        return;
+      }
+      // console.log(error);
       setActiveJars([]);
       setInActiveJars([]);
     } finally {
-      setLoading(false);
+      if (error?.code !== "ERR_CANCELED") {
+        setLoading(false);
+      }
     }
   };
 

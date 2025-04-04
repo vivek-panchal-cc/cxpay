@@ -111,11 +111,11 @@ function DashboardLayout() {
                   <MerchantReportsProvider>
                     <TopUpActivityProvider>
                       <NotificationDetailsProvider>
-                        <SavingJarOwnProvider>
-                          <NotificationBar />
-                          <InitialPopup />
-                          <Outlet />
-                        </SavingJarOwnProvider>
+                        {/* <SavingJarOwnProvider> */}
+                        <NotificationBar />
+                        <InitialPopup />
+                        <Outlet />
+                        {/* </SavingJarOwnProvider> */}
                       </NotificationDetailsProvider>
                     </TopUpActivityProvider>
                   </MerchantReportsProvider>

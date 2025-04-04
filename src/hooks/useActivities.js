@@ -23,6 +23,7 @@ const useActivities = ({
     end_date = ""
   ) => {
     setLoading(true);
+    let error = null;
     try {
       const { data } = await apiRequest.activityList({
         page,
@@ -34,14 +35,21 @@ const useActivities = ({
       const { transactions, pagination } = data.data || {};
       setListActivities(transactions);
       setPagination(pagination);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      error = err;
+      if (error?.code === "ERR_CANCELED") {
+        setLoading(true);
+        return;
+      }
+      // console.log(error);
       if (typeof error === "string") {
         setListActivities([]);
         setPagination({});
       }
     } finally {
-      setLoading(false);
+      if (error?.code !== "ERR_CANCELED") {
+        setLoading(false);
+      }
     }
   };
 

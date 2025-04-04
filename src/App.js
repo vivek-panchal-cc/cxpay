@@ -94,6 +94,7 @@ import JarRecurringPayment from "pages/jar-recurring-payment/JarRecurringPayment
 import EditJarScheduledPayment from "pages/edit-jar-scheduled-payment/EditJarScheduledPayment";
 import EditJarRecurringPayment from "pages/edit-jar-recurring-payment/EditJarRecurringPayment";
 import JarRecurringDetails from "pages/jar-recurring-details/JarRecurringDetails";
+import JarRoutesWrapper from "layouts/JarRoutesWrapper";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -551,56 +552,57 @@ function App() {
               />
             </Route>
             {/* Sub-account */}
-
-            <Route
-              path="/jars/own/jar-details"
-              element={<ProtectedJarDetails />}
-            />
-            <Route path="/jars/own" element={<ProtectedOwnJars />} />
-            <Route
-              path="/jars/own/create-jar"
-              element={<ProtectedCreateJar />}
-            />
-            <Route path="/jars/own/edit-jar" element={<ProtectedEditJar />} />
-            <Route path="/jars/own/send" element={<ProtectedJarSend />} />
-            <Route
-              path="/jars/own/recurring-send"
-              element={<ProtectedJarRecurringSend />}
-            />
-            <Route
-              path="/jars/own/recurring-send-payment"
-              element={<ProtectedJarRecurringSendPayment />}
-            />
-            <Route path="/jars/shared" element={<ProtectedSharedJars />} />
-            <Route path="/jars/invited" element={<ProtectedInvitedJars />} />
-            <Route
-              path="/jars/own/members-list"
-              element={<ProtectedMembers />}
-            />
-            <Route
-              path="/jars/own/jar-activities-list"
-              element={<ProtectedJarActivities />}
-            />
-            <Route
-              path="/jars/own/jar-schedule-pay-list"
-              element={<ProtectedJarSchedulePayment />}
-            />
-            <Route
-              path="/jars/own/jar-recurring-pay-list"
-              element={<ProtectedJarRecurringPayment />}
-            />
-            <Route
-              path="/jars/own/jar-schedule-pay-list/update"
-              element={<ProtectedEditJarScheduledPayment />}
-            />
-            <Route
-              path="/jars/own/jar-recurring-pay-list/update"
-              element={<ProtectedEditJarRecurringPayment />}
-            />
-            <Route
-              path="/jars/own/jar-recurring-pay-list/view-jar-recurring-payment-details"
-              element={<ProtectedJarRecurringDetails />}
-            />
+            <Route element={<JarRoutesWrapper />}>
+              <Route
+                path="/jars/own/jar-details"
+                element={<ProtectedJarDetails />}
+              />
+              <Route path="/jars/own" element={<ProtectedOwnJars />} />
+              <Route
+                path="/jars/own/create-jar"
+                element={<ProtectedCreateJar />}
+              />
+              <Route path="/jars/own/edit-jar" element={<ProtectedEditJar />} />
+              <Route path="/jars/own/send" element={<ProtectedJarSend />} />
+              <Route
+                path="/jars/own/recurring-send"
+                element={<ProtectedJarRecurringSend />}
+              />
+              <Route
+                path="/jars/own/recurring-send-payment"
+                element={<ProtectedJarRecurringSendPayment />}
+              />
+              <Route path="/jars/shared" element={<ProtectedSharedJars />} />
+              <Route path="/jars/invited" element={<ProtectedInvitedJars />} />
+              <Route
+                path="/jars/own/members-list"
+                element={<ProtectedMembers />}
+              />
+              <Route
+                path="/jars/own/jar-activities-list"
+                element={<ProtectedJarActivities />}
+              />
+              <Route
+                path="/jars/own/jar-schedule-pay-list"
+                element={<ProtectedJarSchedulePayment />}
+              />
+              <Route
+                path="/jars/own/jar-recurring-pay-list"
+                element={<ProtectedJarRecurringPayment />}
+              />
+              <Route
+                path="/jars/own/jar-schedule-pay-list/update"
+                element={<ProtectedEditJarScheduledPayment />}
+              />
+              <Route
+                path="/jars/own/jar-recurring-pay-list/update"
+                element={<ProtectedEditJarRecurringPayment />}
+              />
+              <Route
+                path="/jars/own/jar-recurring-pay-list/view-jar-recurring-payment-details"
+                element={<ProtectedJarRecurringDetails />}
+              />
+            </Route>
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Route>

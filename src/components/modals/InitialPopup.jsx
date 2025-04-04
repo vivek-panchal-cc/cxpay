@@ -77,7 +77,10 @@ function InitialPopup(props) {
     >
       <div ref={modalRef} className={classNameChild}>
         <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content" style={{ position: "relative" }}>
+          <div
+            className="modal-content"
+            style={{ position: "relative", padding: "55px 60px 40px" }}
+          >
             <IconCloseModal
               style={{
                 position: "absolute",

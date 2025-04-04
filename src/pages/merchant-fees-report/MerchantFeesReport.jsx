@@ -115,9 +115,9 @@ const MerchantFeesReport = () => {
     setSearchText(elm.target.value);
   };
 
-  useEffect(() => {
-    reload();
-  }, [reloadList]);
+  // useEffect(() => {
+  //   reload();
+  // }, [reloadList]);
 
   return (
     <div className="activities-sec">
