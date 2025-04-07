@@ -85,8 +85,11 @@ ContactsSelection.Body = (props) => {
           ListItemComponentAlias={ListItemComponentAlias}
         />
       ) : (
-        <div className="loading">
-          <p className="loading-data">{emptyListMsg}</p>
+        // <div className="loading">
+        //   <p className="loading-data">{emptyListMsg}</p>
+        // </div>
+        <div className="text-center py-4">
+          <p className="">{emptyListMsg}</p>
         </div>
       )}
     </>
