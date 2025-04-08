@@ -311,24 +311,21 @@ const ModalActivityDetail = (props) => {
                   )}
                   <table>
                     <tbody>
-                      {txn_type === TXN_TYPE_WW &&
-                        (request_type === ACT_TRANSACT_CREDIT ||
-                          request_type === ACT_TRANSACT_DEBIT) &&
-                        fees > 0 && (
-                          <tr>
-                            <td>Fees</td>
-                            <td>
-                              <WrapAmount
-                                value={fees}
-                                prefix={`${CURRENCY_SYMBOL} `}
-                              />
-                            </td>
-                          </tr>
-                        )}
-                      {txn_type === TXN_TYPE_WW &&
-                        (request_type === ACT_TRANSACT_CREDIT ||
-                          request_type === ACT_TRANSACT_DEBIT) &&
-                        fees > 0 && (
+                      {fees != null && Number(fees) > 0 && (
+                        <tr>
+                          <td>Fees</td>
+                          <td>
+                            <WrapAmount
+                              value={fees}
+                              prefix={`${CURRENCY_SYMBOL} `}
+                            />
+                          </td>
+                        </tr>
+                      )}
+                      {fees != null &&
+                        Number(fees) > 0 &&
+                        net_amount != null &&
+                        Number(net_amount) > 0 && (
                           <tr>
                             <td>Net Amount</td>
                             <td>
