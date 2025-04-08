@@ -77,35 +77,43 @@ const ViewInvitedJar = () => {
             <>
               {/* Active Sub-accounts */}
               {activeJars?.length > 0 && (
-                <div>
-                  <div className="activity-month fs-5 p-0">Active</div>
-                  <ul className="act-user-content-wrap">
-                    {activeJars.map((item, index) => (
-                      <OwnJarListItem
-                        key={item.jar_id || index}
-                        details={item}
-                        tabList={"invited"}
-                        active={true}
-                      />
-                    ))}
-                  </ul>
+                <div className="active-jar-list-container">
+                  <div className="activity-month fs-5 p-0 active-jar-header">
+                    Active
+                  </div>
+                  <div className="jar-scroll-bar">
+                    <ul className="act-user-content-wrap">
+                      {activeJars.map((item, index) => (
+                        <OwnJarListItem
+                          key={item.jar_id || index}
+                          details={item}
+                          tabList={"invited"}
+                          active={true}
+                        />
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               )}
 
               {/* Inactive Sub-accounts */}
               {inactiveJars?.length > 0 && (
-                <div>
-                  <div className="activity-month fs-5 p-0">In Active</div>
-                  <ul className="act-user-content-wrap">
-                    {inactiveJars.map((item, index) => (
-                      <OwnJarListItem
-                        key={item.jar_id || index}
-                        details={item}
-                        tabList={"invited"}
-                        active={false}
-                      />
-                    ))}
-                  </ul>
+                <div className="active-jar-list-container">
+                  <div className="activity-month fs-5 p-0 active-jar-header">
+                    In Active
+                  </div>
+                  <div className="jar-scroll-bar">
+                    <ul className="act-user-content-wrap">
+                      {inactiveJars.map((item, index) => (
+                        <OwnJarListItem
+                          key={item.jar_id || index}
+                          details={item}
+                          tabList={"invited"}
+                          active={false}
+                        />
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               )}
             </>
