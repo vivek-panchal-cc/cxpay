@@ -5,6 +5,10 @@ const useSharedJar = ({ search_name = "" }) => {
   const [loading, setLoading] = useState(false);
   const [activeJarList, setActiveJars] = useState([]);
   const [inactiveJarList, setInActiveJars] = useState([]);
+  const [jarStatistics, setJarStatistics] = useState({
+    active_jar_total_amount: "",
+    active_jar_paid_amount: "",
+  });
   const [reloadFlag, setReloadFlag] = useState(false);
 
   const reload = () => {
@@ -19,9 +23,10 @@ const useSharedJar = ({ search_name = "" }) => {
         search_name,
       });
       if (!data.success) throw data.message;
-      const { active_jars, inactive_jars } = data.data || {};
+      const { active_jars, inactive_jars, jar_statistics } = data.data || {};
       setActiveJars(active_jars);
       setInActiveJars(inactive_jars);
+      setJarStatistics(jar_statistics || {});
     } catch (err) {
       error = err;
       if (error?.code === "ERR_CANCELED") {
@@ -31,6 +36,7 @@ const useSharedJar = ({ search_name = "" }) => {
       // console.log(error);
       setActiveJars([]);
       setInActiveJars([]);
+      setJarStatistics({});
     } finally {
       if (error?.code !== "ERR_CANCELED") {
         setLoading(false);
@@ -49,7 +55,7 @@ const useSharedJar = ({ search_name = "" }) => {
     return () => clearTimeout(timeOut);
   }, [search_name?.trim(), reloadFlag]);
 
-  return [loading, activeJarList, inactiveJarList, reload];
+  return [loading, activeJarList, inactiveJarList, jarStatistics, reload];
 };
 
 export default useSharedJar;

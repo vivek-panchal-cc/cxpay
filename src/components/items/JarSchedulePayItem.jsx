@@ -26,6 +26,7 @@ const JarSchedulePayItem = (props) => {
     date,
     profile_image,
     created_at,
+    is_owner = false,
     payment_schedule_date,
   } = activityDetails || {};
 
@@ -119,36 +120,38 @@ const JarSchedulePayItem = (props) => {
           </div>
         </div>
       </div>
-      <div className="jar-act-mv-wrap">
-        <div className="act-edit-btn">
-          <div className="d-flex right-activity-div">
-            <button
-              className={`act-edit-wrap rounded `}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleClick({ id });
-              }}
-              style={{
-                background: "#0081C5",
-                width: "33px",
-                height: "32px",
-              }}
-            >
-              <IconEdit style={{ stroke: "#FFF" }} />
-            </button>
-            <button
-              className={`act-del-wrap rounded`}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleDelete({ id });
-              }}
-              style={{ background: "#FF3333" }}
-            >
-              <IconBin style={{ stroke: "#F3F3F3" }} />
-            </button>
+      {is_owner && (
+        <div className="jar-act-mv-wrap">
+          <div className="act-edit-btn">
+            <div className="d-flex right-activity-div">
+              <button
+                className={`act-edit-wrap rounded `}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleClick({ id });
+                }}
+                style={{
+                  background: "#0081C5",
+                  width: "33px",
+                  height: "32px",
+                }}
+              >
+                <IconEdit style={{ stroke: "#FFF" }} />
+              </button>
+              <button
+                className={`act-del-wrap rounded`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete({ id });
+                }}
+                style={{ background: "#FF3333" }}
+              >
+                <IconBin style={{ stroke: "#F3F3F3" }} />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </li>
   );
 };

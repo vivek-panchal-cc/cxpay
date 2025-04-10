@@ -35,15 +35,21 @@ const SavingJarOwnProvider = ({ children }) => {
   const [showTransferToWalletPopup, setShowTransferToWalletPopup] =
     useState(false);
 
-  const [loadingOwnJar, activeJarList, inactiveJarList, reloadOwnJar] =
-    useOwnJar({
-      search_name: searchName,
-    });
+  const [
+    loadingOwnJar,
+    activeJarList,
+    inactiveJarList,
+    ownJarStatistics,
+    reloadOwnJar,
+  ] = useOwnJar({
+    search_name: searchName,
+  });
 
   const [
     loadingSharedJar,
     activeSharedJarList,
     inactiveSharedJarList,
+    sharedJarStatistics,
     reloadSharedJar,
   ] = useSharedJar({
     search_name: searchSharedName,
@@ -449,6 +455,7 @@ const SavingJarOwnProvider = ({ children }) => {
         reloadOwnJar,
         activeJarList,
         inactiveJarList,
+        ownJarStatistics,
         loadingOwnJar,
         searchName,
         resetSearchName,
@@ -457,6 +464,7 @@ const SavingJarOwnProvider = ({ children }) => {
         loadingSharedJar,
         activeSharedJarList,
         inactiveSharedJarList,
+        sharedJarStatistics,
         reloadSharedJar,
         searchSharedName,
         resetSearchSharedName,

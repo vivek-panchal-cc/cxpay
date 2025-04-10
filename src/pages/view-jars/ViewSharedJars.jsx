@@ -6,12 +6,14 @@ import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import LoaderActivityItem from "loaders/LoaderActivityItem";
 import React, { useContext, useEffect, useState } from "react";
 import { IconCross, IconSearch } from "styles/svgs";
+import WrapAmount from "components/wrapper/WrapAmount";
 
 const ViewSharedJar = () => {
   const {
     reloadSharedJar,
     activeSharedJarList,
     inactiveSharedJarList,
+    sharedJarStatistics,
     loadingSharedJar,
     searchSharedName,
     handleSearchSharedName,
@@ -20,6 +22,7 @@ const ViewSharedJar = () => {
 
   const [activeJars, setActiveJars] = useState([]);
   const [inactiveJars, setInactiveJars] = useState([]);
+  const [jarStatistics, setJarStatistics] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -30,7 +33,8 @@ const ViewSharedJar = () => {
   useEffect(() => {
     setActiveJars(activeSharedJarList);
     setInactiveJars(inactiveSharedJarList);
-  }, [activeSharedJarList, inactiveSharedJarList]);
+    setJarStatistics(sharedJarStatistics);
+  }, [activeSharedJarList, inactiveSharedJarList, sharedJarStatistics]);
 
   return (
     <>
@@ -80,7 +84,20 @@ const ViewSharedJar = () => {
                 <div className="active-jar-list-container">
                   <div className="activity-month fs-5 p-0 active-jar-header">
                     <span>Active</span>
-                    <span>Total : 1000 / 1000</span>
+                    <span>
+                      Total:{" "}
+                      <span className="text-black">
+                        <WrapAmount
+                          value={jarStatistics.active_jar_paid_amount || 0}
+                        />{" "}
+                      </span>
+                      <span>
+                        /{" "}
+                        <WrapAmount
+                          value={jarStatistics.active_jar_total_amount || 0}
+                        />
+                      </span>
+                    </span>
                   </div>
                   <div className="jar-scroll-bar">
                     <ul className="act-user-content-wrap">

@@ -130,7 +130,7 @@ const EditJarScheduledPayment = () => {
         </div>
         <div className="sp-details-main-wrap justify-content-center">
           <div className="sp-details-left-wrap d-flex flex-wrap justify-content-center p-0">
-            <div className="sp-details-inner-wrap ml-0">
+            {/* <div className="sp-details-inner-wrap ml-0">
               <ul>
                 {contacts?.map((item, index) => {
                   const profileURL = item.member_image;
@@ -147,7 +147,7 @@ const EditJarScheduledPayment = () => {
                   );
                 })}
               </ul>
-            </div>
+            </div> */}
             <div className="sp-cal-wrap d-flex justify-content-center w-100">
               <form onSubmit={formik.handleSubmit}>
                 <div className="col-12 p-0 amt-with-currency">
