@@ -97,6 +97,15 @@ const jarSchedulePaymentSchema = yup.object().shape({
       (value, context) => compareDateTime(value, context.parent.date)
     )
     .required("Time is required"),
+  amount: yup
+    .string()
+    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
+    .required("Please enter amount"),
+  specifications: yup
+    .string()
+    .matches(exp0ContainOnlySpace, "Space is not allowed")
+    .max(50, "Maximum limit is 50 characters.")
+    .required("Please enter specifications"),
 });
 
 const jarRecurringForUpdate = yup.object().shape({
@@ -108,6 +117,13 @@ const jarRecurringForUpdate = yup.object().shape({
   frequency: yup.string().required("Please select frequency"),
 });
 
+const setAmount = yup.object().shape({
+  amount: yup
+    .string()
+    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
+    .required("Please enter amount"),
+});
+
 export {
   addJarSchema,
   editJarSchema,
@@ -115,4 +131,5 @@ export {
   jarRecurringSchema,
   jarSchedulePaymentSchema,
   jarRecurringForUpdate,
+  setAmount,
 };

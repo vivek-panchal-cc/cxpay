@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import SectionButtons from "./components/SectionButtons";
 import SectionHeader from "./components/SectionHeader";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import SectionRecurringDetails from "./components/SectionRecurringDetails";
 import { apiRequest } from "helpers/apiRequests";
 import SectionRecurringDates from "./components/SectionRecurringDates";
@@ -34,6 +34,8 @@ const JarRecurringDetails = () => {
     fetchJarRecurringPaymentDetails();
   }, [recurringPaymentDetailsId]);
 
+  if (!recurringPaymentDetailsId) return <Navigate to="/jars/own" replace />;
+
   return (
     <div className="walllet-refund-wrapper wallet-refund-details-wrappper wr-bank-details-wrapper">
       <div className="wr-title-wrap">
@@ -45,8 +47,8 @@ const JarRecurringDetails = () => {
           <li>Recurring Payment Details</li>
         </ul>
       </div>
-      <div className="rc-refund-all-wrap">
-        <div className="rc-refund-main-wrap">
+      <div className="jar-rc-refund-all-wrap">
+        <div className="jar-rc-refund-main-wrap">
           <div className="pattern-wrap"></div>
           <div className="rc-refund-main-inner">
             <SectionHeader details={jarRecurringDetails} loading={isLoading} />
@@ -59,7 +61,7 @@ const JarRecurringDetails = () => {
           </div>
           {/* <div className="pattern-wrap pattern-wrap-bottom"></div> */}
         </div>
-        <div className="rc-refund-second-wrap">
+        <div className="jar-rc-refund-second-wrap">
           <div></div>
           <div className="rc-refund-main-inner section-recurring-dates">
             <SectionRecurringDates

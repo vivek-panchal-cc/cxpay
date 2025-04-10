@@ -220,6 +220,8 @@ export const API_TRANSACTION_DELETE_SAVING_JAR_SCHEDULE_PAYMENT =
   "delete-saving-jar-schedule-payment";
 export const API_TRANSACTION_DELETE_SAVING_JAR_RECURRING_PAYMENT =
   "delete-saving-jar-recurring-payment";
+export const API_TRANSACTION_SUB_ACCOUNTS_STATISTICS_DASHBOARD =
+  "get-saving-jar-statistics-for-dashboard";
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =

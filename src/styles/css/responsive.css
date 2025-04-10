@@ -6044,14 +6044,17 @@
   }
 }
 @media (max-width: 991px) {
-  .rc-refund-all-wrap {
+  .rc-refund-all-wrap,
+  .jar-rc-refund-all-wrap {
     flex-wrap: wrap;
   }
-  .rc-refund-all-wrap .rc-refund-second-wrap {
+  .rc-refund-all-wrap .rc-refund-second-wrap,
+  .jar-rc-refund-all-wrap .jar-rc-refund-second-wrap {
     width: 100%;
     margin: 20px 0 0;
   }
-  .rc-refund-all-wrap .rc-refund-main-wrap {
+  .rc-refund-all-wrap .rc-refund-main-wrap,
+  .jar-rc-refund-all-wrap .jar-rc-refund-main-wrap {
     width: 100%;
   }
 }
@@ -6258,5 +6261,15 @@
 @media (max-width: 375px) {
   .jar-actions span {
     display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-sub-accounts-section
+    .sub-accounts-container
+    .section
+    .account-grid
+    .account-box {
+    flex: 1 1 100%;
   }
 }

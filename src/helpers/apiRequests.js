@@ -218,6 +218,8 @@ const API_deleteSavingJarSchedulePayment =
   apiUrl.API_TRANSACTION_DELETE_SAVING_JAR_SCHEDULE_PAYMENT;
 const API_deleteSavingJarRecurringPayment =
   apiUrl.API_TRANSACTION_DELETE_SAVING_JAR_RECURRING_PAYMENT;
+const API_subAccountsStatisticsForDashboard =
+  apiUrl.API_TRANSACTION_SUB_ACCOUNTS_STATISTICS_DASHBOARD;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -1424,6 +1426,16 @@ export const deleteSavingJarRecurringPayment = (params) => {
   );
 };
 
+/** POST
+ * @params token
+ */
+export const subAccountsStatisticsForDashboard = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_subAccountsStatisticsForDashboard}`,
+    params
+  );
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -1584,4 +1596,5 @@ export const apiRequest = {
   updateSavingJarRecurringPayment,
   deleteSavingJarSchedulePayment,
   deleteSavingJarRecurringPayment,
+  subAccountsStatisticsForDashboard,
 };

@@ -10,6 +10,7 @@
 @import url("./styles/css/responsive.css");
 @import url("./styles/css/fund.css");
 @import url("./styles/css/toastify.css");
+@import url("./styles/css/jar-common.css");
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

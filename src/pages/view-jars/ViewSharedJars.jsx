@@ -79,7 +79,8 @@ const ViewSharedJar = () => {
               {activeJars?.length > 0 && (
                 <div className="active-jar-list-container">
                   <div className="activity-month fs-5 p-0 active-jar-header">
-                    Active
+                    <span>Active</span>
+                    <span>Total : 1000 / 1000</span>
                   </div>
                   <div className="jar-scroll-bar">
                     <ul className="act-user-content-wrap">

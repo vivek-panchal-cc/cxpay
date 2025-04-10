@@ -35,13 +35,23 @@ const SectionRecurringDetails = (props) => {
       <div className="w-50-md rcr-transition-info rcr-transition-info-1 first-rec-detail">
         <table>
           <tbody>
-            <tr style={tableTr}>
+            {/* <tr style={tableTr}>
               <td>Amount</td>
               <td>
                 {isLoading ? (
                   <LoaderDiv height="20" width="50%" />
                 ) : (
                   <WrapAmount value={amount} />
+                )}
+              </td>
+            </tr> */}
+            <tr style={tableTr}>
+              <td>Frequency</td>
+              <td>
+                {isLoading ? (
+                  <LoaderDiv height="20" width="50%" />
+                ) : (
+                  frequency.toUpperCase()
                 )}
               </td>
             </tr>
@@ -52,16 +62,6 @@ const SectionRecurringDetails = (props) => {
                   <LoaderDiv height="20" width="50%" />
                 ) : (
                   formatDate(recurring_start_date)
-                )}
-              </td>
-            </tr>
-            <tr style={tableTr}>
-              <td>Frequency</td>
-              <td>
-                {isLoading ? (
-                  <LoaderDiv height="20" width="50%" />
-                ) : (
-                  frequency.toUpperCase()
                 )}
               </td>
             </tr>

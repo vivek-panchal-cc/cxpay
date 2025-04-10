@@ -22,6 +22,7 @@ import ModalJarPaymentSelect from "components/modals/ModalJarPaymentSelect";
 import ModalPaymentScheduler from "components/modals/ModalPaymentScheduler";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
+import SubAccountsInputSelect from "components/ui/SubAccountsInputSelect";
 
 const CreateJar = (props) => {
   const navigate = useNavigate();
@@ -263,24 +264,20 @@ const CreateJar = (props) => {
           </div>
           <div className="row">
             <div className="col-12 p-0">
-              <InputSelect
+              <SubAccountsInputSelect
+                labelname=""
                 className="form-select form-control"
                 name="jar_category_id"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
                 value={formik.values.jar_category_id}
+                onChange={(selectedValue) =>
+                  formik.setFieldValue("jar_category_id", selectedValue)
+                }
                 error={
                   formik.touched.jar_category_id &&
                   formik.errors.jar_category_id
                 }
-              >
-                <option value={""}>Select Category</option>
-                {jarCategory?.map((jc) => (
-                  <option key={jc.id} value={jc.id}>
-                    {capitalizeWordByWord(jc.jar_category_name)}
-                  </option>
-                ))}
-              </InputSelect>
+                options={jarCategory}
+              />
             </div>
           </div>
 

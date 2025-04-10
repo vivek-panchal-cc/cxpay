@@ -8150,7 +8150,8 @@ ul.recent-act-lw-main .act-info-wrap-left {
   color: var(--dark_blue);
 }
 
-.rc-refund-all-wrap {
+.rc-refund-all-wrap,
+.jar-rc-refund-all-wrap {
   display: flex;
 }
 
@@ -8161,16 +8162,27 @@ ul.recent-act-lw-main .act-info-wrap-left {
   width: 55%;
   border-radius: 24px;
 }
-.rc-refund-main-wrap .pattern-wrap {
+.jar-rc-refund-main-wrap {
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.08);
+  margin-top: 15px;
+  /* max-width: 1000px; */
+  width: 40%;
+  border-radius: 24px;
+  min-width: 500px;
+}
+.rc-refund-main-wrap .pattern-wrap,
+.jar-rc-refund-main-wrap .pattern-wrap {
   background-repeat: repeat-x;
   background-size: auto;
   background-color: transparent;
   height: 11px;
 }
-.rc-refund-main-wrap .pattern-wrap-bottom {
+.rc-refund-main-wrap .pattern-wrap-bottom,
+.jar-rc-refund-main-wrap .pattern-wrap-bottom {
   background-image: url("../../../public/assets/images/bottom_tringle.png");
 }
-.rc-refund-main-wrap .pattern-wrap-top {
+.rc-refund-main-wrap .pattern-wrap-top,
+.jar-rc-refund-main-wrap .pattern-wrap-top {
   background-image: url("../../../public/assets/images/top_circle_half.png");
 }
 .rc-refund-main-inner {
@@ -8189,17 +8201,34 @@ ul.recent-act-lw-main .act-info-wrap-left {
   max-height: 420px;
   overflow-y: auto;
 }
-.rc-refund-second-wrap .pattern-wrap {
+.jar-rc-refund-second-wrap {
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.08);
+  margin-top: 15px;
+  /* max-width: 1000px; */
+  margin-left: 25px;
+  width: 60%;
+  border-radius: 24px;
+  background-color: #f3f3f3;
+  max-height: 420px;
+  overflow: auto;
+}
+.rc-refund-second-wrap .pattern-wrap,
+.jar-rc-refund-second-wrap .pattern-wrap {
   background-repeat: repeat-x;
   background-size: auto;
   background-color: transparent;
   height: 11px;
 }
-.rc-refund-second-wrap .pattern-wrap-bottom {
+.rc-refund-second-wrap .pattern-wrap-bottom,
+.jar-rc-refund-second-wrap .pattern-wrap-bottom {
   background-image: url("../../../public/assets/images/bottom_tringle.png");
 }
-.rc-refund-second-wrap .pattern-wrap-top {
+.rc-refund-second-wrap .pattern-wrap-top,
+.jar-rc-refund-second-wrap .pattern-wrap-top {
   background-image: url("../../../public/assets/images/top_circle_half.png");
+}
+.jar-rc-refund-second-wrap .freq-date-header th {
+  min-width: 150px;
 }
 .rc-refund-second-inner {
   padding: 35px 25px;

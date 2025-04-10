@@ -89,6 +89,7 @@ function JarMemberListingModal(props) {
   };
 
   const retriveRemainingContact = async (page, searchText) => {
+    let error = null;
     try {
       setLoadingContacts(true);
       const { data } = await apiRequest.getRemainingContacts({
@@ -115,10 +116,16 @@ function JarMemberListingModal(props) {
 
         return [...prevContacts, ...newContacts];
       });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      error = err;
+      if (error?.code === "ERR_CANCELED") {
+        setLoadingContacts(true);
+        return;
+      }
     } finally {
-      setLoadingContacts(false);
+      if (error?.code !== "ERR_CANCELED") {
+        setLoadingContacts(false);
+      }
     }
   };
 

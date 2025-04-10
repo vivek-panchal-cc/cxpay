@@ -87,6 +87,8 @@ export { default as IconJarCalendar } from "./JarCalendar";
 export { default as IconNotifyJar } from "./NotifyJar";
 export { default as IconAddJarMember } from "./AddJarMember";
 export { default as IconGear } from "./Gear";
+export { default as IconDashSubAcc } from "./DashSubAcc";
+export { default as IconCheckMark } from "./CheckMark";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";

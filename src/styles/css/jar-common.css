@@ -1,0 +1,127 @@
+.jar-custom-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.jar-dropdown-toggle {
+  width: 100%;
+  text-align: left;
+  padding: 8px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.jar-dropdown-toggle::after {
+  display: none !important;
+}
+
+.jar-dropdown-menu {
+  position: absolute;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  /* max-height: 300px; */
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+  border-radius: 0 0 18px 18px;
+  overflow: hidden;
+}
+
+.jar-dropdown-menu .main-ul {
+  overflow: auto;
+  max-height: 300px;
+}
+
+.jar-dropdown-menu.show {
+  display: block;
+}
+
+.jar-dropdown-item {
+  padding: 10px 20px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  font-family: "Comfortaa", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+}
+
+.jar-dropdown-item:hover {
+  /* background-color: #007aff; */
+  color: #363853;
+}
+
+.parent-option {
+  display: flex;
+  color: #363853;
+}
+
+.child-options {
+  padding-left: 15px;
+  color: #363853;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 0;
+}
+
+.child-options li {
+  margin-left: 20px;
+}
+
+.child-options.expanded {
+  max-height: 300px; /* Adjust this based on content height */
+  opacity: 1;
+}
+
+.child-option {
+  display: flex;
+  padding-left: 10px;
+  color: #363853;
+}
+
+.selected {
+  background-color: rgba(19, 15, 38, 0.05);
+  /* color: white !important; */
+}
+
+.child-option .toggle-icon {
+  margin-right: 8px;
+  stroke: #363853;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid #363853;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 1px;
+}
+
+.toggle-icon {
+  margin-right: 10px;
+  stroke: #363853;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid #363853;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 1px;
+}
+
+.jar-dropdown-item:hover .toggle-icon,
+.jar-dropdown-item.selected .toggle-icon {
+  background-color: #363853 !important;
+  stroke: white !important;
+}

@@ -437,3 +437,136 @@
   button {
   pointer-events: none;
 }
+
+.dashboard-sub-accounts-section {
+  width: 100%;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 15px 0px rgb(0 0 0 / 20%);
+  border-radius: 14px;
+}
+
+.dashboard-sub-accounts-section .sub-accounts-container {
+  /* border: 1px solid #e0e0e0; */
+  border-radius: 12px;
+  padding: 20px;
+  /* max-width: 650px; */
+  margin: auto;
+}
+
+.dashboard-sub-accounts-section .sub-accounts-container .section {
+  margin-bottom: 14px;
+}
+
+.dashboard-sub-accounts-section .sub-accounts-container .section:last-child {
+  margin-bottom: 0px;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .section-header {
+  font-weight: 700;
+  /* font-size: 12px; */
+  line-height: 100%;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  color: #323232;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .section-header
+  .icon {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+.dashboard-sub-accounts-section .sub-accounts-container .section .account-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 20px;
+  /* gap: 16px; */
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .account-grid
+  .account-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  /* gap: 20px; */
+}
+
+/* .dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .account-grid
+  .account-column.first-column {
+  margin-left: 25px;
+} */
+
+.divider {
+  width: 2px;
+  background-color: #999999;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .account-grid
+  .account-box {
+  flex: 1 1 45%;
+  /* background: #f9f9f9; */
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section:not(:first-child) {
+  position: relative;
+  padding-top: 20px;
+  /* margin-top: 10px; */
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -20px;
+  right: -20px;
+  height: 2px;
+  background-color: #f2f2f2;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .account-grid
+  .account-box
+  .label {
+  font-weight: 600;
+  font-size: 10px;
+  color: #36385366;
+  margin: 0;
+  line-height: 10px;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .account-grid
+  .account-box
+  .value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #363853;
+  margin: 4px 0 0 0;
+}
