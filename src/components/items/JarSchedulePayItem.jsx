@@ -1,15 +1,34 @@
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import {
   ACT_TYPE_REQUEST,
   ACT_TYPE_TRANSACTION,
   CURRENCY_SYMBOL,
   activityConsts,
+  isAdminApprovedWithRenewCheck,
+  isComponentDisabled,
 } from "constants/all";
 import { IconBin, IconEdit } from "styles/svgs";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { getInitials, getRandomColorClass } from "constants/all";
+import { useSelector } from "react-redux";
+import { LoginContext } from "context/loginContext";
 
 const JarSchedulePayItem = (props) => {
+  const { admin_approved } = useSelector(
+    (state) => state?.userProfile?.profile
+  );
+  const { loginCreds } = useContext(LoginContext);
+  const { show_renew_section } = loginCreds;
+
+  const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
+    admin_approved,
+    show_renew_section
+  );
+
+  const disableComponent = isComponentDisabled(
+    admin_approved,
+    show_renew_section
+  );
   const { activityDetails, handleClick, handleDelete } = props || {};
   const {
     id,
@@ -120,38 +139,46 @@ const JarSchedulePayItem = (props) => {
           </div>
         </div>
       </div>
-      {is_owner && (
-        <div className="jar-act-mv-wrap">
-          <div className="act-edit-btn">
-            <div className="d-flex right-activity-div">
-              <button
-                className={`act-edit-wrap rounded `}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleClick({ id });
-                }}
-                style={{
-                  background: "#0081C5",
-                  width: "33px",
-                  height: "32px",
-                }}
-              >
-                <IconEdit style={{ stroke: "#FFF" }} />
-              </button>
-              <button
-                className={`act-del-wrap rounded`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDelete({ id });
-                }}
-                style={{ background: "#FF3333" }}
-              >
-                <IconBin style={{ stroke: "#F3F3F3" }} />
-              </button>
-            </div>
+      <div className="jar-act-mv-wrap">
+        <div className="act-edit-btn">
+          <div className="d-flex right-activity-div">
+            <button
+              className={`act-edit-wrap rounded ${
+                adminApprovedWithRenewCheck && is_owner
+                  ? ""
+                  : "contacts-admin-approved-disabled"
+              }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleClick({ id });
+              }}
+              style={{
+                background: "#0081C5",
+                width: "33px",
+                height: "32px",
+              }}
+              disabled={disableComponent || !is_owner}
+            >
+              <IconEdit style={{ stroke: "#FFF" }} />
+            </button>
+            <button
+              className={`act-del-wrap rounded ${
+                adminApprovedWithRenewCheck && is_owner
+                  ? ""
+                  : "contacts-admin-approved-disabled"
+              }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDelete({ id });
+              }}
+              style={{ background: "#FF3333" }}
+              disabled={disableComponent || !is_owner}
+            >
+              <IconBin style={{ stroke: "#F3F3F3" }} />
+            </button>
           </div>
         </div>
-      )}
+      </div>
     </li>
   );
 };

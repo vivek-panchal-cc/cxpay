@@ -35,6 +35,8 @@ const JarRecurringPayItem = (props) => {
     date,
     profile_image,
     created_at,
+    deposite_amount,
+    is_owner = false,
     recurring_start_date = "",
   } = activityDetails || {};
 
@@ -53,6 +55,11 @@ const JarRecurringPayItem = (props) => {
     admin_approved,
     show_renew_section
   );
+
+  const depAmount =
+    typeof deposite_amount === "string"
+      ? parseFloat(deposite_amount)?.toFixed(2)
+      : deposite_amount?.toFixed(2);
 
   const altAmount =
     typeof amount === "string"
@@ -151,11 +158,19 @@ const JarRecurringPayItem = (props) => {
         <div className="jar-rec-pay-rec d-flex justify-content-end">
           <div className={`act-amt-wrap text-end cx-color-green`}>
             <WrapAmount
-              value={altAmount}
+              value={depAmount}
               prefix={`${CURRENCY_SYMBOL} ${
                 iconAmount === "-" ? "" : iconAmount
               }`}
             />
+            <span className="light_gray">
+              <WrapAmount
+                value={altAmount}
+                prefix={` / ${CURRENCY_SYMBOL} ${
+                  iconAmount === "-" ? "" : iconAmount
+                }`}
+              />
+            </span>
           </div>
         </div>
       </div>
@@ -164,7 +179,7 @@ const JarRecurringPayItem = (props) => {
           <div className="d-flex right-activity-div">
             <button
               className={`act-edit-wrap rounded ${
-                adminApprovedWithRenewCheck && isFutureDate
+                adminApprovedWithRenewCheck && isFutureDate && is_owner
                   ? ""
                   : "contacts-admin-approved-disabled"
               }`}
@@ -177,13 +192,13 @@ const JarRecurringPayItem = (props) => {
                 width: "33px",
                 height: "32px",
               }}
-              disabled={disableComponent || !isFutureDate}
+              disabled={disableComponent || !isFutureDate || !is_owner}
             >
               <IconEdit style={{ stroke: "#FFF" }} />
             </button>
             <button
               className={`act-del-wrap rounded ${
-                adminApprovedWithRenewCheck
+                adminApprovedWithRenewCheck && is_owner
                   ? ""
                   : "contacts-admin-approved-disabled"
               }`}
@@ -192,7 +207,7 @@ const JarRecurringPayItem = (props) => {
                 handleDelete({ id });
               }}
               style={{ background: "#FF3333" }}
-              // disabled={disableComponent}
+              disabled={disableComponent || !is_owner}
             >
               <IconBin style={{ stroke: "#F3F3F3" }} />
             </button>

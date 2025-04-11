@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import LoaderDiv from "loaders/LoaderDiv";
 import {
+  CURRENCY_SYMBOL,
   isAdminApprovedWithRenewCheck,
   isComponentDisabled,
   recurringTypeStatus,
@@ -10,6 +11,7 @@ import { LoginContext } from "context/loginContext";
 import { IconBin, IconEdit } from "styles/svgs";
 import ModalAddAmount from "components/modals/ModalAddAmount";
 import ModalConfirmation from "components/modals/ModalConfirmation";
+import WrapAmount from "components/wrapper/WrapAmount";
 
 const SectionRecurringDates = (props) => {
   const [addAmountPopup, setAddAmountPopup] = useState(false);
@@ -66,19 +68,24 @@ const SectionRecurringDates = (props) => {
             </thead>
             <tbody>
               {isLoading ? (
-                [1, 2, 3, 4, 5]?.map((item) => (
+                [1, 2, 3, 4, 5].map((item) => (
                   <tr style={tableTr} key={item}>
-                    <td>
-                      <LoaderDiv height="20" width="70%" />
-                    </td>
-                    <td>
-                      <LoaderDiv height="20" width="100%" />
-                    </td>
+                    {["70%", "70%", "70%", "45%"].map((width, idx) => (
+                      <td
+                        key={idx}
+                        className={`${idx === 3 ? "border-0 pt-2 pb-2" : "'"}`}
+                      >
+                        <LoaderDiv
+                          height={idx === 3 ? "25" : "20"}
+                          width={width}
+                        />
+                      </td>
+                    ))}
                   </tr>
                 ))
               ) : recurring_dates?.length === 0 ? (
                 <tr style={{ textAlign: "center", height: "300px" }}>
-                  <td colSpan="2">No data found</td>
+                  <td colSpan="4">No data found</td>
                 </tr>
               ) : (
                 recurring_dates?.map((dateEntry, index) => {
@@ -86,15 +93,24 @@ const SectionRecurringDates = (props) => {
                     recurringTypeStatus[dateEntry?.status.toLowerCase()];
                   return (
                     <tr style={tableTr} key={index}>
-                      <td>{formatDate(dateEntry.recurring_date)}</td>
-                      <td>1000</td>
+                      <td className="text-black">
+                        {formatDate(dateEntry.recurring_date)}
+                      </td>
+                      <td>
+                        <div className={`act-amt-wrap cx-color-green p-0`}>
+                          <WrapAmount
+                            value={dateEntry.installment_amount || 0}
+                            prefix={`${CURRENCY_SYMBOL} `}
+                          />
+                        </div>
+                      </td>
                       <td className="freq-date-rec-td">
                         <div className={recurringType?.className || ""}>
                           {recurringType?.status ||
                             dateEntry?.status?.toUpperCase()}
                         </div>
                       </td>
-                      <td>
+                      <td className="border-0 pt-2 pb-2">
                         <div className="act-edit-btn">
                           <div className="d-flex right-activity-div">
                             <button

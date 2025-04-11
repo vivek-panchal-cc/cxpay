@@ -264,7 +264,7 @@ const CreateJar = (props) => {
           </div>
           <div className="row">
             <div className="col-12 p-0">
-              <SubAccountsInputSelect
+              {/* <SubAccountsInputSelect
                 labelname=""
                 className="form-select form-control"
                 name="jar_category_id"
@@ -277,7 +277,25 @@ const CreateJar = (props) => {
                   formik.errors.jar_category_id
                 }
                 options={jarCategory}
-              />
+              /> */}
+              <InputSelect
+                className="form-select form-control"
+                name="jar_category_id"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.jar_category_id}
+                error={
+                  formik.touched.jar_category_id &&
+                  formik.errors.jar_category_id
+                }
+              >
+                <option value={""}>Select Category</option>
+                {jarCategory?.map((jc) => (
+                  <option key={jc.id} value={jc.id}>
+                    {capitalizeWordByWord(jc.jar_category_name)}
+                  </option>
+                ))}
+              </InputSelect>
             </div>
           </div>
 
@@ -362,7 +380,7 @@ const CreateJar = (props) => {
             </div>
           )}
 
-          <div className="add-contact-btn-wrap">
+          {/* <div className="add-contact-btn-wrap">
             <button
               type="button"
               onClick={showAddMemberPopupData}
@@ -370,7 +388,7 @@ const CreateJar = (props) => {
             >
               Add Sub-account Members
             </button>
-          </div>
+          </div> */}
 
           {/* {formik.errors.members && formik.touched.members && (
             <div className="text-danger ps-2">{formik.errors.members}</div>

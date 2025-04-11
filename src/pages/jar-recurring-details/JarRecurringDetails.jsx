@@ -63,7 +63,10 @@ const JarRecurringDetails = () => {
         </div>
         <div className="jar-rc-refund-second-wrap">
           <div></div>
-          <div className="rc-refund-main-inner section-recurring-dates">
+          <div
+            className="rc-refund-main-inner section-recurring-dates"
+            style={{ scrollbarColor: "#7f8c8d #f4fcfe" }}
+          >
             <SectionRecurringDates
               details={jarRecurringDetails}
               loading={isLoading}

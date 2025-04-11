@@ -31,16 +31,16 @@ function ModalJarPaymentSelect({
       title: "Schedule Payment",
       color: "#936EE3", // Purple
     },
-    ...(tabName === "own"
-      ? [
-          {
-            id: 3,
-            icon: <IconSyncAlt />,
-            title: "Recurring Payment",
-            color: "#0081C5", // Blue
-          },
-        ]
-      : []),
+    // ...(tabName === "own"
+    //   ? [
+    {
+      id: 3,
+      icon: <IconSyncAlt />,
+      title: "Recurring Payment",
+      color: "#0081C5", // Blue
+    },
+    //   ]
+    // : []),
   ];
 
   useEffect(() => {

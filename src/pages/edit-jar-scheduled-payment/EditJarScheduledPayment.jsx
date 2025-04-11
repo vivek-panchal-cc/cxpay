@@ -95,7 +95,7 @@ const EditJarScheduledPayment = () => {
         jar_id: jarId,
         payment_id: id,
         schedule_date: `${dts} ${tms}`,
-        amount: values.amount,
+        deposite_amount: values.amount,
         specifications: values.specifications,
       };
       try {
