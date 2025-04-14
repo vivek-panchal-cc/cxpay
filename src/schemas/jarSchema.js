@@ -115,6 +115,15 @@ const jarRecurringForUpdate = yup.object().shape({
     .nullable(),
   recurring_end_date: yup.date().required("End date is required").nullable(),
   frequency: yup.string().required("Please select frequency"),
+  amount: yup
+    .string()
+    .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
+    .required("Please enter amount"),
+  specifications: yup
+    .string()
+    .matches(exp0ContainOnlySpace, "Space is not allowed")
+    .max(50, "Maximum limit is 50 characters.")
+    .required("Please enter specifications"),
 });
 
 const setAmount = yup.object().shape({

@@ -58,7 +58,6 @@ const SectionHeader = (props) => {
           ) : (
             <div className="rcr-info-1 d-flex flex-wrap">
               <div className="rcr-card-data">
-                <div style={{ marginBottom: "10px" }}></div>
                 <h2>{name}</h2>
               </div>
               <div className="rcr-card-amt wbr-card-amt">

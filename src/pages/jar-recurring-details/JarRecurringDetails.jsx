@@ -13,6 +13,7 @@ const JarRecurringDetails = () => {
   const { recurringPaymentDetailsId } = useContext(SavingJarOwnContext);
   const [jarRecurringDetails, setJarRecurringDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDataRefresh, setIsDataRefresh] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const JarRecurringDetails = () => {
     };
 
     fetchJarRecurringPaymentDetails();
-  }, [recurringPaymentDetailsId]);
+  }, [recurringPaymentDetailsId, isDataRefresh]);
 
   if (!recurringPaymentDetailsId) return <Navigate to="/jars/own" replace />;
 
@@ -68,8 +69,10 @@ const JarRecurringDetails = () => {
             style={{ scrollbarColor: "#7f8c8d #f4fcfe" }}
           >
             <SectionRecurringDates
+              jarId={recurringPaymentDetailsId.id}
               details={jarRecurringDetails}
               loading={isLoading}
+              setIsDataRefresh={setIsDataRefresh}
             />
           </div>
         </div>

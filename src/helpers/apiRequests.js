@@ -220,6 +220,10 @@ const API_deleteSavingJarRecurringPayment =
   apiUrl.API_TRANSACTION_DELETE_SAVING_JAR_RECURRING_PAYMENT;
 const API_subAccountsStatisticsForDashboard =
   apiUrl.API_TRANSACTION_SUB_ACCOUNTS_STATISTICS_DASHBOARD;
+const API_updateRecurringOccurrenceAmount =
+  apiUrl.API_TRANSACTION_UPDATE_RECURRING_OCCURRENCE_AMOUNT;
+const API_deleteRecurringOccurrence =
+  apiUrl.API_TRANSACTION_DELETE_RECURRING_OCCURRENCE;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -1436,6 +1440,29 @@ export const subAccountsStatisticsForDashboard = (params) => {
   );
 };
 
+/** POST
+ * @params jar_id
+ * @params occurrence_id
+ * @params token
+ */
+export const updateRecurringOccurrenceAmount = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_updateRecurringOccurrenceAmount}`,
+    params
+  );
+};
+/** POST
+ * @params jar_id
+ * @params occurrence_id
+ * @params token
+ */
+export const deleteRecurringOccurrence = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_deleteRecurringOccurrence}`,
+    params
+  );
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -1597,4 +1624,6 @@ export const apiRequest = {
   deleteSavingJarSchedulePayment,
   deleteSavingJarRecurringPayment,
   subAccountsStatisticsForDashboard,
+  updateRecurringOccurrenceAmount,
+  deleteRecurringOccurrence,
 };

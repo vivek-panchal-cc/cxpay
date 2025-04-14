@@ -12,8 +12,14 @@ import { IconBin, IconEdit } from "styles/svgs";
 import ModalAddAmount from "components/modals/ModalAddAmount";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import WrapAmount from "components/wrapper/WrapAmount";
+import { LoaderContext } from "context/loaderContext";
+import { apiRequest } from "helpers/apiRequests";
+import { toast } from "react-toastify";
 
 const SectionRecurringDates = (props) => {
+  const { setIsLoading } = useContext(LoaderContext);
+  const [amountError, setAmountError] = useState("");
+  const [items, setItems] = useState({});
   const [addAmountPopup, setAddAmountPopup] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const { admin_approved } = useSelector(
@@ -31,26 +37,65 @@ const SectionRecurringDates = (props) => {
     admin_approved,
     show_renew_section
   );
-  const isLoading = props?.loading;
   const tableTr = {
     marginBottom: "25px",
   };
 
-  const { recurring_dates = [] } = props?.details || {};
+  const { details, setIsDataRefresh, loading, jarId } = props;
+  const { recurring_dates = [], id } = details || {};
 
   const formatDate = (dateStr) => {
     const [year, month, day] = dateStr.split("-");
     return `${day}/${month}/${year}`;
   };
 
-  const handleSubmitAmount = () => {
-    console.log("Hello");
-    setAddAmountPopup(false);
+  const handleModal = () => {
+    setAddAmountPopup((am) => !am);
+    setAmountError("");
   };
 
-  const handleCallbackTransaction = () => {
-    console.log("HelloDel");
-    setShowDeletePopup(false);
+  const handleSubmitAmount = async (amount) => {
+    setIsLoading(true);
+    try {
+      const reqParams = {
+        jar_id: jarId,
+        payment_id: id,
+        occurrence_id: items.occurrence_id,
+        amount: amount,
+      };
+      const { data } = await apiRequest.updateRecurringOccurrenceAmount(
+        reqParams
+      );
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+      setAddAmountPopup(false);
+      setIsDataRefresh((cs) => !cs);
+      setAmountError("");
+    } catch (error) {
+      setAmountError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCallbackTransaction = async () => {
+    setIsLoading(true);
+    try {
+      const reqParams = {
+        jar_id: jarId,
+        payment_id: id,
+        occurrence_id: items.occurrence_id,
+      };
+      const { data } = await apiRequest.deleteRecurringOccurrence(reqParams);
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+      setIsDataRefresh((cs) => !cs);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setShowDeletePopup(false);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -67,13 +112,13 @@ const SectionRecurringDates = (props) => {
               </tr>
             </thead>
             <tbody>
-              {isLoading ? (
+              {loading ? (
                 [1, 2, 3, 4, 5].map((item) => (
                   <tr style={tableTr} key={item}>
                     {["70%", "70%", "70%", "45%"].map((width, idx) => (
                       <td
                         key={idx}
-                        className={`${idx === 3 ? "border-0 pt-2 pb-2" : "'"}`}
+                        className={`${idx === 3 ? "border-0 pt-2 pb-2" : ""}`}
                       >
                         <LoaderDiv
                           height={idx === 3 ? "25" : "20"}
@@ -85,7 +130,9 @@ const SectionRecurringDates = (props) => {
                 ))
               ) : recurring_dates?.length === 0 ? (
                 <tr style={{ textAlign: "center", height: "300px" }}>
-                  <td colSpan="4">No data found</td>
+                  <td colSpan="4" className="border-0">
+                    No data found
+                  </td>
                 </tr>
               ) : (
                 recurring_dates?.map((dateEntry, index) => {
@@ -112,7 +159,7 @@ const SectionRecurringDates = (props) => {
                       </td>
                       <td className="border-0 pt-2 pb-2">
                         <div className="act-edit-btn">
-                          <div className="d-flex right-activity-div">
+                          <div className="d-flex jar-rec-buttons right-activity-div">
                             <button
                               className={`act-edit-wrap ${
                                 adminApprovedWithRenewCheck &&
@@ -122,13 +169,8 @@ const SectionRecurringDates = (props) => {
                               }`}
                               onClick={(e) => {
                                 e.stopPropagation();
+                                setItems(dateEntry);
                                 setAddAmountPopup(true);
-                              }}
-                              style={{
-                                background: "#936EE3",
-                                width: "33px",
-                                height: "32px",
-                                borderRadius: "50px",
                               }}
                               disabled={
                                 disableComponent ||
@@ -146,11 +188,8 @@ const SectionRecurringDates = (props) => {
                               }`}
                               onClick={(e) => {
                                 e.stopPropagation();
+                                setItems(dateEntry);
                                 setShowDeletePopup(true);
-                              }}
-                              style={{
-                                background: "#FF3333",
-                                borderRadius: "50px",
                               }}
                               disabled={
                                 disableComponent ||
@@ -174,11 +213,11 @@ const SectionRecurringDates = (props) => {
         <ModalAddAmount
           id="set-qr-amount"
           show={addAmountPopup}
-          setShow={setAddAmountPopup}
+          setShow={handleModal}
           heading="Enter Amount"
           subHeading=""
           handleCallback={handleSubmitAmount}
-          error={"error"}
+          error={amountError}
         />
         <ModalConfirmation
           id="delete-group-member-popup"

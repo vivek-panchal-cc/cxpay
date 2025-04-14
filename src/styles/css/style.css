@@ -9704,3 +9704,18 @@ ul .act-info-wrap-left .jar-act-pay-rec {
   background: var(--dark_blue);
   cursor: pointer;
 }
+
+.jar-rec-buttons.right-activity-div button.act-edit-wrap {
+  background: #936ee3;
+  width: 33px;
+  height: 32px;
+  border-radius: 50px;
+}
+.jar-rec-buttons.right-activity-div button.act-del-wrap {
+  background: #ff3333;
+  border-radius: 50px;
+}
+.jar-rec-buttons.right-activity-div button.act-edit-wrap:hover,
+.jar-rec-buttons.right-activity-div button.act-del-wrap:hover {
+  background: var(--dark_blue);
+}

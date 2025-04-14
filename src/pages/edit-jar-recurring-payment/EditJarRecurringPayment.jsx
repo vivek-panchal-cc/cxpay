@@ -1,7 +1,7 @@
 import React, { useContext, useMemo, useRef, useState, useEffect } from "react";
 import PaymentUserItem from "./components/PaymentUserItem";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { isAdminApprovedWithRenewCheck } from "constants/all";
+import { CURRENCY_SYMBOL, isAdminApprovedWithRenewCheck } from "constants/all";
 import { useFormik } from "formik";
 import InputDatePicker from "components/ui/InputDatePicker";
 import ModalConfirmation from "components/modals/ModalConfirmation";
@@ -10,6 +10,7 @@ import ModalDatePickerKyc from "components/modals/ModalDatePickerKyc";
 import { LoginContext } from "context/loginContext";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { jarRecurringForUpdate } from "schemas/jarSchema";
+import Input from "components/ui/Input";
 
 const EditJarRecurringPayment = () => {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ const EditJarRecurringPayment = () => {
     recurring_start_date,
     frequency,
     set_recurring_flag,
+    specifications,
   } = recurringPaymentDetails || {};
   const [selectedFrequency, setSelectedFrequency] = useState(frequency);
   const [activeButton, setActiveButton] = useState("recurring_end_date");
@@ -154,7 +156,7 @@ const EditJarRecurringPayment = () => {
     if (Object.keys(validateObj).length > 0) {
       formik.setTouched(validateObj);
       formik.setErrors(validateObj);
-      setScrollTop((cs) => !cs);
+      // setScrollTop((cs) => !cs);
       return;
     }
 
@@ -188,6 +190,8 @@ const EditJarRecurringPayment = () => {
       recurring_end_date: recurring_end_date || "",
       recurring_start_date: recurring_start_date || "",
       frequency: frequency || "",
+      amount: amount || 0,
+      specifications: specifications || "",
     },
     validationSchema: jarRecurringForUpdate,
     validateOnChange: true,
@@ -195,11 +199,7 @@ const EditJarRecurringPayment = () => {
     context: { activeButton },
     validate: (values) => {
       let errors = {};
-      if (
-        values.recurring_start_date &&
-        values.recurring_end_date &&
-        set_recurring_flag === "DATE"
-      ) {
+      if (values.recurring_start_date && values.recurring_end_date) {
         const startDate = new Date(values.recurring_start_date);
         const endDate = new Date(values.recurring_end_date);
         const timeDiff = endDate - startDate;
@@ -249,6 +249,8 @@ const EditJarRecurringPayment = () => {
         recurring_end_date: formatDateToMDY(recurring_end_date),
         recurring_start_date: formatDateToMDY(recurring_start_date),
         frequency: frequency,
+        deposite_amount: values.amount,
+        specifications: values.specifications,
       };
       try {
         await updateJarRecurringPayment(params);
@@ -280,7 +282,7 @@ const EditJarRecurringPayment = () => {
         </div>
         <div className="jar-recurring-sp-details-main-wrap justify-content-center">
           <div className="recurring-sp-details-left-wrap">
-            <div className="jar-recurring-sp-details-inner-wrap">
+            {/* <div className="jar-recurring-sp-details-inner-wrap">
               <ul>
                 {contacts?.map((item, index) => {
                   const profileURL = item.member_image;
@@ -298,11 +300,95 @@ const EditJarRecurringPayment = () => {
                   );
                 })}
               </ul>
-            </div>
+            </div> */}
             <div className="recurring-sp-cal-wrap d-flex justify-content-center">
               <form onSubmit={formik.handleSubmit}>
                 <div className="row">
                   <div className="flex flex-col items-start justify-start md:ml-[0] ml-[309px] w-[63%] md:w-full">
+                    <div className="col-12 p-0 amt-with-currency">
+                      <span>{CURRENCY_SYMBOL}</span>
+                      <Input
+                        id="amount"
+                        type="text"
+                        inputMode="decimal"
+                        className="form-control"
+                        name="amount"
+                        // maxLength="6"
+                        placeholder="Amount"
+                        onChange={(e) => {
+                          let value = e.target.value.replace(/[^0-9.]/g, ""); // Allow only numbers and decimals
+
+                          // Prevent more than one decimal point
+                          const decimalCount = (value.match(/\./g) || [])
+                            .length;
+                          if (decimalCount > 1) {
+                            value = value.slice(0, -1); // Remove extra decimal point
+                          }
+
+                          // Allow only up to 6 digits before the decimal point
+                          const [integerPart, decimalPart] = value.split(".");
+                          if (integerPart.length <= 6) {
+                            if (decimalPart && decimalPart.length > 2) {
+                              // Limit to two decimal places
+                              formik.setFieldValue(
+                                "amount",
+                                integerPart + "." + decimalPart.slice(0, 2)
+                              );
+                            } else {
+                              formik.setFieldValue("amount", value);
+                            }
+                          } else {
+                            formik.setFieldValue(
+                              "amount",
+                              integerPart.slice(0, 6) +
+                                (decimalPart
+                                  ? `.${decimalPart.slice(0, 2)}`
+                                  : "")
+                            );
+                          }
+                        }}
+                        onBlur={(e) => {
+                          let value = e.target.value.trim();
+
+                          if (!value || value === ".") {
+                            value = "0.00"; // If the field is empty or just a '.', set it to "0.00"
+                          } else {
+                            const hasDecimal = value.includes(".");
+                            // If there's no decimal point, add ".00"
+                            if (!hasDecimal) {
+                              value += ".00";
+                            } else {
+                              const parts = value.split(".");
+                              if (parts[1].length === 0) {
+                                value += "00"; // Add two zeroes if there are no decimal digits
+                              } else if (parts[1].length === 1) {
+                                value += "0"; // Add one zero if there's only one decimal digit
+                              } else if (parts[1].length > 2) {
+                                value = `${parts[0]}.${parts[1].slice(0, 2)}`; // Limit to two decimal places
+                              }
+                            }
+                          }
+
+                          formik.setFieldValue("amount", value);
+                          formik.handleBlur(e);
+                        }}
+                        value={formik.values.amount}
+                        error={formik.touched.amount && formik.errors.amount}
+                      />
+                    </div>
+                    <Input
+                      type="text"
+                      className="form-control"
+                      placeholder="Specification"
+                      name="specifications"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.specifications}
+                      error={
+                        formik.touched.specifications &&
+                        formik.errors.specifications
+                      }
+                    />
                     <div
                       className="common-dr-picker"
                       style={{ marginBottom: "15px", marginTop: "15px" }}
