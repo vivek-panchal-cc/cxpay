@@ -224,6 +224,8 @@ const API_updateRecurringOccurrenceAmount =
   apiUrl.API_TRANSACTION_UPDATE_RECURRING_OCCURRENCE_AMOUNT;
 const API_deleteRecurringOccurrence =
   apiUrl.API_TRANSACTION_DELETE_RECURRING_OCCURRENCE;
+const API_generateOccurrenceForSavingJar =
+  apiUrl.API_GENERATE_OCCURRENCE_FOR_SAVING_JAR;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -1451,6 +1453,7 @@ export const updateRecurringOccurrenceAmount = (params) => {
     params
   );
 };
+
 /** POST
  * @params jar_id
  * @params occurrence_id
@@ -1459,6 +1462,18 @@ export const updateRecurringOccurrenceAmount = (params) => {
 export const deleteRecurringOccurrence = (params) => {
   return axiosTransactionInstance.post(
     `${API_deleteRecurringOccurrence}`,
+    params
+  );
+};
+
+/** POST
+ * @params start_date
+ * @params end_date
+ * @params token
+ */
+export const generateOccurrenceForSavingJar = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_generateOccurrenceForSavingJar}`,
     params
   );
 };
@@ -1626,4 +1641,5 @@ export const apiRequest = {
   subAccountsStatisticsForDashboard,
   updateRecurringOccurrenceAmount,
   deleteRecurringOccurrence,
+  generateOccurrenceForSavingJar,
 };

@@ -183,6 +183,38 @@ const SavingJarOwnProvider = ({ children }) => {
     navigate("/jars/own/recurring-send-payment");
   };
 
+  const handleRecurringPaymentForAddAmountToPayForDate = (data) => {
+    if (!data || !createdJarData) return;
+    const newTargetAmount =
+      parseFloat(createdJarData.target_amount) -
+      parseFloat(createdJarData.deposite_amount);
+    const tmpCreds = {
+      wallet: {
+        ...data,
+        ...createdJarData,
+        deposite_amount: "",
+        specifications: "",
+        target_amount: newTargetAmount || createdJarData.target_amount,
+      },
+    };
+    setSendCreds(tmpCreds);
+    navigate("/jars/own/recurring-send-payment");
+  };
+
+  const handleRecurringSendPaymentForDate = (data) => {
+    if (!data || !createdJarData) return;
+    const tmpCreds = {
+      wallet: {
+        ...data,
+        ...createdJarData,
+        deposite_amount: "",
+        specifications: "",
+      },
+    };
+    setSendCreds(tmpCreds);
+    navigate("/jars/own/recurring-send-payment");
+  };
+
   const handleEditJarData = (data) => {
     if (!data) return;
     const tmpEditData = {
@@ -499,6 +531,8 @@ const SavingJarOwnProvider = ({ children }) => {
         handleSendJarScheduleForAddAmount,
         handleRecurringPaymentForAddAmount,
         handleRecurringPaymentForAddAmountToPay,
+        handleRecurringPaymentForAddAmountToPayForDate,
+        handleRecurringSendPaymentForDate,
         savingJarDetails,
         confirmAcceptOrDeclineTransaction,
         addJarMembers,

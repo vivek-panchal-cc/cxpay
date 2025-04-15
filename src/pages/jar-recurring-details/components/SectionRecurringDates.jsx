@@ -41,8 +41,8 @@ const SectionRecurringDates = (props) => {
     marginBottom: "25px",
   };
 
-  const { details, setIsDataRefresh, loading, jarId } = props;
-  const { recurring_dates = [], id } = details || {};
+  const { details, setIsDataRefresh, loading } = props;
+  const { recurring_dates = [], id, jar_id } = details || {};
 
   const formatDate = (dateStr) => {
     const [year, month, day] = dateStr.split("-");
@@ -58,7 +58,7 @@ const SectionRecurringDates = (props) => {
     setIsLoading(true);
     try {
       const reqParams = {
-        jar_id: jarId,
+        jar_id: jar_id,
         payment_id: id,
         occurrence_id: items.occurrence_id,
         amount: amount,
@@ -82,7 +82,7 @@ const SectionRecurringDates = (props) => {
     setIsLoading(true);
     try {
       const reqParams = {
-        jar_id: jarId,
+        jar_id: jar_id,
         payment_id: id,
         occurrence_id: items.occurrence_id,
       };

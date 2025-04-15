@@ -9,11 +9,9 @@ import ModalConfirmation from "components/modals/ModalConfirmation";
 import { useSelector } from "react-redux";
 import ModalDatePickerKyc from "components/modals/ModalDatePickerKyc";
 import { LoginContext } from "context/loginContext";
-import { CURRENCY_SYMBOL, isAdminApprovedWithRenewCheck } from "constants/all";
+import { isAdminApprovedWithRenewCheck } from "constants/all";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { jarRecurringSchema } from "schemas/jarSchema";
-import Input from "components/ui/Input";
-import { apiRequest } from "helpers/apiRequests";
 
 function JarRecurringSend() {
   const { setIsLoading } = useContext(LoaderContext);
@@ -39,8 +37,8 @@ function JarRecurringSend() {
     sendCreds,
     prevPathRedirect,
     cancelOwnJarPayment,
-    handleRecurringSendPaymentForDate,
-    handleRecurringPaymentForAddAmountToPayForDate,
+    handleRecurringSendPayment,
+    handleRecurringPaymentForAddAmountToPay,
   } = useContext(SavingJarOwnContext);
   const { wallet } = sendCreds || [];
 
@@ -75,6 +73,13 @@ function JarRecurringSend() {
     e.preventDefault();
     setActiveButton("occurrences");
     formik.setFieldValue("recurring_end_date", "");
+  };
+
+  const handleEndDateButtonClick = (e) => {
+    e.preventDefault();
+    setActiveButton("recurring_end_date");
+    setOccurrenceCount(0);
+    formik.setFieldValue("occurrence_count", 0);
   };
 
   const handleFrequencyClick = (frequency) => {
@@ -116,8 +121,7 @@ function JarRecurringSend() {
       recurring_start_date: "",
       recurring_end_date: "",
       frequency: "daily",
-      total_amount: "",
-      specification: "",
+      occurrence_count: "1",
     },
     validationSchema: jarRecurringSchema,
     validateOnChange: true,
@@ -126,6 +130,9 @@ function JarRecurringSend() {
     context: { activeButton },
     validate: (values) => {
       let errors = {};
+      if (activeButton === "occurrences" && values.occurrence_count <= 0) {
+        errors.occurrence_count = "Occurrence must be greater than 0";
+      }
       if (activeButton === "recurring_end_date" && !values.recurring_end_date) {
         errors.recurring_end_date = "End date is required";
       }
@@ -167,6 +174,24 @@ function JarRecurringSend() {
       }
       return errors;
     },
+    onSubmit: async (values, { setErrors }) => {
+      setIsLoading(true);
+      try {
+        const scheduleDate = new Date().toISOString().split("T")[0]; // Current date in YYYY-MM-DD format
+        const requestData = { ...formik.values, schedule_date: scheduleDate };
+
+        wallet.jar_id
+          ? handleRecurringPaymentForAddAmountToPay(requestData)
+          : handleRecurringSendPayment(requestData);
+      } catch (error) {
+        if (typeof error === "string") return toast.error(error);
+        const errorObj = {};
+        for (const property in error) errorObj[property] = error[property]?.[0];
+        setErrors(errorObj);
+      } finally {
+        setIsLoading(false);
+      }
+    },
   });
 
   const handleConfirmRecurringSubmit = async () => {
@@ -179,38 +204,16 @@ function JarRecurringSend() {
 
     setIsLoading(true);
     try {
-      // const { data } = await apiRequest.generateOccurrenceForSavingJar({
-      //   ...formik.values,
-      //   recurring_start_date: new Date(formik.values.recurring_start_date)
-      //     .toISOString()
-      //     .split("T")[0],
-      //   recurring_end_date: new Date(formik.values.recurring_end_date)
-      //     .toISOString()
-      //     .split("T")[0],
-      //   schedule_date: new Date().toISOString().split("T")[0],
-      // });
-      // if (!data.success) throw data.message;
-      // toast.success(data.message);
       if (wallet.jar_id) {
-        handleRecurringPaymentForAddAmountToPayForDate({
-          total_amount: "75.00",
-          schedule_date: "2025-03-20",
-          recurring_start_date: "2025-04-20",
-          recurring_end_date: "2025-04-28",
-          frequency: "weekly",
-          occurrences: [
-            {
-              date: "2025-04-20",
-              amount: "37.00",
-            },
-            {
-              date: "2025-04-27",
-              amount: "38.00",
-            },
-          ],
+        handleRecurringPaymentForAddAmountToPay({
+          ...formik.values,
+          schedule_date: new Date().toISOString().split("T")[0], // Adds current date in YYYY-MM-DD format
         });
       } else {
-        handleRecurringSendPaymentForDate(data.data);
+        handleRecurringSendPayment({
+          ...formik.values,
+          schedule_date: new Date().toISOString().split("T")[0], // Adds current date in YYYY-MM-DD format
+        });
       }
     } catch (error) {
       if (typeof error === "string") return toast.error(error);
@@ -266,110 +269,9 @@ function JarRecurringSend() {
                 <div className="flex md:flex-1 md:flex-col flex-row md:gap-5 items-start justify-evenly w-[79%] md:w-full">
                   <div className="flex flex-1 flex-col justify-start md:mt-0 mt-[174px] w-full">
                     <div className="flex flex-col items-start justify-start md:ml-[0] ml-[309px] w-[63%] md:w-full">
-                      <div className="row mt-3">
-                        <div className="col-12 p-0 amt-with-currency">
-                          <span>{CURRENCY_SYMBOL}</span>
-                          <Input
-                            id="total_amount"
-                            type="text"
-                            inputMode="decimal"
-                            className="form-control"
-                            name="total_amount"
-                            // maxLength="6"
-                            placeholder="Amount"
-                            onChange={(e) => {
-                              let value = e.target.value.replace(
-                                /[^0-9.]/g,
-                                ""
-                              ); // Allow only numbers and decimals
-
-                              // Prevent more than one decimal point
-                              const decimalCount = (value.match(/\./g) || [])
-                                .length;
-                              if (decimalCount > 1) {
-                                value = value.slice(0, -1); // Remove extra decimal point
-                              }
-
-                              // Allow only up to 6 digits before the decimal point
-                              const [integerPart, decimalPart] =
-                                value.split(".");
-                              if (integerPart.length <= 6) {
-                                if (decimalPart && decimalPart.length > 2) {
-                                  // Limit to two decimal places
-                                  formik.setFieldValue(
-                                    "total_amount",
-                                    integerPart + "." + decimalPart.slice(0, 2)
-                                  );
-                                } else {
-                                  formik.setFieldValue("total_amount", value);
-                                }
-                              } else {
-                                formik.setFieldValue(
-                                  "total_amount",
-                                  integerPart.slice(0, 6) +
-                                    (decimalPart
-                                      ? `.${decimalPart.slice(0, 2)}`
-                                      : "")
-                                );
-                              }
-                            }}
-                            onBlur={(e) => {
-                              let value = e.target.value.trim();
-
-                              if (!value || value === ".") {
-                                value = "0.00"; // If the field is empty or just a '.', set it to "0.00"
-                              } else {
-                                const hasDecimal = value.includes(".");
-                                // If there's no decimal point, add ".00"
-                                if (!hasDecimal) {
-                                  value += ".00";
-                                } else {
-                                  const parts = value.split(".");
-                                  if (parts[1].length === 0) {
-                                    value += "00"; // Add two zeroes if there are no decimal digits
-                                  } else if (parts[1].length === 1) {
-                                    value += "0"; // Add one zero if there's only one decimal digit
-                                  } else if (parts[1].length > 2) {
-                                    value = `${parts[0]}.${parts[1].slice(
-                                      0,
-                                      2
-                                    )}`; // Limit to two decimal places
-                                  }
-                                }
-                              }
-
-                              formik.setFieldValue("total_amount", value);
-                              formik.handleBlur(e);
-                            }}
-                            value={formik.values.total_amount}
-                            error={
-                              formik.touched.total_amount &&
-                              formik.errors.total_amount
-                            }
-                          />
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-12 p-0">
-                          <Input
-                            type="text"
-                            id="cc_specification"
-                            className="form-control"
-                            placeholder="Specification"
-                            name="specification"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.specification}
-                            error={
-                              formik.touched.specification &&
-                              formik.errors.specification
-                            }
-                          />
-                        </div>
-                      </div>
                       <div
                         className="common-dr-picker"
-                        style={{ marginBottom: "15px" }}
+                        style={{ marginBottom: "15px", marginTop: "15px" }}
                       >
                         <label className="rec-label-class">Start Date</label>
                         <InputDatePicker
@@ -388,7 +290,7 @@ function JarRecurringSend() {
                       </div>
 
                       <label className="rec-label-class">Frequency</label>
-                      <div className="frequency-buttons mb-0">
+                      <div className="frequency-buttons">
                         {["daily", "weekly", "monthly", "yearly"].map(
                           (freq) => (
                             <button
@@ -407,12 +309,62 @@ function JarRecurringSend() {
                         )}
                       </div>
 
+                      <div className="recurring-occurrence">
+                        <button
+                          type="button"
+                          className={`btn ${
+                            activeButton === "occurrences"
+                              ? "btn-active"
+                              : "btn-inactive"
+                          }`}
+                          //   onClick={handleOccurrenceButtonClick}
+                          disabled
+                        >
+                          No. of Occurrences
+                        </button>
+                        <button
+                          type="button"
+                          className={`btn ${
+                            activeButton === "recurring_end_date"
+                              ? "btn-active"
+                              : "btn-inactive"
+                          }`}
+                          onClick={handleEndDateButtonClick}
+                        >
+                          End date
+                        </button>
+                      </div>
+
+                      {activeButton === "occurrences" && (
+                        <div className="row">
+                          <div className="col-6 col p-0">
+                            <div className="form-field">
+                              <InputNumber
+                                ref={myInputRef}
+                                type="number"
+                                min="1"
+                                max="99"
+                                className="form-control"
+                                placeholder="No. of occurrences"
+                                name="occurrence_count"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.occurrence_count}
+                                error={
+                                  formik.touched.occurrence_count &&
+                                  formik.errors.occurrence_count
+                                }
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
                       {activeButton === "recurring_end_date" && (
                         <div
                           className="common-dr-picker"
                           style={{ marginBottom: "15px", marginTop: "15px" }}
                         >
-                          <label className="rec-label-class">End Date</label>
                           <InputDatePicker
                             className="date-filter-calendar-recurring"
                             date={formik.values.recurring_end_date}
@@ -430,30 +382,21 @@ function JarRecurringSend() {
                       )}
 
                       {adminApprovedWithRenewCheck ? (
-                        <div className="pay-btn-wrap flex-nowrap">
+                        <div className="pay-btn-wrap">
                           <button
                             type="button"
                             onClick={handleCancel}
-                            className="btn btn-cancel-payment w-100"
+                            className="btn btn-cancel-payment"
                           >
                             Cancel
                           </button>
-                          {false && (
-                            <button
-                              type="button"
-                              onClick={handleCancel}
-                              className="btn btn-cancel-payment w-100"
-                            >
-                              Skip
-                            </button>
-                          )}
                           <button
                             type="button"
-                            className="btn btn-send-payment w-100 m-0"
+                            className="btn btn-send-payment"
                             disabled={formik.isSubmitting}
                             onClick={handleScheduleSubmit}
                           >
-                            Continue
+                            Next
                           </button>
                         </div>
                       ) : null}

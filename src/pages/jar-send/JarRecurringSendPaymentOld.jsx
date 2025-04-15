@@ -6,7 +6,7 @@ import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
 import { useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { isAdminApprovedWithRenewCheck } from "constants/all";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
 import ModalConfirmation from "components/modals/ModalConfirmation";
@@ -18,10 +18,6 @@ import { IconFrequency, IconScheduledDate } from "styles/svgs";
 import JarPaymentItem from "components/items/JarpaymentItem";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { jarCreateSchema } from "schemas/jarSchema";
-import SectionHeader from "pages/jar-recurring-create-details/components/SectionHeader";
-import SectionRecurringDetails from "pages/jar-recurring-create-details/components/SectionRecurringDetails";
-import SectionRecurringDates from "pages/jar-recurring-create-details/components/SectionRecurringDates";
-import SectionButtons from "pages/jar-recurring-create-details/components/SectionButtons";
 
 function JarRecurringSendPayment(_props) {
   const navigate = useNavigate();
@@ -279,39 +275,91 @@ function JarRecurringSendPayment(_props) {
       </div>
       {/* <!-- payment block form starts -->  */}
       <form onSubmit={formik.handleSubmit}>
+        <div className="RecurringScheduleDateWrap">
+          <div className="RSDaterange rs_cm_div">
+            <div className="rssvg_wrap">
+              <IconScheduledDate />
+            </div>
+            <div className="rssvg_wrap_inner d-flex align-items-center">
+              <div>
+                <p>
+                  Start Date
+                  <br />
+                  <b>{startDate}</b>
+                </p>
+              </div>
+              {wallet?.recurring_end_date && (
+                <div className="divider_date"></div>
+              )}
+              {wallet?.recurring_end_date && (
+                <div>
+                  <p>
+                    End Date
+                    <br />
+                    <b>{endDate}</b>
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+          {wallet?.target_date && (
+            <div className="RSOccurances rs_cm_div">
+              <div className="rssvg_wrap">
+                <IconScheduledDate />
+              </div>
+              <p>
+                Target Date
+                <br />
+                <b>{wallet?.target_date.replace(/-/g, "/")}</b>
+              </p>
+            </div>
+          )}
+          <div className="RSFrequency rs_cm_div">
+            <div className="rssvg_wrap">
+              <IconFrequency />
+            </div>
+            <p>
+              Frequency
+              <br />
+              <b>{wallet?.frequency?.toUpperCase()}</b>
+            </p>
+          </div>
+        </div>
         <div className="one-time-pay-sec one-time-pay-wrap">
           <div className="one-time-pay-sec-inner-sec col-12">
             {/* <!-- one time payment block starts -->	*/}
             <div className="payment-blocks-wrap">
-              <div className="walllet-refund-wrapper wallet-refund-details-wrappper wr-bank-details-wrapper">
-                {/* <div className="wr-title-wrap">
-                  <h3>Sub-account Recurring Payment Details</h3>
-                  <ul className="breadcrumb">
-                    <li>
-                      <Link to={`/jars/own/jar-recurring-pay-list`}>
-                        Sub-accounts
-                      </Link>
-                    </li>
-                    <li>Recurring Payment Details</li>
-                  </ul>
-                </div> */}
-                <div className="jar-rc-refund-all-wrap">
-                  <div className="jar-rc-refund-main-wrap">
-                    <div className="rc-refund-main-inner">
-                      <SectionHeader details={wallet} />
-                      <div className="rcr-divider-wrap"></div>
-                      <SectionRecurringDetails details={wallet} />
-                    </div>
-                  </div>
-                  <div className="jar-rc-refund-second-wrap">
-                    <div
-                      className="rc-refund-main-inner section-recurring-dates"
-                      style={{ scrollbarColor: "#7f8c8d #f4fcfe" }}
-                    >
-                      <SectionRecurringDates details={wallet} />
-                    </div>
-                  </div>
-                </div>
+              <div className="payment-blocks-inner">
+                {/* <!-- payment-blocks-listing starts --> */}
+                <ul className="payment-blocks-listing">
+                  <JarPaymentItem
+                    formik={formik}
+                    key={0} // Static index since there's only one wallet object
+                    item={wallet}
+                    fallbackImgUrl={"/assets/images/single_contact_profile.png"}
+                    fieldNameAmount={`wallet.deposite_amount`}
+                    fieldValueAmount={formik.values?.wallet?.deposite_amount}
+                    fieldErrorAmount={
+                      formik.touched?.wallet?.deposite_amount &&
+                      formik.errors?.wallet?.deposite_amount
+                    }
+                    fieldNameSpecifications={`wallet.specifications`}
+                    fieldValueSpecifications={
+                      formik.values?.wallet?.specifications
+                    }
+                    fieldErrorSpecifications={
+                      formik.touched?.wallet?.specifications &&
+                      formik.errors?.wallet?.specifications
+                    }
+                    fieldOnChange={formik.handleChange}
+                    fieldOnBlur={formik.handleBlur}
+                    showDelete={false} // No need to delete as there's only one wallet
+                    handleDelete={handleDeleteContact}
+                    disableSpecification={false}
+                    disableAmount={false}
+                    ref={(el) => (inputAmountRefs[0] = el)} // Single reference since there's only one item
+                  />
+                </ul>
               </div>
             </div>
             {adminApprovedWithRenewCheck ? (
