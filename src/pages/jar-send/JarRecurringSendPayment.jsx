@@ -202,7 +202,7 @@ function JarRecurringSendPayment(_props) {
   const handleCancel = (e) => {
     e.preventDefault();
     if (recurringData.jar_id) return navigate(-2);
-    navigate("/jars/own/create-jar", { replace: true });
+    navigate("/jars/own", { replace: true });
     cancelOwnJarPayment();
   };
 

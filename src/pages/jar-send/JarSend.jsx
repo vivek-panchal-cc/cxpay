@@ -244,6 +244,13 @@ function JarSend(props) {
     });
   }, [formik.isSubmitting, scrollTop]);
 
+  const handleCancel = (e) => {
+    e.preventDefault();
+    if (wallet.jar_id) return navigate(-1);
+    navigate("/jars/own", { replace: true });
+    cancelOwnJarPayment();
+  };
+
   useEffect(() => {
     // Check if the wallet array is empty and navigate accordingly
     if (!sendCreds?.wallet || sendCreds.wallet.length <= 0) {
@@ -281,7 +288,7 @@ function JarSend(props) {
         subHeading={sentDetail.message}
         headingImg={sentDetail.url}
         btnText="Done"
-        handleBtnClick={cancelOwnJarPayment}
+        handleBtnClick={handleCancel}
       />
       <ModalConfirmation
         id="delete-group-member-popup"
