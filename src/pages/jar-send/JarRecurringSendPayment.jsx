@@ -199,10 +199,18 @@ function JarRecurringSendPayment(_props) {
     navigate("/jars/own/recurring-send", { replace: true });
   };
 
+  // const handleCancel = (e) => {
+  //   e.preventDefault();
+  //   if (recurringData.jar_id) return navigate(-2);
+  //   navigate("/jars/own", { replace: true });
+  //   cancelOwnJarPayment();
+  // };
+
   const handleCancel = (e) => {
     e.preventDefault();
-    if (recurringData.jar_id) return navigate(-2);
-    navigate("/jars/own", { replace: true });
+    navigate(recurringData.jar_id ? -2 : "/jars/own", {
+      replace: !recurringData.jar_id,
+    });
     cancelOwnJarPayment();
   };
 

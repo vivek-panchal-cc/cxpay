@@ -244,10 +244,16 @@ function JarSend(props) {
     });
   }, [formik.isSubmitting, scrollTop]);
 
+  // const handleCancel = (e) => {
+  //   e.preventDefault();
+  //   if (wallet.jar_id) return navigate(-1);
+  //   navigate("/jars/own", { replace: true });
+  //   cancelOwnJarPayment();
+  // };
+
   const handleCancel = (e) => {
     e.preventDefault();
-    if (wallet.jar_id) return navigate(-1);
-    navigate("/jars/own", { replace: true });
+    navigate(wallet.jar_id ? -1 : "/jars/own", { replace: !wallet.jar_id });
     cancelOwnJarPayment();
   };
 
