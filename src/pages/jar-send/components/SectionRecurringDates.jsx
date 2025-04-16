@@ -35,9 +35,8 @@ const SectionRecurringDates = (props) => {
     marginBottom: "25px",
   };
 
-  const { details, setIsDataRefresh } = props;
-  const { occurrences = [], id, jar_id } = details || {};
-  const [occurrenceList, setOccurrenceList] = useState(occurrences || []);
+  const { details, setDetails } = props;
+  const [occurrenceList, setOccurrenceList] = useState(details || []);
 
   const formatDate = (dateStr) => {
     const [year, month, day] = dateStr.split("-");
@@ -59,6 +58,9 @@ const SectionRecurringDates = (props) => {
       setOccurrenceList(updatedList);
       setAddAmountPopup(false);
       setAmountError("");
+    }
+    if (setDetails) {
+      setDetails(updatedList);
     }
   };
 

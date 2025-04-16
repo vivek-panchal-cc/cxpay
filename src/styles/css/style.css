@@ -8227,8 +8227,16 @@ ul.recent-act-lw-main .act-info-wrap-left {
 .jar-rc-refund-second-wrap .pattern-wrap-top {
   background-image: url("../../../public/assets/images/top_circle_half.png");
 }
+.jar-rc-refund-second-wrap table .freq-date-header th + th,
+.jar-rc-refund-second-wrap table td + td {
+  padding-left: 25px;
+}
+.jar-rc-refund-second-wrap table .freq-date-header th:last-child,
+.jar-rc-refund-second-wrap table td:last-child {
+  padding-right: 25px;
+}
 .jar-rc-refund-second-wrap .freq-date-header th {
-  min-width: 150px;
+  /* min-width: 150px; */
 }
 .rc-refund-second-inner {
   padding: 35px 25px;

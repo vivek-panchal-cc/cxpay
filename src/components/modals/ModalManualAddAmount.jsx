@@ -108,7 +108,7 @@ function ModalManualAddAmount(props) {
             <div>
               <div>{children}</div>
               <div className="d-flex justify-content-center">
-                <div className="form">
+                <form>
                   <div className="input-select-wrap form-field">
                     <Input
                       type="text"
@@ -126,11 +126,11 @@ function ModalManualAddAmount(props) {
                     <p className="ip_currancy">{CURRENCY_SYMBOL}</p>
                   </div>
 
-                  {(inputError || error) && (
+                  {/* {(inputError || error) && (
                     <p className="text-danger text-center">
                       {inputError || error}
                     </p>
-                  )}
+                  )} */}
 
                   <div className="popup-btn-wrap d-flex align-items-center justify-content-end gap-4 mt-3">
                     <div className="set-amount">
@@ -144,17 +144,19 @@ function ModalManualAddAmount(props) {
                       </button>
                       <button
                         className={`outline-btn px-4 py-3 ${
-                          amount.length === 0 ? "disabled-font-color" : ""
+                          amount.length === 0 || amount <= 0
+                            ? "disabled-font-color"
+                            : ""
                         }`}
                         style={{ minWidth: "initial" }}
                         onClick={handleSubmit}
-                        disabled={amount.length === 0}
+                        disabled={amount.length === 0 || amount <= 0}
                       >
                         OK
                       </button>
                     </div>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>

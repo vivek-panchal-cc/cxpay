@@ -192,8 +192,8 @@ const SavingJarOwnProvider = ({ children }) => {
       wallet: {
         ...data,
         ...createdJarData,
-        deposite_amount: "",
-        specifications: "",
+        // deposite_amount: "",
+        // specifications: "",
         target_amount: newTargetAmount || createdJarData.target_amount,
       },
     };
@@ -207,8 +207,19 @@ const SavingJarOwnProvider = ({ children }) => {
       wallet: {
         ...data,
         ...createdJarData,
-        deposite_amount: "",
-        specifications: "",
+        // deposite_amount: "",
+        // specifications: "",
+      },
+    };
+    setSendCreds(tmpCreds);
+    navigate("/jars/own/recurring-send-payment");
+  };
+
+  const handleRecurringUpdatePaymentForDate = (data) => {
+    if (!data) return;
+    const tmpCreds = {
+      wallet: {
+        ...data,
       },
     };
     setSendCreds(tmpCreds);
@@ -533,6 +544,7 @@ const SavingJarOwnProvider = ({ children }) => {
         handleRecurringPaymentForAddAmountToPay,
         handleRecurringPaymentForAddAmountToPayForDate,
         handleRecurringSendPaymentForDate,
+        handleRecurringUpdatePaymentForDate,
         savingJarDetails,
         confirmAcceptOrDeclineTransaction,
         addJarMembers,

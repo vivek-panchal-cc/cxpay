@@ -86,7 +86,7 @@ const jarRecurringSchema = yup.object().shape({
     .string()
     .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
     .required("Please enter amount"),
-  specification: yup
+  specifications: yup
     .string()
     .matches(exp0ContainOnlySpace, "Space is not allowed")
     .max(50, "Maximum limit is 50 characters.")

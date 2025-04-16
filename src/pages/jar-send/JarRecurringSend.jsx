@@ -43,7 +43,6 @@ function JarRecurringSend() {
     handleRecurringPaymentForAddAmountToPayForDate,
   } = useContext(SavingJarOwnContext);
   const { wallet } = sendCreds || [];
-
   const myInputRef = useRef(null);
 
   useEffect(() => {
@@ -117,7 +116,7 @@ function JarRecurringSend() {
       recurring_end_date: "",
       frequency: "daily",
       total_amount: "",
-      specification: "",
+      specifications: "",
     },
     validationSchema: jarRecurringSchema,
     validateOnChange: true,
@@ -169,6 +168,15 @@ function JarRecurringSend() {
     },
   });
 
+  const parseTargetDate = (dateString) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // months are 0-based
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   const handleConfirmRecurringSubmit = async () => {
     const validateObj = await formik.validateForm(formik.values);
     if (Object.keys(validateObj).length > 0) {
@@ -179,38 +187,26 @@ function JarRecurringSend() {
 
     setIsLoading(true);
     try {
-      // const { data } = await apiRequest.generateOccurrenceForSavingJar({
-      //   ...formik.values,
-      //   recurring_start_date: new Date(formik.values.recurring_start_date)
-      //     .toISOString()
-      //     .split("T")[0],
-      //   recurring_end_date: new Date(formik.values.recurring_end_date)
-      //     .toISOString()
-      //     .split("T")[0],
-      //   schedule_date: new Date().toISOString().split("T")[0],
-      // });
-      // if (!data.success) throw data.message;
-      // toast.success(data.message);
+      const { data } = await apiRequest.generateOccurrenceForSavingJar({
+        ...formik.values,
+        recurring_start_date: parseTargetDate(
+          formik.values.recurring_start_date
+        ),
+        recurring_end_date: parseTargetDate(formik.values.recurring_end_date),
+        schedule_date: new Date().toISOString().split("T")[0],
+      });
+      if (!data.success) throw data.message;
+      toast.success(data.message);
       if (wallet.jar_id) {
         handleRecurringPaymentForAddAmountToPayForDate({
-          total_amount: "75.00",
-          schedule_date: "2025-03-20",
-          recurring_start_date: "2025-04-20",
-          recurring_end_date: "2025-04-28",
-          frequency: "weekly",
-          occurrences: [
-            {
-              date: "2025-04-20",
-              amount: "37.00",
-            },
-            {
-              date: "2025-04-27",
-              amount: "38.00",
-            },
-          ],
+          ...data.data,
+          specifications: formik.values.specifications,
         });
       } else {
-        handleRecurringSendPaymentForDate(data.data);
+        handleRecurringSendPaymentForDate({
+          ...data.data,
+          specifications: formik.values.specifications,
+        });
       }
     } catch (error) {
       if (typeof error === "string") return toast.error(error);
@@ -226,12 +222,6 @@ function JarRecurringSend() {
     if (wallet.jar_id) return navigate("/jars/own", { replace: true });
     navigate("/jars/own/create-jar", { replace: true });
     cancelOwnJarPayment();
-  };
-
-  const parseTargetDate = (dateString) => {
-    if (!dateString) return null;
-    const [day, month, year] = dateString.split("-"); // Split "07-03-2025" into [07, 03, 2025]
-    return new Date(`${year}-${month}-${day}`); // Convert to "2025-03-07"
   };
 
   useEffect(() => {
@@ -356,13 +346,13 @@ function JarRecurringSend() {
                             id="cc_specification"
                             className="form-control"
                             placeholder="Specification"
-                            name="specification"
+                            name="specifications"
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            value={formik.values.specification}
+                            value={formik.values.specifications}
                             error={
-                              formik.touched.specification &&
-                              formik.errors.specification
+                              formik.touched.specifications &&
+                              formik.errors.specifications
                             }
                           />
                         </div>

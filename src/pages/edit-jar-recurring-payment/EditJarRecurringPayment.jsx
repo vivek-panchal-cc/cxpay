@@ -11,6 +11,9 @@ import { LoginContext } from "context/loginContext";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { jarRecurringForUpdate } from "schemas/jarSchema";
 import Input from "components/ui/Input";
+import { apiRequest } from "helpers/apiRequests";
+import { LoaderContext } from "context/loaderContext";
+import { toast } from "react-toastify";
 
 const EditJarRecurringPayment = () => {
   const navigate = useNavigate();
@@ -19,14 +22,16 @@ const EditJarRecurringPayment = () => {
     useState(false);
 
   const [startDate, setStartDate] = useState(null);
+  const { setIsLoading } = useContext(LoaderContext);
   const {
     recurringPaymentDetails,
     updateJarRecurringPayment,
     setRecurringPaymentDetails,
+    handleRecurringUpdatePaymentForDate,
   } = useContext(SavingJarOwnContext);
   const {
     id,
-    jarId,
+    jar_id,
     is_group,
     name,
     amount,
@@ -180,7 +185,8 @@ const EditJarRecurringPayment = () => {
       }
       setShowScheduleConfirmPopup(true); // Show the popup otherwise
     } else {
-      formik.handleSubmit();
+      // formik.handleSubmit();
+      handleConfirmRecurringSubmit();
     }
   };
 
@@ -245,7 +251,7 @@ const EditJarRecurringPayment = () => {
       const { recurring_end_date, recurring_start_date, frequency } = values;
       const params = {
         payment_id: id,
-        jar_id: jarId,
+        jar_id: jar_id,
         recurring_end_date: formatDateToMDY(recurring_end_date),
         recurring_start_date: formatDateToMDY(recurring_start_date),
         frequency: frequency,
@@ -261,6 +267,53 @@ const EditJarRecurringPayment = () => {
       }
     },
   });
+
+  const parseTargetDate = (dateString) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // months are 0-based
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const handleConfirmRecurringSubmit = async () => {
+    const validateObj = await formik.validateForm(formik.values);
+    if (Object.keys(validateObj).length > 0) {
+      formik.setTouched(validateObj);
+      formik.setErrors(validateObj);
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.generateOccurrenceForSavingJar({
+        ...formik.values,
+        total_amount: formik.values.amount,
+        recurring_start_date: parseTargetDate(
+          formik.values.recurring_start_date
+        ),
+        recurring_end_date: parseTargetDate(formik.values.recurring_end_date),
+        schedule_date: new Date().toISOString().split("T")[0],
+      });
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+      if (jar_id) {
+        handleRecurringUpdatePaymentForDate({
+          ...data.data,
+          ...recurringPaymentDetails,
+          specifications: formik.values.specifications,
+        });
+      }
+    } catch (error) {
+      if (typeof error === "string") return toast.error(error);
+      const errorObj = {};
+      for (const property in error) errorObj[property] = error[property]?.[0];
+      formik.setErrors(errorObj);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   if (!recurringPaymentDetails.id)
     return <Navigate to="/jars/own/jar-recurring-pay-list" replace />;
@@ -452,18 +505,18 @@ const EditJarRecurringPayment = () => {
                       <div className="sp-btn-inner-wrap outline-solid-wrap flex-recurring-update">
                         <button
                           type="button"
-                          className="btn w-100 mb-2"
-                          disabled={formik.isSubmitting}
-                          onClick={handleScheduleSubmit}
-                        >
-                          Update Recurring
-                        </button>
-                        <button
-                          type="button"
                           className="btn outline-btn w-100 mb-2"
                           onClick={handleCancel}
                         >
                           Cancel
+                        </button>
+                        <button
+                          type="button"
+                          className="btn w-100 mb-2"
+                          disabled={formik.isSubmitting}
+                          onClick={handleScheduleSubmit}
+                        >
+                          Continue
                         </button>
                       </div>
                     ) : null}
@@ -494,7 +547,8 @@ const EditJarRecurringPayment = () => {
         subHeading={
           "From selected current date, your recurring schedule payment will be executed now."
         }
-        handleCallback={formik.handleSubmit}
+        // handleCallback={formik.handleSubmit}
+        handleCallback={handleConfirmRecurringSubmit}
       />
     </>
   );
