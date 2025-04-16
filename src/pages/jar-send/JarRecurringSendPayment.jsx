@@ -109,9 +109,8 @@ function JarRecurringSendPayment(_props) {
           ? {
               payment_id: id,
               jar_id,
-              deposite_amount: requestData.deposite_amount,
+              total_amount: requestData.deposite_amount,
               specifications: requestData.specifications,
-              schedule_date: requestData.schedule_date,
               recurring_start_date: requestData.recurring_start_date,
               recurring_end_date: requestData.recurring_end_date,
               frequency: requestData.frequency,
@@ -169,7 +168,6 @@ function JarRecurringSendPayment(_props) {
     e.preventDefault();
     const { id, jar_id } = wallet;
     if (id && jar_id) {
-      // cancelOwnJarPayment();
       navigate("/jars/own/jar-recurring-pay-list", { replace: true });
     } else {
       navigate(jar_id ? -2 : "/jars/own/create-jar", { replace: true });
@@ -178,9 +176,14 @@ function JarRecurringSendPayment(_props) {
 
   const handleCancel = (e) => {
     e.preventDefault();
-    navigate(recurringData.jar_id ? -2 : "/jars/own", {
-      replace: !recurringData.jar_id,
-    });
+    const { id, jar_id } = recurringData;
+    if (id && jar_id) {
+      navigate("/jars/own/jar-recurring-pay-list", { replace: true });
+    } else {
+      navigate(jar_id ? -2 : "/jars/own", {
+        replace: !jar_id,
+      });
+    }
     cancelOwnJarPayment();
   };
 

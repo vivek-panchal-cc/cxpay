@@ -271,15 +271,15 @@ const JarDetails = () => {
               }
               handleShowAll={handleShowAllSchedulePayments}
             />
-            {tabName === "own" && (
-              <RecentJarRecurringPay
-                loading={loadingSchedulePay}
-                jarRecurringPayList={
-                  jarRecurringPayList ? jarRecurringPayList?.slice(0, 5) : []
-                }
-                handleShowAll={handleShowAllRecurringPayments}
-              />
-            )}
+            {/* {tabName === "own" && ( */}
+            <RecentJarRecurringPay
+              loading={loadingSchedulePay}
+              jarRecurringPayList={
+                jarRecurringPayList ? jarRecurringPayList?.slice(0, 5) : []
+              }
+              handleShowAll={handleShowAllRecurringPayments}
+            />
+            {/* )} */}
           </div>
         </div>
         {/* Fund Account Popup */}
