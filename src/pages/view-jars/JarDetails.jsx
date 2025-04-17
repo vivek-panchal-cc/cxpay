@@ -164,7 +164,7 @@ const JarDetails = () => {
 
   const handleShowAll = async (e) => {
     e.preventDefault();
-    await handleShowAllMemberList(jarId);
+    await handleShowAllMemberList(jarId, savingJarDetails);
     navigate(`/jars/own/members-list`);
   };
 

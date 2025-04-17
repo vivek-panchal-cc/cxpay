@@ -35,8 +35,12 @@ function JarRecurringSendPayment(_props) {
   const { handleForgotPin, OtpModal, PinModal } =
     useForgotPinHandler(setShowPinPopup);
 
-  const { sendCreds, prevPathRedirect, cancelOwnJarPayment } =
-    useContext(SavingJarOwnContext);
+  const {
+    sendCreds,
+    prevPathRedirect,
+    cancelOwnJarPayment,
+    addJarMembersWithRecurringData,
+  } = useContext(SavingJarOwnContext);
 
   const { admin_approved } = useSelector(
     (state) => state?.userProfile?.profile
@@ -45,6 +49,7 @@ function JarRecurringSendPayment(_props) {
   const { show_renew_section } = loginCreds;
 
   const { wallet } = sendCreds || [];
+  console.log("wallet: ", wallet);
   const [updatedWallet, setUpdatedWallet] = useState(wallet);
   const [recurringData, setRecurringData] = useState(null);
   const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
@@ -56,7 +61,6 @@ function JarRecurringSendPayment(_props) {
     setIsLoading(true);
     setShowScheduleConfirmPopup(false);
     setError("");
-    setShowPinPopup(true);
     try {
       const formatDate = (date) => {
         const d = new Date(date);
@@ -71,6 +75,29 @@ function JarRecurringSendPayment(_props) {
         recurring_end_date: formatDate(updatedWallet.recurring_end_date),
       };
       setRecurringData(muValues);
+      if (muValues.isMember && muValues.jar_id) {
+        const { success, message } = await addJarMembersWithRecurringData({
+          jar_id: muValues.jar_id,
+          members: muValues.members,
+          recurring_details: {
+            total_amount: muValues.total_amount,
+            specifications: muValues.specifications,
+            schedule_date: muValues.schedule_date,
+            recurring_start_date: muValues.recurring_start_date,
+            recurring_end_date: muValues.recurring_end_date,
+            frequency: muValues.frequency,
+            occurrences: muValues.occurrences,
+          },
+        });
+        if (success) {
+          setSentDetail({
+            heading: "Member Shared",
+            message: message,
+            url: "/assets/images/sent-payment-pop.svg",
+          });
+          setShowSentPopup(true);
+        } else return toast.error(message);
+      } else setShowPinPopup(true);
     } catch (error) {
       if (typeof error === "string") toast.error(error);
     } finally {
@@ -83,7 +110,15 @@ function JarRecurringSendPayment(_props) {
     if (!pin) return;
     setIsLoading(true);
     try {
-      const { id, jar_id, jar_url, occurrence_count, ...requestData } = {
+      const {
+        id,
+        isMember,
+        jar_id,
+        jar_url,
+        occurrence_count,
+        members,
+        ...requestData
+      } = {
         ...recurringData,
         user_pin: pin,
       };

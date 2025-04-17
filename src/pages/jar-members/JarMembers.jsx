@@ -10,8 +10,15 @@ import ModalConfirmation from "components/modals/ModalConfirmation";
 import useJarMemberList from "hooks/useJarMemberList";
 
 const JarMembers = () => {
-  const { addJarMembers, handleDeleteMember, jarId, tabName } =
-    useContext(SavingJarOwnContext);
+  const {
+    handleRecurringPaymentForSharedUser,
+    addJarMembers,
+    handleDeleteMember,
+    jarId,
+    jarData,
+    tabName,
+    handleCreatedJarData,
+  } = useContext(SavingJarOwnContext);
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
   const [jarMembers, setJarMembers] = useState([]);
   const [popup, setPopup] = useState(false);
@@ -31,10 +38,26 @@ const JarMembers = () => {
     setShowAddMemberPopup(true);
   };
 
+  // const handleSelectMembers = async (item) => {
+  //   setJarMembers([...item]);
+  //   if (addJarMembers) await addJarMembers(jarId, item);
+  //   reloadMembers();
+  // };
+
   const handleSelectMembers = async (item) => {
     setJarMembers([...item]);
-    if (addJarMembers) await addJarMembers(jarId, item);
-    reloadMembers();
+    if (handleCreatedJarData)
+      handleCreatedJarData({
+        ...jarData,
+        target_date: jarData.target_date.split("-").reverse().join("-"),
+      });
+    if (handleRecurringPaymentForSharedUser)
+      await handleRecurringPaymentForSharedUser({
+        ...jarData,
+        target_date: jarData.target_date.split("-").reverse().join("-"),
+        members: item,
+        isMember: true,
+      });
   };
 
   const handleDeleteMemberPopup = (acc_num) => {

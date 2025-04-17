@@ -301,7 +301,9 @@ const EditJarRecurringPayment = () => {
       if (jar_id) {
         handleRecurringUpdatePaymentForDate({
           ...data.data,
-          ...recurringPaymentDetails,
+          id: recurringPaymentDetails.id,
+          jar_id: recurringPaymentDetails.jar_id,
+          jarId: recurringPaymentDetails.jarId,
           specifications: formik.values.specifications,
         });
       }

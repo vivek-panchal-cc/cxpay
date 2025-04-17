@@ -41,6 +41,8 @@ function JarRecurringSend() {
     cancelOwnJarPayment,
     handleRecurringSendPaymentForDate,
     handleRecurringPaymentForAddAmountToPayForDate,
+    handleRecurringPaymentForAddedMember,
+    addJarMembers,
   } = useContext(SavingJarOwnContext);
   const { wallet } = sendCreds || [];
   const myInputRef = useRef(null);
@@ -197,7 +199,13 @@ function JarRecurringSend() {
       });
       if (!data.success) throw data.message;
       toast.success(data.message);
-      if (wallet.jar_id) {
+      if (wallet.isMember && wallet.jar_id) {
+        handleRecurringPaymentForAddedMember({
+          ...wallet,
+          ...data.data,
+          specifications: formik.values.specifications,
+        });
+      } else if (wallet.jar_id) {
         handleRecurringPaymentForAddAmountToPayForDate({
           ...data.data,
           specifications: formik.values.specifications,
@@ -218,7 +226,14 @@ function JarRecurringSend() {
     }
   };
 
+  const handleAddJarMembers = async () => {
+    if (addJarMembers) await addJarMembers(wallet.jar_id, wallet.members);
+    if (wallet.jar_id && wallet?.members?.length > 0) return navigate(-1);
+    cancelOwnJarPayment();
+  };
+
   const handleCancel = () => {
+    if (wallet.jar_id && wallet?.members?.length > 0) return navigate(-1);
     if (wallet.jar_id) return navigate("/jars/own", { replace: true });
     navigate("/jars/own/create-jar", { replace: true });
     cancelOwnJarPayment();
@@ -428,10 +443,10 @@ function JarRecurringSend() {
                           >
                             Cancel
                           </button>
-                          {false && (
+                          {wallet?.members?.length > 0 && wallet.isMember && (
                             <button
                               type="button"
-                              onClick={handleCancel}
+                              onClick={handleAddJarMembers}
                               className="btn btn-cancel-payment w-100"
                             >
                               Skip

@@ -46,6 +46,7 @@ const SavingJarProgress = (props) => {
   const {
     handleEditJarData,
     addJarMembers,
+    handleRecurringPaymentForSharedUser,
     handleSetShowTransferToWalletPopup,
     handleCreatedJarData,
     handleInstantPaymentForAddAmount,
@@ -74,11 +75,33 @@ const SavingJarProgress = (props) => {
     setShowAddMemberPopup(true);
   };
 
+  // const handleSelectMembers = async (item) => {
+  //   setJarMembers([...item]);
+  //   if (addJarMembers) await addJarMembers(jar_id, item);
+  //   getJarMemberList(jar_id, "");
+  //   reloadJarAct(1);
+  // };
+
   const handleSelectMembers = async (item) => {
     setJarMembers([...item]);
-    if (addJarMembers) await addJarMembers(jar_id, item);
-    getJarMemberList(jar_id, "");
-    reloadJarAct(1);
+    if (handleCreatedJarData)
+      handleCreatedJarData({
+        ...savingJarDetails,
+        target_date: savingJarDetails.target_date
+          .split("-")
+          .reverse()
+          .join("-"),
+      });
+    if (handleRecurringPaymentForSharedUser)
+      await handleRecurringPaymentForSharedUser({
+        ...savingJarDetails,
+        target_date: savingJarDetails.target_date
+          .split("-")
+          .reverse()
+          .join("-"),
+        members: item,
+        isMember: true,
+      });
   };
 
   const handleInstantPaymentSend = () => {

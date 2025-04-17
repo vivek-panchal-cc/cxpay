@@ -27,6 +27,7 @@ const OwnJarListItem = (props) => {
     handleRecurringPaymentForAddAmount,
     confirmAcceptOrDeclineTransaction,
     addJarMembers,
+    handleRecurringPaymentForSharedUser,
     handleSetShowTransferToWalletPopup,
   } = useContext(SavingJarOwnContext);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -82,9 +83,20 @@ const OwnJarListItem = (props) => {
     setShowAddMemberPopup(true);
   };
 
+  // const handleSelectMembers = async (item) => {
+  //   setJarMembers([...item]);
+  //   if (addJarMembers) await addJarMembers(details.jar_id, item);
+  // };
+
   const handleSelectMembers = async (item) => {
     setJarMembers([...item]);
-    if (addJarMembers) await addJarMembers(details.jar_id, item);
+    if (handleCreatedJarData) handleCreatedJarData(details);
+    if (handleRecurringPaymentForSharedUser)
+      await handleRecurringPaymentForSharedUser({
+        ...details,
+        members: item,
+        isMember: true,
+      });
   };
 
   const isSameOrPastDate = (dateStr) => {

@@ -28,6 +28,7 @@ const SavingJarOwnProvider = ({ children }) => {
   const [editJar, setEditJar] = useState({ editWallet: [] });
   const [tabName, setTabName] = useState("own");
   const [jarId, setJarId] = useState(null);
+  const [jarData, setJarData] = useState(null);
   const [scheduledPaymentDetails, setScheduledPaymentDetails] = useState({});
   const [recurringPaymentDetails, setRecurringPaymentDetails] = useState({});
   const [recurringPaymentDetailsId, setRecurringPaymentDetailsId] =
@@ -165,6 +166,30 @@ const SavingJarOwnProvider = ({ children }) => {
     navigate("/jars/own/recurring-send");
   };
 
+  const handleRecurringPaymentForSharedUser = (details = null) => {
+    if (!details) return;
+    const tmpCreds = {
+      wallet: {
+        ...details,
+        deposite_amount: "",
+        specifications: "",
+      },
+    };
+    setSendCreds(tmpCreds);
+    navigate("/jars/own/recurring-send");
+  };
+
+  const handleRecurringPaymentForAddedMember = (data) => {
+    if (!data) return;
+    const tmpCreds = {
+      wallet: {
+        ...data,
+      },
+    };
+    setSendCreds(tmpCreds);
+    navigate("/jars/own/recurring-send-payment");
+  };
+
   const handleRecurringPaymentForAddAmountToPay = (data) => {
     if (!data || !createdJarData) return;
     const newTargetAmount =
@@ -251,6 +276,7 @@ const SavingJarOwnProvider = ({ children }) => {
     setEndDate("");
     setSendCreds({ wallet: [] });
     setEditJar({ editWallet: [] });
+    setJarData(null);
     // setJarId(null);
     // setTabName("own");
   };
@@ -326,6 +352,30 @@ const SavingJarOwnProvider = ({ children }) => {
     }
   };
 
+  const addJarMembersWithRecurringData = async (details) => {
+    setIsLoading(true);
+    const members = details.members.map((member) => member.account_number);
+    try {
+      const { data } = await apiRequest.addMemberInSavingJar({
+        jar_id: details.jar_id,
+        members,
+        recurring_details: details.recurring_details,
+      });
+      if (!data.success) throw data.message;
+      return {
+        success: true,
+        message: data.message,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: error || "Something went wrong",
+      };
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSetShowTransferToWalletPopup = (id) => {
     if (!id) return;
     setJarId(id);
@@ -375,9 +425,10 @@ const SavingJarOwnProvider = ({ children }) => {
     }
   };
 
-  const handleShowAllMemberList = (id) => {
+  const handleShowAllMemberList = (id, data = null) => {
     if (!id) return;
     setJarId(id);
+    if (data) setJarData(data);
   };
 
   const handleScheduledPaymentDetails = async ({ id }) => {
@@ -533,6 +584,7 @@ const SavingJarOwnProvider = ({ children }) => {
 
         handleStoreJarId,
         jarId,
+        jarData,
         handleTabList,
         tabName,
         handleEditJarData,
@@ -551,6 +603,8 @@ const SavingJarOwnProvider = ({ children }) => {
         handleInstantPaymentForAddAmount,
         handleSendJarScheduleForAddAmount,
         handleRecurringPaymentForAddAmount,
+        handleRecurringPaymentForSharedUser,
+        handleRecurringPaymentForAddedMember,
         handleRecurringPaymentForAddAmountToPay,
         handleRecurringPaymentForAddAmountToPayForDate,
         handleRecurringSendPaymentForDate,
@@ -558,6 +612,7 @@ const SavingJarOwnProvider = ({ children }) => {
         savingJarDetails,
         confirmAcceptOrDeclineTransaction,
         addJarMembers,
+        addJarMembersWithRecurringData,
         handleDeleteMember,
         handleShowAllMemberList,
         handleCallbackTransferToWallet,
