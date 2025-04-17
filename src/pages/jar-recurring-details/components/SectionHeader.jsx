@@ -49,14 +49,14 @@ const SectionHeader = (props) => {
         </div>
         <div className="rcr-info-main">
           {loading ? (
-            <div className="rcr-info-1 d-flex flex-wrap">
+            <div className="rcr-info-1 d-flex gap-3">
               <LoaderWdrawHeader
               // loaderPorps={{ height: 20, width: "100%" }}
               // divProps={{ rx: "5", ry: "5", width: "12%", height: "20" }}
               />
             </div>
           ) : (
-            <div className="rcr-info-1 d-flex flex-wrap">
+            <div className="rcr-info-1 d-flex gap-3">
               <div className="rcr-card-data">
                 <h2>{name}</h2>
               </div>
