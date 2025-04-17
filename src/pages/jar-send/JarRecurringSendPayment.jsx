@@ -49,7 +49,6 @@ function JarRecurringSendPayment(_props) {
   const { show_renew_section } = loginCreds;
 
   const { wallet } = sendCreds || [];
-  console.log("wallet: ", wallet);
   const [updatedWallet, setUpdatedWallet] = useState(wallet);
   const [recurringData, setRecurringData] = useState(null);
   const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
