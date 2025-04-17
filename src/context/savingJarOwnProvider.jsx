@@ -406,15 +406,18 @@ const SavingJarOwnProvider = ({ children }) => {
       if (!data.success) throw data;
       toast.success(data.message);
       navigate("/jars/own/jar-schedule-pay-list", { replace: true });
-      return true;
+      return { success: true };
     } catch (error) {
       if (error.data.is_suspended) {
         navigate("/logout", { replace: true });
         toast.error(error.message);
         return;
       }
-      if (typeof error.message === "string") toast.error(error.message);
-      return false;
+      // if (typeof error.message === "string") toast.error(error.message);
+      return {
+        success: false,
+        message: error.message || "Something went wrong",
+      };
     } finally {
       setIsLoading(false);
     }

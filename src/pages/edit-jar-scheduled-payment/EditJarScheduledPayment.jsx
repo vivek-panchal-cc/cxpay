@@ -137,8 +137,9 @@ const EditJarScheduledPayment = () => {
   const handleSubmitScheduleData = async (pin) => {
     if (!pin) return;
     const muValues = { ...scheduleData, user_pin: pin };
-    const isSuccess = await updateJarScheduledPayment(muValues);
-    if (isSuccess) setShowPinPopup(false);
+    const { success, message } = await updateJarScheduledPayment(muValues);
+    if (success) setShowPinPopup(false);
+    else setError(message);
   };
 
   const handleCancel = () => {
@@ -160,7 +161,7 @@ const EditJarScheduledPayment = () => {
         headingImg="/assets/images/setupPin.svg"
         subHeading=""
         validationSchema={sendPaymentPinSchema}
-        error={""}
+        error={error}
         handleSubmitPin={handleSubmitScheduleData}
         handleForgotPin={handleForgotPin}
       />
