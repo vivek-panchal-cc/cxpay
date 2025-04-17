@@ -1,5 +1,4 @@
-import React, { useContext, useMemo } from "react";
-import PaymentUserItem from "./components/PaymentUserItem";
+import React, { useContext, useMemo, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import {
   CURRENCY_SYMBOL,
@@ -14,6 +13,9 @@ import { LoginContext } from "context/loginContext";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { jarSchedulePaymentSchema } from "schemas/jarSchema";
 import Input from "components/ui/Input";
+import useForgotPinHandler from "hooks/useForgotPinHandler";
+import ModalPaymentPin from "components/modals/ModalPaymentPin";
+import { sendPaymentPinSchema } from "schemas/sendPaymentSchema";
 
 const EditJarScheduledPayment = () => {
   const navigate = useNavigate();
@@ -38,6 +40,11 @@ const EditJarScheduledPayment = () => {
   const { admin_approved } = useSelector(
     (state) => state?.userProfile?.profile
   );
+  const [scheduleData, setScheduleData] = useState(null);
+  const [error, setError] = useState("");
+  const [showPinPopup, setShowPinPopup] = useState(false);
+  const { handleForgotPin, OtpModal, PinModal } =
+    useForgotPinHandler(setShowPinPopup);
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
   const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
@@ -87,6 +94,8 @@ const EditJarScheduledPayment = () => {
     },
     validationSchema: jarSchedulePaymentSchema,
     onSubmit: async (values) => {
+      setError("");
+      setShowPinPopup(true);
       const { date, time } = values;
       const dt = new Date(`${date.toDateString()} ${time}`);
       const dts = dt.toLocaleDateString("en-CA");
@@ -98,13 +107,39 @@ const EditJarScheduledPayment = () => {
         deposite_amount: values.amount,
         specifications: values.specifications,
       };
-      try {
-        await updateJarScheduledPayment(params);
-      } catch (error) {
-        console.log(error);
-      }
+      setScheduleData(params);
     },
   });
+
+  // const handleConfirmScheduleSubmit = async () => {
+  //   const validateObj = await formik.validateForm(formik.values);
+  //   if (Object.keys(validateObj).length > 0) {
+  //     formik.setTouched(validateObj);
+  //     formik.setErrors(validateObj);
+  //     return;
+  //   }
+  //   setError("");
+  //   setShowPinPopup(true);
+  //   const { date, time } = formik.values;
+  //   const dt = new Date(`${date.toDateString()} ${time}`);
+  //   const dts = dt.toLocaleDateString("en-CA");
+  //   const tms = dt.toLocaleTimeString(undefined, { hourCycle: "h24" });
+  //   const params = {
+  //     jar_id: jarId,
+  //     payment_id: id,
+  //     schedule_date: `${dts} ${tms}`,
+  //     deposite_amount: formik.values.amount,
+  //     specifications: formik.values.specifications,
+  //   };
+  //   setScheduleData(params);
+  // };
+
+  const handleSubmitScheduleData = async (pin) => {
+    if (!pin) return;
+    const muValues = { ...scheduleData, user_pin: pin };
+    const isSuccess = await updateJarScheduledPayment(muValues);
+    if (isSuccess) setShowPinPopup(false);
+  };
 
   const handleCancel = () => {
     setScheduledPaymentDetails({});
@@ -115,6 +150,22 @@ const EditJarScheduledPayment = () => {
     return <Navigate to="/jars/own" replace />;
   return (
     <>
+      <ModalPaymentPin
+        id="group_pay_otp_modal"
+        className="otp-verification-modal group_pay_otp_modal"
+        show={showPinPopup}
+        allowClickOutSide={true}
+        setShow={setShowPinPopup}
+        heading="Enter your 5 - Digit unique PIN"
+        headingImg="/assets/images/setupPin.svg"
+        subHeading=""
+        validationSchema={sendPaymentPinSchema}
+        error={""}
+        handleSubmitPin={handleSubmitScheduleData}
+        handleForgotPin={handleForgotPin}
+      />
+      {OtpModal()}
+      {PinModal()}
       <div className="schedulepayment-sec" style={{ marginBottom: "200px" }}>
         <div className="sp-top-sec">
           <div className="title-content-wrap common-title-wrap">
@@ -284,6 +335,7 @@ const EditJarScheduledPayment = () => {
                   type="button"
                   className="btn w-100 mb-2"
                   onClick={formik.handleSubmit}
+                  // onClick={handleConfirmScheduleSubmit}
                   disabled={formik.isSubmitting}
                 >
                   Update

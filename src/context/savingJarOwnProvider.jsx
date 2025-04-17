@@ -403,11 +403,18 @@ const SavingJarOwnProvider = ({ children }) => {
     setIsLoading(true);
     try {
       const { data } = await apiRequest.updateSavingJarSchedulePayment(params);
-      if (!data.success) throw data.message;
+      if (!data.success) throw data;
       toast.success(data.message);
       navigate("/jars/own/jar-schedule-pay-list", { replace: true });
+      return true;
     } catch (error) {
-      if (typeof error === "string") toast.error(error);
+      if (error.data.is_suspended) {
+        navigate("/logout", { replace: true });
+        toast.error(error.message);
+        return;
+      }
+      if (typeof error.message === "string") toast.error(error.message);
+      return false;
     } finally {
       setIsLoading(false);
     }
