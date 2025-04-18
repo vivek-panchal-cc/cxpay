@@ -552,7 +552,7 @@ const SavingJarOwnProvider = ({ children }) => {
 
   const handleInvitedJarRecurringDetails = async (id) => {
     if (!id) return;
-    setShowDetails(true);
+    setIsLoading(true);
     setInvitedViewDetailsLoading(true);
     try {
       const { data } = await apiRequest.getInvitedMemberRecurringDetails({
@@ -562,11 +562,13 @@ const SavingJarOwnProvider = ({ children }) => {
       const details = data.data;
       if (!details) return setShowDetails(false);
       setRecurringDetails(details);
+      setShowDetails(true);
     } catch (error) {
       if (typeof error === "string") toast.error(error);
       setInvitedViewDetailsLoading(false);
     } finally {
       setInvitedViewDetailsLoading(false);
+      setIsLoading(false);
     }
   };
 

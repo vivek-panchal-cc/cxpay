@@ -239,6 +239,7 @@ const OwnJarListItem = (props) => {
                 "",
                 {
                   minWidth: "150px",
+                  marginRight: "0px",
                 }
               )}
             </>
