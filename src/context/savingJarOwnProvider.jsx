@@ -7,6 +7,7 @@ import useInvitedJar from "hooks/useInvitedJar";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import ModalJarTransferWallet from "components/modals/ModalJarTransferWallet";
+import ModalRecurringPaymentDetails from "components/modals/ModalRecurringPaymentDetails";
 
 export const SavingJarOwnContext = React.createContext({});
 
@@ -35,6 +36,10 @@ const SavingJarOwnProvider = ({ children }) => {
     useState(null);
   const [showTransferToWalletPopup, setShowTransferToWalletPopup] =
     useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+  const [invitedViewDetailsLoading, setInvitedViewDetailsLoading] =
+    useState(false);
+  const [recurringDetails, setRecurringDetails] = useState({});
 
   const [
     loadingOwnJar,
@@ -545,6 +550,26 @@ const SavingJarOwnProvider = ({ children }) => {
     }
   };
 
+  const handleInvitedJarRecurringDetails = async (id) => {
+    if (!id) return;
+    setShowDetails(true);
+    setInvitedViewDetailsLoading(true);
+    try {
+      const { data } = await apiRequest.getInvitedMemberRecurringDetails({
+        jar_id: id,
+      });
+      if (!data.success) throw data.message;
+      const details = data.data;
+      if (!details) return setShowDetails(false);
+      setRecurringDetails(details);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+      setInvitedViewDetailsLoading(false);
+    } finally {
+      setInvitedViewDetailsLoading(false);
+    }
+  };
+
   useEffect(() => {
     const path = location.pathname;
     setPrevPathRedirect(prevPath);
@@ -630,6 +655,7 @@ const SavingJarOwnProvider = ({ children }) => {
         updateJarRecurringPayment,
         deleteScheduleItem,
         deleteRecurringItem,
+        handleInvitedJarRecurringDetails,
       }}
     >
       {children}
@@ -641,6 +667,16 @@ const SavingJarOwnProvider = ({ children }) => {
         heading={"Do you really want to transfer to wallet?"}
         subHeading={""}
         handleCallback={handleCallbackTransferToWallet}
+      />
+      <ModalRecurringPaymentDetails
+        id="user-details-popup"
+        className="reserved-amount-modal"
+        show={showDetails}
+        setShow={setShowDetails}
+        loading={invitedViewDetailsLoading}
+        details={recurringDetails}
+        onClose={() => setShowDetails(false)}
+        allowClickOutSide={true}
       />
     </SavingJarOwnContext.Provider>
   );

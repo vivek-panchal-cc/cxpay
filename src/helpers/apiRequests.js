@@ -226,6 +226,8 @@ const API_deleteRecurringOccurrence =
   apiUrl.API_TRANSACTION_DELETE_RECURRING_OCCURRENCE;
 const API_generateOccurrenceForSavingJar =
   apiUrl.API_GENERATE_OCCURRENCE_FOR_SAVING_JAR;
+const API_getInvitedMemberRecurringDetails =
+  apiUrl.API_INVITED_MEMBER_RECURRING_DETAILS;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -1478,6 +1480,16 @@ export const generateOccurrenceForSavingJar = (params) => {
   );
 };
 
+/** POST
+ * @params jar_id
+ */
+export const getInvitedMemberRecurringDetails = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_getInvitedMemberRecurringDetails}`,
+    params
+  );
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -1642,4 +1654,5 @@ export const apiRequest = {
   updateRecurringOccurrenceAmount,
   deleteRecurringOccurrence,
   generateOccurrenceForSavingJar,
+  getInvitedMemberRecurringDetails,
 };

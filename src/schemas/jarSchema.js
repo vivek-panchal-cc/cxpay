@@ -140,6 +140,7 @@ const setAmount = yup.object().shape({
     .string()
     .matches(/^[1-9]\d*(\.\d+)?$/, "Please enter valid amount")
     .required("Please enter amount"),
+  recurring_date: yup.date().required("Recurring date is required").nullable(),
 });
 
 export {

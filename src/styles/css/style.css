@@ -9727,3 +9727,7 @@ ul .act-info-wrap-left .jar-act-pay-rec {
 .jar-rec-buttons.right-activity-div button.act-del-wrap:hover {
   background: var(--dark_blue);
 }
+.modal-add-amount-date {
+  border: 1px solid #bdbdbd;
+  box-shadow: none;
+}

@@ -54,14 +54,15 @@ const SectionRecurringDates = (props) => {
     setAmountError("");
   };
 
-  const handleSubmitAmount = async (amount) => {
+  const handleSubmitAmount = async (values) => {
     setIsLoading(true);
     try {
       const reqParams = {
         jar_id: jar_id,
         payment_id: id,
         occurrence_id: items.occurrence_id,
-        amount: amount,
+        amount: values.amount,
+        recurring_date: values.recurring_date,
       };
       const { data } = await apiRequest.updateRecurringOccurrenceAmount(
         reqParams
@@ -218,6 +219,7 @@ const SectionRecurringDates = (props) => {
           subHeading=""
           handleCallback={handleSubmitAmount}
           error={amountError}
+          values={items}
         />
         <ModalConfirmation
           id="delete-group-member-popup"

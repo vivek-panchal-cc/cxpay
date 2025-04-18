@@ -29,6 +29,7 @@ const OwnJarListItem = (props) => {
     addJarMembers,
     handleRecurringPaymentForSharedUser,
     handleSetShowTransferToWalletPopup,
+    handleInvitedJarRecurringDetails,
   } = useContext(SavingJarOwnContext);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showModalScheduler, setShowModalScheduler] = useState(false);
@@ -224,32 +225,49 @@ const OwnJarListItem = (props) => {
       );
     }
     if (tabList === "invited" && active) {
+      const isRecurring = details?.is_recurring_available;
       return (
         <div className="con-listing-btn-wrap">
-          <>
-            {renderButton(
-              "Decline",
-              (e) => {
-                e.stopPropagation();
-                handleAcceptOrRejectDetails(0);
-              },
-              "con-req-btn",
-              {
-                minWidth: "150px",
-              }
-            )}
-            {renderButton(
-              "Accept",
-              (e) => {
-                e.stopPropagation();
-                handleAcceptOrRejectDetails(1);
-              },
-              "",
-              {
-                minWidth: "150px",
-              }
-            )}
-          </>
+          {isRecurring ? (
+            <>
+              {renderButton(
+                "View",
+                (e) => {
+                  e.stopPropagation();
+                  handleInvitedJarRecurringDetails(details.jar_id);
+                },
+                "",
+                {
+                  minWidth: "150px",
+                }
+              )}
+            </>
+          ) : (
+            <>
+              {renderButton(
+                "Decline",
+                (e) => {
+                  e.stopPropagation();
+                  handleAcceptOrRejectDetails(0);
+                },
+                "con-req-btn",
+                {
+                  minWidth: "150px",
+                }
+              )}
+              {renderButton(
+                "Accept",
+                (e) => {
+                  e.stopPropagation();
+                  handleAcceptOrRejectDetails(1);
+                },
+                "",
+                {
+                  minWidth: "150px",
+                }
+              )}
+            </>
+          )}
         </div>
       );
     }

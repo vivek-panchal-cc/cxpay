@@ -176,7 +176,21 @@ function JarRecurringSendPayment(_props) {
       setShowSentPopup(true);
       setShowPinPopup(false);
     } catch (error) {
-      setError(error.message);
+      let finalErrorMessage = "Something went wrong";
+
+      if (typeof error.message === "string") {
+        finalErrorMessage = error.message;
+      } else if (typeof error.message === "object" && error.message !== null) {
+        // Extract first error message from the object
+        const firstKey = Object.keys(error.message)[0];
+        if (Array.isArray(error.message[firstKey])) {
+          finalErrorMessage = error.message[firstKey][0];
+        } else {
+          finalErrorMessage = JSON.stringify(error.message);
+        }
+      }
+
+      setError(finalErrorMessage);
       if (error.data.is_suspended) {
         navigate("/logout", { replace: true });
         toast.error(error.message);

@@ -288,7 +288,8 @@ const EditJarRecurringPayment = () => {
     setIsLoading(true);
     try {
       const { data } = await apiRequest.generateOccurrenceForSavingJar({
-        ...formik.values,
+        specifications: formik.values.specifications,
+        frequency: formik.values.frequency,
         total_amount: formik.values.amount,
         recurring_start_date: parseTargetDate(
           formik.values.recurring_start_date

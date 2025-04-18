@@ -1,9 +1,11 @@
 import Input from "components/ui/Input";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import styles from "./modal.module.scss";
 import { CURRENCY_SYMBOL } from "constants/all";
 import { setAmount } from "schemas/jarSchema";
+import InputDatePicker from "components/ui/InputDatePicker";
+import ModalDatePickerKyc from "./ModalDatePickerKyc";
 
 function ModalAddAmount(props) {
   const {
@@ -17,12 +19,17 @@ function ModalAddAmount(props) {
     heading = "Confirm",
     subHeading = "",
     error = "",
+    values,
   } = props;
+  const { installment_amount, recurring_date } = values || {};
+  const [datePicker, setDatePicker] = useState(false);
   const modalRef = useRef(null);
-
+  const inputRef = useRef(null);
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      amount: "",
+      amount: installment_amount || "",
+      recurring_date: recurring_date || "",
     },
     validationSchema: setAmount,
     onSubmit: (values) => {
@@ -41,9 +48,24 @@ function ModalAddAmount(props) {
 
       // Update the formik value and trigger callback with formatted amount
       formik.setFieldValue("amount", formattedValue);
-      handleCallback(formattedValue);
+      // handleCallback(formattedValue);
+      handleCallback({
+        amount: formattedValue,
+        recurring_date: values.recurring_date,
+      });
     },
   });
+
+  const handleChangeDateFilter = (date) => {
+    if (datePicker && date instanceof Date && !isNaN(date)) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const formattedDate = `${year}-${month}-${day}`; // yyyy-mm-dd in local time
+      formik.setFieldValue("recurring_date", formattedDate);
+    }
+    setDatePicker("");
+  };
 
   useEffect(() => {
     function handleclickOutside(event) {
@@ -57,6 +79,12 @@ function ModalAddAmount(props) {
       document.removeEventListener("mousedown", handleclickOutside);
     };
   }, [modalRef, setShow]);
+
+  useEffect(() => {
+    if (show && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [show]);
 
   useEffect(() => {
     if (!show) {
@@ -85,6 +113,7 @@ function ModalAddAmount(props) {
                 <form onSubmit={formik.handleSubmit}>
                   <div className="input-select-wrap form-field">
                     <Input
+                      ref={inputRef}
                       type="text"
                       className="form-control"
                       placeholder="0.00"
@@ -127,6 +156,23 @@ function ModalAddAmount(props) {
                     />
                     <p className="ip_currancy">{CURRENCY_SYMBOL}</p>
                   </div>
+                  <div className="common-dr-picker">
+                    <InputDatePicker
+                      className="d-flex flex-column form-field kyc-date-filter modal-add-amount-date"
+                      date={formik.values.recurring_date}
+                      onClick={() => setDatePicker(true)}
+                      placeholder="Recurring Date"
+                    />
+                    {formik.touched.recurring_date &&
+                    formik.errors.recurring_date ? (
+                      <p
+                        style={{ marginLeft: "10px" }}
+                        className="kyc-text-danger"
+                      >
+                        {formik.errors.recurring_date}
+                      </p>
+                    ) : null}
+                  </div>
                   {error ? (
                     <p className="text-danger text-center">{error}</p>
                   ) : null}
@@ -160,6 +206,14 @@ function ModalAddAmount(props) {
                   </div>
                 </form>
               </div>
+              <ModalDatePickerKyc
+                minDate={datePicker ? new Date() : ""}
+                show={datePicker}
+                setShow={() => setDatePicker(false)}
+                classNameChild={"schedule-time-modal"}
+                heading="Recurring Date"
+                handleChangeDate={handleChangeDateFilter}
+              />
             </div>
           </div>
         </div>

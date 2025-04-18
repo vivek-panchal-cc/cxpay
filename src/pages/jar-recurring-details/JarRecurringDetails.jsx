@@ -5,7 +5,6 @@ import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import SectionRecurringDetails from "./components/SectionRecurringDetails";
 import { apiRequest } from "helpers/apiRequests";
 import SectionRecurringDates from "./components/SectionRecurringDates";
-import SectionRecurringGroupList from "./components/SectionRecurringGroupList";
 import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { toast } from "react-toastify";
 

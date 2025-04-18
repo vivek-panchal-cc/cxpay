@@ -48,12 +48,13 @@ const SectionRecurringDates = (props) => {
     setAmountError("");
   };
 
-  const handleSubmitAmount = (amount) => {
+  const handleSubmitAmount = ({ amount, recurring_date }) => {
     const updatedList = [...occurrenceList];
     if (items.index !== undefined) {
       updatedList[items.index] = {
         ...updatedList[items.index],
         amount,
+        date: recurring_date,
       };
       setOccurrenceList(updatedList);
       setAddAmountPopup(false);
@@ -137,6 +138,7 @@ const SectionRecurringDates = (props) => {
           handleCallback={handleSubmitAmount}
           error={""}
           allowClickOutSide={true}
+          values={items}
         />
       </div>
     </>

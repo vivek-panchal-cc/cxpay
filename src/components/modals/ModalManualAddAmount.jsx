@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./modal.module.scss";
 import { CURRENCY_SYMBOL } from "constants/all";
 import { setAmount } from "schemas/jarSchema"; // Yup schema
+import InputDatePicker from "components/ui/InputDatePicker";
+import ModalDatePickerKyc from "./ModalDatePickerKyc";
 
 function ModalManualAddAmount(props) {
   const {
@@ -17,10 +19,13 @@ function ModalManualAddAmount(props) {
     subHeading = "",
     error = "",
     allowClickOutSide,
+    values,
   } = props;
-
+  const { amount: installment_amount, date } = values || {};
+  const [datePicker, setDatePicker] = useState(false);
   const modalRef = useRef(null);
   const [amount, setAmountValue] = useState("");
+  const [recurring_date, setDate] = useState("");
   const [inputError, setInputError] = useState("");
 
   useEffect(() => {
@@ -38,8 +43,13 @@ function ModalManualAddAmount(props) {
   }, [modalRef, setShow, allowClickOutSide]);
 
   useEffect(() => {
-    if (!show) {
+    if (show) {
+      setAmountValue(installment_amount || "");
+      setDate(date || "");
+      setInputError("");
+    } else {
       setAmountValue("");
+      setDate("");
       setInputError("");
     }
   }, [show]);
@@ -69,9 +79,10 @@ function ModalManualAddAmount(props) {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      await setAmount.validate({ amount });
+      await setAmount.validate({ amount, recurring_date });
       let formattedValue = amount;
 
       if (!formattedValue.includes(".")) {
@@ -84,10 +95,25 @@ function ModalManualAddAmount(props) {
       }
 
       setInputError("");
-      handleCallback(formattedValue);
+      // handleCallback(formattedValue);
+      handleCallback({
+        amount: formattedValue,
+        recurring_date: recurring_date,
+      });
     } catch (validationError) {
       setInputError(validationError.message);
     }
+  };
+
+  const handleChangeDateFilter = (date) => {
+    if (datePicker && date instanceof Date && !isNaN(date)) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const formattedDate = `${year}-${month}-${day}`; // yyyy-mm-dd in local time
+      setDate(formattedDate);
+    }
+    setDatePicker("");
   };
 
   if (!show) return null;
@@ -119,13 +145,21 @@ function ModalManualAddAmount(props) {
                       autoComplete="off"
                       onChange={handleInputChange}
                       value={amount}
+                      // value={amount !== "" ? amount : installment_amount || ""}
                       error={inputError || error}
                       onCopy={(e) => e.preventDefault()}
                       onPaste={(e) => e.preventDefault()}
                     />
                     <p className="ip_currancy">{CURRENCY_SYMBOL}</p>
                   </div>
-
+                  <div className="common-dr-picker">
+                    <InputDatePicker
+                      className="d-flex flex-column form-field kyc-date-filter modal-add-amount-date"
+                      date={recurring_date || date}
+                      onClick={() => setDatePicker(true)}
+                      placeholder="Recurring Date"
+                    />
+                  </div>
                   {/* {(inputError || error) && (
                     <p className="text-danger text-center">
                       {inputError || error}
@@ -158,6 +192,14 @@ function ModalManualAddAmount(props) {
                   </div>
                 </form>
               </div>
+              <ModalDatePickerKyc
+                minDate={datePicker ? new Date() : ""}
+                show={datePicker}
+                setShow={() => setDatePicker(false)}
+                classNameChild={"schedule-time-modal"}
+                heading="Recurring Date"
+                handleChangeDate={handleChangeDateFilter}
+              />
             </div>
           </div>
         </div>
