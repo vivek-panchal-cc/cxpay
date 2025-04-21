@@ -8,6 +8,7 @@ import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import ModalJarTransferWallet from "components/modals/ModalJarTransferWallet";
 import ModalRecurringPaymentDetails from "components/modals/ModalRecurringPaymentDetails";
+import ModalConfirmation from "components/modals/ModalConfirmation";
 
 export const SavingJarOwnContext = React.createContext({});
 
@@ -40,6 +41,11 @@ const SavingJarOwnProvider = ({ children }) => {
   const [invitedViewDetailsLoading, setInvitedViewDetailsLoading] =
     useState(false);
   const [recurringDetails, setRecurringDetails] = useState({});
+  const [acceptDecline, setAcceptDecline] = useState({
+    value: "",
+    jar_id: "",
+  });
+  const [popup, setPopup] = useState(false);
 
   const [
     loadingOwnJar,
@@ -282,6 +288,10 @@ const SavingJarOwnProvider = ({ children }) => {
     setSendCreds({ wallet: [] });
     setEditJar({ editWallet: [] });
     setJarData(null);
+    setAcceptDecline({
+      value: "",
+      jar_id: "",
+    });
     // setJarId(null);
     // setTabName("own");
   };
@@ -572,6 +582,27 @@ const SavingJarOwnProvider = ({ children }) => {
     }
   };
 
+  const handleInvitedJarAcceptOrDecline = async (value, id) => {
+    setAcceptDecline({
+      value: value,
+      jar_id: id,
+    });
+    setPopup(true);
+  };
+
+  const handleCallbackTransaction = async () => {
+    setPopup(false);
+    await confirmAcceptOrDeclineTransaction(
+      acceptDecline.value,
+      acceptDecline.jar_id
+    );
+    setShowDetails(false);
+    setAcceptDecline({
+      value: "",
+      jar_id: "",
+    });
+  };
+
   useEffect(() => {
     const path = location.pathname;
     setPrevPathRedirect(prevPath);
@@ -678,7 +709,29 @@ const SavingJarOwnProvider = ({ children }) => {
         loading={invitedViewDetailsLoading}
         details={recurringDetails}
         onClose={() => setShowDetails(false)}
+        handleAcceptOrDecline={handleInvitedJarAcceptOrDecline}
         allowClickOutSide={true}
+      />
+      <ModalConfirmation
+        id="delete-group-member-popup"
+        show={popup}
+        setShow={setPopup}
+        heading={
+          acceptDecline.value ? "Accept Invitation" : "Decline Invitation"
+        }
+        subHeading={
+          <span
+            className=""
+            style={{ whiteSpace: "normal", wordWrap: "break-word" }}
+          >
+            Are you sure you want to{" "}
+            {acceptDecline.value ? "accept" : "decline"} this invitation?{" "}
+            {acceptDecline.value
+              ? "You'll be added to the sub-account once confirmed."
+              : ""}
+          </span>
+        }
+        handleCallback={handleCallbackTransaction}
       />
     </SavingJarOwnContext.Provider>
   );
