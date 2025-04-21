@@ -56,9 +56,11 @@ const CreateJar = (props) => {
       jar_name: "",
       target_amount: "",
       target_date: "",
-      jar_category_id: "",
       jar_icon: null,
       members: [],
+      jar_parent_category_id: "",
+      jar_child_category_id: "",
+      jar_child_category_name: "",
     },
     validationSchema: addJarSchema,
     onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
@@ -264,29 +266,53 @@ const CreateJar = (props) => {
           </div>
           <div className="row">
             <div className="col-12 p-0">
-              {/* <SubAccountsInputSelect
+              <SubAccountsInputSelect
                 labelname=""
                 className="form-select form-control"
-                name="jar_category_id"
-                value={formik.values.jar_category_id}
-                onChange={(selectedValue) =>
-                  formik.setFieldValue("jar_category_id", selectedValue)
+                name="jar_parent_category_id"
+                value={
+                  formik.values.jar_child_category_id +
+                  "|" +
+                  formik.values.jar_parent_category_id
                 }
+                onChange={(selected) => {
+                  const [childId, parentId] = selected.split("|");
+                  const selectedParent = jarCategory.find(
+                    (parent) => String(parent.id) === parentId
+                  );
+
+                  const selectedChild = selectedParent?.children?.find(
+                    (child) => String(child.id) === childId
+                  );
+
+                  if (selectedParent && selectedChild) {
+                    formik.setFieldValue("jar_parent_category_id", parentId);
+                    formik.setFieldValue("jar_child_category_id", childId);
+                    // If the selected child id is not 98765, clear the jar_child_category_name field
+                    if (childId !== "98765") {
+                      formik.setFieldValue("jar_child_category_name", "");
+                    }
+                  } else {
+                    formik.setFieldValue("jar_parent_category_id", "");
+                    formik.setFieldValue("jar_child_category_id", "");
+                    formik.setFieldValue("jar_child_category_name", "");
+                  }
+                }}
                 error={
-                  formik.touched.jar_category_id &&
-                  formik.errors.jar_category_id
+                  formik.touched.jar_parent_category_id &&
+                  formik.errors.jar_parent_category_id
                 }
                 options={jarCategory}
-              /> */}
-              <InputSelect
+              />
+              {/* <InputSelect
                 className="form-select form-control"
-                name="jar_category_id"
+                name="jar_parent_category_id"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.jar_category_id}
+                value={formik.values.jar_parent_category_id}
                 error={
-                  formik.touched.jar_category_id &&
-                  formik.errors.jar_category_id
+                  formik.touched.jar_parent_category_id &&
+                  formik.errors.jar_parent_category_id
                 }
               >
                 <option value={""}>Select Category</option>
@@ -295,9 +321,30 @@ const CreateJar = (props) => {
                     {capitalizeWordByWord(jc.jar_category_name)}
                   </option>
                 ))}
-              </InputSelect>
+              </InputSelect> */}
             </div>
           </div>
+
+          {formik.values.jar_child_category_id === "98765" && (
+            <div className="row">
+              <div className="col-12 col p-0">
+                <Input
+                  type="text"
+                  inputMode="numeric"
+                  className="form-control"
+                  placeholder="Other"
+                  name="jar_child_category_name"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.jar_child_category_name}
+                  error={
+                    formik.touched.jar_child_category_name &&
+                    formik.errors.jar_child_category_name
+                  }
+                />
+              </div>
+            </div>
+          )}
 
           <div className="row">
             <div className="col-12 p-0">

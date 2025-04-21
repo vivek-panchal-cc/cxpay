@@ -24,8 +24,16 @@ const addJarSchema = yup.object().shape({
     .matches(/^[1-9]\d{0,6}(\.\d{1,2})?$/, "Please enter valid target amount")
     .required("Please enter target amount"),
   target_date: yup.date().required("Target date is required").nullable(),
-  jar_category_id: yup.string().required("Sub-account category is required"),
+  jar_parent_category_id: yup
+    .string()
+    .required("Sub-account category is required"),
   jar_icon: yup.string().required("Please select sub-account category icon"),
+  jar_child_category_name: yup.string().when("jar_child_category_id", {
+    is: (val) => val === "98765",
+    then: (schema) =>
+      schema.required("Please enter sub-account child category name"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
   // members: yup.array().min(1, "Add atleast one member"),
 });
 
@@ -39,8 +47,16 @@ const editJarSchema = yup.object().shape({
     .matches(/^[1-9]\d{0,6}(\.\d{1,2})?$/, "Please enter valid target amount")
     .required("Please enter target amount"),
   target_date: yup.date().required("Target date is required").nullable(),
-  jar_category_id: yup.string().required("Sub-account category is required"),
+  jar_parent_category_id: yup
+    .string()
+    .required("Sub-account category is required"),
   jar_icon: yup.string().required("Please select sub-account category icon"),
+  jar_child_category_name: yup.string().when("jar_child_category_id", {
+    is: (val) => val === "98765",
+    then: (schema) =>
+      schema.required("Please enter sub-account child category name"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
 });
 
 // const jarCreateSchema = yup.object().shape({

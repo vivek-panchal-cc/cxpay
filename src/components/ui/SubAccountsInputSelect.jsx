@@ -92,21 +92,23 @@ function SubAccountsInputSelect({
                         <button
                           type="button"
                           className={`jar-dropdown-item child-option ${
-                            value === child.id ? "selected" : ""
+                            value === `${child.id}|${parent.id}`
+                              ? "selected"
+                              : ""
                           }`}
                           onClick={() => {
-                            onChange(child.id);
+                            onChange(`${child.id}|${parent.id}`);
                             setIsDropdownOpen(false);
                           }}
                         >
                           <span className="toggle-icon">
                             <IconCheckMark />
                           </span>
-                          {capitalizeWordByWord(child.jar_category_name)}
+                          {capitalizeWordByWord(child.name)}
                         </button>
                       </li>
                     ))}
-                    <li>
+                    {/* <li>
                       <button
                         type="button"
                         className={`jar-dropdown-item child-option ${
@@ -122,7 +124,7 @@ function SubAccountsInputSelect({
                         </span>
                         Other
                       </button>
-                    </li>
+                    </li> */}
                   </ul>
                 </li>
               ))}
@@ -136,17 +138,19 @@ function SubAccountsInputSelect({
 }
 
 const findSelectedLabel = (value, options) => {
+  const [childId, parentId] = value?.split("|") ?? [];
   for (let parent of options) {
-    if (parent.id === value)
-      return capitalizeWordByWord(parent.jar_category_name);
-    if (parent.children) {
-      for (let child of parent.children) {
-        if (child.id === value)
-          return capitalizeWordByWord(child.jar_category_name);
+    if (String(parent.id) === parentId) {
+      const child = parent.children?.find(
+        (child) => String(child.id) === childId
+      );
+      if (child) {
+        // return capitalizeWordByWord(child.name);
+        return `${capitalizeWordByWord(
+          parent.jar_category_name
+        )} - ${capitalizeWordByWord(child.name)}`;
       }
     }
-    if (`other-${parent.id}` === value)
-      return `Other ${capitalizeWordByWord(parent.jar_category_name)}`;
   }
   return "Select Sub-account Category";
 };

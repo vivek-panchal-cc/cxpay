@@ -9,7 +9,7 @@ function useJarCategories() {
       try {
         const { data } = await apiRequest.getSavingJarCategories();
         if (!data.success) throw data.message;
-        setJarCategory(data?.data?.category);
+        setJarCategory(data?.data);
       } catch (error) {
         console.log(error);
       }
