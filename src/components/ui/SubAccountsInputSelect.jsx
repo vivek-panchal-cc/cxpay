@@ -10,7 +10,12 @@ function SubAccountsInputSelect({
   onChange,
   value,
 }) {
-  const [expandedParent, setExpandedParent] = useState(null);
+  // const [expandedParent, setExpandedParent] = useState(null);
+  const [expandedParent, setExpandedParent] = useState(() => {
+    const [, parentId] = value?.split("|") ?? [];
+    return Number(parentId) || null;
+  });
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
