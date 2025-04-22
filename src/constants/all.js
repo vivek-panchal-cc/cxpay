@@ -121,6 +121,7 @@ const RECURRING_PENDING = "pending";
 const RECURRING_FAILED = "failed";
 const RECURRING_SUCCESS = "success";
 const RECURRING_PAID = "paid";
+const RECURRING_PENDING_PAST = "past_pending";
 
 const recurringTypeStatus = {
   [RECURRING_PENDING]: {
@@ -138,6 +139,10 @@ const recurringTypeStatus = {
   [RECURRING_PAID]: {
     status: "SUCCESS",
     className: "recurring-date-status-common recurring-paid",
+  },
+  [RECURRING_PENDING_PAST]: {
+    status: "PENDING",
+    className: "recurring-date-status-common recurring-failed",
   },
 };
 
