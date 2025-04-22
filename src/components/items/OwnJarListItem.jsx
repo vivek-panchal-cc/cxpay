@@ -76,7 +76,11 @@ const OwnJarListItem = (props) => {
 
   const handleCallbackTransaction = async () => {
     setPopup(false);
-    await confirmAcceptOrDeclineTransaction(acceptRejectValue, details.jar_id);
+    await confirmAcceptOrDeclineTransaction(
+      undefined,
+      acceptRejectValue,
+      details.jar_id
+    );
     setAcceptRejectValue(null);
   };
 

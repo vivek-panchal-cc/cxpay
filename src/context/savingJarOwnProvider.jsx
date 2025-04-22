@@ -42,6 +42,7 @@ const SavingJarOwnProvider = ({ children }) => {
     useState(false);
   const [recurringDetails, setRecurringDetails] = useState({});
   const [acceptDecline, setAcceptDecline] = useState({
+    id: "",
     value: "",
     jar_id: "",
   });
@@ -289,6 +290,7 @@ const SavingJarOwnProvider = ({ children }) => {
     setEditJar({ editWallet: [] });
     setJarData(null);
     setAcceptDecline({
+      id: "",
       value: "",
       jar_id: "",
     });
@@ -330,13 +332,17 @@ const SavingJarOwnProvider = ({ children }) => {
     setTabName(value);
   };
 
-  const confirmAcceptOrDeclineTransaction = async (value, jar_id) => {
+  const confirmAcceptOrDeclineTransaction = async (id, value, jar_id) => {
     setIsLoading(true);
     try {
-      const { data } = await apiRequest.acceptRejectSavingJarDetails({
-        jar_id: jar_id,
+      const payload = {
+        jar_id,
         request_accept: value,
-      });
+      };
+      if (id !== undefined) {
+        payload.id = id;
+      }
+      const { data } = await apiRequest.acceptRejectSavingJarDetails(payload);
       if (!data.success) throw data.message;
       toast.success(data.message);
       reloadInvitedJar();
@@ -582,10 +588,11 @@ const SavingJarOwnProvider = ({ children }) => {
     }
   };
 
-  const handleInvitedJarAcceptOrDecline = async (value, id) => {
+  const handleInvitedJarAcceptOrDecline = async (value, data) => {
     setAcceptDecline({
+      id: data.id,
       value: value,
-      jar_id: id,
+      jar_id: data.jar_id,
     });
     setPopup(true);
   };
@@ -593,11 +600,13 @@ const SavingJarOwnProvider = ({ children }) => {
   const handleCallbackTransaction = async () => {
     setPopup(false);
     await confirmAcceptOrDeclineTransaction(
+      acceptDecline.id,
       acceptDecline.value,
       acceptDecline.jar_id
     );
     setShowDetails(false);
     setAcceptDecline({
+      id: "",
       value: "",
       jar_id: "",
     });

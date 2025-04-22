@@ -258,7 +258,7 @@ const ModalRecurringPaymentDetails = (props) => {
               <button
                 type="button"
                 className="outline-btn justify-content-center"
-                onClick={() => handleAcceptOrDecline(0, details.jar_id)}
+                onClick={() => handleAcceptOrDecline(0, details)}
                 style={{ minWidth: "204px" }}
               >
                 Decline
@@ -266,7 +266,7 @@ const ModalRecurringPaymentDetails = (props) => {
               <button
                 type="button"
                 className="btn print-details-btn"
-                onClick={() => handleAcceptOrDecline(1, details.jar_id)}
+                onClick={() => handleAcceptOrDecline(1, details)}
               >
                 Accept
               </button>
