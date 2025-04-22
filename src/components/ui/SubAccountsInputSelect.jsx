@@ -161,7 +161,7 @@ const findSelectedLabel = (value, options) => {
 };
 
 const capitalizeWordByWord = (str) => {
-  return str.replace(/\b\w/g, (char) => char.toUpperCase());
+  return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
 };
 
 export default SubAccountsInputSelect;
