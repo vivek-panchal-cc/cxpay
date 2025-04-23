@@ -114,7 +114,7 @@ const ModalRecurringPaymentDetails = (props) => {
               onClick={() => setShow(false)}
             />{" "}
             <div className="jar-rc-refund-all-wrap">
-              <div className="jar-rc-refund-main-wrap">
+              <div className="modal-rec jar-rc-refund-main-wrap">
                 <div className="rc-refund-main-inner">
                   <div className="rcr-innner-wrap rcr-innner-wrap-1 pb-0 d-flex flex-wrap w-100">
                     <div className="rcrc-img-wrap rcr-img-wrap">

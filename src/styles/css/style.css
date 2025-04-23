@@ -8162,6 +8162,13 @@ ul.recent-act-lw-main .act-info-wrap-left {
   width: 55%;
   border-radius: 24px;
 }
+.modal-rec.jar-rc-refund-main-wrap {
+  width: calc(100% - 200px);
+  min-width: auto;
+}
+.modal-rec .rcr-card-data {
+  width: calc(100% - 120px);
+}
 .jar-rc-refund-main-wrap {
   box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.08);
   margin-top: 15px;
