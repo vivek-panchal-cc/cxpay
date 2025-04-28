@@ -106,9 +106,9 @@ const SectionRecurringDates = (props) => {
           <table>
             <thead className="freq-date-header">
               <tr>
-                <th>Frequency Date</th>
+                <th>Freq. Date</th>
                 <th>Amount</th>
-                <th>Status</th>
+                <th>Payment Status</th>
                 <th>Action</th>
               </tr>
             </thead>

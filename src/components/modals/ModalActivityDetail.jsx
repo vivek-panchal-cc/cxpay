@@ -82,14 +82,21 @@ const ModalActivityDetail = (props) => {
   );
   const { setIsLoading } = useContext(LoaderContext);
   const { handleSendContactsForInstantPay } = useContext(SendPaymentContext);
-  const statusKey =
-    user_type === "business" && status === "PAID"
+
+  const statusKey = useMemo(() => {
+    return user_type === "business" && status === ACT_STATUS_PAID
       ? `${status}_business`
       : status;
-  const trWwStatus =
-    activity_type === "transaction" &&
-    (request_type === "credit" || request_type === "debit") &&
-    txn_type === "WW";
+  }, [user_type, status]);
+
+  const trWwStatus = useMemo(
+    () =>
+      activity_type === ACT_TYPE_TRANSACTION &&
+      (request_type === ACT_TRANSACT_CREDIT ||
+        request_type === ACT_TRANSACT_DEBIT) &&
+      txn_type === TXN_TYPE_WW,
+    [activity_type, request_type, txn_type]
+  );
 
   const {
     iconStatus,

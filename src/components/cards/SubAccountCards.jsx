@@ -1,7 +1,8 @@
+import TooltipInfo from "components/tooltips/TooltipInfo";
 import WrapAmount from "components/wrapper/WrapAmount";
 import useCountUp from "hooks/useCountUp";
-import React from "react";
-import { IconDashSubAcc } from "styles/svgs";
+import React, { useState } from "react";
+import { IconDashSubAcc, IconInfo } from "styles/svgs";
 
 const SubAccountsCard = (props) => {
   const { loading, statistics, getSubAccountsStatistics } = props;
@@ -15,6 +16,7 @@ const SubAccountsCard = (props) => {
     my_shared_reserve = "",
     shared_reserved_share = "",
   } = statistics;
+  const [iconColor, setIconColor] = useState(false);
 
   // Own Statistics
   const myDeposit = useCountUp(my_deposit);
@@ -32,10 +34,25 @@ const SubAccountsCard = (props) => {
     <div className="sub-accounts-container">
       <div className="section">
         <div className="section-header">
-          <span className="icon">
-            <IconDashSubAcc />
-          </span>{" "}
-          Own Sub-accounts
+          <div className="header-left">
+            <span className="icon">
+              <IconDashSubAcc />
+            </span>
+            Own Sub-accounts
+          </div>
+          {/* <div className="header-right">
+            <TooltipInfo
+              content={
+                <p>
+                  This section shows your own sub-accounts, where you manage
+                  permissions and track activities easily.
+                </p>
+              }
+              setIconColor={setIconColor}
+            >
+              <IconInfo fill={`${iconColor ? "#363853" : "#999999"}`} />
+            </TooltipInfo>
+          </div> */}
         </div>
         <div className="account-grid">
           <div className="account-column first-column">
@@ -72,10 +89,12 @@ const SubAccountsCard = (props) => {
 
       <div className="section">
         <div className="section-header">
-          <span className="icon">
-            <IconDashSubAcc />
-          </span>{" "}
-          Shared Sub-accounts
+          <div className="header-left">
+            <span className="icon">
+              <IconDashSubAcc />
+            </span>{" "}
+            Shared Sub-accounts
+          </div>
         </div>
         <div className="account-grid">
           <div className="account-column first-column">

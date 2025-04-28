@@ -472,6 +472,37 @@
   display: flex;
   align-items: center;
   color: #323232;
+  justify-content: space-between;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .section-header
+  .header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .section-header
+  .header-right
+  svg {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .section-header
+  .header-right
+  svg:hover {
+  fill: var(--dark_blue);
 }
 
 .dashboard-sub-accounts-section

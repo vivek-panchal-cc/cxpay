@@ -5780,6 +5780,13 @@
     padding-left: 17px;
     padding-right: 17px;
   }
+  .tooltip-box {
+    right: 30px !important; /* Further adjust for smaller devices */
+    width: 200px !important; /* Reduce the width for mobile */
+  }
+  .tooltip-content {
+    max-height: 200px !important; /* Adjust the height */
+  }
 }
 @media only screen and (max-width: 400px) {
   .notification-user-wrap {
@@ -6255,6 +6262,15 @@
 
   .progress-bar {
     width: 100%;
+  }
+
+  .tooltip-box {
+    right: 30px; /* Adjust position for smaller screens */
+    width: 250px; /* Make the tooltip a little smaller */
+  }
+
+  .tooltip-content {
+    max-height: 250px; /* Adjust max height for smaller screens */
   }
 }
 
