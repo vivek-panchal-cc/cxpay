@@ -1201,7 +1201,7 @@ const getInitials = (fullName) => {
     return (nameParts[0][0] + nameParts[1][0]).toUpperCase();
   }
   // Otherwise, take the first two letters of the first valid word
-  return nameParts[0]?.slice(0, 2).toUpperCase() || "";
+  return nameParts[0]?.slice(0, 2).toUpperCase() || "NA";
 };
 
 // Function to generate class based on alphabetics range
