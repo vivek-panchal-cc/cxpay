@@ -109,8 +109,14 @@ const chartOption = {
 const months = [];
 
 const BalanceGraph = (props) => {
-  const { isLoading, setIsLoading } = useContext(LoaderContext);
-  const { graphBackgroundImage, balanceDataArr, balance, monthDataArr, getBalance } = props;
+  const { isLoading } = useContext(LoaderContext);
+  const {
+    graphBackgroundImage,
+    balanceDataArr,
+    balance,
+    monthDataArr,
+    getBalance,
+  } = props;
   const [options, setOptions] = useState({ ...chartOption });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reservedDetails, setReservedDetails] = useState([]);
@@ -118,6 +124,7 @@ const BalanceGraph = (props) => {
   const [showAvailableBalance, setShowAvailableBalance] = useState(false);
   const [showReservedAmount, setShowReservedAmount] = useState(false);
   const [showBalance, setShowBalance] = useState(true);
+  const [balanceLoading, setBalanceLoading] = useState(false);
   const [displayedBalance, setDisplayedBalance] = useState(0);
   const [displayedReservedBalance, setDisplayedReservedBalance] = useState(0);
 
@@ -309,13 +316,13 @@ const BalanceGraph = (props) => {
   };
 
   const handleGetBalance = async () => {
-    setIsLoading(true);
+    setBalanceLoading(true);
     try {
       await getBalance();
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setBalanceLoading(false);
     }
   };
 
@@ -463,7 +470,7 @@ const BalanceGraph = (props) => {
             ) : null}
             <div className="p-4 pb-0 flex-grow-1 text-end cursor-pointer">
               <IconDashboardRefresh
-                className={isLoading ? `refresh-icon-loading` : ""}
+                className={balanceLoading ? `refresh-icon-loading` : ""}
                 style={{ marginBottom: "4px" }}
                 stroke="#0081C5"
                 onClick={handleGetBalance}
