@@ -87,10 +87,21 @@ function SubAccountsInputSelect({
                     {capitalizeWordByWord(parent.jar_category_name)}
                   </button>
 
+                  {/* <ul
+                    className={`child-options ${
+                      expandedParent === parent.id ? "expanded" : ""
+                    }`}
+                  > */}
                   <ul
                     className={`child-options ${
                       expandedParent === parent.id ? "expanded" : ""
                     }`}
+                    style={{
+                      maxHeight:
+                        expandedParent === parent.id
+                          ? `${parent.children.length * 50}px`
+                          : "0",
+                    }}
                   >
                     {parent.children?.map((child) => (
                       <li key={child.id}>
@@ -113,23 +124,6 @@ function SubAccountsInputSelect({
                         </button>
                       </li>
                     ))}
-                    {/* <li>
-                      <button
-                        type="button"
-                        className={`jar-dropdown-item child-option ${
-                          value === `other-${parent.id}` ? "selected" : ""
-                        }`}
-                        onClick={() => {
-                          onChange(`other-${parent.id}`);
-                          setIsDropdownOpen(false);
-                        }}
-                      >
-                        <span className="toggle-icon">
-                          <IconCheckMark />
-                        </span>
-                        Other
-                      </button>
-                    </li> */}
                   </ul>
                 </li>
               ))}

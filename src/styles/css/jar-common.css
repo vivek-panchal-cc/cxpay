@@ -78,8 +78,14 @@
   margin-left: 20px;
 }
 
+/* .child-options.expanded {
+  max-height: 50vh;
+  overflow-y: auto;
+  opacity: 1;
+} */
+
 .child-options.expanded {
-  max-height: 300px; /* Adjust this based on content height */
+  /* max-height: none; */
   opacity: 1;
 }
 
