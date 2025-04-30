@@ -87,7 +87,7 @@ const QrCode = (props) => {
       });
       if (!data.success) throw data.message;
       toast.success(data.message);
-      setCustomQR(data.data);
+      setCustomQR(data?.data.qr_code_image);
       setAmount(value);
       setShowConfirmPopup(false);
     } catch (error) {
