@@ -31,6 +31,11 @@ function InputIconSelect({
       minHeight: "45px",
       borderRadius: "18px",
       border: "1px solid #0081c5",
+      boxShadow: "none",
+      "&:hover": {
+        border: "1px solid #0081c5",
+      },
+      filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1))",
       backgroundColor: "#fff",
       fontSize: "14px",
       cursor: "pointer",
