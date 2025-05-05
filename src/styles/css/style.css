@@ -4387,7 +4387,8 @@ cursor:pointer;
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
+  /* object-fit: cover; */
 }
 
 ul::-webkit-scrollbar {
@@ -9482,7 +9483,8 @@ button.export-activities.disabled:hover {
   height: 40px;
   border-radius: 50%;
   background: white;
-  object-fit: cover;
+  object-fit: contain;
+  /* object-fit: cover; */
 }
 
 .jar-name {
