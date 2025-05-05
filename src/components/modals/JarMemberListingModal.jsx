@@ -38,7 +38,7 @@ function JarMemberListingModal(props) {
 
   const searchContactData = (e) => {
     setSearchContactName(e.target.value);
-    retriveRemainingContact(1, e.target.value);
+    // retriveRemainingContact(1, e.target.value);
     setCurrentListPage(1);
   };
 
@@ -130,6 +130,18 @@ function JarMemberListingModal(props) {
   };
 
   useEffect(() => {
+    if (searchContactName === "") {
+      retriveRemainingContact(1, searchContactName);
+      return;
+    }
+    const delayDebounce = setTimeout(() => {
+      retriveRemainingContact(1, searchContactName);
+    }, 1000);
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchContactName]);
+
+  useEffect(() => {
     if (show) retriveRemainingContact(currentListPage, searchContactName);
     function handleclickOutside(event) {
       if (!modalRef.current) return;
@@ -211,46 +223,49 @@ function JarMemberListingModal(props) {
               </div>
               <div className="cml-container">
                 <ul onScroll={onScroll}>
-                  {remainingContactListing?.map((ele) => (
-                    <li key={"li-" + ele.account_number}>
-                      <div className="modal-contact-list-wrap">
-                        <div
-                          className={`cm-listing-check ${
-                            disabledCheckedBox(ele) ||
-                            show_renew_section === "disable_fund_action" ||
-                            show_renew_section ===
-                              "renew_limit_exceed_and_disable"
-                              ? "cursor-not-allowed"
-                              : ""
-                          }`}
-                        >
-                          <input
-                            id={ele.account_number}
-                            type="checkbox"
-                            value={ele.account_number}
-                            onChange={handleChange}
-                            checked={selectedRemainingContact.includes(
-                              ele.account_number
-                            )}
-                            disabled={
+                  {loadingContacts ? (
+                    <div className="d-flex flex-column">
+                      {[1, 2, 3, 4, 5, 6]?.map((item) => (
+                        <LoaderAddGroupContact key={item} />
+                      ))}
+                    </div>
+                  ) : (
+                    remainingContactListing?.map((ele) => (
+                      <li key={"li-" + ele.account_number}>
+                        <div className="modal-contact-list-wrap">
+                          <div
+                            className={`cm-listing-check ${
                               disabledCheckedBox(ele) ||
                               show_renew_section === "disable_fund_action" ||
                               show_renew_section ===
                                 "renew_limit_exceed_and_disable"
-                            }
-                          />
-                          <label htmlFor={ele.account_number}>
-                            {ele.member_name}
-                          </label>
+                                ? "cursor-not-allowed"
+                                : ""
+                            }`}
+                          >
+                            <input
+                              id={ele.account_number}
+                              type="checkbox"
+                              value={ele.account_number}
+                              onChange={handleChange}
+                              checked={selectedRemainingContact.includes(
+                                ele.account_number
+                              )}
+                              disabled={
+                                disabledCheckedBox(ele) ||
+                                show_renew_section === "disable_fund_action" ||
+                                show_renew_section ===
+                                  "renew_limit_exceed_and_disable"
+                              }
+                            />
+                            <label htmlFor={ele.account_number}>
+                              {ele.member_name}
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                  ))}
-                  {loadingContacts
-                    ? [1, 2, 3, 4, 5, 6]?.map((item) => (
-                        <LoaderAddGroupContact key={item} itemType={"bank"} />
-                      ))
-                    : null}
+                      </li>
+                    ))
+                  )}
                 </ul>
                 {!loadingContacts && remainingContactListing.length <= 0 ? (
                   <p className="text-center">No contacts found.</p>
