@@ -193,22 +193,24 @@ const SavingJarProgress = (props) => {
           >
             <div className="jar-header">
               <div className="jar-details">
-                {jar_icon ? (
-                  <img
-                    src={jar_icon}
-                    className="jar-icon"
-                    alt="Sub-account Icon"
-                  />
-                ) : (
-                  <div
-                    className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
-                      jar_name
-                    )}`}
-                    style={{ width: "40px", height: "40px" }}
-                  >
-                    {getInitials(jar_name)}
-                  </div>
-                )}
+                <div className="jar-details-img">
+                  {jar_icon ? (
+                    <img
+                      src={jar_icon}
+                      className="jar-icon"
+                      alt="Sub-account Icon"
+                    />
+                  ) : (
+                    <div
+                      className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                        jar_name
+                      )}`}
+                      style={{ width: "40px", height: "40px" }}
+                    >
+                      {getInitials(jar_name)}
+                    </div>
+                  )}
+                </div>
                 <div>
                   <h5 className="jar-name">{jar_name}</h5>
                   <p className="jar-category">

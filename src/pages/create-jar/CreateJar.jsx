@@ -363,6 +363,10 @@ const CreateJar = (props) => {
                         width="30"
                         height="30"
                         className="mb-1"
+                        style={{
+                          filter: "drop-shadow(0 0 0 black)",
+                          objectFit: "contain",
+                        }}
                       />
                       {/* Sub-account {icon.id} */}
                     </div>

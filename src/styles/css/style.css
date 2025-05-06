@@ -4387,6 +4387,7 @@ cursor:pointer;
   width: 100%;
   height: 100%;
   border-radius: 50%;
+  filter: drop-shadow(0 0 0 black);
   object-fit: contain;
   /* object-fit: cover; */
 }
@@ -9478,12 +9479,23 @@ button.export-activities.disabled:hover {
   flex-grow: 1;
 }
 
-.jar-icon {
+.jar-details-img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jar-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
   object-fit: contain;
+  filter: drop-shadow(0 0 0 black);
   /* object-fit: cover; */
 }
 

@@ -3,6 +3,7 @@ import {
   ACT_TYPE_REQUEST,
   ACT_TYPE_TRANSACTION,
   CURRENCY_SYMBOL,
+  TXN_TYPE_SJ,
   activityConsts,
 } from "constants/all";
 import { IconEyeOpen } from "styles/svgs";
@@ -66,7 +67,18 @@ const ActivityItem = (props) => {
           <div className="act-user-thumb">
             {/* <img src={profileUrl} alt="" /> */}
             {profile_image ? (
-              <img src={profile_image} className="blue-bg" alt="" />
+              <img
+                src={profile_image}
+                className="blue-bg"
+                alt=""
+                style={{
+                  objectFit: txn_type === TXN_TYPE_SJ ? "contain" : "cover",
+                  filter:
+                    txn_type === TXN_TYPE_SJ
+                      ? "drop-shadow(0 0 0 black)"
+                      : "none",
+                }}
+              />
             ) : (
               <div
                 className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(

@@ -71,6 +71,7 @@ function InputIconSelect({
     }),
     menu: (base) => ({
       ...base,
+      padding: "4px 20px",
       borderRadius: "8px",
       boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
       zIndex: 9999,
@@ -82,7 +83,7 @@ function InputIconSelect({
       display: "flex",
       flexWrap: "wrap", // Enables multi-row layout
       overflowY: "auto", // Enables scrolling
-      scrollbarWidth: "thin", // Firefox
+      scrollbarWidth: "none", // Firefox
       scrollbarColor: "#f0f0f0", // Scrollbar color for Firefox
     }),
     placeholder: (base) => ({

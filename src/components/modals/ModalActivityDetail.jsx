@@ -276,7 +276,18 @@ const ModalActivityDetail = (props) => {
                   <LoaderActivityProfile />
                 ) : image ? (
                   // <img src={profileUrl} alt="User Profile" />
-                  <img src={image} className="blue-bg" alt="" />
+                  <img
+                    src={image}
+                    className="blue-bg"
+                    alt=""
+                    style={{
+                      objectFit: txn_type === TXN_TYPE_SJ ? "contain" : "cover",
+                      filter:
+                        txn_type === TXN_TYPE_SJ
+                          ? "drop-shadow(0 0 0 black)"
+                          : "none",
+                    }}
+                  />
                 ) : (
                   <div
                     className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
