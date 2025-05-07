@@ -3249,6 +3249,22 @@ img.img-hover {
   object-fit: cover;
 }
 
+.user-details-modal .user-profile-div.savings-jar-details,
+.act-user-thumb.savings-jar-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-details-modal .user-profile-div.savings-jar-details img,
+.act-user-thumb.savings-jar-details img {
+  border-radius: 0;
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 0 black);
+}
+
 .user-details-modal table {
   width: 100%;
   margin-top: 25px;

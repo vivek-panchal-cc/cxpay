@@ -262,7 +262,11 @@ const ModalActivityDetail = (props) => {
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              <div className="user-profile-div bg-white">
+              <div
+                className={`user-profile-div ${
+                  txn_type === TXN_TYPE_SJ ? "savings-jar-details" : ""
+                } bg-white`}
+              >
                 <IconCloseModal
                   style={{
                     position: "absolute",
@@ -276,18 +280,7 @@ const ModalActivityDetail = (props) => {
                   <LoaderActivityProfile />
                 ) : image ? (
                   // <img src={profileUrl} alt="User Profile" />
-                  <img
-                    src={image}
-                    className="blue-bg"
-                    alt=""
-                    style={{
-                      objectFit: txn_type === TXN_TYPE_SJ ? "contain" : "cover",
-                      filter:
-                        txn_type === TXN_TYPE_SJ
-                          ? "drop-shadow(0 0 0 black)"
-                          : "none",
-                    }}
-                  />
+                  <img src={image} className="blue-bg" alt="" />
                 ) : (
                   <div
                     className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(

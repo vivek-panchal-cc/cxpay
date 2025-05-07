@@ -64,21 +64,14 @@ const ActivityItem = (props) => {
     <li onClick={() => handleClick({ id, activity_type, reference_id })}>
       <div className="act-info-wrap-left">
         <div className="act-user-info-wrap d-flex">
-          <div className="act-user-thumb">
+          <div
+            className={`act-user-thumb ${
+              txn_type === TXN_TYPE_SJ ? "savings-jar-details" : ""
+            }`}
+          >
             {/* <img src={profileUrl} alt="" /> */}
             {profile_image ? (
-              <img
-                src={profile_image}
-                className="blue-bg"
-                alt=""
-                style={{
-                  objectFit: txn_type === TXN_TYPE_SJ ? "contain" : "cover",
-                  filter:
-                    txn_type === TXN_TYPE_SJ
-                      ? "drop-shadow(0 0 0 black)"
-                      : "none",
-                }}
-              />
+              <img src={profile_image} className="blue-bg" alt="" />
             ) : (
               <div
                 className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
