@@ -31,7 +31,7 @@ const JarPaymentItem = forwardRef((props, ref) => {
   return (
     <li>
       <div className="payee-name-img-wrap">
-        <div className="payee-img">
+        <div className="payee-img saving-jar-record">
           {/* <Image
             src={imgUrl}
             fallbacksrc={fallbackImgUrl}
@@ -40,16 +40,7 @@ const JarPaymentItem = forwardRef((props, ref) => {
             alt="contact img"
           /> */}
           {imgUrl ? (
-            <Image
-              src={imgUrl}
-              className=""
-              style={{
-                objectPosition: "center",
-                objectFit: "contain",
-                filter: "drop-shadow(0 0 0 black)",
-              }}
-              alt="contact img"
-            />
+            <Image src={imgUrl} className="" alt="contact img" />
           ) : (
             <div
               className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(

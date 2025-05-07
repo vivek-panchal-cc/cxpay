@@ -2149,6 +2149,21 @@ box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.08); */
   border-radius: 50%;
 }
 
+.payee-name-img-wrap .payee-img.saving-jar-record {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.payee-name-img-wrap .payee-img.saving-jar-record img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 0 black);
+  object-position: center;
+  border-radius: 0;
+}
+
 .payee-name-img-wrap {
   display: flex;
   flex-wrap: wrap;

@@ -1423,6 +1423,10 @@
     font-size: 13px;
     padding-left: 10px;
   }
+  .payee-name-img-wrap .payee-img.saving-jar-record img {
+    width: 30px;
+    height: 30px;
+  }
   .payee-name-img-wrap .payee-img {
     width: 45px;
     height: 45px;
