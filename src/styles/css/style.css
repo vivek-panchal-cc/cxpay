@@ -4400,9 +4400,9 @@ cursor:pointer;
 }
 
 .jar-con-list-uimg img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
+  width: 80%;
+  height: 80%;
+  /* border-radius: 50%; */
   filter: drop-shadow(0 0 0 black);
   object-fit: contain;
   /* object-fit: cover; */
@@ -9506,9 +9506,9 @@ button.export-activities.disabled:hover {
 }
 
 .jar-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  /* border-radius: 50%; */
   background: transparent;
   object-fit: contain;
   filter: drop-shadow(0 0 0 black);

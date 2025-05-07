@@ -14,6 +14,8 @@ export const SystemOptionsContext = createContext({
   MANUAL_KYC: "",
   MOBILE_NUMBER_NOT_CHANGE_DURATION_IN_DAYS: "",
   CHANGE_MOBILE_NUMBER_ALLOW_COUNT: "",
+  APP_INSTALL_LINK_ANDROID: "",
+  APP_INSTALL_LINK_IOS: "",
 });
 
 const SystemOptionsProvider = ({ children }) => {

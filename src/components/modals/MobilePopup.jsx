@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import styles from "./modal.module.scss";
 import { getMobilePlatform } from "utils/platformUtils";
 import { CXPAY_LOGO } from "constants/all";
 import { useLocation } from "react-router-dom";
+import { SystemOptionsContext } from "context/systemOptionsContext";
 
 function MobilePopup(props) {
   const {
@@ -18,6 +19,9 @@ function MobilePopup(props) {
   const location = useLocation();
   const [showPopup, setShowPopup] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState("");
+  const { APP_INSTALL_LINK_IOS, APP_INSTALL_LINK_ANDROID } =
+    useContext(SystemOptionsContext);
+  const [isChecking, setIsChecking] = useState(true);
   const [isActive, setIsActive] = useState(true);
 
   // For closing the modal on click of outside the modal area
@@ -36,17 +40,20 @@ function MobilePopup(props) {
 
   useEffect(() => {
     const platform = getMobilePlatform();
-    if (platform) {
-      setShowPopup(true);
-      if (platform === "android") {
-        setDownloadUrl(process.env.REACT_APP_ANDROID_DEVICE);
-      } else if (platform === "ios") {
-        setDownloadUrl(process.env.REACT_APP_APPLE_DEVICE);
+    if (APP_INSTALL_LINK_ANDROID && APP_INSTALL_LINK_IOS) {
+      setIsChecking(false);
+      if (platform) {
+        setShowPopup(true);
+        if (platform === "android") {
+          setDownloadUrl(APP_INSTALL_LINK_ANDROID);
+        } else if (platform === "ios") {
+          setDownloadUrl(APP_INSTALL_LINK_IOS);
+        }
+      } else {
+        setShowPopup(false);
       }
-    } else {      
-      setShowPopup(false);
     }
-  }, [location.pathname]);
+  }, [location.pathname, APP_INSTALL_LINK_ANDROID, APP_INSTALL_LINK_IOS]);
 
   if (!showPopup) return null;
 
@@ -70,16 +77,18 @@ function MobilePopup(props) {
                 <label className="mb-3 w-100 text-center">
                   Get the best experience on mobile by downloading our app.
                 </label>
-                <div className="popup-btn-wrap">
-                  <button
-                    type="button"
-                    className={`btn btn-primary cursor-pointer`}
-                    onClick={() => window.open(downloadUrl, "_blank")}
-                  >
-                    {" "}
-                    Download{" "}
-                  </button>
-                </div>
+                {!isChecking && (
+                  <div className="popup-btn-wrap">
+                    <button
+                      type="button"
+                      className={`btn btn-primary cursor-pointer`}
+                      onClick={() => window.open(downloadUrl, "_blank")}
+                    >
+                      {" "}
+                      Download{" "}
+                    </button>
+                  </div>
+                )}
               </form>
             </div>
           </div>
