@@ -369,6 +369,7 @@ const EditJar = () => {
                   ),
                   url: icon.url,
                 }))}
+                isLoading={jarIconLoading}
                 onChange={(selectedOption) =>
                   formik.setFieldValue("jar_icon", selectedOption.value)
                 }

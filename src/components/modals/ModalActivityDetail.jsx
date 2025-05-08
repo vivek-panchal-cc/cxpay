@@ -121,7 +121,7 @@ const ModalActivityDetail = (props) => {
       default:
         return {};
     }
-  }, [activity_type, request_type, status]);
+  }, [activity_type, request_type, status, txn_type]);
 
   useEffect(() => {
     function handleclickOutside(event) {

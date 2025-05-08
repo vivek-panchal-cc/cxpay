@@ -1,4 +1,5 @@
 import React from "react";
+import ContentLoader from "react-content-loader";
 import Select from "react-select";
 
 const SingleValue = ({ data }) => (
@@ -13,6 +14,21 @@ const SingleValue = ({ data }) => (
   </div>
 );
 
+const SkeletonOption = () => (
+  <div className="d-flex flex-column align-items-center justify-content-center m-2">
+    <ContentLoader
+      speed={2}
+      width={50}
+      height={50}
+      viewBox="0 0 50 50"
+      backgroundColor="#f3f3f3"
+      foregroundColor="#ecebeb"
+    >
+      <circle cx="25" cy="25" r="24" />
+    </ContentLoader>
+  </div>
+);
+
 function InputIconSelect({
   labelname,
   error,
@@ -22,8 +38,15 @@ function InputIconSelect({
   className,
   customStyles,
   placeholder,
+  isLoading = false,
   ...props
 }) {
+  const skeletonOptions = Array.from({ length: 27 }).map((_, index) => ({
+    label: <SkeletonOption />,
+    value: `skeleton-${index}`,
+    isDisabled: true,
+  }));
+
   // Default custom styles for react-select
   const customDropdownStyles = {
     control: (base) => ({
@@ -107,7 +130,7 @@ function InputIconSelect({
       {useReactSelect ? (
         <Select
           {...props}
-          options={options}
+          options={isLoading ? skeletonOptions : options}
           isDisabled={disabled}
           isSearchable={false}
           styles={customStyles || customDropdownStyles} // Use custom styles if provided
@@ -122,6 +145,7 @@ function InputIconSelect({
         <select
           {...props}
           className={`${className} ${disabled ? "cursor-not-allowed" : ""}`}
+          disabled={disabled || isLoading}
         >
           <option value="" disabled>
             {placeholder || "Select an option"}

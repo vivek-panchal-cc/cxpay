@@ -26,7 +26,7 @@ import SubAccountsInputSelect from "components/ui/SubAccountsInputSelect";
 
 const CreateJar = (props) => {
   const navigate = useNavigate();
-  const [jarIcon] = useJarIcons();
+  const [jarIcon, jarIconLoading] = useJarIcons();
   const [jarCategory] = useJarCategories();
   const [datePicker, setDatePicker] = useState(false);
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
@@ -373,6 +373,7 @@ const CreateJar = (props) => {
                   ),
                   url: icon.url,
                 }))}
+                isLoading={jarIconLoading}
                 onChange={(selectedOption) =>
                   formik.setFieldValue("jar_icon", selectedOption.value)
                 }
