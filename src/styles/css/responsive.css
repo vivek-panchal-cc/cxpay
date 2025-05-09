@@ -444,7 +444,8 @@
     line-height: 23px;
   }
   .profile-qr-inner {
-    padding: 25px 30px;
+    /* padding: 25px 30px; */
+    padding: 10px;
     margin-bottom: 33px;
   }
   /* .merchant-qr-inner {
@@ -1149,18 +1150,20 @@
     line-height: 20px;
   }
   .profile-qr-inner {
-    padding: 20px 20px;
+    /* padding: 20px 20px; */
+    padding: 10px;
     margin-bottom: 30px;
-    border-radius: 25px;
+    /* border-radius: 25px; */
+    border-radius: 10px;
   }
   .profile-qr-inner img {
     max-width: 110px;
     height: auto;
   }
   .merchant-qr-inner {
-    padding: 20px 20px;
-    margin-bottom: 20px;
-    border-radius: 25px;
+    /* padding: 20px 20px; */
+    /* margin-bottom: 20px; */
+    /* border-radius: 25px; */
   }
   .merchant-qr-inner img {
     max-width: 250px;
