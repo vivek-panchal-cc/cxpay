@@ -226,10 +226,14 @@ export const API_TRANSACTION_UPDATE_RECURRING_OCCURRENCE_AMOUNT =
   "update-saving-jar-recurring-occurrence-amount";
 export const API_TRANSACTION_DELETE_RECURRING_OCCURRENCE =
   "delete-saving-jar-recurring-occurrence-amount";
+export const API_TRANSACTION_UPDATE_RECURRING_OCCURRENCE_DATE =
+  "retry-failed-recurring-payment";
 export const API_GENERATE_OCCURRENCE_FOR_SAVING_JAR =
   "generate-occurrences-for-saving-jar";
 export const API_INVITED_MEMBER_RECURRING_DETAILS =
   "get-invited-member-recurring-for-saving-jar";
+export const API_SAVING_JAR_DASHBOARD_STASTISTICS_DESCRIPTION =
+  "get-saving-jar-dashboard-stats-description";
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =

@@ -13,6 +13,7 @@ function ModalDatePickerKyc(props) {
     heading,
     handleChangeDate,
     maxDate,
+    currentDate = new Date(),
   } = props;
 
   const modalRef = useRef(null);
@@ -54,7 +55,7 @@ function ModalDatePickerKyc(props) {
             </div>
             <ReactDatePicker
               minDate={props.minDate || new Date()}
-              value={selectedDate || new Date()}
+              value={selectedDate || new Date(currentDate) || new Date()}
               onChange={handleDateChange}
               className="kyc-expiry-date"
               maxDate={maxDate || null}

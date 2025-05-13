@@ -68,6 +68,26 @@ function ModalAddAmount(props) {
   };
 
   useEffect(() => {
+    if (recurring_date) {
+      const today = new Date();
+      const inputDate = new Date(recurring_date);
+
+      // Set time to 0 to compare only date parts
+      today.setHours(0, 0, 0, 0);
+      inputDate.setHours(0, 0, 0, 0);
+
+      if (inputDate < today) {
+        // Format today as yyyy-mm-dd
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, "0");
+        const day = String(today.getDate()).padStart(2, "0");
+        const formattedToday = `${year}-${month}-${day}`;
+        formik.setFieldValue("recurring_date", formattedToday);
+      }
+    }
+  }, [recurring_date, show]);
+
+  useEffect(() => {
     function handleclickOutside(event) {
       if (!modalRef.current) return;
       const childDialog = modalRef.current?.children[0];
@@ -213,6 +233,7 @@ function ModalAddAmount(props) {
                 classNameChild={"schedule-time-modal"}
                 heading="Recurring Date"
                 handleChangeDate={handleChangeDateFilter}
+                currentDate={formik.values.recurring_date}
               />
             </div>
           </div>

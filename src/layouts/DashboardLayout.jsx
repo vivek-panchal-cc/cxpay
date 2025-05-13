@@ -105,23 +105,23 @@ function DashboardLayout() {
                 />
               </span>
             </div>
-            <ContactsProvider>
-              <SendPaymentProvider>
-                <ActivityProvider>
-                  <MerchantReportsProvider>
-                    <TopUpActivityProvider>
-                      <NotificationDetailsProvider>
-                        {/* <SavingJarOwnProvider> */}
-                        <NotificationBar />
-                        <InitialPopup />
-                        <Outlet />
-                        {/* </SavingJarOwnProvider> */}
-                      </NotificationDetailsProvider>
-                    </TopUpActivityProvider>
-                  </MerchantReportsProvider>
-                </ActivityProvider>
-              </SendPaymentProvider>
-            </ContactsProvider>
+            <SavingJarOwnProvider>
+              <ContactsProvider>
+                <SendPaymentProvider>
+                  <ActivityProvider>
+                    <MerchantReportsProvider>
+                      <TopUpActivityProvider>
+                        <NotificationDetailsProvider>
+                          <NotificationBar />
+                          <InitialPopup />
+                          <Outlet />
+                        </NotificationDetailsProvider>
+                      </TopUpActivityProvider>
+                    </MerchantReportsProvider>
+                  </ActivityProvider>
+                </SendPaymentProvider>
+              </ContactsProvider>
+            </SavingJarOwnProvider>
           </div>
         </div>
         {showPinPopup && (

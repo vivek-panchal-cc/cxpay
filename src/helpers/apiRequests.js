@@ -224,10 +224,14 @@ const API_updateRecurringOccurrenceAmount =
   apiUrl.API_TRANSACTION_UPDATE_RECURRING_OCCURRENCE_AMOUNT;
 const API_deleteRecurringOccurrence =
   apiUrl.API_TRANSACTION_DELETE_RECURRING_OCCURRENCE;
+const API_updateRecurringOccurrenceDate =
+  apiUrl.API_TRANSACTION_UPDATE_RECURRING_OCCURRENCE_DATE;
 const API_generateOccurrenceForSavingJar =
   apiUrl.API_GENERATE_OCCURRENCE_FOR_SAVING_JAR;
 const API_getInvitedMemberRecurringDetails =
   apiUrl.API_INVITED_MEMBER_RECURRING_DETAILS;
+const API_getSavingJarDashboardStatisticsDescription =
+  apiUrl.API_SAVING_JAR_DASHBOARD_STASTISTICS_DESCRIPTION;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -1469,6 +1473,18 @@ export const deleteRecurringOccurrence = (params) => {
 };
 
 /** POST
+ * @params jar_id
+ * @params occurrence_id
+ * @params token
+ */
+export const updateRecurringOccurrenceDate = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_updateRecurringOccurrenceDate}`,
+    params
+  );
+};
+
+/** POST
  * @params start_date
  * @params end_date
  * @params token
@@ -1486,6 +1502,13 @@ export const generateOccurrenceForSavingJar = (params) => {
 export const getInvitedMemberRecurringDetails = (params) => {
   return axiosTransactionInstance.post(
     `${API_getInvitedMemberRecurringDetails}`,
+    params
+  );
+};
+
+export const getSavingJarDashboardStatisticsDescription = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_getSavingJarDashboardStatisticsDescription}`,
     params
   );
 };
@@ -1653,6 +1676,8 @@ export const apiRequest = {
   subAccountsStatisticsForDashboard,
   updateRecurringOccurrenceAmount,
   deleteRecurringOccurrence,
+  updateRecurringOccurrenceDate,
   generateOccurrenceForSavingJar,
   getInvitedMemberRecurringDetails,
+  getSavingJarDashboardStatisticsDescription,
 };

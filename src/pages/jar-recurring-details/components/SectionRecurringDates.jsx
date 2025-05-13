@@ -8,13 +8,14 @@ import {
 } from "constants/all";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
-import { IconBin, IconEdit } from "styles/svgs";
+import { IconBin, IconEdit, IconRefresh } from "styles/svgs";
 import ModalAddAmount from "components/modals/ModalAddAmount";
 import ModalConfirmation from "components/modals/ModalConfirmation";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { LoaderContext } from "context/loaderContext";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
+import ModalAddDate from "components/modals/ModalAddDate";
 
 const SectionRecurringDates = (props) => {
   const { setIsLoading } = useContext(LoaderContext);
@@ -22,6 +23,7 @@ const SectionRecurringDates = (props) => {
   const [items, setItems] = useState({});
   const [addAmountPopup, setAddAmountPopup] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [showRetryPopup, setShowRetryPopup] = useState(false);
   const { admin_approved } = useSelector(
     (state) => state?.userProfile?.profile
   );
@@ -42,7 +44,7 @@ const SectionRecurringDates = (props) => {
   };
 
   const { details, setIsDataRefresh, loading } = props;
-  const { recurring_dates = [], id, jar_id } = details || {};
+  const { recurring_dates = [], id, jar_id, is_owner = false } = details || {};
 
   const formatDate = (dateStr) => {
     const [year, month, day] = dateStr.split("-");
@@ -52,6 +54,10 @@ const SectionRecurringDates = (props) => {
   const handleModal = () => {
     setAddAmountPopup((am) => !am);
     setAmountError("");
+  };
+
+  const handleRetryModal = () => {
+    setShowRetryPopup((am) => !am);
   };
 
   const handleSubmitAmount = async (values) => {
@@ -70,6 +76,29 @@ const SectionRecurringDates = (props) => {
       if (!data.success) throw data.message;
       toast.success(data.message);
       setAddAmountPopup(false);
+      setIsDataRefresh((cs) => !cs);
+      setAmountError("");
+    } catch (error) {
+      setAmountError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleRetryOccurrence = async (values) => {
+    setIsLoading(true);
+    try {
+      const reqParams = {
+        jar_id: jar_id,
+        occurrence_id: items.occurrence_id,
+        recurring_date: values.date,
+      };
+      const { data } = await apiRequest.updateRecurringOccurrenceDate(
+        reqParams
+      );
+      if (!data.success) throw data.message;
+      toast.success(data.message);
+      setShowRetryPopup(false);
       setIsDataRefresh((cs) => !cs);
       setAmountError("");
     } catch (error) {
@@ -109,7 +138,7 @@ const SectionRecurringDates = (props) => {
                 <th>Freq. Date</th>
                 <th>Amount</th>
                 <th>Payment Status</th>
-                <th>Action</th>
+                {is_owner && <th>Action</th>}
               </tr>
             </thead>
             <tbody>
@@ -152,56 +181,84 @@ const SectionRecurringDates = (props) => {
                           />
                         </div>
                       </td>
-                      <td className="freq-date-rec-td">
+                      <td className="freq-date-rec-td border-0 pt-2 pb-2">
                         <div className={recurringType?.className || ""}>
                           {recurringType?.status ||
                             dateEntry?.status?.toUpperCase()}
                         </div>
                       </td>
-                      <td className="border-0 pt-2 pb-2">
-                        <div className="act-edit-btn">
-                          <div className="d-flex jar-rec-buttons right-activity-div">
-                            <button
-                              className={`act-edit-wrap ${
-                                adminApprovedWithRenewCheck &&
-                                dateEntry?.status.toLowerCase() === "pending"
-                                  ? ""
-                                  : "contacts-admin-approved-disabled"
-                              }`}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setItems(dateEntry);
-                                setAddAmountPopup(true);
-                              }}
-                              disabled={
-                                disableComponent ||
-                                dateEntry?.status.toLowerCase() !== "pending"
-                              }
-                            >
-                              <IconEdit style={{ stroke: "#FFF" }} />
-                            </button>
-                            <button
-                              className={`act-del-wrap ${
-                                adminApprovedWithRenewCheck &&
-                                dateEntry?.status.toLowerCase() === "pending"
-                                  ? ""
-                                  : "contacts-admin-approved-disabled"
-                              }`}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setItems(dateEntry);
-                                setShowDeletePopup(true);
-                              }}
-                              disabled={
-                                disableComponent ||
-                                dateEntry?.status.toLowerCase() !== "pending"
-                              }
-                            >
-                              <IconBin style={{ stroke: "#F3F3F3" }} />
-                            </button>
+                      {is_owner && (
+                        <td className="border-0 pt-2 pb-2">
+                          <div className="act-edit-btn">
+                            <div className="d-flex jar-rec-buttons right-activity-div">
+                              {dateEntry?.status.toLowerCase() === "failed" ? (
+                                <>
+                                  <button
+                                    className={`act-retry-wrap ms-auto w-100 ${
+                                      adminApprovedWithRenewCheck
+                                        ? ""
+                                        : "contacts-admin-approved-disabled"
+                                    }`}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setItems(dateEntry);
+                                      setShowRetryPopup(true);
+                                    }}
+                                    disabled={disableComponent}
+                                  >
+                                    <IconRefresh />
+                                  </button>
+                                </>
+                              ) : (
+                                <>
+                                  <button
+                                    className={`act-edit-wrap ${
+                                      adminApprovedWithRenewCheck &&
+                                      dateEntry?.status.toLowerCase() ===
+                                        "pending"
+                                        ? ""
+                                        : "contacts-admin-approved-disabled"
+                                    }`}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setItems(dateEntry);
+                                      setAddAmountPopup(true);
+                                    }}
+                                    disabled={
+                                      disableComponent ||
+                                      dateEntry?.status.toLowerCase() !==
+                                        "pending"
+                                    }
+                                  >
+                                    <IconEdit style={{ stroke: "#FFF" }} />
+                                  </button>
+                                  <button
+                                    className={`act-del-wrap ${
+                                      adminApprovedWithRenewCheck &&
+                                      dateEntry?.status.toLowerCase() ===
+                                        "pending"
+                                        ? ""
+                                        : "contacts-admin-approved-disabled"
+                                    }`}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setItems(dateEntry);
+                                      setShowDeletePopup(true);
+                                    }}
+                                    disabled={
+                                      disableComponent ||
+                                      dateEntry?.status.toLowerCase() !==
+                                        "pending"
+                                    }
+                                  >
+                                    <IconBin style={{ stroke: "#F3F3F3" }} />
+                                  </button>
+                                </>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </td>
+                        </td>
+                      )}
                     </tr>
                   );
                 })
@@ -220,6 +277,18 @@ const SectionRecurringDates = (props) => {
           handleCallback={handleSubmitAmount}
           error={amountError}
           values={items}
+        />
+        <ModalAddDate
+          id="set-qr-amount"
+          show={showRetryPopup}
+          setShow={handleRetryModal}
+          heading="Enter Recurring Date"
+          subHeading=""
+          handleCallback={handleRetryOccurrence}
+          error={amountError}
+          date={items.recurring_date}
+          btnName="Re-schedule"
+          calendarHeader="Recurring Date"
         />
         <ModalConfirmation
           id="delete-group-member-popup"

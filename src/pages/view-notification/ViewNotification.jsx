@@ -15,10 +15,12 @@ import { useNavigate } from "react-router-dom";
 import Button from "components/ui/Button";
 import { ActivityContext } from "context/activityContext";
 import { NotificationContext } from "context/notificationsContext";
+import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 
 function ViewNotification(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { handleStoreJarId } = useContext(SavingJarOwnContext);
   const { setIsLoading } = useContext(LoaderContext);
   const { handleActivityDetail } = useContext(ActivityContext);
   const { handleNotificationDetails } = useContext(NotificationContext);
@@ -42,7 +44,7 @@ function ViewNotification(props) {
   };
 
   const handleMarkAsRead = async ({ id, status, type, payload, message }) => {
-    const { request_id, description } =
+    const { request_id, description, jar_id } =
       typeof payload === "string" && payload.length > 0
         ? JSON.parse(payload)
         : "";
@@ -51,7 +53,10 @@ function ViewNotification(props) {
       heading: message,
     };
     if (request_id) handleActivityDetail({ id: request_id });
-    else if (description) handleNotificationDetails(notiDesc);
+    else if (jar_id) {
+      await handleStoreJarId(jar_id);
+      navigate(notificationType[type].redirect);
+    } else if (description) handleNotificationDetails(notiDesc);
     else navigate(notificationType[type].redirect);
     if (status) return;
     setIsLoading(true);

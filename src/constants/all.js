@@ -159,6 +159,7 @@ const NOTIFY_DBT = "direct_top_up";
 const NOTIFY_PUSH_NOTIFICATION = "push_notification";
 const NOTIFY_SAVING_JAR_PAYMENT = "saving_jar_payment_done";
 const NOTIFY_SAVING_JAR_PAYMENT_WITHDRAW = "saving_jar_payment_withdraw";
+const NOTIFY_SAVING_JAR_PAYMENT_UPCOMING = "saving_jar_payment_upcoming";
 
 // Notifications Type Constants
 const notificationType = {
@@ -209,6 +210,10 @@ const notificationType = {
   [NOTIFY_SAVING_JAR_PAYMENT_WITHDRAW]: {
     icon: IconNotifyJar,
     redirect: "/jars/own",
+  },
+  [NOTIFY_SAVING_JAR_PAYMENT_UPCOMING]: {
+    icon: IconNotifyJar,
+    redirect: "/jars/own/jar-details",
   },
   "": {
     icon: "",

@@ -159,6 +159,10 @@ const setAmount = yup.object().shape({
   recurring_date: yup.date().required("Recurring date is required").nullable(),
 });
 
+const setOccurrenceDate = yup.object().shape({
+  date: yup.date().required("Date is required").nullable(),
+});
+
 export {
   addJarSchema,
   editJarSchema,
@@ -167,4 +171,5 @@ export {
   jarSchedulePaymentSchema,
   jarRecurringForUpdate,
   setAmount,
+  setOccurrenceDate,
 };

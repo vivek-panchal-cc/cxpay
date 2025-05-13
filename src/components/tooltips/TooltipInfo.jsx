@@ -1,6 +1,12 @@
 import { useState, useRef, useEffect } from "react";
+import LoaderContent from "loaders/LoaderContent";
 
-const TooltipInfo = ({ children, content, setIconColor }) => {
+const TooltipInfo = ({
+  children,
+  content,
+  setIconColor,
+  isLoading = false,
+}) => {
   const [show, setShow] = useState(false);
   const tooltipRef = useRef(null);
   const triggerRef = useRef(null);
@@ -9,25 +15,21 @@ const TooltipInfo = ({ children, content, setIconColor }) => {
     setShow((prev) => !prev);
   };
 
-  const handleClickOutside = (event) => {
-    if (
-      tooltipRef.current &&
-      !tooltipRef.current.contains(event.target) &&
-      triggerRef.current &&
-      !triggerRef.current.contains(event.target)
-    ) {
-      setShow(false);
-    }
-  };
-
   useEffect(() => {
-    if (show) {
-      document.addEventListener("click", handleClickOutside);
-    } else {
-      document.removeEventListener("click", handleClickOutside);
-    }
+    const handleClickOutside = (event) => {
+      const clickedOutsideTooltip =
+        tooltipRef.current && !tooltipRef.current.contains(event.target);
+      const clickedOutsideTrigger =
+        triggerRef.current && !triggerRef.current.contains(event.target);
+
+      if (show && clickedOutsideTooltip && clickedOutsideTrigger) {
+        setShow(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [show]);
 
@@ -36,16 +38,22 @@ const TooltipInfo = ({ children, content, setIconColor }) => {
   }, [show, setIconColor]);
 
   return (
-    <div
-      className={`tooltip-wrapper ${show ? "show-arrow" : ""}`}
-      ref={triggerRef}
-      onClick={toggleTooltip}
-    >
-      {children}
+    <div className={`tooltip-wrapper ${show ? "show-arrow" : ""}`}>
+      <div ref={triggerRef} onClick={toggleTooltip}>
+        {children}
+      </div>
       {show && (
         <>
           <div className="tooltip-box" ref={tooltipRef}>
-            <div className="tooltip-content">{content}</div>
+            <div className="tooltip-content">
+              {isLoading
+                ? [1, 2, 3, 4, 5].map((item, index) => (
+                    <p key={index} className="tooltip-content-loader">
+                      <LoaderContent height="20" width="100%" />
+                    </p>
+                  ))
+                : content}
+            </div>
           </div>
           <div className="tooltip-info-arrow"></div>
         </>

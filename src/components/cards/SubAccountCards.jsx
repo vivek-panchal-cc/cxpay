@@ -1,10 +1,17 @@
 import TooltipInfo from "components/tooltips/TooltipInfo";
 import WrapAmount from "components/wrapper/WrapAmount";
+import { apiRequest } from "helpers/apiRequests";
 import useCountUp from "hooks/useCountUp";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { IconDashSubAcc, IconInfo } from "styles/svgs";
 
 const SubAccountsCard = (props) => {
+  const [contentLoading, setContentLoading] = useState(false);
+  const [htmlContent, setHtmlContent] = useState([]);
+  const memoizedHtmlContent = useMemo(() => {
+    return htmlContent;
+  }, [htmlContent]);
+
   const { loading, statistics, getSubAccountsStatistics } = props;
   const {
     my_deposit = "",
@@ -30,6 +37,22 @@ const SubAccountsCard = (props) => {
   const mySharedReserve = useCountUp(my_shared_reserve);
   const sharedReservedShare = useCountUp(shared_reserved_share);
 
+  useEffect(() => {
+    const fetchCMSContent = async () => {
+      setContentLoading(true);
+      try {
+        const { data } =
+          await apiRequest.getSavingJarDashboardStatisticsDescription();
+        setHtmlContent(data.data || []);
+      } catch (error) {
+        console.error("Error fetching CMS content:", error);
+      } finally {
+        setContentLoading(false);
+      }
+    };
+    fetchCMSContent();
+  }, []);
+
   return (
     <div className="sub-accounts-container">
       <div className="section">
@@ -40,19 +63,44 @@ const SubAccountsCard = (props) => {
             </span>
             Own Sub-accounts
           </div>
-          {/* <div className="header-right">
-            <TooltipInfo
-              content={
-                <p>
-                  This section shows your own sub-accounts, where you manage
-                  permissions and track activities easily.
-                </p>
-              }
-              setIconColor={setIconColor}
-            >
-              <IconInfo fill={`${iconColor ? "#363853" : "#999999"}`} />
-            </TooltipInfo>
-          </div> */}
+          {memoizedHtmlContent?.length > 0 && (
+            <div className="header-right">
+              <TooltipInfo
+                content={
+                  <div className="tooltip-content-list">
+                    <div className="tooltip-header">
+                      <IconDashSubAcc />
+                      <strong className="text-black text-center font-bold mb-2">
+                        FUNDAMENTALS
+                      </strong>
+                      <p>
+                        This section helps you better understand the key terms
+                        used in your Sub-account statistics. Here's what each
+                        term means:
+                      </p>
+                      <p>How much I contributed in my own Sub-accounts</p>
+                    </div>
+                    <div className="funda-divider"></div>
+                    {memoizedHtmlContent?.map((item, index) => (
+                      <>
+                        <div key={index} className="tooltip-item">
+                          <strong className="text-black">{item.name}:</strong>
+                          <ul>
+                            <li>{item.description}</li>
+                          </ul>
+                        </div>
+                        <div className="funda-divider"></div>
+                      </>
+                    ))}
+                  </div>
+                }
+                setIconColor={setIconColor}
+                isLoading={contentLoading}
+              >
+                <IconInfo fill={`${iconColor ? "#363853" : "#999999"}`} />
+              </TooltipInfo>
+            </div>
+          )}
         </div>
         <div className="account-grid">
           <div className="account-column first-column">
