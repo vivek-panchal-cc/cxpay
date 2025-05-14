@@ -199,6 +199,7 @@ const SectionRecurringDates = (props) => {
                                         ? ""
                                         : "contacts-admin-approved-disabled"
                                     }`}
+                                    style={{ transform: "scaleX(-1)" }}
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       setItems(dateEntry);

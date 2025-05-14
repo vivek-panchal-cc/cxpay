@@ -198,6 +198,8 @@ export const API_TRANSACTION_ACCEPT_REJECT_SAVING_JAR_DETAILS =
   "/accept-reject-saving-jar-request";
 export const API_TRANSACTION_ADD_MEMBER_IN_SAVING_JAR =
   "/add-member-in-saving-jar";
+export const API_TRANSACTION_ADJUST_SAVING_JAR_RECURRING_AMOUNT =
+  "/adjust-saving-jar-recurring-amount";
 export const API_TRANSACTION_REMOVE_MEMBER_IN_SAVING_JAR =
   "/remove-member-from-saving-jar";
 export const API_TRANSACTION_SAVING_JAR_MEMBER_LIST =

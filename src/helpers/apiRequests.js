@@ -196,6 +196,8 @@ const API_acceptRejectSavingJarDetails =
   apiUrl.API_TRANSACTION_ACCEPT_REJECT_SAVING_JAR_DETAILS;
 const API_addMemberInSavingJar =
   apiUrl.API_TRANSACTION_ADD_MEMBER_IN_SAVING_JAR;
+const API_adjustSavingJarRecurringAmount =
+  apiUrl.API_TRANSACTION_ADJUST_SAVING_JAR_RECURRING_AMOUNT;
 const API_removeMemberInSavingJar =
   apiUrl.API_TRANSACTION_REMOVE_MEMBER_IN_SAVING_JAR;
 const API_getSavingJarMemberList =
@@ -1323,6 +1325,16 @@ export const addMemberInSavingJar = (params) => {
 
 /** POST
  * @params token
+ */
+export const adjustSavingJarRecurringAmount = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_adjustSavingJarRecurringAmount}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
  * @params member_account_number
  */
 export const removeMemberInSavingJar = (params) => {
@@ -1662,6 +1674,7 @@ export const apiRequest = {
   updateSavingJarDetails,
   acceptRejectSavingJarDetails,
   addMemberInSavingJar,
+  adjustSavingJarRecurringAmount,
   removeMemberInSavingJar,
   getSavingJarMemberList,
   getSavingJarActivityList,

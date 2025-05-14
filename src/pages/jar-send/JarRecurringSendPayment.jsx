@@ -208,7 +208,7 @@ function JarRecurringSendPayment(_props) {
     setUpdatedWallet((prev) => ({
       ...prev,
       occurrences: updatedOccurrences,
-      total_amount: totalAmount,
+      // total_amount: totalAmount,
     }));
   };
 
@@ -330,6 +330,7 @@ function JarRecurringSendPayment(_props) {
                       style={{ scrollbarColor: "#7f8c8d #f4fcfe" }}
                     >
                       <SectionRecurringDates
+                        totalAmount={updatedWallet.total_amount}
                         details={updatedWallet.occurrences}
                         setDetails={setSomeStateForDetails}
                       />

@@ -82,7 +82,7 @@ const SubAccountsCard = (props) => {
                     </div>
                     <div className="funda-divider"></div>
                     {memoizedHtmlContent?.map((item, index) => (
-                      <>
+                      <React.Fragment key={item.name || index}>
                         <div key={index} className="tooltip-item">
                           <strong className="text-black">{item.name}:</strong>
                           <ul>
@@ -90,7 +90,7 @@ const SubAccountsCard = (props) => {
                           </ul>
                         </div>
                         <div className="funda-divider"></div>
-                      </>
+                      </React.Fragment>
                     ))}
                   </div>
                 }

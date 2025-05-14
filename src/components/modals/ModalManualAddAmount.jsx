@@ -20,6 +20,7 @@ function ModalManualAddAmount(props) {
     error = "",
     allowClickOutSide,
     values,
+    minAmount,
   } = props;
   const { amount: installment_amount, date } = values || {};
   const [datePicker, setDatePicker] = useState(false);
@@ -83,8 +84,13 @@ function ModalManualAddAmount(props) {
     e.preventDefault();
     try {
       await setAmount.validate({ amount, recurring_date });
-      let formattedValue = amount;
+      const parsedAmount = parseFloat(amount);
+      if (minAmount && parsedAmount > parseFloat(minAmount)) {
+        setInputError(`Amount should not exceed ${minAmount}`);
+        return;
+      }
 
+      let formattedValue = amount;
       if (!formattedValue.includes(".")) {
         formattedValue += ".00";
       } else {
@@ -199,6 +205,7 @@ function ModalManualAddAmount(props) {
                 classNameChild={"schedule-time-modal"}
                 heading="Recurring Date"
                 handleChangeDate={handleChangeDateFilter}
+                currentDate={date}
               />
             </div>
           </div>
