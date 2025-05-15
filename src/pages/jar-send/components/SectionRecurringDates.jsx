@@ -37,7 +37,8 @@ const SectionRecurringDates = (props) => {
     marginBottom: "25px",
   };
 
-  const { details, setDetails, totalAmount } = props;
+  const { details, setDetails, totalAmount, detailsData } = props;
+  const { recurring_start_date, recurring_end_date } = detailsData || {};
   const [occurrenceList, setOccurrenceList] = useState(
     (details || []).map((item, idx) => ({ ...item, id: item.id ?? idx + 1 }))
   );
@@ -85,12 +86,15 @@ const SectionRecurringDates = (props) => {
       const occurrencePayload = updatedList.map((item, idx) => ({
         id: item.id ?? idx + 1,
         amount: parseFloat(item.amount).toFixed(2),
+        date: item.date,
       }));
 
       const requestPayload = {
         // total_amount: occurrencePayload
         //   .reduce((acc, curr) => acc + parseFloat(curr.amount), 0)
         //   .toFixed(2),
+        start_date: recurring_start_date,
+        end_date: recurring_end_date,
         total_amount: totalAmount,
         changed_id: updatedItem.id ?? items.index + 1,
         occurrence: occurrencePayload,
@@ -102,7 +106,7 @@ const SectionRecurringDates = (props) => {
           requestPayload
         );
         if (!data.success) throw data.message;
-        const updatedFromAPI = data.data; // array of {id, amount}
+        const updatedFromAPI = data.data?.occurrences; // array of {id, amount}
         const newList = updatedList?.map((item) => {
           const matched = updatedFromAPI?.find((d) => d.id == item.id);
           return matched ? { ...item, amount: matched.amount } : item;
@@ -195,6 +199,8 @@ const SectionRecurringDates = (props) => {
           allowClickOutSide={true}
           values={items}
           minAmount={totalAmount}
+          minDate={recurring_start_date}
+          maxDate={recurring_end_date}
         />
       </div>
     </>

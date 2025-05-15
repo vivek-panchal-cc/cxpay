@@ -330,6 +330,7 @@ function JarRecurringSendPayment(_props) {
                       style={{ scrollbarColor: "#7f8c8d #f4fcfe" }}
                     >
                       <SectionRecurringDates
+                        detailsData={updatedWallet}
                         totalAmount={updatedWallet.total_amount}
                         details={updatedWallet.occurrences}
                         setDetails={setSomeStateForDetails}

@@ -396,45 +396,19 @@ function App() {
           <Route element={<DashboardLayout />}>
             {/* settings */}
             <Route path="/setting" element={<Setting />} />
-            <Route
-              path="/setting/edit-profile"
-              element={
-                <ProtectedRoute>
-                  <EditProfile />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/setting/edit-profile" element={<EditProfile />} />
             <Route
               path="/setting/notification"
-              element={
-                <ProtectedRoute>
-                  <ProtectedNotification />
-                </ProtectedRoute>
-              }
+              element={<ProtectedNotification />}
             />
             <Route
               path="/setting/change-password"
-              element={
-                <ProtectedRoute>
-                  <ChangePassword />
-                </ProtectedRoute>
-              }
+              element={<ChangePassword />}
             />
-            <Route
-              path="/setting/change-pin"
-              element={
-                <ProtectedRoute>
-                  <ChangePin />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/setting/change-pin" element={<ChangePin />} />
             <Route
               path="/setting/business-info"
-              element={
-                <ProtectedRoute>
-                  <ProtectedBusinessInfo />
-                </ProtectedRoute>
-              }
+              element={<ProtectedBusinessInfo />}
             />
             {/* <Route
               path="/setting/app-settings"

@@ -20,6 +20,9 @@ function ModalAddAmount(props) {
     subHeading = "",
     error = "",
     values,
+    minAmount,
+    minDate,
+    maxDate,
   } = props;
   const { installment_amount, recurring_date } = values || {};
   const [datePicker, setDatePicker] = useState(false);
@@ -33,8 +36,13 @@ function ModalAddAmount(props) {
     },
     validationSchema: setAmount,
     onSubmit: (values) => {
-      let formattedValue = values.amount;
+      const parsedAmount = parseFloat(values.amount);
+      if (minAmount && parsedAmount > parseFloat(minAmount)) {
+        formik.setFieldError("amount", `Amount should not exceed ${minAmount}`);
+        return;
+      }
 
+      let formattedValue = values.amount;
       // Check if the value has a decimal point
       if (!formattedValue.includes(".")) {
         formattedValue += ".00"; // Add .00 if no decimal exists
@@ -227,7 +235,10 @@ function ModalAddAmount(props) {
                 </form>
               </div>
               <ModalDatePickerKyc
-                minDate={datePicker ? new Date() : ""}
+                minDate={
+                  minDate ? new Date(minDate) : datePicker ? new Date() : ""
+                }
+                maxDate={maxDate ? new Date(maxDate) : ""}
                 show={datePicker}
                 setShow={() => setDatePicker(false)}
                 classNameChild={"schedule-time-modal"}

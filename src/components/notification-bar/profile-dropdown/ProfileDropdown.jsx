@@ -133,11 +133,11 @@ const ProfileDropdown = () => {
               path={elm.path === "/setting" ? null : elm.path}
               onClick={(e) => {
                 setShowDrop(false);
-                if (elm.path === "/setting" && user_type !== "agent") {
-                  handleSettingsClick(e);
-                } else {
-                  navigate(elm.path);
-                }
+                // if (elm.path === "/setting" && user_type !== "agent") {
+                //   handleSettingsClick(e);
+                // } else {
+                navigate(elm.path);
+                // }
               }}
             >
               {elm.icon}

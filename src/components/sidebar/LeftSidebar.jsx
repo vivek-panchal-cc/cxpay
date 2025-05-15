@@ -384,10 +384,12 @@ function LeftSidebar({
             </Link>
           </li>
           <li className={`${thisRoute === "setting" ? "active" : ""}`}>
-            <a href="#" onClick={handleSettingsClick}>
+            {/* <a href="#" onClick={handleSettingsClick}> */}
+            <Link to="/setting" replace>
               <IconSetting style={{ fill: "#fff100" }} />
               <span>Settings</span>
-            </a>
+            </Link>
+            {/* </a> */}
           </li>
           <li
             className={`more-menu ${

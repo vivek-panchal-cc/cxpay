@@ -97,9 +97,9 @@ function ModalPaymentPin(props) {
               onClick={() => {
                 setShow(false);
                 formik.resetForm();
-                if (window.location.href.includes("setting")) {
-                  navigate(-1);
-                }
+                // if (window.location.href.includes("setting")) {
+                //   navigate(-1);
+                // }
               }}
             />{" "}
             <div className="modal-header">

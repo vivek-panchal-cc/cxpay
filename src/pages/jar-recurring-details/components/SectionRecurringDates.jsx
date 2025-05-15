@@ -44,7 +44,15 @@ const SectionRecurringDates = (props) => {
   };
 
   const { details, setIsDataRefresh, loading } = props;
-  const { recurring_dates = [], id, jar_id, is_owner = false } = details || {};
+  const {
+    recurring_dates = [],
+    id,
+    jar_id,
+    is_owner = false,
+    recurring_start_date,
+    recurring_end_date,
+    amount,
+  } = details || {};
 
   const formatDate = (dateStr) => {
     const [year, month, day] = dateStr.split("-");
@@ -278,6 +286,9 @@ const SectionRecurringDates = (props) => {
           handleCallback={handleSubmitAmount}
           error={amountError}
           values={items}
+          minAmount={amount}
+          minDate={recurring_start_date}
+          maxDate={recurring_end_date}
         />
         <ModalAddDate
           id="set-qr-amount"

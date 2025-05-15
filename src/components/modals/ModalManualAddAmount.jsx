@@ -21,6 +21,8 @@ function ModalManualAddAmount(props) {
     allowClickOutSide,
     values,
     minAmount,
+    minDate,
+    maxDate,
   } = props;
   const { amount: installment_amount, date } = values || {};
   const [datePicker, setDatePicker] = useState(false);
@@ -199,7 +201,10 @@ function ModalManualAddAmount(props) {
                 </form>
               </div>
               <ModalDatePickerKyc
-                minDate={datePicker ? new Date() : ""}
+                minDate={
+                  minDate ? new Date(minDate) : datePicker ? new Date() : ""
+                }
+                maxDate={maxDate ? new Date(maxDate) : ""}
                 show={datePicker}
                 setShow={() => setDatePicker(false)}
                 classNameChild={"schedule-time-modal"}
