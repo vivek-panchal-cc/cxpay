@@ -89,6 +89,14 @@ function ChangePassword() {
         navigate("/logout", { replace: true });
         toast.error(error.message);
       }
+      if (typeof error.message === "object" && error.message !== null) {
+        formik.setErrors({
+          current_password: error?.message?.current_password?.[0],
+          new_password: error?.message?.new_password?.[0],
+          confirm_password: error?.message?.confirm_password?.[0],
+        });
+        setShowPinPopup(false);
+      }
     } finally {
       setIsLoading(false);
     }
