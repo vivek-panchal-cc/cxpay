@@ -20,7 +20,7 @@ const JarRecurringDetails = () => {
     const fetchJarRecurringPaymentDetails = async () => {
       try {
         const { data } = await apiRequest.dateListSavingJarRecurringPayment({
-          jar_recurring_payment_id: recurringPaymentDetailsId,
+          jar_recurring_payment_id: recurringPaymentDetailsId?.id,
         });
         if (!data.success) throw data.message;
         setJarRecurringDetails(data?.data);
