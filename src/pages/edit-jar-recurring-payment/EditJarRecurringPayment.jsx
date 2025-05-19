@@ -1,7 +1,12 @@
 import React, { useContext, useMemo, useRef, useState, useEffect } from "react";
 import PaymentUserItem from "./components/PaymentUserItem";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { CURRENCY_SYMBOL, isAdminApprovedWithRenewCheck } from "constants/all";
+import {
+  CURRENCY_SYMBOL,
+  handleWholeNumberInputBlur,
+  handleWholeNumberInputChange,
+  isAdminApprovedWithRenewCheck,
+} from "constants/all";
 import { useFormik } from "formik";
 import InputDatePicker from "components/ui/InputDatePicker";
 import ModalConfirmation from "components/modals/ModalConfirmation";
@@ -196,7 +201,7 @@ const EditJarRecurringPayment = () => {
       recurring_end_date: recurring_end_date || "",
       recurring_start_date: recurring_start_date || "",
       frequency: frequency || "",
-      amount: amount || 0,
+      amount: amount ? String(parseInt(amount, 10)) : 0,
       specifications: specifications || "",
     },
     validationSchema: jarRecurringForUpdate,
@@ -371,63 +376,21 @@ const EditJarRecurringPayment = () => {
                         name="amount"
                         // maxLength="6"
                         placeholder="Amount"
-                        onChange={(e) => {
-                          let value = e.target.value.replace(/[^0-9.]/g, ""); // Allow only numbers and decimals
-
-                          // Prevent more than one decimal point
-                          const decimalCount = (value.match(/\./g) || [])
-                            .length;
-                          if (decimalCount > 1) {
-                            value = value.slice(0, -1); // Remove extra decimal point
-                          }
-
-                          // Allow only up to 6 digits before the decimal point
-                          const [integerPart, decimalPart] = value.split(".");
-                          if (integerPart.length <= 6) {
-                            if (decimalPart && decimalPart.length > 2) {
-                              // Limit to two decimal places
-                              formik.setFieldValue(
-                                "amount",
-                                integerPart + "." + decimalPart.slice(0, 2)
-                              );
-                            } else {
-                              formik.setFieldValue("amount", value);
-                            }
-                          } else {
-                            formik.setFieldValue(
-                              "amount",
-                              integerPart.slice(0, 6) +
-                                (decimalPart
-                                  ? `.${decimalPart.slice(0, 2)}`
-                                  : "")
-                            );
-                          }
-                        }}
-                        onBlur={(e) => {
-                          let value = e.target.value.trim();
-
-                          if (!value || value === ".") {
-                            value = "0.00"; // If the field is empty or just a '.', set it to "0.00"
-                          } else {
-                            const hasDecimal = value.includes(".");
-                            // If there's no decimal point, add ".00"
-                            if (!hasDecimal) {
-                              value += ".00";
-                            } else {
-                              const parts = value.split(".");
-                              if (parts[1].length === 0) {
-                                value += "00"; // Add two zeroes if there are no decimal digits
-                              } else if (parts[1].length === 1) {
-                                value += "0"; // Add one zero if there's only one decimal digit
-                              } else if (parts[1].length > 2) {
-                                value = `${parts[0]}.${parts[1].slice(0, 2)}`; // Limit to two decimal places
-                              }
-                            }
-                          }
-
-                          formik.setFieldValue("amount", value);
-                          formik.handleBlur(e);
-                        }}
+                        onChange={(e) =>
+                          handleWholeNumberInputChange(
+                            e,
+                            formik.setFieldValue,
+                            "amount"
+                          )
+                        }
+                        onBlur={(e) =>
+                          handleWholeNumberInputBlur(
+                            e,
+                            formik.setFieldValue,
+                            formik.handleBlur,
+                            "amount"
+                          )
+                        }
                         value={formik.values.amount}
                         error={formik.touched.amount && formik.errors.amount}
                       />

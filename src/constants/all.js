@@ -1232,6 +1232,32 @@ const getRandomColorClass = (fullName) => {
   return "bg-color-1"; // Default to the first color class if no match
 };
 
+const handleWholeNumberInputChange = (
+  e,
+  setValue,
+  fieldName,
+  maxLength = 6
+) => {
+  let value = e.target.value.replace(/\D/g, ""); // Remove non-digits
+
+  if (value.length > maxLength) {
+    value = value.slice(0, maxLength);
+  }
+
+  setValue(fieldName, value);
+};
+
+const handleWholeNumberInputBlur = (e, setValue, handleBlur, fieldName) => {
+  let value = e.target.value.trim();
+
+  if (!value) {
+    value = "0";
+  }
+
+  setValue(fieldName, value);
+  handleBlur(e);
+};
+
 export {
   exp0ContainWhitespace,
   exp0ContainOnlySpace,
@@ -1323,4 +1349,6 @@ export {
   capitalizeWordByWord,
   getInitials,
   getRandomColorClass,
+  handleWholeNumberInputChange,
+  handleWholeNumberInputBlur,
 };

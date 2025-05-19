@@ -106,6 +106,8 @@ const SectionRecurringDates = (props) => {
           requestPayload
         );
         if (!data.success) throw data.message;
+        // if (!data.data.occurrences?.success)
+        //   throw data.data.occurrences.message;
         const updatedFromAPI = data.data?.occurrences; // array of {id, amount}
         const newList = updatedList?.map((item) => {
           const matched = updatedFromAPI?.find((d) => d.id == item.id);

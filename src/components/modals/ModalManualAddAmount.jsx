@@ -47,7 +47,10 @@ function ModalManualAddAmount(props) {
 
   useEffect(() => {
     if (show) {
-      setAmountValue(installment_amount || "");
+      // setAmountValue(installment_amount || "");
+      setAmountValue(
+        installment_amount ? String(parseInt(installment_amount, 10)) : ""
+      );
       setDate(date || "");
       setInputError("");
     } else {
@@ -57,29 +60,41 @@ function ModalManualAddAmount(props) {
     }
   }, [show]);
 
+  // const handleInputChange = (e) => {
+  //   let value = e.target.value.replace(/[^0-9.]/g, "");
+
+  //   // Prevent more than one decimal point
+  //   const decimalCount = (value.match(/\./g) || []).length;
+  //   if (decimalCount > 1) {
+  //     value = value.slice(0, -1);
+  //   }
+
+  //   const [integerPart = "", decimalPart = ""] = value.split(".");
+  //   if (integerPart.length <= 6) {
+  //     if (decimalPart.length > 2) {
+  //       setAmountValue(`${integerPart}.${decimalPart.slice(0, 2)}`);
+  //     } else {
+  //       setAmountValue(value);
+  //     }
+  //   } else {
+  //     setAmountValue(
+  //       `${integerPart.slice(0, 6)}${
+  //         decimalPart ? `.${decimalPart.slice(0, 2)}` : ""
+  //       }`
+  //     );
+  //   }
+  // };
+
   const handleInputChange = (e) => {
-    let value = e.target.value.replace(/[^0-9.]/g, "");
+    // Remove all non-digit characters
+    let value = e.target.value.replace(/\D/g, "");
 
-    // Prevent more than one decimal point
-    const decimalCount = (value.match(/\./g) || []).length;
-    if (decimalCount > 1) {
-      value = value.slice(0, -1);
+    // Limit to 6 digits max
+    if (value.length > 6) {
+      value = value.slice(0, 6);
     }
 
-    const [integerPart = "", decimalPart = ""] = value.split(".");
-    if (integerPart.length <= 6) {
-      if (decimalPart.length > 2) {
-        setAmountValue(`${integerPart}.${decimalPart.slice(0, 2)}`);
-      } else {
-        setAmountValue(value);
-      }
-    } else {
-      setAmountValue(
-        `${integerPart.slice(0, 6)}${
-          decimalPart ? `.${decimalPart.slice(0, 2)}` : ""
-        }`
-      );
-    }
+    setAmountValue(value);
   };
 
   const handleSubmit = async (e) => {
@@ -147,7 +162,7 @@ function ModalManualAddAmount(props) {
                     <Input
                       type="text"
                       className="form-control"
-                      placeholder="0.00"
+                      placeholder="00"
                       name="amount"
                       autoFocus
                       autoComplete="off"

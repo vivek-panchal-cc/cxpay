@@ -2,7 +2,7 @@ import Input from "components/ui/Input";
 import React, { useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import styles from "./modal.module.scss";
-import { CURRENCY_SYMBOL } from "constants/all";
+import { CURRENCY_SYMBOL, handleWholeNumberInputChange } from "constants/all";
 import { setAmount } from "schemas/jarSchema";
 import InputDatePicker from "components/ui/InputDatePicker";
 import ModalDatePickerKyc from "./ModalDatePickerKyc";
@@ -31,7 +31,9 @@ function ModalAddAmount(props) {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      amount: installment_amount || "",
+      amount: installment_amount
+        ? String(parseInt(installment_amount, 10))
+        : "",
       recurring_date: recurring_date || "",
     },
     validationSchema: setAmount,
@@ -144,39 +146,17 @@ function ModalAddAmount(props) {
                       ref={inputRef}
                       type="text"
                       className="form-control"
-                      placeholder="0.00"
+                      placeholder="00"
                       name="amount"
                       autoFocus={true}
                       autoComplete="off"
-                      onChange={(e) => {
-                        let value = e.target.value.replace(/[^0-9.]/g, ""); // Allow only numbers and decimals
-
-                        // Prevent more than one decimal point
-                        const decimalCount = (value.match(/\./g) || []).length;
-                        if (decimalCount > 1) {
-                          value = value.slice(0, -1); // Remove extra decimal point
-                        }
-
-                        // Allow only up to 6 digits before the decimal point
-                        const [integerPart, decimalPart] = value.split(".");
-                        if (integerPart.length <= 6) {
-                          if (decimalPart && decimalPart.length > 2) {
-                            // Limit to two decimal places
-                            formik.setFieldValue(
-                              "amount",
-                              integerPart + "." + decimalPart.slice(0, 2)
-                            );
-                          } else {
-                            formik.setFieldValue("amount", value);
-                          }
-                        } else {
-                          formik.setFieldValue(
-                            "amount",
-                            integerPart.slice(0, 6) +
-                              (decimalPart ? `.${decimalPart.slice(0, 2)}` : "")
-                          );
-                        }
-                      }}
+                      onChange={(e) =>
+                        handleWholeNumberInputChange(
+                          e,
+                          formik.setFieldValue,
+                          "amount"
+                        )
+                      }
                       value={formik.values.amount}
                       error={formik.touched.amount && formik.errors.amount}
                       onCopy={(e) => e.preventDefault()}
