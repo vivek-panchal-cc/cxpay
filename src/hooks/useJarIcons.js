@@ -1,59 +1,77 @@
-// useJarIcons.js
 import { useEffect, useState } from "react";
 import { apiRequest } from "helpers/apiRequests";
 
-// Internal module-scoped cache
-let cachedIcons = null;
-let cachedAt = null;
-let fetchingPromise = null;
+const cacheMap = new Map(); // category_id => { icons, cachedAt }
+const fetchingMap = new Map(); // category_id => promise
 
 const CACHE_EXPIRY = 10 * 60 * 1000; // 10 minutes
+const DEBOUNCE_DELAY = 300;
 
-function shouldUseCache() {
-  return cachedIcons && Date.now() - cachedAt < CACHE_EXPIRY;
+function shouldUseCache(category_id) {
+  const cache = cacheMap.get(category_id);
+  return cache && Date.now() - cache.cachedAt < CACHE_EXPIRY;
 }
 
-async function fetchJarIcons(force = false) {
-  if (shouldUseCache() && !force) return cachedIcons;
-  if (fetchingPromise) return fetchingPromise;
+async function fetchJarIcons(category_id, force = false) {
+  if (shouldUseCache(category_id) && !force) {
+    return cacheMap.get(category_id).icons;
+  }
 
-  fetchingPromise = (async () => {
-    const { data } = await apiRequest.getSavingJarIcons();
+  if (fetchingMap.has(category_id)) {
+    return fetchingMap.get(category_id);
+  }
+
+  const promise = (async () => {
+    const { data } = await apiRequest.getSavingJarIcons({ category_id });
     if (!data.success) throw new Error(data.message || "Failed to fetch icons");
 
-    cachedIcons = data.data;
-    cachedAt = Date.now();
-    return cachedIcons;
+    cacheMap.set(category_id, {
+      icons: data.data,
+      cachedAt: Date.now(),
+    });
+
+    return data.data;
   })();
 
-  return fetchingPromise.finally(() => {
-    fetchingPromise = null;
+  fetchingMap.set(category_id, promise);
+
+  return promise.finally(() => {
+    fetchingMap.delete(category_id);
   });
 }
 
-function useJarIcons() {
-  const [jarIcon, setJarIcon] = useState(cachedIcons || []);
-  const [jarIconLoading, setJarIconLoading] = useState(!shouldUseCache());
+function useJarIcons({ category_id, force = false }) {
+  const [jarIcon, setJarIcon] = useState(() =>
+    shouldUseCache(category_id) ? cacheMap.get(category_id).icons : []
+  );
+  const [jarIconLoading, setJarIconLoading] = useState(
+    !shouldUseCache(category_id)
+  );
 
   useEffect(() => {
-    let isMounted = true;
+    let debounceTimer;
 
-    if (!shouldUseCache()) {
+    const shouldFetch = !shouldUseCache(category_id) || force;
+
+    if (shouldFetch) {
       setJarIconLoading(true);
-      fetchJarIcons()
-        .then((data) => {
-          if (isMounted) setJarIcon(data);
-        })
-        .catch(console.error)
-        .finally(() => {
-          if (isMounted) setJarIconLoading(false);
-        });
+
+      debounceTimer = setTimeout(() => {
+        fetchJarIcons(category_id, force)
+          .then((data) => setJarIcon(data))
+          .catch(console.error)
+          .finally(() => setJarIconLoading(false));
+      }, DEBOUNCE_DELAY);
+    } else {
+      // If cache is valid and force is false, load directly from cache
+      setJarIcon(cacheMap.get(category_id).icons);
+      setJarIconLoading(false);
     }
 
     return () => {
-      isMounted = false;
+      clearTimeout(debounceTimer);
     };
-  }, []);
+  }, [category_id, force]);
 
   return [jarIcon, jarIconLoading];
 }

@@ -32,7 +32,10 @@ const EditJar = () => {
     admin_approved,
     show_renew_section
   );
-  const [jarIcon, jarIconLoading] = useJarIcons();
+  const [categoryParentId, setCategoryParentId] = useState("");
+  const [jarIcon, jarIconLoading] = useJarIcons({
+    category_id: categoryParentId,
+  });
   const [jarCategory] = useJarCategories();
   const [datePicker, setDatePicker] = useState(false);
   const { setIsLoading } = useContext(LoaderContext);
@@ -123,6 +126,10 @@ const EditJar = () => {
     await handleStoreJarId(jar_id);
     navigate(`/jars/own/jar-details`);
   };
+
+  useEffect(() => {
+    setCategoryParentId(formik.values.jar_parent_category_id);
+  }, [formik.values.jar_parent_category_id]);
 
   // For making input scroll into view on validation error
   useEffect(() => {

@@ -26,7 +26,10 @@ import SubAccountsInputSelect from "components/ui/SubAccountsInputSelect";
 
 const CreateJar = (props) => {
   const navigate = useNavigate();
-  const [jarIcon, jarIconLoading] = useJarIcons();
+  const [categoryParentId, setCategoryParentId] = useState("");
+  const [jarIcon, jarIconLoading] = useJarIcons({
+    category_id: categoryParentId,
+  });
   const [jarCategory] = useJarCategories();
   const [datePicker, setDatePicker] = useState(false);
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
@@ -133,6 +136,10 @@ const CreateJar = (props) => {
       updatedMembers.map((member) => member.account_number) // Extract only IDs
     );
   };
+
+  useEffect(() => {
+    setCategoryParentId(formik.values.jar_parent_category_id);
+  }, [formik.values.jar_parent_category_id]);
 
   // For making input scroll into view on validation error
   useEffect(() => {
