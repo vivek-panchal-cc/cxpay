@@ -129,6 +129,7 @@ const EditJar = () => {
 
   useEffect(() => {
     setCategoryParentId(formik.values.jar_parent_category_id);
+    formik.setFieldValue("jar_icon", null);
   }, [formik.values.jar_parent_category_id]);
 
   // For making input scroll into view on validation error
