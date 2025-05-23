@@ -128,12 +128,12 @@ const EditJar = () => {
   };
 
   useEffect(() => {
+    if (!jarIcon.length) return;
     setCategoryParentId(formik.values.jar_parent_category_id);
 
     // Get new list of icons for the selected category
     const newIcons = jarIcon.map((icon) => icon.id);
     const currentIcon = formik.values.jar_icon;
-
     if (!newIcons.includes(currentIcon)) {
       formik.setFieldValue("jar_icon", null);
     }
