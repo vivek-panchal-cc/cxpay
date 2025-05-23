@@ -35,6 +35,7 @@ const SavingJarProgress = (props) => {
     target_amount: raw_target_amount,
     target_date,
     status = true,
+    is_owner,
     reserve_amount: raw_reserve_amount,
     card_bg_color,
     card_scroll_color,
@@ -217,19 +218,24 @@ const SavingJarProgress = (props) => {
                     {capitalizeWordByWord(jar_category_name)}
                   </p>
                 </div>
-                {status && adminApprovedWithRenewCheck && tabName === "own" && (
-                  <div
-                    className={`jar-settings ${
-                      adminApprovedWithRenewCheck
-                        ? ""
-                        : "admin-approved-disabled"
-                    }`}
-                    onClick={adminApprovedWithRenewCheck ? handleJarEdit : null}
-                  >
-                    {/* <IconJarCreate /> */}
-                    <IconGear fill="#fff" />
-                  </div>
-                )}
+                {status &&
+                  adminApprovedWithRenewCheck &&
+                  tabName === "own" &&
+                  is_owner && (
+                    <div
+                      className={`jar-settings ${
+                        adminApprovedWithRenewCheck
+                          ? ""
+                          : "admin-approved-disabled"
+                      }`}
+                      onClick={
+                        adminApprovedWithRenewCheck ? handleJarEdit : null
+                      }
+                    >
+                      {/* <IconJarCreate /> */}
+                      <IconGear fill="#fff" />
+                    </div>
+                  )}
               </div>
             </div>
 
@@ -288,7 +294,7 @@ const SavingJarProgress = (props) => {
                 [1, 2, 3].map((item) => <LoaderJarActions key={item} />)
               ) : (
                 <>
-                  {!isTrue && tabName === "own" && (
+                  {!isTrue && tabName === "own" && is_owner && (
                     <a
                       className="action-button"
                       onClick={() => showAddMemberPopupData()}
@@ -298,7 +304,7 @@ const SavingJarProgress = (props) => {
                     </a>
                   )}
 
-                  {isTrue && tabName === "own" && (
+                  {isTrue && tabName === "own" && is_owner && (
                     <>
                       <a
                         className={`${
@@ -331,7 +337,7 @@ const SavingJarProgress = (props) => {
                     </>
                   )}
 
-                  {(!isTrue || tabName === "shared") && (
+                  {(!isTrue || tabName === "shared" || !is_owner) && (
                     <a
                       className="action-button"
                       onClick={() => setShowPaymentModal(true)}
