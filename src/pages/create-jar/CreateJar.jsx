@@ -138,9 +138,10 @@ const CreateJar = (props) => {
   };
 
   useEffect(() => {
+    if (!jarIcon.length) return;
     setCategoryParentId(formik.values.jar_parent_category_id);
     formik.setFieldValue("jar_icon", null);
-  }, [formik.values.jar_parent_category_id]);
+  }, [formik.values.jar_parent_category_id, jarIcon]);
 
   // For making input scroll into view on validation error
   useEffect(() => {
