@@ -5,6 +5,7 @@ import { LoaderContext } from "context/loaderContext";
 import { apiRequest } from "helpers/apiRequests";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import { toast } from "react-toastify";
 import {
   IconBalanceEyeOpen,
   IconBalanceEyeClose,
@@ -283,21 +284,11 @@ const BalanceGraph = (props) => {
     try {
       const { data } = await apiRequest.listReservedAmount();
       if (!data.success) throw data.message;
-      const details = data.data.transactions;
-      if (!details) {
-        setIsModalOpen(false);
-        return;
-      }
-      if (Array.isArray(details) && details.length > 0) {
-        setReservedDetails(details);
-      } else {
-        // Handle case where details is not an array or is an empty array.
-        setIsModalOpen(false);
-        toast.error("No transaction details available.");
-      }
+      const details = data.data?.transactions;
+      setReservedDetails(details);
     } catch (error) {
-      if (typeof error === "string") toast.error(error);
-      setIsModalOpen(false);
+      if (typeof error === "string") console.log(error);
+      // setIsModalOpen(false);
     } finally {
       setLoadingDetails(false);
     }
