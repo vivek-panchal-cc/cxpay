@@ -9668,6 +9668,10 @@ button.export-activities.disabled:hover {
   padding: 0;
 }
 
+#jar-delete-group-popup ul li:hover {
+  box-shadow: none;
+}
+
 #jar-delete-group-popup ul li div {
   display: block;
 }
