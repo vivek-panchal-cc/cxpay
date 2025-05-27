@@ -1,11 +1,16 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Ignore robot files for prod and staging
+/public/robots.prod.txt
+/public/robots.staging.txt
+
 # dependencies
 /node_modules
 /.vscode
 /.pnp
 .pnp.js
 .env
+package-lock.json
 # testing
 /coverage
 
@@ -18,6 +23,8 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env.staging
+.env.production
 
 npm-debug.log*
 yarn-debug.log*

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
 import { editProfileBusinessUserSchema } from "schemas/validationSchema";
@@ -11,10 +11,19 @@ import { IconLeftArrow } from "styles/svgs";
 import InputSelect from "components/ui/InputSelect";
 import { fetchUserProfile } from "features/user/userProfileSlice";
 import { LoaderContext } from "context/loaderContext";
-import { CURRENCY_SYMBOL } from "constants/all";
+import { capitalizeWordByWord, CURRENCY_SYMBOL } from "constants/all";
+import useBusinessCategories from "hooks/useBusinessCategories";
+import useForgotPinHandler from "hooks/useForgotPinHandler";
+import ModalPaymentPin from "components/modals/ModalPaymentPin";
+import { sendPaymentPinSchema } from "schemas/sendPaymentSchema";
 
 function Businessform(props) {
   const { countryList, cityList } = props;
+  const [showPinPopup, setShowPinPopup] = useState(false);
+  const [error, setError] = useState("");
+  const { handleForgotPin, OtpModal, PinModal } =
+    useForgotPinHandler(setShowPinPopup);
+  const [categories] = useBusinessCategories();
   const { profile } = useSelector((state) => state.userProfile);
   const {
     company_name,
@@ -27,6 +36,7 @@ function Businessform(props) {
     city,
     profile_image,
     business_id,
+    business_category_id,
   } = profile;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,204 +55,275 @@ function Businessform(props) {
       country: country || "",
       city: city || "",
       business_id: business_id || "",
+      business_category_id: business_category_id || "",
     },
     validationSchema: editProfileBusinessUserSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
-      setIsLoading(true);
-      try {
-        const formData = new FormData();
-        for (let key in values) {
-          if (key === "profile_image") continue;
-          formData.append(key, values[key]);
-        }
-        formData.append("profile_image", values.profile_image);
-        const { data } = await apiRequest.updateUser(formData);
-        if (!data.success) throw data.message;
-        toast.success(data.message);
-        dispatch(fetchUserProfile());
-        navigate("/setting", { replace: true });
-      } catch (error) {
-        setErrors({
+      setError("");
+      setShowPinPopup(true);
+    },
+  });
+
+  const handleSubmitData = async (pin) => {
+    if (!pin) return;
+    setIsLoading(true);
+    try {
+      const formData = new FormData();
+      for (let key in formik.values) {
+        if (key === "profile_image") continue;
+        formData.append(key, formik.values[key]);
+      }
+      formData.append("profile_image", formik.values.profile_image);
+      formData.append("user_pin", pin);
+      const { data } = await apiRequest.updateUser(formData);
+      if (!data.success) throw data;
+      toast.success(data.message);
+      setShowPinPopup(false);
+      dispatch(fetchUserProfile());
+      navigate("/setting", { replace: true });
+    } catch (error) {
+      if (typeof error.message === "string") setError(error.message);
+      if (error.data?.is_suspended) {
+        navigate("/logout", { replace: true });
+        toast.error(error.message);
+      }
+      if (typeof error.message === "object" && error.message !== null) {
+        formik.setErrors({
           email: error.first_name?.[0],
           mobile_number: error.mobile_number?.[0],
           company_name: error.company_name?.[0],
           country: error.country?.[0],
           city: error.city?.[0],
         });
-      } finally {
-        setIsLoading(false);
+        setShowPinPopup(false);
       }
-    },
-  });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="settings-edit-profile-right-sec">
-      <div className="settings-edit-profile-inner-sec">
-        <div className="settings-profile-bottom-info-sec">
-          <form onSubmit={formik.handleSubmit}>
-            <div className="settings-edit-profile-top-sec">
-              <InputFile
-                id="_upBusiness"
-                name="profile_image"
-                onChange={(e) => {
-                  formik.setFieldValue(
-                    "profile_image",
-                    e.currentTarget.files[0]
-                  );
-                }}
-                showPreview={true}
-                showLabel={false}
-                previewSrc={profile_image}
-                fallbackSrc={
-                  profile_image
-                    ? profile_image
-                    : "/assets/images/Business-account.png"
-                }
-                showLoader={true}
-                classNameInput="d-none"
-                classNameBorder="border-0 overflow-visible"
-                classNameLabel="profile-avtar"
-              />
-              <div className="profile-info">
-                <h3>{company_name}</h3>
-                <p>
-                  <a href={`mailto:${email}`}>{email}</a>
-                </p>
-                <div className="">
-                  <label
-                    htmlFor="fileInput_upBusiness"
-                    className="cursor-pointer"
-                    style={{ color: "#0081c5" }}
-                  >
-                    {profile_image || formik.values.profile_image
-                      ? "Change Profile Picture"
-                      : "Select Profile Picture"}
-                  </label>
-                  {/* {!profile_image && !formik.values.profile_image ? ( */}
-                  <div className="red">
-                    Note: Allowed formats are JPEG, PNG, JPG
+    <>
+      <ModalPaymentPin
+        id="group_pay_otp_modal"
+        className="otp-verification-modal group_pay_otp_modal"
+        show={showPinPopup}
+        allowClickOutSide={true}
+        setShow={setShowPinPopup}
+        heading="Enter your 5 - Digit unique PIN"
+        headingImg="/assets/images/setupPin.svg"
+        subHeading=""
+        validationSchema={sendPaymentPinSchema}
+        error={error}
+        handleSubmitPin={handleSubmitData}
+        handleForgotPin={handleForgotPin}
+      />
+      {OtpModal()}
+      {PinModal()}
+      <div className="settings-edit-profile-right-sec">
+        <div className="settings-edit-profile-inner-sec">
+          <div className="settings-profile-bottom-info-sec">
+            <form onSubmit={formik.handleSubmit}>
+              <div className="settings-edit-profile-top-sec">
+                <InputFile
+                  id="_upBusiness"
+                  name="profile_image"
+                  onChange={(e) => {
+                    formik.setFieldValue(
+                      "profile_image",
+                      e.currentTarget.files[0]
+                    );
+                  }}
+                  showPreview={true}
+                  showLabel={false}
+                  previewSrc={profile_image}
+                  fallbackSrc={
+                    profile_image
+                      ? profile_image
+                      : "/assets/images/Business-account.png"
+                  }
+                  showLoader={true}
+                  classNameInput="d-none"
+                  classNameBorder="border-0 overflow-visible"
+                  classNameLabel="profile-avtar"
+                />
+                <div className="profile-info">
+                  <h3>{company_name}</h3>
+                  <p>
+                    <a href={`mailto:${email}`}>{email}</a>
+                  </p>
+                  <div className="">
+                    <label
+                      htmlFor="fileInput_upBusiness"
+                      className="cursor-pointer"
+                      style={{ color: "#0081c5" }}
+                    >
+                      {profile_image || formik.values.profile_image
+                        ? "Change Profile Picture"
+                        : "Select Profile Picture"}
+                    </label>
+                    {/* {!profile_image && !formik.values.profile_image ? ( */}
+                    <div className="red">
+                      Note: Allowed formats are JPEG, PNG, JPG
+                    </div>
+                    {/* ) : null} */}
                   </div>
-                  {/* ) : null} */}
+                  <p className="text-danger">{formik.errors.profile_image}</p>
                 </div>
-                <p className="text-danger">{formik.errors.profile_image}</p>
               </div>
-            </div>
-            <Input
-              type="name"
-              disabled
-              className={`form-control ${formik.values.company_name ? 'disabled-field' : ''}`}
-              placeholder="Business Name"
-              // name="company_name"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.company_name}
-              error={formik.touched.company_name && formik.errors.company_name}
-            />
-            <Input
-              type="text"
-              disabled
-              className={`form-control ${formik.values.mobile_number ? 'disabled-field' : ''}`}
-              placeholder="Mobile Number"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.mobile_number}
-              error={
-                formik.touched.mobile_number && formik.errors.mobile_number
-              }
-            />
-            <Input
-              type="text"
-              disabled
-              className={`form-control ${formik.values.email ? 'disabled-field' : ''}`}
-              placeholder="Email"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.email}
-              error={formik.touched.email && formik.errors.email}
-              autoComplete={"new-email"}
-            />
-            <Input
-              type="text"
-              className={`form-control ${formik.values.business_id ? 'disabled-field' : ''}`}
-              name="business_id"
-              placeholder="Chamber of Commerce"
-              value={formik.values.business_id}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.business_id && formik.errors.business_id}
-              disabled
-            />
-            <Input
-              type="text"
-              className="form-control"
-              placeholder="Address"
-              name="address"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.address}
-              error={formik.touched.address && formik.errors.address}
-            />
-            <div className="form-field two-fields">
-              <div className="field-half">
-                <InputSelect
-                  className={`form-select form-control ${formik.values.country ? 'disabled-field' : ''}`}
-                  // name="country"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.country}
-                  error={formik.touched.country && formik.errors.country}
-                  disabled
-                >
-                  <option value={""}>Select Country</option>
-                  {countryList?.map((country) => (
-                    <option key={country.iso} value={country.iso}>
-                      {country.country_name}
-                    </option>
-                  ))}
-                </InputSelect>
-              </div>
-              <div className="field-half">
-                <InputSelect
-                  className={`form-select form-control ${city ? 'disabled-field' : ''}`}
-                  name={city ? "" : "city"}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.city}
-                  error={formik.touched.city && formik.errors.city}
-                  disabled={city}
-                >
-                  <option value={""}>Select City</option>
-                  {cityList[formik.values.country]?.map((city) => (
-                    <option key={city.city_name} value={city.city_name}>
-                      {city.city_name}
-                    </option>
-                  ))}
-                </InputSelect>
-              </div>
-            </div>
-            <p className="currency-wrap">
-              Currency:{" "}
-              <span className="selected-currency">{CURRENCY_SYMBOL}</span>
-            </p>
-            <div className="login-btn">
-              <div className="setting-btn-link">
-                <Link to="/setting">
-                  <IconLeftArrow style={{ stroke: "#0081C5" }} />
-                  Settings
-                </Link>
-              </div>
-              <input
-                type="submit"
-                className={`btn btn-primary ${
-                  formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+              <Input
+                type="name"
+                disabled
+                className={`form-control ${
+                  formik.values.company_name ? "disabled-field" : ""
                 }`}
-                disabled={formik.isSubmitting}
-                value="Save Changes"
+                placeholder="Business Name"
+                // name="company_name"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.company_name}
+                error={
+                  formik.touched.company_name && formik.errors.company_name
+                }
               />
-            </div>
-          </form>
+              <Input
+                type="text"
+                disabled
+                className={`form-control ${
+                  formik.values.mobile_number ? "disabled-field" : ""
+                }`}
+                placeholder="Mobile Number"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.mobile_number}
+                error={
+                  formik.touched.mobile_number && formik.errors.mobile_number
+                }
+              />
+              <Input
+                type="text"
+                disabled
+                className={`form-control ${
+                  formik.values.email ? "disabled-field" : ""
+                }`}
+                placeholder="Email"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+                error={formik.touched.email && formik.errors.email}
+                autoComplete={"new-email"}
+              />
+              <Input
+                type="text"
+                className={`form-control ${
+                  formik.values.business_id ? "disabled-field" : ""
+                }`}
+                name="business_id"
+                placeholder="Chamber of Commerce"
+                value={formik.values.business_id}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.business_id && formik.errors.business_id}
+                disabled
+              />
+              <InputSelect
+                className={`form-select form-control ${
+                  business_category_id ? "disabled-field" : ""
+                }`}
+                name={business_category_id ? "" : "business_category_id"}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.business_category_id}
+                error={
+                  formik.touched.business_category_id &&
+                  formik.errors.business_category_id
+                }
+                disabled={business_category_id}
+              >
+                <option value={""}>Select Business Category</option>
+                {categories?.map((ct) => (
+                  <option key={ct.id} value={ct.id}>
+                    {capitalizeWordByWord(ct.name)}
+                  </option>
+                ))}
+              </InputSelect>
+              <Input
+                type="text"
+                className="form-control"
+                placeholder="Address"
+                name="address"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.address}
+                error={formik.touched.address && formik.errors.address}
+              />
+              <div className="form-field two-fields">
+                <div className="field-half">
+                  <InputSelect
+                    className={`form-select form-control ${
+                      formik.values.country ? "disabled-field" : ""
+                    }`}
+                    // name="country"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.country}
+                    error={formik.touched.country && formik.errors.country}
+                    disabled
+                  >
+                    <option value={""}>Select Country</option>
+                    {countryList?.map((country) => (
+                      <option key={country.iso} value={country.iso}>
+                        {country.country_name}
+                      </option>
+                    ))}
+                  </InputSelect>
+                </div>
+                <div className="field-half">
+                  <InputSelect
+                    className={`form-select form-control ${
+                      city ? "disabled-field" : ""
+                    }`}
+                    name={city ? "" : "city"}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.city}
+                    error={formik.touched.city && formik.errors.city}
+                    disabled={city}
+                  >
+                    <option value={""}>Select City</option>
+                    {cityList[formik.values.country]?.map((city) => (
+                      <option key={city.city_name} value={city.city_name}>
+                        {city.city_name}
+                      </option>
+                    ))}
+                  </InputSelect>
+                </div>
+              </div>
+              <p className="currency-wrap">
+                Currency:{" "}
+                <span className="selected-currency">{CURRENCY_SYMBOL}</span>
+              </p>
+              <div className="login-btn">
+                <div className="setting-btn-link">
+                  <Link to="/setting">
+                    <IconLeftArrow style={{ stroke: "#0081C5" }} />
+                    Settings
+                  </Link>
+                </div>
+                <input
+                  type="submit"
+                  className={`btn btn-primary ${
+                    formik.isSubmitting ? "cursor-wait" : "cursor-pointer"
+                  }`}
+                  disabled={formik.isSubmitting}
+                  value="Save Changes"
+                />
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -1,6 +1,13 @@
-import React from "react";
+import ModalPaymentPin from "components/modals/ModalPaymentPin";
+import { LoaderContext } from "context/loaderContext";
+import { usePinContext } from "context/pinContext";
+import { apiRequest } from "helpers/apiRequests";
+import useForgotPinHandler from "hooks/useForgotPinHandler";
+import React, { useContext, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { sendPaymentPinSchema } from "schemas/sendPaymentSchema";
 import {
   IconInfo,
   IconLock,
@@ -9,6 +16,7 @@ import {
   IconRightArrow,
   IconSetting,
 } from "styles/svgs";
+import ChangePin from "styles/svgs/ChangePin";
 
 const settingsRedirects = [
   {
@@ -29,6 +37,18 @@ const settingsRedirects = [
     link: (
       <Link
         to={"/setting/change-password"}
+        className="setting-details-links stretched-link"
+      >
+        <IconRightArrow />
+      </Link>
+    ),
+  },
+  {
+    icon: <ChangePin />,
+    title: "Change PIN",
+    link: (
+      <Link
+        to={"/setting/change-pin"}
         className="setting-details-links stretched-link"
       >
         <IconRightArrow />
@@ -76,9 +96,50 @@ const settingsRedirects = [
 function Setting() {
   const { profile } = useSelector((state) => state.userProfile);
   const { user_type = "personal" } = profile || {};
+  const { isPinValidated, setIsPinValidated } = usePinContext();
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const { setIsLoading } = useContext(LoaderContext);
+  const [showPinPopup, setShowPinPopup] = React.useState(false);
+  const { handleForgotPin, OtpModal, PinModal } =
+    useForgotPinHandler(setShowPinPopup);
+
+  // React.useEffect(() => {
+  //   if (user_type === "agent") {
+  //     setIsPinValidated(true);
+  //     setShowPinPopup(false);
+  //     return;
+  //   }
+  //   if (!isPinValidated && (user_type === "personal" || user_type === "business")) {
+  //     setShowPinPopup(true);
+  //   }
+  // }, [isPinValidated, user_type, setIsPinValidated]);
+
+  const handleSubmitPin = async (pin) => {
+    if (!pin) return;
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.pinValidate({ user_pin: pin });
+      if (!data.success) throw data;
+      toast.success(data.message);
+      setShowPinPopup(false);
+      setIsPinValidated(true);
+      navigate("/setting");
+    } catch (error) {
+      setError(error.message);
+      if (error.data.is_suspended) {
+        navigate("/logout", { replace: true });
+        toast.error(error.message);
+      }
+      // toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="settings-right-sec settings-vc-sec">
+      {/* {isPinValidated && ( */}
       <div className="settings-inner-sec">
         <div className="profile-info">
           <h3>Settings</h3>
@@ -90,7 +151,8 @@ function Setting() {
                 {(item?.title === "Business info" &&
                   user_type === "personal") ||
                 (item?.title === "Business info" && user_type === "agent") ||
-                (item?.title === "Notifications" && user_type === "agent") ? (
+                (item?.title === "Notifications" && user_type === "agent") ||
+                (item?.title === "Change PIN" && user_type === "agent") ? (
                   ""
                 ) : (
                   <li key={item.title?.trim() || index}>
@@ -106,6 +168,25 @@ function Setting() {
           </ul>
         </div>
       </div>
+      {/* )} */}
+      {showPinPopup && user_type !== "agent" && (
+        <ModalPaymentPin
+          id="group_pay_otp_modal"
+          className="otp-verification-modal group_pay_otp_modal"
+          show={showPinPopup}
+          allowClickOutSide={true}
+          setShow={setShowPinPopup}
+          heading="5 - Digit PIN Access"
+          headingImg="/assets/images/setupPin.svg"
+          subHeading="Secure your account with 5 - Digit PIN Access"
+          validationSchema={sendPaymentPinSchema}
+          error={error}
+          handleSubmitPin={handleSubmitPin}
+          handleForgotPin={handleForgotPin}
+        />
+      )}
+      {OtpModal()}
+      {PinModal()}
     </div>
   );
 }

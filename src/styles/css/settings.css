@@ -408,3 +408,9 @@ div.settings-note-inner-sec.setting-noti-sec-new {
 .outline-btn:hover svg path {
   stroke: #fff;
 }
+
+.change-pin .login-otp-numbers .form-field {
+  justify-content: unset !important;
+  margin: unset;
+  margin-bottom: 18px;
+}

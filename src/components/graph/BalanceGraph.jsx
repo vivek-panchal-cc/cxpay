@@ -9,6 +9,7 @@ import {
   IconBalanceEyeOpen,
   IconBalanceEyeClose,
   IconShowReservedAmount,
+  IconDashboardRefresh,
 } from "styles/svgs";
 
 const chartOption = {
@@ -109,7 +110,13 @@ const months = [];
 
 const BalanceGraph = (props) => {
   const { isLoading } = useContext(LoaderContext);
-  const { graphBackgroundImage, balanceDataArr, balance, monthDataArr } = props;
+  const {
+    graphBackgroundImage,
+    balanceDataArr,
+    balance,
+    monthDataArr,
+    getBalance,
+  } = props;
   const [options, setOptions] = useState({ ...chartOption });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reservedDetails, setReservedDetails] = useState([]);
@@ -117,6 +124,9 @@ const BalanceGraph = (props) => {
   const [showAvailableBalance, setShowAvailableBalance] = useState(false);
   const [showReservedAmount, setShowReservedAmount] = useState(false);
   const [showBalance, setShowBalance] = useState(true);
+  const [balanceLoading, setBalanceLoading] = useState(false);
+  const [displayedBalance, setDisplayedBalance] = useState(0);
+  const [displayedReservedBalance, setDisplayedReservedBalance] = useState(0);
 
   const { availableBalance, lockBalance } = useMemo(() => {
     const { available, lock } = balance || {};
@@ -126,6 +136,44 @@ const BalanceGraph = (props) => {
       typeof lock === "number" && lock > 0 ? lock.toFixed(2) : "";
     return { availableBalance, lockBalance };
   }, [balance]);
+
+  useEffect(() => {
+    const duration = 1000; // Total time for animation (5 seconds)
+    const intervalTime = 50; // Update the balance every 10ms
+    const steps = duration / intervalTime;
+    const increment = availableBalance / steps;
+
+    let currentBalance = 0;
+    const interval = setInterval(() => {
+      currentBalance += increment;
+      if (currentBalance >= availableBalance) {
+        currentBalance = availableBalance;
+        clearInterval(interval);
+      }
+      setDisplayedBalance(currentBalance);
+    }, intervalTime);
+
+    return () => clearInterval(interval);
+  }, [availableBalance]);
+
+  useEffect(() => {
+    const duration = 1000; // Total time for animation (5 seconds)
+    const intervalTime = 50; // Update the balance every 10ms
+    const steps = duration / intervalTime;
+    const increment = lockBalance / steps;
+
+    let currentReservedBalance = 0;
+    const interval = setInterval(() => {
+      currentReservedBalance += increment;
+      if (currentReservedBalance >= lockBalance) {
+        currentReservedBalance = lockBalance;
+        clearInterval(interval);
+      }
+      setDisplayedReservedBalance(currentReservedBalance);
+    }, intervalTime);
+
+    return () => clearInterval(interval);
+  }, [lockBalance]);
 
   // useEffect(() => {
   //   months.length = 0; // Clear the months array before pushing new values
@@ -267,6 +315,17 @@ const BalanceGraph = (props) => {
     setShowBalance(!showBalance);
   };
 
+  const handleGetBalance = async () => {
+    setBalanceLoading(true);
+    try {
+      await getBalance();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setBalanceLoading(false);
+    }
+  };
+
   return (
     <>
       <div
@@ -308,7 +367,7 @@ const BalanceGraph = (props) => {
               {availableBalance && (
                 <h2 className="h3 text-black fw-bolder">
                   {showBalance ? ( // Check if available balance should be shown
-                    <WrapAmount value={availableBalance} />
+                    <WrapAmount value={displayedBalance} />
                   ) : (
                     `${CURRENCY_SYMBOL} ${new Array(
                       (availableBalance + "")?.length
@@ -377,7 +436,7 @@ const BalanceGraph = (props) => {
                   {lockBalance && (
                     <h2 className="h3 text-black fw-bolder">
                       {showBalance ? (
-                        <WrapAmount value={lockBalance} />
+                        <WrapAmount value={displayedReservedBalance} />
                       ) : (
                         `${CURRENCY_SYMBOL} ${new Array(
                           (lockBalance + "")?.length
@@ -409,6 +468,14 @@ const BalanceGraph = (props) => {
                 </div>
               </>
             ) : null}
+            <div className="p-4 pb-0 flex-grow-1 text-end cursor-pointer">
+              <IconDashboardRefresh
+                className={balanceLoading ? `refresh-icon-loading` : ""}
+                style={{ marginBottom: "4px" }}
+                stroke="#0081C5"
+                onClick={handleGetBalance}
+              />
+            </div>
           </div>
           <div className="px-2 z-1">
             <div id="chart" className="overflow-hidden">

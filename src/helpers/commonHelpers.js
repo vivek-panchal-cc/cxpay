@@ -33,6 +33,123 @@ const getChargedAmount = (charges = [], amounts = []) => {
   };
 };
 
+const getChargedCommissionAmount = (
+  charges = [],
+  amounts = [],
+  values = []
+) => {
+  if (!charges || amounts.length <= 0)
+    return { allCharges: [], grandTotal: 0, total: 0 };
+
+  let chargeMap = new Map(); // Store merged charges
+  let grandTotal = 0;
+  let totalCharges = 0;
+  let total = amounts.reduce((prev, curr) => prev + curr, 0); // Compute total upfront
+  let individualTotals = [];
+
+  values.forEach((item, index) => {
+    const { user_type, merchant_fees = {} } = item;
+    let chargeAmount = 0;
+    let individualTotal = amounts[index] || 0; // Use individual amount per account
+    let chargeDesc = merchant_fees.merchant_fees_title || "Merchant Fees";
+
+    switch (user_type) {
+      case "business":
+        if (merchant_fees.merchant_fees) {
+          const {
+            merchant_fees_type,
+            fees_deduct_account,
+            merchant_fees: feeAmount,
+            merchant_fees_capacity,
+          } = merchant_fees;
+          const numericFeeAmount = parseFloat(feeAmount) || 0;
+          const numericMerchantFeesCapacity =
+            parseFloat(merchant_fees_capacity) ||
+            individualTotal * (numericFeeAmount / 100);
+
+          if (fees_deduct_account === "sender") {
+            switch (merchant_fees_type) {
+              case "fixed":
+                chargeAmount = individualTotal > 0 ? numericFeeAmount : 0;
+                break;
+              case "percentage":
+                chargeAmount =
+                  individualTotal > 0
+                    ? Math.min(
+                        individualTotal * (numericFeeAmount / 100),
+                        numericMerchantFeesCapacity
+                      )
+                    : 0;
+                break;
+            }
+            individualTotal += chargeAmount; // Apply charge per account
+            totalCharges += chargeAmount;
+
+            // Merge charges in the map
+            if (chargeMap.has(chargeDesc)) {
+              chargeMap.set(
+                chargeDesc,
+                chargeMap.get(chargeDesc) + chargeAmount
+              );
+            } else {
+              chargeMap.set(chargeDesc, chargeAmount);
+            }
+          } else if (fees_deduct_account === "receiver") {
+            // Charge applies but should not be displayed
+            totalCharges += chargeAmount;
+            individualTotal += chargeAmount;
+          }
+        }
+        break;
+
+      case "personal":
+        charges.forEach(({ type, amount, text }) => {
+          let thisChargeAmount = 0;
+
+          switch (type) {
+            case "fixed":
+              thisChargeAmount = individualTotal > 0 ? amount : 0;
+              break;
+            case "percentage":
+              thisChargeAmount =
+                individualTotal > 0 ? individualTotal * (amount / 100) : 0;
+              break;
+          }
+
+          totalCharges += thisChargeAmount;
+          individualTotal += thisChargeAmount;
+
+          // Merge charges in the map
+          if (chargeMap.has(text)) {
+            chargeMap.set(text, chargeMap.get(text) + thisChargeAmount);
+          } else {
+            chargeMap.set(text, thisChargeAmount);
+          }
+        });
+        break;
+
+      default:
+        break;
+    }
+
+    individualTotals.push(individualTotal); // Store total per account
+    grandTotal += individualTotal; // Sum up all individual totals
+  });
+
+  // Convert chargeMap to an array for final result
+  let allCharges = Array.from(chargeMap, ([desc, amount]) => ({
+    desc,
+    amount,
+  }));
+
+  return {
+    allCharges,
+    totalCharges,
+    total, // Returning total like in old code
+    grandTotal,
+  };
+};
+
 function addObjToFormData(obj, pkey, formData) {
   switch (Object.prototype.toString.call(obj)) {
     case "[object Array]":
@@ -149,6 +266,7 @@ function formatDateToDesiredFormat(dateString) {
 
 export {
   getChargedAmount,
+  getChargedCommissionAmount,
   addObjToFormData,
   timeStampToTimeString,
   dateFormattor,

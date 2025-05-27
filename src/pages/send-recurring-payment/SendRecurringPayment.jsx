@@ -5,8 +5,13 @@ import ContactPaymentItem from "components/items/ContactPaymentItem";
 import {
   sendPaymentSchema,
   sendPaymentOtpSchema,
+  sendPaymentPinSchema,
 } from "schemas/sendPaymentSchema";
-import { addObjToFormData, getChargedAmount } from "helpers/commonHelpers";
+import {
+  addObjToFormData,
+  getChargedAmount,
+  getChargedCommissionAmount,
+} from "helpers/commonHelpers";
 import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { LoaderContext } from "context/loaderContext";
@@ -19,6 +24,9 @@ import ModalConfirmation from "components/modals/ModalConfirmation";
 import ModalPaymentSchedulerRecurring from "components/modals/ModalPaymentSchedulerRecurring";
 import ModalOtpConfirmation from "components/modals/ModalOtpConfirmation";
 import { LoginContext } from "context/loginContext";
+import ModalPaymentPin from "components/modals/ModalPaymentPin";
+import useForgotPinHandler from "hooks/useForgotPinHandler";
+import ModalAlert from "components/modals/ModalAlert";
 
 // Track the number of failed attempts
 let failedAttempts = 1;
@@ -30,18 +38,27 @@ function SendRecurringPayment(_props) {
   const formData = location.state?.formData;
   const inputAmountRefs = useRef([]);
   const { setIsLoading } = useContext(LoaderContext);
+  const [error, setError] = useState("");
   const [showOtpPoup, setShowOtpPopup] = useState(false);
   const [showSchedulePopup, setShowSchedulePopup] = useState(false);
   const [showScheduleConfirmPopup, setShowScheduleConfirmPopup] =
     useState(false);
   const [scheduleCreds, setScheduleCreds] = useState(null);
+  const [showSentPopup, setShowSentPopup] = useState(false);
+  const [sentDetail, setSentDetail] = useState({
+    heading: "",
+    message: "",
+    url: "",
+  });
+  const [showPinPopup, setShowPinPopup] = useState(false);
+  const { handleForgotPin, OtpModal, PinModal } =
+    useForgotPinHandler(setShowPinPopup);
 
   const {
     sendCreds,
     charges,
     disableEdit,
     handleSendCreds,
-    prevPathRedirect,
     handleCancelPayment,
   } = useContext(SendPaymentContext);
 
@@ -127,6 +144,8 @@ function SendRecurringPayment(_props) {
     }
     setIsLoading(true);
     setShowScheduleConfirmPopup(false);
+    setError("");
+    setShowPinPopup(true);
     try {
       const formDataAppend = new FormData();
       const muValues = { ...formik.values, ...scheduleCreds };
@@ -135,6 +154,11 @@ function SendRecurringPayment(_props) {
           specification: walletItem.specifications,
           amount: walletItem.personal_amount,
           receiver_account_number: walletItem.receiver_account_number,
+          user_type: walletItem.user_type,
+          fees_deduct_account: walletItem.merchant_fees?.fees_deduct_account,
+          merchant_fees_amount: walletItem.merchant_fees?.merchant_fees,
+          merchant_fees_type: walletItem.merchant_fees?.merchant_fees_type,
+          merchant_fees_capacity: walletItem.merchant_fees?.merchant_fees_capacity || 0.00,
         })),
         fees: charges?.length > 0 ? charges : "",
         total: paymentDetails.grandTotal.toString(),
@@ -155,15 +179,15 @@ function SendRecurringPayment(_props) {
       for (const key in formattedData)
         addObjToFormData(formattedData[key], key, formDataAppend);
 
-      const { data } = await apiRequest.walletTransferRecurringOtp(
-        formDataAppend
-      );
-      if (!data.success) throw data.message;
+      // const { data } = await apiRequest.walletTransferRecurringOtp(
+      //   formDataAppend
+      // );
+      // if (!data.success) throw data.message;
       // Store the formData values in scheduledData
-      setRecurringData(Object.fromEntries(formDataAppend));
-      if (data?.data?.otp) toast.success(`${data?.data?.otp}`);
-      toast.success(`${data.message}`);
-      setShowOtpPopup(true);
+      setRecurringData(formDataAppend);
+      // if (data?.data?.otp) toast.success(`${data?.data?.otp}`);
+      // toast.success(`${data.message}`);
+      // setShowOtpPopup(true);
       // const { data } = await apiRequest.createRecurringPayment(formDataAppend);
       // if (!data.success) throw data.message;
       // setShowSchedulePopup(false);
@@ -174,6 +198,36 @@ function SendRecurringPayment(_props) {
       if (typeof error === "string") toast.error(error);
     } finally {
       setScheduleCreds(null);
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubmitRecurringData = async (pin) => {
+    if (!pin) return;
+    setIsLoading(true);
+    try {
+      const formData = recurringData;
+      if (formData.has("user_pin")) {
+        formData.delete("user_pin");
+      }
+      formData.append("user_pin", pin);
+      const { data } = await apiRequest.recurringPaymentPin(formData);
+      if (!data.success) throw data;
+      // toast.success(`${data.message}`);
+      setSentDetail({
+        heading: "Money Sent",
+        message: data.message,
+        url: "/assets/images/sent-payment-pop.svg",
+      });
+      setShowSentPopup(true);
+      setShowPinPopup(false);
+    } catch (error) {
+      setError(error.message);
+      if (error.data.is_suspended) {
+        navigate("/logout", { replace: true });
+        toast.error(error.message);
+      }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -305,20 +359,48 @@ function SendRecurringPayment(_props) {
         ? parseFloat(item.personal_amount)
         : 0
     );
-    setPaymentDetails(getChargedAmount(charges, amounts));
+    setPaymentDetails(
+      getChargedCommissionAmount(charges, amounts, formik.values.wallet)
+    );
   }, [formik.values?.wallet, charges]);
 
   useEffect(() => {
     // Check if the wallet array is empty and navigate accordingly
     if (!sendCreds?.wallet || sendCreds.wallet.length <= 0) {
-      navigate(prevPathRedirect || "/send", { replace: true });
+      navigate("/send", { replace: true });
     }
-  }, [sendCreds, navigate, prevPathRedirect]);
+  }, [sendCreds, navigate]);
 
   // if (!sendCreds?.wallet || sendCreds.wallet.length <= 0)
   //   navigate(prevPathRedirect || "/send", { replace: true });
   return (
     <>
+      <ModalPaymentPin
+        id="group_pay_otp_modal"
+        className="otp-verification-modal group_pay_otp_modal"
+        show={showPinPopup}
+        allowClickOutSide={true}
+        setShow={setShowPinPopup}
+        heading="Enter your 5 - Digit unique PIN"
+        headingImg="/assets/images/setupPin.svg"
+        subHeading=""
+        validationSchema={sendPaymentPinSchema}
+        error={error}
+        handleSubmitPin={handleSubmitRecurringData}
+        handleForgotPin={handleForgotPin}
+      />
+      {OtpModal()}
+      {PinModal()}
+      <ModalAlert
+        id="money_sent_modal"
+        className="money-sent-modal"
+        show={showSentPopup}
+        heading={sentDetail.heading}
+        subHeading={sentDetail.message}
+        headingImg={sentDetail.url}
+        btnText="Done"
+        handleBtnClick={handleCancelPayment}
+      />
       <ModalOtpConfirmation
         id="group_pay_otp_modal"
         className="otp-verification-modal group_pay_otp_modal"
@@ -574,7 +656,7 @@ function SendRecurringPayment(_props) {
               <div className="pay-btn-wrap">
                 <button
                   type="button"
-                  onClick={() => navigate("/send/recurring-payment")}
+                  onClick={() => navigate(-1)}
                   className="btn btn-cancel-payment"
                 >
                   Back

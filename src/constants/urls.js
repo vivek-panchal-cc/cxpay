@@ -4,6 +4,11 @@ export const API_LOGIN_LOGOUT = "/logout";
 export const API_LOGIN_LOGIN_OTP = "/login-otp";
 export const API_LOGIN_LOGIN_OTP_VERIFY = "/login-otp-verify";
 export const API_LOGIN_PASSWORD_CHANGE = "/password-change";
+export const API_LOGIN_PIN_CHANGE = "/change-user-pin";
+export const API_LOGIN_PIN_SET = "/set-user-pin";
+export const API_LOGIN_VALIDATE_PIN = "/validate-user-pin";
+export const API_LOGIN_GENERATE_FORGOT_PIN_OTP = "/generate-forgot-pin-otp";
+export const API_LOGIN_VERIFY_FORGOT_PIN_OTP = "/verify-forgot-pin-otp";
 export const API_LOGIN_GENERATE_FORGOT_PASSWORD_OTP =
   "/generate-forgot-password-otp";
 export const API_LOGIN_VERIFY_FORGOT_PASSWORD_OTP =
@@ -13,8 +18,9 @@ export const API_LOGIN_RESEND_LOGIN_OTP = "/login-otp-resend";
 export const API_LOGIN_RESEND_FORGOT_PASSWORD_OTP =
   "/resend-forgot-password-otp";
 export const API_LOGIN_REFRESH_TOKEN = "/refresh-token";
-export const API_CHECK_CUSTOMER_KYC = "check-customer-kyc"
-export const API_UPDATE_CUSTOMER_KYC = "update-customer-kyc"
+export const API_CHECK_CUSTOMER_KYC = "check-customer-kyc";
+export const API_UPDATE_CUSTOMER_KYC = "update-customer-kyc";
+export const API_ACKNOWLEDGEMENT_POPUP = "/acknowledge-popup";
 
 // customer-onboard urls
 export const API_ONBOARD_VERIFY_MOBILE_NUMBER = "/register-mobile";
@@ -31,8 +37,13 @@ export const API_ONBOARD_DELETE_CONTACT = "/delete-contact";
 export const API_ONBOARD_CHECK_CUSTOMER_PAYMENT = "/check-customer-payment";
 export const API_ONBOARD_FAV_CONTACT = "/mark-as-favourite";
 export const API_ONBOARD_GET_COUNTRY = "/get-country";
+export const API_ONBOARD_APP_INSTALL = "/app-install";
+export const API_ONBOARD_GET_BUSIINESS_CATEGORY =
+  "/list-active-business-category";
+export const API_ONBOARD_GET_MERCHANT_LIST = "/get-merchant-list";
 export const API_ONBOARD_RESEND_REGISTER_OTP = "/resend-register-otp";
 export const API_ONBOARD_UPDATE_BUSINESS_URL = "/update-business-url";
+export const API_ONBOARD_CUSTOM_QR_CODE = "/create-custom-QRcode";
 export const API_ONBOARD_GENERATE_QR_CODE = "/generate-new-qrcode";
 export const API_ONBOARD_CARDS_LIST = "/cards-list";
 export const API_ONBOARD_BANK_LIST = "/banks-list";
@@ -64,6 +75,8 @@ export const API_ONBOARD_GET_COUNTRY_BANKS = "/get-country-banks";
 export const API_ONBOARD_RESEND_VERIFY_EMAIL = "/resend-verify-email";
 export const API_ONBOARD_DEACTIVATE_ACCOUNT = "/deactivate-account";
 export const API_ONBOARD_DEACTIVATE_ACCOUNT_AGENT = "/agent-delete";
+export const API_ONBOARD_SCHEDULE_PAYMENT_PIN =
+  "/validate-pin-for-schedule-payment";
 export const API_ONBOARD_CREATE_SCHEDULE_PAYMENT = "/create-schedule-payment";
 export const API_ONBOARD_LIST_SCHEDULE_PAYMENT = "/list-schedule-payment";
 export const API_ONBOARD_DELETE_SCHEDULE_PAYMENT = "/delete-schedule-payment";
@@ -71,16 +84,18 @@ export const API_ONBOARD_UPDATE_SCHEDULE_PAYMENT = "/update-schedule-payment";
 export const API_ONBOARD_VIEW_SCHEDULE_PAYMENT = "/view-schedule-payment";
 export const API_ONBOARD_GET_ALL_SYSTEM_OPTIONS = "/get-all-system-options";
 export const API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS = "/mark-all-as-read";
-export const API_ONBOARD_WALLET_TRANSFER_SCHEDULE_OTP = "/create-schedule-payment-otp";
-export const API_ONBOARD_RESEND_SCHEDULE_PAYMENT_OTP = "/resend-schedule-payment-otp";
-export const API_ONBOARD_CREATE_CHANGE_MOBILE_OTP = "/create-change-mobile-otp"
-export const API_ONBOARD_VERIFY_CHANGE_MOBILE_OTP = "verify-change-mobile-otp"
-export const API_ONBOARD_MANUAL_KYC_PROCESS = "manual-kyc-process"
+export const API_ONBOARD_WALLET_TRANSFER_SCHEDULE_OTP =
+  "/create-schedule-payment-otp";
+export const API_ONBOARD_RESEND_SCHEDULE_PAYMENT_OTP =
+  "/resend-schedule-payment-otp";
+export const API_ONBOARD_CREATE_CHANGE_MOBILE_OTP = "/create-change-mobile-otp";
+export const API_ONBOARD_VERIFY_CHANGE_MOBILE_OTP = "verify-change-mobile-otp";
+export const API_ONBOARD_MANUAL_KYC_PROCESS = "manual-kyc-process";
 
 // customer-admin urls
 export const API_ADMIN_CMS_PAGE = "/api/cms-page/details";
 export const API_ADMIN_CMS_LIST = "/api/cms-page/displayed-page-list";
-export const API_GET_FAQ_LIST = "/api/faq/get-list"
+export const API_GET_FAQ_LIST = "/api/faq/get-list";
 
 // customer-transaction Urls
 export const API_TRANSACTION_ADD_FUND = "/add-fund";
@@ -93,6 +108,9 @@ export const API_TRANSACTION_WALLET_PERSONAL_OTP_VERIFY =
   "/wallet-personal-otp-verify";
 export const API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP =
   "/resend-wallet-transfer-otp";
+export const API_TRANSACTION_WALLET_TRANSFER_PIN =
+  "/validate-pin-for-wallet-transfer";
+export const API_TRANSACTION_VERIFY = "/verify-transactions";
 export const API_TRANSACTION_GET_CHARGES = "/get-charges";
 export const API_TRANSACTION_SEND_PAYMENT_REQUEST = "/send-payment-request";
 export const API_TRANSACTION_ACTIVITY_LIST = "/activity-list";
@@ -100,6 +118,9 @@ export const API_TRANSACTION_GET_ACTIVITY_DETAILS = "/get-activity-details";
 export const API_TRANSACTION_CHANGE_REQUEST_STATUS = "/change-request-status";
 export const API_TRANSACTION_GET_CHART_DATA = "/get-chart-data";
 export const API_TRANSACTION_GET_PRINT_DETAILS = "/get-print-details";
+export const API_TRANSACTION_MERCHANT_REPORTS = "/get-merchant-fees-report";
+export const API_TRANSACTION_EXPORT_MERCHANT_REPORTS =
+  "/export-merchant-fees-report";
 
 export const API_TRANSACTION_BANK_WITHDRAW_LIST = "/bank-withdraw-list";
 export const API_TRANSACTION_BANK_WITHDRAW_DETAILS = "/bank-withdraw-detail";
@@ -121,6 +142,7 @@ export const API_TRANSACTION_GET_TOPUP_PRINT_DETAILS =
   "/get-topup-print-details";
 export const API_TRANSACTION_GET_TOPUP_TRANSACTION_HISTORY =
   "/topup-transaction-history";
+export const API_AGENT_TRANSACTION_EXPORT = "/export-agent-recharge-records";
 export const API_TRANSACTION_GET_TOPUP_ACTIVITY_DETAILS =
   "/topup-transaction-details";
 export const API_TRANSACTION_MONTHLY_RECHARGE_TOTAL = "/agent-recharge-total";
@@ -136,12 +158,84 @@ export const API_TRANSACTION_LIST_RECURRING_PAYMENT =
   "/list-recurring-schedule-payment";
 export const API_TRANSACTION_VIEW_RECURRING_PAYMENT =
   "/view-recurring-schedule-payment";
-export const API_TRANSACTION_WALLET_TRANSFER_RECURRING_OTP = "/create-recurring-schedule-payment-otp";
+export const API_TRANSACTION_WALLET_TRANSFER_RECURRING_OTP =
+  "/create-recurring-schedule-payment-otp";
 export const API_TRANSACTION_RESEND_RECURRING_PAYMENT_OTP =
   "/resend-recurring-schedule-payment-otp";
+export const API_TRANSACTION_RECURRING_PAYMENT_PIN =
+  "/validate-pin-for-recurring-payment";
 
 //Reserved Amount
 export const API_RESERVED_AMOUNT_LIST = "/reserved-amount-list";
+
+//Sub-accounts
+export const API_GET_SAVING_JAR_ICONS = "/get-saving-jar-icons";
+export const API_GET_SAVING_JAR_CATEGORIES = "/list-active-saving-jar-category";
+export const API_GET_REMAINING_CONTACTS_SAVING =
+  "/get-remaining-contact-for-saving-jar";
+export const API_TRANSACTION_JAR_CREATE_WW =
+  "/create-saving-jar-with-wallet-transfer";
+export const API_TRANSACTION_JAR_CREATE_WW_SCHEDULE =
+  "/create-saving-jar-with-schedule-payment";
+export const API_TRANSACTION_JAR_CREATE_WW_RECURRING =
+  "/create-saving-jar-with-recurring-payment";
+export const API_TRANSACTION_USER_OWN_SAVING_JAR =
+  "/get-user-own-saving-jar-list";
+export const API_TRANSACTION_USER_SHARED_SAVING_JAR =
+  "/get-user-shared-saving-jar-list";
+export const API_TRANSACTION_USER_INVITED_SAVING_JAR =
+  "/get-user-invited-saving-jar-list";
+export const API_TRANSACTION_ADD_AMOUNT_WW =
+  "/add-amount-saving-jar-with-wallet-transfer";
+export const API_TRANSACTION_ADD_AMOUNT_SCHEDULE =
+  "/add-amount-saving-jar-with-schedule-payment";
+export const API_TRANSACTION_ADD_AMOUNT_RECURRING =
+  "/add-amount-saving-jar-with-recurring-payment";
+export const API_TRANSACTION_GET_SAVING_JAR_DETAILS = "/get-saving-jar-details";
+export const API_TRANSACTION_UPDATE_SAVING_JAR_DETAILS =
+  "/update-saving-jar-details";
+export const API_TRANSACTION_ACCEPT_REJECT_SAVING_JAR_DETAILS =
+  "/accept-reject-saving-jar-request";
+export const API_TRANSACTION_ADD_MEMBER_IN_SAVING_JAR =
+  "/add-member-in-saving-jar";
+export const API_TRANSACTION_ADJUST_SAVING_JAR_RECURRING_AMOUNT =
+  "/adjust-saving-jar-recurring-amount";
+export const API_TRANSACTION_REMOVE_MEMBER_IN_SAVING_JAR =
+  "/remove-member-from-saving-jar";
+export const API_TRANSACTION_SAVING_JAR_MEMBER_LIST =
+  "/get-saving-jar-member-list";
+export const API_TRANSACTION_SAVING_JAR_ACTIVITY_LIST =
+  "/get-saving-jar-activity-list";
+export const API_TRANSACTION_SAVING_JAR_AMOUNT_TO_WALLET_TRANSFER =
+  "/transfer-saving-jar-amount-to-wallet";
+export const API_TRANSACTION_LIST_SAVING_JAR_SCHEDULE_PAYMENT =
+  "/list-saving-jar-schedule-payment";
+export const API_TRANSACTION_LIST_SAVING_JAR_RECURRING_PAYMENT =
+  "/list-saving-jar-recurring-payment";
+export const API_TRANSACTION_UPDATE_SAVING_JAR_SCHEDULE_PAYMENT =
+  "/update-saving-jar-schedule-payment-details";
+export const API_TRANSACTION_SAVING_JAR_RECURRING_PAYMENT_DATE =
+  "/list-saving-jar-recurring-payment-date";
+export const API_TRANSACTION_UPDATE_SAVING_JAR_RECURRING_PAYMENT =
+  "update-saving-jar-recurring-payment-details";
+export const API_TRANSACTION_DELETE_SAVING_JAR_SCHEDULE_PAYMENT =
+  "delete-saving-jar-schedule-payment";
+export const API_TRANSACTION_DELETE_SAVING_JAR_RECURRING_PAYMENT =
+  "delete-saving-jar-recurring-payment";
+export const API_TRANSACTION_SUB_ACCOUNTS_STATISTICS_DASHBOARD =
+  "get-saving-jar-statistics-for-dashboard";
+export const API_TRANSACTION_UPDATE_RECURRING_OCCURRENCE_AMOUNT =
+  "update-saving-jar-recurring-occurrence-amount";
+export const API_TRANSACTION_DELETE_RECURRING_OCCURRENCE =
+  "delete-saving-jar-recurring-occurrence-amount";
+export const API_TRANSACTION_UPDATE_RECURRING_OCCURRENCE_DATE =
+  "retry-failed-recurring-payment";
+export const API_GENERATE_OCCURRENCE_FOR_SAVING_JAR =
+  "generate-occurrences-for-saving-jar";
+export const API_INVITED_MEMBER_RECURRING_DETAILS =
+  "get-invited-member-recurring-for-saving-jar";
+export const API_SAVING_JAR_DASHBOARD_STASTISTICS_DESCRIPTION =
+  "get-saving-jar-dashboard-stats-description";
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =

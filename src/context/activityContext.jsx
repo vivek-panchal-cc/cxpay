@@ -151,6 +151,8 @@ const ActivityProvider = ({ children }) => {
               ? actDetails.amount?.toFixed(2)
               : "0",
           receiver_account_number: actDetails?.account_number,
+          user_type: actDetails.user_type,
+          merchant_fees: actDetails.merchant_fees,
         };
         handleSendContacts([contact], request_id);
         return;

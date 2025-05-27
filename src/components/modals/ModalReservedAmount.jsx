@@ -1,6 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./modal.module.scss";
-import { CURRENCY_SYMBOL } from "constants/all";
+import {
+  CURRENCY_SYMBOL,
+  getInitials,
+  getRandomColorClass,
+  reservedAmountType,
+} from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { formatDateToDesiredFormat } from "helpers/commonHelpers";
 import {
@@ -77,13 +82,28 @@ const ModalReservedAmount = (props) => {
                     <div className="act-info-wrap-left">
                       <div className="act-user-info-wrap d-flex">
                         <div className="act-user-thumb">
-                          <img
+                          {/* <img
                             src={
                               detail.image ||
                               "/assets/images/single_contact_profile.png"
                             }
                             alt="User Profile"
-                          />
+                          /> */}
+                          {detail.image ? (
+                            <img
+                              src={detail.image}
+                              className="blue-bg"
+                              alt=""
+                            />
+                          ) : (
+                            <div
+                              className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                                detail?.name
+                              )}`}
+                            >
+                              {getInitials(detail?.name)}
+                            </div>
+                          )}
                         </div>
 
                         <div className="act-user-in">
@@ -138,20 +158,40 @@ const ModalReservedAmount = (props) => {
                             </span>
                           </div>
                           <div className="act-specification-text">
-                            <p className={`${detail.transaction_type}`}>
+                            <p
+                              className={
+                                reservedAmountType[detail.transaction_type]
+                                  ?.classText
+                              }
+                            >
+                              {
+                                reservedAmountType[detail.transaction_type]
+                                  ?.icon
+                              }
+                              {
+                                reservedAmountType[detail.transaction_type]
+                                  ?.label
+                              }
+                            </p>
+                            {/* <p className={`${detail.transaction_type}`}>
                               {["withdraw", "WD"].includes(
                                 detail.transaction_type
                               ) ? (
-                                <IconManualWithdraw />
+                                <>
+                                  <IconManualWithdraw /> Manual Withdraw
+                                </>
+                              ) : detail.transaction_type ===
+                                "saving_jar_schedule_payment" ? (
+                                <>
+                                  <IconSchedulePayment /> Sub-account Schedule
+                                  Payment
+                                </>
                               ) : (
-                                <IconSchedulePayment />
+                                <>
+                                  <IconSchedulePayment /> Schedule Payment
+                                </>
                               )}
-                              {["withdraw", "WD"].includes(
-                                detail.transaction_type
-                              )
-                                ? "Manual Withdraw"
-                                : "Schedule Payment"}
-                            </p>
+                            </p> */}
                           </div>
                         </>
                       </div>

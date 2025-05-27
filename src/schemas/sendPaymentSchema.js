@@ -1,5 +1,12 @@
 import * as yup from "yup";
-import { otpSchema } from "./commonSchema";
+import {
+  confirmNewPinSchema,
+  confirmPinSchema,
+  otpSchema,
+  paymentPinSchema,
+  pinSchema,
+} from "./commonSchema";
+import { exp0ContainOnlySpace } from "constants/all";
 
 const getYesterDay = () => {
   const today = new Date();
@@ -19,11 +26,12 @@ const sendPaymentSchema = yup.object().shape({
     yup.object().shape({
       specifications: yup
         .string()
+        .matches(exp0ContainOnlySpace, "Space is not allowed")
         .max(50, "Maximum limit is 50 characters.")
         .required("Please enter specifications"),
       personal_amount: yup
         .string()
-        .matches(/^[1-9]\d{0,5}(\.\d{1,2})?$/, "Please enter valid amount")
+        .matches(/^[1-9]\d{0,6}(\.\d{1,2})?$/, "Please enter valid amount")
         .required("Please enter amount"),
     })
   ),
@@ -34,11 +42,12 @@ const sendRequestSchema = yup.object().shape({
     yup.object().shape({
       specification: yup
         .string()
+        .matches(exp0ContainOnlySpace, "Space is not allowed")
         .max(50, "Maximum limit is 50 characters.")
         .required("Please enter specifications"),
       amount: yup
         .string()
-        .matches(/^[1-9]\d{0,5}(\.\d{1,2})?$/, "Please enter valid amount")
+        .matches(/^[1-9]\d{0,6}(\.\d{1,2})?$/, "Please enter valid amount")
         .required("Please enter amount"),
     })
   ),
@@ -90,7 +99,24 @@ const sendPaymentOtpSchema = yup.object().shape({
   otp: otpSchema,
 });
 
+const sendPaymentPinSchema = yup.object().shape({
+  pin: paymentPinSchema,
+});
+
+const setPinSchema = yup.object().shape({
+  pin: pinSchema,
+  confirm_pin: confirmPinSchema,
+});
+
+const setNewPinSchema = yup.object().shape({
+  new_pin: pinSchema,
+  confirm_pin: confirmNewPinSchema,
+});
+
 export {
+  setPinSchema,
+  setNewPinSchema,
+  sendPaymentPinSchema,
   sendPaymentSchema,
   sendPaymentOtpSchema,
   sendRequestSchema,

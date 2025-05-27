@@ -3,11 +3,13 @@ import {
   ACT_TYPE_REQUEST,
   ACT_TYPE_TRANSACTION,
   CURRENCY_SYMBOL,
+  TXN_TYPE_SJ,
   activityConsts,
 } from "constants/all";
 import { IconEyeOpen } from "styles/svgs";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { formatDate } from "helpers/commonHelpers";
+import { getInitials, getRandomColorClass } from "constants/all";
 
 const ActivityItem = (props) => {
   const { activityDetails, handleClick } = props || {};
@@ -62,8 +64,23 @@ const ActivityItem = (props) => {
     <li onClick={() => handleClick({ id, activity_type, reference_id })}>
       <div className="act-info-wrap-left">
         <div className="act-user-info-wrap d-flex">
-          <div className="act-user-thumb">
-            <img src={profileUrl} alt="" />
+          <div
+            className={`act-user-thumb ${
+              txn_type === TXN_TYPE_SJ ? "savings-jar-details" : ""
+            }`}
+          >
+            {/* <img src={profileUrl} alt="" /> */}
+            {profile_image ? (
+              <img src={profile_image} className="blue-bg" alt="" />
+            ) : (
+              <div
+                className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                  name
+                )}`}
+              >
+                {getInitials(name)}
+              </div>
+            )}
           </div>
           <div className="act-user-in">
             <h2>{name || specification}</h2>

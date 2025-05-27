@@ -5,10 +5,12 @@ import BusinessForm from "./components/BusinessForm";
 import "./businessInfo.css";
 import QrCode from "./components/QrCode";
 import Breadcrumb from "components/breadcrumb/Breadcrumb";
+import useCountriesCities from "hooks/useCountriesCities";
 
 const BusinessInfo = () => {
   const { profile } = useSelector((state) => state.userProfile);
-  const [countryList, setCountryList] = useState([]);
+  // const [countryList, setCountryList] = useState([]);
+  const [countries] = useCountriesCities(true);
 
   const getCountries = async () => {
     try {
@@ -21,7 +23,7 @@ const BusinessInfo = () => {
   };
 
   useEffect(() => {
-    getCountries();
+    // getCountries();
   }, []);
 
   return (
@@ -35,7 +37,7 @@ const BusinessInfo = () => {
             </div>
           </div>
           <div className="settings-profile-bottom-info-sec business-info-bottom-sec">
-            <BusinessForm countryList={countryList} profile={profile} />
+            <BusinessForm countryList={countries} profile={profile} />
           </div>
         </div>
         <div className="profile-right-content col-lg-5 col-12">

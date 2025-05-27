@@ -3,6 +3,11 @@
   background-color: #24beef1a;
   border-radius: 16.5px;
   cursor: pointer;
+
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  user-select: none;
 }
 .fc-bdetails-dd-wrap:not(.active) .fc-bdetails-dd-title svg:last-child {
   transform: rotate(180deg);
@@ -41,6 +46,11 @@
   font-size: 14px;
   line-height: 18px;
   font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  transition: max-height 0.5s ease;
+  position: relative;
 }
 .fc-bdetails-dd-wrap .fc-bdetails-dd-content tr {
   vertical-align: top;
@@ -111,6 +121,52 @@
 .fc-upload-receipt-wrap label svg {
   margin-right: 20px;
 }
+.scrollable-bank-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  /* position: relative;
+  width: 100%;
+  text-align: left; */
+}
+
+.scrollable-bank-details table {
+  min-width: 80%;
+  user-select: text;
+  /* text-align: left; */
+}
+.left-arrow,
+.right-arrow {
+  position: absolute;
+  bottom: 10px; /* Position both arrows at the bottom */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border-radius: 50%;
+  user-select: none;
+}
+.left-arrow {
+  right: 50px; /* Slightly left of the right arrow */
+}
+.right-arrow {
+  right: 10px; /* Positioned at the far-right corner */
+}
+.left-arrow svg,
+.right-arrow svg {
+  width: 10px;
+  height: 15px;
+}
+.left-arrow.disabled,
+.right-arrow.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 /* Responsive view */
 @media only screen and (max-width: 991px) {
   .fc-bdetails-dd-wrap .fc-bdetails-dd-title svg:first-child {

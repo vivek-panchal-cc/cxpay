@@ -28,6 +28,8 @@ import RecentTopUpActivities from "components/top-up/RecentTopUpActivities";
 import AgentBalanceGraph from "components/graph/AgentBalanceGraph";
 import { LoginContext } from "context/loginContext";
 import { isAdminApprovedWithRenewCheck } from "constants/all";
+import SubAccountsCard from "components/cards/SubAccountCards";
+import useSubAccountsStatistics from "hooks/useSubAccountsStatistics";
 
 const graphBackgroundImage = "/assets/images/chart-duumy.png";
 
@@ -57,8 +59,10 @@ const Dashboard = () => {
   const [cardsList, setCardsList] = useState([]);
   const [slideCard, setSlideCard] = useState({});
 
-  const [loadingBalance, balance] = useBalance();
-  const [loadingTopUpBalance, topUpBalance] = useTopUpBalance();
+  const [loadingBalance, balance, getBalance] = useBalance();
+  const [loadingStatistics, statistics, getSubAccountsStatistics] =
+    useSubAccountsStatistics();
+  const [loadingTopUpBalance, topUpBalance, getRecharge] = useTopUpBalance();
   const [loadingChart, chartData] = useChartData();
   const [loadingAct, actPagination, activitiesList, reload] = useActivities({});
   const [loadingTopUp, actTopUpPagination, topUpActivitiesList, topUpReload] =
@@ -194,6 +198,7 @@ const Dashboard = () => {
                   balance={balance}
                   balanceDataArr={chartData.balanceArr}
                   monthDataArr={chartData.monthArr}
+                  getBalance={getBalance}
                 />
               ) : (
                 <AgentBalanceGraph
@@ -201,6 +206,7 @@ const Dashboard = () => {
                   balance={topUpBalance}
                   balanceDataArr={chartData.balanceArr}
                   monthDataArr={chartData.monthArr}
+                  getRecharge={getRecharge}
                 />
               )}
             </div>
@@ -224,6 +230,13 @@ const Dashboard = () => {
           {/*   <!-- Dashboard card section starts --> */}
           {user_type !== "agent" && (
             <div className="dashboard-card-links-sec">
+              <div className="dashboard-sub-accounts-section">
+                <SubAccountsCard
+                  loading={loadingStatistics}
+                  statistics={statistics}
+                  getSubAccountsStatistics={getSubAccountsStatistics}
+                />
+              </div>
               <div className="dashboard-card-sec mb-0">
                 <div className="title-content-wrap">
                   <h3>My Cards</h3>

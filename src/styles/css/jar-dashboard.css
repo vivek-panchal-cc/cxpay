@@ -1,0 +1,603 @@
+/*dashboard page css starts*/
+.jar-dashboard-page > .container-fluid {
+  padding: 0;
+  height: inherit;
+}
+
+.jar-dashboard-page > .container-fluid > .row {
+  margin: 0 auto;
+  height: inherit;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.jar-dashboard-left-sec {
+  width: 221px;
+  padding: 0;
+  background-color: var(--blue);
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  min-height: 100vh;
+  z-index: 999;
+  position: fixed;
+}
+
+.jar-dashboard-right-sec {
+  width: calc(100% - 221px);
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  margin-left: auto;
+  margin-right: 0;
+  /* transition: width 1s; */
+}
+
+.jar-dashboard-left-wrap {
+  height: 100%;
+  position: relative;
+}
+
+.jar-dashboard-left-wrap .toggle-admin-btn {
+  position: absolute;
+  left: auto;
+  right: -40px;
+  /* top: 30px; */
+  top: 40px;
+  bottom: auto;
+  margin: auto;
+  width: 30px;
+  height: 30px;
+  background-color: var(--blue);
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* .jar-dashboard-logo-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  } */
+.jar-dashboard-logo-wrap > a {
+  max-width: max-content;
+  margin: 0 auto;
+}
+
+.jar-dashboard-logo-wrap .jar-dashaboard-btn {
+  border-radius: 9px;
+  background-color: var(--yellow);
+  text-align: center;
+  font-size: 12px;
+  font-family: "Visby Round CF", sans-serif;
+  font-weight: 700;
+  color: var(--dark_blue);
+  padding: 7px 27px 9px;
+  line-height: 15px;
+}
+
+.jar-dashboard-logo-wrap .jar-dashaboard-btn:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.jar-dashboard-link-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  height: calc(100vh - 160px);
+  padding-top: 28px;
+  padding-bottom: 28px;
+  background-color: var(--blue);
+  /* overflow-y: auto; */
+}
+
+.jar-dashboard-link-wrap ul {
+  width: 100%;
+  padding-left: 17px;
+  background-color: var(--blue);
+}
+
+.jar-dashboard-link-wrap ul li a {
+  color: #fff;
+  font-family: "Visby Round CF", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  /*flex-wrap: wrap;*/
+  line-height: 17px;
+  padding: 14px 26px;
+  background-color: transparent;
+  border-radius: 15px 0 0 15px;
+}
+
+.jar-dashboard-link-wrap ul li a:hover,
+.jar-dashboard-link-wrap ul li.active > a {
+  background-color: #fff;
+  color: var(--blue);
+}
+
+.jar-dashboard-link-wrap ul li a:hover svg path,
+.jar-dashboard-link-wrap ul li.active > a svg path {
+  stroke: var(--blue);
+}
+
+.jar-dashboard-link-wrap
+  ul.jar-dashboard-main-links
+  li:first-child
+  a:hover
+  svg
+  path,
+.jar-dashboard-link-wrap
+  ul.jar-dashboard-main-links
+  li:first-child.active
+  a
+  svg
+  path {
+  fill: var(--blue);
+}
+
+.jar-dashboard-link-wrap ul li {
+  margin-bottom: 17px;
+}
+
+.jar-dashboard-bottom-links {
+  margin-top: auto;
+  margin-bottom: 0;
+  background-color: var(--blue);
+}
+
+.jar-dashboard-bottom-links li:last-child {
+  margin-bottom: 0;
+}
+
+.jar-dashboard-home-container .jar-dashboard-bottom-sec {
+  flex-wrap: nowrap;
+  /* padding-top: 20px; */
+}
+
+.jar-dashboard-home-container .jar-dashboard-graph-sec {
+  width: calc(100% - 40%);
+  padding-right: 40px;
+}
+
+.jar-dashboard-home-container .jar-dashboard-card-links-sec {
+  width: 40%;
+  padding-left: 35px;
+}
+
+.jar-dashboard-home-container .jar-dashboard-search-wrap {
+  width: calc(100% - 40%);
+  padding-right: 40px;
+}
+
+.jar-dashboard-home-container .jar-dashboard-notification-sec {
+  width: 40%;
+  padding-left: 35px;
+}
+
+.jar-dashboard-home-container.agent .jar-dashboard-graph-sec {
+  width: 75%;
+  padding-right: 0; /* assuming you want to remove the padding for agent view */
+}
+
+.jar-dashboard-home-container.agent .jar-dashboard-bottom-sec {
+  flex-direction: column; /* only if you want items to stack vertically */
+}
+
+/* .jar-dashboard-home-container .jar-dashboard-bottom-sec {
+    padding-top: 20px;
+  } */
+
+/*dashboard-right-section css starts*/
+.jar-dashaboard-main-sec {
+  /* padding-top: 46px;
+    padding-bottom: 29px; */
+  padding-top: 40px;
+  padding-bottom: 30px;
+}
+
+.jar-dashboard-top-sec {
+  display: flex;
+  flex-wrap: wrap;
+  position: -webkit-sticky;
+  position: sticky;
+  border-bottom: 1px solid transparent;
+  animation: fadeIn 0.5s;
+  z-index: 9;
+}
+
+.jar-dashboard-notification-sec {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.jar-dashboard-bottom-sec {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.jar-dashboard-card-sec h3 {
+  margin-bottom: 8px;
+  font-size: 20px;
+  line-height: 24px;
+  color: #323232;
+}
+
+.jar-dashboard-card-sec p {
+  line-height: 16px;
+}
+
+.jar-dashboard-card-sec .title-content-wrap {
+  /* padding-top: 24px; */
+  padding-bottom: 26px;
+}
+
+.jar-dashboard-graph-sec .graph-title-content-wrap {
+  padding-bottom: 0px;
+}
+
+.jar-dashboard-graph-wrap {
+  margin-top: 18px;
+}
+
+.jar-dashboard-card-sec {
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+
+.jar-dashboard-graph-wrap img {
+  max-width: 100%;
+  width: auto;
+}
+
+.jar-dashboard-link-wrap ul li a svg {
+  margin-right: 0px;
+  width: 19px;
+  min-width: 19px;
+}
+
+.jar-dashboard-link-wrap ul li a span {
+  padding-left: 20px;
+}
+
+.jar-dashboard-logo-wrap {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* padding: 40px 5px 0px; */
+  padding: 15px 5px 0px;
+  /* height: 125px; */
+  height: 160px;
+  justify-content: flex-start;
+}
+
+.jar-dashboard-logo-wrap a:first-child {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.jar-dashboard-logo-wrap a img {
+  width: 100%;
+  max-width: 130px;
+  max-height: 90px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0px;
+  transition: all 0.5s ease-in-out;
+}
+
+.jar-dashboard-left-sec ::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+  background: #ddd;
+}
+
+.jar-dashboard-left-sec ::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 0px rgba(0, 0, 0, 0);
+}
+
+.jar-dashboard-left-sec ::-webkit-scrollbar-thumb {
+  background: var(--sky_Blue);
+  border-radius: 0px;
+  width: 4px;
+  height: 3px;
+}
+
+.jar-dashboard-left-sec ::-webkit-scrollbar-thumb:hover {
+  background: var(--sky_Blue);
+}
+
+/* CSS Added on 31-03 */
+.jar-dashboard-right-sec.send-page-wrapper {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.jar-dashboard-right-sec.send-page-wrapper .send-top-sec,
+.jar-dashboard-right-sec.send-page-wrapper .send-btn-wrap,
+.jar-dashboard-right-sec.send-page-wrapper .jar-dashboard-top-sec,
+.jar-dashboard-right-sec.send-page-wrapper .loading {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.jar-dashboard-right-sec.send-page-wrapper .send-whom-slider .swiper {
+  padding-left: 40px;
+}
+
+.jar-dashboard-right-sec.send-page-wrapper .send-top-sec {
+  padding-bottom: 0px !important;
+}
+
+.jar-dashboard-notification-sec > .user-profile {
+  cursor: pointer;
+}
+
+.jar-dashboard-card-sec .card-slider .slider-card-common svg {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* CSS on 22-05 */
+.jar-dashboard-graph-sec .title-content-wrap a.wallet-top-1-btn,
+.jar-dashboard-card-sec .title-content-wrap p > a {
+  font-weight: 500;
+}
+
+.jar-dashboard-graph-sec ul.recent-act-lw-main .act-amt-status-wrap > div {
+  text-align: center;
+}
+
+.jar-dashboard-recent-contact-sec {
+  margin-bottom: 10px;
+}
+
+.jar-dashboard-recent-contact-sec .recent-contact-sec form .form-field {
+  margin-bottom: 0px;
+}
+
+.jar-dashboard-recent-contact-sec
+  .recent-contact-sec
+  .search-field
+  input[type="search"] {
+  padding-left: 35px !important;
+}
+
+.jar-dashboard-recent-contact-sec
+  .recent-contact-sec
+  .search-field
+  .search-btn {
+  left: 13px !important;
+}
+
+.jar-dashboard-recent-contact-sec .recent-contact-sec .title-content-wrap {
+  width: 50%;
+  padding-bottom: 0px;
+  padding-right: 10px;
+}
+
+.jar-dashboard-recent-contact-sec .recent-contact-sec .send-top-right-sec {
+  justify-content: flex-end;
+}
+
+.jar-dashboard-recent-contact-sec .swiper-wrapper {
+  align-items: center;
+}
+
+.jar-dashboard-recent-contact-sec .swiper-wrapper .recent-con-img-wrap {
+  box-shadow: 0px 20.434px 40.868px rgba(0, 0, 0, 0.08);
+}
+
+.jar-dashboard-recent-contact-sec
+  .swiper-wrapper
+  .swiper-slide
+  .cb-div
+  input[type="checkbox"] {
+  /* visibility: hidden; */
+  appearance: none;
+  width: auto;
+  inset: 0;
+}
+
+.jar-dashboard-graph-sec
+  .jar-dashboard-recent-activity-sec
+  ul.activity-lw-main
+  li {
+  cursor: default;
+}
+
+.jar-dashboard-graph-sec
+  .jar-dashboard-recent-activity-sec
+  ul.activity-lw-main
+  li:hover {
+  box-shadow: none;
+}
+
+.jar-dashboard-graph-sec
+  .jar-dashboard-recent-activity-sec
+  ul.activity-lw-main
+  li
+  button {
+  pointer-events: none;
+}
+
+.dashboard-sub-accounts-section {
+  width: 100%;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 15px 0px rgb(0 0 0 / 20%);
+  border-radius: 14px;
+}
+
+.dashboard-sub-accounts-section .sub-accounts-container {
+  /* border: 1px solid #e0e0e0; */
+  border-radius: 12px;
+  padding: 20px;
+  /* max-width: 650px; */
+  margin: auto;
+}
+
+.dashboard-sub-accounts-section .sub-accounts-container .section {
+  margin-bottom: 14px;
+}
+
+.dashboard-sub-accounts-section .sub-accounts-container .section:last-child {
+  margin-bottom: 0px;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .section-header {
+  font-weight: 700;
+  /* font-size: 12px; */
+  line-height: 100%;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  color: #323232;
+  justify-content: space-between;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .section-header
+  .header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .section-header
+  .header-right
+  svg {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .section-header
+  .header-right
+  svg:hover {
+  fill: var(--dark_blue);
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .section-header
+  .icon {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+.dashboard-sub-accounts-section .sub-accounts-container .section .account-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 20px;
+  /* gap: 16px; */
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .account-grid
+  .account-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  /* gap: 20px; */
+}
+
+/* .dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .account-grid
+  .account-column.first-column {
+  margin-left: 25px;
+} */
+
+.divider {
+  width: 2px;
+  background-color: #999999;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .account-grid
+  .account-box {
+  flex: 1 1 45%;
+  /* background: #f9f9f9; */
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section:not(:first-child) {
+  position: relative;
+  padding-top: 20px;
+  /* margin-top: 10px; */
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -20px;
+  right: -20px;
+  height: 2px;
+  background-color: #f2f2f2;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .account-grid
+  .account-box
+  .label {
+  font-weight: 600;
+  font-size: 10px;
+  color: #36385366;
+  margin: 0;
+  line-height: 10px;
+}
+
+.dashboard-sub-accounts-section
+  .sub-accounts-container
+  .section
+  .account-grid
+  .account-box
+  .value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #363853;
+  margin: 4px 0 0 0;
+}

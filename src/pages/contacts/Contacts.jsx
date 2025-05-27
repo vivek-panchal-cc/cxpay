@@ -169,7 +169,10 @@ const Contacts = () => {
               <div
                 className="clearsearchbox"
                 style={{ opacity: userType ? 1 : 0 }}
-                onClick={() => setUserType("")}
+                onClick={() => {
+                  setUserType("");
+                  setCurrentPage(1);
+                }}
               >
                 <IconCross />
               </div>

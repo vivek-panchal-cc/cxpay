@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 function ForgotPassword() {
   const [showOtpPopup, setShowOtpPopup] = useState(false);
-  const [countryList] = useCountriesCities();
+  const [countryList] = useCountriesCities(true);
 
   const formik = useFormik({
     initialValues: {

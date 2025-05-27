@@ -3,6 +3,10 @@ import { storageRequest } from "helpers/storageRequests";
 import { API_LOGIN_REFRESH_TOKEN } from "constants/urls";
 import { toast } from "react-toastify";
 import { browserName, fullVersion, timeZone } from "../helpers/headerRequests";
+import {
+  addPendingRequest,
+  removePendingRequest,
+} from "helpers/requestManager";
 
 // define API_URL in env file
 const axiosLoginInstance = axios.create({
@@ -33,10 +37,17 @@ const requestInterceptor = (config) => {
   config.headers["Device-Type"] = "web";
   config.headers["User-Timezone"] = country_time_zone || timeZone;
   if (token) config.headers.Authorization = `Bearer ${token}`;
+  const added = addPendingRequest(config);
+  if (!added) {
+    const cancelSource = axios.CancelToken.source();
+    config.cancelToken = cancelSource.token;
+    cancelSource.cancel("Duplicate request prevented by requestManager");
+  }
   return config;
 };
 
 const responseInterceptor = async (response) => {
+  removePendingRequest(response.config);
   const originalRequest = response.config;
   const token = storageRequest.getAuth();
   if (!token) return response;
@@ -50,7 +61,20 @@ const responseInterceptor = async (response) => {
 let isToastShown = false;
 
 const responseErrorInterceptor = (error) => {
+  if (error.config) {
+    removePendingRequest(error.config);
+  }
   const errResponse = error.response;
+  if (!errResponse) {
+    if (error.code === "ERR_CANCELED") {
+      // Optional: skip logging if it’s just a duplicate cancel
+      return Promise.reject(error);
+    }
+
+    console.error("No response received:", error);
+    return Promise.reject(error);
+  }
+
   if (
     errResponse &&
     (errResponse.status === 401 ||
@@ -86,6 +110,9 @@ const responseErrorInterceptor = (error) => {
           errResponse.data.message
         )}`;
       }, 3000);
+    } else if (redirect_to === "423C") {
+      sessionStorage.setItem("pendingPin", "true");
+      window.location.href = `/pending-pin`;
     } else if (redirect_to === "424C") {
       window.location.href = `/send-mail?message=${encodeURIComponent(
         errResponse.data.message

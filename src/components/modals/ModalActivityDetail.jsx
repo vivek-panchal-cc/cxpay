@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useMemo, useRef } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./modal.module.scss";
 import {
+  TXN_TYPE_SJ,
   ACT_REQUEST_RECEIVE,
   ACT_REQUEST_SEND,
   ACT_STATUS_APPROVED,
@@ -16,6 +17,9 @@ import {
   activityConsts,
   isAdminApprovedWithRenewCheck,
   ACT_STATUS_FAILED,
+  TXN_TYPE_WW,
+  getInitials,
+  getRandomColorClass,
 } from "constants/all";
 import LoaderActivityDetail from "loaders/LoaderActivityDetail";
 import LoaderActivityProfile from "loaders/LoaderActivityProfile";
@@ -24,6 +28,10 @@ import { formatDate } from "helpers/commonHelpers";
 import { IconCloseModal } from "styles/svgs";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
+import { LoaderContext } from "context/loaderContext";
+import { apiRequest } from "helpers/apiRequests";
+import { toast } from "react-toastify";
+import { SendPaymentContext } from "context/sendPaymentContext";
 
 const ModalActivityDetail = (props) => {
   const {
@@ -55,12 +63,15 @@ const ModalActivityDetail = (props) => {
     comment,
     txn_mode,
     fees,
+    net_amount,
     payment_type,
+    ref_id,
   } = details || {};
 
   const modalRef = useRef(null);
+  const [payAgain, setPayAgain] = useState(false);
   const profileUrl = image || "/assets/images/single_contact_profile.png";
-  const { admin_approved } = useSelector(
+  const { admin_approved, user_type } = useSelector(
     (state) => state?.userProfile?.profile
   );
   const { loginCreds } = useContext(LoginContext);
@@ -68,6 +79,23 @@ const ModalActivityDetail = (props) => {
   const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
     admin_approved,
     show_renew_section
+  );
+  const { setIsLoading } = useContext(LoaderContext);
+  const { handleSendContactsForInstantPay } = useContext(SendPaymentContext);
+
+  const statusKey = useMemo(() => {
+    return user_type === "business" && status === ACT_STATUS_PAID
+      ? `${status}_business`
+      : status;
+  }, [user_type, status]);
+
+  const trWwStatus = useMemo(
+    () =>
+      activity_type === ACT_TYPE_TRANSACTION &&
+      (request_type === ACT_TRANSACT_CREDIT ||
+        request_type === ACT_TRANSACT_DEBIT) &&
+      txn_type === TXN_TYPE_WW,
+    [activity_type, request_type, txn_type]
   );
 
   const {
@@ -86,13 +114,14 @@ const ModalActivityDetail = (props) => {
         return activityConsts[activity_type]?.[request_type]?.[status] || {};
       case ACT_TYPE_TRANSACTION:
         return (
-          activityConsts[activity_type]?.[request_type]?.[txn_type]?.[status] ||
-          {}
+          activityConsts[activity_type]?.[request_type]?.[txn_type]?.[
+            trWwStatus ? statusKey : status
+          ] || {}
         );
       default:
         return {};
     }
-  }, [activity_type, request_type, status]);
+  }, [activity_type, request_type, status, txn_type]);
 
   useEffect(() => {
     function handleclickOutside(event) {
@@ -108,6 +137,16 @@ const ModalActivityDetail = (props) => {
   }, [modalRef, setShow]);
 
   const getActivityActions = () => {
+    if (
+      activity_type === ACT_TYPE_TRANSACTION &&
+      (request_type === ACT_TRANSACT_CREDIT ||
+        request_type === ACT_TRANSACT_DEBIT) &&
+      status === ACT_STATUS_PAID &&
+      txn_type === TXN_TYPE_SJ
+    ) {
+      return null;
+    }
+
     switch (`${activity_type}_${request_type}_${status}`) {
       case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_SEND}_${ACT_STATUS_PENDING}`:
         return (
@@ -179,6 +218,43 @@ const ModalActivityDetail = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (ACT_TRANSACT_DEBIT === request_type && TXN_TYPE_WW === txn_type) {
+      setPayAgain(true);
+    } else {
+      setPayAgain(false); // Optionally reset if conditions don't match
+    }
+  }, [request_type, txn_type]);
+
+  const handlePayAgain = async () => {
+    if (!ref_id) return;
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.walletTransactionVerify({
+        ref_id: ref_id,
+      });
+      if (!data.success) throw data.message;
+      const details = data.data;
+      const contact = {
+        name: details.name,
+        profile_image: details.image,
+        specifications: details.specification,
+        personal_amount:
+          typeof details.amount === "number" ? details.amount?.toFixed(2) : "0",
+        receiver_account_number: details.receiver_account_number,
+        user_type: details.user_type,
+        merchant_fees: details.merchant_fees,
+      };
+      handleSendContactsForInstantPay([contact], ref_id);
+      // toast.success(data.message);
+      setShow(false);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   if (!show) return;
   return (
     <div className={`modal fade show ${styles.modal} ${className}`} id={id}>
@@ -186,7 +262,11 @@ const ModalActivityDetail = (props) => {
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              <div className="user-profile-div bg-white">
+              <div
+                className={`user-profile-div ${
+                  txn_type === TXN_TYPE_SJ ? "savings-jar-details" : ""
+                } bg-white`}
+              >
                 <IconCloseModal
                   style={{
                     position: "absolute",
@@ -198,8 +278,17 @@ const ModalActivityDetail = (props) => {
                 />{" "}
                 {loading ? (
                   <LoaderActivityProfile />
+                ) : image ? (
+                  // <img src={profileUrl} alt="User Profile" />
+                  <img src={image} className="blue-bg" alt="" />
                 ) : (
-                  <img src={profileUrl} alt="User Profile" />
+                  <div
+                    className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                      name
+                    )}`}
+                  >
+                    {getInitials(name)}
+                  </div>
                 )}
               </div>
             </div>
@@ -220,8 +309,45 @@ const ModalActivityDetail = (props) => {
                     </p>
                     <p>{specification}</p>
                   </div>
+                  {payAgain && (
+                    <div className="act-status-wrap mt-3 d-flex justify-content-center">
+                      <button
+                        type="button"
+                        className={`btn btn-blue`}
+                        onClick={handlePayAgain}
+                      >
+                        Recreate
+                      </button>
+                    </div>
+                  )}
                   <table>
                     <tbody>
+                      {fees != null && Number(fees) > 0 && (
+                        <tr>
+                          <td>Fees</td>
+                          <td>
+                            <WrapAmount
+                              value={fees}
+                              prefix={`${CURRENCY_SYMBOL} `}
+                            />
+                          </td>
+                        </tr>
+                      )}
+                      {fees != null &&
+                        Number(fees) > 0 &&
+                        net_amount != null &&
+                        Number(net_amount) > 0 && (
+                          <tr>
+                            <td>Net Amount</td>
+                            <td>
+                              <WrapAmount
+                                value={net_amount}
+                                prefix={`${CURRENCY_SYMBOL} `}
+                              />
+                            </td>
+                          </tr>
+                        )}
+
                       <tr>
                         <td>Date</td>
                         <td>{formatDate(date)}</td>
@@ -241,17 +367,6 @@ const ModalActivityDetail = (props) => {
                           </span>
                         </td>
                       </tr>
-                      {/* {fees > 0 && (
-                        <tr>
-                          <td>Fees</td>
-                          <td>
-                            <WrapAmount
-                              value={fees}
-                              prefix={`${CURRENCY_SYMBOL} `}
-                            />
-                          </td>
-                        </tr>
-                      )} */}
                       {txn_type === TXN_TYPE_AGENT && txn_mode && (
                         <tr>
                           <td>Payment Type</td>

@@ -47,30 +47,20 @@ const passwordSchema = yup
     "Password must contain 8 to 16 characters and contain at least one number, one uppercase & lowercase letter and one special character."
   );
 
-  const passwordStrengthSchema = yup
+const passwordStrengthSchema = yup
   .string()
   .min(8, "Password must contain 8 to 16 characters")
   .max(16, "Password must contain 8 to 16 characters")
+  .matches(/^(?=.*[a-z])/, "At least one lowercase character")
+  .matches(/^(?=.*[A-Z])/, "At least one uppercase character")
+  .matches(/^(?=.*[0-9])/, "At least one numeric character")
   .matches(
-    /^(?=.*[a-z])/,
-    "At least one lowercase character"
-  )
-  .matches(
-    /^(?=.*[A-Z])/,
-    "At least one uppercase character"
-  )
-  .matches(
-    /^(?=.*[0-9])/,
-    "At least one numeric character"
-  )
-  .matches(
-    /^(?=.*[@$!%*?&#])/,
-    "At least one special character (@, $, !, %, *, ?, &, #)"
+    /^(?=.*[@$!%*?&#_])/,
+    "At least one special character (@, $, !, %, *, ?, &, #, _)"
   )
   .matches(exp0ContainWhitespace, "Space is not allowed")
   .matches(exp0ContainWordPassword, `Word 'password' is not allowed`)
   .required("Password is required");
-
 
 const confirmPasswordSchema = yup
   .string()
@@ -186,6 +176,76 @@ const otpSchema = yup
   .matches(/^\d*$/, "OTP should be number")
   .required("OTP is required");
 
+const paymentPinSchema = yup
+  .string()
+  .length(5, "PIN length must be 5 digits")
+  .matches(/^\d*$/, "Please enter your PIN. This field is required")
+  .required("PIN is required");
+
+const pinSchema = yup
+  .string()
+  .required("PIN is required")
+  .length(5, "PIN length must be 5 digits")
+  .matches(/^\d*$/, "Please enter your PIN. This field is required")
+  // .test(
+  //   "no-all-zeros",
+  //   "The PIN cannot be '00000'. Please enter a valid PIN",
+  //   (value) => value !== "00000"
+  // )
+  .test("no-all-same-digit", function (value) {
+    // Check if the value contains the same digit repeated
+    if (/^(.)\1{4}$/.test(value)) {
+      return this.createError({
+        path: this.path,
+        message: `The PIN cannot be '${value}'. Please enter a valid PIN`,
+      });
+    }
+    return true;
+  })
+  .test("no-consecutive-numbers", function (value) {
+    if (!value) return true; // Skip validation if no value
+
+    // Check for ascending consecutive numbers
+    const isConsecutive = (str) => {
+      for (let i = 1; i < str.length; i++) {
+        if (parseInt(str[i]) !== parseInt(str[i - 1]) + 1) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    // Check for descending consecutive numbers
+    const isReverseConsecutive = (str) => {
+      for (let i = 1; i < str.length; i++) {
+        if (parseInt(str[i]) !== parseInt(str[i - 1]) - 1) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    // Create the error message dynamically if a consecutive pattern is found
+    if (isConsecutive(value) || isReverseConsecutive(value)) {
+      return this.createError({
+        path: this.path,
+        message: `The PIN cannot be '${value}'. Please enter a valid PIN.`,
+      });
+    }
+
+    return true;
+  });
+
+const confirmPinSchema = yup
+  .string()
+  .required("Please enter confirm pin")
+  .oneOf([yup.ref("pin"), null], "The PIN and Confirm PIN must be same.");
+
+const confirmNewPinSchema = yup
+  .string()
+  .required("Please enter confirm pin")
+  .oneOf([yup.ref("new_pin"), null], "The PIN and Confirm PIN must be same.");
+
 export {
   emailSchema,
   passwordSchema,
@@ -208,4 +268,8 @@ export {
   countrySchema,
   citySchema,
   otpSchema,
+  pinSchema,
+  confirmPinSchema,
+  confirmNewPinSchema,
+  paymentPinSchema,
 };

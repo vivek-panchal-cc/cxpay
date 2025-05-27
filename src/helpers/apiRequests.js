@@ -13,6 +13,11 @@ const API_logout = apiUrl.API_LOGIN_LOGOUT;
 const API_loginOtp = apiUrl.API_LOGIN_LOGIN_OTP;
 const API_LoginOtpVerify = apiUrl.API_LOGIN_LOGIN_OTP_VERIFY;
 const API_passwordChange = apiUrl.API_LOGIN_PASSWORD_CHANGE;
+const API_pinChange = apiUrl.API_LOGIN_PIN_CHANGE;
+const API_pinSet = apiUrl.API_LOGIN_PIN_SET;
+const API_pinValidate = apiUrl.API_LOGIN_VALIDATE_PIN;
+const API_forgotPinOtp = apiUrl.API_LOGIN_GENERATE_FORGOT_PIN_OTP;
+const API_verifyPinOtp = apiUrl.API_LOGIN_VERIFY_FORGOT_PIN_OTP;
 const API_generateForgotPasswordOtp =
   apiUrl.API_LOGIN_GENERATE_FORGOT_PASSWORD_OTP;
 const API_verifyForgotPasswordOtp = apiUrl.API_LOGIN_VERIFY_FORGOT_PASSWORD_OTP;
@@ -22,6 +27,7 @@ const API_resendForgotPasswordOtp = apiUrl.API_LOGIN_RESEND_FORGOT_PASSWORD_OTP;
 const API_refreshToken = apiUrl.API_LOGIN_REFRESH_TOKEN;
 const API_checkCustomerKyc = apiUrl.API_CHECK_CUSTOMER_KYC;
 const API_updateCustomerKyc = apiUrl.API_UPDATE_CUSTOMER_KYC;
+const API_acknowledgementPopup = apiUrl.API_ACKNOWLEDGEMENT_POPUP;
 
 // ONBOARD SERVICES
 const API_verifyMobileNumber = apiUrl.API_ONBOARD_VERIFY_MOBILE_NUMBER;
@@ -36,8 +42,12 @@ const API_addCard = apiUrl.API_ONBOARD_ADD_CARD;
 const API_deleteCard = apiUrl.API_ONBOARD_DELETE_CARD;
 const API_updateCard = apiUrl.API_ONBOARD_UPDATE_CARD;
 const API_getCountry = apiUrl.API_ONBOARD_GET_COUNTRY;
+const API_appInstall = apiUrl.API_ONBOARD_APP_INSTALL;
+const API_getBusinessCategory = apiUrl.API_ONBOARD_GET_BUSIINESS_CATEGORY;
+const API_getMerchantList = apiUrl.API_ONBOARD_GET_MERCHANT_LIST;
 const API_resendRegisterOtp = apiUrl.API_ONBOARD_RESEND_REGISTER_OTP;
 const API_updateBusinessUrl = apiUrl.API_ONBOARD_UPDATE_BUSINESS_URL;
+const API_createCustomQrCode = apiUrl.API_ONBOARD_CUSTOM_QR_CODE;
 const API_generateNewQrCode = apiUrl.API_ONBOARD_GENERATE_QR_CODE;
 const API_cardsList = apiUrl.API_ONBOARD_CARDS_LIST;
 const API_bankList = apiUrl.API_ONBOARD_BANK_LIST;
@@ -72,6 +82,7 @@ const API_getCountryBanks = apiUrl.API_ONBOARD_GET_COUNTRY_BANKS;
 const API_resendVerifyEmail = apiUrl.API_ONBOARD_RESEND_VERIFY_EMAIL;
 const API_deactivateAccount = apiUrl.API_ONBOARD_DEACTIVATE_ACCOUNT;
 const API_deactivateAccountAgent = apiUrl.API_ONBOARD_DEACTIVATE_ACCOUNT_AGENT;
+const API_createPinSchedulePayment = apiUrl.API_ONBOARD_SCHEDULE_PAYMENT_PIN;
 const API_createSchedulePayment = apiUrl.API_ONBOARD_CREATE_SCHEDULE_PAYMENT;
 const API_listSchedulePayment = apiUrl.API_ONBOARD_LIST_SCHEDULE_PAYMENT;
 const API_deleteSchedulePayment = apiUrl.API_ONBOARD_DELETE_SCHEDULE_PAYMENT;
@@ -80,8 +91,10 @@ const API_viewSchedulePayment = apiUrl.API_ONBOARD_VIEW_SCHEDULE_PAYMENT;
 const API_getAllSystemOptions = apiUrl.API_ONBOARD_GET_ALL_SYSTEM_OPTIONS;
 const API_markAllAsReadNotifications =
   apiUrl.API_ONBOARD_MARK_ALL_AS_READ_NOTIFICATIONS;
-const API_walletTransferScheduleOtp = apiUrl.API_ONBOARD_WALLET_TRANSFER_SCHEDULE_OTP;
-const API_resendSchedulePaymentOtp = apiUrl.API_ONBOARD_RESEND_SCHEDULE_PAYMENT_OTP;
+const API_walletTransferScheduleOtp =
+  apiUrl.API_ONBOARD_WALLET_TRANSFER_SCHEDULE_OTP;
+const API_resendSchedulePaymentOtp =
+  apiUrl.API_ONBOARD_RESEND_SCHEDULE_PAYMENT_OTP;
 const API_createChangeMobileOtp = apiUrl.API_ONBOARD_CREATE_CHANGE_MOBILE_OTP;
 const API_verifyChangeMobileOtp = apiUrl.API_ONBOARD_VERIFY_CHANGE_MOBILE_OTP;
 
@@ -96,13 +109,16 @@ const API_initiateManualFundAdd =
   apiUrl.API_TRANSACTION_INITIATE_MANUAL_FUND_ADD;
 const API_getBalance = apiUrl.API_TRANSACTION_GET_BALANCE;
 const API_walletTransferOtp = apiUrl.API_TRANSACTION_WALLET_TRANSFER_OTP;
-const API_walletTransferRecurringOtp = apiUrl.API_TRANSACTION_WALLET_TRANSFER_RECURRING_OTP;
+const API_walletTransferRecurringOtp =
+  apiUrl.API_TRANSACTION_WALLET_TRANSFER_RECURRING_OTP;
 const API_walletPersonalOtpVerify =
   apiUrl.API_TRANSACTION_WALLET_PERSONAL_OTP_VERIFY;
 const API_resendWalletTransferOtp =
   apiUrl.API_TRANSACTION_RESEND_WALLET_TRANSFER_OTP;
 const API_resendRecurringPaymentOtp =
   apiUrl.API_TRANSACTION_RESEND_RECURRING_PAYMENT_OTP;
+const API_walletTransferPin = apiUrl.API_TRANSACTION_WALLET_TRANSFER_PIN;
+const API_walletTransactionVerify = apiUrl.API_TRANSACTION_VERIFY;
 const API_getCharges = apiUrl.API_TRANSACTION_GET_CHARGES;
 const API_sendPaymentRequest = apiUrl.API_TRANSACTION_SEND_PAYMENT_REQUEST;
 const API_activityList = apiUrl.API_TRANSACTION_ACTIVITY_LIST;
@@ -131,10 +147,14 @@ const API_agentTopUps = apiUrl.API_TRANSACTION_AGENT_TOP_UPS;
 const API_getTopupPrintDetails = apiUrl.API_TRANSACTION_GET_TOPUP_PRINT_DETAILS;
 const API_getTopupTransactionHistory =
   apiUrl.API_TRANSACTION_GET_TOPUP_TRANSACTION_HISTORY;
+const API_topupTransactionExport = apiUrl.API_AGENT_TRANSACTION_EXPORT;
 const API_getTopupActivityDetails =
   apiUrl.API_TRANSACTION_GET_TOPUP_ACTIVITY_DETAILS;
 const API_getMonthlyRechargeTotal =
   apiUrl.API_TRANSACTION_MONTHLY_RECHARGE_TOTAL;
+const API_merchantReports = apiUrl.API_TRANSACTION_MERCHANT_REPORTS;
+const API_exportMerchantReports =
+  apiUrl.API_TRANSACTION_EXPORT_MERCHANT_REPORTS;
 
 //Recurring
 const API_createRecurringPayment =
@@ -145,9 +165,75 @@ const API_deleteRecurringPayment =
   apiUrl.API_TRANSACTION_DELETE_RECURRING_PAYMENT;
 const API_listRecurringPayment = apiUrl.API_TRANSACTION_LIST_RECURRING_PAYMENT;
 const API_viewRecurringPayment = apiUrl.API_TRANSACTION_VIEW_RECURRING_PAYMENT;
+const API_recurringPaymentPin = apiUrl.API_TRANSACTION_RECURRING_PAYMENT_PIN;
 
 //Reserved Amount
 const API_listReservedAmount = apiUrl.API_RESERVED_AMOUNT_LIST;
+
+//Sub-accounts
+const API_savingJarIcons = apiUrl.API_GET_SAVING_JAR_ICONS;
+const API_savingJarCategories = apiUrl.API_GET_SAVING_JAR_CATEGORIES;
+const API_getRemainingContacts = apiUrl.API_GET_REMAINING_CONTACTS_SAVING;
+const API_createTransactionJar = apiUrl.API_TRANSACTION_JAR_CREATE_WW;
+const API_createTransactionJarSchedule =
+  apiUrl.API_TRANSACTION_JAR_CREATE_WW_SCHEDULE;
+const API_createTransactionJarRecurring =
+  apiUrl.API_TRANSACTION_JAR_CREATE_WW_RECURRING;
+const API_getUserOwnSavingJar = apiUrl.API_TRANSACTION_USER_OWN_SAVING_JAR;
+const API_getUserSharedSavingJar =
+  apiUrl.API_TRANSACTION_USER_SHARED_SAVING_JAR;
+const API_getUserSharedInvitedJar =
+  apiUrl.API_TRANSACTION_USER_INVITED_SAVING_JAR;
+const API_addAmountToSavingJarWW = apiUrl.API_TRANSACTION_ADD_AMOUNT_WW;
+const API_addAmountToSavingJarSchedule =
+  apiUrl.API_TRANSACTION_ADD_AMOUNT_SCHEDULE;
+const API_addAmountToSavingJarRecurring =
+  apiUrl.API_TRANSACTION_ADD_AMOUNT_RECURRING;
+const API_getSavingJarDetails = apiUrl.API_TRANSACTION_GET_SAVING_JAR_DETAILS;
+const API_updateSavingJarDetails =
+  apiUrl.API_TRANSACTION_UPDATE_SAVING_JAR_DETAILS;
+const API_acceptRejectSavingJarDetails =
+  apiUrl.API_TRANSACTION_ACCEPT_REJECT_SAVING_JAR_DETAILS;
+const API_addMemberInSavingJar =
+  apiUrl.API_TRANSACTION_ADD_MEMBER_IN_SAVING_JAR;
+const API_adjustSavingJarRecurringAmount =
+  apiUrl.API_TRANSACTION_ADJUST_SAVING_JAR_RECURRING_AMOUNT;
+const API_removeMemberInSavingJar =
+  apiUrl.API_TRANSACTION_REMOVE_MEMBER_IN_SAVING_JAR;
+const API_getSavingJarMemberList =
+  apiUrl.API_TRANSACTION_SAVING_JAR_MEMBER_LIST;
+const API_getSavingJarActivityList =
+  apiUrl.API_TRANSACTION_SAVING_JAR_ACTIVITY_LIST;
+const API_transferSavingJarAmountToWallet =
+  apiUrl.API_TRANSACTION_SAVING_JAR_AMOUNT_TO_WALLET_TRANSFER;
+const API_transferListSavingJarSchedulePayment =
+  apiUrl.API_TRANSACTION_LIST_SAVING_JAR_SCHEDULE_PAYMENT;
+const API_transferListSavingJarRecurringPayment =
+  apiUrl.API_TRANSACTION_LIST_SAVING_JAR_RECURRING_PAYMENT;
+const API_updateSavingJarSchedulePayment =
+  apiUrl.API_TRANSACTION_UPDATE_SAVING_JAR_SCHEDULE_PAYMENT;
+const API_dateListSavingJarRecurringPayment =
+  apiUrl.API_TRANSACTION_SAVING_JAR_RECURRING_PAYMENT_DATE;
+const API_updateSavingJarRecurringPayment =
+  apiUrl.API_TRANSACTION_UPDATE_SAVING_JAR_RECURRING_PAYMENT;
+const API_deleteSavingJarSchedulePayment =
+  apiUrl.API_TRANSACTION_DELETE_SAVING_JAR_SCHEDULE_PAYMENT;
+const API_deleteSavingJarRecurringPayment =
+  apiUrl.API_TRANSACTION_DELETE_SAVING_JAR_RECURRING_PAYMENT;
+const API_subAccountsStatisticsForDashboard =
+  apiUrl.API_TRANSACTION_SUB_ACCOUNTS_STATISTICS_DASHBOARD;
+const API_updateRecurringOccurrenceAmount =
+  apiUrl.API_TRANSACTION_UPDATE_RECURRING_OCCURRENCE_AMOUNT;
+const API_deleteRecurringOccurrence =
+  apiUrl.API_TRANSACTION_DELETE_RECURRING_OCCURRENCE;
+const API_updateRecurringOccurrenceDate =
+  apiUrl.API_TRANSACTION_UPDATE_RECURRING_OCCURRENCE_DATE;
+const API_generateOccurrenceForSavingJar =
+  apiUrl.API_GENERATE_OCCURRENCE_FOR_SAVING_JAR;
+const API_getInvitedMemberRecurringDetails =
+  apiUrl.API_INVITED_MEMBER_RECURRING_DETAILS;
+const API_getSavingJarDashboardStatisticsDescription =
+  apiUrl.API_SAVING_JAR_DASHBOARD_STASTISTICS_DESCRIPTION;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -184,6 +270,26 @@ export const loginOtpVerify = (params) => {
  */
 export const passwordChange = (params) => {
   return axiosLoginInstance.post(`${API_passwordChange}`, params);
+};
+
+export const pinChange = (params) => {
+  return axiosLoginInstance.post(`${API_pinChange}`, params);
+};
+
+export const pinSet = (params) => {
+  return axiosLoginInstance.post(`${API_pinSet}`, params);
+};
+
+export const pinValidate = (params) => {
+  return axiosLoginInstance.post(`${API_pinValidate}`, params);
+};
+
+export const forgotPinOtp = (params) => {
+  return axiosLoginInstance.post(`${API_forgotPinOtp}`, params);
+};
+
+export const verifyPinOtp = (params) => {
+  return axiosLoginInstance.post(`${API_verifyPinOtp}`, params);
 };
 
 /** POST @generate-forgot-password-otp-change API
@@ -240,6 +346,13 @@ export const checkCustomerKyc = (token) => {
  */
 export const updateCustomerKyc = (params) => {
   return axiosOnboardInstance.post(`${API_updateCustomerKyc}`, params);
+};
+
+/** POST API
+ * @params authToken
+ */
+export const acknowledgementPopup = (params) => {
+  return axiosLoginInstance.post(`${API_acknowledgementPopup}`, params);
 };
 
 //  -------------------------------------------- ON BOARD ------------------------------------------------------------------------------------------>
@@ -338,6 +451,41 @@ export const getCountry = () => {
   return axiosOnboardInstance.post(`${API_getCountry}`);
 };
 
+/** POST @get-country API
+ * @params
+ */
+export const appInstall = () => {
+  return axiosOnboardInstance.get(`${API_appInstall}`);
+};
+
+/** POST @list-active-business-category API
+ * @params
+ */
+export const getBusinessCategory = () => {
+  return axiosOnboardInstance.post(`${API_getBusinessCategory}`);
+};
+
+/** POST @get-merchant-list API
+ * @params
+ */
+export const getMerchantList = (params) => {
+  return axiosOnboardInstance.post(`${API_getMerchantList}`, params);
+};
+
+/** POST @merchant-reports
+ * @params auth_token, start_date, end_date, page
+ */
+export const merchantReports = (params) => {
+  return axiosTransactionInstance.post(`${API_merchantReports}`, params);
+};
+
+/** GET @merchant-reports-export
+ * @params
+ */
+export const exportMerchantReports = (params) => {
+  return axiosTransactionInstance.post(`${API_exportMerchantReports}`, params);
+};
+
 /** POST @resend-register-otp API
  * @params mobile_number
  */
@@ -391,6 +539,13 @@ export const cardsList = () => {
  */
 export const updateBusinessUrl = (params) => {
   return axiosOnboardInstance.post(`${API_updateBusinessUrl}`, params);
+};
+
+/** POST @create-custom-QRcode
+ * @params QR_amount
+ */
+export const createCustomeQrCode = (params) => {
+  return axiosOnboardInstance.post(`${API_createCustomQrCode}`, params);
 };
 
 /** POST @generate-new-qrcode API
@@ -645,6 +800,13 @@ export const getTopUpTransactionHistory = (params) => {
   );
 };
 
+/** GET @topup-transaction-export
+ * @params
+ */
+export const topupTransactionExport = (params) => {
+  return axiosTransactionInstance.post(`${API_topupTransactionExport}`, params);
+};
+
 /** POST @get-topup-activity-details
  * @params auth_token, id
  */
@@ -666,18 +828,28 @@ export const createRecurringPayment = (params) => {
 /** POST @wallet-transfer-recurring-otp
  * @params wallet, fees, amount, group_id
  */
- export const walletTransferRecurringOtp = (params) => {
-  return axiosTransactionInstance.post(`${API_walletTransferRecurringOtp}`, params);
+export const walletTransferRecurringOtp = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_walletTransferRecurringOtp}`,
+    params
+  );
 };
 
 /** POST @resend-recurring-payment-otp
  * @params auth_token
  */
- export const resendRecurringPaymentOtp = (params) => {
+export const resendRecurringPaymentOtp = (params) => {
   return axiosTransactionInstance.post(
     `${API_resendRecurringPaymentOtp}`,
     params
   );
+};
+
+/** POST @resend-recurring-payment-otp
+ * @params auth_token, user_pin
+ */
+export const recurringPaymentPin = (params) => {
+  return axiosTransactionInstance.post(`${API_recurringPaymentPin}`, params);
 };
 
 /** POST @update-recurring-payment
@@ -749,6 +921,23 @@ export const walletTransferOtp = (params) => {
   return axiosTransactionInstance.post(`${API_walletTransferOtp}`, params);
 };
 
+/** POST @wallet-transfer-otp
+ * @params wallet, fees, total_amount, group_id
+ */
+export const walletTransferPin = (params) => {
+  return axiosTransactionInstance.post(`${API_walletTransferPin}`, params);
+};
+
+/** POST @verify-transactions
+ * @params ref_id
+ */
+export const walletTransactionVerify = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_walletTransactionVerify}`,
+    params
+  );
+};
+
 /** POST @wallet-personal-otp-verify
  * @params mobile_number, wallet_transfer_otp
  */
@@ -779,6 +968,13 @@ export const sendPaymentRequest = (params) => {
 /** POST @create-schedule-payment
  * @params schedule_payment , total_amount, schedule_date, overall_specification, group_id
  */
+export const createPinSchedulePayment = (params) => {
+  return axiosOnboardInstance.post(`${API_createPinSchedulePayment}`, params);
+};
+
+/** POST @create-schedule-payment
+ * @params schedule_payment , total_amount, schedule_date, overall_specification, group_id
+ */
 export const createSchedulePayment = (params) => {
   return axiosOnboardInstance.post(`${API_createSchedulePayment}`, params);
 };
@@ -786,38 +982,29 @@ export const createSchedulePayment = (params) => {
 /** POST @wallet-transfer-schedule-otp
  * @params wallet, fees, amount, group_id
  */
- export const walletTransferScheduleOtp = (params) => {
+export const walletTransferScheduleOtp = (params) => {
   return axiosOnboardInstance.post(`${API_walletTransferScheduleOtp}`, params);
 };
 
 /** POST @resend-schedule-payment-otp
  * @params auth_token
  */
- export const resendSchedulePaymentOtp = (params) => {
-  return axiosOnboardInstance.post(
-    `${API_resendSchedulePaymentOtp}`,
-    params
-  );
+export const resendSchedulePaymentOtp = (params) => {
+  return axiosOnboardInstance.post(`${API_resendSchedulePaymentOtp}`, params);
 };
 
 /** POST @create-change-mobile-otp
  * @params auth_token
  */
- export const createChangeMobileOtp = (params) => {
-  return axiosOnboardInstance.post(
-    `${API_createChangeMobileOtp}`,
-    params
-  );
+export const createChangeMobileOtp = (params) => {
+  return axiosOnboardInstance.post(`${API_createChangeMobileOtp}`, params);
 };
 
 /** POST @verify-change-mobile-otp
  * @params auth_token
  */
- export const verifyChangeMobileOtp = (params) => {
-  return axiosOnboardInstance.post(
-    `${API_verifyChangeMobileOtp}`,
-    params
-  );
+export const verifyChangeMobileOtp = (params) => {
+  return axiosOnboardInstance.post(`${API_verifyChangeMobileOtp}`, params);
 };
 
 /** POST @list-schedule-payment
@@ -990,6 +1177,354 @@ export const checkEnrollment = (params) => {
   return axiosTransactionInstance.post(`${"/check-enrollment"}`, params);
 };
 
+//Sub-accounts
+/** POST
+ * @params token
+ */
+export const getSavingJarIcons = (params) => {
+  return axiosTransactionInstance.post(`${API_savingJarIcons}`, params);
+};
+
+/** POST
+ * @params token
+ */
+export const getSavingJarCategories = (params) => {
+  return axiosTransactionInstance.post(`${API_savingJarCategories}`, params);
+};
+
+/** POST
+ * @params token
+ */
+export const getRemainingContacts = (params) => {
+  return axiosTransactionInstance.post(`${API_getRemainingContacts}`, params);
+};
+
+/** POST
+ * @params token
+ * @params values
+ */
+export const createTransactionJar = (params) => {
+  return axiosTransactionInstance.post(`${API_createTransactionJar}`, params);
+};
+
+/** POST
+ * @params token
+ * @params schedule_date
+ * @params values
+ */
+export const createTransactionJarSchedule = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_createTransactionJarSchedule}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params schedule_date
+ * @params start_date
+ * @params end_date
+ * @params values
+ */
+export const createTransactionJarRecurring = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_createTransactionJarRecurring}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ */
+export const getUserOwnSavingJar = (params) => {
+  return axiosTransactionInstance.post(`${API_getUserOwnSavingJar}`, params);
+};
+
+/** POST
+ * @params token
+ */
+export const getUserSharedSavingJar = (params) => {
+  return axiosTransactionInstance.post(`${API_getUserSharedSavingJar}`, params);
+};
+
+/** POST
+ * @params token
+ */
+export const getUserSharedInvitedJar = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_getUserSharedInvitedJar}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const addAmountToSavingJarWW = (params) => {
+  return axiosTransactionInstance.post(`${API_addAmountToSavingJarWW}`, params);
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const addAmountToSavingJarSchedule = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_addAmountToSavingJarSchedule}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const addAmountToSavingJarRecurring = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_addAmountToSavingJarRecurring}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const getSavingJarDetails = (params) => {
+  return axiosTransactionInstance.post(`${API_getSavingJarDetails}`, params);
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const updateSavingJarDetails = (params) => {
+  return axiosTransactionInstance.post(`${API_updateSavingJarDetails}`, params);
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ * @params request_accept : 0 || 1
+ */
+export const acceptRejectSavingJarDetails = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_acceptRejectSavingJarDetails}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const addMemberInSavingJar = (params) => {
+  return axiosTransactionInstance.post(`${API_addMemberInSavingJar}`, params);
+};
+
+/** POST
+ * @params token
+ */
+export const adjustSavingJarRecurringAmount = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_adjustSavingJarRecurringAmount}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params member_account_number
+ */
+export const removeMemberInSavingJar = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_removeMemberInSavingJar}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params search_name
+ */
+export const getSavingJarMemberList = (params) => {
+  return axiosTransactionInstance.post(`${API_getSavingJarMemberList}`, params);
+};
+
+/** POST
+ * @params token
+ * @params search_name
+ */
+export const getSavingJarActivityList = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_getSavingJarActivityList}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ */
+export const transferSavingJarAmountToWallet = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_transferSavingJarAmountToWallet}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const transferListSavingJarSchedulePayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_transferListSavingJarSchedulePayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const transferListSavingJarRecurringPayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_transferListSavingJarRecurringPayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const updateSavingJarSchedulePayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_updateSavingJarSchedulePayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_recurring_payment_id
+ */
+export const dateListSavingJarRecurringPayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_dateListSavingJarRecurringPayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params payment_id
+ */
+export const updateSavingJarRecurringPayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_updateSavingJarRecurringPayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params schedule_payment_id
+ */
+export const deleteSavingJarSchedulePayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_deleteSavingJarSchedulePayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params recurring_payment_id
+ */
+export const deleteSavingJarRecurringPayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_deleteSavingJarRecurringPayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ */
+export const subAccountsStatisticsForDashboard = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_subAccountsStatisticsForDashboard}`,
+    params
+  );
+};
+
+/** POST
+ * @params jar_id
+ * @params occurrence_id
+ * @params token
+ */
+export const updateRecurringOccurrenceAmount = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_updateRecurringOccurrenceAmount}`,
+    params
+  );
+};
+
+/** POST
+ * @params jar_id
+ * @params occurrence_id
+ * @params token
+ */
+export const deleteRecurringOccurrence = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_deleteRecurringOccurrence}`,
+    params
+  );
+};
+
+/** POST
+ * @params jar_id
+ * @params occurrence_id
+ * @params token
+ */
+export const updateRecurringOccurrenceDate = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_updateRecurringOccurrenceDate}`,
+    params
+  );
+};
+
+/** POST
+ * @params start_date
+ * @params end_date
+ * @params token
+ */
+export const generateOccurrenceForSavingJar = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_generateOccurrenceForSavingJar}`,
+    params
+  );
+};
+
+/** POST
+ * @params jar_id
+ */
+export const getInvitedMemberRecurringDetails = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_getInvitedMemberRecurringDetails}`,
+    params
+  );
+};
+
+export const getSavingJarDashboardStatisticsDescription = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_getSavingJarDashboardStatisticsDescription}`,
+    params
+  );
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -1002,6 +1537,11 @@ export const apiRequest = {
   manualKyc,
   updateUser,
   passwordChange,
+  pinChange,
+  pinSet,
+  pinValidate,
+  forgotPinOtp,
+  verifyPinOtp,
   generateForgotPasswordOtpChange,
   verifyForgotPasswordOtp,
   updateForgotPassword,
@@ -1011,9 +1551,15 @@ export const apiRequest = {
   updateCard,
   cardMarkAsDefault,
   getCountry,
+  appInstall,
+  getBusinessCategory,
+  getMerchantList,
+  merchantReports,
+  exportMerchantReports,
   refreshToken,
   checkCustomerKyc,
   updateCustomerKyc,
+  acknowledgementPopup,
   resendLoginOtp,
   resendForgotPasswordOtp,
   resendRegisterOtp,
@@ -1023,6 +1569,7 @@ export const apiRequest = {
   checkCustomerPayment,
   markAsFavourite,
   updateBusinessUrl,
+  createCustomeQrCode,
   generateNewQrCode,
   getAllNotifications,
   markAsRead,
@@ -1054,6 +1601,7 @@ export const apiRequest = {
   agentTopUps,
   getTopUpPrintDetails,
   getTopUpTransactionHistory,
+  topupTransactionExport,
   getTopupActivityDetails,
   getMonthlyRechargeTotal,
   initiateManualFundAdd,
@@ -1067,6 +1615,9 @@ export const apiRequest = {
   createChangeMobileOtp,
   verifyChangeMobileOtp,
   resendRecurringPaymentOtp,
+  recurringPaymentPin,
+  walletTransferPin,
+  walletTransactionVerify,
   resendVerifyEmail,
   deactivateAccount,
   deactivateAgentAccount,
@@ -1074,6 +1625,7 @@ export const apiRequest = {
   getCMSPageLists,
   getFaqList,
   sendPaymentRequest,
+  createPinSchedulePayment,
   createSchedulePayment,
   listSchedulePayment,
   deleteSchedulePayment,
@@ -1106,4 +1658,39 @@ export const apiRequest = {
   deleteRecurringPayment,
   viewRecurringPayment,
   listReservedAmount,
+  getSavingJarIcons,
+  getSavingJarCategories,
+  getRemainingContacts,
+  createTransactionJar,
+  createTransactionJarSchedule,
+  createTransactionJarRecurring,
+  getUserOwnSavingJar,
+  getUserSharedSavingJar,
+  getUserSharedInvitedJar,
+  addAmountToSavingJarWW,
+  addAmountToSavingJarSchedule,
+  addAmountToSavingJarRecurring,
+  getSavingJarDetails,
+  updateSavingJarDetails,
+  acceptRejectSavingJarDetails,
+  addMemberInSavingJar,
+  adjustSavingJarRecurringAmount,
+  removeMemberInSavingJar,
+  getSavingJarMemberList,
+  getSavingJarActivityList,
+  transferSavingJarAmountToWallet,
+  transferListSavingJarSchedulePayment,
+  transferListSavingJarRecurringPayment,
+  updateSavingJarSchedulePayment,
+  dateListSavingJarRecurringPayment,
+  updateSavingJarRecurringPayment,
+  deleteSavingJarSchedulePayment,
+  deleteSavingJarRecurringPayment,
+  subAccountsStatisticsForDashboard,
+  updateRecurringOccurrenceAmount,
+  deleteRecurringOccurrence,
+  updateRecurringOccurrenceDate,
+  generateOccurrenceForSavingJar,
+  getInvitedMemberRecurringDetails,
+  getSavingJarDashboardStatisticsDescription,
 };

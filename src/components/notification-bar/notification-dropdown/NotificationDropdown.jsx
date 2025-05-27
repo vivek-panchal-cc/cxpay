@@ -2,6 +2,8 @@ import NotificationListItem from "components/items/NotificationListItem";
 import { notificationType } from "constants/all";
 import { ActivityContext } from "context/activityContext";
 import { LoaderContext } from "context/loaderContext";
+import { NotificationContext } from "context/notificationsContext";
+import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { fetchMarkAsRead } from "features/user/userNotificationSlice";
 import LoaderNotificationDropdown from "loaders/LoaderNotificationDropdown";
 import React, { useContext, useEffect, useRef, useState } from "react";
@@ -14,8 +16,10 @@ const NotificationDropdown = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const dropdownref = useRef(null);
+  const { handleStoreJarId } = useContext(SavingJarOwnContext);
   const { setIsLoading } = useContext(LoaderContext);
   const { handleActivityDetail } = useContext(ActivityContext);
+  const { handleNotificationDetails } = useContext(NotificationContext);
   const { dropNotifications, initialLoading, pendingRead } = useSelector(
     (state) => state.userNotification
   );
@@ -33,12 +37,20 @@ const NotificationDropdown = (props) => {
     };
   }, [dropdownref]);
 
-  const handleMarkAsRead = async ({ id, status, type, payload }) => {
-    const { request_id } =
+  const handleMarkAsRead = async ({ id, status, type, payload, message }) => {
+    const { request_id, description, jar_id } =
       typeof payload === "string" && payload.length > 0
         ? JSON.parse(payload)
         : "";
+    const notiDesc = {
+      subHeading: description,
+      heading: message,
+    };
     if (request_id) handleActivityDetail({ id: request_id });
+    else if (jar_id) {
+      await handleStoreJarId(jar_id);
+      navigate(notificationType[type].redirect);
+    } else if (description) handleNotificationDetails(notiDesc);
     else navigate(notificationType[type].redirect);
     if (status) return;
     setIsLoading(true);

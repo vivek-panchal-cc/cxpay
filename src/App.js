@@ -22,6 +22,7 @@ import Wallet from "pages/wallet/Wallet";
 import AddCard from "pages/add-card/AddCard";
 import LinkBank from "pages/link-bank/LinkBank";
 import Contacts from "pages/contacts/Contacts";
+import Merchants from "pages/merchants/Merchants";
 import ContactsInvited from "pages/contacts-invited/ContactsInvited";
 import Logout from "pages/logout/Logout";
 import PublicLayout from "layouts/PublicLayout";
@@ -67,6 +68,33 @@ import CMSPage from "pages/cms-content/CmsPage";
 import FaqContent from "pages/cms-content/faq/FaqContent";
 import { CmsProvider } from "context/cmsContext";
 import { FaqProvider } from "context/faqContext";
+import ChangePin from "pages/change-pin/ChangePin";
+import SetPin from "pages/change-pin/SetPin";
+import ForgotPin from "pages/forgot-pin/ForgotPin";
+import PendingPin from "pages/pending-pin/PendingPin";
+import ProtectedRoute from "components/protected-pin-route/ProtectedPin";
+import OrgDashboard from "pages/dashboard/OrgDashboard";
+import { useOrganizationSwitch } from "context/organizationSwitchContext";
+import AppInstall from "pages/app-install/AppInstall";
+import WellKnown from "pages/deep-linking/WellKnown";
+import MerchantFeesReport from "pages/merchant-fees-report/MerchantFeesReport";
+import ViewSharedJars from "pages/view-jars/ViewSharedJars";
+import ViewOwnJars from "pages/view-jars/ViewOwnJars";
+import ViewInvitedJars from "pages/view-jars/ViewInvitedJars";
+import CreateJar from "pages/create-jar/CreateJar";
+import JarSend from "pages/jar-send/JarSend";
+import JarRecurringSend from "pages/jar-send/JarRecurringSend";
+import JarRecurringSendPayment from "pages/jar-send/JarRecurringSendPayment";
+import JarDetails from "pages/view-jars/JarDetails";
+import EditJar from "pages/edit-jar/EditJar";
+import JarMembers from "pages/jar-members/JarMembers";
+import JarActivities from "pages/jar-activities/JarActivities";
+import JarSchedulePayment from "pages/jar-schedule-payment/JarSchedulePayment";
+import JarRecurringPayment from "pages/jar-recurring-payment/JarRecurringPayment";
+import EditJarScheduledPayment from "pages/edit-jar-scheduled-payment/EditJarScheduledPayment";
+import EditJarRecurringPayment from "pages/edit-jar-recurring-payment/EditJarRecurringPayment";
+import JarRecurringDetails from "pages/jar-recurring-details/JarRecurringDetails";
+import JarRoutesWrapper from "layouts/JarRoutesWrapper";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -147,6 +175,14 @@ const ProtectedActivities = withUserProtection(
   AllowedBusinessPersonal
 );
 const ProtectedContacts = withUserProtection(Contacts, AllowedBusinessPersonal);
+const ProtectedMerchants = withUserProtection(
+  Merchants,
+  AllowedBusinessPersonal
+);
+const ProtectedMerchantFeesReport = withUserProtection(
+  MerchantFeesReport,
+  AllowedBusiness
+);
 const ProtectedContactsInvited = withUserProtection(
   ContactsInvited,
   AllowedBusinessPersonal
@@ -211,6 +247,69 @@ const ProtectedViewNotification = withUserProtection(
   ViewNotification,
   AllowedBusinessPersonal
 );
+const ProtectedSharedJars = withUserProtection(
+  ViewSharedJars,
+  AllowedBusinessPersonal
+);
+const ProtectedOwnJars = withUserProtection(
+  ViewOwnJars,
+  AllowedBusinessPersonal
+);
+const ProtectedInvitedJars = withUserProtection(
+  ViewInvitedJars,
+  AllowedBusinessPersonal
+);
+const ProtectedCreateJar = withUserProtection(
+  CreateJar,
+  AllowedBusinessPersonal
+);
+const ProtectedEditJar = withUserProtection(EditJar, AllowedBusinessPersonal);
+const ProtectedJarSend = withUserProtection(JarSend, AllowedBusinessPersonal);
+const ProtectedJarRecurringSend = withUserProtection(
+  JarRecurringSend,
+  AllowedBusinessPersonal
+);
+const ProtectedJarRecurringSendPayment = withUserProtection(
+  JarRecurringSendPayment,
+  AllowedBusinessPersonal
+);
+const ProtectedJarDetails = withUserProtection(
+  JarDetails,
+  AllowedBusinessPersonal
+);
+const ProtectedMembers = withUserProtection(
+  JarMembers,
+  AllowedBusinessPersonal
+);
+
+const ProtectedJarActivities = withUserProtection(
+  JarActivities,
+  AllowedBusinessPersonal
+);
+
+const ProtectedJarSchedulePayment = withUserProtection(
+  JarSchedulePayment,
+  AllowedBusinessPersonal
+);
+
+const ProtectedJarRecurringPayment = withUserProtection(
+  JarRecurringPayment,
+  AllowedBusinessPersonal
+);
+
+const ProtectedEditJarScheduledPayment = withUserProtection(
+  EditJarScheduledPayment,
+  AllowedBusinessPersonal
+);
+
+const ProtectedEditJarRecurringPayment = withUserProtection(
+  EditJarRecurringPayment,
+  AllowedBusinessPersonal
+);
+const ProtectedJarRecurringDetails = withUserProtection(
+  JarRecurringDetails,
+  AllowedBusinessPersonal
+);
 
 // user_types = business
 const ProtectedBusinessInfo = withUserProtection(BusinessInfo, AllowedBusiness);
@@ -232,6 +331,7 @@ const ProtectedFaqContent = withUserProtection(FaqContent, AllowedAllTypes);
 function App() {
   const location = useLocation();
   const dispatch = useDispatch();
+  const { isToggled } = useOrganizationSwitch();
 
   // useEffect(() => {
   //   dispatch(fetchUserProfile());
@@ -258,6 +358,8 @@ function App() {
         />
         {/* List of Public Routes */}
         <Route element={<PublicLayout />}>
+          {/* <Route path="/app-install" element={<AppInstall />} />
+          <Route path="/.well-known/:fileName" element={<WellKnown />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/login-with-otp" element={<LoginWithOtp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -287,6 +389,9 @@ function App() {
             element={<KycManualSecondStep />}
           />
           <Route path="/send-mail" element={<KycSendMail />} />
+          <Route path="/set-pin" element={<SetPin />} />
+          <Route path="/forgot-pin" element={<ForgotPin />} />
+          <Route path="/pending-pin" element={<PendingPin />} />
           <Route path="/signup/:fundtype" element={<SignupFundAccount />} />
           <Route element={<DashboardLayout />}>
             {/* settings */}
@@ -300,6 +405,7 @@ function App() {
               path="/setting/change-password"
               element={<ChangePassword />}
             />
+            <Route path="/setting/change-pin" element={<ChangePin />} />
             <Route
               path="/setting/business-info"
               element={<ProtectedBusinessInfo />}
@@ -351,6 +457,10 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             {/* contacts */}
             <Route path="/" element={<ProtectedDashboard />} />
+            {/* <Route
+              path="/"
+              element={isToggled ? <OrgDashboard /> : <ProtectedDashboard />}
+            /> */}
             <Route path="/more/:slug" element={<ProtectedCMSContent />} />
             <Route
               path="/more/faq"
@@ -369,6 +479,11 @@ function App() {
             <Route
               path="/contacts-invited"
               element={<ProtectedContactsInvited />}
+            />
+            <Route path="/merchants" element={<ProtectedMerchants />} />
+            <Route
+              path="/wallet/merchant-fees-report"
+              element={<ProtectedMerchantFeesReport />}
             />
             <Route path="/edit-group/:id" element={<ProtectedEditGroup />} />
             <Route path="/send" element={<ProtectedSendContact />} />
@@ -410,6 +525,58 @@ function App() {
                 element={<ProtectedEditRecurringPayment />}
               />
             </Route>
+            {/* Sub-account */}
+            {/* <Route element={<JarRoutesWrapper />}> */}
+            <Route
+              path="/jars/own/jar-details"
+              element={<ProtectedJarDetails />}
+            />
+            <Route path="/jars/own" element={<ProtectedOwnJars />} />
+            <Route
+              path="/jars/own/create-jar"
+              element={<ProtectedCreateJar />}
+            />
+            <Route path="/jars/own/edit-jar" element={<ProtectedEditJar />} />
+            <Route path="/jars/own/send" element={<ProtectedJarSend />} />
+            <Route
+              path="/jars/own/recurring-send"
+              element={<ProtectedJarRecurringSend />}
+            />
+            <Route
+              path="/jars/own/recurring-send-payment"
+              element={<ProtectedJarRecurringSendPayment />}
+            />
+            <Route path="/jars/shared" element={<ProtectedSharedJars />} />
+            <Route path="/jars/invited" element={<ProtectedInvitedJars />} />
+            <Route
+              path="/jars/own/members-list"
+              element={<ProtectedMembers />}
+            />
+            <Route
+              path="/jars/own/jar-activities-list"
+              element={<ProtectedJarActivities />}
+            />
+            <Route
+              path="/jars/own/jar-schedule-pay-list"
+              element={<ProtectedJarSchedulePayment />}
+            />
+            <Route
+              path="/jars/own/jar-recurring-pay-list"
+              element={<ProtectedJarRecurringPayment />}
+            />
+            <Route
+              path="/jars/own/jar-schedule-pay-list/update"
+              element={<ProtectedEditJarScheduledPayment />}
+            />
+            <Route
+              path="/jars/own/jar-recurring-pay-list/update"
+              element={<ProtectedEditJarRecurringPayment />}
+            />
+            <Route
+              path="/jars/own/jar-recurring-pay-list/view-jar-recurring-payment-details"
+              element={<ProtectedJarRecurringDetails />}
+            />
+            {/* </Route> */}
           </Route>
           <Route path="/logout" element={<Logout />} />
         </Route>

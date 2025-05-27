@@ -28,6 +28,9 @@ import LoaderProvider from "context/loaderContext";
 import SystemOptionsProvider from "context/systemOptionsContext";
 import LoginProvider from "context/loginContext";
 import TimeZoneProvider from "context/timeZoneContext";
+import { PinProvider } from "context/pinContext";
+import MobilePopup from "components/modals/MobilePopup";
+import { OrganizationSwitchProvider } from "context/organizationSwitchContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -36,11 +39,16 @@ root.render(
     <LoaderProvider>
       <SystemOptionsProvider>
         <BrowserRouter>
-          <LoginProvider>
-            <TimeZoneProvider>
-              <App />
-            </TimeZoneProvider>
-          </LoginProvider>
+          <OrganizationSwitchProvider>
+            <LoginProvider>
+              <PinProvider>
+                <TimeZoneProvider>
+                  <MobilePopup />
+                  <App />
+                </TimeZoneProvider>
+              </PinProvider>
+            </LoginProvider>
+          </OrganizationSwitchProvider>
         </BrowserRouter>
       </SystemOptionsProvider>
     </LoaderProvider>

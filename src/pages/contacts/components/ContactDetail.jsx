@@ -1,4 +1,5 @@
 import Modal from "components/modals/Modal";
+import { getInitials, getRandomColorClass } from "constants/all";
 import React from "react";
 
 function ContactDetail(props) {
@@ -10,14 +11,29 @@ function ContactDetail(props) {
           <div className="modal-content">
             <div className="modal-header">
               <div className="con-user-profile-wrap">
-                <img
+                {/* <img
                   src={
                     data.profile_image
                       ? data.profile_image
                       : "/assets/images/user-avatar.png"
                   }
                   alt=""
-                />
+                /> */}
+                {data?.profile_image ? (
+                  <img src={data?.profile_image} className="blue-bg" alt="" />
+                ) : (
+                  <div
+                    className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                      data.user_type === "business"
+                        ? data?.company_name
+                        : data?.first_name + " " + data.last_name
+                    )}`}
+                  >
+                    {data.user_type === "business"
+                      ? getInitials(data?.company_name)
+                      : getInitials(data?.first_name + " " + data.last_name)}
+                  </div>
+                )}
               </div>
             </div>
             <div className="modal-body">
@@ -33,7 +49,7 @@ function ContactDetail(props) {
                 </div>
                 <div>
                   <p className="sub-head">Phone</p>
-                  <p>{data?.mobile_number}</p>
+                  <p>{`+${data?.mobile_number}`}</p>
                 </div>
                 <div className="cm-sucess-msg">Contact Added Successfully</div>
               </div>

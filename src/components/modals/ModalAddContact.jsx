@@ -26,7 +26,7 @@ function ModalAddContact(props) {
   } = props;
   const navigate = useNavigate();
   const { profile } = useSelector((state) => state.userProfile);
-  const [countryList] = useCountriesCities();
+  const [countryList] = useCountriesCities(true);
   const { country_code } = profile || {};
   const modalRef = useRef(null);
 
@@ -38,15 +38,23 @@ function ModalAddContact(props) {
       country_code: country_code,
     },
     validationSchema: inviteContactSchema,
-    onSubmit: async (values, { resetForm, setStatus }) => {
+    onSubmit: async (values, { resetForm, setStatus, setValues }) => {
       try {
-        values.mobile = values.country_code+values.mobile;
-        const { data } = await apiRequest.addContact(values);
+        const requestData = {
+          ...values,
+          mobile: values.country_code + values.mobile, // Concatenate only for API request
+        };
+        // values.mobile = values.country_code + values.mobile;
+        const { data } = await apiRequest.addContact(requestData);
         if (!data.success) throw data.message;
         const { alreadyAdded, alreadyInvited, contactDetails } =
           data?.data || {};
         if (alreadyAdded || alreadyInvited) {
           setStatus(data.message);
+          setValues({
+            ...values, // Keep existing values
+            mobile: values.mobile, // Ensure mobile remains unchanged
+          });
           return;
         }
         toast.success(data.message);
