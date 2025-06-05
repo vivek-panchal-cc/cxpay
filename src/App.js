@@ -95,6 +95,7 @@ import EditJarScheduledPayment from "pages/edit-jar-scheduled-payment/EditJarSch
 import EditJarRecurringPayment from "pages/edit-jar-recurring-payment/EditJarRecurringPayment";
 import JarRecurringDetails from "pages/jar-recurring-details/JarRecurringDetails";
 import JarRoutesWrapper from "layouts/JarRoutesWrapper";
+import UnderMaintenance from "pages/under-maintenance/UnderMaintenance";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -375,6 +376,7 @@ function App() {
               </SignupProvider>
             }
           />
+          <Route path="/under-maintenance" element={<UnderMaintenance />} />
         </Route>
         {/* List of Private Routes */}
         <Route element={<PrivateLayout />}>

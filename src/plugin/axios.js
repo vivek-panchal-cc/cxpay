@@ -60,73 +60,177 @@ const responseInterceptor = async (response) => {
 
 let isToastShown = false;
 
-const responseErrorInterceptor = (error) => {
-  if (error.config) {
-    removePendingRequest(error.config);
-  }
-  const errResponse = error.response;
-  if (!errResponse) {
-    if (error.code === "ERR_CANCELED") {
-      // Optional: skip logging if it’s just a duplicate cancel
-      return Promise.reject(error);
-    }
+const handleRedirect = (path, message, additionalParams = {}) => {
+  const url = new URL(path, window.location.origin);
+  if (message) url.searchParams.set("message", message);
 
+  for (const [key, value] of Object.entries(additionalParams)) {
+    url.searchParams.set(key, value);
+  }
+
+  window.location.href = url.toString();
+};
+
+const responseErrorInterceptor = (error) => {
+  if (error.config) removePendingRequest(error.config);
+
+  const errResponse = error.response;
+
+  if (!errResponse) {
+    if (error.code === "ERR_CANCELED") return Promise.reject(error);
     console.error("No response received:", error);
     return Promise.reject(error);
   }
 
-  if (
-    errResponse &&
-    (errResponse.status === 401 ||
-      errResponse.status === 451 ||
-      errResponse.status === 422) &&
-    errResponse.data
-  ) {
-    const token = storageRequest.getAuth();
-    if (token) {
-      toast.success(errResponse.data.message);
-    }
-    storageRequest.removeAuth();
-    window.location.href = "/login";
-    return Promise.reject(error);
-  } else if (
-    (errResponse.status === 423 || errResponse.status === 424) &&
-    !isToastShown
-  ) {
-    const { redirect_to, system_option_manual_kyc_status } =
-      errResponse.data?.data;
-    if (redirect_to === "423B" || redirect_to === "424B") {
-      window.location.href = `/kyc-manual-second-step?message=${encodeURIComponent(
-        errResponse.data.message
-      )}`;
-    } else if (redirect_to === "423A" || redirect_to === "424A") {
-      const token = storageRequest.getAuth();
-      if (token) {
-        toast.success(errResponse.data.message);
-        isToastShown = true;
+  const { status, data } = errResponse;
+  const token = storageRequest.getAuth();
+  const message = data?.message;
+
+  switch (status) {
+    case 401:
+    case 422:
+    case 451:
+      if (token && message) toast.success(message);
+      storageRequest.removeAuth();
+      window.location.href = "/login";
+      break;
+
+    case 423:
+    case 424:
+      if (isToastShown) break;
+
+      const redirectTo = data?.data?.redirect_to;
+      const systemOption = data?.data?.system_option_manual_kyc_status;
+
+      if (redirectTo === "423D") {
+        const isAlreadyOnMaintenancePage =
+          window.location.pathname === "/under-maintenance";
+        storageRequest.removeAuth();
+        if (!isAlreadyOnMaintenancePage) {
+          handleRedirect("/under-maintenance", message, {
+            is_under_maintenance: true,
+          });
+        }
+        return Promise.reject(error);
       }
-      setTimeout(() => {
-        window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
-          errResponse.data.message
-        )}`;
-      }, 3000);
-    } else if (redirect_to === "423C") {
-      sessionStorage.setItem("pendingPin", "true");
-      window.location.href = `/pending-pin`;
-    } else if (redirect_to === "424C") {
-      window.location.href = `/send-mail?message=${encodeURIComponent(
-        errResponse.data.message
-      )}&system_option_manual_kyc_status=${encodeURIComponent(
-        system_option_manual_kyc_status
-      )}&is_renew=${encodeURIComponent(false)}`;
-    }
-  } else if (errResponse.status === 428) {
-    window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
-      errResponse.data.message
-    )}`;
+
+      if (isToastShown) break;
+
+      switch (redirectTo) {
+        case "423B":
+        case "424B":
+          handleRedirect("/kyc-manual-second-step", message);
+          break;
+
+        case "423A":
+        case "424A":
+          if (token && message) {
+            toast.success(message);
+            isToastShown = true;
+          }
+          setTimeout(() => {
+            handleRedirect("/complete-kyc-initial", message);
+          }, 3000);
+          break;
+
+        case "423C":
+          sessionStorage.setItem("pendingPin", "true");
+          window.location.href = "/pending-pin";
+          break;
+
+        case "424C":
+          handleRedirect("/send-mail", message, {
+            system_option_manual_kyc_status: systemOption,
+            is_renew: false,
+          });
+          break;
+
+        default:
+          console.warn("Unhandled redirect_to:", redirectTo);
+      }
+      break;
+
+    case 428:
+      handleRedirect("/complete-kyc-initial", message);
+      break;
+
+    default:
+      // Unhandled status can be logged or handled here
+      break;
   }
+
   return Promise.reject(error);
 };
+
+// let isToastShown = false;
+
+// const responseErrorInterceptor = (error) => {
+//   if (error.config) {
+//     removePendingRequest(error.config);
+//   }
+//   const errResponse = error.response;
+//   if (!errResponse) {
+//     if (error.code === "ERR_CANCELED") {
+//       // Optional: skip logging if it’s just a duplicate cancel
+//       return Promise.reject(error);
+//     }
+
+//     console.error("No response received:", error);
+//     return Promise.reject(error);
+//   }
+
+//   if (
+//     errResponse &&
+//     (errResponse.status === 401 ||
+//       errResponse.status === 451 ||
+//       errResponse.status === 422) &&
+//     errResponse.data
+//   ) {
+//     const token = storageRequest.getAuth();
+//     if (token) {
+//       toast.success(errResponse.data.message);
+//     }
+//     storageRequest.removeAuth();
+//     window.location.href = "/login";
+//     return Promise.reject(error);
+//   } else if (
+//     (errResponse.status === 423 || errResponse.status === 424) &&
+//     !isToastShown
+//   ) {
+//     const { redirect_to, system_option_manual_kyc_status } =
+//       errResponse.data?.data;
+//     if (redirect_to === "423B" || redirect_to === "424B") {
+//       window.location.href = `/kyc-manual-second-step?message=${encodeURIComponent(
+//         errResponse.data.message
+//       )}`;
+//     } else if (redirect_to === "423A" || redirect_to === "424A") {
+//       const token = storageRequest.getAuth();
+//       if (token) {
+//         toast.success(errResponse.data.message);
+//         isToastShown = true;
+//       }
+//       setTimeout(() => {
+//         window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
+//           errResponse.data.message
+//         )}`;
+//       }, 3000);
+//     } else if (redirect_to === "423C") {
+//       sessionStorage.setItem("pendingPin", "true");
+//       window.location.href = `/pending-pin`;
+//     } else if (redirect_to === "424C") {
+//       window.location.href = `/send-mail?message=${encodeURIComponent(
+//         errResponse.data.message
+//       )}&system_option_manual_kyc_status=${encodeURIComponent(
+//         system_option_manual_kyc_status
+//       )}&is_renew=${encodeURIComponent(false)}`;
+//     }
+//   } else if (errResponse.status === 428) {
+//     window.location.href = `/complete-kyc-initial?message=${encodeURIComponent(
+//       errResponse.data.message
+//     )}`;
+//   }
+//   return Promise.reject(error);
+// };
 
 // Binding interceptors to axios instances
 axiosLoginInstance.interceptors.request.use(requestInterceptor);
