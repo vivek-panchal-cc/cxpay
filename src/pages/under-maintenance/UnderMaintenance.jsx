@@ -43,17 +43,19 @@ function UnderMaintenance(_props) {
               </div> */}
               <div className="d-flex flex-column align-items-center justify-content-center under-maintenance content-wrapper">
                 <IconUnderMaintenance />
-                <p className="dark_black text-center m-4 mb-0">
-                  <h3>We'll be back soon!</h3>
-                  {message || (
-                    <>
-                      Our application is currently undergoing scheduled
-                      maintenance. We’re working hard to improve your experience
-                      and will be back online shortly. Thank you for your
-                      patience.
-                    </>
-                  )}
-                </p>
+                <div className="text-center m-4 mb-0">
+                  <h3 className="dark_black">We'll be back soon!</h3>
+                  <p className="dark_black">
+                    {message || (
+                      <>
+                        Our application is currently undergoing scheduled
+                        maintenance. We’re working hard to improve your
+                        experience and will be back online shortly. Thank you
+                        for your patience.
+                      </>
+                    )}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
