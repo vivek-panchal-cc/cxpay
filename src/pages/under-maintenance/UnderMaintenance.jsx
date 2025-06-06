@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { CXPAY_LOGO } from "constants/all";
 import { apiRequest } from "helpers/apiRequests";
+import { IconUnderMaintenance } from "styles/svgs";
 
 function UnderMaintenance(_props) {
   const location = useLocation();
@@ -35,20 +36,25 @@ function UnderMaintenance(_props) {
       <div className="container login-signup-01 login-signup-02">
         <div className="row">
           <div className="col-xs-12">
-            <div className="login-signup-content-wrap login-signup01-content-wrap">
-              <div className="login-logo-image text-center">
+            <div className="login-signup-content-wrap login-signup01-content-wrap position-relative">
+              <div className="under-maintenance-background-logo" />
+              {/* <div className="login-logo-image text-center">
                 <img src={CXPAY_LOGO} alt="kyc logo img" />
+              </div> */}
+              <div className="d-flex flex-column align-items-center justify-content-center under-maintenance content-wrapper">
+                <IconUnderMaintenance />
+                <p className="dark_black text-center m-4 mb-0">
+                  <h3>We'll be back soon!</h3>
+                  {message || (
+                    <>
+                      Our application is currently undergoing scheduled
+                      maintenance. We’re working hard to improve your experience
+                      and will be back online shortly. Thank you for your
+                      patience.
+                    </>
+                  )}
+                </p>
               </div>
-              <h5 className="blue-text text-center m-4">
-                {message || (
-                  <>
-                    We’ll be back soon! Our application is currently undergoing
-                    scheduled maintenance. We’re working hard to improve your
-                    experience and will be back online shortly. Thank you for
-                    your patience.
-                  </>
-                )}
-              </h5>
             </div>
           </div>
         </div>

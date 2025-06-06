@@ -89,6 +89,7 @@ export { default as IconAddJarMember } from "./AddJarMember";
 export { default as IconGear } from "./Gear";
 export { default as IconDashSubAcc } from "./DashSubAcc";
 export { default as IconCheckMark } from "./CheckMark";
+export { default as IconUnderMaintenance } from "./UnderMaintenance";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";
