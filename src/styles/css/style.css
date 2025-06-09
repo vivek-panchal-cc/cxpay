@@ -590,7 +590,7 @@ pointer-events: none;
 }
 
 .sidebar-open .dashboard-link-wrap .more-sub-menu .more-sub-menu-scroll {
-  max-height: 250px;
+  max-height: 200px;
 }
 
 .dashboard-link-wrap .more-sub-menu {
