@@ -28,8 +28,8 @@ const CMSContent = (props) => {
     <div>
       {listIsLoading ? (
         <div>
-          {[...Array.from({ length: 3 })].map((item) => (
-            <LoaderParagraphContents key={item} />
+          {[...Array.from({ length: 3 })].map((_, index) => (
+            <LoaderParagraphContents key={`loader-${index}`} />
           ))}
         </div>
       ) : (
