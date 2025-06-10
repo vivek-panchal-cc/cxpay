@@ -4,7 +4,7 @@
   width: 80%;
 }
 
-.accordion-wrapper{
+.accordion-wrapper {
   display: flex;
   justify-content: center;
 }
@@ -56,15 +56,15 @@
   display: block;
 }
 
-.accordion-content.show p{
+.accordion-content.show p {
   color: #323232;
 }
 
-.accordion-content.show strong{
+.accordion-content.show strong {
   color: #323232;
 }
 
-.accordion-content.show ul li{
+.accordion-content.show ul li {
   color: #323232;
 }
 
@@ -76,4 +76,34 @@
 
 .accordion-toggle-icon.active:before {
   content: "";
+}
+
+.skeleton-item {
+  padding: 12px 0;
+}
+
+.skeleton {
+  background-color: #e2e2e2;
+  border-radius: 4px;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.skeleton-title {
+  width: 60%;
+  height: 20px;
+  margin-bottom: 8px;
+}
+
+.skeleton-content {
+  width: 100%;
+  height: 16px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
 }
