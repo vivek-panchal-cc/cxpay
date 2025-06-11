@@ -1,5 +1,5 @@
 import { CXPAY_SHADOW_LOGO } from "constants/all";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import $ from "jquery";
@@ -52,6 +52,8 @@ function LeftSidebar({
   //   useForgotPinHandler(setShowPinPopup);
   const [submenuPosition, setSubmenuPosition] = useState({ top: 0, left: 0 });
   const { isToggled, toggle } = useOrganizationSwitch();
+  const [isHovered, setIsHovered] = useState(false);
+  const hideTimer = useRef(null);
 
   const updateSubMenuPosition = () => {
     const submenu = document.querySelector(
@@ -89,6 +91,14 @@ function LeftSidebar({
         left: window.innerWidth > 991 ? rect.right : 0,
       });
     }
+    clearTimeout(hideTimer.current);
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    hideTimer.current = setTimeout(() => {
+      setIsHovered(false);
+    }, 500); // <-- Delay of 0.5s before hiding
   };
 
   useEffect(() => {
@@ -111,23 +121,19 @@ function LeftSidebar({
   }, []);
 
   useEffect(() => {
-    function handleResize() {
-      updateBottomSubMenuPosition();
-    }
+    const handleResizeOrScroll = () => {
+      if (isHovered) updateBottomSubMenuPosition();
+    };
 
-    function handleScroll() {
-      updateBottomSubMenuPosition();
-    }
-
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResizeOrScroll);
+    window.addEventListener("scroll", handleResizeOrScroll);
 
     // Cleanup event listeners
     return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResizeOrScroll);
+      window.removeEventListener("scroll", handleResizeOrScroll);
     };
-  }, []);
+  }, [isHovered]);
 
   const handleToggleClick = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -396,13 +402,14 @@ function LeftSidebar({
               thisRoute.startsWith("more") ? "active" : ""
             }`}
             onMouseEnter={updateBottomSubMenuPosition}
+            onMouseLeave={handleMouseLeave}
           >
             <a>
               <IconMore style={{ stroke: "#FFF100" }} />
               <span>More</span>
             </a>
             <ul
-              className="more-sub-menu"
+              className={`more-sub-menu ${isHovered ? "visible" : ""}`}
               style={{
                 top: `${submenuPosition.top}px`,
                 left: `${submenuPosition.left}px`,
