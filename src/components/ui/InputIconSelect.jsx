@@ -49,7 +49,7 @@ function InputIconSelect({
 
   // Default custom styles for react-select
   const customDropdownStyles = {
-    control: (base) => ({
+    control: (base, state) => ({
       ...base,
       backgroundImage: `url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e")`,
       backgroundRepeat: "no-repeat",
@@ -59,8 +59,15 @@ function InputIconSelect({
       borderRadius: "18px",
       border: "1px solid #0081c5",
       boxShadow: "none",
+      borderRadius: state.menuIsOpen ? "18px 18px 0 0" : "18px",
+      borderBottom: state.menuIsOpen
+        ? "1px solid #e4e3e5"
+        : "1px solid #0081c5",
       "&:hover": {
         border: "1px solid #0081c5",
+        borderBottom: state.menuIsOpen
+          ? "1px solid #e4e3e5"
+          : "1px solid #0081c5",
       },
       filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1))",
       backgroundColor: "#fff",
@@ -98,12 +105,15 @@ function InputIconSelect({
     }),
     menu: (base) => ({
       ...base,
+      marginTop: "0",
       padding: "4px 20px",
-      borderRadius: "8px",
+      borderRadius: "0 0 18px 18px",
       boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
       zIndex: 9999,
       display: "flex",
       flexWrap: "wrap", // Allow multiple items in a row
+      border: "1px solid #0081c5",
+      borderTop: "none",
     }),
     menuList: (base) => ({
       ...base,
@@ -119,7 +129,7 @@ function InputIconSelect({
       fontSize: "16px",
       fontWeight: 500,
       fontFamily: `"Comfortaa", sans-serif`,
-      color: "#bdbdbd",
+      color: "#363853",
     }),
   };
 

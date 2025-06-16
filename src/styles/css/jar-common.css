@@ -16,6 +16,11 @@
   display: none !important;
 }
 
+.jar-dropdown-toggle.form-control.dropdown-open {
+  border-radius: 18px 18px 0 0 !important;
+  border-bottom: 1px solid transparent !important;
+}
+
 .jar-dropdown-menu {
   position: absolute;
   width: 100%;
@@ -39,6 +44,11 @@
 
 .jar-dropdown-menu.show {
   display: block;
+}
+
+.jar-dropdown-menu.dropdown-is-open {
+  border: 1px solid var(--blue);
+  border-top: none;
 }
 
 .jar-dropdown-item {

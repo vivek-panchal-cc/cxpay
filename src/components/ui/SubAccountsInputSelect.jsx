@@ -49,9 +49,9 @@ function SubAccountsInputSelect({
       <div className="jar-custom-dropdown">
         <button
           type="button"
-          className={`jar-dropdown-toggle ${className} ${
-            disabled ? "cursor-not-allowed" : ""
-          }`}
+          className={`jar-dropdown-toggle ${
+            isDropdownOpen ? "dropdown-open" : ""
+          } ${className} ${disabled ? "cursor-not-allowed" : ""}`}
           onClick={toggleDropdown}
         >
           {value
@@ -60,7 +60,7 @@ function SubAccountsInputSelect({
         </button>
 
         {isDropdownOpen && (
-          <div className="jar-dropdown-menu show">
+          <div className="jar-dropdown-menu show dropdown-is-open">
             <ul className="main-ul">
               {options?.map((parent) => (
                 <li key={parent.id} className="parent-item">
