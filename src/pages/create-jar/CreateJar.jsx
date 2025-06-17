@@ -361,7 +361,7 @@ const CreateJar = (props) => {
                 classNamePrefix="jar-icon-input"
                 name="jar_icon"
                 useReactSelect={true} // Enable react-select
-                placeholder="Sub-account Category Icon"
+                placeholder="Select Sub-account Category Icon"
                 options={jarIcon.map((icon) => ({
                   value: icon.id,
                   label: (

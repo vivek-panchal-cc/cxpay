@@ -1,18 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ContentLoader from "react-content-loader";
 import Select from "react-select";
-
-const SingleValue = ({ data }) => (
-  <div className="d-flex align-items-center">
-    <img
-      src={data.url}
-      alt="Selected Icon"
-      width="24"
-      height="24"
-      className="me-2"
-    />
-  </div>
-);
 
 const SkeletonOption = () => (
   <div className="d-flex flex-column align-items-center justify-content-center m-2">
@@ -39,8 +27,19 @@ function InputIconSelect({
   customStyles,
   placeholder,
   isLoading = false,
+  onChange,
   ...props
 }) {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const [loadedImages, setLoadedImages] = useState({});
+
+  const toggleDropdown = (e) => {
+    // prevent toggle if click came from inside menu (e.g., selecting an option)
+    if (e?.target?.closest(".jar-icon-input__menu")) return;
+    setIsDropdownOpen((prev) => !prev);
+  };
+
   const skeletonOptions = Array.from({ length: 27 }).map((_, index) => ({
     label: <SkeletonOption />,
     value: `skeleton-${index}`,
@@ -118,6 +117,7 @@ function InputIconSelect({
     menuList: (base) => ({
       ...base,
       display: "flex",
+      gap: "1px",
       flexWrap: "wrap", // Enables multi-row layout
       overflowY: "auto", // Enables scrolling
       scrollbarWidth: "none", // Firefox
@@ -133,14 +133,59 @@ function InputIconSelect({
     }),
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const imageMap = {};
+
+    options.forEach((option) => {
+      const imgSrc = option?.url;
+      if (imgSrc && !loadedImages[imgSrc]) {
+        const img = new Image();
+        img.onload = () => {
+          imageMap[imgSrc] = true;
+          setLoadedImages((prev) => ({ ...prev, ...imageMap }));
+        };
+        img.onerror = () => {
+          imageMap[imgSrc] = true; // Still mark as loaded to avoid blocking
+          setLoadedImages((prev) => ({ ...prev, ...imageMap }));
+        };
+        img.src = imgSrc;
+      }
+    });
+  }, [options]);
+
+  const processedOptions = options.map((opt) => {
+    const isImageLoaded = loadedImages[opt?.url];
+    return {
+      ...opt,
+      label: isImageLoaded ? opt.label : <SkeletonOption />,
+      isDisabled: !isImageLoaded,
+    };
+  });
+
   return (
-    <div className={`d-flex flex-column form-field`}>
+    <div
+      className={`d-flex flex-column form-field`}
+      ref={dropdownRef}
+      onClick={toggleDropdown}
+    >
       {labelname && <label className="mb-2">{labelname}</label>}
 
       {useReactSelect ? (
         <Select
           {...props}
-          options={isLoading ? skeletonOptions : options}
+          options={isLoading ? skeletonOptions : processedOptions}
           isDisabled={disabled}
           isSearchable={false}
           styles={customStyles || customDropdownStyles} // Use custom styles if provided
@@ -149,7 +194,15 @@ function InputIconSelect({
           value={
             options.find((option) => option.value === props.value?.id) || null
           }
-          // components={{ SingleValue }}
+          onChange={(selectedOption, { action }) => {
+            if (action === "select-option") {
+              setIsDropdownOpen(false);
+            }
+            onChange?.(selectedOption);
+          }}
+          menuIsOpen={isDropdownOpen}
+          // onMenuOpen={() => setIsDropdownOpen(true)}
+          // onMenuClose={() => setIsDropdownOpen(false)}
         />
       ) : (
         <select

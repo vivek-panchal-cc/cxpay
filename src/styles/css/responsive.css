@@ -3740,6 +3740,14 @@
     padding: 0px 10px !important;
     border-radius: 12px !important;
   }
+  .jar-icon-input__control.jar-icon-input__control--is-focused.jar-icon-input__control--menu-is-open,
+  .jar-icon-input__control.jar-icon-input__control--is-focused,
+  .jar-icon-input__control.jar-icon-input__control--menu-is-open {
+    border-radius: 12px 12px 0 0 !important;
+  }
+  .jar-icon-input__menu {
+    border-radius: 0 0 12px 12px !important;
+  }
   .logo-content-wrap h4 {
     font-size: 23px;
     line-height: 30px;
