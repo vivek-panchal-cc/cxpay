@@ -9289,7 +9289,7 @@ button.export-activities.disabled:hover {
 /* Target the wrapper div */
 .jar-icon-input__control {
   width: 100%;
-  padding: 10px;
+  padding: 17px 22px;
   border-radius: 18px;
 }
 
@@ -9297,6 +9297,12 @@ button.export-activities.disabled:hover {
 .jar-icon-input__control input {
   font-size: 16px;
   color: #333;
+}
+
+.jar-icon-input__placeholder,
+.jar-icon-input__single-value {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
 }
 
 .jar-payment-selection {
