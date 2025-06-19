@@ -2,12 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import ContentLoader from "react-content-loader";
 import Select from "react-select";
 
-const SkeletonOption = () => (
-  <div className="d-flex flex-column align-items-center justify-content-center m-2">
+const SkeletonOption = ({ width, height, singleValue = false }) => (
+  <div
+    className={`d-flex flex-column align-items-center justify-content-center ${
+      singleValue ? "" : "m-2"
+    }`}
+  >
     <ContentLoader
       speed={2}
-      width={50}
-      height={50}
+      width={width || 50}
+      height={height || 50}
       viewBox="0 0 50 50"
       backgroundColor="#f3f3f3"
       foregroundColor="#ecebeb"
@@ -191,9 +195,23 @@ function InputIconSelect({
           styles={customStyles || customDropdownStyles} // Use custom styles if provided
           classNamePrefix="jar-icon-input"
           placeholder={placeholder || "Select an option"}
-          value={
-            options.find((option) => option.value === props.value?.id) || null
-          }
+          value={(() => {
+            const selected = options.find(
+              (option) => option.value === props.value?.id
+            );
+            if (!selected) return null;
+
+            const isLoaded = loadedImages[selected?.url];
+            return {
+              ...selected,
+              label: isLoaded ? (
+                selected.label
+              ) : (
+                <SkeletonOption width="40" height="40" singleValue={true} />
+              ),
+              isDisabled: !isLoaded,
+            };
+          })()}
           onChange={(selectedOption, { action }) => {
             if (action === "select-option") {
               setIsDropdownOpen(false);

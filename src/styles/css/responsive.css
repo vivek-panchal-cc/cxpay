@@ -1925,6 +1925,11 @@
   .rese-modal-wrap .act-specification-text > p {
     font-size: 12px !important;
   }
+  .profile-qr {
+    max-width: 225px;
+    margin: 40px auto 0 auto;
+    padding-top: 100px;
+  }
 }
 @media only screen and (max-width: 990px) and (min-width: 520px) {
   .flex-recurring-update {
