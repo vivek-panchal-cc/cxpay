@@ -26,7 +26,7 @@ function InputIconSelect({
   error,
   disabled,
   options = [],
-  useReactSelect,
+  useReactSelect = true,
   className,
   customStyles,
   placeholder,

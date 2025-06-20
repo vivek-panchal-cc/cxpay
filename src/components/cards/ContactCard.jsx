@@ -69,6 +69,7 @@ const ContactCard = (props) => {
             <Image src={imgUrl} className="blue-bg" alt="" />
           ) : (
             <div
+              style={{ fontSize: fullWidth ? "35px" : "" }}
               className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
                 title
               )}`}

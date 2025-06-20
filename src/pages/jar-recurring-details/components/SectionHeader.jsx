@@ -7,6 +7,7 @@ import {
   withdrawConsts,
 } from "constants/all";
 import { IconAlert } from "styles/svgs";
+import LoaderImageWithSkeleton from "loaders/LoaderImageWithSkeleton";
 
 const SectionHeader = (props) => {
   const { loading, details } = props;
@@ -35,9 +36,15 @@ const SectionHeader = (props) => {
           <span bg-color="#000" className="user-thumb-name">
             {/* <img src={profileURL} alt="" /> */}
             {profile_image ? (
-              <img src={profile_image} className="blue-bg" alt="" />
+              <LoaderImageWithSkeleton
+                src={profile_image}
+                style={{ maxWidth: "none" }}
+                className="blue-bg w-100 h-100"
+              />
             ) : (
+              // <img src={profile_image} className="blue-bg" alt="" />
               <div
+                style={{ fontSize: "30px" }}
                 className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
                   name
                 )}`}

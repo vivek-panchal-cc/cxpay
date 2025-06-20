@@ -8,6 +8,7 @@ import {
 } from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { getInitials, getRandomColorClass } from "constants/all";
+import LoaderImageWithSkeleton from "loaders/LoaderImageWithSkeleton";
 
 const JarActivityItem = (props) => {
   const { activityDetails, handleClick } = props || {};
@@ -82,8 +83,12 @@ const JarActivityItem = (props) => {
           <div className="act-user-thumb">
             {/* <img src={profileUrl} alt="" /> */}
             {profile_image ? (
-              <img src={profile_image} className="blue-bg" alt="" />
+              <LoaderImageWithSkeleton
+                src={profile_image}
+                className="blue-bg"
+              />
             ) : (
+              // <img src={profile_image} className="blue-bg" alt="" />
               <div
                 className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
                   name

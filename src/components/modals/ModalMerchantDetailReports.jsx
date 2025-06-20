@@ -56,6 +56,7 @@ const ModalMerchantDetailReports = (props) => {
                         <img src={profile_image} className="blue-bg" alt="" />
                       ) : (
                         <div
+                          style={{ fontSize: "35px" }}
                           className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
                             sname
                           )}`}

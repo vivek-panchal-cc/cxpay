@@ -14,6 +14,7 @@ import { SavingJarOwnContext } from "context/savingJarOwnProvider";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
+import LoaderImageWithSkeleton from "loaders/LoaderImageWithSkeleton";
 
 const JarRecurringPayItem = (props) => {
   const navigate = useNavigate();
@@ -134,8 +135,12 @@ const JarRecurringPayItem = (props) => {
           <div className="act-user-thumb">
             {/* <img src={profileUrl} alt="" /> */}
             {profile_image ? (
-              <img src={profile_image} className="blue-bg" alt="" />
+              <LoaderImageWithSkeleton
+                src={profile_image}
+                className="blue-bg"
+              />
             ) : (
+              // <img src={profile_image} className="blue-bg" alt="" />
               <div
                 className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
                   name
