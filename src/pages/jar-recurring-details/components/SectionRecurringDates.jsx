@@ -87,7 +87,12 @@ const SectionRecurringDates = (props) => {
       setIsDataRefresh((cs) => !cs);
       setAmountError("");
     } catch (error) {
-      setAmountError(error);
+      if (typeof error === "string") setAmountError(error);
+      else if (error && typeof error === "object") {
+        const firstErrorMsg =
+          Object.values(error)?.[0]?.[0] || "Something went wrong.";
+        setAmountError(firstErrorMsg);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -110,7 +115,12 @@ const SectionRecurringDates = (props) => {
       setIsDataRefresh((cs) => !cs);
       setAmountError("");
     } catch (error) {
-      setAmountError(error);
+      if (typeof error === "string") setAmountError(error);
+      else if (error && typeof error === "object") {
+        const firstErrorMsg =
+          Object.values(error)?.[0]?.[0] || "Something went wrong.";
+        setAmountError(firstErrorMsg);
+      }
     } finally {
       setIsLoading(false);
     }
