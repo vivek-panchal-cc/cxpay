@@ -119,7 +119,7 @@ const JarMembers = () => {
                 </div>
               </div>
 
-              {tabName === "own" && memberList.is_owner && (
+              {memberList.is_owner && (
                 <button
                   className={`button shedule-date-filter rounded-4 p-0 ${
                     memberList.is_owner && memberList.jar_status

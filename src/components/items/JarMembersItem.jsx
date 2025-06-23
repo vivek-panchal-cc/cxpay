@@ -77,7 +77,7 @@ const JarMembersItem = (props) => {
             {display_amount}
           </div>
         </div>
-        {tabName === "own" && is_owner && jar_status && (
+        {is_owner && jar_status && (
           <div className="merchant-listing-last-wrap">
             <div className="right-activity-div w-0">
               <button
