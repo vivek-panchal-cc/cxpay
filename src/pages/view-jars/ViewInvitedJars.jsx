@@ -100,7 +100,7 @@ const ViewInvitedJar = () => {
               {inactiveJars?.length > 0 && (
                 <div className="active-jar-list-container">
                   <div className="activity-month fs-5 p-0 active-jar-header">
-                    In Active
+                    Inactive
                   </div>
                   <div className="jar-scroll-bar">
                     <ul className="act-user-content-wrap">
