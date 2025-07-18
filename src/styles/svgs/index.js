@@ -74,6 +74,22 @@ export { default as IconExport } from "./Export";
 export { default as IconMerchant } from "./Merchant";
 export { default as IconMerchantQR } from "./MerchantQR";
 export { default as IconQR } from "./QR";
+export { default as IconNotifyNotification } from "./NotifyNotification";
+export { default as IconJar } from "./Jars";
+export { default as IconJarAdd } from "./JarAdd";
+export { default as IconSyncAlt } from "./SyncAlt";
+export { default as IconInstantPay } from "./InstantPay";
+export { default as IconScheduledDate } from "./ScheduledDate";
+export { default as IconOccurrence } from "./Occurrence";
+export { default as IconFrequency } from "./Frequency";
+export { default as IconJarCreate } from "./JarCreate";
+export { default as IconJarCalendar } from "./JarCalendar";
+export { default as IconNotifyJar } from "./NotifyJar";
+export { default as IconAddJarMember } from "./AddJarMember";
+export { default as IconGear } from "./Gear";
+export { default as IconDashSubAcc } from "./DashSubAcc";
+export { default as IconCheckMark } from "./CheckMark";
+export { default as IconUnderMaintenance } from "./UnderMaintenance";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";

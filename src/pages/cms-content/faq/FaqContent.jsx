@@ -3,9 +3,24 @@ import { useFaq } from "context/faqContext";
 import { IconMinusFaq, IconPlusFaq } from "styles/svgs";
 import "./faq-content.css";
 
+const FaqSkeleton = () => (
+  <div className="accordion-wrapper">
+    <div className="accordion">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <div key={i} className="accordion-item skeleton-item">
+          <div className="accordion-title-wrapper">
+            <div className="skeleton skeleton-title"></div>
+          </div>
+          <div className="skeleton skeleton-content"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
 const FaqContent = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const { faqList } = useFaq();
+  const { faqList, listIsLoading } = useFaq();
 
   const toggleAccordion = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
@@ -20,43 +35,50 @@ const FaqContent = () => {
               <h3>FAQs</h3>
             </div>
           </div>
-          <div className="accordion-wrapper">
-            <div className="accordion">
-              {faqList?.map((item, index) => (
-                <div
-                  key={index}
-                  className={`accordion-item ${
-                    activeIndex === index ? "active" : ""
-                  }`}
-                  onClick={() => toggleAccordion(index)}
-                >
-                  <div className="accordion-title-wrapper">
-                    <label className="accordion-title">
-                      {item.faq_question}
-                    </label>
-                    <div
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleAccordion(index);
-                      }}
-                    >
-                      {activeIndex === index ? (
-                        <IconMinusFaq className="minus-icon" />
-                      ) : (
-                        <IconPlusFaq />
-                      )}
-                    </div>
-                  </div>
+          {listIsLoading ? (
+            <FaqSkeleton />
+          ) : (
+            <div className="accordion-wrapper">
+              <div className="accordion">
+                {faqList?.map((item, index) => (
                   <div
-                    className={`accordion-content ${
-                      activeIndex === index ? "show" : ""
+                    key={index}
+                    className={`accordion-item ${
+                      activeIndex === index ? "active" : ""
                     }`}
-                    dangerouslySetInnerHTML={{ __html: item.faq_answer }}
-                  ></div>
-                </div>
-              ))}
+                    onClick={() => toggleAccordion(index)}
+                  >
+                    <div className="accordion-title-wrapper">
+                      <label className="accordion-title">
+                        {item.faq_question}
+                      </label>
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleAccordion(index);
+                        }}
+                      >
+                        {activeIndex === index ? (
+                          <IconMinusFaq className="minus-icon" />
+                        ) : (
+                          <IconPlusFaq />
+                        )}
+                      </div>
+                    </div>
+                    <div
+                      className={`accordion-content ${
+                        activeIndex === index ? "show" : ""
+                      }`}
+                      dangerouslySetInnerHTML={{ __html: item.faq_answer }}
+                    ></div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
+          {!listIsLoading && faqList?.length <= 0 ? (
+            <p className="text-center">Content not available.</p>
+          ) : null}
         </div>
       </div>
     </div>

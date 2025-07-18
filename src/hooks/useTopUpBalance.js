@@ -8,7 +8,7 @@ const useTopUpBalance = () => {
     recharge_amount: "",
   });
 
-  const getBalance = async () => {
+  const getRecharge = async () => {
     setLoading(true);
     try {
       const { data } = await apiRequest.getMonthlyRechargeTotal();
@@ -26,10 +26,10 @@ const useTopUpBalance = () => {
   };
 
   useEffect(() => {
-    getBalance();
+    getRecharge();
   }, []);
 
-  return [loading, balance];
+  return [loading, balance, getRecharge];
 };
 
 export default useTopUpBalance;

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./modal.module.scss";
 import {
+  TXN_TYPE_SJ,
   ACT_REQUEST_RECEIVE,
   ACT_REQUEST_SEND,
   ACT_STATUS_APPROVED,
@@ -62,6 +63,7 @@ const ModalActivityDetail = (props) => {
     comment,
     txn_mode,
     fees,
+    net_amount,
     payment_type,
     ref_id,
   } = details || {};
@@ -89,6 +91,21 @@ const ModalActivityDetail = (props) => {
     (request_type === "credit" || request_type === "debit") &&
     txn_type === "WW";
 
+  const statusKey = useMemo(() => {
+    return user_type === "business" && status === ACT_STATUS_PAID
+      ? `${status}_business`
+      : status;
+  }, [user_type, status]);
+
+  const trWwStatus = useMemo(
+    () =>
+      activity_type === ACT_TYPE_TRANSACTION &&
+      (request_type === ACT_TRANSACT_CREDIT ||
+        request_type === ACT_TRANSACT_DEBIT) &&
+      txn_type === TXN_TYPE_WW,
+    [activity_type, request_type, txn_type]
+  );
+
   const {
     iconStatus,
     iconAmount,
@@ -112,7 +129,7 @@ const ModalActivityDetail = (props) => {
       default:
         return {};
     }
-  }, [activity_type, request_type, status]);
+  }, [activity_type, request_type, status, txn_type]);
 
   useEffect(() => {
     function handleclickOutside(event) {
@@ -128,6 +145,16 @@ const ModalActivityDetail = (props) => {
   }, [modalRef, setShow]);
 
   const getActivityActions = () => {
+    if (
+      activity_type === ACT_TYPE_TRANSACTION &&
+      (request_type === ACT_TRANSACT_CREDIT ||
+        request_type === ACT_TRANSACT_DEBIT) &&
+      status === ACT_STATUS_PAID &&
+      txn_type === TXN_TYPE_SJ
+    ) {
+      return null;
+    }
+
     switch (`${activity_type}_${request_type}_${status}`) {
       case `${ACT_TYPE_REQUEST}_${ACT_REQUEST_SEND}_${ACT_STATUS_PENDING}`:
         return (
@@ -223,6 +250,8 @@ const ModalActivityDetail = (props) => {
         personal_amount:
           typeof details.amount === "number" ? details.amount?.toFixed(2) : "0",
         receiver_account_number: details.receiver_account_number,
+        user_type: details.user_type,
+        merchant_fees: details.merchant_fees,
       };
       handleSendContactsForInstantPay([contact], ref_id);
       // toast.success(data.message);
@@ -241,7 +270,11 @@ const ModalActivityDetail = (props) => {
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              <div className="user-profile-div bg-white">
+              <div
+                className={`user-profile-div ${
+                  txn_type === TXN_TYPE_SJ ? "savings-jar-details" : ""
+                } bg-white`}
+              >
                 <IconCloseModal
                   style={{
                     position: "absolute",
@@ -258,6 +291,7 @@ const ModalActivityDetail = (props) => {
                   <img src={image} className="blue-bg" alt="" />
                 ) : (
                   <div
+                    style={{ fontSize: "35px" }}
                     className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
                       name
                     )}`}
@@ -297,6 +331,32 @@ const ModalActivityDetail = (props) => {
                   )}
                   <table>
                     <tbody>
+                      {fees != null && Number(fees) > 0 && (
+                        <tr>
+                          <td>Fees</td>
+                          <td>
+                            <WrapAmount
+                              value={fees}
+                              prefix={`${CURRENCY_SYMBOL} `}
+                            />
+                          </td>
+                        </tr>
+                      )}
+                      {fees != null &&
+                        Number(fees) > 0 &&
+                        net_amount != null &&
+                        Number(net_amount) > 0 && (
+                          <tr>
+                            <td>Net Amount</td>
+                            <td>
+                              <WrapAmount
+                                value={net_amount}
+                                prefix={`${CURRENCY_SYMBOL} `}
+                              />
+                            </td>
+                          </tr>
+                        )}
+
                       <tr>
                         <td>Date</td>
                         <td>{formatDate(date)}</td>
@@ -316,17 +376,6 @@ const ModalActivityDetail = (props) => {
                           </span>
                         </td>
                       </tr>
-                      {/* {fees > 0 && (
-                        <tr>
-                          <td>Fees</td>
-                          <td>
-                            <WrapAmount
-                              value={fees}
-                              prefix={`${CURRENCY_SYMBOL} `}
-                            />
-                          </td>
-                        </tr>
-                      )} */}
                       {txn_type === TXN_TYPE_AGENT && txn_mode && (
                         <tr>
                           <td>Payment Type</td>

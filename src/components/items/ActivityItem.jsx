@@ -3,6 +3,7 @@ import {
   ACT_TYPE_REQUEST,
   ACT_TYPE_TRANSACTION,
   CURRENCY_SYMBOL,
+  TXN_TYPE_SJ,
   activityConsts,
 } from "constants/all";
 import { IconEyeOpen } from "styles/svgs";
@@ -63,7 +64,11 @@ const ActivityItem = (props) => {
     <li onClick={() => handleClick({ id, activity_type, reference_id })}>
       <div className="act-info-wrap-left">
         <div className="act-user-info-wrap d-flex">
-          <div className="act-user-thumb">
+          <div
+            className={`act-user-thumb ${
+              txn_type === TXN_TYPE_SJ ? "savings-jar-details" : ""
+            }`}
+          >
             {/* <img src={profileUrl} alt="" /> */}
             {profile_image ? (
               <img src={profile_image} className="blue-bg" alt="" />

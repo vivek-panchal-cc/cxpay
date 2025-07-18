@@ -5,6 +5,7 @@ import { LoaderContext } from "context/loaderContext";
 import { apiRequest } from "helpers/apiRequests";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import { toast } from "react-toastify";
 import {
   IconBalanceEyeOpen,
   IconBalanceEyeClose,
@@ -109,8 +110,14 @@ const chartOption = {
 const months = [];
 
 const BalanceGraph = (props) => {
-  const { isLoading, setIsLoading } = useContext(LoaderContext);
-  const { graphBackgroundImage, balanceDataArr, balance, monthDataArr } = props;
+  const { isLoading } = useContext(LoaderContext);
+  const {
+    graphBackgroundImage,
+    balanceDataArr,
+    balance,
+    monthDataArr,
+    getBalance,
+  } = props;
   const [options, setOptions] = useState({ ...chartOption });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reservedDetails, setReservedDetails] = useState([]);
@@ -118,6 +125,7 @@ const BalanceGraph = (props) => {
   const [showAvailableBalance, setShowAvailableBalance] = useState(false);
   const [showReservedAmount, setShowReservedAmount] = useState(false);
   const [showBalance, setShowBalance] = useState(true);
+  const [balanceLoading, setBalanceLoading] = useState(false);
   const [displayedBalance, setDisplayedBalance] = useState(0);
   const [displayedReservedBalance, setDisplayedReservedBalance] = useState(0);
 
@@ -276,21 +284,11 @@ const BalanceGraph = (props) => {
     try {
       const { data } = await apiRequest.listReservedAmount();
       if (!data.success) throw data.message;
-      const details = data.data.transactions;
-      if (!details) {
-        setIsModalOpen(false);
-        return;
-      }
-      if (Array.isArray(details) && details.length > 0) {
-        setReservedDetails(details);
-      } else {
-        // Handle case where details is not an array or is an empty array.
-        setIsModalOpen(false);
-        toast.error("No transaction details available.");
-      }
+      const details = data.data?.transactions;
+      setReservedDetails(details);
     } catch (error) {
-      if (typeof error === "string") toast.error(error);
-      setIsModalOpen(false);
+      if (typeof error === "string") console.log(error);
+      // setIsModalOpen(false);
     } finally {
       setLoadingDetails(false);
     }
@@ -309,14 +307,13 @@ const BalanceGraph = (props) => {
   };
 
   const handleGetBalance = async () => {
-    setIsLoading(true);
+    setBalanceLoading(true);
     try {
-      const { data } = await apiRequest.getBalance();
-      if (!data.success) throw data?.message;
+      await getBalance();
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setBalanceLoading(false);
     }
   };
 
@@ -464,7 +461,7 @@ const BalanceGraph = (props) => {
             ) : null}
             <div className="p-4 pb-0 flex-grow-1 text-end cursor-pointer">
               <IconDashboardRefresh
-                className={isLoading ? `refresh-icon-loading` : ""}
+                className={balanceLoading ? `refresh-icon-loading` : ""}
                 style={{ marginBottom: "4px" }}
                 stroke="#0081C5"
                 onClick={handleGetBalance}

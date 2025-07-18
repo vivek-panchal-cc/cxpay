@@ -27,6 +27,7 @@ const API_resendForgotPasswordOtp = apiUrl.API_LOGIN_RESEND_FORGOT_PASSWORD_OTP;
 const API_refreshToken = apiUrl.API_LOGIN_REFRESH_TOKEN;
 const API_checkCustomerKyc = apiUrl.API_CHECK_CUSTOMER_KYC;
 const API_updateCustomerKyc = apiUrl.API_UPDATE_CUSTOMER_KYC;
+const API_acknowledgementPopup = apiUrl.API_ACKNOWLEDGEMENT_POPUP;
 
 // ONBOARD SERVICES
 const API_verifyMobileNumber = apiUrl.API_ONBOARD_VERIFY_MOBILE_NUMBER;
@@ -151,6 +152,9 @@ const API_getTopupActivityDetails =
   apiUrl.API_TRANSACTION_GET_TOPUP_ACTIVITY_DETAILS;
 const API_getMonthlyRechargeTotal =
   apiUrl.API_TRANSACTION_MONTHLY_RECHARGE_TOTAL;
+const API_merchantReports = apiUrl.API_TRANSACTION_MERCHANT_REPORTS;
+const API_exportMerchantReports =
+  apiUrl.API_TRANSACTION_EXPORT_MERCHANT_REPORTS;
 
 //Recurring
 const API_createRecurringPayment =
@@ -165,6 +169,71 @@ const API_recurringPaymentPin = apiUrl.API_TRANSACTION_RECURRING_PAYMENT_PIN;
 
 //Reserved Amount
 const API_listReservedAmount = apiUrl.API_RESERVED_AMOUNT_LIST;
+
+//Sub-accounts
+const API_savingJarIcons = apiUrl.API_GET_SAVING_JAR_ICONS;
+const API_savingJarCategories = apiUrl.API_GET_SAVING_JAR_CATEGORIES;
+const API_getRemainingContacts = apiUrl.API_GET_REMAINING_CONTACTS_SAVING;
+const API_createTransactionJar = apiUrl.API_TRANSACTION_JAR_CREATE_WW;
+const API_createTransactionJarSchedule =
+  apiUrl.API_TRANSACTION_JAR_CREATE_WW_SCHEDULE;
+const API_createTransactionJarRecurring =
+  apiUrl.API_TRANSACTION_JAR_CREATE_WW_RECURRING;
+const API_getUserOwnSavingJar = apiUrl.API_TRANSACTION_USER_OWN_SAVING_JAR;
+const API_getUserSharedSavingJar =
+  apiUrl.API_TRANSACTION_USER_SHARED_SAVING_JAR;
+const API_getUserSharedInvitedJar =
+  apiUrl.API_TRANSACTION_USER_INVITED_SAVING_JAR;
+const API_addAmountToSavingJarWW = apiUrl.API_TRANSACTION_ADD_AMOUNT_WW;
+const API_addAmountToSavingJarSchedule =
+  apiUrl.API_TRANSACTION_ADD_AMOUNT_SCHEDULE;
+const API_addAmountToSavingJarRecurring =
+  apiUrl.API_TRANSACTION_ADD_AMOUNT_RECURRING;
+const API_getSavingJarDetails = apiUrl.API_TRANSACTION_GET_SAVING_JAR_DETAILS;
+const API_updateSavingJarDetails =
+  apiUrl.API_TRANSACTION_UPDATE_SAVING_JAR_DETAILS;
+const API_acceptRejectSavingJarDetails =
+  apiUrl.API_TRANSACTION_ACCEPT_REJECT_SAVING_JAR_DETAILS;
+const API_addMemberInSavingJar =
+  apiUrl.API_TRANSACTION_ADD_MEMBER_IN_SAVING_JAR;
+const API_adjustSavingJarRecurringAmount =
+  apiUrl.API_TRANSACTION_ADJUST_SAVING_JAR_RECURRING_AMOUNT;
+const API_removeMemberInSavingJar =
+  apiUrl.API_TRANSACTION_REMOVE_MEMBER_IN_SAVING_JAR;
+const API_getSavingJarMemberList =
+  apiUrl.API_TRANSACTION_SAVING_JAR_MEMBER_LIST;
+const API_getSavingJarActivityList =
+  apiUrl.API_TRANSACTION_SAVING_JAR_ACTIVITY_LIST;
+const API_transferSavingJarAmountToWallet =
+  apiUrl.API_TRANSACTION_SAVING_JAR_AMOUNT_TO_WALLET_TRANSFER;
+const API_transferListSavingJarSchedulePayment =
+  apiUrl.API_TRANSACTION_LIST_SAVING_JAR_SCHEDULE_PAYMENT;
+const API_transferListSavingJarRecurringPayment =
+  apiUrl.API_TRANSACTION_LIST_SAVING_JAR_RECURRING_PAYMENT;
+const API_updateSavingJarSchedulePayment =
+  apiUrl.API_TRANSACTION_UPDATE_SAVING_JAR_SCHEDULE_PAYMENT;
+const API_dateListSavingJarRecurringPayment =
+  apiUrl.API_TRANSACTION_SAVING_JAR_RECURRING_PAYMENT_DATE;
+const API_updateSavingJarRecurringPayment =
+  apiUrl.API_TRANSACTION_UPDATE_SAVING_JAR_RECURRING_PAYMENT;
+const API_deleteSavingJarSchedulePayment =
+  apiUrl.API_TRANSACTION_DELETE_SAVING_JAR_SCHEDULE_PAYMENT;
+const API_deleteSavingJarRecurringPayment =
+  apiUrl.API_TRANSACTION_DELETE_SAVING_JAR_RECURRING_PAYMENT;
+const API_subAccountsStatisticsForDashboard =
+  apiUrl.API_TRANSACTION_SUB_ACCOUNTS_STATISTICS_DASHBOARD;
+const API_updateRecurringOccurrenceAmount =
+  apiUrl.API_TRANSACTION_UPDATE_RECURRING_OCCURRENCE_AMOUNT;
+const API_deleteRecurringOccurrence =
+  apiUrl.API_TRANSACTION_DELETE_RECURRING_OCCURRENCE;
+const API_updateRecurringOccurrenceDate =
+  apiUrl.API_TRANSACTION_UPDATE_RECURRING_OCCURRENCE_DATE;
+const API_generateOccurrenceForSavingJar =
+  apiUrl.API_GENERATE_OCCURRENCE_FOR_SAVING_JAR;
+const API_getInvitedMemberRecurringDetails =
+  apiUrl.API_INVITED_MEMBER_RECURRING_DETAILS;
+const API_getSavingJarDashboardStatisticsDescription =
+  apiUrl.API_SAVING_JAR_DASHBOARD_STASTISTICS_DESCRIPTION;
 
 //  -------------------------------------------- LOGIN ------------------------------------------------------------------------------------------>
 
@@ -277,6 +346,13 @@ export const checkCustomerKyc = (token) => {
  */
 export const updateCustomerKyc = (params) => {
   return axiosOnboardInstance.post(`${API_updateCustomerKyc}`, params);
+};
+
+/** POST API
+ * @params authToken
+ */
+export const acknowledgementPopup = (params) => {
+  return axiosLoginInstance.post(`${API_acknowledgementPopup}`, params);
 };
 
 //  -------------------------------------------- ON BOARD ------------------------------------------------------------------------------------------>
@@ -394,6 +470,20 @@ export const getBusinessCategory = () => {
  */
 export const getMerchantList = (params) => {
   return axiosOnboardInstance.post(`${API_getMerchantList}`, params);
+};
+
+/** POST @merchant-reports
+ * @params auth_token, start_date, end_date, page
+ */
+export const merchantReports = (params) => {
+  return axiosTransactionInstance.post(`${API_merchantReports}`, params);
+};
+
+/** GET @merchant-reports-export
+ * @params
+ */
+export const exportMerchantReports = (params) => {
+  return axiosTransactionInstance.post(`${API_exportMerchantReports}`, params);
 };
 
 /** POST @resend-register-otp API
@@ -1087,6 +1177,354 @@ export const checkEnrollment = (params) => {
   return axiosTransactionInstance.post(`${"/check-enrollment"}`, params);
 };
 
+//Sub-accounts
+/** POST
+ * @params token
+ */
+export const getSavingJarIcons = (params) => {
+  return axiosTransactionInstance.post(`${API_savingJarIcons}`, params);
+};
+
+/** POST
+ * @params token
+ */
+export const getSavingJarCategories = (params) => {
+  return axiosTransactionInstance.post(`${API_savingJarCategories}`, params);
+};
+
+/** POST
+ * @params token
+ */
+export const getRemainingContacts = (params) => {
+  return axiosTransactionInstance.post(`${API_getRemainingContacts}`, params);
+};
+
+/** POST
+ * @params token
+ * @params values
+ */
+export const createTransactionJar = (params) => {
+  return axiosTransactionInstance.post(`${API_createTransactionJar}`, params);
+};
+
+/** POST
+ * @params token
+ * @params schedule_date
+ * @params values
+ */
+export const createTransactionJarSchedule = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_createTransactionJarSchedule}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params schedule_date
+ * @params start_date
+ * @params end_date
+ * @params values
+ */
+export const createTransactionJarRecurring = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_createTransactionJarRecurring}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ */
+export const getUserOwnSavingJar = (params) => {
+  return axiosTransactionInstance.post(`${API_getUserOwnSavingJar}`, params);
+};
+
+/** POST
+ * @params token
+ */
+export const getUserSharedSavingJar = (params) => {
+  return axiosTransactionInstance.post(`${API_getUserSharedSavingJar}`, params);
+};
+
+/** POST
+ * @params token
+ */
+export const getUserSharedInvitedJar = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_getUserSharedInvitedJar}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const addAmountToSavingJarWW = (params) => {
+  return axiosTransactionInstance.post(`${API_addAmountToSavingJarWW}`, params);
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const addAmountToSavingJarSchedule = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_addAmountToSavingJarSchedule}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const addAmountToSavingJarRecurring = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_addAmountToSavingJarRecurring}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const getSavingJarDetails = (params) => {
+  return axiosTransactionInstance.post(`${API_getSavingJarDetails}`, params);
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const updateSavingJarDetails = (params) => {
+  return axiosTransactionInstance.post(`${API_updateSavingJarDetails}`, params);
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ * @params request_accept : 0 || 1
+ */
+export const acceptRejectSavingJarDetails = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_acceptRejectSavingJarDetails}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const addMemberInSavingJar = (params) => {
+  return axiosTransactionInstance.post(`${API_addMemberInSavingJar}`, params);
+};
+
+/** POST
+ * @params token
+ */
+export const adjustSavingJarRecurringAmount = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_adjustSavingJarRecurringAmount}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params member_account_number
+ */
+export const removeMemberInSavingJar = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_removeMemberInSavingJar}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params search_name
+ */
+export const getSavingJarMemberList = (params) => {
+  return axiosTransactionInstance.post(`${API_getSavingJarMemberList}`, params);
+};
+
+/** POST
+ * @params token
+ * @params search_name
+ */
+export const getSavingJarActivityList = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_getSavingJarActivityList}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ */
+export const transferSavingJarAmountToWallet = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_transferSavingJarAmountToWallet}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const transferListSavingJarSchedulePayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_transferListSavingJarSchedulePayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const transferListSavingJarRecurringPayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_transferListSavingJarRecurringPayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_id
+ */
+export const updateSavingJarSchedulePayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_updateSavingJarSchedulePayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params jar_recurring_payment_id
+ */
+export const dateListSavingJarRecurringPayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_dateListSavingJarRecurringPayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params payment_id
+ */
+export const updateSavingJarRecurringPayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_updateSavingJarRecurringPayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params schedule_payment_id
+ */
+export const deleteSavingJarSchedulePayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_deleteSavingJarSchedulePayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ * @params recurring_payment_id
+ */
+export const deleteSavingJarRecurringPayment = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_deleteSavingJarRecurringPayment}`,
+    params
+  );
+};
+
+/** POST
+ * @params token
+ */
+export const subAccountsStatisticsForDashboard = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_subAccountsStatisticsForDashboard}`,
+    params
+  );
+};
+
+/** POST
+ * @params jar_id
+ * @params occurrence_id
+ * @params token
+ */
+export const updateRecurringOccurrenceAmount = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_updateRecurringOccurrenceAmount}`,
+    params
+  );
+};
+
+/** POST
+ * @params jar_id
+ * @params occurrence_id
+ * @params token
+ */
+export const deleteRecurringOccurrence = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_deleteRecurringOccurrence}`,
+    params
+  );
+};
+
+/** POST
+ * @params jar_id
+ * @params occurrence_id
+ * @params token
+ */
+export const updateRecurringOccurrenceDate = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_updateRecurringOccurrenceDate}`,
+    params
+  );
+};
+
+/** POST
+ * @params start_date
+ * @params end_date
+ * @params token
+ */
+export const generateOccurrenceForSavingJar = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_generateOccurrenceForSavingJar}`,
+    params
+  );
+};
+
+/** POST
+ * @params jar_id
+ */
+export const getInvitedMemberRecurringDetails = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_getInvitedMemberRecurringDetails}`,
+    params
+  );
+};
+
+export const getSavingJarDashboardStatisticsDescription = (params) => {
+  return axiosTransactionInstance.post(
+    `${API_getSavingJarDashboardStatisticsDescription}`,
+    params
+  );
+};
+
 export const apiRequest = {
   login,
   logout,
@@ -1116,9 +1554,12 @@ export const apiRequest = {
   appInstall,
   getBusinessCategory,
   getMerchantList,
+  merchantReports,
+  exportMerchantReports,
   refreshToken,
   checkCustomerKyc,
   updateCustomerKyc,
+  acknowledgementPopup,
   resendLoginOtp,
   resendForgotPasswordOtp,
   resendRegisterOtp,
@@ -1217,4 +1658,39 @@ export const apiRequest = {
   deleteRecurringPayment,
   viewRecurringPayment,
   listReservedAmount,
+  getSavingJarIcons,
+  getSavingJarCategories,
+  getRemainingContacts,
+  createTransactionJar,
+  createTransactionJarSchedule,
+  createTransactionJarRecurring,
+  getUserOwnSavingJar,
+  getUserSharedSavingJar,
+  getUserSharedInvitedJar,
+  addAmountToSavingJarWW,
+  addAmountToSavingJarSchedule,
+  addAmountToSavingJarRecurring,
+  getSavingJarDetails,
+  updateSavingJarDetails,
+  acceptRejectSavingJarDetails,
+  addMemberInSavingJar,
+  adjustSavingJarRecurringAmount,
+  removeMemberInSavingJar,
+  getSavingJarMemberList,
+  getSavingJarActivityList,
+  transferSavingJarAmountToWallet,
+  transferListSavingJarSchedulePayment,
+  transferListSavingJarRecurringPayment,
+  updateSavingJarSchedulePayment,
+  dateListSavingJarRecurringPayment,
+  updateSavingJarRecurringPayment,
+  deleteSavingJarSchedulePayment,
+  deleteSavingJarRecurringPayment,
+  subAccountsStatisticsForDashboard,
+  updateRecurringOccurrenceAmount,
+  deleteRecurringOccurrence,
+  updateRecurringOccurrenceDate,
+  generateOccurrenceForSavingJar,
+  getInvitedMemberRecurringDetails,
+  getSavingJarDashboardStatisticsDescription,
 };

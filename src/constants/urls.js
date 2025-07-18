@@ -20,6 +20,7 @@ export const API_LOGIN_RESEND_FORGOT_PASSWORD_OTP =
 export const API_LOGIN_REFRESH_TOKEN = "/refresh-token";
 export const API_CHECK_CUSTOMER_KYC = "check-customer-kyc";
 export const API_UPDATE_CUSTOMER_KYC = "update-customer-kyc";
+export const API_ACKNOWLEDGEMENT_POPUP = "/acknowledge-popup";
 
 // customer-onboard urls
 export const API_ONBOARD_VERIFY_MOBILE_NUMBER = "/register-mobile";
@@ -117,6 +118,9 @@ export const API_TRANSACTION_GET_ACTIVITY_DETAILS = "/get-activity-details";
 export const API_TRANSACTION_CHANGE_REQUEST_STATUS = "/change-request-status";
 export const API_TRANSACTION_GET_CHART_DATA = "/get-chart-data";
 export const API_TRANSACTION_GET_PRINT_DETAILS = "/get-print-details";
+export const API_TRANSACTION_MERCHANT_REPORTS = "/get-merchant-fees-report";
+export const API_TRANSACTION_EXPORT_MERCHANT_REPORTS =
+  "/export-merchant-fees-report";
 
 export const API_TRANSACTION_BANK_WITHDRAW_LIST = "/bank-withdraw-list";
 export const API_TRANSACTION_BANK_WITHDRAW_DETAILS = "/bank-withdraw-detail";
@@ -163,6 +167,75 @@ export const API_TRANSACTION_RECURRING_PAYMENT_PIN =
 
 //Reserved Amount
 export const API_RESERVED_AMOUNT_LIST = "/reserved-amount-list";
+
+//Sub-accounts
+export const API_GET_SAVING_JAR_ICONS = "/get-saving-jar-icons";
+export const API_GET_SAVING_JAR_CATEGORIES = "/list-active-saving-jar-category";
+export const API_GET_REMAINING_CONTACTS_SAVING =
+  "/get-remaining-contact-for-saving-jar";
+export const API_TRANSACTION_JAR_CREATE_WW =
+  "/create-saving-jar-with-wallet-transfer";
+export const API_TRANSACTION_JAR_CREATE_WW_SCHEDULE =
+  "/create-saving-jar-with-schedule-payment";
+export const API_TRANSACTION_JAR_CREATE_WW_RECURRING =
+  "/create-saving-jar-with-recurring-payment";
+export const API_TRANSACTION_USER_OWN_SAVING_JAR =
+  "/get-user-own-saving-jar-list";
+export const API_TRANSACTION_USER_SHARED_SAVING_JAR =
+  "/get-user-shared-saving-jar-list";
+export const API_TRANSACTION_USER_INVITED_SAVING_JAR =
+  "/get-user-invited-saving-jar-list";
+export const API_TRANSACTION_ADD_AMOUNT_WW =
+  "/add-amount-saving-jar-with-wallet-transfer";
+export const API_TRANSACTION_ADD_AMOUNT_SCHEDULE =
+  "/add-amount-saving-jar-with-schedule-payment";
+export const API_TRANSACTION_ADD_AMOUNT_RECURRING =
+  "/add-amount-saving-jar-with-recurring-payment";
+export const API_TRANSACTION_GET_SAVING_JAR_DETAILS = "/get-saving-jar-details";
+export const API_TRANSACTION_UPDATE_SAVING_JAR_DETAILS =
+  "/update-saving-jar-details";
+export const API_TRANSACTION_ACCEPT_REJECT_SAVING_JAR_DETAILS =
+  "/accept-reject-saving-jar-request";
+export const API_TRANSACTION_ADD_MEMBER_IN_SAVING_JAR =
+  "/add-member-in-saving-jar";
+export const API_TRANSACTION_ADJUST_SAVING_JAR_RECURRING_AMOUNT =
+  "/adjust-saving-jar-recurring-amount";
+export const API_TRANSACTION_REMOVE_MEMBER_IN_SAVING_JAR =
+  "/remove-member-from-saving-jar";
+export const API_TRANSACTION_SAVING_JAR_MEMBER_LIST =
+  "/get-saving-jar-member-list";
+export const API_TRANSACTION_SAVING_JAR_ACTIVITY_LIST =
+  "/get-saving-jar-activity-list";
+export const API_TRANSACTION_SAVING_JAR_AMOUNT_TO_WALLET_TRANSFER =
+  "/transfer-saving-jar-amount-to-wallet";
+export const API_TRANSACTION_LIST_SAVING_JAR_SCHEDULE_PAYMENT =
+  "/list-saving-jar-schedule-payment";
+export const API_TRANSACTION_LIST_SAVING_JAR_RECURRING_PAYMENT =
+  "/list-saving-jar-recurring-payment";
+export const API_TRANSACTION_UPDATE_SAVING_JAR_SCHEDULE_PAYMENT =
+  "/update-saving-jar-schedule-payment-details";
+export const API_TRANSACTION_SAVING_JAR_RECURRING_PAYMENT_DATE =
+  "/list-saving-jar-recurring-payment-date";
+export const API_TRANSACTION_UPDATE_SAVING_JAR_RECURRING_PAYMENT =
+  "update-saving-jar-recurring-payment-details";
+export const API_TRANSACTION_DELETE_SAVING_JAR_SCHEDULE_PAYMENT =
+  "delete-saving-jar-schedule-payment";
+export const API_TRANSACTION_DELETE_SAVING_JAR_RECURRING_PAYMENT =
+  "delete-saving-jar-recurring-payment";
+export const API_TRANSACTION_SUB_ACCOUNTS_STATISTICS_DASHBOARD =
+  "get-saving-jar-statistics-for-dashboard";
+export const API_TRANSACTION_UPDATE_RECURRING_OCCURRENCE_AMOUNT =
+  "update-saving-jar-recurring-occurrence-amount";
+export const API_TRANSACTION_DELETE_RECURRING_OCCURRENCE =
+  "delete-saving-jar-recurring-occurrence-amount";
+export const API_TRANSACTION_UPDATE_RECURRING_OCCURRENCE_DATE =
+  "retry-failed-recurring-payment";
+export const API_GENERATE_OCCURRENCE_FOR_SAVING_JAR =
+  "generate-occurrences-for-saving-jar";
+export const API_INVITED_MEMBER_RECURRING_DETAILS =
+  "get-invited-member-recurring-for-saving-jar";
+export const API_SAVING_JAR_DASHBOARD_STASTISTICS_DESCRIPTION =
+  "get-saving-jar-dashboard-stats-description";
 
 // URLs for payments redirects and responses
 export const API_TRANSACTION_DATE_COLLECTED_ORIGIN =

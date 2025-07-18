@@ -9,6 +9,10 @@ import {
   IconNotifyMoneySent,
   IconNotifyMoneySentFailed,
   IconNotifyKyc,
+  IconNotifyNotification,
+  IconNotifyJar,
+  IconManualWithdraw,
+  IconSchedulePayment,
 } from "styles/svgs";
 
 // Expressions
@@ -117,6 +121,7 @@ const RECURRING_PENDING = "pending";
 const RECURRING_FAILED = "failed";
 const RECURRING_SUCCESS = "success";
 const RECURRING_PAID = "paid";
+const RECURRING_PENDING_PAST = "past_pending";
 
 const recurringTypeStatus = {
   [RECURRING_PENDING]: {
@@ -135,6 +140,10 @@ const recurringTypeStatus = {
     status: "SUCCESS",
     className: "recurring-date-status-common recurring-paid",
   },
+  [RECURRING_PENDING_PAST]: {
+    status: "PENDING",
+    className: "recurring-date-status-common recurring-failed",
+  },
 };
 
 // Notification types constants
@@ -147,6 +156,10 @@ const NOTIFY_CON_REGISTER = "contact_register";
 const NOTIFY_MANUAL_TOPUP = "manual_top_up";
 const NOTIFY_KYC = "kyc";
 const NOTIFY_DBT = "direct_top_up";
+const NOTIFY_PUSH_NOTIFICATION = "push_notification";
+const NOTIFY_SAVING_JAR_PAYMENT = "saving_jar_payment_done";
+const NOTIFY_SAVING_JAR_PAYMENT_WITHDRAW = "saving_jar_payment_withdraw";
+const NOTIFY_SAVING_JAR_PAYMENT_UPCOMING = "saving_jar_payment_upcoming";
 
 // Notifications Type Constants
 const notificationType = {
@@ -186,9 +199,111 @@ const notificationType = {
     icon: IconNotifyMoneyRecieved,
     redirect: "/activities",
   },
+  [NOTIFY_PUSH_NOTIFICATION]: {
+    icon: IconNotifyNotification,
+    redirect: "/",
+  },
+  [NOTIFY_SAVING_JAR_PAYMENT]: {
+    icon: IconNotifyJar,
+    redirect: "/jars/own",
+  },
+  [NOTIFY_SAVING_JAR_PAYMENT_WITHDRAW]: {
+    icon: IconNotifyJar,
+    redirect: "/jars/own",
+  },
+  [NOTIFY_SAVING_JAR_PAYMENT_UPCOMING]: {
+    icon: IconNotifyJar,
+    redirect: "/jars/own/jar-details",
+  },
   "": {
     icon: "",
     redirect: "/wallet",
+  },
+};
+
+const RES_WITHDRAW_SCH = "withdraw";
+const RES_WD_SCH = "WD";
+const RES_SAVING_JAR_SCH = "saving_jar_schedule_payment";
+const RES_SCH_PAY = "schedule_payment";
+
+const reservedAmountType = {
+  [RES_WITHDRAW_SCH]: {
+    icon: <IconManualWithdraw />,
+    label: "Manual Withdraw",
+    classText: "withdraw",
+  },
+  [RES_WD_SCH]: {
+    icon: <IconManualWithdraw />,
+    label: "Manual Withdraw",
+    classText: "WD",
+  },
+  [RES_SAVING_JAR_SCH]: {
+    icon: "",
+    label: "Sub-account Schedule Payment",
+    classText: "saving_jar_schedule_payment",
+  },
+  [RES_SCH_PAY]: {
+    icon: <IconSchedulePayment />,
+    label: "Schedule Payment",
+    classText: "schedule_payment",
+  },
+  "": {
+    icon: <IconSchedulePayment />,
+    label: "Payment",
+    classText: "schedule_payment",
+  },
+};
+
+const JAR_FUND_ADD = "SAVING JAR FUND ADD";
+const JAR_FUND_WITHDRAW = "SAVING JAR FUND WITHDRAW";
+const JAR_MEMBER_ADD = "SAVING JAR MEMBER ADD";
+const JAR_PAID = "PAID";
+const JAR_WITHDRAW = "WITHDRAW";
+const JAR_APPROVED = "APPROVED";
+const JAR_REJECTED = "REJECTED";
+
+const jarActvityConsts = {
+  [JAR_FUND_ADD]: {
+    [JAR_PAID]: {
+      iconStatus: "",
+      iconAmount: "+",
+      classStatus: "btn-blue",
+      classBg: "cx-bg-blue",
+      classText: "cx-color-green",
+      textStatus: "Request Sent",
+      desc: "",
+    },
+  },
+  [JAR_FUND_WITHDRAW]: {
+    [JAR_WITHDRAW]: {
+      iconStatus: "",
+      iconAmount: "-",
+      classStatus: "btn-red",
+      classBg: "cx-bg-red",
+      classText: "cx-color-red",
+      textStatus: "Request Declined",
+      desc: "",
+    },
+  },
+  [JAR_MEMBER_ADD]: {
+    [JAR_APPROVED]: {
+      iconStatus: "",
+      iconAmount: "",
+      classStatus: "btn-blue",
+      classBg: "cx-bg-blue",
+      classText: "cx-color-green",
+      textStatus: "",
+      desc: "Invitation Accepted",
+    },
+    [JAR_REJECTED]: {
+      iconStatus: "",
+      iconAmount: "",
+      classStatus: "btn-red",
+      classBg: "cx-bg-red",
+      classText: "cx-color-red",
+      textStatus: "",
+      desc: "Invitation Declined",
+    },
   },
 };
 
@@ -212,6 +327,8 @@ const TXN_TYPE_WW = "WW";
 const TXN_TYPE_WD = "WD";
 const TXN_TYPE_MF = "MF";
 const TXN_TYPE_DBT = "DBT";
+const TXN_TYPE_SJ = "SJ";
+const TXN_TYPE_JR_WITHDRAW = "WITHDRAW";
 const TXN_TYPE_WITHDRAW = "withdraw";
 const TXN_TYPE_AGENT = "AGENT TOPUP";
 const BUSINESS_PAID = `${ACT_STATUS_PAID}_business`;
@@ -254,6 +371,15 @@ const activityConsts = {
         classText: "cx-color-green",
         textStatus: "Request Sent",
         desc: "Requested money from YYYY",
+      },
+      [ACT_STATUS_FAILED]: {
+        iconStatus: "",
+        iconAmount: "",
+        classStatus: "btn-red",
+        classBg: "cx-bg-red",
+        classText: "cx-color-red",
+        textStatus: "Failed",
+        desc: "Requested money From YYYY",
       },
     },
     [ACT_REQUEST_RECEIVE]: {
@@ -617,6 +743,19 @@ const activityConsts = {
           desc: "From YYYY",
         },
       },
+      [TXN_TYPE_SJ]: {
+        [ACT_STATUS_PAID]: {
+          iconStatus: "",
+          iconAmount: "",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "cx-color-red",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Sub-account Transfer",
+          textDetailStatus: "Sub-account Transfer",
+          desc: "From YYYY",
+        },
+      },
     },
     [ACT_TRANSACT_DEBIT]: {
       [TXN_TYPE_WW]: {
@@ -843,6 +982,19 @@ const activityConsts = {
           desc: "You refunded",
         },
       },
+      [TXN_TYPE_SJ]: {
+        [TXN_TYPE_JR_WITHDRAW]: {
+          iconStatus: "",
+          iconAmount: "+",
+          classStatus: "btn-green",
+          classBg: "cx-bg-green",
+          classText: "cx-color-green",
+          classDetailStatus: "cx-color-green",
+          textStatus: "Sub-account Withdraw",
+          textDetailStatus: "Sub-account Withdraw",
+          desc: "Withdrawal initiated",
+        },
+      },
       [TXN_TYPE_AGENT]: {
         [ACT_STATUS_PENDING]: {
           iconStatus: "",
@@ -961,7 +1113,7 @@ const withdrawConsts = {
 };
 
 // Currency Symbol
-const CURRENCY_SYMBOL = "ANG";
+const CURRENCY_SYMBOL = "XCG";
 
 // Buffer Time for schedule
 const SCHEDULE_BUFFER = 5;
@@ -982,6 +1134,12 @@ const WITHDRAW_OPTIONS_TABS_LIST = [
 const PAYMENT_OPTIONS_TABS_LIST = [
   { title: "Schedule Payments", url: "/view-schedule-payment" },
   { title: "Recurring Payments", url: "/view-recurring-payment" },
+];
+
+const JAR_OPTIONS_TABS_LIST = [
+  { title: "Own", url: "/jars/own" },
+  { title: "Shared", url: "/jars/shared" },
+  { title: "Invited", url: "/jars/invited" },
 ];
 
 // Withdraw status filters list for card transactions
@@ -1026,14 +1184,29 @@ const capitalizeWordByWord = (text) => {
 };
 
 // Function to get initials
+// const getInitials = (fullName) => {
+//   if (!fullName) return "";
+//   const nameParts = fullName?.trim()?.split(" ");
+//   const initials =
+//     nameParts.length > 1
+//       ? nameParts[0][0] + nameParts[1][0] // First letters of first and last names
+//       : nameParts[0]?.slice(0, 2); // First two letters if only one name
+//   return initials.toUpperCase(); // Convert to uppercase
+// };
+
 const getInitials = (fullName) => {
   if (!fullName) return "";
-  const nameParts = fullName?.trim()?.split(" ");
-  const initials =
-    nameParts.length > 1
-      ? nameParts[0][0] + nameParts[1][0] // First letters of first and last names
-      : nameParts[0]?.slice(0, 2); // First two letters if only one name
-  return initials.toUpperCase(); // Convert to uppercase
+  // Remove special characters except spaces and split words
+  const nameParts = fullName
+    .replace(/[^a-zA-Z\s]/g, "") // Remove special characters except spaces
+    .trim()
+    .split(/\s+/); // Split by spaces
+  // If at least two valid words exist, take first letters
+  if (nameParts.length > 1) {
+    return (nameParts[0][0] + nameParts[1][0]).toUpperCase();
+  }
+  // Otherwise, take the first two letters of the first valid word
+  return nameParts[0]?.slice(0, 2).toUpperCase() || "NA";
 };
 
 // Function to generate class based on alphabetics range
@@ -1059,6 +1232,32 @@ const getRandomColorClass = (fullName) => {
   return "bg-color-1"; // Default to the first color class if no match
 };
 
+const handleWholeNumberInputChange = (
+  e,
+  setValue,
+  fieldName,
+  maxLength = 6
+) => {
+  let value = e.target.value.replace(/\D/g, ""); // Remove non-digits
+
+  if (value.length > maxLength) {
+    value = value.slice(0, maxLength);
+  }
+
+  setValue(fieldName, value);
+};
+
+const handleWholeNumberInputBlur = (e, setValue, handleBlur, fieldName) => {
+  let value = e.target.value.trim();
+
+  if (!value) {
+    value = "0";
+  }
+
+  setValue(fieldName, value);
+  handleBlur(e);
+};
+
 export {
   exp0ContainWhitespace,
   exp0ContainOnlySpace,
@@ -1070,8 +1269,10 @@ export {
   otpCounterTime,
   url_regex,
   notificationType,
+  reservedAmountType,
   recurringTypeStatus,
   activityConsts,
+  jarActvityConsts,
   withdrawConsts,
   THEME_COLORS,
   CURRENCY_SYMBOL,
@@ -1111,6 +1312,7 @@ export {
   CHARGES_TYPE_MF,
   WITHDRAW_OPTIONS_TABS_LIST,
   PAYMENT_OPTIONS_TABS_LIST,
+  JAR_OPTIONS_TABS_LIST,
   WITHDRAW_STATUS_FILTER_CARD,
   WITHDRAW_STATUS_FILTER_BANK,
   FILE_SIZE,
@@ -1121,6 +1323,14 @@ export {
   RECURRING_PAID,
   TXN_TYPE_WW,
   BUSINESS_PAID,
+  JAR_FUND_ADD,
+  JAR_FUND_WITHDRAW,
+  JAR_MEMBER_ADD,
+  JAR_PAID,
+  JAR_WITHDRAW,
+  JAR_APPROVED,
+  JAR_REJECTED,
+  TXN_TYPE_SJ,
 };
 export {
   regexContainCapitalLetter,
@@ -1139,4 +1349,6 @@ export {
   capitalizeWordByWord,
   getInitials,
   getRandomColorClass,
+  handleWholeNumberInputChange,
+  handleWholeNumberInputBlur,
 };

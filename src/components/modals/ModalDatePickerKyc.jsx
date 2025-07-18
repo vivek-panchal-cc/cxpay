@@ -12,6 +12,9 @@ function ModalDatePickerKyc(props) {
     setShow,
     heading,
     handleChangeDate,
+    maxDate,
+    minDate,
+    currentDate = new Date(),
   } = props;
 
   const modalRef = useRef(null);
@@ -37,6 +40,16 @@ function ModalDatePickerKyc(props) {
     setShow(false); // Close modal after selecting a date
   };
 
+  const getValidMinDate = (minDate) => {
+    const today = new Date();
+    const parsed = minDate ? new Date(minDate) : null;
+
+    if (parsed instanceof Date && !isNaN(parsed)) {
+      return parsed > today ? parsed : today;
+    }
+    return today;
+  };
+
   if (!show) return null;
 
   return (
@@ -52,10 +65,11 @@ function ModalDatePickerKyc(props) {
               <h3 className="text-center">{heading}</h3>
             </div>
             <ReactDatePicker
-              minDate={props.minDate || new Date()}
-              value={selectedDate || new Date()}
+              minDate={getValidMinDate(minDate)}
+              value={selectedDate || new Date(currentDate) || new Date()}
               onChange={handleDateChange}
               className="kyc-expiry-date"
+              maxDate={maxDate || null}
               // inline
             />
             <div className="popup-btn-wrap d-flex align-items-center justify-content-center gap-4">

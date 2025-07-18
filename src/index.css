@@ -2,12 +2,15 @@
 @import url("./styles/css/style.css");
 @import url("./styles/css/forms.css");
 @import url("./styles/css/dashboard.css");
+@import url("./styles/css/jar-dashboard.css");
 @import url("./styles/css/profile.css");
 @import url("./styles/css/settings.css");
 @import url("./styles/css/organization.css");
 @import url("./styles/css/withdraw.css");
 @import url("./styles/css/responsive.css");
 @import url("./styles/css/fund.css");
+@import url("./styles/css/toastify.css");
+@import url("./styles/css/jar-common.css");
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -89,6 +92,11 @@ code {
   pointer-events: visible !important;
   cursor: not-allowed !important;
   background: #d5dbe0 !important;
+}
+.jar-action-button-disabled {
+  color: #878787 !important;
+  pointer-events: visible !important;
+  cursor: not-allowed !important;
 }
 .resend-otp-wrap button {
   cursor: pointer;

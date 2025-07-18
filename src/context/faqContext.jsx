@@ -1,18 +1,17 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { apiRequest } from "helpers/apiRequests";
-import { LoaderContext } from "./loaderContext";
 
 const FaqContext = createContext();
 
 export const FaqProvider = ({ children }) => {
   const [faqList, setFaqList] = useState([]);
   const [error, setError] = useState(null);
-  const { setIsLoading } = useContext(LoaderContext);
+  const [listIsLoading, setListIsLoading] = useState(false);
 
   useEffect(() => {
     // Fetch CMS pages when the component mounts
     const fetchFaqList = async () => {
-      setIsLoading(true);
+      setListIsLoading(true);
       try {
         const { data } = await apiRequest.getFaqList();
         const sortedFaqList = data?.result?.sort(
@@ -27,7 +26,7 @@ export const FaqProvider = ({ children }) => {
         console.error("Error fetching FAQ list:", error);
         setError(error);
       } finally {
-        setIsLoading(false);
+        setListIsLoading(false);
       }
     };
 
@@ -35,7 +34,7 @@ export const FaqProvider = ({ children }) => {
   }, []);
 
   return (
-    <FaqContext.Provider value={{ faqList, setIsLoading, error }}>
+    <FaqContext.Provider value={{ faqList, listIsLoading, error }}>
       {children}
     </FaqContext.Provider>
   );

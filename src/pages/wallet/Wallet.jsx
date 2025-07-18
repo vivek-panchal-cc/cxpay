@@ -20,10 +20,10 @@ function Wallet() {
   const [showPopupFundAccount, setShowFundAccountPopup] = useState(false);
   const [slideCard, setSlideCard] = useState({});
   const [activitiesList, setActivitiesList] = useState([]);
-  const [loadingBalance, balance] = useBalance();
+  const [loadingBalance, balance, getBalance] = useBalance();
   const [loadingChart, chartData] = useChartData();
   const { profile } = useSelector((state) => state.userProfile);
-  const { admin_approved } = profile || {};
+  const { admin_approved, user_type } = profile || {};
   const { loginCreds } = useContext(LoginContext);
   const { show_renew_section } = loginCreds;
   const adminApprovedWithRenewCheck = isAdminApprovedWithRenewCheck(
@@ -121,6 +121,7 @@ function Wallet() {
               balanceDataArr={chartData.balanceArr}
               balance={balance}
               monthDataArr={chartData.monthArr}
+              getBalance={getBalance}
             />
           </div>
           <RecentActivities activitiesList={activitiesList} />
@@ -164,7 +165,7 @@ function Wallet() {
                 </Link>
               )}
             </div>
-            <div className="wallet-card-add-btns">
+            <div className="wallet-card-add-btns mb-4">
               <Link
                 to="/wallet/add-card"
                 className="w-100 d-flex align-items-center"
@@ -180,6 +181,17 @@ function Wallet() {
                 <span>View Cards</span>
               </Link>
             </div>
+            {user_type === "business" && (
+              <div className="wallet-card-add-btns mb-4">
+                <Link
+                  to="/wallet/merchant-fees-report"
+                  className="w-100 d-flex align-items-center"
+                >
+                  <img src="/assets/images/merchant_report_logo.svg" alt="" />
+                  Merchant Fees Report
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -68,6 +68,8 @@ const Login = () => {
             payload.data.kyc_renew_data?.show_renew_button
           ),
           kyc_message: payload.data.kyc_renew_data?.kyc_message || "",
+          show_popup: Boolean(payload.data?.show_popup),
+          popup_message: payload.data?.popup_message,
         }));
         navigate("/", { replace: true });
       } catch (error) {

@@ -12,3 +12,52 @@
     opacity: 1;
   }
 }
+
+.paymentOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    border-radius: 10px;
+    // background: #f8f8f8;
+    color: #363853;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+
+    &:hover {
+      // background: #e8e8e8;
+    }
+
+    &.selected {
+      // border-color: #7ed321;
+    }
+
+    .iconWrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      color: white;
+    }
+
+    .title {
+      flex: 1;
+      margin-left: 40px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .checkIcon {
+      color: #7ed321;
+      font-size: 20px;
+    }
+  }
+}

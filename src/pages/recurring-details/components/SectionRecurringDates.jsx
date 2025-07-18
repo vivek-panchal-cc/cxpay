@@ -21,8 +21,8 @@ const SectionRecurringDates = (props) => {
         <table>
           <thead className="freq-date-header">
             <tr>
-              <th>Frequency Date</th>
-              <th>Status</th>
+              <th>Freq. Date</th>
+              <th>Payment Status</th>
             </tr>
           </thead>
           <tbody>
@@ -50,7 +50,8 @@ const SectionRecurringDates = (props) => {
                     <td>{formatDate(dateEntry.recurring_date)}</td>
                     <td className="freq-date-rec-td">
                       <div className={recurringType?.className || ""}>
-                        {recurringType?.status || dateEntry?.status?.toUpperCase()}
+                        {recurringType?.status ||
+                          dateEntry?.status?.toUpperCase()}
                       </div>
                     </td>
                   </tr>

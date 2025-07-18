@@ -159,6 +159,9 @@ function ModalSetAmount(props) {
                       />
                     </div>
                   </div>
+                  <div className="red ms-2" style={{ fontSize: "12px" }}>
+                    Note: Only alphabets and numbers are allowed.
+                  </div>
                   <div className="popup-btn-wrap d-flex align-items-center justify-content-end gap-4 mt-3">
                     <div className="set-amount">
                       <button

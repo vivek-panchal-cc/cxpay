@@ -27,15 +27,15 @@ const InviteContactItem = (props) => {
           <label htmlFor={contact?.mobile}></label>
         </div>
         <div className="con-list-uimg">
-          {/* <img
+          <img
             src={
               contact?.profile_image
                 ? contact?.profile_image
                 : "../assets/images/user-avatar.png"
             }
             alt=""
-          /> */}
-          {contact?.profile_image ? (
+          />
+          {/* {contact?.profile_image ? (
             <img src={contact?.profile_image} className="blue-bg" alt="" />
           ) : (
             <div
@@ -45,7 +45,7 @@ const InviteContactItem = (props) => {
             >
               {getInitials(contact?.name || contact?.email)}
             </div>
-          )}
+          )} */}
         </div>
         {contact?.name ? (
           <div className="con-list-uname">{contact?.name}</div>

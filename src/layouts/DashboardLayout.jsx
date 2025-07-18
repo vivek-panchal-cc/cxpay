@@ -18,6 +18,10 @@ import { apiRequest } from "helpers/apiRequests";
 import { toast } from "react-toastify";
 import { usePinContext } from "context/pinContext";
 import { sendPaymentPinSchema } from "schemas/sendPaymentSchema";
+import MerchantReportsProvider from "context/merchantReportsContext";
+import NotificationDetailsProvider from "context/notificationsContext";
+import SavingJarOwnProvider from "context/savingJarOwnProvider";
+import InitialPopup from "components/modals/InitialPopup";
 
 function DashboardLayout() {
   const { setIsPinValidated } = usePinContext();
@@ -101,16 +105,23 @@ function DashboardLayout() {
                 />
               </span>
             </div>
-            <ContactsProvider>
-              <SendPaymentProvider>
-                <ActivityProvider>
-                  <TopUpActivityProvider>
-                    <NotificationBar />
-                    <Outlet />
-                  </TopUpActivityProvider>
-                </ActivityProvider>
-              </SendPaymentProvider>
-            </ContactsProvider>
+            <SavingJarOwnProvider>
+              <ContactsProvider>
+                <SendPaymentProvider>
+                  <ActivityProvider>
+                    <MerchantReportsProvider>
+                      <TopUpActivityProvider>
+                        <NotificationDetailsProvider>
+                          <NotificationBar />
+                          <InitialPopup />
+                          <Outlet />
+                        </NotificationDetailsProvider>
+                      </TopUpActivityProvider>
+                    </MerchantReportsProvider>
+                  </ActivityProvider>
+                </SendPaymentProvider>
+              </ContactsProvider>
+            </SavingJarOwnProvider>
           </div>
         </div>
         {showPinPopup && (

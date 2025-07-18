@@ -1,0 +1,247 @@
+import React, { useEffect, useRef, useState } from "react";
+import ContentLoader from "react-content-loader";
+import Select from "react-select";
+
+const SkeletonOption = ({ width, height, singleValue = false }) => (
+  <div
+    className={`d-flex flex-column align-items-center justify-content-center ${
+      singleValue ? "" : "m-2"
+    }`}
+  >
+    <ContentLoader
+      speed={2}
+      width={width || 50}
+      height={height || 50}
+      viewBox="0 0 50 50"
+      backgroundColor="#f3f3f3"
+      foregroundColor="#ecebeb"
+    >
+      <circle cx="25" cy="25" r="24" />
+    </ContentLoader>
+  </div>
+);
+
+function InputIconSelect({
+  labelname,
+  error,
+  disabled,
+  options = [],
+  useReactSelect = true,
+  className,
+  customStyles,
+  placeholder,
+  isLoading = false,
+  onChange,
+  ...props
+}) {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const [loadedImages, setLoadedImages] = useState({});
+
+  const toggleDropdown = (e) => {
+    // prevent toggle if click came from inside menu (e.g., selecting an option)
+    if (e?.target?.closest(".jar-icon-input__menu")) return;
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  const skeletonOptions = Array.from({ length: 27 }).map((_, index) => ({
+    label: <SkeletonOption />,
+    value: `skeleton-${index}`,
+    isDisabled: true,
+  }));
+
+  // Default custom styles for react-select
+  const customDropdownStyles = {
+    control: (base, state) => ({
+      ...base,
+      backgroundImage: `url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e")`,
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "right .75rem center",
+      backgroundSize: "16px 12px",
+      minHeight: "45px",
+      borderRadius: "18px",
+      border: "1px solid #0081c5",
+      boxShadow: "none",
+      borderRadius: state.menuIsOpen ? "18px 18px 0 0" : "18px",
+      borderBottom: state.menuIsOpen
+        ? "1px solid #e4e3e5"
+        : "1px solid #0081c5",
+      "&:hover": {
+        border: "1px solid #0081c5",
+        borderBottom: state.menuIsOpen
+          ? "1px solid #e4e3e5"
+          : "1px solid #0081c5",
+      },
+      filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1))",
+      backgroundColor: "#fff",
+      fontSize: "14px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      paddingLeft: "5px", // Pushes the content to the start
+    }),
+    singleValue: (base) => ({
+      ...base,
+      display: "flex",
+      alignItems: "center",
+    }),
+    option: (base, { isSelected }) => ({
+      ...base,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      width: "50px", // Set a fixed width for grid layout
+      height: "50px",
+      borderRadius: "8px",
+      cursor: "pointer",
+      backgroundColor: isSelected ? "transparent" : "#fff",
+      border: isSelected ? "1px solid #0081c5" : "1px solid #fff",
+      color: isSelected ? "#fff" : "#212529",
+      ":hover": {
+        backgroundColor: "transparent",
+        border: "1px solid #0081c5",
+      },
+    }),
+    menu: (base) => ({
+      ...base,
+      marginTop: "0",
+      padding: "4px 20px",
+      borderRadius: "0 0 18px 18px",
+      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+      zIndex: 9999,
+      display: "flex",
+      flexWrap: "wrap", // Allow multiple items in a row
+      border: "1px solid #0081c5",
+      borderTop: "none",
+    }),
+    menuList: (base) => ({
+      ...base,
+      display: "flex",
+      gap: "1px",
+      flexWrap: "wrap", // Enables multi-row layout
+      overflowY: "auto", // Enables scrolling
+      scrollbarWidth: "none", // Firefox
+      scrollbarColor: "#f0f0f0", // Scrollbar color for Firefox
+    }),
+    placeholder: (base) => ({
+      ...base,
+      // padding: "14px",
+      fontSize: "16px",
+      fontWeight: 500,
+      fontFamily: `"Comfortaa", sans-serif`,
+      color: "#363853",
+    }),
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const imageMap = {};
+
+    options.forEach((option) => {
+      const imgSrc = option?.url;
+      if (imgSrc && !loadedImages[imgSrc]) {
+        const img = new Image();
+        img.onload = () => {
+          imageMap[imgSrc] = true;
+          setLoadedImages((prev) => ({ ...prev, ...imageMap }));
+        };
+        img.onerror = () => {
+          imageMap[imgSrc] = true; // Still mark as loaded to avoid blocking
+          setLoadedImages((prev) => ({ ...prev, ...imageMap }));
+        };
+        img.src = imgSrc;
+      }
+    });
+  }, [options]);
+
+  const processedOptions = options.map((opt) => {
+    const isImageLoaded = loadedImages[opt?.url];
+    return {
+      ...opt,
+      label: isImageLoaded ? opt.label : <SkeletonOption />,
+      isDisabled: !isImageLoaded,
+    };
+  });
+
+  return (
+    <div
+      className={`d-flex flex-column form-field`}
+      ref={dropdownRef}
+      onClick={toggleDropdown}
+    >
+      {labelname && <label className="mb-2">{labelname}</label>}
+
+      {useReactSelect ? (
+        <Select
+          {...props}
+          options={isLoading ? skeletonOptions : processedOptions}
+          isDisabled={disabled}
+          isSearchable={false}
+          styles={customStyles || customDropdownStyles} // Use custom styles if provided
+          classNamePrefix="jar-icon-input"
+          placeholder={placeholder || "Select an option"}
+          value={(() => {
+            const selected = options.find(
+              (option) => option.value === props.value?.id
+            );
+            if (!selected) return null;
+
+            const isLoaded = loadedImages[selected?.url];
+            return {
+              ...selected,
+              label: isLoaded ? (
+                selected.label
+              ) : (
+                <SkeletonOption width="40" height="40" singleValue={true} />
+              ),
+              isDisabled: !isLoaded,
+            };
+          })()}
+          onChange={(selectedOption, { action }) => {
+            if (action === "select-option") {
+              setIsDropdownOpen(false);
+            }
+            onChange?.(selectedOption);
+          }}
+          menuIsOpen={isDropdownOpen}
+          // onMenuOpen={() => setIsDropdownOpen(true)}
+          // onMenuClose={() => setIsDropdownOpen(false)}
+        />
+      ) : (
+        <select
+          {...props}
+          className={`${className} ${disabled ? "cursor-not-allowed" : ""}`}
+          disabled={disabled || isLoading}
+        >
+          <option value="" disabled>
+            {placeholder || "Select an option"}
+          </option>
+          {options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      )}
+
+      {error && <p className="text-danger ps-2">{error}</p>}
+    </div>
+  );
+}
+
+export default InputIconSelect;

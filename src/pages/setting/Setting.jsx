@@ -104,16 +104,16 @@ function Setting() {
   const { handleForgotPin, OtpModal, PinModal } =
     useForgotPinHandler(setShowPinPopup);
 
-  React.useEffect(() => {
-    if (user_type === "agent") {
-      setIsPinValidated(true);
-      setShowPinPopup(false);
-      return;
-    }
-    if (!isPinValidated && (user_type === "personal" || user_type === "business")) {
-      setShowPinPopup(true);
-    }
-  }, [isPinValidated, user_type, setIsPinValidated]);
+  // React.useEffect(() => {
+  //   if (user_type === "agent") {
+  //     setIsPinValidated(true);
+  //     setShowPinPopup(false);
+  //     return;
+  //   }
+  //   if (!isPinValidated && (user_type === "personal" || user_type === "business")) {
+  //     setShowPinPopup(true);
+  //   }
+  // }, [isPinValidated, user_type, setIsPinValidated]);
 
   const handleSubmitPin = async (pin) => {
     if (!pin) return;
@@ -127,7 +127,7 @@ function Setting() {
       navigate("/setting");
     } catch (error) {
       setError(error.message);
-      if(error.data.is_suspended){
+      if (error.data.is_suspended) {
         navigate("/logout", { replace: true });
         toast.error(error.message);
       }
@@ -140,34 +140,34 @@ function Setting() {
   return (
     <div className="settings-right-sec settings-vc-sec">
       {/* {isPinValidated && ( */}
-        <div className="settings-inner-sec">
-          <div className="profile-info">
-            <h3>Settings</h3>
-          </div>
-          <div className="settings-bottom-info-sec">
-            <ul>
-              {settingsRedirects?.map((item, index) => (
-                <React.Fragment key={index}>
-                  {(item?.title === "Business info" &&
-                    user_type === "personal") ||
-                  (item?.title === "Business info" && user_type === "agent") ||
-                  (item?.title === "Notifications" && user_type === "agent") ||
-                  (item?.title === "Change PIN" && user_type === "agent") ? (
-                    ""
-                  ) : (
-                    <li key={item.title?.trim() || index}>
-                      <div className="icon-wrap">
-                        <span className="icon-settings">{item.icon}</span>
-                        {item.title}
-                      </div>
-                      {item.link}
-                    </li>
-                  )}
-                </React.Fragment>
-              ))}
-            </ul>
-          </div>
+      <div className="settings-inner-sec">
+        <div className="profile-info">
+          <h3>Settings</h3>
         </div>
+        <div className="settings-bottom-info-sec">
+          <ul>
+            {settingsRedirects?.map((item, index) => (
+              <React.Fragment key={index}>
+                {(item?.title === "Business info" &&
+                  user_type === "personal") ||
+                (item?.title === "Business info" && user_type === "agent") ||
+                (item?.title === "Notifications" && user_type === "agent") ||
+                (item?.title === "Change PIN" && user_type === "agent") ? (
+                  ""
+                ) : (
+                  <li key={item.title?.trim() || index}>
+                    <div className="icon-wrap">
+                      <span className="icon-settings">{item.icon}</span>
+                      {item.title}
+                    </div>
+                    {item.link}
+                  </li>
+                )}
+              </React.Fragment>
+            ))}
+          </ul>
+        </div>
+      </div>
       {/* )} */}
       {showPinPopup && user_type !== "agent" && (
         <ModalPaymentPin

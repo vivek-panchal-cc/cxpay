@@ -4,6 +4,7 @@ import {
   CURRENCY_SYMBOL,
   getInitials,
   getRandomColorClass,
+  reservedAmountType,
 } from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { formatDateToDesiredFormat } from "helpers/commonHelpers";
@@ -157,20 +158,40 @@ const ModalReservedAmount = (props) => {
                             </span>
                           </div>
                           <div className="act-specification-text">
-                            <p className={`${detail.transaction_type}`}>
+                            <p
+                              className={
+                                reservedAmountType[detail.transaction_type]
+                                  ?.classText
+                              }
+                            >
+                              {
+                                reservedAmountType[detail.transaction_type]
+                                  ?.icon
+                              }
+                              {
+                                reservedAmountType[detail.transaction_type]
+                                  ?.label
+                              }
+                            </p>
+                            {/* <p className={`${detail.transaction_type}`}>
                               {["withdraw", "WD"].includes(
                                 detail.transaction_type
                               ) ? (
-                                <IconManualWithdraw />
+                                <>
+                                  <IconManualWithdraw /> Manual Withdraw
+                                </>
+                              ) : detail.transaction_type ===
+                                "saving_jar_schedule_payment" ? (
+                                <>
+                                  <IconSchedulePayment /> Sub-account Schedule
+                                  Payment
+                                </>
                               ) : (
-                                <IconSchedulePayment />
+                                <>
+                                  <IconSchedulePayment /> Schedule Payment
+                                </>
                               )}
-                              {["withdraw", "WD"].includes(
-                                detail.transaction_type
-                              )
-                                ? "Manual Withdraw"
-                                : "Schedule Payment"}
-                            </p>
+                            </p> */}
                           </div>
                         </>
                       </div>
