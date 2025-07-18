@@ -82,6 +82,14 @@ const ModalActivityDetail = (props) => {
   );
   const { setIsLoading } = useContext(LoaderContext);
   const { handleSendContactsForInstantPay } = useContext(SendPaymentContext);
+  const statusKey =
+    user_type === "business" && status === "PAID"
+      ? `${status}_business`
+      : status;
+  const trWwStatus =
+    activity_type === "transaction" &&
+    (request_type === "credit" || request_type === "debit") &&
+    txn_type === "WW";
 
   const statusKey = useMemo(() => {
     return user_type === "business" && status === ACT_STATUS_PAID
