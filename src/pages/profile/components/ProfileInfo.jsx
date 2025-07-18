@@ -58,7 +58,7 @@ const ProfileInfo = (props) => {
         if (!data.success) throw data.message;
         setIsEditable(false);
         await dispatch(fetchUserProfile());
-        toast.success("Business url updated successfully.");
+        toast.success(data.message);
       } catch (error) {
         if (typeof error === "string") return toast.error(error);
         setErrors({

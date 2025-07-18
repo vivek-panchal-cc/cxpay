@@ -65,7 +65,7 @@
     padding: 10px 26px;
   }
   .dashboard-link-wrap .more-sub-menu {
-    max-height: 200px;
+    max-height: 250px;
   }
   .wallet-page-body .settings-inner-sec .profile-info {
     padding-bottom: 25px;
@@ -74,6 +74,9 @@
     padding-top: 30px;
   }
   .contact-listing-wrap {
+    margin-bottom: 35px;
+  }
+  .merchant-listing-wrap {
     margin-bottom: 35px;
   }
   .wallet-link-bank-bottom {
@@ -323,10 +326,10 @@
     padding: 7.5px 26px;
   }
   .dashboard-link-wrap .more-sub-menu {
-    max-height: 150px;
+    max-height: 250px;
   }
   .sidebar-open .dashboard-link-wrap .more-sub-menu {
-    max-height: 150px;
+    max-height: 250px;
   }
   /* .dashboard-link-wrap ul li a {
     padding: 7.5px 26px;
@@ -356,6 +359,13 @@
     padding: 11px 10px;
     font-size: 12px;
   }
+  .merchant-top-btn-nav .btn img {
+    max-width: 22px;
+  }
+  .merchant-top-btn-nav .con-btn-wrap > .btn {
+    padding: 11px 10px;
+    font-size: 12px;
+  }
 }
 @media only screen and (max-width: 1366px) {
   .profile-right-sec {
@@ -381,6 +391,10 @@
     padding: 25px 30px;
     margin-bottom: 33px;
   }
+  /* .merchant-qr-inner {
+    padding: 25px 30px;
+    margin-bottom: 20px;
+  } */
   .profile-qr p {
     padding-bottom: 30px;
   }
@@ -536,6 +550,11 @@
     font-size: 15px;
     line-height: 20px;
   }
+  .mer-listing-info .mer-list-uname {
+    width: calc(100% - 101px);
+    font-size: 15px;
+    line-height: 20px;
+  }
   .wallet-bank_link-form-wrap .radio-wrap {
     margin-bottom: 35px;
     margin-top: 25px;
@@ -564,6 +583,11 @@
     font-size: 13px;
     padding: 9px 16px;
   }
+  .merchant-listing-btn-wrap .btn {
+    /* padding: 8px 16px; */
+    font-size: 13px;
+    padding: 9px 16px;
+  }
   .con-listing-edit-wrap {
     margin-right: 25px;
   }
@@ -575,6 +599,9 @@
   } */
   .profile-qr-inner img {
     max-width: 150px;
+  }
+  .merchant-qr-inner img {
+    max-width: 250px;
   }
   .profile-info-right-desc {
     padding-left: 25px;
@@ -647,6 +674,10 @@
   .act-user-content-wrap .user-thumb-name img {
     margin-right: 20px;
   }
+  .act-user-content-wrap .user-thumb-name div {
+    margin-right: 20px;
+    min-width: 48px;
+  }
   .act-user-content-wrap .user-thumb-name {
     min-width: 210px;
     max-width: 210px;
@@ -664,7 +695,10 @@
     padding-top: 11px !important;
     padding-bottom: 11px !important;
   }
-  .contact-customer-type .anchor{
+  .contact-customer-type .anchor {
+    height: 40px;
+  }
+  .merchant-customer-type .anchor {
     height: 40px;
   }
   .activity-date-wrap {
@@ -704,13 +738,23 @@
     padding-left: 18px;
     width: 60%;
   }
+  .merchant-top-btn-nav {
+    padding-left: 18px;
+    width: 60%;
+  }
   .contact-serch-main {
+    width: 40%;
+  }
+  .merchant-serch-main {
     width: 40%;
   }
   /* .contact-top-btn-nav {
     width: 60%;
   } */
   .contact-top-btn-nav .con-btn-wrap .btn img {
+    margin-right: 5px;
+  }
+  .merchant-top-btn-nav .con-btn-wrap .btn img {
     margin-right: 5px;
   }
   form .form-field .eye-icon {
@@ -762,6 +806,9 @@
   .con-listing-info .con-list-uname {
     font-size: 14px;
   }
+  .mer-listing-info .mer-list-uname {
+    font-size: 14px;
+  }
   .conlist-edit-a:first-child {
     margin-right: 10px;
   }
@@ -776,6 +823,17 @@
   .con-listing-btn-wrap .btn:first-child {
     margin-right: 0px;
   }
+  .merchant-listing-btn-wrap .btn {
+    font-size: 12px;
+    line-height: 12px;
+    padding: 8px 18px;
+  }
+  .merchant-listing-btn-wrap .btn:first-child {
+    margin-right: 20px;
+  }
+  .merchant-top-btn-nav .con-btn-wrap {
+    padding-right: 10px;
+  }
   .contact-top-btn-nav .con-btn-wrap {
     padding-right: 10px;
   }
@@ -784,6 +842,9 @@
   }
   .profile-qr-inner img {
     max-width: 125px;
+  }
+  .merchant-qr-inner img {
+    max-width: 250px;
   }
   .business-info-right-sec .form-field .form-control {
     padding-top: 13px !important;
@@ -841,11 +902,23 @@
   .contact-top-search-sec {
     display: block !important;
   }
+  .merchant-top-search-sec {
+    display: block !important;
+  }
+  .merchant-serch-main {
+    margin-bottom: 20px;
+    width: 100% !important;
+  }
   .contact-serch-main {
     margin-bottom: 20px;
     width: 75% !important;
   }
   .contact-top-btn-nav {
+    padding-left: 0px !important;
+    width: 100%;
+    justify-content: left;
+  }
+  .merchant-top-btn-nav {
     padding-left: 0px !important;
     width: 100%;
     justify-content: left;
@@ -909,7 +982,14 @@
     margin: 0px 20px 20px 0px;
     width: 75% !important;
   }
-  .contact-customer-type .anchor{
+  .contact-customer-type .anchor {
+    height: 40px;
+  }
+  .merchant-customer-type {
+    margin: 0px 20px 20px 0px;
+    width: 75% !important;
+  }
+  .merchant-customer-type .anchor {
     height: 40px;
   }
   .div-font-14 {
@@ -978,6 +1058,15 @@
   }
   .profile-qr-inner img {
     max-width: 110px;
+    height: auto;
+  }
+  .merchant-qr-inner {
+    padding: 20px 20px;
+    margin-bottom: 20px;
+    border-radius: 25px;
+  }
+  .merchant-qr-inner img {
+    max-width: 250px;
     height: auto;
   }
   /*20-01-2023*/
@@ -1251,6 +1340,10 @@
   .act-user-content-wrap .user-thumb-name img {
     margin-right: 15px;
   }
+  .act-user-content-wrap .user-thumb-name div {
+    margin-right: 15px;
+    min-width: 48px;
+  }
   .act-user-content-wrap li div,
   .act-user-content-wrap .seleted-value,
   .act-user-content-wrap .user-thumb-name span {
@@ -1274,6 +1367,9 @@
   .con-listing-info .con-list-uname {
     width: calc(100% - 95px);
   }
+  .mer-listing-info .mer-list-uname {
+    width: calc(100% - 95px);
+  }
   .contact-top-btn-nav .con-btn-wrap > .btn {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -1284,6 +1380,23 @@
   }
   .contact-top-btn-nav {
     padding-left: 20px;
+  }
+  .merchant-top-btn-nav .con-btn-wrap > .btn {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .merchant-top-btn-nav .con-btn-wrap .btn img {
+    margin-right: 8px;
+    max-width: 25px;
+  }
+  .merchant-top-btn-nav {
+    padding-left: 20px;
+  }
+  .merchant-listing-wrap > li > div {
+    margin-right: 50px;
+  }
+  .merchant-listing-wrap > li > div:last-child {
+    margin-right: 0px;
   }
   .contact-listing-wrap > li > div {
     margin-right: 15px;
@@ -1497,6 +1610,16 @@
   .contact-top-btn-nav .btn img {
     max-width: 22px;
   }
+  .merchant-top-btn-nav .con-btn-wrap {
+    padding-right: 8px;
+  }
+  .merchant-top-btn-nav .con-btn-wrap > .btn {
+    padding: 11px 10px;
+    font-size: 12px;
+  }
+  .merchant-top-btn-nav .btn img {
+    max-width: 22px;
+  }
   /* .contact-top-btn-nav .con-btn-wrap > .btn {
     font-size: 12px;
   } */
@@ -1515,10 +1638,10 @@
   form .form-field .form-control {
     padding: 11px 15px !important;
   }
-  .kyc-date-filter{
+  .kyc-date-filter {
     height: 47px !important;
   }
-  .date-filter-calendar-recurring{
+  .date-filter-calendar-recurring {
     height: 47px !important;
   }
   .amt-with-currency span {
@@ -1889,6 +2012,9 @@
   .contact-top-btn-nav .con-btn-wrap {
     padding-right: 30px;
   }
+  .merchant-top-btn-nav .con-btn-wrap {
+    padding-right: 30px;
+  }
   .con-details-modal .modal-body {
     padding: 80px 28px 40px;
   }
@@ -2037,6 +2163,9 @@
     padding-top: 75px;
   }
   .contact-top-btn-nav .con-btn-wrap .btn img {
+    max-width: 23px;
+  }
+  .merchant-top-btn-nav .con-btn-wrap .btn img {
     max-width: 23px;
   }
   .pi-title-div {
@@ -2215,10 +2344,10 @@
   form .form-field .form-control {
     padding: 11px 15px !important;
   }
-  .kyc-date-filter{
+  .kyc-date-filter {
     height: 47px !important;
   }
-  .date-filter-calendar-recurring{
+  .date-filter-calendar-recurring {
     height: 47px !important;
   }
   /*.login-signup-content-wrap {
@@ -2314,6 +2443,10 @@
     max-width: 100px;
     height: auto;
   }
+  .merchant-qr-inner img {
+    max-width: 250px;
+    height: auto;
+  }
   .settings-bottom-info-sec ul li {
     padding: 13px 15px;
     border-radius: 15px;
@@ -2321,7 +2454,13 @@
   .icon-wrap {
     font-size: 15px;
   }
+  .merchant-icon-wrap {
+    font-size: 15px;
+  }
   .icon-settings {
+    margin-right: 13px;
+  }
+  .merchant-icon-settings {
     margin-right: 13px;
   }
   .settings-notifications-bottom-info-sec ul li {
@@ -2329,6 +2468,13 @@
     font-size: 15px;
   }
   .settings-notifications-bottom-info-sec ul {
+    padding-bottom: 40px;
+  }
+  .organization-toggle ul li {
+    padding: 13px 25px;
+    font-size: 15px;
+  }
+  .organization-toggle ul {
     padding-bottom: 40px;
   }
   .settings-edit-profile-top-sec {
@@ -2428,6 +2574,9 @@
     line-height: 16px;
   }
   .contact-customer-type {
+    min-height: 0px !important;
+  }
+  .merchant-customer-type {
     min-height: 0px !important;
   }
   .search-field .search-btn {
@@ -2711,6 +2860,13 @@
     margin-right: 5px;
   }
   .contact-top-btn-nav .btn {
+    padding: 15px 15px;
+    font-size: 15px;
+  }
+  .merchant-top-btn-nav .con-btn-wrap .btn img {
+    margin-right: 5px;
+  }
+  .merchant-top-btn-nav .btn {
     padding: 15px 15px;
     font-size: 15px;
   }
@@ -3038,6 +3194,11 @@
     width: 100%;
     justify-content: left;
   }
+  .merchant-top-btn-nav {
+    max-width: 100%;
+    width: 100%;
+    justify-content: left;
+  }
   .send-top-sec > form {
     width: 100% !important;
   }
@@ -3054,6 +3215,9 @@
     padding-top: 20px;
   }
   .contact-top-sec {
+    margin-top: 20px;
+  }
+  .merchant-top-sec {
     margin-top: 20px;
   }
   .edit-group-slider-main {
@@ -3236,11 +3400,11 @@
     padding: 11px 15px !important;
     font-size: 14px;
   }
-  .kyc-date-filter{
+  .kyc-date-filter {
     border-radius: 12px !important;
     height: 44px !important;
   }
-  .date-filter-calendar-recurring{
+  .date-filter-calendar-recurring {
     border-radius: 12px !important;
     height: 44px !important;
   }
@@ -3405,10 +3569,21 @@
     width: 36px;
     height: 36px;
   }
+  .merchant-icon-settings {
+    margin-right: 11px;
+    width: 36px;
+    height: 36px;
+  }
   .icon-wrap {
     font-size: 14px;
   }
+  .merchant-icon-wrap {
+    font-size: 14px;
+  }
   .icon-settings svg {
+    max-height: 20px;
+  }
+  .merchant-icon-settings svg {
     max-height: 20px;
   }
   .settings-inner-sec .profile-info h3 {
@@ -3421,6 +3596,11 @@
     padding-bottom: 18px;
   }
   .settings-notifications-bottom-info-sec ul li {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 13px;
+  }
+  .organization-toggle ul li {
     padding: 10px 20px;
     font-size: 14px;
     border-radius: 13px;
@@ -3438,6 +3618,12 @@
     padding-bottom: 33px;
   }
   .settings-notifications-bottom-info-sec ul li:not(:last-child) {
+    margin-bottom: 15px;
+  }
+  .organization-toggle ul {
+    padding-bottom: 33px;
+  }
+  .organization-toggle ul li:not(:last-child) {
     margin-bottom: 15px;
   }
   .settings-edit-profile-top-sec .upload-profile-image a {
@@ -3904,7 +4090,7 @@
     border-radius: 15px !important;
     line-height: 25px;
   }
-  .qr-share-icon{
+  .qr-share-icon {
     border-radius: 25px !important;
     padding: 0px 14px;
     height: 45px;
@@ -4010,7 +4196,18 @@
     max-width: 200px;
     min-width: 200px;
   }
+  /* .mer-listing-info.no-width {
+    max-width: 500px;
+    min-width: 300px;
+  } */
+  .mer-listing-info {
+    max-width: 200px;
+    min-width: 200px;
+  }
   .contact-listing-wrap > li > div {
+    margin-right: 8px;
+  }
+  .merchant-listing-wrap > li > div {
     margin-right: 8px;
   }
   #invite-sent-popup .modal-body h3 {
@@ -4020,6 +4217,9 @@
     margin-top: 20px;
   }
   .contact-serch-main {
+    width: 100% !important;
+  }
+  .merchant-serch-main {
     width: 100% !important;
   }
   .wallet-title-btns a {
@@ -4057,7 +4257,16 @@
     margin-left: 20px;
     margin-right: 20px;
   }
+  .merchant-listing-wrap li {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
   .con-listing-container {
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-top: 20px;
+  }
+  .merchant-listing-container {
     margin-left: -20px;
     margin-right: -20px;
     margin-top: 20px;
@@ -4244,7 +4453,14 @@
     margin-bottom: 20px;
     width: 100% !important;
   }
-  .contact-customer-type .anchor{
+  .contact-customer-type .anchor {
+    height: 40px;
+  }
+  .merchant-customer-type {
+    margin-bottom: 20px;
+    width: 100% !important;
+  }
+  .merchant-customer-type .anchor {
     height: 40px;
   }
   .rf-details-div > div > p {
@@ -4688,6 +4904,14 @@
   .contact-top-btn-nav .con-btn-wrap > .btn > a {
     font-size: 12px;
   }
+  .merchant-top-btn-nav .con-btn-wrap > .btn {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 12px;
+  }
+  .merchant-top-btn-nav .con-btn-wrap > .btn > a {
+    font-size: 12px;
+  }
   .wallet-acc-fund-btns .btn {
     min-width: auto;
   }
@@ -4712,6 +4936,13 @@
     flex-wrap: wrap;
   }
   .contact-top-btn-nav .con-btn-wrap {
+    margin-bottom: 10px;
+    padding-right: 5px;
+  }
+  .merchant-top-btn-nav {
+    flex-wrap: wrap;
+  }
+  .merchant-top-btn-nav .con-btn-wrap {
     margin-bottom: 10px;
     padding-right: 5px;
   }
@@ -4940,6 +5171,13 @@
     min-width: 95px;
     max-width: 65px;
   }
+  .merchant-customer-type.merchant-first-child {
+    margin: 0px 0px 20px 0px;
+  }
+  .merchant-qr-inner img {
+    max-width: 200px;
+    height: auto;
+  }
 }
 @media only screen and (max-width: 480px) {
   /* .profile-inner-sec.p-4 {
@@ -4952,6 +5190,17 @@
     max-width: 100px;
   }
   .contact-top-btn-nav .con-btn-wrap > .btn {
+    font-size: 10px;
+    line-height: 13px;
+    padding: 8px;
+  }
+  .merchant-top-btn-nav .con-btn-wrap > .btn span {
+    display: block;
+    width: 100%;
+    margin: auto;
+    max-width: 100px;
+  }
+  .merchant-top-btn-nav .con-btn-wrap > .btn {
     font-size: 10px;
     line-height: 13px;
     padding: 8px;
@@ -4971,6 +5220,12 @@
     padding: 10px 10px !important;
   }
   .contact-top-btn-nav .con-btn-wrap > .btn > a {
+    font-size: 10px;
+    line-height: 13px;
+    padding: 0px;
+    display: flex;
+  }
+  .merchant-top-btn-nav .con-btn-wrap > .btn > a {
     font-size: 10px;
     line-height: 13px;
     padding: 0px;
@@ -5061,7 +5316,15 @@
     /* max-width: 300px; */
     width: 100% !important;
   }
-  .contact-customer-type .anchor{
+  .contact-customer-type .anchor {
+    height: 40px;
+  }
+  .merchant-customer-type {
+    min-height: 60px;
+    /* max-width: 300px; */
+    width: 100% !important;
+  }
+  .merchant-customer-type .anchor {
     height: 40px;
   }
   .refund-dr-wrap .date-filter-calendar > input {
@@ -5197,6 +5460,10 @@
     min-width: 45px;
     max-width: 65px;
   }
+  .mer-list-uimg-mh-mw {
+    min-width: 218px;
+    max-width: 200px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -5273,6 +5540,10 @@
   .RecurringScheduleDateWrap > div:not(:last-child) {
     margin-right: 25px;
   }
+
+  .dashboard-home-container.agent .dashboard-graph-sec {
+    width: 100%;
+  }
 }
 
 @media all and (max-width: 767px) {
@@ -5323,12 +5594,12 @@
   }
 
   .act-user-in {
-    padding-left: 0px !important;
+    padding-left: 10px !important;
   }
 
   .agent-recent-activity-list-table img {
-    width: 75%;
-    height: 75%;
+    width: 100%;
+    height: 100%;
   }
 
   .accordion {
@@ -5354,6 +5625,21 @@
   }
   .rc-refund-all-wrap .rc-refund-main-wrap {
     width: 100%;
+  }
+}
+
+@media only screen and (min-width: 1199px) and (max-width: 1299px) {
+  .contact-listing-wrap > li > div {
+    margin-right: 50px;
+  }
+  .merchant-listing-wrap > li > div {
+    margin-right: 50px;
+  }
+}
+
+@media only screen and (max-width: 1299px) {
+  .merchant-customer-type.merchant-last-child {
+    margin: 0px 0px 20px 0px;
   }
 }
 

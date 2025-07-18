@@ -1,7 +1,7 @@
 import { apiRequest } from "helpers/apiRequests";
 import { useState, useEffect } from "react";
 
-const useCountriesCities = () => {
+const useCountriesCities = (showOnlySignupCountries = false) => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
 
@@ -10,13 +10,18 @@ const useCountriesCities = () => {
       try {
         const { data } = await apiRequest.getCountry();
         if (!data.success) throw data.message;
-        setCountries(data?.data?.country_list);
+        const filteredCountries = showOnlySignupCountries
+          ? data?.data?.country_list?.filter(
+              (country) => country.is_signup_country
+            )
+          : data?.data?.country_list;
+        setCountries(filteredCountries);
         setCities(data?.data?.city_list);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, []);
+  }, [showOnlySignupCountries]);
 
   return [countries, cities];
 };

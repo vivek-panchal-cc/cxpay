@@ -1,13 +1,30 @@
 import Image from "components/ui/Image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { IconContact, IconLogout, IconSetting } from "styles/svgs";
 import ProfileDropItem from "./ProfileDropItem";
+import { LoaderContext } from "context/loaderContext";
+import { apiRequest } from "helpers/apiRequests";
+import { useNavigate } from "react-router-dom";
+import ModalPaymentPin from "components/modals/ModalPaymentPin";
+import { sendPaymentPinSchema } from "schemas/sendPaymentSchema";
+import { toast } from "react-toastify";
+import { usePinContext } from "context/pinContext";
+import useForgotPinHandler from "hooks/useForgotPinHandler";
+import { getInitials, getRandomColorClass } from "constants/all";
 
 const ProfileDropdown = () => {
   const dropdownref = useRef(null);
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const { setIsPinValidated } = usePinContext();
   const { profile } = useSelector((state) => state.userProfile);
+  const { user_type, company_name, first_name, last_name } = profile || "";
   const [showDrop, setShowDrop] = useState(false);
+  const { setIsLoading } = useContext(LoaderContext);
+  const [showPinPopup, setShowPinPopup] = useState(false);
+  const { handleForgotPin, OtpModal, PinModal } =
+    useForgotPinHandler(setShowPinPopup);
 
   useEffect(() => {
     function handleclickOutside(event) {
@@ -20,6 +37,35 @@ const ProfileDropdown = () => {
       document.removeEventListener("mousedown", handleclickOutside);
     };
   }, [dropdownref]);
+
+  // Function to handle PIN validation
+  const handleSubmitPin = async (pin) => {
+    if (!pin) return;
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.pinValidate({ user_pin: pin });
+      if (!data.success) throw data;
+      toast.success(data.message);
+      setShowPinPopup(false);
+      setIsPinValidated(true);
+      navigate("/setting");
+    } catch (error) {
+      setError(error.message);
+      if (error.data.is_suspended) {
+        navigate("/logout", { replace: true });
+        toast.error(error.message);
+      }
+      // toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSettingsClick = (e) => {
+    e.preventDefault();
+    setError("");
+    setShowPinPopup(true);
+  };
 
   const profileDropItems = [
     {
@@ -43,7 +89,7 @@ const ProfileDropdown = () => {
       <div className="user-image">
         <div className="user-image-wrap" onClick={() => setShowDrop(true)}>
           <span className="h-100 w-100">
-            <Image
+            {/* <Image
               src={profile?.profile_image || ""}
               alt="profile avtars"
               fallbacksrc={
@@ -57,15 +103,42 @@ const ProfileDropdown = () => {
               }
               className="h-100 w-100 object-fit-cover"
               style={{ objectPosition: "center" }}
-            />
+            /> */}
+            {profile?.profile_image ? (
+              <Image
+                src={profile?.profile_image}
+                className="blue-bg h-100 w-100 object-fit-cover"
+                // style={{ objectPosition: "center", objectFit: "cover" }}
+                alt="contact img"
+              />
+            ) : (
+              <div
+                className={`rounded-0 initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                  user_type === "business"
+                    ? company_name
+                    : first_name + " " + last_name
+                )}`}
+              >
+                {user_type === "business"
+                  ? getInitials(company_name)
+                  : getInitials(first_name + " " + last_name)}
+              </div>
+            )}
           </span>
         </div>
         <ul ref={dropdownref} style={{ display: showDrop ? "block" : "none" }}>
           {profileDropItems.map((elm) => (
             <ProfileDropItem
               key={elm.path}
-              path={elm.path}
-              onClick={() => setShowDrop(false)}
+              path={elm.path === "/setting" ? null : elm.path}
+              onClick={(e) => {
+                setShowDrop(false);
+                if (elm.path === "/setting" && user_type !== "agent") {
+                  handleSettingsClick(e);
+                } else {
+                  navigate(elm.path);
+                }
+              }}
             >
               {elm.icon}
               {elm.title}
@@ -73,6 +146,24 @@ const ProfileDropdown = () => {
           ))}
         </ul>
       </div>
+      {showPinPopup && (
+        <ModalPaymentPin
+          id="group_pay_otp_modal"
+          className="otp-verification-modal group_pay_otp_modal"
+          show={showPinPopup}
+          allowClickOutSide={true}
+          setShow={setShowPinPopup}
+          heading="5 - Digit PIN Access"
+          headingImg="/assets/images/setupPin.svg"
+          subHeading="Secure your account with 5 - Digit PIN Access"
+          validationSchema={sendPaymentPinSchema}
+          error={error}
+          handleSubmitPin={handleSubmitPin}
+          handleForgotPin={handleForgotPin}
+        />
+      )}
+      {OtpModal()}
+      {PinModal()}
     </div>
   );
 };

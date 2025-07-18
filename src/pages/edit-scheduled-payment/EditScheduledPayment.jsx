@@ -146,9 +146,9 @@ const EditScheduledPayment = () => {
             <div className="sp-details-inner-wrap ">
               <ul>
                 {contacts?.map((item, index) => {
-                  const profileURL = item.member_image
-                    ? item.member_image
-                    : "/assets/images/single_contact_profile.png";
+                  const profileURL = item.member_image;
+                  // ? item.member_image
+                  // : "/assets/images/single_contact_profile.png";
                   return (
                     <PaymentUserItem
                       key={item?.member_amount || index}

@@ -86,6 +86,9 @@ const responseErrorInterceptor = (error) => {
           errResponse.data.message
         )}`;
       }, 3000);
+    } else if (redirect_to === "423C") {
+      sessionStorage.setItem("pendingPin", "true");
+      window.location.href = `/pending-pin`;
     } else if (redirect_to === "424C") {
       window.location.href = `/send-mail?message=${encodeURIComponent(
         errResponse.data.message

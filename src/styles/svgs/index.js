@@ -26,6 +26,8 @@ export { default as IconImage } from "./Image";
 export { default as IconCardBackground } from "./CardBackground";
 export { default as IconCancel } from "./Cancel";
 export { default as IconEdit } from "./Edit";
+export { default as IconSetAmountEdit } from "./SetAmountEdit";
+export { default as IconClear } from "./Clear";
 export { default as IconCross } from "./Cross";
 export { default as IconBank } from "./Bank";
 export { default as IconEye } from "./Eye";
@@ -68,6 +70,10 @@ export { default as IconArrowRight } from "./ArrowRight";
 export { default as IconNotifyKyc } from "./NotifyKyc";
 export { default as IconVerified } from "./Verified";
 export { default as IconDeleteContact } from "./DeleteContact";
+export { default as IconExport } from "./Export";
+export { default as IconMerchant } from "./Merchant";
+export { default as IconMerchantQR } from "./MerchantQR";
+export { default as IconQR } from "./QR";
 
 // Notification related icons
 export { default as IconNotifyDelete } from "./NotifyDelete";
@@ -84,3 +90,4 @@ export { default as IconActReqDecline } from "./ActReqDecline";
 export { default as IconActReqReceive } from "./ActReqReceive";
 export { default as IconActReqSent } from "./ActReqSent";
 export { default as IconRefresh } from "./Refresh";
+export { default as IconDashboardRefresh } from "./DashboardRefresh";

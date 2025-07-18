@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useRef } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./modal.module.scss";
 import {
   ACT_REQUEST_RECEIVE,
@@ -16,6 +16,9 @@ import {
   activityConsts,
   isAdminApprovedWithRenewCheck,
   ACT_STATUS_FAILED,
+  TXN_TYPE_WW,
+  getInitials,
+  getRandomColorClass,
 } from "constants/all";
 import LoaderActivityDetail from "loaders/LoaderActivityDetail";
 import LoaderActivityProfile from "loaders/LoaderActivityProfile";
@@ -24,6 +27,10 @@ import { formatDate } from "helpers/commonHelpers";
 import { IconCloseModal } from "styles/svgs";
 import { useSelector } from "react-redux";
 import { LoginContext } from "context/loginContext";
+import { LoaderContext } from "context/loaderContext";
+import { apiRequest } from "helpers/apiRequests";
+import { toast } from "react-toastify";
+import { SendPaymentContext } from "context/sendPaymentContext";
 
 const ModalActivityDetail = (props) => {
   const {
@@ -56,11 +63,13 @@ const ModalActivityDetail = (props) => {
     txn_mode,
     fees,
     payment_type,
+    ref_id,
   } = details || {};
 
   const modalRef = useRef(null);
+  const [payAgain, setPayAgain] = useState(false);
   const profileUrl = image || "/assets/images/single_contact_profile.png";
-  const { admin_approved } = useSelector(
+  const { admin_approved, user_type } = useSelector(
     (state) => state?.userProfile?.profile
   );
   const { loginCreds } = useContext(LoginContext);
@@ -69,6 +78,16 @@ const ModalActivityDetail = (props) => {
     admin_approved,
     show_renew_section
   );
+  const { setIsLoading } = useContext(LoaderContext);
+  const { handleSendContactsForInstantPay } = useContext(SendPaymentContext);
+  const statusKey =
+    user_type === "business" && status === "PAID"
+      ? `${status}_business`
+      : status;
+  const trWwStatus =
+    activity_type === "transaction" &&
+    (request_type === "credit" || request_type === "debit") &&
+    txn_type === "WW";
 
   const {
     iconStatus,
@@ -86,8 +105,9 @@ const ModalActivityDetail = (props) => {
         return activityConsts[activity_type]?.[request_type]?.[status] || {};
       case ACT_TYPE_TRANSACTION:
         return (
-          activityConsts[activity_type]?.[request_type]?.[txn_type]?.[status] ||
-          {}
+          activityConsts[activity_type]?.[request_type]?.[txn_type]?.[
+            trWwStatus ? statusKey : status
+          ] || {}
         );
       default:
         return {};
@@ -179,6 +199,41 @@ const ModalActivityDetail = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (ACT_TRANSACT_DEBIT === request_type && TXN_TYPE_WW === txn_type) {
+      setPayAgain(true);
+    } else {
+      setPayAgain(false); // Optionally reset if conditions don't match
+    }
+  }, [request_type, txn_type]);
+
+  const handlePayAgain = async () => {
+    if (!ref_id) return;
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.walletTransactionVerify({
+        ref_id: ref_id,
+      });
+      if (!data.success) throw data.message;
+      const details = data.data;
+      const contact = {
+        name: details.name,
+        profile_image: details.image,
+        specifications: details.specification,
+        personal_amount:
+          typeof details.amount === "number" ? details.amount?.toFixed(2) : "0",
+        receiver_account_number: details.receiver_account_number,
+      };
+      handleSendContactsForInstantPay([contact], ref_id);
+      // toast.success(data.message);
+      setShow(false);
+    } catch (error) {
+      if (typeof error === "string") toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   if (!show) return;
   return (
     <div className={`modal fade show ${styles.modal} ${className}`} id={id}>
@@ -198,8 +253,17 @@ const ModalActivityDetail = (props) => {
                 />{" "}
                 {loading ? (
                   <LoaderActivityProfile />
+                ) : image ? (
+                  // <img src={profileUrl} alt="User Profile" />
+                  <img src={image} className="blue-bg" alt="" />
                 ) : (
-                  <img src={profileUrl} alt="User Profile" />
+                  <div
+                    className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                      name
+                    )}`}
+                  >
+                    {getInitials(name)}
+                  </div>
                 )}
               </div>
             </div>
@@ -220,6 +284,17 @@ const ModalActivityDetail = (props) => {
                     </p>
                     <p>{specification}</p>
                   </div>
+                  {payAgain && (
+                    <div className="act-status-wrap mt-3 d-flex justify-content-center">
+                      <button
+                        type="button"
+                        className={`btn btn-blue`}
+                        onClick={handlePayAgain}
+                      >
+                        Recreate
+                      </button>
+                    </div>
+                  )}
                   <table>
                     <tbody>
                       <tr>

@@ -1,5 +1,6 @@
 import KycChecked from "components/notification-bar/kyc-checked/KycChecked";
 import Image from "components/ui/Image";
+import { getInitials, getRandomColorClass } from "constants/all";
 import React, { useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { IconMobile, IconPersonalId } from "styles/svgs";
@@ -21,7 +22,7 @@ const AvatarInfo = (props) => {
   return (
     <div className="profile-top-sec">
       <div className="profile-avtar">
-        <Image
+        {/* <Image
           src={profileImg}
           alt="profile avtar"
           fallbacksrc={
@@ -35,7 +36,23 @@ const AvatarInfo = (props) => {
           }
           className="h-100 w-100 object-fit-cover"
           style={{ objectPosition: "center" }}
-        />
+        /> */}
+        {profileImg ? (
+          <Image
+            src={profileImg}
+            className="blue-bg h-100 w-100"
+            style={{ objectPosition: "center", objectFit: "cover" }}
+            alt="contact img"
+          />
+        ) : (
+          <div
+            className={`rounded-0 initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+              profileName
+            )}`}
+          >
+            {getInitials(profileName)}
+          </div>
+        )}
       </div>
       <div className="profile-info">
         <h3>{profileName}</h3>

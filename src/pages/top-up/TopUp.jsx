@@ -22,7 +22,7 @@ function TopUp() {
   const [activitiesList, setActivitiesList] = useState([]);
   const [loadingBalance, balance] = useBalance();
   const [loadingChart, chartData] = useChartData();
-  const [countryList, cities] = useCountriesCities();
+  const [countryList, cities] = useCountriesCities(true);
 
   const [modalDetails, setModalDetails] = useState({
     show: false,
@@ -88,7 +88,7 @@ function TopUp() {
       } catch (error) {
         // if (typeof error === "string") return toast.error(error);
         if (typeof error === "string") {
-          setModalDetails({ show: true, message: error || "" });        
+          setModalDetails({ show: true, message: error || "" });
           return;
         }
         const errorObj = {};
@@ -101,7 +101,7 @@ function TopUp() {
   });
 
   const handleModalCallback = () => {
-    setModalDetails({ show: false, message: "" });    
+    setModalDetails({ show: false, message: "" });
   };
 
   return (

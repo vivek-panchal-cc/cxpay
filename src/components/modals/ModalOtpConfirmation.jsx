@@ -24,6 +24,7 @@ function ModalOtpConfirmation(props) {
     handleResendOtp,
     validationSchema,
     allowClickOutSide,
+    error,
   } = props;
 
   const modalRef = useRef(null);
@@ -167,9 +168,7 @@ function ModalOtpConfirmation(props) {
                   </button>
                 </div>
                 <div className="popup-btn-wrap">
-                  {formik.status && (
-                    <p className="text-danger">{formik.status}</p>
-                  )}
+                  {error && <p className="text-danger">{error}</p>}
                   <input
                     type="submit"
                     className={`btn btn-primary ${

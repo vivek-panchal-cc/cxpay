@@ -8,6 +8,7 @@ import {
 import { IconEyeOpen } from "styles/svgs";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { formatDate } from "helpers/commonHelpers";
+import { getInitials, getRandomColorClass } from "constants/all";
 
 const TopUpActivityItem = (props) => {
   const { activityDetails, handleClick, visibleIcon } = props || {};
@@ -78,9 +79,20 @@ const TopUpActivityItem = (props) => {
 
   return (
     <tr onClick={() => handleClick({ id, activity_type, reference_id })}>
-      <td className="act-user-info-wrap d-flex">
+      <td className="act-user-info-wrap d-flex w-100">
         <div className="act-user-thumb">
-          <img src={profileUrl} alt="" />
+          {/* <img src={profileUrl} alt="" /> */}
+          {profile_image ? (
+            <img src={profile_image} className="blue-bg" alt="" />
+          ) : (
+            <div
+              className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                customer_name
+              )}`}
+            >
+              {getInitials(customer_name)}
+            </div>
+          )}
         </div>
         <div className="act-user-in">
           <h2>{customer_name}</h2>

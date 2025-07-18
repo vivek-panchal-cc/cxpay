@@ -278,7 +278,7 @@ function SendContact() {
                 disabled={selectedContactsIds.length < 1}
               >
                 <IconSend style={{ stroke: "#fff" }} />
-                Send
+                Proceed to Pay
               </Button>
               <Button
                 type="button"
@@ -369,7 +369,7 @@ function SendContact() {
                 disabled={selectedGroupIds.length < 1}
               >
                 <IconSend style={{ stroke: "#fff" }} />
-                Send
+                Proceed to Pay
               </Button>
               <Button
                 type="button"

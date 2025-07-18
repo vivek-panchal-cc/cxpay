@@ -1,9 +1,14 @@
 import WrapAmount from "components/wrapper/WrapAmount";
 import { CURRENCY_SYMBOL } from "constants/all";
 import { LoaderContext } from "context/loaderContext";
+import { apiRequest } from "helpers/apiRequests";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import ReactApexChart from "react-apexcharts";
-import { IconBalanceEyeOpen, IconBalanceEyeClose } from "styles/svgs";
+import {
+  IconBalanceEyeOpen,
+  IconBalanceEyeClose,
+  IconDashboardRefresh,
+} from "styles/svgs";
 
 const chartOption = {
   series: [
@@ -102,12 +107,14 @@ const chartOption = {
 const months = [];
 
 const AgentBalanceGraph = (props) => {
-  const { isLoading } = useContext(LoaderContext);
+  const { isLoading, setIsLoading } = useContext(LoaderContext);
   const { graphBackgroundImage, balanceDataArr, balance, monthDataArr } = props;
   const [options, setOptions] = useState({ ...chartOption });
   const [showAvailableBalance, setShowAvailableBalance] = useState(false);
   const [showReservedAmount, setShowReservedAmount] = useState(false);
   const [showBalance, setShowBalance] = useState(true);
+  const [displayedCommissionAmount, setDisplayedCommissionAmount] = useState(0);
+  const [displayedRechargeAmount, setDisplayedRechargeAmount] = useState(0);
 
   const { commissionAmount, rechargeAmount } = useMemo(() => {
     const { commission_amount, recharge_amount } = balance || {};
@@ -121,6 +128,44 @@ const AgentBalanceGraph = (props) => {
         : "";
     return { commissionAmount, rechargeAmount };
   }, [balance]);
+
+  useEffect(() => {
+    const duration = 1000; // Total time for animation (5 seconds)
+    const intervalTime = 50; // Update the balance every 10ms
+    const steps = duration / intervalTime;
+    const increment = commissionAmount / steps;
+
+    let currentCommissionAmount = 0;
+    const interval = setInterval(() => {
+      currentCommissionAmount += increment;
+      if (currentCommissionAmount >= commissionAmount) {
+        currentCommissionAmount = commissionAmount;
+        clearInterval(interval);
+      }
+      setDisplayedCommissionAmount(currentCommissionAmount);
+    }, intervalTime);
+
+    return () => clearInterval(interval);
+  }, [commissionAmount]);
+
+  useEffect(() => {
+    const duration = 1000; // Total time for animation (5 seconds)
+    const intervalTime = 50; // Update the balance every 10ms
+    const steps = duration / intervalTime;
+    const increment = rechargeAmount / steps;
+
+    let currentRechargeAmount = 0;
+    const interval = setInterval(() => {
+      currentRechargeAmount += increment;
+      if (currentRechargeAmount >= rechargeAmount) {
+        currentRechargeAmount = rechargeAmount;
+        clearInterval(interval);
+      }
+      setDisplayedRechargeAmount(currentRechargeAmount);
+    }, intervalTime);
+
+    return () => clearInterval(interval);
+  }, [rechargeAmount]);
 
   useEffect(() => {
     // Process monthDataArr and generate sortedMonthValues
@@ -254,6 +299,18 @@ const AgentBalanceGraph = (props) => {
     setShowBalance(!showBalance);
   };
 
+  const handleGetRechargeTotal = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await apiRequest.getMonthlyRechargeTotal();
+      if (!data.success) throw data?.message;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div
       className="dashboard-graph-wrap rounded-4"
@@ -294,7 +351,7 @@ const AgentBalanceGraph = (props) => {
             {commissionAmount && (
               <h2 className="h3 text-black fw-bolder">
                 {showBalance ? ( // Check if available balance should be shown
-                  <WrapAmount value={commissionAmount} />
+                  <WrapAmount value={displayedCommissionAmount} />
                 ) : (
                   `${CURRENCY_SYMBOL} ${new Array(
                     (commissionAmount + "")?.length
@@ -353,7 +410,7 @@ const AgentBalanceGraph = (props) => {
               {rechargeAmount && (
                 <h2 className="h3 text-black fw-bolder">
                   {showBalance ? (
-                    <WrapAmount value={rechargeAmount} />
+                    <WrapAmount value={displayedRechargeAmount} />
                   ) : (
                     `${CURRENCY_SYMBOL} ${new Array(
                       (rechargeAmount + "")?.length
@@ -384,6 +441,14 @@ const AgentBalanceGraph = (props) => {
               )}
             </div>
           ) : null}
+          <div className="p-4 pb-0 flex-grow-1 text-end cursor-pointer">
+            <IconDashboardRefresh
+              className={isLoading ? `refresh-icon-loading` : ""}
+              style={{ marginBottom: "4px" }}
+              stroke="#0081C5"
+              onClick={handleGetRechargeTotal}
+            />
+          </div>
         </div>
         <div className="px-2 z-1">
           <div id="chart" className="overflow-hidden">

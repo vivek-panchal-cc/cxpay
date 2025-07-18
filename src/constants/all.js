@@ -13,10 +13,11 @@ import {
 
 // Expressions
 const exp0ContainWhitespace = /^\S*$/;
+const exp0ContainOnlySpace = /^(?!\s*$).*/;
 const exp0ContainWordPassword = /^((?!password).)*$/gim;
 const expContainCapitalLetter = /^(?=.*[A-Z])/;
 const expContainNumber = /^(?=.*\d)/;
-const expContainSpecialChar = /^(?=.*[!@#$%^&*])/;
+const expContainSpecialChar = /^(?=.*[!@#$%^&*_])/;
 const validFileExtensions = {
   image: ["jpg", "png", "jpeg", "svg", "heif", "hevc"],
   receipt: ["jpg", "png", "jpeg", "heif", "hevc", "pdf", "tif", "tiff", "webp"],
@@ -41,6 +42,9 @@ const validDocumentExtensions = {
 // Test Functions
 const regexNotContainWhitespace = (testStr) =>
   new RegExp(exp0ContainWhitespace).test(testStr);
+
+const regexContainOnlySpace = (testStr) =>
+  new RegExp(exp0ContainOnlySpace).test(testStr);
 
 const regexNotContainWordPassword = (testStr) =>
   new RegExp(exp0ContainWordPassword).test(testStr);
@@ -117,7 +121,7 @@ const RECURRING_PAID = "paid";
 const recurringTypeStatus = {
   [RECURRING_PENDING]: {
     status: "UPCOMING",
-    className: "recurring-date-status-common recurring-upcoming"
+    className: "recurring-date-status-common recurring-upcoming",
   },
   [RECURRING_FAILED]: {
     status: "FAILED",
@@ -210,6 +214,7 @@ const TXN_TYPE_MF = "MF";
 const TXN_TYPE_DBT = "DBT";
 const TXN_TYPE_WITHDRAW = "withdraw";
 const TXN_TYPE_AGENT = "AGENT TOPUP";
+const BUSINESS_PAID = `${ACT_STATUS_PAID}_business`;
 
 const activityConsts = {
   [ACT_TYPE_REQUEST]: {
@@ -407,6 +412,18 @@ const activityConsts = {
           textDetailStatus: "Amount Credited",
           desc: "From YYYY",
         },
+        [BUSINESS_PAID]: {
+          iconStatus: "",
+          iconAmount: "+",
+          classStatus: "btn-green",
+          classBg: "cx-bg-green",
+          classText: "cx-color-green",
+          classDetailStatus: "cx-color-green",
+          textStatus: "Receive",
+          textDetailStatus: "Payment Received",
+
+          desc: "From YYYY",
+        },
         [ACT_STATUS_FAILED]: {
           iconStatus: "",
           iconAmount: "",
@@ -484,8 +501,8 @@ const activityConsts = {
           classBg: "cx-bg-orange",
           classText: "",
           classDetailStatus: "cx-color-orange",
-          textStatus: "Refund Inprogress",
-          textDetailStatus: "Refund Inprogress",
+          textStatus: "Refund in Progress",
+          textDetailStatus: "Refund in Progress",
           desc: "Refund request mark as inprocess by admin",
         },
         [ACT_STATUS_APPROVED]: {
@@ -625,6 +642,17 @@ const activityConsts = {
           textDetailStatus: "Amount Debited",
           desc: "To YYYY",
         },
+        [BUSINESS_PAID]: {
+          iconStatus: "",
+          iconAmount: "-",
+          classStatus: "btn-red",
+          classBg: "cx-bg-red",
+          classText: "",
+          classDetailStatus: "cx-color-red",
+          textStatus: "Sent",
+          textDetailStatus: "Payment Sent",
+          desc: "To YYYY",
+        },
         [ACT_STATUS_FAILED]: {
           iconStatus: "",
           iconAmount: "-",
@@ -656,8 +684,8 @@ const activityConsts = {
           classBg: "cx-bg-orange",
           classText: "",
           classDetailStatus: "cx-color-orange",
-          textStatus: "Refund Inprogress",
-          textDetailStatus: "Refund Inprogress",
+          textStatus: "Refund in Progress",
+          textDetailStatus: "Refund in Progress",
           desc: "Refund request mark as inprocess by admin",
         },
         [ACT_STATUS_APPROVED]: {
@@ -745,9 +773,9 @@ const activityConsts = {
           classBg: "cx-bg-orange",
           classText: "",
           classDetailStatus: "cx-color-orange",
-          textStatus: "Refund Inprogress",
-          textDetailStatus: "Refund Inprogress",
-          desc: "Refund request mark as inprocess by admin",
+          textStatus: "Refund in Progress",
+          textDetailStatus: "Refund in Progress",
+          desc: "Refund request mark as in process by admin",
         },
         [ACT_STATUS_APPROVED]: {
           iconStatus: "",
@@ -987,8 +1015,53 @@ const isComponentDisabled = (admin_approved, show_renew_section) => {
   );
 };
 
+const capitalizeWordByWord = (text) => {
+  if (typeof text !== "string") return "";
+  var separateWord = text.toLowerCase().split(" ");
+  for (var i = 0; i < separateWord.length; i++) {
+    separateWord[i] =
+      separateWord[i].charAt(0).toUpperCase() + separateWord[i].substring(1);
+  }
+  return separateWord.join(" ");
+};
+
+// Function to get initials
+const getInitials = (fullName) => {
+  if (!fullName) return "";
+  const nameParts = fullName?.trim()?.split(" ");
+  const initials =
+    nameParts.length > 1
+      ? nameParts[0][0] + nameParts[1][0] // First letters of first and last names
+      : nameParts[0]?.slice(0, 2); // First two letters if only one name
+  return initials.toUpperCase(); // Convert to uppercase
+};
+
+// Function to generate class based on alphabetics range
+const getRandomColorClass = (fullName) => {
+  if (!fullName) return "";
+
+  const firstLetter = fullName?.trim()[0]?.toLowerCase();
+  const alphabetRanges = [
+    { range: ["a", "e"], class: "bg-color-1" },
+    { range: ["f", "j"], class: "bg-color-2" },
+    { range: ["k", "o"], class: "bg-color-3" },
+    { range: ["p", "t"], class: "bg-color-4" },
+    { range: ["u", "z"], class: "bg-color-5" },
+  ];
+
+  for (let i = 0; i < alphabetRanges.length; i++) {
+    const { range, class: colorClass } = alphabetRanges[i];
+    if (firstLetter >= range[0] && firstLetter <= range[1]) {
+      return colorClass;
+    }
+  }
+
+  return "bg-color-1"; // Default to the first color class if no match
+};
+
 export {
   exp0ContainWhitespace,
+  exp0ContainOnlySpace,
   exp0ContainWordPassword,
   expContainCapitalLetter,
   expContainNumber,
@@ -1046,6 +1119,8 @@ export {
   RECURRING_FAILED,
   RECURRING_SUCCESS,
   RECURRING_PAID,
+  TXN_TYPE_WW,
+  BUSINESS_PAID,
 };
 export {
   regexContainCapitalLetter,
@@ -1056,8 +1131,12 @@ export {
   // fileUploadLimit,
   // ~NOT
   regexNotContainWhitespace,
+  regexContainOnlySpace,
   regexNotContainWordPassword,
   renameKeys,
   isAdminApprovedWithRenewCheck,
   isComponentDisabled,
+  capitalizeWordByWord,
+  getInitials,
+  getRandomColorClass,
 };

@@ -54,8 +54,40 @@ const SendPaymentProvider = (props) => {
     navigate("/send/payment");
   };
 
+  // For Instance Pay from Activity
+  const handleSendContactsForInstantPay = (contacts = null, ref_id = "") => {
+    const sendContactsList =
+      contacts && contacts.length > 0 ? contacts : selectedContacts;
+    if (!sendContactsList || sendContactsList.length <= 0)
+      return toast.warning("Please select at least one contact");
+    if (sendContactsList.length > MAX_PAYMENT_CONTACTS)
+      return toast.warning(`You have exceed the contact limit.`);
+    const alias = {
+      receiver_account_number: "receiver_account_number",
+    };
+    const listAlias = sendContactsList.map((item) => ({
+      ...renameKeys(alias, item),
+      personal_amount: item.personal_amount || "",
+      specifications: item.specifications || "",
+    }));
+    const tmpCreds = { wallet: listAlias };
+    // setDisableEdit(ref_id ? true : false);
+    if (ref_id && ref_id.length > 0) {
+      tmpCreds.ref_id = ref_id;
+      setSelectedContacts([]);
+      setSelectedGroup([]);
+      setRequestCreds([]);
+    }
+    setSendCreds(tmpCreds);
+    navigate("/send/payment");
+  };
+
   // For Send contacts button click
-  const handleSendContactsSchedule = (schedule_date = null, contacts = null, request_id = "") => {    
+  const handleSendContactsSchedule = (
+    schedule_date = null,
+    contacts = null,
+    request_id = ""
+  ) => {
     const sendContactsList =
       contacts && contacts.length > 0 ? contacts : selectedContacts;
     if (!sendContactsList || sendContactsList.length <= 0)
@@ -328,6 +360,7 @@ const SendPaymentProvider = (props) => {
         handleSelectedGroup,
         handleCancelPayment,
         handleSendContacts,
+        handleSendContactsForInstantPay,
         handleSendRecurringContacts,
         handleSendRecurringGroup,
         handleSendRequest,

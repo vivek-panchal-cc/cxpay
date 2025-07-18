@@ -17,7 +17,7 @@ const NewMobileChange = (props) => {
   const { customer_id } = details || {};
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
-  const [countryList] = useCountriesCities();
+  const [countryList] = useCountriesCities(true);
 
   useEffect(() => {
     const token = getCookie("auth._token.Bearer");
@@ -38,9 +38,9 @@ const NewMobileChange = (props) => {
     },
     validationSchema: loginWithOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
-      setIsLoading(true);      
+      setIsLoading(true);
       try {
-        const { data } = await apiRequest.createChangeMobileOtp(values);        
+        const { data } = await apiRequest.createChangeMobileOtp(values);
         if (!data.success) throw data.message;
         setMobileNumber(values.mobile_number);
         setCountryCode(values.country_code);

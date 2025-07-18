@@ -22,6 +22,7 @@ import Wallet from "pages/wallet/Wallet";
 import AddCard from "pages/add-card/AddCard";
 import LinkBank from "pages/link-bank/LinkBank";
 import Contacts from "pages/contacts/Contacts";
+import Merchants from "pages/merchants/Merchants";
 import ContactsInvited from "pages/contacts-invited/ContactsInvited";
 import Logout from "pages/logout/Logout";
 import PublicLayout from "layouts/PublicLayout";
@@ -67,6 +68,15 @@ import CMSPage from "pages/cms-content/CmsPage";
 import FaqContent from "pages/cms-content/faq/FaqContent";
 import { CmsProvider } from "context/cmsContext";
 import { FaqProvider } from "context/faqContext";
+import ChangePin from "pages/change-pin/ChangePin";
+import SetPin from "pages/change-pin/SetPin";
+import ForgotPin from "pages/forgot-pin/ForgotPin";
+import PendingPin from "pages/pending-pin/PendingPin";
+import ProtectedRoute from "components/protected-pin-route/ProtectedPin";
+import OrgDashboard from "pages/dashboard/OrgDashboard";
+import { useOrganizationSwitch } from "context/organizationSwitchContext";
+import AppInstall from "pages/app-install/AppInstall";
+import WellKnown from "pages/deep-linking/WellKnown";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -147,6 +157,10 @@ const ProtectedActivities = withUserProtection(
   AllowedBusinessPersonal
 );
 const ProtectedContacts = withUserProtection(Contacts, AllowedBusinessPersonal);
+const ProtectedMerchants = withUserProtection(
+  Merchants,
+  AllowedBusinessPersonal
+);
 const ProtectedContactsInvited = withUserProtection(
   ContactsInvited,
   AllowedBusinessPersonal
@@ -232,6 +246,7 @@ const ProtectedFaqContent = withUserProtection(FaqContent, AllowedAllTypes);
 function App() {
   const location = useLocation();
   const dispatch = useDispatch();
+  const { isToggled } = useOrganizationSwitch();
 
   // useEffect(() => {
   //   dispatch(fetchUserProfile());
@@ -258,6 +273,8 @@ function App() {
         />
         {/* List of Public Routes */}
         <Route element={<PublicLayout />}>
+          {/* <Route path="/app-install" element={<AppInstall />} />
+          <Route path="/.well-known/:fileName" element={<WellKnown />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/login-with-otp" element={<LoginWithOtp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -287,22 +304,52 @@ function App() {
             element={<KycManualSecondStep />}
           />
           <Route path="/send-mail" element={<KycSendMail />} />
+          <Route path="/set-pin" element={<SetPin />} />
+          <Route path="/forgot-pin" element={<ForgotPin />} />
+          <Route path="/pending-pin" element={<PendingPin />} />
           <Route path="/signup/:fundtype" element={<SignupFundAccount />} />
           <Route element={<DashboardLayout />}>
             {/* settings */}
             <Route path="/setting" element={<Setting />} />
-            <Route path="/setting/edit-profile" element={<EditProfile />} />
+            <Route
+              path="/setting/edit-profile"
+              element={
+                <ProtectedRoute>
+                  <EditProfile />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/setting/notification"
-              element={<ProtectedNotification />}
+              element={
+                <ProtectedRoute>
+                  <ProtectedNotification />
+                </ProtectedRoute>
+              }
             />
             <Route
               path="/setting/change-password"
-              element={<ChangePassword />}
+              element={
+                <ProtectedRoute>
+                  <ChangePassword />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/setting/change-pin"
+              element={
+                <ProtectedRoute>
+                  <ChangePin />
+                </ProtectedRoute>
+              }
             />
             <Route
               path="/setting/business-info"
-              element={<ProtectedBusinessInfo />}
+              element={
+                <ProtectedRoute>
+                  <ProtectedBusinessInfo />
+                </ProtectedRoute>
+              }
             />
             {/* <Route
               path="/setting/app-settings"
@@ -351,6 +398,10 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             {/* contacts */}
             <Route path="/" element={<ProtectedDashboard />} />
+            {/* <Route
+              path="/"
+              element={isToggled ? <OrgDashboard /> : <ProtectedDashboard />}
+            /> */}
             <Route path="/more/:slug" element={<ProtectedCMSContent />} />
             <Route
               path="/more/faq"
@@ -370,6 +421,7 @@ function App() {
               path="/contacts-invited"
               element={<ProtectedContactsInvited />}
             />
+            <Route path="/merchants" element={<ProtectedMerchants />} />
             <Route path="/edit-group/:id" element={<ProtectedEditGroup />} />
             <Route path="/send" element={<ProtectedSendContact />} />
             <Route path="/send/payment" element={<ProtectedSendPayment />} />

@@ -7,7 +7,7 @@ import PersonalForm from "./components/PersonalForm";
 
 const EditProfile = () => {
   const { profile } = useSelector((state) => state.userProfile);
-  const [countryList, cityList] = useCountriesCities();
+  const [countryList, cityList] = useCountriesCities(true);
   const { user_type = "personal" } = profile || {};
 
   const getCurrentStepComponent = () => {

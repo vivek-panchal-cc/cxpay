@@ -1,6 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./modal.module.scss";
-import { CURRENCY_SYMBOL } from "constants/all";
+import {
+  CURRENCY_SYMBOL,
+  getInitials,
+  getRandomColorClass,
+} from "constants/all";
 import WrapAmount from "components/wrapper/WrapAmount";
 import { formatDateToDesiredFormat } from "helpers/commonHelpers";
 import {
@@ -77,13 +81,28 @@ const ModalReservedAmount = (props) => {
                     <div className="act-info-wrap-left">
                       <div className="act-user-info-wrap d-flex">
                         <div className="act-user-thumb">
-                          <img
+                          {/* <img
                             src={
                               detail.image ||
                               "/assets/images/single_contact_profile.png"
                             }
                             alt="User Profile"
-                          />
+                          /> */}
+                          {detail.image ? (
+                            <img
+                              src={detail.image}
+                              className="blue-bg"
+                              alt=""
+                            />
+                          ) : (
+                            <div
+                              className={`initials-circle d-flex align-items-center justify-content-center ${getRandomColorClass(
+                                detail?.name
+                              )}`}
+                            >
+                              {getInitials(detail?.name)}
+                            </div>
+                          )}
                         </div>
 
                         <div className="act-user-in">

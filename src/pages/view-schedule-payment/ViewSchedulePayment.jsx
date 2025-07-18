@@ -138,12 +138,12 @@ const ViewSchedulePayment = () => {
                 <div className="activity-month">{key}</div>
                 <ul className="act-user-content-wrap">
                   {paymentsDateBind[key]?.map((item) => {
-                    const profileURL =
-                      item.is_group.toString() === "1"
-                        ? item.image ||
-                          "/assets/images/group_contact_profile.png"
-                        : item.image ||
-                          "/assets/images/single_contact_profile.png";
+                    const profileURL = item.image;
+                    // item.is_group.toString() === "1"
+                    //   ? item.image ||
+                    //     "/assets/images/group_contact_profile.png"
+                    //   : item.image ||
+                    //     "/assets/images/single_contact_profile.png";
                     return (
                       <SchedulePaymentItem
                         key={item.id}

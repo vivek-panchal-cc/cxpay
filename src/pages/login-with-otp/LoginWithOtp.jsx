@@ -17,7 +17,7 @@ import { TimeZoneContext } from "context/timeZoneContext";
 const LoginWithOtp = (props) => {
   const navigate = useNavigate();
   const { setIsLoading } = useContext(LoaderContext);
-  const [countryList] = useCountriesCities();
+  const [countryList] = useCountriesCities(true);
 
   useEffect(() => {
     const token = getCookie("auth._token.Bearer");
