@@ -23,6 +23,8 @@ export const API_UPDATE_CUSTOMER_KYC = "update-customer-kyc";
 export const API_ACKNOWLEDGEMENT_POPUP = "/acknowledge-popup";
 
 // customer-onboard urls
+export const API_ONBOARD_VERIFY_EMAIL = "/register-email";
+export const API_ONBOARD_VERIFY_EMAIL_OTP = "/verify-email-otp";
 export const API_ONBOARD_VERIFY_MOBILE_NUMBER = "/register-mobile";
 export const API_ONBOARD_VERIFY_REGISTER_OTP = "/verify-register-otp";
 export const API_ONBOARD_REGISTER_USER = "/register-user";

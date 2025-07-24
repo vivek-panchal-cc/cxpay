@@ -4,6 +4,7 @@ import useCountriesCities from "hooks/useCountriesCities";
 
 const initialValues = {
   step: 0,
+  email: "",
   mobile_number: "",
   user_otp: "",
   user_type: "",
@@ -15,6 +16,7 @@ const initialValues = {
   // is_kyc: "",
   system_manual_kyc: "",
   kyc_approved_status: "",
+  token: "",
 };
 
 export const SignupContext = React.createContext(initialValues);

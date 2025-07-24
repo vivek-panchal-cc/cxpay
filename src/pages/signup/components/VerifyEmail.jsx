@@ -1,18 +1,21 @@
 import React, { useContext, useState } from "react";
 import InputOtp from "components/ui/InputOtp";
 import { useFormik } from "formik";
-import { verifyOtpSchema } from "schemas/validationSchema";
+import {
+  verifyEmailOtpSchema,
+  verifyOtpSchema,
+} from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
 import { SignupContext } from "context/signupContext";
 import { otpCounterTime } from "constants/all";
 import { toast } from "react-toastify";
 
-function VerifyPhone(props) {
+function VerifyEmail(props) {
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const [counter, setCounter] = useState(otpCounterTime);
   const [isTimerOver, setIsTimerOver] = useState(true);
   const [error, setError] = useState(false);
-  const { mobile_number, country_code, email, token } = signUpCreds || {};
+  const { email } = signUpCreds || {};
 
   React.useEffect(() => {
     const timer =
@@ -33,18 +36,21 @@ function VerifyPhone(props) {
 
   const formik = useFormik({
     initialValues: {
-      mobile_number: mobile_number,
-      country_code: country_code,
-      user_otp: "",
       email: email,
-      token: token,
+      user_otp: "",
     },
-    validationSchema: verifyOtpSchema,
+    validationSchema: verifyEmailOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
-        const { data } = await apiRequest.verifyRegisterOtp(values);
+        const { data } = await apiRequest.verifyEmailOtp(values);
         if (!data.success) throw data.message;
-        setSignUpCreds((cs) => ({ ...cs, user_otp: values.user_otp, step: 2 }));
+        const { email, token } = data?.data;
+        setSignUpCreds((cs) => ({
+          ...cs,
+          email: email,
+          token: token,
+          step: 1,
+        }));
       } catch (error) {
         resetForm();
         if (typeof error === "string") setStatus(error);
@@ -58,10 +64,7 @@ function VerifyPhone(props) {
     setCounter(otpCounterTime);
     handleTimeOut();
     try {
-      const { data } = await apiRequest.resendRegisterOtp({
-        mobile_number,
-        country_code,
-        token,
+      const { data } = await apiRequest.verifyEmail({
         email,
       });
       if (!data.success) throw data.message;
@@ -91,7 +94,7 @@ function VerifyPhone(props) {
           </div>
         </div>
         <div className="modal-body">
-          <h3>Verify your Phone Number</h3>
+          <h3>Verify your Email</h3>
           <p>Please enter confirmation code</p>
           <form className="login-otp-numbers" onSubmit={formik.handleSubmit}>
             <div className="form-field">
@@ -143,4 +146,4 @@ function VerifyPhone(props) {
   );
 }
 
-export default VerifyPhone;
+export default VerifyEmail;

@@ -83,6 +83,10 @@ const enterPhoneSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
 });
 
+const enterEmailSchema = yup.object().shape({
+  email: emailSchema,
+});
+
 const loginWithOtpSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
   mobile_number: mobileSchema,
@@ -91,6 +95,11 @@ const loginWithOtpSchema = yup.object().shape({
 const verifyOtpSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
   mobile_number: mobileSchema,
+  user_otp: otpSchema,
+});
+
+const verifyEmailOtpSchema = yup.object().shape({
+  email: emailSchema,
   user_otp: otpSchema,
 });
 
@@ -113,6 +122,14 @@ const recurringSchema = yup.object().shape({
 const LoginSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
   user_name: mobileSchema,
+  password: yup
+    .string()
+    .required("Please enter password")
+    .max(16, "Maximum limit is 16 characters"),
+});
+
+const LoginWithEmailSchema = yup.object().shape({
+  email: emailSchema,
   password: yup
     .string()
     .required("Please enter password")
@@ -287,6 +304,9 @@ const kycDetailsSchema = yup.object().shape({
 
 export {
   LoginSchema,
+  LoginWithEmailSchema,
+  enterEmailSchema,
+  verifyEmailOtpSchema,
   enterPhoneSchema,
   verifyOtpSchema,
   deleteAccountPassword,

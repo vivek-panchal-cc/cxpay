@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
-import { LoginSchema } from "schemas/validationSchema";
+import { LoginWithEmailSchema } from "schemas/validationSchema";
 import { useDispatch } from "react-redux";
 import { fetchLogin } from "features/user/userProfileSlice";
 import { storageRequest } from "helpers/storageRequests";
@@ -15,7 +15,7 @@ import { SystemOptionsContext } from "context/systemOptionsContext";
 import { LoginContext } from "context/loginContext";
 import { TimeZoneContext } from "context/timeZoneContext";
 
-const Login = () => {
+const LoginWithEmail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { setIsLoading } = useContext(LoaderContext);
@@ -34,28 +34,16 @@ const Login = () => {
 
   const formik = useFormik({
     initialValues: {
-      country_code: "",
-      user_name: "",
+      email: "",
       password: "",
     },
-    validationSchema: LoginSchema,
+    validationSchema: LoginWithEmailSchema,
+    validateOnMount: true,
     onSubmit: async (values, { resetForm, setErrors, setStatus }) => {
       setIsLoading(true);
-      // Get the selected country's time zone
-      const selectedCountry = countryList.find(
-        (country) => country.phonecode.toString() === values.country_code
-      );
-      const country_time_zone = selectedCountry
-        ? selectedCountry.time_zone
-        : "";
-      setCountryTimeZone({ country_time_zone });
       try {
         const { error, payload } = await dispatch(fetchLogin(values));
         if (error) throw payload;
-        // if (!payload.data.is_user_pin_set) {
-        //   navigate("/pending-pin", { replace: true });
-        //   return;
-        // }
         setLoginCreds((ls) => ({
           ...ls,
           renew_kyc_approved_status:
@@ -75,7 +63,7 @@ const Login = () => {
       } catch (error) {
         if (typeof error === "string") setStatus(error);
         setErrors({
-          user_name: error?.user_name?.[0],
+          email: error?.email?.[0],
           password: error?.password?.[0],
         });
       } finally {
@@ -97,47 +85,20 @@ const Login = () => {
                     <img src={CXPAY_LOGO} alt="login logo img" />
                   </a>
                 </div>
-                <h5 className="text-center">Login with Mobile</h5>
+                <h5 className="text-center">Login with Email</h5>
                 <form onSubmit={formik.handleSubmit}>
-                  <div className="row form-field">
-                    <div className="col-4 ps-0">
-                      <InputSelect
-                        className="form-select form-control"
-                        name="country_code"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.country_code}
-                        error={
-                          formik.touched.country_code &&
-                          formik.errors.country_code
-                        }
-                      >
-                        <option value={""}>Country</option>
-                        {countryList?.map((country, index) => (
-                          <option
-                            value={country.phonecode}
-                            key={country.phonecode || index}
-                          >
-                            {country.phonecode} &nbsp; {country.country_name}
-                          </option>
-                        ))}
-                      </InputSelect>
-                    </div>
-                    <div className="col-8 px-0">
-                      <Input
-                        type="mobile"
-                        inputMode="tel"
-                        className="form-control"
-                        placeholder="Mobile Number"
-                        name="user_name"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.user_name}
-                        error={
-                          formik.touched.user_name && formik.errors.user_name
-                        }
-                      />
-                    </div>
+                  <div className="form-field">
+                    <Input
+                      type="text"
+                      className="form-control"
+                      placeholder="Email"
+                      name="email"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.email}
+                      error={formik.touched.email && formik.errors.email}
+                      autoComplete={"new-email"}
+                    />
                   </div>
                   <div className="form-field">
                     <Input
@@ -155,6 +116,7 @@ const Login = () => {
                       onCopy={(e) => e.preventDefault()}
                       onPaste={(e) => e.preventDefault()}
                       onFocus={() => setIsInputFocused(true)}
+                      autoComplete="new-password"
                     />
                     <span
                       className="eye-icon"
@@ -200,17 +162,8 @@ const Login = () => {
                   <span>OR</span>
                 </div>
                 <div className="login-signup-inner login-with-opt-wrap">
-                  {/* <Link
-                    className="btn btn-primary blue-bg"
-                    to="/login-with-otp"
-                  >
-                    Login with OTP
-                  </Link> */}
-                  <Link
-                    className="btn btn-primary blue-bg"
-                    to="/login-with-email"
-                  >
-                    Login with Email
+                  <Link className="btn btn-primary blue-bg" to="/login">
+                    Login with Mobile
                   </Link>
                   {/* <p className="sign-up-text text-center">
                     Don't have an account ? <a href="/signup">Signup</a>
@@ -227,4 +180,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginWithEmail;

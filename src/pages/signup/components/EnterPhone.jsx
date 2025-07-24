@@ -17,7 +17,7 @@ function EnterPhone(props) {
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const [showRegisteredPopup, setShowregisteredPopup] = useState(false);
   const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
-  const { countryList } = signUpCreds || {};
+  const { countryList, email, token } = signUpCreds || {};
   const { setCountryTimeZone } = useContext(TimeZoneContext);
 
   const handleChangeCountry = (e) => {
@@ -47,6 +47,8 @@ function EnterPhone(props) {
     initialValues: {
       mobile_number: "",
       country_code: "",
+      token: token,
+      email: email,
     },
     validationSchema: enterPhoneSchema,
     onSubmit: async (values, { resetForm, setStatus, setErrors }) => {

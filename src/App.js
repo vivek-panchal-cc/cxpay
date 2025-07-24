@@ -96,6 +96,7 @@ import EditJarRecurringPayment from "pages/edit-jar-recurring-payment/EditJarRec
 import JarRecurringDetails from "pages/jar-recurring-details/JarRecurringDetails";
 import JarRoutesWrapper from "layouts/JarRoutesWrapper";
 import UnderMaintenance from "pages/under-maintenance/UnderMaintenance";
+import LoginWithEmail from "pages/login/LoginWithEmail";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -362,7 +363,8 @@ function App() {
           {/* <Route path="/app-install" element={<AppInstall />} />
           <Route path="/.well-known/:fileName" element={<WellKnown />} /> */}
           <Route path="/login" element={<Login />} />
-          <Route path="/login-with-otp" element={<LoginWithOtp />} />
+          <Route path="/login-with-email" element={<LoginWithEmail />} />
+          {/* <Route path="/login-with-otp" element={<LoginWithOtp />} /> */}
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route
             path="/reset-password/:code/:mobile/:token"

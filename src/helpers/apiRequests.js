@@ -30,6 +30,8 @@ const API_updateCustomerKyc = apiUrl.API_UPDATE_CUSTOMER_KYC;
 const API_acknowledgementPopup = apiUrl.API_ACKNOWLEDGEMENT_POPUP;
 
 // ONBOARD SERVICES
+const API_verifyEmail = apiUrl.API_ONBOARD_VERIFY_EMAIL;
+const API_verifyEmailOtp = apiUrl.API_ONBOARD_VERIFY_EMAIL_OTP;
 const API_verifyMobileNumber = apiUrl.API_ONBOARD_VERIFY_MOBILE_NUMBER;
 const API_verifyRegisterOtp = apiUrl.API_ONBOARD_VERIFY_REGISTER_OTP;
 const API_getProfile = apiUrl.API_ONBOARD_GET_PROFILE;
@@ -356,6 +358,20 @@ export const acknowledgementPopup = (params) => {
 };
 
 //  -------------------------------------------- ON BOARD ------------------------------------------------------------------------------------------>
+
+/** POST @register-email API
+ * @params email
+ */
+export const verifyEmail = (params) => {
+  return axiosOnboardInstance.post(`${API_verifyEmail}`, params);
+};
+
+/** POST @verify-email-otp API
+ * @params email, otp
+ */
+export const verifyEmailOtp = (params) => {
+  return axiosOnboardInstance.post(`${API_verifyEmailOtp}`, params);
+};
 
 /** POST @register-mobile API
  * @params mobile_number, country_code
@@ -1531,6 +1547,8 @@ export const apiRequest = {
   loginOtp,
   loginOtpVerify,
   getUserProfile,
+  verifyEmail,
+  verifyEmailOtp,
   verifyMobileNumber,
   verifyRegisterOtp,
   registerUser,
