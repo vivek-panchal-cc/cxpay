@@ -14,12 +14,20 @@ import { CXPAY_LOGO } from "constants/all";
 import { SystemOptionsContext } from "context/systemOptionsContext";
 import { LoginContext } from "context/loginContext";
 import { TimeZoneContext } from "context/timeZoneContext";
+import Modal from "components/modals/Modal";
+import VerifyLoginWithOtp from "./components/VerifyLoginWithOtp";
+import { apiRequest } from "helpers/apiRequests";
+import { toast } from "react-toastify";
 
 const LoginWithEmail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { setIsLoading } = useContext(LoaderContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [emailOrMobile, setEmailOrMobile] = useState("");
+  const [countryCode, setCountryCode] = useState("");
+  const [loginType, setLoginType] = useState("email");
+  const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
   const [countryList, cities] = useCountriesCities(true);
   const { setLoginCreds } = useContext(LoginContext);
   const { setCountryTimeZone } = useContext(TimeZoneContext);
@@ -36,31 +44,29 @@ const LoginWithEmail = () => {
     initialValues: {
       email: "",
       password: "",
+      login_type: loginType,
     },
     validationSchema: LoginWithEmailSchema,
     validateOnMount: true,
     onSubmit: async (values, { resetForm, setErrors, setStatus }) => {
       setIsLoading(true);
       try {
-        const { error, payload } = await dispatch(fetchLogin(values));
-        if (error) throw payload;
-        setLoginCreds((ls) => ({
-          ...ls,
-          renew_kyc_approved_status:
-            payload.data.kyc_renew_data?.renew_kyc_approved_status || "",
-          renew_kyc_attempt_count:
-            payload.data.kyc_renew_data?.renew_kyc_attempt_count || "",
-          show_renew_section:
-            payload.data.kyc_renew_data?.show_renew_section || "",
-          show_renew_button: Boolean(
-            payload.data.kyc_renew_data?.show_renew_button
-          ),
-          kyc_message: payload.data.kyc_renew_data?.kyc_message || "",
-          show_popup: Boolean(payload.data?.show_popup),
-          popup_message: payload.data?.popup_message,
-        }));
-        navigate("/", { replace: true });
+        const { data } = await apiRequest.loginOtp(values);
+        if (!data.success) throw data.message;
+        setEmailOrMobile(data.data?.email || data.data?.mobile_number);
+        setCountryCode(data.data?.country_code);
+        const selectedCountry = countryList.find(
+          (country) => country.phonecode.toString() === data.data?.country_code
+        );
+        const country_time_zone = selectedCountry
+          ? selectedCountry.time_zone
+          : "";
+        setCountryTimeZone({ country_time_zone });
+        if (data?.data?.login_otp) toast.success(data.data.login_otp);
+        toast.success(data.message);
+        setShowVerifyPhonePopup(true);
       } catch (error) {
+        resetForm();
         if (typeof error === "string") setStatus(error);
         setErrors({
           email: error?.email?.[0],
@@ -162,7 +168,10 @@ const LoginWithEmail = () => {
                   <span>OR</span>
                 </div>
                 <div className="login-signup-inner login-with-opt-wrap">
-                  <Link className="btn btn-primary blue-bg" to="/login">
+                  <Link
+                    className="btn btn-primary blue-bg"
+                    to="/login-with-mobile"
+                  >
                     Login with Mobile
                   </Link>
                   {/* <p className="sign-up-text text-center">
@@ -174,6 +183,16 @@ const LoginWithEmail = () => {
           </div>
         </div>
       </div>
+      <Modal
+        id="login_otp_modal"
+        show={showVerifyPhonePopup}
+        // setShow={setShowVerifyPhonePopup}
+      >
+        <VerifyLoginWithOtp
+          setShow={setShowVerifyPhonePopup}
+          {...{ emailOrMobile, countryCode, loginType }}
+        />
+      </Modal>
       <script src="js/bootstrap.bundle.min.js"></script>
       <script src="js/bootstrap.esm.min.js"></script>
     </div>

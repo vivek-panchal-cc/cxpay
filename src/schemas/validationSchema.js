@@ -121,7 +121,7 @@ const recurringSchema = yup.object().shape({
 
 const LoginSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
-  user_name: mobileSchema,
+  mobile_number: mobileSchema,
   password: yup
     .string()
     .required("Please enter password")

@@ -14,6 +14,10 @@ import { CXPAY_LOGO } from "constants/all";
 import { SystemOptionsContext } from "context/systemOptionsContext";
 import { LoginContext } from "context/loginContext";
 import { TimeZoneContext } from "context/timeZoneContext";
+import Modal from "components/modals/Modal";
+import VerifyLoginWithOtp from "./components/VerifyLoginWithOtp";
+import { toast } from "react-toastify";
+import { apiRequest } from "helpers/apiRequests";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,6 +25,10 @@ const Login = () => {
   const { setIsLoading } = useContext(LoaderContext);
   const [showPassword, setShowPassword] = useState(false);
   const [countryList, cities] = useCountriesCities(true);
+  const [emailOrMobile, setEmailOrMobile] = useState("");
+  const [countryCode, setCountryCode] = useState("");
+  const [loginType, setLoginType] = useState("mobile");
+  const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
   const { setLoginCreds } = useContext(LoginContext);
   const { setCountryTimeZone } = useContext(TimeZoneContext);
 
@@ -35,8 +43,9 @@ const Login = () => {
   const formik = useFormik({
     initialValues: {
       country_code: "",
-      user_name: "",
+      mobile_number: "",
       password: "",
+      login_type: loginType,
     },
     validationSchema: LoginSchema,
     onSubmit: async (values, { resetForm, setErrors, setStatus }) => {
@@ -50,32 +59,17 @@ const Login = () => {
         : "";
       setCountryTimeZone({ country_time_zone });
       try {
-        const { error, payload } = await dispatch(fetchLogin(values));
-        if (error) throw payload;
-        // if (!payload.data.is_user_pin_set) {
-        //   navigate("/pending-pin", { replace: true });
-        //   return;
-        // }
-        setLoginCreds((ls) => ({
-          ...ls,
-          renew_kyc_approved_status:
-            payload.data.kyc_renew_data?.renew_kyc_approved_status || "",
-          renew_kyc_attempt_count:
-            payload.data.kyc_renew_data?.renew_kyc_attempt_count || "",
-          show_renew_section:
-            payload.data.kyc_renew_data?.show_renew_section || "",
-          show_renew_button: Boolean(
-            payload.data.kyc_renew_data?.show_renew_button
-          ),
-          kyc_message: payload.data.kyc_renew_data?.kyc_message || "",
-          show_popup: Boolean(payload.data?.show_popup),
-          popup_message: payload.data?.popup_message,
-        }));
-        navigate("/", { replace: true });
+        const { data } = await apiRequest.loginOtp(values);
+        if (!data.success) throw data.message;
+        setEmailOrMobile(data.data?.email || data.data?.mobile_number);
+        setCountryCode(data.data?.country_code);
+        if (data?.data?.login_otp) toast.success(data.data.login_otp);
+        toast.success(data.message);
+        setShowVerifyPhonePopup(true);
       } catch (error) {
         if (typeof error === "string") setStatus(error);
         setErrors({
-          user_name: error?.user_name?.[0],
+          mobile_number: error?.mobile_number?.[0],
           password: error?.password?.[0],
         });
       } finally {
@@ -129,12 +123,13 @@ const Login = () => {
                         inputMode="tel"
                         className="form-control"
                         placeholder="Mobile Number"
-                        name="user_name"
+                        name="mobile_number"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.user_name}
+                        value={formik.values.mobile_number}
                         error={
-                          formik.touched.user_name && formik.errors.user_name
+                          formik.touched.mobile_number &&
+                          formik.errors.mobile_number
                         }
                       />
                     </div>
@@ -206,10 +201,7 @@ const Login = () => {
                   >
                     Login with OTP
                   </Link> */}
-                  <Link
-                    className="btn btn-primary blue-bg"
-                    to="/login-with-email"
-                  >
+                  <Link className="btn btn-primary blue-bg" to="/login">
                     Login with Email
                   </Link>
                   {/* <p className="sign-up-text text-center">
@@ -221,6 +213,16 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <Modal
+        id="login_otp_modal"
+        show={showVerifyPhonePopup}
+        // setShow={setShowVerifyPhonePopup}
+      >
+        <VerifyLoginWithOtp
+          setShow={setShowVerifyPhonePopup}
+          {...{ emailOrMobile, countryCode, loginType }}
+        />
+      </Modal>
       <script src="js/bootstrap.bundle.min.js"></script>
       <script src="js/bootstrap.esm.min.js"></script>
     </div>
