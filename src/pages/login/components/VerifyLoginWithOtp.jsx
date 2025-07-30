@@ -118,7 +118,9 @@ function VerifyLoginWithOtp(props) {
           </div>
         </div>
         <div className="modal-body">
-          <h3>Verify your Phone Number</h3>
+          <h3>
+            Verify your {loginType === "email" ? "Email" : "Phone Number"}
+          </h3>
           <p>Please enter confirmation code</p>
           <form className="login-otp-numbers" onSubmit={formik.handleSubmit}>
             <div className="form-field">
