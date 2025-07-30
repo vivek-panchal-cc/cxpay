@@ -94,8 +94,10 @@ function VerifyLoginWithOtp(props) {
     handleTimeOut();
     try {
       const { data } = await apiRequest.resendLoginOtp({
-        country_code: countryCode,
-        mobile_number: emailOrMobile,
+        ...(loginType === "email"
+          ? { email: emailOrMobile }
+          : { mobile_number: emailOrMobile, country_code: countryCode }),
+        login_type: loginType,
       });
       if (!data.success) throw data.message;
       if (data?.data?.login_otp) toast.success(data.data.login_otp);
