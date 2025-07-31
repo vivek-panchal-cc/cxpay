@@ -8,8 +8,11 @@ import { resetPasswordSchema } from "schemas/validationSchema";
 import { IconEyeClose, IconEyeOpen } from "styles/svgs";
 import { LoaderContext } from "context/loaderContext";
 import { CXPAY_LOGO } from "constants/all";
+import { ForgotPasswordContext } from "context/forgotPasswordContext";
 
 function ResetPassword() {
+  const { forgorPasswordCreds } = useContext(ForgotPasswordContext);
+  const { email, token } = forgorPasswordCreds;
   const { setIsLoading } = useContext(LoaderContext);
   const params = useParams();
   const navigate = useNavigate();
@@ -32,6 +35,8 @@ function ResetPassword() {
       country_code: params.code,
       mobile_number: params.mobile,
       token: params.token,
+      temp_token: token,
+      email: email,
       password: "",
       confirm_password: "",
     },
@@ -115,7 +120,13 @@ function ResetPassword() {
                       onPaste={(e) => e.preventDefault()}
                       onFocus={() => setIsInputFocused(true)}
                     />
-                    <span className="eye-icon" style={{ top: "24px", right: isSafari && isInputFocused ? "45px" : "" }}>
+                    <span
+                      className="eye-icon"
+                      style={{
+                        top: "24px",
+                        right: isSafari && isInputFocused ? "45px" : "",
+                      }}
+                    >
                       {showPassword.new ? (
                         <IconEyeOpen
                           onClick={() =>
@@ -185,7 +196,13 @@ function ResetPassword() {
                     !formik.errors.confirm_password ? (
                       <span
                         className="eye-icon"
-                        style={{ top: "24px", right: isSafari && isInputConfirmedFocused ? "70px" : "45px" }}
+                        style={{
+                          top: "24px",
+                          right:
+                            isSafari && isInputConfirmedFocused
+                              ? "70px"
+                              : "45px",
+                        }}
                       >
                         <img
                           className="eye-close"
@@ -194,7 +211,14 @@ function ResetPassword() {
                         />
                       </span>
                     ) : null}
-                    <span className="eye-icon" style={{ top: "24px", right: isSafari && isInputConfirmedFocused ? "45px" : "" }}>
+                    <span
+                      className="eye-icon"
+                      style={{
+                        top: "24px",
+                        right:
+                          isSafari && isInputConfirmedFocused ? "45px" : "",
+                      }}
+                    >
                       {showPassword.confirm ? (
                         <IconEyeOpen
                           onClick={() =>

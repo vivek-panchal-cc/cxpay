@@ -3,17 +3,18 @@ import InputOtp from "components/ui/InputOtp";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
 import { useNavigate } from "react-router-dom";
-import { verifyForgotPasswordOtpSchema } from "schemas/validationSchema";
+import { verifyForgotPasswordEmailOtpSchema } from "schemas/validationSchema";
 import { otpCounterTime } from "constants/all";
 import { toast } from "react-toastify";
 import { ForgotPasswordContext } from "context/forgotPasswordContext";
+import { Modal } from "bootstrap";
+import ForgotPasswordMobile from "../ForgotPasswordMobile";
 
-function VerifyOtp(props) {
-  const { mobile_number, country_code, token, email } = props.values;
+function VerifyEmailOtp(props) {
+  const { email } = props.values;
   const { setForgotPasswordCreds } = useContext(ForgotPasswordContext);
-
   const navigate = useNavigate();
-
+  const [showMobilePopup, setShowMobilePopup] = useState(false);
   const { setShow } = props;
   const [counter, setCounter] = useState(otpCounterTime);
   const [isTimerOver, setIsTimerOver] = useState(true);
@@ -45,27 +46,26 @@ function VerifyOtp(props) {
 
   const formik = useFormik({
     initialValues: {
-      country_code: country_code,
-      mobile_number: mobile_number,
       email: email,
-      token: token,
       user_otp: "",
     },
-    validationSchema: verifyForgotPasswordOtpSchema,
+    validationSchema: verifyForgotPasswordEmailOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
-        const { data } = await apiRequest.verifyForgotPasswordOtp(values);
+        const { data } = await apiRequest.verifyForgotPasswordEmailOtp(values);
         if (!data.success) throw data;
         setForgotPasswordCreds((ls) => ({
           ...ls,
-          password_token: data.data?.password_token || "",
-          mobile_number: data.data?.mobile_number || "",
+          email: data.data?.email || "",
           country_code: data.data?.country_code || "",
+          token: data.data?.token || "",
         }));
-        if (data.data.mobile_number)
-          navigate(
-            `/reset-password/${values.country_code}/${data.data.mobile_number}/${data.data.password_token}`
-          );
+        setShowMobilePopup(true);
+        navigate("/forgot-password-mobile", { replace: true });
+        // if (data.data.mobile_number)
+        //   navigate(
+        //     `/reset-password/${values.country_code}/${data.data.mobile_number}/${data.data.password_token}`
+        //   );
       } catch (error) {
         resetForm();
         const { message = "", data } = error || {};
@@ -84,10 +84,7 @@ function VerifyOtp(props) {
     setCounter(otpCounterTime);
     handleTimeOut();
     try {
-      const { data } = await apiRequest.resendForgotPasswordOtp({
-        country_code: country_code,
-        mobile_number: mobile_number,
-        token: token,
+      const { data } = await apiRequest.generateForgotPasswordEmailOtpChange({
         email: email,
       });
       if (!data.success) throw data.message;
@@ -95,7 +92,7 @@ function VerifyOtp(props) {
         ...ls,
         login_otp: data.data?.login_otp || "",
         country_code: data.data?.country_code || "",
-        mobile_number: data.data?.mobile_number || "",
+        email: data.data?.email || "",
       }));
       if (data?.data?.login_otp) toast.success(data.data.login_otp);
       toast.success(data.message);
@@ -172,4 +169,4 @@ function VerifyOtp(props) {
   );
 }
 
-export default VerifyOtp;
+export default VerifyEmailOtp;

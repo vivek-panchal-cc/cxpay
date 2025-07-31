@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate, Outlet } from "react-router-dom";
 import PrivateLayout from "layouts/PrivateLayout.jsx";
 import { ToastContainer } from "react-toastify";
 // Pages
@@ -97,6 +97,8 @@ import JarRecurringDetails from "pages/jar-recurring-details/JarRecurringDetails
 import JarRoutesWrapper from "layouts/JarRoutesWrapper";
 import UnderMaintenance from "pages/under-maintenance/UnderMaintenance";
 import LoginWithEmail from "pages/login/LoginWithEmail";
+import ForgotPasswordProvider from "context/forgotPasswordContext";
+import ForgotPasswordMobile from "pages/forgot-password/ForgotPasswordMobile";
 
 async function loadData() {
   await import(`./styles/js/custom`);
@@ -342,6 +344,12 @@ function App() {
   useEffect(() => {
     loadData();
     if (!location.pathname) return;
+    if (
+      !location.pathname.includes("/forgot-password") &&
+      !location.pathname.includes("/forgot-password-mobile") &&
+      !location.pathname.startsWith("/reset-password/")
+    )
+      storageRequest.removeForgotCreds();
     if (!location.pathname.includes("/signup"))
       storageRequest.removeSignupCreds();
   }, [location.pathname]);
@@ -365,11 +373,24 @@ function App() {
           <Route path="/login-with-mobile" element={<Login />} />
           <Route path="/login" element={<LoginWithEmail />} />
           {/* <Route path="/login-with-otp" element={<LoginWithOtp />} /> */}
-          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route
-            path="/reset-password/:code/:mobile/:token"
-            element={<ResetPassword />}
-          />
+            element={
+              <ForgotPasswordProvider>
+                <Outlet />
+              </ForgotPasswordProvider>
+            }
+          >
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route
+              path="/forgot-password-mobile"
+              element={<ForgotPasswordMobile />}
+            />
+            <Route
+              path="/reset-password/:code/:mobile/:token"
+              element={<ResetPassword />}
+            />
+          </Route>
+
           <Route
             path="/signup"
             element={

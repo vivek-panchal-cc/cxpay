@@ -18,8 +18,12 @@ const API_pinSet = apiUrl.API_LOGIN_PIN_SET;
 const API_pinValidate = apiUrl.API_LOGIN_VALIDATE_PIN;
 const API_forgotPinOtp = apiUrl.API_LOGIN_GENERATE_FORGOT_PIN_OTP;
 const API_verifyPinOtp = apiUrl.API_LOGIN_VERIFY_FORGOT_PIN_OTP;
+const API_generateForgotEMailPasswordOtp =
+  apiUrl.API_LOGIN_GENERATE_FORGOT_PASSWORD_EMAIL_OTP;
 const API_generateForgotPasswordOtp =
   apiUrl.API_LOGIN_GENERATE_FORGOT_PASSWORD_OTP;
+const API_verifyForgotPasswordEmailOtp =
+  apiUrl.API_LOGIN_VERIFY_FORGOT_PASSWORD_EMAIL_OTP;
 const API_verifyForgotPasswordOtp = apiUrl.API_LOGIN_VERIFY_FORGOT_PASSWORD_OTP;
 const API_updateForgotPassword = apiUrl.API_LOGIN_UPDATE_FORGOT_PASSWORD_OTP;
 const API_resendLoginOtp = apiUrl.API_LOGIN_RESEND_LOGIN_OTP;
@@ -294,11 +298,28 @@ export const verifyPinOtp = (params) => {
   return axiosLoginInstance.post(`${API_verifyPinOtp}`, params);
 };
 
+/** POST @forgot-password-email-otp API
+ * @params email
+ */
+export const generateForgotPasswordEmailOtpChange = (params) => {
+  return axiosLoginInstance.post(
+    `${API_generateForgotEMailPasswordOtp}`,
+    params
+  );
+};
+
 /** POST @generate-forgot-password-otp-change API
  * @params country_code, mobile_number
  */
 export const generateForgotPasswordOtpChange = (params) => {
   return axiosLoginInstance.post(`${API_generateForgotPasswordOtp}`, params);
+};
+
+/** POST @verify-forgot-pass-email-otp API
+ * @params email , user_otp
+ */
+export const verifyForgotPasswordEmailOtp = (params) => {
+  return axiosLoginInstance.post(`${API_verifyForgotPasswordEmailOtp}`, params);
 };
 
 /** POST @verify-forgot-password-otp API
@@ -1560,7 +1581,9 @@ export const apiRequest = {
   pinValidate,
   forgotPinOtp,
   verifyPinOtp,
+  generateForgotPasswordEmailOtpChange,
   generateForgotPasswordOtpChange,
+  verifyForgotPasswordEmailOtp,
   verifyForgotPasswordOtp,
   updateForgotPassword,
   linkBank,

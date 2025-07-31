@@ -9,8 +9,12 @@ export const API_LOGIN_PIN_SET = "/set-user-pin";
 export const API_LOGIN_VALIDATE_PIN = "/validate-user-pin";
 export const API_LOGIN_GENERATE_FORGOT_PIN_OTP = "/generate-forgot-pin-otp";
 export const API_LOGIN_VERIFY_FORGOT_PIN_OTP = "/verify-forgot-pin-otp";
+export const API_LOGIN_GENERATE_FORGOT_PASSWORD_EMAIL_OTP =
+  "/forgot-password-email-otp";
 export const API_LOGIN_GENERATE_FORGOT_PASSWORD_OTP =
   "/generate-forgot-password-otp";
+export const API_LOGIN_VERIFY_FORGOT_PASSWORD_EMAIL_OTP =
+  "/verify-forgot-pass-email-otp";
 export const API_LOGIN_VERIFY_FORGOT_PASSWORD_OTP =
   "/verify-forgot-password-otp";
 export const API_LOGIN_UPDATE_FORGOT_PASSWORD_OTP = "/update-forgot-password";

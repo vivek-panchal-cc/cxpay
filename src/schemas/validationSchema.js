@@ -103,6 +103,11 @@ const verifyEmailOtpSchema = yup.object().shape({
   user_otp: otpSchema,
 });
 
+const verifyForgotPasswordEmailOtpSchema = yup.object().shape({
+  email: emailSchema,
+  user_otp: otpSchema,
+});
+
 const verifyForgotPasswordOtpSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
   mobile_number: mobileSchema,
@@ -198,6 +203,10 @@ const editProfileAgentUserSchema = yup.object().shape({
   profile_image: profileImageSchema,
   // mobile_number: yup.string().required("Mobile number is required"),
 });
+const forgotPasswordEmailSchema = yup.object().shape({
+  email: emailSchema,
+});
+
 const forgotPasswordSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
   mobile_number: mobileSchema,
@@ -316,7 +325,9 @@ export {
   editProfileBusinessUserSchema,
   editProfilePersonalUserSchema,
   editProfileAgentUserSchema,
+  forgotPasswordEmailSchema,
   forgotPasswordSchema,
+  verifyForgotPasswordEmailOtpSchema,
   verifyForgotPasswordOtpSchema,
   topUpSchema,
   recurringSchema,
