@@ -44,7 +44,7 @@ function VerifyPhone(props) {
       try {
         const { data } = await apiRequest.verifyRegisterOtp(values);
         if (!data.success) throw data.message;
-        setSignUpCreds((cs) => ({ ...cs, user_otp: values.user_otp, step: 2 }));
+        setSignUpCreds((cs) => ({ ...cs, user_otp: values.user_otp, step: 3 }));
       } catch (error) {
         resetForm();
         if (typeof error === "string") setStatus(error);

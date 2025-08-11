@@ -13,7 +13,7 @@ function SelectaccountType(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSignUpCreds((cs) => ({ ...cs, user_type: userType, step: 3 }));
+    setSignUpCreds((cs) => ({ ...cs, user_type: userType, step: 4 }));
   };
 
   return (

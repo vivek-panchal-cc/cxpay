@@ -49,7 +49,7 @@ function VerifyEmail(props) {
           ...cs,
           email: email,
           token: token,
-          step: 1,
+          step: 2,
         }));
       } catch (error) {
         resetForm();

@@ -78,6 +78,10 @@ const signUpBusinessAccountSchema = yup.object().shape({
     .required("Please select business category"),
 });
 
+const enterPhoneRegionSchema = yup.object().shape({
+  country_code: yup.string().required("Code is required"),
+});
+
 const enterPhoneSchema = yup.object().shape({
   mobile_number: mobileSchema,
   country_code: yup.string().required("Code is required"),
@@ -317,6 +321,7 @@ export {
   enterEmailSchema,
   verifyEmailOtpSchema,
   enterPhoneSchema,
+  enterPhoneRegionSchema,
   verifyOtpSchema,
   deleteAccountPassword,
   signUpPersonalAccountSchema,

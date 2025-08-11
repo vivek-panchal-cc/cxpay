@@ -7,6 +7,7 @@ import PersonalForm from "./components/PersonalForm";
 import { SignupContext } from "context/signupContext";
 import { Navigate } from "react-router-dom";
 import { FUND_CARD } from "constants/all";
+import EnterRegion from "./components/EnterRegion";
 
 const Signup = () => {
   const { signUpCreds } = useContext(SignupContext);
@@ -14,12 +15,14 @@ const Signup = () => {
   const getCurrentStepComponent = () => {
     switch (signUpCreds.step) {
       case 0:
-        return <EnterEmail />;
+        return <EnterRegion />;
       case 1:
-        return <EnterPhone />;
+        return <EnterEmail />;
       case 2:
-        return <AccountType />;
+        return <EnterPhone />;
       case 3:
+        return <AccountType />;
+      case 4:
         switch (signUpCreds.user_type) {
           case "business":
             return <Businessform />;
@@ -28,7 +31,7 @@ const Signup = () => {
           default:
             return <EnterPhone />;
         }
-      case 4:
+      case 5:
         if (
           signUpCreds.system_manual_kyc?.toString() === "true" &&
           signUpCreds.kyc_approved_status === "pending"

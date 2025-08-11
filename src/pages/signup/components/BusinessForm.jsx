@@ -78,7 +78,7 @@ function Businessform(props) {
       //   storageRequest.setAuth(data.data.token);
       //   setSignUpCreds((cs) => ({
       //     ...cs,
-      //     step: 4,
+      //     step: 5,
       //     // is_kyc: data.data.is_kyc,
       //     system_manual_kyc: data.data.system_manual_kyc,
       //     kyc_approved_status: data.data.kyc_approved_status,
@@ -115,7 +115,7 @@ function Businessform(props) {
       storageRequest.setAuth(data.data.token);
       setSignUpCreds((cs) => ({
         ...cs,
-        step: 4,
+        step: 5,
         system_manual_kyc: data.data.system_manual_kyc,
         kyc_approved_status: data.data.kyc_approved_status,
       }));
