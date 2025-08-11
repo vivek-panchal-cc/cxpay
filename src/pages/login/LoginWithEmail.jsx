@@ -64,6 +64,7 @@ const LoginWithEmail = () => {
         setCountryTimeZone({ country_time_zone });
         if (data?.data?.login_otp) toast.success(data.data.login_otp);
         toast.success(data.message);
+        setStatus(null);
         setShowVerifyPhonePopup(true);
       } catch (error) {
         resetForm();

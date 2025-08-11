@@ -80,6 +80,7 @@ function VerifyLoginWithOtp(props) {
         const { message = "", data } = error || {};
         if (data?.suspend_account) {
           toast.error(message);
+          setShow(false);
           navigate("/login", { replace: true });
         }
         if (typeof message === "string") setStatus(message);

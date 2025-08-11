@@ -65,6 +65,7 @@ const Login = () => {
         setCountryCode(data.data?.country_code);
         if (data?.data?.login_otp) toast.success(data.data.login_otp);
         toast.success(data.message);
+        setStatus(null);
         setShowVerifyPhonePopup(true);
       } catch (error) {
         if (typeof error === "string") setStatus(error);
