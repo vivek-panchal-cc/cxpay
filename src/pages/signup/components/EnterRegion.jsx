@@ -1,23 +1,17 @@
 import React, { useContext, useState } from "react";
-import Input from "components/ui/Input";
 import { useFormik } from "formik";
-import { apiRequest } from "helpers/apiRequests";
-import { enterPhoneSchema } from "schemas/validationSchema";
-import AlreadyRegistered from "./AlreadyRegistered";
-import VerifyPhone from "./VerifyPhone";
-import Modal from "components/modals/Modal";
+import { enterPhoneRegionSchema } from "schemas/validationSchema";
 import { SignupContext } from "context/signupContext";
 import InputSelect from "components/ui/InputSelect";
-import { toast } from "react-toastify";
 import { CXPAY_LOGO } from "constants/all";
 import { Link } from "react-router-dom";
 import { TimeZoneContext } from "context/timeZoneContext";
 
-function EnterPhone(props) {
+function EnterRegion(props) {
   const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
   const [showRegisteredPopup, setShowregisteredPopup] = useState(false);
   const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
-  const { countryList, email, token, country_code } = signUpCreds || {};
+  const { countryList, email, token } = signUpCreds || {};
   const { setCountryTimeZone } = useContext(TimeZoneContext);
 
   const handleChangeCountry = (e) => {
@@ -45,12 +39,9 @@ function EnterPhone(props) {
 
   const formik = useFormik({
     initialValues: {
-      mobile_number: "",
-      country_code: country_code,
-      token: token,
-      email: email,
+      country_code: "",
     },
-    validationSchema: enterPhoneSchema,
+    validationSchema: enterPhoneRegionSchema,
     onSubmit: async (values, { resetForm, setStatus, setErrors }) => {
       // Get the selected country's time zone
       const selectedCountry = countryList.find(
@@ -61,24 +52,13 @@ function EnterPhone(props) {
         : "";
       setCountryTimeZone({ country_time_zone });
       try {
-        const { data } = await apiRequest.verifyMobileNumber(values);
-        if (!data.success) throw data.message;
-        if (data.data.isAlreadyRegster) {
-          return setShowregisteredPopup(true);
-        }
         setSignUpCreds((cs) => ({
           ...cs,
-          mobile_number: values.mobile_number,
+          step: 1,
           country_code: values.country_code,
         }));
-        setShowVerifyPhonePopup(true);
-        if (data?.data?.otp) toast.success(data.data.otp);
-        toast.success(data.message);
       } catch (error) {
-        setErrors({
-          country_code: error.country_code?.[0],
-          mobile_number: error.mobile_number?.[0],
-        });
+        console.log(error);
       }
     },
   });
@@ -96,12 +76,9 @@ function EnterPhone(props) {
                 </a>
               </div>
               <h5 className="text-center">Signup</h5>
-              <h4 className="blue-text text-center">
-                Please Enter Mobile Number
-              </h4>
               <form onSubmit={formik.handleSubmit}>
                 <div className="row form-field">
-                  <div className="col-4">
+                  <div className="">
                     <InputSelect
                       className="form-select form-control"
                       name="country_code"
@@ -113,7 +90,6 @@ function EnterPhone(props) {
                       }
                       // onChange={formik.handleChange}
                       onChange={handleChangeCountry}
-                      disabled
                     >
                       <option value={""}>Country</option>
                       {countryList?.map((country, index) => (
@@ -126,28 +102,12 @@ function EnterPhone(props) {
                       ))}
                     </InputSelect>
                   </div>
-                  <div className="col-8 px-0">
-                    <Input
-                      type="mobile"
-                      inputMode="tel"
-                      className="form-control"
-                      placeholder="Mobile Number"
-                      name="mobile_number"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.mobile_number}
-                      error={
-                        formik.touched.mobile_number &&
-                        formik.errors.mobile_number
-                      }
-                    />
-                  </div>
                 </div>
                 <div className="text-center send-cd-btn">
                   <input
                     type="submit"
                     className="btn btn-primary"
-                    value="Send Code"
+                    value="Submit"
                     disabled={formik.isSubmitting}
                   />
                 </div>
@@ -159,14 +119,8 @@ function EnterPhone(props) {
           </div>
         </div>
       </div>
-      <Modal id="login_otp_modal" show={showVerifyPhonePopup}>
-        <VerifyPhone {...{ signUpCreds, setSignUpCreds }} />
-      </Modal>
-      <Modal id="already_register_user" show={showRegisteredPopup}>
-        <AlreadyRegistered />
-      </Modal>
     </div>
   );
 }
 
-export default EnterPhone;
+export default EnterRegion;

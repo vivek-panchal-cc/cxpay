@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import InputOtp from "components/ui/InputOtp";
 import { useFormik } from "formik";
 import { apiRequest } from "helpers/apiRequests";
@@ -6,9 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { verifyForgotPasswordOtpSchema } from "schemas/validationSchema";
 import { otpCounterTime } from "constants/all";
 import { toast } from "react-toastify";
+import { ForgotPasswordContext } from "context/forgotPasswordContext";
 
 function VerifyOtp(props) {
-  const { mobile_number, country_code } = props.values;
+  const { mobile_number, country_code, token, email } = props.values;
+  const { setForgotPasswordCreds } = useContext(ForgotPasswordContext);
 
   const navigate = useNavigate();
 
@@ -45,6 +47,8 @@ function VerifyOtp(props) {
     initialValues: {
       country_code: country_code,
       mobile_number: mobile_number,
+      email: email,
+      token: token,
       user_otp: "",
     },
     validationSchema: verifyForgotPasswordOtpSchema,
@@ -52,6 +56,12 @@ function VerifyOtp(props) {
       try {
         const { data } = await apiRequest.verifyForgotPasswordOtp(values);
         if (!data.success) throw data;
+        setForgotPasswordCreds((ls) => ({
+          ...ls,
+          password_token: data.data?.password_token || "",
+          mobile_number: data.data?.mobile_number || "",
+          country_code: data.data?.country_code || "",
+        }));
         if (data.data.mobile_number)
           navigate(
             `/reset-password/${values.country_code}/${data.data.mobile_number}/${data.data.password_token}`
@@ -77,8 +87,16 @@ function VerifyOtp(props) {
       const { data } = await apiRequest.resendForgotPasswordOtp({
         country_code: country_code,
         mobile_number: mobile_number,
+        token: token,
+        email: email,
       });
       if (!data.success) throw data.message;
+      setForgotPasswordCreds((ls) => ({
+        ...ls,
+        login_otp: data.data?.login_otp || "",
+        country_code: data.data?.country_code || "",
+        mobile_number: data.data?.mobile_number || "",
+      }));
       if (data?.data?.login_otp) toast.success(data.data.login_otp);
       toast.success(data.message);
     } catch (error) {

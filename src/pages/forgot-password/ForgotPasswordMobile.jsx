@@ -4,28 +4,33 @@ import Input from "components/ui/Input";
 import Modal from "components/modals/Modal";
 import VerifyOtp from "./components/VerifyOtp";
 import { apiRequest } from "helpers/apiRequests";
-import { forgotPasswordEmailSchema } from "schemas/validationSchema";
+import { forgotPasswordSchema } from "schemas/validationSchema";
 import { toast } from "react-toastify";
 import useCountriesCities from "hooks/useCountriesCities";
 import InputSelect from "components/ui/InputSelect";
 import { CXPAY_LOGO } from "constants/all";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { ForgotPasswordContext } from "context/forgotPasswordContext";
-import VerifyEmailOtp from "./components/VerifyEmailOtp";
 
-function ForgotPassword() {
+function ForgotPasswordMobile() {
   const [showOtpPopup, setShowOtpPopup] = useState(false);
   const [countryList] = useCountriesCities(true);
-  const { setForgotPasswordCreds } = useContext(ForgotPasswordContext);
+  const { forgorPasswordCreds, setForgotPasswordCreds } = useContext(
+    ForgotPasswordContext
+  );
+  const { token, country_code, email } = forgorPasswordCreds;
 
   const formik = useFormik({
     initialValues: {
-      email: "",
+      country_code: country_code,
+      mobile_number: "",
+      token: token,
+      email: email,
     },
-    validationSchema: forgotPasswordEmailSchema,
-    onSubmit: async (values, { resetForm, setErrors, setStatus }) => {
+    validationSchema: forgotPasswordSchema,
+    onSubmit: async (values, { resetForm, setStatus }) => {
       try {
-        const { data } = await apiRequest.generateForgotPasswordEmailOtpChange(
+        const { data } = await apiRequest.generateForgotPasswordOtpChange(
           values
         );
         if (!data.success) throw data.message;
@@ -33,19 +38,20 @@ function ForgotPassword() {
           ...ls,
           login_otp: data.data?.login_otp || "",
           country_code: data.data?.country_code || "",
-          email: data.data?.email || "",
+          mobile_number: data.data?.mobile_number || "",
         }));
         if (data?.data?.login_otp) toast.success(data.data.login_otp);
         toast.success(data.message);
         setShowOtpPopup(true);
       } catch (error) {
-        if (typeof error === "string") setStatus(error);
-        setErrors({
-          email: error?.email?.[0],
-        });
+        resetForm();
+        setStatus(error);
+        console.log(error);
       }
     },
   });
+
+  if (!token) return <Navigate to="/login" replace />;
 
   return (
     <div className="login-signup login-signup-main common-body-bg">
@@ -62,18 +68,47 @@ function ForgotPassword() {
                 </div>
                 <h5 className="text-center">Forgot Password</h5>
                 <form onSubmit={formik.handleSubmit}>
-                  <div className="form-field">
-                    <Input
-                      type="text"
-                      className="form-control"
-                      placeholder="Email"
-                      name="email"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.email}
-                      error={formik.touched.email && formik.errors.email}
-                      autoComplete={"new-email"}
-                    />
+                  <div className="row">
+                    <div className="col-4 ps-0">
+                      <InputSelect
+                        className="form-select form-control"
+                        name="country_code"
+                        // onChange={formik.handleChange}
+                        // onBlur={formik.handleBlur}
+                        value={formik.values.country_code}
+                        error={
+                          formik.touched.country_code &&
+                          formik.errors.country_code
+                        }
+                        disabled
+                      >
+                        <option value={""}>Country</option>
+                        {countryList?.map((country) => (
+                          <option
+                            value={country.phonecode}
+                            key={country.phonecode}
+                          >
+                            {country.phonecode} &nbsp; {country.country_name}
+                          </option>
+                        ))}
+                      </InputSelect>
+                    </div>
+                    <div className="col-8 px-0">
+                      <Input
+                        type="mobile"
+                        inputMode="tel"
+                        className="form-control w-100"
+                        placeholder="Registered Mobile Number"
+                        name="mobile_number"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.mobile_number}
+                        error={
+                          formik.touched.mobile_number &&
+                          formik.errors.mobile_number
+                        }
+                      />
+                    </div>
                   </div>
                   {formik.status ? (
                     <p className="text-danger text-center">{formik.status}</p>
@@ -102,10 +137,10 @@ function ForgotPassword() {
         show={showOtpPopup}
         // setShow={setShowOtpPopup}
       >
-        <VerifyEmailOtp setShow={setShowOtpPopup} values={formik.values} />
+        <VerifyOtp setShow={setShowOtpPopup} values={formik.values} />
       </Modal>
     </div>
   );
 }
 
-export default ForgotPassword;
+export default ForgotPasswordMobile;

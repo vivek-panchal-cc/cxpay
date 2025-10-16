@@ -24,8 +24,14 @@ function Businessform(props) {
     new: false,
     confirm: false,
   });
-  const { countryList, cityList, country_iso, selected_country_name } =
-    signUpCreds || {};
+  const {
+    countryList,
+    cityList,
+    country_iso,
+    selected_country_name,
+    token,
+    email,
+  } = signUpCreds || {};
 
   const [passwordStrength, setPasswordStrength] = useState("");
   const [passwordStrengthData, setPasswordStrengthData] = useState({
@@ -44,7 +50,7 @@ function Businessform(props) {
       user_type: signUpCreds.user_type || "business",
       mobile_number: signUpCreds.mobile_number,
       country_code: signUpCreds.country_code,
-      email: "",
+      email: email,
       address: "",
       password: "",
       confirm_password: "", //not required for API
@@ -54,6 +60,7 @@ function Businessform(props) {
       business_id: "",
       terms_conditions: false,
       business_category_id: "",
+      token: token,
     },
     validationSchema: signUpBusinessAccountSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
@@ -71,7 +78,7 @@ function Businessform(props) {
       //   storageRequest.setAuth(data.data.token);
       //   setSignUpCreds((cs) => ({
       //     ...cs,
-      //     step: 3,
+      //     step: 5,
       //     // is_kyc: data.data.is_kyc,
       //     system_manual_kyc: data.data.system_manual_kyc,
       //     kyc_approved_status: data.data.kyc_approved_status,
@@ -108,7 +115,7 @@ function Businessform(props) {
       storageRequest.setAuth(data.data.token);
       setSignUpCreds((cs) => ({
         ...cs,
-        step: 3,
+        step: 5,
         system_manual_kyc: data.data.system_manual_kyc,
         kyc_approved_status: data.data.kyc_approved_status,
       }));
@@ -273,7 +280,7 @@ function Businessform(props) {
                     </option>
                   ))}
                 </InputSelect>
-                <Input
+                {/* <Input
                   type="text"
                   className="form-control"
                   placeholder="Email"
@@ -283,7 +290,7 @@ function Businessform(props) {
                   value={formik.values.email}
                   error={formik.touched.email && formik.errors.email}
                   autoComplete={"new-email"}
-                />
+                /> */}
                 <Input
                   type="text"
                   className="form-control"

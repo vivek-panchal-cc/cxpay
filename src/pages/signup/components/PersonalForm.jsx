@@ -21,8 +21,14 @@ function PersonalForm(props) {
     new: false,
     confirm: false,
   });
-  const { countryList, cityList, country_iso, selected_country_name } =
-    signUpCreds || {};
+  const {
+    countryList,
+    cityList,
+    country_iso,
+    selected_country_name,
+    token,
+    email,
+  } = signUpCreds || {};
 
   const [passwordStrength, setPasswordStrength] = useState("");
   const [passwordStrengthData, setPasswordStrengthData] = useState({
@@ -43,7 +49,7 @@ function PersonalForm(props) {
       mobile_number: signUpCreds.mobile_number,
       country_code: signUpCreds.country_code,
       personal_id: "",
-      email: "",
+      email: email,
       address: "",
       password: "",
       confirm_password: "", //not required for API
@@ -51,6 +57,7 @@ function PersonalForm(props) {
       city: "",
       profile_image: "",
       terms_conditions: false,
+      token: token,
     },
     validationSchema: signUpPersonalAccountSchema,
     onSubmit: async (values, { setStatus, resetForm, setErrors }) => {
@@ -68,7 +75,7 @@ function PersonalForm(props) {
       //   storageRequest.setAuth(data.data.token);
       //   setSignUpCreds((cs) => ({
       //     ...cs,
-      //     step: 3,
+      //     step: 5,
       //     // is_kyc: data.data.is_kyc,
       //     system_manual_kyc: data.data.system_manual_kyc,
       //     kyc_approved_status: data.data.kyc_approved_status,
@@ -104,7 +111,7 @@ function PersonalForm(props) {
       storageRequest.setAuth(data.data.token);
       setSignUpCreds((cs) => ({
         ...cs,
-        step: 3,
+        step: 5,
         system_manual_kyc: data.data.system_manual_kyc,
         kyc_approved_status: data.data.kyc_approved_status,
       }));
@@ -292,7 +299,7 @@ function PersonalForm(props) {
                   }
                   autoComplete={"new-id"}
                 />
-                <Input
+                {/* <Input
                   type="text"
                   className="form-control"
                   placeholder="Email"
@@ -302,7 +309,7 @@ function PersonalForm(props) {
                   value={formik.values.email}
                   error={formik.touched.email && formik.errors.email}
                   autoComplete={"new-email"}
-                />
+                /> */}
                 <Input
                   type="text"
                   className="form-control"

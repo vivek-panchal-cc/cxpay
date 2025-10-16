@@ -3,6 +3,7 @@ const STORAGE_KEY = "CXPAY_SIGNUP_CREDS";
 const LOGIN_STORAGE_KEY = "CXPAY_LOGIN_CREDS";
 const TIMEZONE_STORAGE_KEY = "CXPAY_TIMEZONE_CREDS";
 const ORGANIZATION_KEY = "CXPAY_IS_ORGANIZATION";
+const FORGOT_KEY = "CXPAY_FORGOT_PASSWORD_CREDS";
 
 // LOCAL STORAGE set Auth data
 export const setAuth = (token) => {
@@ -41,6 +42,25 @@ const setCredsToStorage = (creds) => {
 const removeSignupCreds = () => {
   if (!localStorage) return null;
   localStorage.removeItem(STORAGE_KEY);
+};
+
+// LOCAL STORAGE get Signup creds
+const getPasswordCredsFromStorage = () => {
+  if (!localStorage) return null;
+  const creds = localStorage.getItem(FORGOT_KEY);
+  return JSON.parse(creds);
+};
+
+// LOCAL STORAGE set Signup creds
+const setPasswordCredsToStorage = (creds) => {
+  if (!localStorage) return null;
+  localStorage.setItem(FORGOT_KEY, JSON.stringify(creds));
+};
+
+// LOCAL STORAGE remove Signup creds
+const removeForgotCreds = () => {
+  if (!localStorage) return null;
+  localStorage.removeItem(FORGOT_KEY);
 };
 
 // LOCAL STORAGE get Login creds
@@ -97,6 +117,9 @@ export const storageRequest = {
   getCredsFromtStorage,
   setCredsToStorage,
   removeSignupCreds,
+  getPasswordCredsFromStorage,
+  setPasswordCredsToStorage,
+  removeForgotCreds,
   getLoginCreds,
   setLoginCredsToStorage,
   getTimeZone,

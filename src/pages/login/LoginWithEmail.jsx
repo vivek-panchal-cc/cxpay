@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "components/ui/Input";
 import { useFormik } from "formik";
-import { LoginSchema } from "schemas/validationSchema";
+import { LoginWithEmailSchema } from "schemas/validationSchema";
 import { useDispatch } from "react-redux";
 import { fetchLogin } from "features/user/userProfileSlice";
 import { storageRequest } from "helpers/storageRequests";
@@ -16,19 +16,19 @@ import { LoginContext } from "context/loginContext";
 import { TimeZoneContext } from "context/timeZoneContext";
 import Modal from "components/modals/Modal";
 import VerifyLoginWithOtp from "./components/VerifyLoginWithOtp";
-import { toast } from "react-toastify";
 import { apiRequest } from "helpers/apiRequests";
+import { toast } from "react-toastify";
 
-const Login = () => {
+const LoginWithEmail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { setIsLoading } = useContext(LoaderContext);
   const [showPassword, setShowPassword] = useState(false);
-  const [countryList, cities] = useCountriesCities(true);
   const [emailOrMobile, setEmailOrMobile] = useState("");
   const [countryCode, setCountryCode] = useState("");
-  const [loginType, setLoginType] = useState("mobile");
+  const [loginType, setLoginType] = useState("email");
   const [showVerifyPhonePopup, setShowVerifyPhonePopup] = useState(false);
+  const [countryList, cities] = useCountriesCities(true);
   const { setLoginCreds } = useContext(LoginContext);
   const { setCountryTimeZone } = useContext(TimeZoneContext);
 
@@ -42,35 +42,35 @@ const Login = () => {
 
   const formik = useFormik({
     initialValues: {
-      country_code: "",
-      mobile_number: "",
+      email: "",
       password: "",
       login_type: loginType,
     },
-    validationSchema: LoginSchema,
+    validationSchema: LoginWithEmailSchema,
+    validateOnMount: true,
     onSubmit: async (values, { resetForm, setErrors, setStatus }) => {
       setIsLoading(true);
-      // Get the selected country's time zone
-      const selectedCountry = countryList.find(
-        (country) => country.phonecode.toString() === values.country_code
-      );
-      const country_time_zone = selectedCountry
-        ? selectedCountry.time_zone
-        : "";
-      setCountryTimeZone({ country_time_zone });
       try {
         const { data } = await apiRequest.loginOtp(values);
         if (!data.success) throw data.message;
         setEmailOrMobile(data.data?.email || data.data?.mobile_number);
         setCountryCode(data.data?.country_code);
+        const selectedCountry = countryList.find(
+          (country) => country.phonecode.toString() === data.data?.country_code
+        );
+        const country_time_zone = selectedCountry
+          ? selectedCountry.time_zone
+          : "";
+        setCountryTimeZone({ country_time_zone });
         if (data?.data?.login_otp) toast.success(data.data.login_otp);
         toast.success(data.message);
         setStatus(null);
         setShowVerifyPhonePopup(true);
       } catch (error) {
+        resetForm();
         if (typeof error === "string") setStatus(error);
         setErrors({
-          mobile_number: error?.mobile_number?.[0],
+          email: error?.email?.[0],
           password: error?.password?.[0],
         });
       } finally {
@@ -92,48 +92,20 @@ const Login = () => {
                     <img src={CXPAY_LOGO} alt="login logo img" />
                   </a>
                 </div>
-                <h5 className="text-center">Login with Mobile</h5>
+                <h5 className="text-center">Login with Email</h5>
                 <form onSubmit={formik.handleSubmit}>
-                  <div className="row form-field">
-                    <div className="col-4 ps-0">
-                      <InputSelect
-                        className="form-select form-control"
-                        name="country_code"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.country_code}
-                        error={
-                          formik.touched.country_code &&
-                          formik.errors.country_code
-                        }
-                      >
-                        <option value={""}>Country</option>
-                        {countryList?.map((country, index) => (
-                          <option
-                            value={country.phonecode}
-                            key={country.phonecode || index}
-                          >
-                            {country.phonecode} &nbsp; {country.country_name}
-                          </option>
-                        ))}
-                      </InputSelect>
-                    </div>
-                    <div className="col-8 px-0">
-                      <Input
-                        type="mobile"
-                        inputMode="tel"
-                        className="form-control"
-                        placeholder="Mobile Number"
-                        name="mobile_number"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.mobile_number}
-                        error={
-                          formik.touched.mobile_number &&
-                          formik.errors.mobile_number
-                        }
-                      />
-                    </div>
+                  <div className="form-field">
+                    <Input
+                      type="text"
+                      className="form-control"
+                      placeholder="Email"
+                      name="email"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.email}
+                      error={formik.touched.email && formik.errors.email}
+                      autoComplete={"new-email"}
+                    />
                   </div>
                   <div className="form-field">
                     <Input
@@ -151,6 +123,7 @@ const Login = () => {
                       onCopy={(e) => e.preventDefault()}
                       onPaste={(e) => e.preventDefault()}
                       onFocus={() => setIsInputFocused(true)}
+                      autoComplete="new-password"
                     />
                     <span
                       className="eye-icon"
@@ -196,14 +169,11 @@ const Login = () => {
                   <span>OR</span>
                 </div>
                 <div className="login-signup-inner login-with-opt-wrap">
-                  {/* <Link
+                  <Link
                     className="btn btn-primary blue-bg"
-                    to="/login-with-otp"
+                    to="/login-with-mobile"
                   >
-                    Login with OTP
-                  </Link> */}
-                  <Link className="btn btn-primary blue-bg" to="/login">
-                    Login with Email
+                    Login with Mobile
                   </Link>
                   {/* <p className="sign-up-text text-center">
                     Don't have an account ? <a href="/signup">Signup</a>
@@ -230,4 +200,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginWithEmail;

@@ -9,8 +9,12 @@ export const API_LOGIN_PIN_SET = "/set-user-pin";
 export const API_LOGIN_VALIDATE_PIN = "/validate-user-pin";
 export const API_LOGIN_GENERATE_FORGOT_PIN_OTP = "/generate-forgot-pin-otp";
 export const API_LOGIN_VERIFY_FORGOT_PIN_OTP = "/verify-forgot-pin-otp";
+export const API_LOGIN_GENERATE_FORGOT_PASSWORD_EMAIL_OTP =
+  "/forgot-password-email-otp";
 export const API_LOGIN_GENERATE_FORGOT_PASSWORD_OTP =
   "/generate-forgot-password-otp";
+export const API_LOGIN_VERIFY_FORGOT_PASSWORD_EMAIL_OTP =
+  "/verify-forgot-pass-email-otp";
 export const API_LOGIN_VERIFY_FORGOT_PASSWORD_OTP =
   "/verify-forgot-password-otp";
 export const API_LOGIN_UPDATE_FORGOT_PASSWORD_OTP = "/update-forgot-password";
@@ -23,6 +27,8 @@ export const API_UPDATE_CUSTOMER_KYC = "update-customer-kyc";
 export const API_ACKNOWLEDGEMENT_POPUP = "/acknowledge-popup";
 
 // customer-onboard urls
+export const API_ONBOARD_VERIFY_EMAIL = "/register-email";
+export const API_ONBOARD_VERIFY_EMAIL_OTP = "/verify-email-otp";
 export const API_ONBOARD_VERIFY_MOBILE_NUMBER = "/register-mobile";
 export const API_ONBOARD_VERIFY_REGISTER_OTP = "/verify-register-otp";
 export const API_ONBOARD_REGISTER_USER = "/register-user";

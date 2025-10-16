@@ -1,18 +1,24 @@
 import React, { useContext, useState } from "react";
 import InputOtp from "components/ui/InputOtp";
 import { useFormik } from "formik";
-import { verifyOtpSchema } from "schemas/validationSchema";
 import { apiRequest } from "helpers/apiRequests";
-import { SignupContext } from "context/signupContext";
+import { useNavigate } from "react-router-dom";
+import { verifyForgotPasswordEmailOtpSchema } from "schemas/validationSchema";
 import { otpCounterTime } from "constants/all";
 import { toast } from "react-toastify";
+import { ForgotPasswordContext } from "context/forgotPasswordContext";
+import { Modal } from "bootstrap";
+import ForgotPasswordMobile from "../ForgotPasswordMobile";
 
-function VerifyPhone(props) {
-  const { signUpCreds, setSignUpCreds } = useContext(SignupContext);
+function VerifyEmailOtp(props) {
+  const { email } = props.values;
+  const { setForgotPasswordCreds } = useContext(ForgotPasswordContext);
+  const navigate = useNavigate();
+  const [showMobilePopup, setShowMobilePopup] = useState(false);
+  const { setShow } = props;
   const [counter, setCounter] = useState(otpCounterTime);
   const [isTimerOver, setIsTimerOver] = useState(true);
   const [error, setError] = useState(false);
-  const { mobile_number, country_code, email, token } = signUpCreds || {};
 
   React.useEffect(() => {
     const timer =
@@ -31,23 +37,43 @@ function VerifyPhone(props) {
   let counterTime =
     Math.floor(counter / 60) + ":" + (formattedNumber ? formattedNumber : "00");
 
+  const handleTimeOut = () => {
+    setTimeout(function () {
+      setIsTimerOver(false);
+      formik.setStatus("");
+    }, otpCounterTime * 1000);
+  };
+
   const formik = useFormik({
     initialValues: {
-      mobile_number: mobile_number,
-      country_code: country_code,
-      user_otp: "",
       email: email,
-      token: token,
+      user_otp: "",
     },
-    validationSchema: verifyOtpSchema,
+    validationSchema: verifyForgotPasswordEmailOtpSchema,
     onSubmit: async (values, { resetForm, setStatus }) => {
       try {
-        const { data } = await apiRequest.verifyRegisterOtp(values);
-        if (!data.success) throw data.message;
-        setSignUpCreds((cs) => ({ ...cs, user_otp: values.user_otp, step: 3 }));
+        const { data } = await apiRequest.verifyForgotPasswordEmailOtp(values);
+        if (!data.success) throw data;
+        setForgotPasswordCreds((ls) => ({
+          ...ls,
+          email: data.data?.email || "",
+          country_code: data.data?.country_code || "",
+          token: data.data?.token || "",
+        }));
+        setShowMobilePopup(true);
+        navigate("/forgot-password-mobile", { replace: true });
+        // if (data.data.mobile_number)
+        //   navigate(
+        //     `/reset-password/${values.country_code}/${data.data.mobile_number}/${data.data.password_token}`
+        //   );
       } catch (error) {
         resetForm();
-        if (typeof error === "string") setStatus(error);
+        const { message = "", data } = error || {};
+        if (data?.suspend_account) {
+          toast.error(message);
+          navigate("/login", { replace: true });
+        }
+        if (typeof message === "string") setStatus(message);
       }
     },
   });
@@ -58,28 +84,25 @@ function VerifyPhone(props) {
     setCounter(otpCounterTime);
     handleTimeOut();
     try {
-      const { data } = await apiRequest.resendRegisterOtp({
-        mobile_number,
-        country_code,
-        token,
-        email,
+      const { data } = await apiRequest.generateForgotPasswordEmailOtpChange({
+        email: email,
       });
       if (!data.success) throw data.message;
-      if (data?.data?.otp) toast.success(data.data.otp);
+      setForgotPasswordCreds((ls) => ({
+        ...ls,
+        login_otp: data.data?.login_otp || "",
+        country_code: data.data?.country_code || "",
+        email: data.data?.email || "",
+      }));
+      if (data?.data?.login_otp) toast.success(data.data.login_otp);
       toast.success(data.message);
     } catch (error) {
-      if (typeof error !== "string") return;
-      setIsTimerOver(true);
-      formik.setStatus(error);
-      setError(true);
+      if (typeof error === "string") {
+        if (typeof error === "string") formik.setStatus(error);
+        setIsTimerOver(true);
+        setError(true);
+      }
     }
-  };
-
-  const handleTimeOut = () => {
-    setTimeout(function () {
-      setIsTimerOver(false);
-      formik.setStatus("");
-    }, otpCounterTime * 1000);
   };
 
   return (
@@ -91,7 +114,7 @@ function VerifyPhone(props) {
           </div>
         </div>
         <div className="modal-body">
-          <h3>Verify your Phone Number</h3>
+          <h3 className="lh-base">Verify your Email</h3>
           <p>Please enter confirmation code</p>
           <form className="login-otp-numbers" onSubmit={formik.handleSubmit}>
             <div className="form-field">
@@ -119,8 +142,6 @@ function VerifyPhone(props) {
                 className={isTimerOver ? "disabled" : ""}
                 disabled={isTimerOver}
                 onClick={handleResendBtn}
-                tabIndex="0"
-                title="Tooltip on top"
               >
                 Resend OTP
               </button>
@@ -136,6 +157,11 @@ function VerifyPhone(props) {
                 disabled={formik.isSubmitting}
               />
             </div>
+            <div className="pop-cancel-btn text-center">
+              <button type="button" onClick={() => setShow(false)}>
+                Cancel
+              </button>
+            </div>
           </form>
         </div>
       </div>
@@ -143,4 +169,4 @@ function VerifyPhone(props) {
   );
 }
 
-export default VerifyPhone;
+export default VerifyEmailOtp;

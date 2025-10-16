@@ -78,9 +78,17 @@ const signUpBusinessAccountSchema = yup.object().shape({
     .required("Please select business category"),
 });
 
+const enterPhoneRegionSchema = yup.object().shape({
+  country_code: yup.string().required("Code is required"),
+});
+
 const enterPhoneSchema = yup.object().shape({
   mobile_number: mobileSchema,
   country_code: yup.string().required("Code is required"),
+});
+
+const enterEmailSchema = yup.object().shape({
+  email: emailSchema,
 });
 
 const loginWithOtpSchema = yup.object().shape({
@@ -91,6 +99,16 @@ const loginWithOtpSchema = yup.object().shape({
 const verifyOtpSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
   mobile_number: mobileSchema,
+  user_otp: otpSchema,
+});
+
+const verifyEmailOtpSchema = yup.object().shape({
+  email: emailSchema,
+  user_otp: otpSchema,
+});
+
+const verifyForgotPasswordEmailOtpSchema = yup.object().shape({
+  email: emailSchema,
   user_otp: otpSchema,
 });
 
@@ -112,7 +130,15 @@ const recurringSchema = yup.object().shape({
 
 const LoginSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
-  user_name: mobileSchema,
+  mobile_number: mobileSchema,
+  password: yup
+    .string()
+    .required("Please enter password")
+    .max(16, "Maximum limit is 16 characters"),
+});
+
+const LoginWithEmailSchema = yup.object().shape({
+  email: emailSchema,
   password: yup
     .string()
     .required("Please enter password")
@@ -181,6 +207,10 @@ const editProfileAgentUserSchema = yup.object().shape({
   profile_image: profileImageSchema,
   // mobile_number: yup.string().required("Mobile number is required"),
 });
+const forgotPasswordEmailSchema = yup.object().shape({
+  email: emailSchema,
+});
+
 const forgotPasswordSchema = yup.object().shape({
   country_code: yup.string().required("Code is required"),
   mobile_number: mobileSchema,
@@ -287,7 +317,11 @@ const kycDetailsSchema = yup.object().shape({
 
 export {
   LoginSchema,
+  LoginWithEmailSchema,
+  enterEmailSchema,
+  verifyEmailOtpSchema,
   enterPhoneSchema,
+  enterPhoneRegionSchema,
   verifyOtpSchema,
   deleteAccountPassword,
   signUpPersonalAccountSchema,
@@ -296,7 +330,9 @@ export {
   editProfileBusinessUserSchema,
   editProfilePersonalUserSchema,
   editProfileAgentUserSchema,
+  forgotPasswordEmailSchema,
   forgotPasswordSchema,
+  verifyForgotPasswordEmailOtpSchema,
   verifyForgotPasswordOtpSchema,
   topUpSchema,
   recurringSchema,
